@@ -31,7 +31,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Database connection
      *
-     * @var Xoops\Core\Database\Connection;
+     * @var \Xoops\Core\Database\Connection;
      */
     public $conn;
 

@@ -20,9 +20,7 @@ class SetConfigCommand extends Command
         $this->setName(
             'set-config'
         )
-            ->setDescription(
-                'Set a system configuration value'
-            )
+            ->setDescription('Set a system configuration value')
             ->setDefinition(
                 [
                 new InputArgument(
@@ -80,9 +78,7 @@ EOT
         $objArray = $configHandler->getConfigs(
             $criteria
         );
-        $configItem = reset(
-            $objArray
-        );
+        $configItem = reset($objArray);
         if (empty($configItem)) {
             $output->writeln(
                 sprintf('<error>Config item %s not found!</error>', $name)
@@ -100,8 +96,6 @@ EOT
                 sprintf('<error>Could not set %s!</error>', $name)
             );
         }
-        $output->writeln(
-            sprintf('Set %s', $name)
-        );
+        $output->writeln(sprintf('Set %s', $name));
     }
 }
