@@ -182,7 +182,7 @@ class XoopsPathController
                 }
             }
         }
-        return ($validPaths && $this->validUrl && $validPerms);
+        return $validPaths && $this->validUrl && $validPerms;
     }
 
     public function checkPath($PATH = '')

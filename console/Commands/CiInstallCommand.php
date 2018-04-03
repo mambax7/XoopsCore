@@ -2,6 +2,9 @@
 
 namespace XoopsConsole\Commands;
 
+use SystemModule;
+use XoopsLoad;
+use Xoops;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,13 +20,14 @@ class CiInstallCommand extends Command
         $this->setName('ci-install')
             ->setDescription('Install a minimal XOOPS for CI processes')
             ->setDefinition([])
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>ci-install</info> command installs a default XOOPS system for use in the
 travis-ci continuous integration environment. This command expects on an
 appropriate mainfile.php to have been previously created, possibly using the
 <info>ci-bootstrap</info> command (only available if mainfile.php does not exist.)
 EOT
-             );
+            );
     }
 
     /**
@@ -35,7 +39,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // install the 'system' module
-        $xoops = \Xoops::getInstance();
+        $xoops = Xoops::getInstance();
         $module = 'system';
         $output->writeln(sprintf('Installing %s', $module));
         if ($xoops->getModuleByDirname($module) !== false) {
@@ -43,8 +47,8 @@ EOT
             return;
         }
         $xoops->setTpl(new XoopsTpl());
-        \XoopsLoad::load('module', 'system');
-        $sysmod = new \SystemModule();
+        XoopsLoad::load('module', 'system');
+        $sysmod = new SystemModule();
         $result = $sysmod->install($module);
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {

@@ -19,7 +19,7 @@ class XoopsXmlRpcStructTest extends \PHPUnit\Framework\TestCase
         $value = $instance->render();
         $this->assertSame('<value><struct></struct></value>', $value);
 
-        $instance->add('instance', clone($instance));
+        $instance->add('instance', clone $instance);
         $value = $instance->render();
         $expected = '<value><struct>'
             . '<member><name>instance</name>'

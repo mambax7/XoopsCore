@@ -47,7 +47,7 @@ abstract class AbstractLocale
      */
     public static function isRtl()
     {
-        return (Misc::getCharacterOrder() === 'right-to-left');
+        return Misc::getCharacterOrder() === 'right-to-left';
     }
 
     /**

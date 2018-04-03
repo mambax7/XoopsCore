@@ -67,7 +67,8 @@ if (! $tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
         if (is_array($res) && count($res) > 0) {
             foreach ($res as $item) {
                 $date[] = ['date' => $item['date']];
-                $items[] = ['date' => XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                $items[] = [
+                    'date' => XoopsLocale::formatTimestamp($item['date'], 'rss'),
                     'title' => $myts->htmlSpecialChars($item['title']),
                     'content' => $myts->htmlSpecialChars($item['content']),
                     'link' => $item['link'],
@@ -83,7 +84,8 @@ if (! $tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
             if (is_array($res) && count($res) > 0) {
                 foreach ($res as $item) {
                     $date[] = ['date' => $item['date']];
-                    $items[] = ['date' => XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                    $items[] = [
+                        'date' => XoopsLocale::formatTimestamp($item['date'], 'rss'),
                         'title' => $myts->htmlSpecialChars($item['title']),
                         'content' => $myts->htmlSpecialChars($item['content']),
                         'link' => $item['link'],

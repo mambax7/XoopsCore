@@ -12,20 +12,23 @@
 /**
  * Legacy compatibility for CriteriaElement
  */
-abstract class CriteriaElement extends \Xoops\Core\Kernel\CriteriaElement
+abstract use Xoops\Core\Kernel\Criteria;
+use Xoops\Core\Kernel\CriteriaCompo;
+use Xoops\Core\Kernel\CriteriaElement;
+class AbstractCriteriaElement extends CriteriaElement
 {
 }
 
 /**
  * Legacy compatibility for CriteriaCompo
  */
-class CriteriaCompo extends \Xoops\Core\Kernel\CriteriaCompo
+class CriteriaCompo extends CriteriaCompo
 {
 }
 
 /**
  * Legacy compatibility for Criteria
  */
-class Criteria extends \Xoops\Core\Kernel\Criteria
+class Criteria extends Criteria
 {
 }

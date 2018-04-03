@@ -29,17 +29,17 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
-abstract class xoopscaptchamethod
+abstract class Abstractxoopscaptchamethod
 {
     /**
      * @var XoopsCaptcha
      */
-    public $handler;
+    public $xoopsCaptcha;
 
     /**
      * @var array
      */
-    public $config;
+    public $config = [];
 
     /**
      * @var string
@@ -53,7 +53,7 @@ abstract class xoopscaptchamethod
      */
     public function __construct($handler = null)
     {
-        $this->handler = $handler;
+        $this->xoopsCaptcha = $handler;
     }
 
     /**
@@ -75,12 +75,12 @@ abstract class xoopscaptchamethod
      */
     public function loadConfig($name = '')
     {
-        if (! is_object($this->handler))
+        if (! is_object($this->xoopsCaptcha))
             $this->config = [];
         else
             $this->config = empty($name)
-                ? $this->handler->config
-                : array_merge($this->handler->config, $this->handler->loadConfig($name));
+                ? $this->xoopsCaptcha->config
+                : array_merge($this->xoopsCaptcha->config, $this->xoopsCaptcha->loadConfig($name));
     }
 
     /**

@@ -62,7 +62,7 @@ class CommentsComment extends XoopsObject
      */
     public function isRoot()
     {
-        return ($this->getVar('id') === $this->getVar('rootid'));
+        return $this->getVar('id') === $this->getVar('rootid');
     }
 }
 

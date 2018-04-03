@@ -70,7 +70,7 @@ function makeSize($size) {
      $size = $size / 1024;
      $u++;
    }
-   return (number_format($size, 0) . ' ' . $units[$u]);
+   return number_format($size, 0) . ' ' . $units[$u];
 }
 
 function foldersize($path) {

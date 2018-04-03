@@ -95,6 +95,6 @@ class Factory
      */
     public function isThemeAllowed($name)
     {
-        return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes, true));
+        return empty($this->allowedThemes) || in_array($name, $this->allowedThemes, true);
     }
 }

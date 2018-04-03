@@ -101,16 +101,22 @@ if (! empty($xoopsorgnews)) {
         $ret = '<table class="outer width100">';
         foreach (array_keys($items) as $i) {
             $ret .= '<tr class="head"><td><a href="' . htmlspecialchars($items[$i]['link']) . '" rel="external">';
-            $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars($items[$i]['pubdate']) . ')</td></tr>';
+            $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars(
+                $items[$i]['pubdate']
+            ) . ')</td></tr>';
             if ($items[$i]['description'] !== '') {
                 $ret .= '<tr><td class="odd">' . $items[$i]['description'];
                 if (! empty($items[$i]['guid'])) {
-                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external" title="">' . XoopsLocale::MORE . '</a>';
+                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars(
+                        $items[$i]['guid']
+                    ) . '" rel="external" title="">' . XoopsLocale::MORE . '</a>';
                 }
                 $ret .= '</td></tr>';
             } else {
                 if ($items[$i]['guid'] !== '') {
-                    $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external">' . _MORE . '</a></td></tr>';
+                    $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars(
+                        $items[$i]['guid']
+                    ) . '" rel="external">' . _MORE . '</a></td></tr>';
                 }
             }
         }

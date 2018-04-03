@@ -352,7 +352,7 @@ class PublisherUtils
     {
         $xoops = Xoops::getInstance();
 
-        return ($xoops->isUser() && is_object($itemObj) && ($xoops->user->getVar('uid') === $itemObj->getVar('uid')));
+        return $xoops->isUser() && is_object($itemObj) && ($xoops->user->getVar('uid') === $itemObj->getVar('uid'));
     }
 
     /**
@@ -367,7 +367,7 @@ class PublisherUtils
         $publisher = Publisher::getInstance();
         $categoriesGranted = $publisher->getPermissionHandler()->getGrantedItems('category_moderation');
 
-        return (is_object($itemObj) && in_array($itemObj->getVar('categoryid'), $categoriesGranted, true));
+        return is_object($itemObj) && in_array($itemObj->getVar('categoryid'), $categoriesGranted, true);
     }
 
     public static function IsUserAdmin()

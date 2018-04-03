@@ -55,12 +55,18 @@ switch ($op) {
                 }
                 // All dirs
                 foreach ($files as $file) {
-                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
+                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir(
+                        $root . $_REQUEST['dir'] . $file
+                    )) {
                         //retirer .svn
                         $file_no_valid = ['.svn', 'conf', 'db', 'locks', 'hooks', 'cache', 'templates_c'];
 
                         if (! in_array($file, $file_no_valid, true)) {
-                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities($_REQUEST['dir'] . $file) . '/">' . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities(
+                                $_REQUEST['dir'] . $file
+                            ) . '/">' . htmlentities(
+                                $file
+                            ) . '</a></li>';
                         }
                     }
                 }
@@ -97,10 +103,14 @@ switch ($op) {
                <div class="xo-btn-actions">
                     <div class="xo-buttons">
                         <button class="ui-corner-all tooltip" type="button" onclick="filemanager_load_tree();filemanager_display_file(\'\', 0)" title="' . _AM_SYSTEM_FILEMANAGER_HOME . '">
-                            <img src="' . system_AdminIcons('home.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_HOME . '" />
+                            <img src="' . system_AdminIcons(
+                    'home.png'
+                ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_HOME . '" />
                         </button>
                         <button class="ui-corner-all tooltip" onclick="filemanager_add_directory(\'' . $path_file . '\')" title="' . _AM_SYSTEM_FILEMANAGER_ADDDIR . '">
-                            <img src="' . system_AdminIcons('folder_add.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_ADDDIR . '" />
+                            <img src="' . system_AdminIcons(
+                    'folder_add.png'
+                ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_ADDDIR . '" />
                         </button>';
                 $verif = true;
                 $protected = [
@@ -120,14 +130,20 @@ switch ($op) {
                 }
                 if ($verif) {
                     echo '<button class="ui-corner-all tooltip" onclick="filemanager_confirm_delete_directory(\'' . $path_file . '\')" title="' . _AM_SYSTEM_FILEMANAGER_DELDIR . '">
-                                    <img src="' . system_AdminIcons('folder_delete.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_DELDIR . '" />
+                                    <img src="' . system_AdminIcons(
+                        'folder_delete.png'
+                    ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_DELDIR . '" />
                                   </button>';
                 }
                 echo '<button class="ui-corner-all tooltip" onclick="filemanager_add_file(\'' . $path_file . '\')" title="' . _AM_SYSTEM_FILEMANAGER_ADDFILE . '">
-                            <img src="' . system_AdminIcons('add.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_ADDFILE . '" />
+                            <img src="' . system_AdminIcons(
+                    'add.png'
+                ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_ADDFILE . '" />
                         </button>
                         <button class="ui-corner-all tooltip" onclick="filemanager_upload(\'' . $path_file . '\')" title="' . _AM_SYSTEM_FILEMANAGER_UPLOAD . '">
-                            <img src="' . system_AdminIcons('upload.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_UPLOAD . '" />
+                            <img src="' . system_AdminIcons(
+                    'upload.png'
+                ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_UPLOAD . '" />
                         </button>
                     </div>
                 <div class="clear">&nbsp;</div>
@@ -139,7 +155,9 @@ switch ($op) {
                             <td align="center" width="' . $width . '%" style="padding-bottom:12px">';
                 foreach ($files as $file) {
                     if (! preg_match('#.back#', $file)) {
-                        if (file_exists($path_file . $file) && $file !== '.' && $file !== '..' && ! is_dir($path_file . $file)) {
+                        if (file_exists($path_file . $file) && $file !== '.' && $file !== '..' && ! is_dir(
+                            $path_file . $file
+                        )) {
                             //echo $path_file . $file.'<br />';
                             $unzip = '';
                             $edit = false;
@@ -200,7 +218,9 @@ switch ($op) {
                                     break;
                             }
                             if ($edit === true) {
-                                $edit = '<img class="cursorpointer" src="' . system_AdminIcons('edit.png') . '" onclick=\'filemanager_edit_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '", "' . $extension_verif . '");\' width="16" alt="edit" />';
+                                $edit = '<img class="cursorpointer" src="' . system_AdminIcons(
+                                    'edit.png'
+                                ) . '" onclick=\'filemanager_edit_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '", "' . $extension_verif . '");\' width="16" alt="edit" />';
                             } else {
                                 $edit = '';
                             }
@@ -224,7 +244,9 @@ switch ($op) {
                                             <table cellpadding="0" cellspacing="0">
                                                 <tr class="odd">
                                                     <td align="left">' . $chmod . '</td>
-                                                    <td align="right">' . $unzip . $edit . '&nbsp;<img class="cursorpointer" src="' . system_AdminIcons('delete.png') . '" onclick=\'filemanager_confirm_delete_file("' . $path_file . $file . '", "' . $path_file . '");\' width="16" alt="delete" /></td>
+                                                    <td align="right">' . $unzip . $edit . '&nbsp;<img class="cursorpointer" src="' . system_AdminIcons(
+                                'delete.png'
+                            ) . '" onclick=\'filemanager_confirm_delete_file("' . $path_file . $file . '", "' . $path_file . '");\' width="16" alt="delete" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" align="center" height="60px"><br />' . $img . '</td>
@@ -265,7 +287,9 @@ switch ($op) {
         //Button restore
         if (file_exists($path_file . '.back')) {
             $restore = '<button class="ui-corner-all tooltip" type="button" onclick="filemanager_restore(\'' . $path_file . '\')" value="' . _AM_SYSTEM_FILEMANAGER_RESTORE . '" title="' . _AM_SYSTEM_FILEMANAGER_RESTORE . '">
-                            <img src="' . system_AdminIcons('revert.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_RESTORE . '" />
+                            <img src="' . system_AdminIcons(
+                'revert.png'
+            ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_RESTORE . '" />
                         </button>';
         } else {
             $restore = '';
@@ -286,11 +310,15 @@ switch ($op) {
                           <div class="xo-btn-actions">
                               <div class="xo-buttons">
                                   <button class="ui-corner-all tooltip" type="submit" value="' . _AM_SYSTEM_FILEMANAGER_SAVE . '" title="' . _AM_SYSTEM_FILEMANAGER_SAVE . '">
-                                      <img src="' . system_AdminIcons('save.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_SAVE . '" />
+                                      <img src="' . system_AdminIcons(
+            'save.png'
+        ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_SAVE . '" />
                                   </button>
                                   ' . $restore . '
                                   <button class="ui-corner-all tooltip" type="button" onclick="$(\'#edit_file\').fadeOut(\'fast\');$(\'#display_file\').fadeIn(\'fast\');" title="' . _AM_SYSTEM_FILEMANAGER_CANCEL . '">
-                                      <img src="' . system_AdminIcons('cancel.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_CANCEL . '" />
+                                      <img src="' . system_AdminIcons(
+            'cancel.png'
+        ) . '" alt="' . _AM_SYSTEM_FILEMANAGER_CANCEL . '" />
                                   </button>
                                   <div class="clear"></div>
                              </div>
@@ -301,7 +329,9 @@ switch ($op) {
                 <textarea id="code_mirror" name="filemanager" rows=24 cols=110>' . $content . '</textarea>
                 </td></tr>
               </table>';
-        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="path" value="' . $path . '"><input type="hidden" name="file" value="' . trim($_REQUEST['file']) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
+        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="path" value="' . $path . '"><input type="hidden" name="file" value="' . trim(
+            $_REQUEST['file']
+        ) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
         break;
 
     case 'filemanager_unzip_file':
@@ -337,7 +367,10 @@ switch ($op) {
 
     //Confirm delete file
     case 'filemanager_confirm_delete_file':
-        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_SUREDEL, $_REQUEST['file']) . '<br /><br /><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_file(\'' . $_REQUEST['path_file'] . '\', \'' . $_REQUEST['path'] . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
+        echo '<div class="confirmMsg">' . sprintf(
+            _AM_SYSTEM_FILEMANAGER_SUREDEL,
+            $_REQUEST['file']
+        ) . '<br /><br /><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_file(\'' . $_REQUEST['path_file'] . '\', \'' . $_REQUEST['path'] . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
         break;
 
     //Delete one file
@@ -386,7 +419,10 @@ switch ($op) {
     //Confirm delete directory
     case 'filemanager_confirm_delete_directory':
         $path = $system->cleanVars($_REQUEST, 'path', '', 'string');
-        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_DIR_SUREDEL, $path) . '<br /><br /><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_directory(\'' . $path . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
+        echo '<div class="confirmMsg">' . sprintf(
+            _AM_SYSTEM_FILEMANAGER_DIR_SUREDEL,
+            $path
+        ) . '<br /><br /><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_directory(\'' . $path . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
         break;
 
     // Delete one directory

@@ -380,9 +380,9 @@ class HttpRequest
     {
         if ($name === 'HTTPS') {
             if (isset($_SERVER['HTTPS'])) {
-                return (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+                return ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
             }
-            return (strpos($this->getEnv('SCRIPT_URI'), 'https://') === 0);
+            return strpos($this->getEnv('SCRIPT_URI'), 'https://') === 0;
         }
 
         if ($name === 'SCRIPT_NAME' && ! isset($_SERVER[$name])) {
@@ -427,7 +427,7 @@ class HttpRequest
                 return str_replace($this->getEnv('DOCUMENT_ROOT'), '', $this->getEnv('SCRIPT_FILENAME'));
                 break;
             case 'CGI_MODE':
-                return (PHP_SAPI === 'cgi');
+                return PHP_SAPI === 'cgi';
                 break;
             case 'HTTP_BASE':
                 $host = $this->getEnv('HTTP_HOST');
@@ -584,7 +584,7 @@ class HttpRequest
             arsort($types, SORT_NUMERIC);
         }
 
-        return($types);
+        return $types;
     }
 
     /**
@@ -613,7 +613,7 @@ class HttpRequest
             arsort($languages, SORT_NUMERIC);
         }
 
-        return($languages);
+        return $languages;
     }
 
     /**

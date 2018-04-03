@@ -344,7 +344,7 @@ class Metagen
      */
     protected static function nonEmptyString($var)
     {
-        return (strlen($var) > 0);
+        return strlen($var) > 0;
     }
 
     /**

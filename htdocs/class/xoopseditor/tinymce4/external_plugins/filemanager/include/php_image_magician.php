@@ -220,7 +220,7 @@ class imageLib
     # Notes:
     #
     {
-    if (! $this->testGDInstalled()) { if ($this->debug) { throw new Exception('The GD Library is not installed.'); } throw new Exception(); };
+    if (! $this->testGDInstalled()) { if ($this->debug) { throw new Exception('The GD Library is not installed.'); } throw new Exception(); }
 
     $this->initialise();
 
@@ -325,7 +325,7 @@ class imageLib
     $option = $this->prepOption($option);
 
     // *** Make sure the file passed in is valid
-    if (! $this->image) { if ($this->debug) { throw new Exception('file ' . $this->getFileName() . ' is missing or invalid'); } throw new Exception(); };
+    if (! $this->image) { if ($this->debug) { throw new Exception('file ' . $this->getFileName() . ' is missing or invalid'); } throw new Exception(); }
 
     // *** Get optimal width and height - based on $option
     $dimensionsArray = $this->getDimensions($newWidth, $newHeight, $option);
@@ -393,7 +393,7 @@ class imageLib
   {
 
     // *** Make sure the file passed in is valid
-    if (! $this->image) { if ($this->debug) { throw new Exception('file ' . $this->getFileName() . ' is missing or invalid'); } throw new Exception(); };
+    if (! $this->image) { if ($this->debug) { throw new Exception('file ' . $this->getFileName() . ' is missing or invalid'); } throw new Exception(); }
 
     $this->imageResized = $this->image;
     $this->crop($this->width, $this->height, $newWidth, $newHeight, $cropPos);
@@ -1130,9 +1130,9 @@ class imageLib
     if (! $this->debug || ! $debug) { $debug = false; }
 
     // *** Check all is good - check the EXIF library exists and the file exists, too.
-    if (! $this->testEXIFInstalled()) { if ($debug) { throw new Exception('The EXIF Library is not installed.'); } return []; };
-    if (! file_exists($this->fileName)) { if ($debug) { throw new Exception('Image not found.'); } return []; };
-    if ($this->fileExtension !== '.jpg') { if ($debug) { throw new Exception('Metadata not supported for this image type.'); } return []; };
+    if (! $this->testEXIFInstalled()) { if ($debug) { throw new Exception('The EXIF Library is not installed.'); } return []; }
+    if (! file_exists($this->fileName)) { if ($debug) { throw new Exception('Image not found.'); } return []; }
+    if ($this->fileExtension !== '.jpg') { if ($debug) { throw new Exception('Metadata not supported for this image type.'); } return []; }
     $exifData = exif_read_data($this->fileName, 'IFD0');
 
     // *** Format the apperture value
@@ -1741,7 +1741,7 @@ class imageLib
   function checkStringStartsWith($needle, $haystack)
   # Check if a string starts with a specific pattern
   {
-    return (substr($haystack, 0, strlen($needle)) === $needle);
+    return substr($haystack, 0, strlen($needle)) === $needle;
   }
 
 ## --------------------------------------------------------
@@ -2653,7 +2653,7 @@ class imageLib
 
         case 'tr':
           $width = $this->width - $assetWidth - $padding;
-          $height = 0 + $padding; ;
+          $height = 0 + $padding; 
           break;
 
         case 'l':
@@ -2781,7 +2781,7 @@ class imageLib
     #
     {
 
-    if (! file_exists($file) && ! $this->checkStringStartsWith('http://', $file)) { if ($this->debug) { throw new Exception('Image not found.'); } throw new Exception(); };
+    if (! file_exists($file) && ! $this->checkStringStartsWith('http://', $file)) { if ($this->debug) { throw new Exception('Image not found.'); } throw new Exception(); }
 
         // *** Get extension
         $extension = strrchr($file, '.');

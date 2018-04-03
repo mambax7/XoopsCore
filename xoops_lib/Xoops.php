@@ -409,7 +409,7 @@ class Xoops
      */
     public function url($url)
     {
-        return (strpos($url, '://') !== false ? $url : $this->path($url, true));
+        return strpos($url, '://') !== false ? $url : $this->path($url, true);
     }
 
     /**

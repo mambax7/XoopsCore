@@ -96,7 +96,7 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
         if ($rows === false) {
             return false;
         }
-        return ($rows > 0);
+        return $rows > 0;
     }
 
     /**

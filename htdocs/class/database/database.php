@@ -25,7 +25,7 @@
  * @abstract
  * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
  */
-abstract class XoopsDatabase
+abstract class AbstractXoopsDatabase
 {
     /**
      * Database connection

@@ -155,6 +155,6 @@ class TableLoad
 
         $count = Yaml::save($rows, $yamlFile);
 
-        return ($count !== false);
+        return $count !== false;
     }
 }

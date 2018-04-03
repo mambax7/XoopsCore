@@ -4,8 +4,8 @@ class upgrade_2016 extends xoopsUpgrade
 {
     function isApplied()
     {
-        return ( /*$this->check_file_patch() &&*/
-        $this->check_auth_db());
+        return  /*$this->check_file_patch() &&*/
+        $this->check_auth_db();
     }
 
     function apply()

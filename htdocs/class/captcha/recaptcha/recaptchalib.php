@@ -179,11 +179,11 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
     $response = _recaptcha_http_post(RECAPTCHA_VERIFY_SERVER,
 		'/recaptcha/api/verify',
 		[
-		    'privatekey' => $privkey,
+    'privatekey' => $privkey,
 		    'remoteip' => $remoteip,
 		    'challenge' => $challenge,
 		    'response' => $response,
-		] + $extra_params);
+] + $extra_params);
 
     $answers = explode("\n", $response[1]);
     $recaptcha_response = new ReCaptchaResponse();
@@ -209,7 +209,10 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
 function recaptcha_get_signup_url($domain = null, $appname = null)
 {
     return 'https://www.google.com/recaptcha/admin/create?' . _recaptcha_qsencode(
-        ['domains' => $domain, 'app' => $appname]);
+        [
+            'domains' => $domain,
+            'app' => $appname
+        ]);
 }
 
 /**
@@ -301,5 +304,11 @@ function recaptcha_mailhide_html($pubkey, $privkey, $email)
     $emailparts = _recaptcha_mailhide_email_parts($email);
     $url = recaptcha_mailhide_url($pubkey, $privkey, $email);
 
-    return htmlentities($emailparts[0]) . "<a href='" . htmlentities($url) . "' onclick=\"window.open('" . htmlentities($url) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities($emailparts[1]);
+    return htmlentities($emailparts[0]) . "<a href='" . htmlentities(
+        $url
+    ) . "' onclick=\"window.open('" . htmlentities(
+        $url
+    ) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities(
+        $emailparts[1]
+    );
 }

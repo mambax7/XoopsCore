@@ -2,6 +2,8 @@
 
 namespace XoopsConsole\Commands;
 
+use Kint;
+use Xoops;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,11 +21,12 @@ class Utf8mb4ModuleCommand extends Command
                 new InputArgument('module', InputArgument::REQUIRED, 'Module directory name'),
             ])
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Show but do not execute DDL.')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>utf8mb4-module</info> command updates the tables that are owned by an installed module
 to use MySQL's <info>utf8mb4</info> character set, and <info>utf8mb4_unicode_ci</info> collation.
 EOT
-             );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,7 +40,7 @@ EOT
         }
 
         $output->writeln(sprintf('Updating %s tables', $dirname));
-        $xoops = \Xoops::getInstance();
+        $xoops = Xoops::getInstance();
         $module = $xoops->getModuleByDirname($dirname);
         if ($module === false) {
             $output->writeln(sprintf('<error>%s is not an installed module!</error>', $dirname));
@@ -89,7 +92,7 @@ EOT
                         $xoops->db()->errorCode(),
                         implode(' - ', $xoops->db()->errorInfo())
                     ));
-                    \Kint::dump($xoops->db()->errorInfo());
+                    Kint::dump($xoops->db()->errorInfo());
                 }
             }
         }

@@ -38,6 +38,6 @@ class SubSet extends ListAbstract
             $subset = array_intersect_key($list, $keys);
             return $subset;
         }
-        return($list);
+        return $list;
     }
 }

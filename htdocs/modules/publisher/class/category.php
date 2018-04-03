@@ -72,7 +72,7 @@ class PublisherCategory extends XoopsObject
      */
     public function notLoaded()
     {
-        return ($this->getVar('categoryid') === -1);
+        return $this->getVar('categoryid') === -1;
     }
 
     /**

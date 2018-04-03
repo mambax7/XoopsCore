@@ -132,7 +132,7 @@ class PathStuffController
                 }
             }
         }
-        return ( $validPaths && $validPerms );
+        return  $validPaths && $validPerms ;
     }
 
     function checkPath($PATH = '')

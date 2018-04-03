@@ -76,7 +76,7 @@ class PluginsManager
                 if (! $object = $handler->getLC($listener, $caller)) {
                     if (! $handler->addNew($listener, $caller)) {
                         $ret = false;
-                    };
+                    }
                 }
             }
         }

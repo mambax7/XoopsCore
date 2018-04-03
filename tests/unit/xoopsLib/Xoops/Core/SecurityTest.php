@@ -173,7 +173,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->checkReferer(0);
         $this->assertTrue($value);
 
-        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url'); ;
+        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url'); 
         $value = $instance->checkReferer();
         $this->assertTrue($value);
 

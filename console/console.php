@@ -25,7 +25,7 @@ spl_autoload_register(function ($class) {
 date_default_timezone_set('UTC');
 //set_time_limit(0);
 
-$configs = (include 'config.php');
+$configs = (include __DIR__.'/config.php');
 
 $mainfile = $configs->get('mainfile');
 if (file_exists($mainfile)) {

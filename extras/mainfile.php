@@ -14,6 +14,10 @@
  * Typical writable permission would be 665 (user read/write, group read/write, other read)
  * If problems persist, escalate permission to 777 (world read/write/execute) as a last resort.
  */
-if (! defined('XOOPS_INSTALL')) {
-    header('Location: install/index.php');
+if (! defined(
+    'XOOPS_INSTALL'
+)) {
+    header(
+        'Location: install/index.php'
+    );
 }

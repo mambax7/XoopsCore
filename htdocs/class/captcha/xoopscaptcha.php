@@ -25,6 +25,7 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
+use XoopsBaseConfig;
 class xoopscaptcha
 {
     /**
@@ -35,7 +36,7 @@ class xoopscaptcha
     /**
      * @var XoopsCaptchaMethod
      */
-    public $handler;
+    public $xoopsCaptchaMethod;
 
     /**
      * @var string
@@ -73,8 +74,8 @@ class xoopscaptcha
     protected function __construct()
     {
         // Load static configurations
-		$xoops_root_path = \XoopsBaseConfig::get('root-path');
-		$xoops_var_path = \XoopsBaseConfig::get('var-path');
+		$xoops_root_path = XoopsBaseConfig::get('root-path');
+		$xoops_var_path = XoopsBaseConfig::get('var-path');
         $this->path_basic = $xoops_root_path . '/class/captcha';
         $this->path_plugin = $xoops_root_path . '/Frameworks/captcha';
         $this->configPath = $xoops_var_path . '/configs/';
@@ -104,15 +105,15 @@ class xoopscaptcha
      *
      * @return array
      */
-    function loadConfig( $name = 'config') {
+    function loadConfig($name = 'config') {
         if ( $name === 'config' ) {
             $filename = 'captcha.config';
         } else {
             $filename = 'captcha.config.' . $name;
         }
         if ( ! $config = $this->readConfig($filename) ) {
-            $config = $this->loadBasicConfig( $name );
-            $this->writeConfig($filename, $config );
+            $config = $this->loadBasicConfig($name);
+            $this->writeConfig($filename, $config);
         }
 
         return $config;
@@ -167,7 +168,7 @@ class xoopscaptcha
     {
         $path_file = $this->configPath . $filename . '.php';
         $file = XoopsFile::getHandler('file', $path_file);
-        return $file->write( 'return ' . var_export($config, true) . ';');
+        return $file->write('return ' . var_export($config, true) . ';');
     }
 
     /**
@@ -190,10 +191,10 @@ class xoopscaptcha
             $this->active = false;
             return $this->active;
         }
-        if (! isset($this->handler)) {
+        if (! isset($this->xoopsCaptchaMethod)) {
             $this->loadHandler();
         }
-        $this->active = isset($this->handler);
+        $this->active = isset($this->xoopsCaptchaMethod);
         return $this->active;
     }
 
@@ -208,10 +209,10 @@ class xoopscaptcha
     {
         $name = ! empty($name) ? $name : (empty($this->config['mode']) ? 'text' : $this->config['mode']);
         $class = 'XoopsCaptcha' . ucfirst($name);
-        if (! empty($this->handler) && get_class($this->handler) === $class) {
-            return $this->handler;
+        if (! empty($this->xoopsCaptchaMethod) && get_class($this->xoopsCaptchaMethod) === $class) {
+            return $this->xoopsCaptchaMethod;
         }
-        $this->handler = null;
+        $this->xoopsCaptchaMethod = null;
         if (XoopsLoad::fileExists($file = $this->path_basic . '/' . $name . '.php')) {
             require_once $file;
         } else {
@@ -227,10 +228,10 @@ class xoopscaptcha
         /* @var $handler XoopsCaptchaMethod */
         $handler = new $class($this);
         if ($handler->isActive()) {
-            $this->handler = $handler;
-            $this->handler->loadConfig($name);
+            $this->xoopsCaptchaMethod = $handler;
+            $this->xoopsCaptchaMethod->loadConfig($name);
         }
-        return $this->handler;
+        return $this->xoopsCaptchaMethod;
     }
 
     /**
@@ -297,7 +298,7 @@ class xoopscaptcha
                     $this->message[] = XoopsLocale::E_TO_MANY_ATTEMPTS;
                     // Verify the code
                 } else {
-                    $is_valid = $this->handler->verify($sessionName);
+                    $is_valid = $this->xoopsCaptchaMethod->verify($sessionName);
                 }
             }
         }
@@ -345,7 +346,7 @@ class xoopscaptcha
     public function destroyGarbage($clearSession = false)
     {
         $this->loadHandler();
-        $this->handler->destroyGarbage();
+        $this->xoopsCaptchaMethod->destroyGarbage();
 
         if ($clearSession) {
             foreach ($this->config as $k => $config ) {
@@ -396,7 +397,7 @@ class xoopscaptcha
         if (! $this->active || empty($this->config['name'])) {
             return '';
         }
-        return $this->handler->renderValidationJS();
+        return $this->xoopsCaptchaMethod->renderValidationJS();
     }
 
     /**
@@ -408,7 +409,7 @@ class xoopscaptcha
      */
     public function setCode($code = null)
     {
-        $code = ($code === null) ? $this->handler->getCode() : $code;
+        $code = ($code === null) ? $this->xoopsCaptchaMethod->getCode() : $code;
         if (! empty($code)) {
             $_SESSION[$this->name . '_code'] = $code;
             return true;
@@ -423,7 +424,7 @@ class xoopscaptcha
      */
     public function loadForm()
     {
-        $form = $this->handler->render();
+        $form = $this->xoopsCaptchaMethod->render();
         $this->setCode();
         return $form;
     }

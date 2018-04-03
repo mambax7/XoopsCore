@@ -280,9 +280,9 @@ public function interceptAfterUpload($str) {
 	protected function logDebug($function, $msg, $htmlComment = true) {
 		$output = "[DEBUG] [${function}] ${msg}";
 		if ($htmlComment) {
-			echo("<!-- ${output} -->\r\n");
+			echo "<!-- ${output} -->\r\n";
 		} else {
-			echo("${output}\r\n");
+			echo "${output}\r\n";
 		}
 	}
 
@@ -394,7 +394,7 @@ public function interceptAfterUpload($str) {
 	private function warning($msg = '') {
 		$this->cleanup();
 		if ($msg !== '')
-		echo('WARNING: ' . $msg . "\n");
+		echo 'WARNING: ' . $msg . "\n";
 		echo $this->appletparams['stringUploadSuccess'] . "\n";
 		exit;
 	}

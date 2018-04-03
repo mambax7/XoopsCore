@@ -340,7 +340,11 @@ class tar
                 $header .= str_pad('ustar', 6, chr(32));
                 $header .= chr(32) . chr(0);
                 $header .= str_pad($information['user_name'], 32, chr(0)); // How do I get a file's user name from PHP?
-                $header .= str_pad($information['group_name'], 32, chr(0)); // How do I get a file's group name from PHP?
+                $header .= str_pad(
+                    $information['group_name'],
+                    32,
+                    chr(0)
+                ); // How do I get a file's group name from PHP?
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 155);

@@ -374,11 +374,11 @@ class Admin
     public static function menuIconPath($image)
     {
         if (static::isXng()) {
-            return($image);
+            return $image;
         }
             $path = '../../Frameworks/moduleclasses/icons/32/';
 
-            return($path . $image);
+            return $path . $image;
 
     }
 
@@ -419,7 +419,7 @@ class Admin
             $path = '/Frameworks/moduleclasses/icons/' . $path;
         }
 
-        return(XOOPS_URL . $path . $name);
+        return XOOPS_URL . $path . $name;
     }
 
     /**

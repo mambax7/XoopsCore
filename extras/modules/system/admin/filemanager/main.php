@@ -148,7 +148,11 @@ switch ($op) {
                             //Chmod
                             $file_arr['chmod'] = substr($folder->perms(), 1);
 
-                            $file_arr['chmod'] = modify_chmod($file_arr['chmod'], $file_arr['path_file'], $count_file);
+                            $file_arr['chmod'] = modify_chmod(
+                                $file_arr['chmod'],
+                                $file_arr['path_file'],
+                                $count_file
+                            );
 
                             if ($extension_verif === 'picture') {
                                 list($width, $height) = getimagesize($root . $file);
@@ -201,7 +205,11 @@ switch ($op) {
                     if (rename($old_file, $new_file)) {
                         $xoops->redirect('admin.php?fct=filemanager', 2, XoopsLocale::S_DATABASE_UPDATED);
                     } else {
-                        $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME);
+                        $xoops->redirect(
+                            'admin.php?fct=filemanager',
+                            2,
+                            _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME
+                        );
                     }
                 } else {
                     $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_DELETE);

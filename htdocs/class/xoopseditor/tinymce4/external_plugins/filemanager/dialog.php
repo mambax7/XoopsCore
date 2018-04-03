@@ -326,7 +326,7 @@ $get_params = http_build_query([
 	<input type="hidden" id="lang_paste_here" value="<?php echo lang_Paste_Here; ?>" />
 	<input type="hidden" id="lang_paste_confirm" value="<?php echo lang_Paste_Confirm; ?>" />
 	<input type="hidden" id="lang_files_on_clipboard" value="<?php echo lang_Files_ON_Clipboard; ?>" />
-	<input type="hidden" id="clipboard" value="<?php echo ((isset($_SESSION['RF']['clipboard']['path']) && trim($_SESSION['RF']['clipboard']['path']) !== null) ? 1 : 0); ?>" />
+	<input type="hidden" id="clipboard" value="<?php echo (isset($_SESSION['RF']['clipboard']['path']) && trim($_SESSION['RF']['clipboard']['path']) !== null) ? 1 : 0; ?>" />
 	<input type="hidden" id="lang_clear_clipboard_confirm" value="<?php echo lang_Clear_Clipboard_Confirm; ?>" />
 	<input type="hidden" id="lang_file_info" value="<?php echo fix_strtoupper(lang_File_info); ?>" />
 	<input type="hidden" id="lang_edit_image" value="<?php echo lang_Edit_image; ?>" />
@@ -498,7 +498,7 @@ $files = array_merge([$prev_folder], [$current_folder], $sorted);
 			    <input id="select-type-5" name="radio-sort" type="radio" data-item="ff-item-type-5" class="hide"  />
 			    <label id="ff-item-type-5" title="<?php echo lang_Music; ?>" for="select-type-5" class="tip btn ff-label-type-5"><i class="icon-music"></i></label>
 			    <?php } ?>
-			    <input accesskey="f" type="text" class="filter-input <?php echo (($_GET['type'] !== 1 && $_GET['type'] !== 3) ? '' : 'filter-input-notype'); ?>" id="filter-input" name="filter" placeholder="<?php echo fix_strtolower(lang_Text_filter); ?>..." value="<?php echo $filter; ?>"/><?php if($n_files > $file_number_limit_js){ ?><label id="filter" class="btn"><i class="icon-play"></i></label><?php } ?>
+			    <input accesskey="f" type="text" class="filter-input <?php echo ($_GET['type'] !== 1 && $_GET['type'] !== 3) ? '' : 'filter-input-notype'; ?>" id="filter-input" name="filter" placeholder="<?php echo fix_strtolower(lang_Text_filter); ?>..." value="<?php echo $filter; ?>"/><?php if($n_files > $file_number_limit_js){ ?><label id="filter" class="btn"><i class="icon-play"></i></label><?php } ?>
 			    
 			    <input id="select-type-all" name="radio-sort" type="radio" data-item="ff-item-type-all" class="hide"  />
 			     <label id="ff-item-type-all" title="<?php echo lang_All; ?>" <?php if($_GET['type'] === 1 || $_GET['type'] === 3){ ?>style="visibility: hidden;" <?php } ?> data-item="ff-item-type-all" for="select-type-all" style="margin-rigth:0px;" class="tip btn btn-inverse ff-label-type-all"><i class="icon-align-justify icon-white"></i></label>
@@ -811,7 +811,7 @@ $files = array_merge([$prev_folder], [$current_folder], $sorted);
 				    <a class="tip-right preview" title="<?php echo lang_Preview?>" data-url="<?php echo $src; ?>" data-toggle="lightbox" href="#previewLightbox"><i class=" icon-eye-open"></i></a>
 				    <?php }elseif(($is_video || $is_audio) && in_array($extension_lower, $jplayer_ext, true)){ ?>
 				    <a class="tip-right modalAV <?php if($is_audio){ echo 'audio'; }else{ echo 'video'; } ?>"
-					title="<?php echo lang_Preview?>" data-url="ajax_calls.php?action=media_preview&title=<?php echo $filename; ?>&file=<?php echo $current_path . $rfm_subfolder . $subdir . $file; ; ?>"
+					title="<?php echo lang_Preview?>" data-url="ajax_calls.php?action=media_preview&title=<?php echo $filename; ?>&file=<?php echo $current_path . $rfm_subfolder . $subdir . $file;  ?>"
 					href="javascript:void('');" ><i class=" icon-eye-open"></i></a>
 				    <?php }else{ ?>
 				    <a class="preview disabled"><i class="icon-eye-open icon-white"></i></a>

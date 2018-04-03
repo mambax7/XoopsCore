@@ -2,6 +2,8 @@
 
 namespace XoopsConsole\Commands;
 
+use Xoops\Core\Cache\CacheManager;
+use XoopsBaseConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,11 +19,12 @@ class CiBootstrapCommand extends Command
         $this->setName('ci-bootstrap')
             ->setDescription('Create a mainfile for CI processes')
             ->setDefinition([])
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>ci-bootstrap</info> command writes a basic mainfile for use in automation
 of the travis-ci continuous integration environment.
 EOT
-             );
+            );
     }
 
     /**
@@ -141,8 +144,8 @@ EOT;
 
         if (! class_exists('\XoopsBaseConfig', false)) {
             include $baseDir . '/htdocs/class/XoopsBaseConfig.php';
-            \XoopsBaseConfig::getInstance($configFile);
+            XoopsBaseConfig::getInstance($configFile);
         }
-        \Xoops\Core\Cache\CacheManager::createDefaultConfig();
+        CacheManager::createDefaultConfig();
     }
 }

@@ -139,7 +139,7 @@ switch ($op) {
                 $criteria->add(new Criteria('tplset_name', $tplset));
                 $tplsets_arr = $tplset_handler->getObjects();
                 $tcount = $tplset_handler->getCount();
-                ;
+                
                 $installed_mods = $tpltpl_handler->getModuleTplCount($tplset);
 
                 //all templates or only one template

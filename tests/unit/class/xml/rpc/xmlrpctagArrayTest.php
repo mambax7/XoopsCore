@@ -22,7 +22,7 @@ class XoopsXmlRpcArrayTest extends \PHPUnit\Framework\TestCase
         $value = $instance->render();
         $this->assertSame('<value><array><data></data></array></value>', $value);
 
-        $instance->add(clone($instance));
+        $instance->add(clone $instance);
         $value = $instance->render();
         $this->assertSame('<value><array><data><value><array><data></data></array></value></data></array></value>', $value);
     }

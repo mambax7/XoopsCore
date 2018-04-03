@@ -873,7 +873,7 @@ class Tables
             ];
 
             $tableDef['columns'][] = $columnDef;
-        };
+        }
 
         $sql = 'SELECT `INDEX_NAME`, `SEQ_IN_INDEX`, `NON_UNIQUE`, ';
         $sql .= ' `COLUMN_NAME`, `SUB_PART` ';
@@ -905,7 +905,7 @@ class Tables
                     $keyCols .= ' (' . $key['SUB_PART'] . ')';
                 }
             }
-        };
+        }
         if (! empty($lastKey)) {
             $tableDef['keys'][$lastKey]['columns'] = $keyCols;
             $tableDef['keys'][$lastKey]['unique'] = $keyUnique;

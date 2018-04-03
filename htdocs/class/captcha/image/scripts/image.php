@@ -26,7 +26,7 @@
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 
-require_once 'imageclass.php';
+require_once __DIR__.'/imageclass.php';
 
 Xoops::getInstance()->disableErrorReporting();
 $image_handler = new XoopsCaptchaImageHandler();

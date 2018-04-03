@@ -238,7 +238,7 @@ class Connection extends \Doctrine\DBAL\Connection
         if ($this->safe || $this->force) {
             if (! $this->transactionActive) {
                 $this->force = false;
-            };
+            }
             $events->triggerEvent('core.database.query.start');
             try {
                 $result = parent::executeUpdate($query, $params, $types);

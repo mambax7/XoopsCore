@@ -67,7 +67,12 @@ if ($op === 'dologin') {
         $_SESSION['xoopsUserId'] = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
         if (! empty($xoopsConfig['use_ssl'])) {
-            xoops_confirm([$xoopsConfig['sslpost_name'] => session_id()], XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN, XoopsLocale::A_LOGIN);
+            xoops_confirm(
+                [$xoopsConfig['sslpost_name'] => session_id()],
+                XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin',
+                XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN,
+                XoopsLocale::A_LOGIN
+            );
         } else {
             echo sprintf(XoopsLocale::SF_THANK_YOU_FOR_LOGGING_IN, $user->getVar('uname'));
             echo '<div style="text-align:center;"><input value="' . XoopsLocale::A_CLOSE . '" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';

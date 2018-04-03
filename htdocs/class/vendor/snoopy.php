@@ -1059,7 +1059,7 @@ class snoopy
 
     function _disconnect($fp)
     {
-        return (fclose($fp));
+        return fclose($fp);
     }
 
     /*======================================================================*\

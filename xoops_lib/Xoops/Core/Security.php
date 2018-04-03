@@ -138,7 +138,7 @@ class Security
      */
     public function filterToken($token)
     {
-        return (! empty($token['expire']) && $token['expire'] >= time());
+        return ! empty($token['expire']) && $token['expire'] >= time();
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace XoopsConsole\Commands;
 
+use SystemModule;
+use XoopsLoad;
+use Xoops;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,27 +19,28 @@ class UpdateModuleCommand extends Command
             ->setDescription('Update a module')
             ->setDefinition([
                 new InputArgument('module', InputArgument::REQUIRED, 'Module directory name'),
-            ])->setHelp(<<<EOT
+            ])->setHelp(
+                <<<EOT
 The <info>update-module</info> command updates a currently installed module.
 
 This can be especially useful if the module configuration has changed, and
 it is interfering with normal online operation.
 EOT
-             );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $module = $input->getArgument('module');
         $output->writeln(sprintf('Updating %s', $module));
-        $xoops = \Xoops::getInstance();
+        $xoops = Xoops::getInstance();
         if ($xoops->getModuleByDirname($module) === false) {
             $output->writeln(sprintf('<error>%s is not an installed module!</error>', $module));
             return;
         }
         $xoops->setTpl(new XoopsTpl());
-        \XoopsLoad::load('module', 'system');
-        $sysmod = new \SystemModule();
+        XoopsLoad::load('module', 'system');
+        $sysmod = new SystemModule();
         $result = $sysmod->update($module);
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {

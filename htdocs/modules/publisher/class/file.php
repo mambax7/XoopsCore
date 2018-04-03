@@ -175,7 +175,7 @@ class PublisherFile extends XoopsObject
      */
     public function notLoaded()
     {
-        return ($this->getVar('itemid') === 0);
+        return $this->getVar('itemid') === 0;
     }
 
     /**

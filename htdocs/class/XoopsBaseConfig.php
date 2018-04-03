@@ -9,6 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use Exception;
+use XoopsLoad;
 use Xmf\Yaml;
 
 /**
@@ -43,23 +45,23 @@ class XoopsBaseConfig
         if (is_string($config)) {
             $yamlString = file_get_contents($config);
             if ($yamlString === false) {
-                throw new \Exception('XoopsBaseConfig failed to load configuration.');
+                throw new Exception('XoopsBaseConfig failed to load configuration.');
             }
             $loaderPath = $this->extractLibPath($yamlString) . '/vendor/autoload.php';
             if (file_exists($loaderPath)) {
                 include_once $loaderPath;
             }
             self::$configs = Yaml::loadWrapped($yamlString);
-            \XoopsLoad::startAutoloader(self::$configs['lib-path']);
+            XoopsLoad::startAutoloader(self::$configs['lib-path']);
         } elseif (is_array($config)) {
             self::$configs = $config;
-            \XoopsLoad::startAutoloader(self::$configs['lib-path']);
+            XoopsLoad::startAutoloader(self::$configs['lib-path']);
         }
         if (! isset(self::$configs['lib-path'])) {
-            throw new \Exception('XoopsBaseConfig lib-path not defined.');
+            throw new Exception('XoopsBaseConfig lib-path not defined.');
             return;
         }
-        \XoopsLoad::startAutoloader(self::$configs['lib-path']);
+        XoopsLoad::startAutoloader(self::$configs['lib-path']);
     }
 
     /**
@@ -80,7 +82,7 @@ class XoopsBaseConfig
         }
 
         if ($instance === false || empty(self::$configs)) {
-            throw new \Exception('XoopsBaseConfig failed.');
+            throw new Exception('XoopsBaseConfig failed.');
         }
         return $instance;
     }

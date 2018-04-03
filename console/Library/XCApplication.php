@@ -2,6 +2,7 @@
 
 namespace XoopsConsole\Library;
 
+use Symfony\Component\Console\Application;
 /**
  * A really simple container
  *
@@ -12,10 +13,10 @@ namespace XoopsConsole\Library;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
-class XCApplication extends \Symfony\Component\Console\Application
+class XCApplication extends Application
 {
     /**
      * @var SimpleContainer
      */
-    public $XContainer = null;
+    public $simpleContainer = null;
 }

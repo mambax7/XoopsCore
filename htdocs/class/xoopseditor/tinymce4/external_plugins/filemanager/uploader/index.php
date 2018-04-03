@@ -47,7 +47,7 @@ function handle_uploaded_files($juploadPhpSupportClass, $files) {
 	return "<P>We are in the 'handle_uploaded_files' callback function, in the index.php script. To avoid double coding, we "
 		. 'just call the default behavior of the JUpload PHP class. Just replace this by your code...</P>'
 		. $juploadPhpSupportClass->defaultAfterUploadManagement();
-		;
+		
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

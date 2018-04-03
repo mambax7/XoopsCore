@@ -9,6 +9,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use XoopsBaseConfig;
+use Xoops;
 use Xoops\Core\Database\Factory;
 
 /**
@@ -45,7 +47,7 @@ class XoopsDatabaseFactory extends Factory
     {
         static $legacy;
 
-        $file = \XoopsBaseConfig::get('root-path') . '/class/database/mysqldatabase.php';
+        $file = XoopsBaseConfig::get('root-path') . '/class/database/mysqldatabase.php';
         if (! isset($legacy) && file_exists($file)) {
             require_once $file;
             if (! defined('XOOPS_DB_PROXY')) {
@@ -53,10 +55,10 @@ class XoopsDatabaseFactory extends Factory
             } else {
                 $class = 'XoopsMysqlDatabaseProxy';
             }
-            \Xoops::getInstance()->events()->triggerEvent('core.class.database.databasefactory.connection', [&$class]);
+            Xoops::getInstance()->events()->triggerEvent('core.class.database.databasefactory.connection', [&$class]);
             $legacy = new $class();
-            $legacy->setPrefix(\XoopsBaseConfig::get('db-prefix'));
-            $legacy->conn = \Xoops\Core\Database\Factory::getConnection();
+            $legacy->setPrefix(XoopsBaseConfig::get('db-prefix'));
+            $legacy->conn = Factory::getConnection();
         }
         if ($legacy->conn === null) {
             trigger_error('notrace:Unable to connect to database', E_USER_ERROR);

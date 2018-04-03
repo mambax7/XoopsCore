@@ -114,7 +114,7 @@ class IPAddress
         switch ($this->ipVersion()) {
             case 4:
                 $mask = (-1) << (32 - $netMask4);
-                return ((ip2long($this->ip) & $mask) === (ip2long($match->asReadable()) & $mask));
+                return (ip2long($this->ip) & $mask) === (ip2long($match->asReadable()) & $mask);
                 break;
             case 6:
                 $ipBits = $this->asBinaryString($this);

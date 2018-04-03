@@ -266,7 +266,7 @@ class XoopsFolderHandler
     {
         $path = str_replace('\\', '/', $path);
         $match = preg_match('/^(\/|[A-Z]:\/|\/\/)/', $path);
-        return ($match === 1);
+        return $match === 1;
     }
 
     /**
@@ -370,7 +370,7 @@ class XoopsFolderHandler
         } else {
             $return = strpos($dir, $current);
         }
-        return ($return !== false);
+        return $return !== false;
     }
 
     /**

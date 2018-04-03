@@ -8,8 +8,8 @@ class upgrade_2014 extends xoopsUpgrade
 
     function isApplied()
     {
-        return ( /*$this->check_0523patch() &&*/
-        $this->check_auth_db());
+        return  /*$this->check_0523patch() &&*/
+        $this->check_auth_db();
     }
 
     function apply()

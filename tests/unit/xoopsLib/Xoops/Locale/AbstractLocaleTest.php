@@ -36,7 +36,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $x = $instance::setLocale();
         if ($x === false) {
-            $this->markTestSkipped('setlocale() returned false'); ;
+            $this->markTestSkipped('setlocale() returned false'); 
         }
         $y = $instance::getLocale();
         $this->assertSame($y, $x);

@@ -253,7 +253,7 @@ class PublisherMetagen
      */
     static public function emptyString($var)
     {
-        return (strlen($var) > 0);
+        return strlen($var) > 0;
     }
 
     /**

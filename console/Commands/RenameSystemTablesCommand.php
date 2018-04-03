@@ -2,6 +2,7 @@
 
 namespace XoopsConsole\Commands;
 
+use Xmf\Database\Tables;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,11 +15,12 @@ class RenameSystemTablesCommand extends Command
         $this->setName('rename-system-tables')
             ->setDescription('Update the XOOPS Kernel tables')
             ->addOption('undo', null, InputOption::VALUE_NONE, 'Revert to 2.5.x style names')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
 The <info>rename-system-tables</info> command updates the XOOPS kernel
 database tables that are managed by the system module.
 EOT
-             );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -48,7 +50,7 @@ EOT
             $undo = true;
         }
 
-        $migrate = new \Xmf\Database\Tables();
+        $migrate = new Tables();
 
         $renameTable = function ($existingName, $newName) use ($migrate) {
             $status = $migrate->useTable($newName);

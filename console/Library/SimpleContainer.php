@@ -2,6 +2,7 @@
 
 namespace XoopsConsole\Library;
 
+use ArrayObject;
 /**
  * A really simple container
  *
@@ -12,7 +13,7 @@ namespace XoopsConsole\Library;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
-class SimpleContainer extends \ArrayObject
+class SimpleContainer extends ArrayObject
 {
     /**
      * Retrieve an attribute value.

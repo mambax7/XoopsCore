@@ -24,6 +24,9 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
+use Xoops\Cache;
+use Xoops\Core\Lists\File;
+use XoopsBaseConfig;
 class XoopsCaptchaImageHandler
 {
     /**
@@ -69,12 +72,12 @@ class XoopsCaptchaImageHandler
     /**
      * @var XoopsCaptcha
      */
-    public $captcha_handler;
+    public $xoopsCaptcha;
 
     /**
      * @var object
      */
-    public $oImage;
+    public $object;
 
     /**
      * @var string
@@ -86,9 +89,9 @@ class XoopsCaptchaImageHandler
      */
     public function __construct()
     {
-        $this->captcha_handler = XoopsCaptcha::getInstance();
-        $this->config = $this->captcha_handler->loadConfig('image');
-        $this->xoops_root_path = \XoopsBaseConfig::get('root-path');
+        $this->xoopsCaptcha = XoopsCaptcha::getInstance();
+        $this->config = $this->xoopsCaptcha->loadConfig('image');
+        $this->xoops_root_path = XoopsBaseConfig::get('root-path');
     }
 
     /**
@@ -113,7 +116,10 @@ class XoopsCaptchaImageHandler
 
         if ($this->mode === 'bmp') {
             $this->config['num_chars'] = 4;
-            $this->code = mt_rand(pow(10, $this->config['num_chars'] - 1), (int) (str_pad('9', $this->config['num_chars'], '9')));
+            $this->code = mt_rand(
+                pow(10, $this->config['num_chars'] - 1),
+                (int) (str_pad('9', $this->config['num_chars'], '9'))
+            );
         } else {
             $raw_code = md5(uniqid(mt_rand(), 1));
             if (! empty($this->config['skip_characters'])) {
@@ -126,7 +132,7 @@ class XoopsCaptchaImageHandler
                 $this->code = strtoupper($this->code);
             }
         }
-        $this->captcha_handler->setCode($this->code);
+        $this->xoopsCaptcha->setCode($this->code);
         return true;
     }
 
@@ -160,18 +166,18 @@ class XoopsCaptchaImageHandler
      */
     public function getList($name, $extension = '')
     {
-        if ($items = \Xoops\Cache::read("captcha_captcha_{$name}")) {
+        if ($items = Cache::read("captcha_captcha_{$name}")) {
             return $items;
         }
-        ;
+        
         $file_path = $this->xoops_root_path . "/class/captcha/image/{$name}";
-        $files = \Xoops\Core\Lists\File::getList($file_path);
+        $files = File::getList($file_path);
         foreach ($files as $item) {
             if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
                 $items[] = $item;
             }
         }
-        \Xoops\Cache::write("captcha_captcha_{$name}", $items);
+        Cache::write("captcha_captcha_{$name}", $items);
         return $items;
     }
 
@@ -190,9 +196,9 @@ class XoopsCaptchaImageHandler
         $this->loadFont();
         $this->setImageSize();
 
-        $this->oImage = imagecreatetruecolor($this->width, $this->height);
-        $background = imagecolorallocate($this->oImage, 255, 255, 255);
-        imagefilledrectangle($this->oImage, 0, 0, $this->width, $this->height, $background);
+        $this->object = imagecreatetruecolor($this->width, $this->height);
+        $background = imagecolorallocate($this->object, 255, 255, 255);
+        imagefilledrectangle($this->object, 0, 0, $this->width, $this->height, $background);
         switch ($this->config['background_type']) {
             case 0:
                 $this->drawBars();
@@ -221,8 +227,8 @@ class XoopsCaptchaImageHandler
         $this->drawCode();
 
         header('Content-type: image/jpeg');
-        imagejpeg($this->oImage);
-        imagedestroy($this->oImage);
+        imagejpeg($this->object);
+        imagedestroy($this->object);
     }
 
     /**
@@ -275,7 +281,9 @@ class XoopsCaptchaImageHandler
     {
         $RandBackground = null;
         if ($backgrounds = $this->getList('backgrounds', '(gif|jpg|png)')) {
-            $RandBackground = $this->xoops_root_path . '/class/captcha/image/backgrounds/' . $backgrounds[array_rand($backgrounds)];
+            $RandBackground = $this->xoops_root_path . '/class/captcha/image/backgrounds/' . $backgrounds[array_rand(
+                $backgrounds
+            )];
         }
         return $RandBackground;
     }
@@ -300,7 +308,18 @@ class XoopsCaptchaImageHandler
             }
         }
         if (isset($BackgroundImage) && ! empty($BackgroundImage)) {
-            imagecopyresized($this->oImage, $BackgroundImage, 0, 0, 0, 0, imagesx($this->oImage), imagesy($this->oImage), imagesx($BackgroundImage), imagesy($BackgroundImage));
+            imagecopyresized(
+                $this->object,
+                $BackgroundImage,
+                0,
+                0,
+                0,
+                0,
+                imagesx($this->object),
+                imagesy($this->object),
+                imagesx($BackgroundImage),
+                imagesy($BackgroundImage)
+            );
             imagedestroy($BackgroundImage);
         } else {
             $this->drawBars();
@@ -314,7 +333,7 @@ class XoopsCaptchaImageHandler
     {
         for ($i = 0; $i < $this->config['num_chars']; ++$i) {
             // select random greyscale colour
-            $text_color = imagecolorallocate($this->oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
+            $text_color = imagecolorallocate($this->object, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
 
             // write text to image
             $Angle = mt_rand(10, 30);
@@ -333,7 +352,7 @@ class XoopsCaptchaImageHandler
             $posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
             imagefttext(
-                $this->oImage, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], []
+                $this->object, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], []
             );
         }
     }
@@ -344,8 +363,8 @@ class XoopsCaptchaImageHandler
     public function drawBorder()
     {
         $rgb = mt_rand(50, 150);
-        $border_color = imagecolorallocate($this->oImage, $rgb, $rgb, $rgb);
-        imagerectangle($this->oImage, 0, 0, $this->width - 1, $this->height - 1, $border_color);
+        $border_color = imagecolorallocate($this->object, $rgb, $rgb, $rgb);
+        imagerectangle($this->object, 0, 0, $this->width - 1, $this->height - 1, $border_color);
     }
 
     /**
@@ -354,8 +373,15 @@ class XoopsCaptchaImageHandler
     public function drawCircles()
     {
         for ($i = 1; $i <= $this->config['background_num']; ++$i) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imagefilledellipse($this->oImage, mt_rand(0, $this->width - 10), mt_rand(0, $this->height - 3), mt_rand(10, 20), mt_rand(20, 30), $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imagefilledellipse(
+                $this->object,
+                mt_rand(0, $this->width - 10),
+                mt_rand(0, $this->height - 3),
+                mt_rand(10, 20),
+                mt_rand(20, 30),
+                $randomcolor
+            );
         }
     }
 
@@ -365,8 +391,15 @@ class XoopsCaptchaImageHandler
     public function drawLines()
     {
         for ($i = 0; $i < $this->config['background_num']; ++$i) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imageline(
+                $this->object,
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                $randomcolor
+            );
         }
     }
 
@@ -376,8 +409,15 @@ class XoopsCaptchaImageHandler
     public function drawRectangles()
     {
         for ($i = 1; $i <= $this->config['background_num']; ++$i) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imagefilledrectangle($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imagefilledrectangle(
+                $this->object,
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                $randomcolor
+            );
         }
     }
 
@@ -387,13 +427,13 @@ class XoopsCaptchaImageHandler
     public function drawBars()
     {
         for ($i = 0; $i <= $this->height;) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, 0, $i, $this->width, $i, $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imageline($this->object, 0, $i, $this->width, $i, $randomcolor);
             $i = $i + 2.5;
         }
         for ($i = 0; $i <= $this->width;) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline($this->oImage, $i, 0, $i, $this->height, $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imageline($this->object, $i, 0, $i, $this->height, $randomcolor);
             $i = $i + 2.5;
         }
     }
@@ -404,8 +444,15 @@ class XoopsCaptchaImageHandler
     public function drawEllipses()
     {
         for ($i = 1; $i <= $this->config['background_num']; ++$i) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageellipse($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            imageellipse(
+                $this->object,
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                mt_rand(0, $this->width),
+                mt_rand(0, $this->height),
+                $randomcolor
+            );
         }
     }
 
@@ -417,13 +464,13 @@ class XoopsCaptchaImageHandler
     public function drawPolygons()
     {
         for ($i = 1; $i <= $this->config['background_num']; ++$i) {
-            $randomcolor = imagecolorallocate($this->oImage, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+            $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
             $coords = [];
             for ($j = 1; $j <= $this->config['polygon_point']; ++$j) {
                 $coords[] = mt_rand(0, $this->width);
                 $coords[] = mt_rand(0, $this->height);
             }
-            imagefilledpolygon($this->oImage, $coords, $this->config['polygon_point'], $randomcolor);
+            imagefilledpolygon($this->object, $coords, $this->config['polygon_point'], $randomcolor);
         }
     }
 
