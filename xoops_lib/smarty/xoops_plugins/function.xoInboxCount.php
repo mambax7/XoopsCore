@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-function smarty_function_xoInboxCount($params, &$smarty)
+function smarty_function_xoInboxCount($params, &$smarty): void
 {
     $xoops = Xoops::getInstance();
 

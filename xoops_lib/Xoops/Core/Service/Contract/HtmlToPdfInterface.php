@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ interface HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function startPdf($response);
+    public function startPdf(Response $response): void;
 
     /**
      * setPageOrientation - set page orientation.
@@ -39,7 +40,7 @@ interface HtmlToPdfInterface
      * @param Response $response        \Xoops\Core\Service\Response object
      * @param string   $pageOrientation page orientation, 'P' for portrait, 'L' for landscape
      */
-    public function setPageOrientation($response, $pageOrientation);
+    public function setPageOrientation(Response $response, string $pageOrientation): void;
 
     /**
      * setPageSize - set standard page size.
@@ -47,7 +48,7 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pageSize standard named page size, i.e. 'LETTER', 'A4', etc.
      */
-    public function setPageSize($response, $pageSize);
+    public function setPageSize(Response $response, string $pageSize): void;
 
     /**
      * setBaseUnit - set unit of measure for page size, margins, etc.
@@ -56,7 +57,7 @@ interface HtmlToPdfInterface
      * @param string   $unit     unit used in page size, margins. Possible values include
      *                           'mm' = millimeter, "in" = inches, 'pt' = typographic points
      */
-    public function setBaseUnit($response, $unit);
+    public function setBaseUnit(Response $response, string $unit): void;
 
     /**
      * setMargins - set margin sizes.
@@ -67,7 +68,7 @@ interface HtmlToPdfInterface
      * @param float    $rightMargin  right margin in base units
      * @param float    $bottomMargin bottom margin in base units
      */
-    public function setMargins($response, $leftMargin, $topMargin, $rightMargin, $bottomMargin);
+    public function setMargins(Response $response, float $leftMargin, float $topMargin, float $rightMargin, float $bottomMargin): void;
 
     /**
      * setBaseFont - set the base font used in rendering.
@@ -77,7 +78,7 @@ interface HtmlToPdfInterface
      * @param string   $fontStyle  font style ('bold', 'italic', etc.)
      * @param float    $fontSize   font size in points
      */
-    public function setBaseFont($response, $fontFamily, $fontStyle = '', $fontSize = null);
+    public function setBaseFont(Response $response, string $fontFamily, string $fontStyle = '', float $fontSize = null): void;
 
     /**
      * setDefaultMonospacedFont - default monotype font used in rendering.
@@ -85,7 +86,7 @@ interface HtmlToPdfInterface
      * @param Response $response       \Xoops\Core\Service\Response object
      * @param string   $monoFontFamily font family
      */
-    public function setDefaultMonospacedFont($response, $monoFontFamily);
+    public function setDefaultMonospacedFont(Response $response, string $monoFontFamily): void;
 
     /**
      * setAuthor - set author in pdf meta data.
@@ -93,7 +94,7 @@ interface HtmlToPdfInterface
      * @param Response $response  \Xoops\Core\Service\Response object
      * @param string   $pdfAuthor author name
      */
-    public function setAuthor($response, $pdfAuthor);
+    public function setAuthor(Response $response, string $pdfAuthor): void;
 
     /**
      * setTitle - set title in pdf meta data.
@@ -101,7 +102,7 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pdfTitle document title
      */
-    public function setTitle($response, $pdfTitle);
+    public function setTitle(Response $response, string $pdfTitle): void;
 
     /**
      * setSubject - set subject in pdf meta data.
@@ -109,7 +110,7 @@ interface HtmlToPdfInterface
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $pdfSubject document subject
      */
-    public function setSubject($response, $pdfSubject);
+    public function setSubject(Response $response, string $pdfSubject): void;
 
     /**
      * setKeywords - set keywords in pdf meta data.
@@ -117,7 +118,7 @@ interface HtmlToPdfInterface
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string[] $pdfKeywords array of keywords pertaining to document
      */
-    public function setKeywords($response, $pdfKeywords);
+    public function setKeywords(Response $response, $pdfKeywords): void;
 
     /**
      * addHtml - add HTML formatted text to document. This may be called multiple times.
@@ -126,7 +127,7 @@ interface HtmlToPdfInterface
      * @param string   $html     HTML formated text to include in document
      *                           array     user info, 'uid', 'uname' and 'email' required
      */
-    public function addHtml($response, $html);
+    public function addHtml(Response $response, string $html): void;
 
     /**
      * outputPdfInline - output a named pdf document file inline.
@@ -134,7 +135,7 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
      */
-    public function outputPdfInline($response, $name);
+    public function outputPdfInline(Response $response, string $name): void;
 
     /**
      * outputPdfDownload - output a named pdf document file for download.
@@ -142,12 +143,12 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
      */
-    public function outputPdfDownload($response, $name);
+    public function outputPdfDownload(Response $response, string $name): void;
 
     /**
      * fetchPdf - fetch rendered document as a string.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function fetchPdf($response);
+    public function fetchPdf(Response $response): void;
 }

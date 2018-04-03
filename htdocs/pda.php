@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ if (!$result) {
     echo "<img src='images/logo.gif' alt='".htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES)."' border='0' /><br />";
     echo '<h2>'.htmlspecialchars($xoops->getConfig('slogan')).'</h2>';
     echo '<div>';
-    while (false !== (list($storyid, $title) = $xoopsDB->fetchRow($result))) {
+    while (false !== ([$storyid, $title] = $xoopsDB->fetchRow($result))) {
         echo "<a href='".$xoops_url."/modules/news/print.php?storyid={$storyid}'>".htmlspecialchars($title).'</a><br />';
     }
     echo '</div>';

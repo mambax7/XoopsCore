@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@
  *
  * @return bool true if no error
  */
-function xoops_module_install_banners(&$module)
+function xoops_module_install_banners(XoopsModule &$module): bool
 {
     $xoops = Xoops::getInstance();
     //$xoops->db();

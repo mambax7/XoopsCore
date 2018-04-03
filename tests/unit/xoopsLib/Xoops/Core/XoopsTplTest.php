@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core;
 
@@ -17,7 +17,7 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new XoopsTpl();
         $this->xoops = \Xoops::getInstance();
@@ -27,11 +27,11 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\XoopsTpl', $this->object);
         $this->assertInstanceOf('\Smarty', $this->object);
@@ -42,7 +42,7 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
         return str_replace('\\', '/', $path);
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $xoops = \Xoops::getInstance();
         $this->assertSame('{', $this->object->left_delimiter);
@@ -75,7 +75,7 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(\XoopsBaseConfig::get('uploads-url'), $this->object->getTemplateVars('xoops_upload_url'));
     }
 
-    public function test_convertLegacyDelimiters()
+    public function test_convertLegacyDelimiters(): void
     {
         if (!method_exists($this, 'createMock')) {
             $this->markTestSkipped('Old PHPUnit');

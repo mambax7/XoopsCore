@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,14 +6,14 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'MyTextSanitizer';
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
         $this->assertInstanceOf($this->myClass, $sanitizer);
     }
 
-    public function test_getinstance100()
+    public function test_getinstance100(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -22,7 +22,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($sanitizer2, $sanitizer);
     }
 
-    public function test_smiley()
+    public function test_smiley(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -30,7 +30,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $message);
     }
 
-    public function test_makeClickable()
+    public function test_makeClickable(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -53,7 +53,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         return $message;
     }
 
-    public function test_xoopsCodeDecode()
+    public function test_xoopsCodeDecode(): void
     {
         $this->markTestSkipped('now protected - move to extension test');
         $path = \XoopsBaseConfig::get('root-path');
@@ -118,7 +118,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('<a href="http://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
     }
 
-    public function test_xoopsCodeDecode100()
+    public function test_xoopsCodeDecode100(): void
     {
         $this->markTestSkipped('now protected - move to extension test');
         $class = $this->myClass;
@@ -150,7 +150,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('<span style="font-family: '.$font.';">'.$string.'</span>', $message);
     }
 
-    public function test_xoopsCodeDecode200()
+    public function test_xoopsCodeDecode200(): void
     {
         $this->markTestSkipped('now protected - move to extension test');
         $class = $this->myClass;
@@ -180,7 +180,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('<div style="text-align: right;">'.$string.'</div>', $message);
     }
 
-    public function test_quoteConv()
+    public function test_quoteConv(): void
     {
         $this->markTestSkipped('now protected - move to extension test');
         $class = $this->myClass;
@@ -196,7 +196,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(XoopsLocale::C_QUOTE.'<div class="xoopsQuote"><blockquote>totoQuote:<div class="xoopsQuote"><blockquote>'.$string.'</blockquote></div>titi</blockquote></div>', $message);
     }
 
-    public function test_filterxss()
+    public function test_filterxss(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -205,7 +205,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $message);
     }
 
-    public function test_nl2br()
+    public function test_nl2br(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -223,7 +223,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     /**
      * @expectedException \LogicException
      */
-    public function test_addSlashes()
+    public function test_addSlashes(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -234,7 +234,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     /**
      * @expectedException \LogicException
      */
-    public function test_stripSlashesGPC()
+    public function test_stripSlashesGPC(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -242,7 +242,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $message = $sanitizer->stripSlashesGPC($text);
     }
 
-    public function test_htmlSpecialChars()
+    public function test_htmlSpecialChars(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -259,7 +259,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('toto&nbsp;titi', $message);
     }
 
-    public function test_undohtmlSpecialChars()
+    public function test_undohtmlSpecialChars(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -268,7 +268,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('><"\'&nbsp;', $message);
     }
 
-    public function test_displayTarea()
+    public function test_displayTarea(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -277,7 +277,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($text, $message);
     }
 
-    public function test_previewTarea()
+    public function test_previewTarea(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -303,7 +303,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $message);
     }
 
-    public function test_censorString()
+    public function test_censorString(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
@@ -324,7 +324,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $text);
     }
 
-    public function test_textFilter()
+    public function test_textFilter(): void
     {
         $class = $this->myClass;
         $sanitizer = $class::getInstance();

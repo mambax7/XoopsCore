@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -53,7 +54,7 @@ if (!empty($_POST['action'])) {
         $lines = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
         $bad_ips = [];
         foreach ($lines as $line) {
-            @list($bad_ip, $jailed_time) = explode(':', $line, 2);
+            @[$bad_ip, $jailed_time] = explode(':', $line, 2);
             $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) ($jailed_time);
         }
         if (!$protector->write_file_badips($bad_ips)) {
@@ -95,7 +96,7 @@ if (!empty($_POST['action'])) {
                     $result = $db->query("SELECT `lid`,`ip`,`type` FROM ${log_table} ORDER BY lid DESC");
                     $buf = [];
                     $ids = [];
-                    while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
+                    while (false !== ([$lid, $ip, $type] = $db->fetchRow($result))) {
                         if (isset($buf[$ip.$type])) {
                             $ids[] = $lid;
                         } else {
@@ -138,7 +139,7 @@ $form->render();
 // header of log listing
 // query for listing
 $rs = $db->query("SELECT count(lid) FROM ${log_table}");
-list($numrows) = $db->fetchRow($rs);
+[$numrows] = $db->fetchRow($rs);
 $prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM ${log_table} l LEFT JOIN ".$db->prefix('system_user')." u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT ${pos},${num}");
 // Number selection
 $num_options = '';
@@ -157,7 +158,7 @@ $nav_html = $nav->renderNav(10);
 $xoops->tpl()->assign('nav_html', $nav_html);
 // body of log listing
 $oddeven = 'odd';
-while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs))) {
+while (false !== ([$lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname] = $db->fetchRow($prs))) {
     $oddeven = ('odd' === $oddeven ? 'even' : 'odd');
 
     $ip = htmlspecialchars($ip, ENT_QUOTES);

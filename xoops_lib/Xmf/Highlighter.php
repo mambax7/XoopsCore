@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class Highlighter
      *
      * @return string highlighted body
      */
-    public static function apply($words, $body, $pre = '<mark>', $post = '</mark>')
+    public static function apply($words, $body, $pre = '<mark>', $post = '</mark>'): string
     {
         if (!is_array($words)) {
             $words = preg_replace('/[\s]+/', ' ', $words);
@@ -63,7 +64,7 @@ class Highlighter
      *
      * @return mixed return from preg_replace_callback()
      */
-    protected static function splitOnTag($needle, $haystack, $pre, $post)
+    protected static function splitOnTag(string $needle, string $haystack, string $pre, string $post)
     {
         $encoding = static::ENCODING;
 

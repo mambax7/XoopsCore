@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class Security
      *
      * @return bool
      */
-    public function check($clearIfValid = true, $token = false, $name = 'XOOPS_TOKEN')
+    public function check(bool $clearIfValid = true, $token = false, $name = 'XOOPS_TOKEN'): bool
     {
         return $this->validateToken($token, $clearIfValid, $name);
     }
@@ -53,7 +54,7 @@ class Security
      *
      * @return string token value
      */
-    public function createToken($timeout = 300, $name = 'XOOPS_TOKEN')
+    public function createToken(int $timeout = 300, string $name = 'XOOPS_TOKEN'): string
     {
         $this->garbageCollection($name);
         $timeout = ($timeout <= 0) ? 300 : $timeout;
@@ -79,13 +80,13 @@ class Security
      *
      * @return bool
      */
-    public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
+    public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN'): bool
     {
         $ret = false;
         $log = [];
         $token = (false !== $token)
             ? $token
-            : (isset($_REQUEST[$name.'_REQUEST']) ? $_REQUEST[$name.'_REQUEST'] : '');
+            : ($_REQUEST[$name.'_REQUEST'] ?? '');
         if (empty($token) || empty($_SESSION[$name.'_SESSION'])) {
             $str = 'No valid token found in request/session';
             $this->setErrors($str);
@@ -125,7 +126,7 @@ class Security
      *
      * @param string $name session name
      */
-    public function clearTokens($name = 'XOOPS_TOKEN')
+    public function clearTokens(string $name = 'XOOPS_TOKEN'): void
     {
         $_SESSION[$name.'_SESSION'] = [];
     }
@@ -137,7 +138,7 @@ class Security
      *
      * @return bool
      */
-    public function filterToken($token)
+    public function filterToken(string $token): bool
     {
         return !empty($token['expire']) && $token['expire'] >= time();
     }
@@ -147,7 +148,7 @@ class Security
      *
      * @param string $name session name
      */
-    public function garbageCollection($name = 'XOOPS_TOKEN')
+    public function garbageCollection(string $name = 'XOOPS_TOKEN'): void
     {
         $sessionName = $name.'_SESSION';
         if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
@@ -162,7 +163,7 @@ class Security
      *
      * @return bool
      */
-    public function checkReferer($docheck = 1)
+    public function checkReferer(int $docheck = 1): bool
     {
         $ref = \Xoops::getInstance()->getEnv('HTTP_REFERER');
         if (0 === $docheck) {
@@ -182,7 +183,7 @@ class Security
      * Check if visitor's IP address is banned
      * Should be changed to return bool and let the action be up to the calling script.
      */
-    public function checkBadips()
+    public function checkBadips(): void
     {
         $xoops = \Xoops::getInstance();
         if (1 === $xoops->getConfig('enable_badips')
@@ -205,7 +206,7 @@ class Security
      *
      * @return string
      */
-    public function getTokenHTML($name = 'XOOPS_TOKEN')
+    public function getTokenHTML(string $name = 'XOOPS_TOKEN'): string
     {
         $token = new \Xoops\Form\Token($name);
 
@@ -217,7 +218,7 @@ class Security
      *
      * @param string $error message
      */
-    public function setErrors($error)
+    public function setErrors(string $error): void
     {
         $this->errors[] = trim($error);
     }
@@ -229,7 +230,7 @@ class Security
      *
      * @return array|string Array of array messages OR HTML string
      */
-    public function getErrors($ashtml = false)
+    public function getErrors(bool $ashtml = false)
     {
         if (!$ashtml) {
             return $this->errors;

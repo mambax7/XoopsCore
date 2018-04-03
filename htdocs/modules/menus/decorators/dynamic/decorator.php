@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,15 +19,15 @@
  */
 class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
-    public function accessFilter(&$accessFilter)
+    public function accessFilter(&$accessFilter): void
     {
     }
 
-    public function decorateMenu(&$menu)
+    public function decorateMenu(&$menu): void
     {
     }
 
-    public function end(&$menus)
+    public function end(&$menus): void
     {
         $ret = [];
         foreach ($menus as $menu) {
@@ -44,11 +45,11 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
         $menus = $ret;
     }
 
-    public function hasAccess($menu, &$hasAccess)
+    public function hasAccess($menu, &$hasAccess): void
     {
     }
 
-    public function start()
+    public function start(): void
     {
     }
 

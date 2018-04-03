@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the webmozart/assert package.
@@ -46,7 +46,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 {
     private static $resource;
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         @fclose(self::$resource);
     }
@@ -110,7 +110,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             ['resource', [1], false],
             ['isCallable', ['strlen'], true],
             ['isCallable', [[$this, 'getTests']], true],
-            ['isCallable', [function () {
+            ['isCallable', [function (): void {
             }], true],
             ['isCallable', [1234], false],
             ['isCallable', ['foobar'], false],
@@ -309,20 +309,20 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             ['uuid', ['ff6f8cb0-c57da-51e1-9b21-0800200c9a66'], false],
             ['uuid', ['af6f8cb-c57d-11e1-9b21-0800200c9a66'], false],
             ['uuid', ['3f6f8cb0-c57d-11e1-9b21-0800200c9a6'], false],
-            ['throws', [function () {
+            ['throws', [function (): void {
                 throw new LogicException('test');
             }, 'LogicException'], true],
-            ['throws', [function () {
+            ['throws', [function (): void {
                 throw new LogicException('test');
             }, 'IllogicException'], false],
-            ['throws', [function () {
+            ['throws', [function (): void {
                 throw new Exception('test');
             }], true],
             //array('throws', array(function() { trigger_error('test'); }, 'Throwable'), true, false, 70000),
-            ['throws', [function () {
+            ['throws', [function (): void {
                 trigger_error('test');
             }, 'Unthrowable'], false, false, 70000],
-            ['throws', [function () {
+            ['throws', [function (): void {
                 throw new Error();
             }, 'Throwable'], true, true, 70000],
         ];
@@ -342,7 +342,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTests
      */
-    public function testAssert($method, $args, $success, $multibyte = false, $minVersion = null)
+    public function testAssert($method, $args, $success, $multibyte = false, $minVersion = null): void
     {
         if ($minVersion && $minVersion > PHP_VERSION_ID) {
             $this->markTestSkipped(sprintf('This test requires php %s or upper.', $minVersion));
@@ -366,7 +366,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTests
      */
-    public function testNullOr($method, $args, $success, $multibyte = false, $minVersion = null)
+    public function testNullOr($method, $args, $success, $multibyte = false, $minVersion = null): void
     {
         if ($minVersion && $minVersion > PHP_VERSION_ID) {
             $this->markTestSkipped(sprintf('This test requires php %s or upper.', $minVersion));
@@ -390,7 +390,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getMethods
      */
-    public function testNullOrAcceptsNull($method)
+    public function testNullOrAcceptsNull($method): void
     {
         call_user_func(['Xmf\Assert', 'nullOr'.ucfirst($method)], null);
         self::assertTrue(true, 'Return type ensures this assertion is never reached on failure');
@@ -399,7 +399,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTests
      */
-    public function testAllArray($method, $args, $success, $multibyte = false, $minVersion = null)
+    public function testAllArray($method, $args, $success, $multibyte = false, $minVersion = null): void
     {
         if ($minVersion && $minVersion > PHP_VERSION_ID) {
             $this->markTestSkipped(sprintf('This test requires php %s or upper.', $minVersion));
@@ -426,7 +426,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTests
      */
-    public function testAllTraversable($method, $args, $success, $multibyte = false, $minVersion = null)
+    public function testAllTraversable($method, $args, $success, $multibyte = false, $minVersion = null): void
     {
         if ($minVersion && $minVersion > PHP_VERSION_ID) {
             $this->markTestSkipped(sprintf('This test requires php %s or upper.', $minVersion));
@@ -475,7 +475,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getStringConversions
      */
-    public function testConvertValuesToStrings($method, $args, $exceptionMessage)
+    public function testConvertValuesToStrings($method, $args, $exceptionMessage): void
     {
         $this->expectException('\InvalidArgumentException', $exceptionMessage);
 

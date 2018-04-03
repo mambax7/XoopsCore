@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class SyntaxHighlight extends FilterAbstract
      *
      * @return bool|mixed|string
      */
-    public function applyFilter($source, $language = 'php')
+    public function applyFilter(string $source, string $language = 'php')
     {
         $config = $this->config;
         if (empty($config['highlighter'])) {
@@ -70,7 +71,7 @@ class SyntaxHighlight extends FilterAbstract
      *
      * @return string
      */
-    public function php($text)
+    public function php(string $text): string
     {
         $text = trim($text);
         $addedOpenTag = false;
@@ -114,7 +115,7 @@ class SyntaxHighlight extends FilterAbstract
      *
      * @return bool
      */
-    public function geshi($source, $language)
+    public function geshi(string $source, string $language): bool
     {
         if (!@\XoopsLoad::load('geshi', 'framework')) {
             return false;

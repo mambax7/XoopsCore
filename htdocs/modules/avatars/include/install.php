@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@
  *
  * @return bool true on success
  */
-function xoops_module_install_avatars(&$module)
+function xoops_module_install_avatars(&$module): bool
 {
     /* This is all upgrade related, not install.
        TODO: Add to upgrade script and remove from here

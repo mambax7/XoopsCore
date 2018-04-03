@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -53,7 +54,7 @@ class Events
      *
      * @return Events instance
      */
-    public static function getInstance()
+    public static function getInstance(): Events
     {
         static $instance = false;
 
@@ -71,7 +72,7 @@ class Events
      * @param string $eventName Name of the event to trigger
      * @param mixed  $args      Method arguments
      */
-    public function triggerEvent($eventName, $args = [])
+    public function triggerEvent(string $eventName, $args = []): void
     {
         if ($this->eventsEnabled) {
             $eventName = $this->toInternalEventName($eventName);
@@ -91,7 +92,7 @@ class Events
      * @param string   $eventName the event name
      * @param callable $callback  any callable acceptable for call_user_func
      */
-    public function addListener($eventName, $callback)
+    public function addListener(string $eventName, callable $callback): void
     {
         $eventName = $this->toInternalEventName($eventName);
         $this->eventListeners[$eventName][] = $callback;
@@ -102,7 +103,7 @@ class Events
      *
      * @return array of events and listeners
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         return $this->eventListeners;
     }
@@ -114,7 +115,7 @@ class Events
      *
      * @return bool true if one or more listeners are registered for the event
      */
-    public function hasListeners($eventName)
+    public function hasListeners(string $eventName): bool
     {
         $eventName = $this->toInternalEventName($eventName);
 
@@ -129,7 +130,7 @@ class Events
      * that listeners are not prepared to handle. In such circumstances, module level class
      * mapping will not have been done.
      */
-    protected function initializeListeners()
+    protected function initializeListeners(): void
     {
         $this->eventsEnabled = false;
         // clear state in case this is invoked more than once
@@ -143,7 +144,7 @@ class Events
     /**
      * Get list of all available preload files.
      */
-    protected function setPreloads()
+    protected function setPreloads(): void
     {
         $cache = \Xoops::getInstance()->cache();
         $key = 'system/modules/preloads';
@@ -195,7 +196,7 @@ class Events
      * containing a single PreloadItem class name concatenating the module name and
      * the literal 'Preload'. This class can listen for events from any source.
      */
-    protected function setEvents()
+    protected function setEvents(): void
     {
         $xoops = \Xoops::getInstance();
         foreach ($this->preloadList as $preload) {
@@ -226,7 +227,7 @@ class Events
      *
      * @return string converted name
      */
-    protected function toInternalEventName($eventName)
+    protected function toInternalEventName(string $eventName): string
     {
         return strtolower(str_replace('.', '', $eventName));
     }

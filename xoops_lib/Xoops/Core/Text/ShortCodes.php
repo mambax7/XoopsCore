@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text;
 
@@ -48,7 +48,7 @@ class ShortCodes
      *
      * @throws \ErrorException
      */
-    public function addShortcode($tag, $function)
+    public function addShortcode(string $tag, callable $function): void
     {
         if (!is_callable($function)) {
             throw new \ErrorException('Function must be callable');
@@ -62,7 +62,7 @@ class ShortCodes
      *
      * @param string $tag short code tag
      */
-    public function removeShortcode($tag)
+    public function removeShortcode(string $tag): void
     {
         if (array_key_exists($tag, $this->shortcodes)) {
             unset($this->shortcodes[$tag]);
@@ -74,7 +74,7 @@ class ShortCodes
      *
      * @return array of tag => callable
      */
-    public function getShortcodes()
+    public function getShortcodes(): array
     {
         return $this->shortcodes;
     }
@@ -86,7 +86,7 @@ class ShortCodes
      *
      * @return bool true is shortcode is defined in the active set
      */
-    public function hasShortcode($shortcode)
+    public function hasShortcode(string $shortcode): bool
     {
         return array_key_exists($shortcode, $this->shortcodes);
     }
@@ -99,7 +99,7 @@ class ShortCodes
      *
      * @return bool true if tag is used in content, otherwise false
      */
-    public function contentHasShortcode($content, $tag)
+    public function contentHasShortcode(string $content, string $tag): bool
     {
         if (!$this->hasShortcode($tag)) {
             return false;
@@ -131,7 +131,7 @@ class ShortCodes
      *
      * @return string Content with shortcodes filtered out.
      */
-    public function process($content)
+    public function process(string $content): string
     {
         if (empty($this->shortcodes)) {
             return $content;
@@ -147,7 +147,7 @@ class ShortCodes
      *
      * @return string Content without shortcode tags.
      */
-    public function stripAllShortcodes($content)
+    public function stripAllShortcodes(string $content): string
     {
         if (empty($this->shortcodes)) {
             return $content;
@@ -171,7 +171,7 @@ class ShortCodes
      *
      * @return array Combined and filtered attribute list.
      */
-    public function shortcodeAttributes($defaults, $attributes)
+    public function shortcodeAttributes(array $defaults, array $attributes): array
     {
         $attributes = (array) $attributes;
         $out = [];
@@ -225,7 +225,7 @@ class ShortCodes
      *
      * @return array List of attributes and their value.
      */
-    private function parseAttributes($text)
+    private function parseAttributes(string $text): array
     {
         $text = preg_replace("/[\x{00a0}\x{200b}]+/u", ' ', $text);
 
@@ -259,7 +259,7 @@ class ShortCodes
      *
      * @return string stripped tag
      */
-    private function stripShortcodeTag($tag)
+    private function stripShortcodeTag(array $tag): string
     {
         if ('[' === $tag[1] && ']' === $tag[6]) {
             return substr($tag[0], 1, -1);
@@ -285,7 +285,7 @@ class ShortCodes
      *
      * @return string The shortcode search regular expression
      */
-    private function shortcodeRegex()
+    private function shortcodeRegex(): string
     {
         $tagRegex = implode('|', array_map('preg_quote', array_keys($this->shortcodes)));
 

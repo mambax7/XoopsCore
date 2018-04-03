@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class Link extends Item
      *   'icon'    - css classes for icon, i.e. "glyphicon glyphicon-ok"
      *   'image'   - image to represent link
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->set('type', Item::TYPE_LINK);

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS common initialization file.
  *
@@ -149,7 +150,7 @@ $xoops->gzipCompression();
 /**
  * clickjack protection - Add option to HTTP header restricting using site in an iframe.
  */
-$xFrameOptions = isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
+$xFrameOptions = $xoopsConfig['xFrameOptions'] ?? 'sameorigin';
 $xoops->events()->triggerEvent('core.include.common.xframeoption');
 if (!headers_sent() && !empty($xFrameOptions)) {
     header('X-Frame-Options: '.$xFrameOptions);

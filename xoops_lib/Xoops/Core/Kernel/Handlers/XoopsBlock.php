@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -99,7 +100,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('bid', $format);
     }
@@ -111,7 +112,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function bid($format = '')
+    public function bid(string $format = '')
     {
         return $this->getVar('bid', $format);
     }
@@ -123,7 +124,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function mid($format = '')
+    public function mid(string $format = '')
     {
         return $this->getVar('mid', $format);
     }
@@ -135,7 +136,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function func_num($format = '')
+    public function func_num(string $format = '')
     {
         return $this->getVar('func_num', $format);
     }
@@ -147,7 +148,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function options($format = '')
+    public function options(string $format = '')
     {
         return $this->getVar('options', $format);
     }
@@ -159,7 +160,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function name($format = '')
+    public function name(string $format = '')
     {
         return $this->getVar('name', $format);
     }
@@ -171,7 +172,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function title($format = '')
+    public function title(string $format = '')
     {
         return $this->getVar('title', $format);
     }
@@ -183,7 +184,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function content($format = '')
+    public function content(string $format = '')
     {
         return $this->getVar('content', $format);
     }
@@ -195,7 +196,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function side($format = '')
+    public function side(string $format = '')
     {
         return $this->getVar('side', $format);
     }
@@ -207,7 +208,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function weight($format = '')
+    public function weight(string $format = '')
     {
         return $this->getVar('weight', $format);
     }
@@ -219,7 +220,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function visible($format = '')
+    public function visible(string $format = '')
     {
         return $this->getVar('visible', $format);
     }
@@ -231,7 +232,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function block_type($format = '')
+    public function block_type(string $format = '')
     {
         return $this->getVar('block_type', $format);
     }
@@ -243,7 +244,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function c_type($format = '')
+    public function c_type(string $format = '')
     {
         return $this->getVar('c_type', $format);
     }
@@ -255,7 +256,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function isactive($format = '')
+    public function isactive(string $format = '')
     {
         return $this->getVar('isactive', $format);
     }
@@ -267,7 +268,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function dirname($format = '')
+    public function dirname(string $format = '')
     {
         return $this->getVar('dirname', $format);
     }
@@ -279,7 +280,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function func_file($format = '')
+    public function func_file(string $format = '')
     {
         return $this->getVar('func_file', $format);
     }
@@ -291,7 +292,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function show_func($format = '')
+    public function show_func(string $format = '')
     {
         return $this->getVar('show_func', $format);
     }
@@ -303,7 +304,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function edit_func($format = '')
+    public function edit_func(string $format = '')
     {
         return $this->getVar('edit_func', $format);
     }
@@ -315,7 +316,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function template($format = '')
+    public function template(string $format = '')
     {
         return $this->getVar('template', $format);
     }
@@ -327,7 +328,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function bcachetime($format = '')
+    public function bcachetime(string $format = '')
     {
         return $this->getVar('bcachetime', $format);
     }
@@ -339,7 +340,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return mixed
      */
-    public function last_modified($format = '')
+    public function last_modified(string $format = '')
     {
         return $this->getVar('last_modified', $format);
     }
@@ -356,7 +357,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return string content for output
      */
-    public function getContent($format = 's', $c_type = 'T')
+    public function getContent(string $format = 's', string $c_type = 'T'): string
     {
         $format = strtolower($format);
         $c_type = strtoupper($c_type);
@@ -443,7 +444,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return bool true if this is a custom block
      */
-    public function isCustom()
+    public function isCustom(): bool
     {
         return self::BLOCK_TYPE_CUSTOM === $this->getVar('block_type');
     }
@@ -506,7 +507,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return string
      */
-    protected function convertSiteURL($content)
+    protected function convertSiteURL(string $content): string
     {
         $content = str_replace('{X_SITEURL}', \Xoops::getInstance()->url('/'), $content);
 

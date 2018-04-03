@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class DhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DhtmlTextArea('Caption', 'name');
         \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme());
@@ -26,29 +26,29 @@ class DhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);
     }
 
-    public function testCodeIcon()
+    public function testCodeIcon(): void
     {
         $value = $this->object->codeIcon();
         $this->assertInternalType('string', $value);
     }
 
-    public function testFontArray()
+    public function testFontArray(): void
     {
         $value = $this->object->fontArray();
         $this->assertInternalType('string', $value);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertFalse($value);

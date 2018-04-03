@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Library;
 
@@ -22,7 +22,7 @@ class SimpleContainer extends ArrayObject
      *
      * @return mixed The value of the attribute, or null if not set
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->offsetGet($name);
     }
@@ -34,7 +34,7 @@ class SimpleContainer extends ArrayObject
      *
      * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return $this->offsetExists($name);
     }

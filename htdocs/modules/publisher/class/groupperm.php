@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ class PublisherGroupPermHandler extends XoopsGroupPermHandler
      *
      * @return bool
      */
-    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true)
+    public function checkRight(string $gperm_name, int $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true): bool
     {
         $trueifadmin = false;
 

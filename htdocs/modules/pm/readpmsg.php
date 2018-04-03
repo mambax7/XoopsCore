@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -112,7 +113,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
                 break;
         }
     }
-    $res_message = isset($res_message) ? $res_message : (($res) ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
+    $res_message = $res_message ?? (($res) ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
     $xoops->redirect('viewpmsg.php?op='.htmlspecialchars($_REQUEST['op']), 2, $res_message);
 }
 $start = !empty($_GET['start']) ? (int) ($_GET['start']) : 0;
@@ -143,7 +144,7 @@ if (!is_object($pm)) {
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $criteria->setOrder('DESC');
-    list($pm) = $pm_handler->getObjects($criteria);
+    [$pm] = $pm_handler->getObjects($criteria);
 }
 
 $pmform = new Xoops\Form\ThemeForm('', 'pmform', 'readpmsg.php', 'post', true);

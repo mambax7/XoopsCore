@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class ProtectorCorePreload extends PreloadItem
     /**
      * @static
      */
-    public static function eventCoreIncludeCommonStart($args)
+    public static function eventCoreIncludeCommonStart($args): void
     {
         $xoops = Xoops::getInstance();
         include $xoops->path('modules/protector/include/precheck.inc.php');
@@ -42,7 +43,7 @@ class ProtectorCorePreload extends PreloadItem
     /**
      * @static
      */
-    public static function eventCoreIncludeCommonEnd($args)
+    public static function eventCoreIncludeCommonEnd($args): void
     {
         $xoops = Xoops::getInstance();
         include $xoops->path('modules/protector/include/postcheck.inc.php');
@@ -51,7 +52,7 @@ class ProtectorCorePreload extends PreloadItem
     /**
      * @static
      */
-    public static function eventCoreClassDatabaseDatabasefactoryConnection($args)
+    public static function eventCoreClassDatabaseDatabasefactoryConnection($args): void
     {
         // Protector class
         require_once dirname(__DIR__).'/class/protector.php';

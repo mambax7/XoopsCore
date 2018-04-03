@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class Time
      *
      * @return \DateTime
      */
-    public static function cleanTime($time = null)
+    public static function cleanTime($time = null): \DateTime
     {
         if (is_a($time, '\DateTime')) {
             return $time->setTimezone(Locale::getTimeZone());
@@ -61,7 +62,7 @@ class Time
      *
      * @throws \InvalidArgumentException
      */
-    public static function describeRelativeInterval($dateEnd, $dateStart = null, $width = '', $locale = '')
+    public static function describeRelativeInterval(\DateTime $dateEnd, ?\DateTime $dateStart = null, string $width = '', string $locale = ''): string
     {
         if (!is_a($dateEnd, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
@@ -154,7 +155,7 @@ class Time
      *
      * @return string Returns an empty string if $value is empty, the localized textual representation otherwise
      */
-    public static function formatDate($value, $width = 'short', $toTimezone = '', $locale = '')
+    public static function formatDate($value, $width = 'short', $toTimezone = '', $locale = ''): string
     {
         try {
             $formatted = Calendar::formatDateEx($value, $width, $toTimezone, $locale);
@@ -184,7 +185,7 @@ class Time
      *
      * @throws \Punic\Exception Throws an exception in case of problems
      */
-    public static function formatTime($value, $width = 'short', $toTimezone = '', $locale = '')
+    public static function formatTime($value, $width = 'short', $toTimezone = '', $locale = ''): string
     {
         try {
             $formatted = Calendar::formatTimeEx($value, $width, $toTimezone, $locale);
@@ -212,7 +213,7 @@ class Time
      *
      * @throws \Punic\Exception Throws an exception in case of problems
      */
-    public static function formatDateTime(\DateTime $value, $width, $locale = '')
+    public static function formatDateTime(\DateTime $value, string $width, string $locale = ''): string
     {
         return Calendar::formatDatetime($value, $width, $locale);
     }
@@ -220,7 +221,7 @@ class Time
     /**
      * Perform any localization required for date picker used in Form\DateSelect.
      */
-    public static function localizeDatePicker()
+    public static function localizeDatePicker(): void
     {
         $delimiter = '-';
         $locale = Locale::normalizeLocale(Locale::getCurrent(), $delimiter, false);
@@ -230,7 +231,7 @@ class Time
         if ('zh' === $locale) {
             $locale = 'zh-CN';
         }
-        list($language) = explode($delimiter, $locale);
+        [$language] = explode($delimiter, $locale);
         $xoops = \Xoops::getInstance();
 
         $locales = [$locale, $language];
@@ -252,7 +253,7 @@ class Time
      *
      * @return \DateTime
      */
-    public static function inputToDateTime($input, $locale = '')
+    public static function inputToDateTime($input, $locale = ''): \DateTime
     {
         $dateTime = static::cleanTime();
         $dateTime->setTime(0, 0, 0);
@@ -274,7 +275,7 @@ class Time
      *
      * @return array
      */
-    protected static function utf8StringToChars($input)
+    protected static function utf8StringToChars(string $input): array
     {
         $chars = [];
         $strLen = mb_strlen($input, 'UTF-8');
@@ -295,7 +296,7 @@ class Time
      *
      * @throws \Punic\Exception\ValueNotInList
      */
-    protected static function parseInputDate(\DateTime $datetime, $input, $locale = '')
+    protected static function parseInputDate(\DateTime $datetime, string $input, string $locale = ''): void
     {
         $year = 0;
         $month = 0;
@@ -407,7 +408,7 @@ class Time
      * @throws \Punic\Exception\BadArgumentType
      * @throws \Punic\Exception\ValueNotInList
      */
-    protected static function parseInputTime(\DateTime $datetime, $input, $locale = '')
+    protected static function parseInputTime(\DateTime $datetime, string $input, string $locale = ''): void
     {
         $timeFormat = Calendar::getTimeFormat('short', $locale);
         $am = Calendar::getDayperiodName('am', 'wide', $locale);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -10,7 +10,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
     protected $save_ENV = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->save_SERVER = $_SERVER;
         $this->save_ENV = $_ENV;
@@ -20,13 +20,13 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $_SERVER = $this->save_SERVER;
         $_ENV = $this->save_ENV;
     }
 
-    public function test_dumpVar()
+    public function test_dumpVar(): void
     {
         $class = $this->myClass;
         $var = [1 => 'test'];
@@ -45,7 +45,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $buf);
     }
 
-    public function test_dumpFile()
+    public function test_dumpFile(): void
     {
         $class = $this->myClass;
         $file = __FILE__;
@@ -64,7 +64,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $buf);
     }
 
-    public function test_arrayRecursiveDiff()
+    public function test_arrayRecursiveDiff(): void
     {
         $class = $this->myClass;
 
@@ -83,7 +83,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue('red' === $x[2]);
     }
 
-    public function test_arrayRecursiveDiff100()
+    public function test_arrayRecursiveDiff100(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', ['a' => 'green', 'red', 'blue']];
@@ -101,7 +101,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x[1][1] === 'blue');
     }
 
-    public function test_arrayRecursiveDiff120()
+    public function test_arrayRecursiveDiff120(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];
@@ -119,7 +119,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x['array'][1] === 'blue');
     }
 
-    public function test_arrayRecursiveDiff140()
+    public function test_arrayRecursiveDiff140(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];
@@ -137,7 +137,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x['array'][1] === 'blue');
     }
 
-    public function test_arrayRecursiveDiff160()
+    public function test_arrayRecursiveDiff160(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];
@@ -152,7 +152,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($x);
     }
 
-    public function test_arrayRecursiveMerge()
+    public function test_arrayRecursiveMerge(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];
@@ -168,7 +168,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x['array'][2] === 'yellow');
     }
 
-    public function test_arrayRecursiveMerge100()
+    public function test_arrayRecursiveMerge100(): void
     {
         $class = $this->myClass;
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];

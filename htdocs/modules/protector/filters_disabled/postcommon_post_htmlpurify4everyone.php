@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
 
     public $method;
 
-    public function execute()
+    public function execute(): void
     {
         $xoops = Xoops::getInstance();
         // use HTMLPurifier inside Protector

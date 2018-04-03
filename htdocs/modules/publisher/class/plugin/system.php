@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +23,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      *
      * @return int
      */
-    public function userPosts($uid)
+    public function userPosts(int $uid): int
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', 2));
@@ -34,7 +35,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
     /**
      * @return array
      */
-    public function waiting()
+    public function waiting(): array
     {
         $publisher = Publisher::getInstance();
         $ret = [];
@@ -62,7 +63,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      *
      * @return array
      */
-    public function backend($limit)
+    public function backend(int $limit)
     {
         // TODO: Implement backend() method.
     }

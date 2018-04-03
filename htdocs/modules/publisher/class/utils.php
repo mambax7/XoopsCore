@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -24,7 +25,7 @@ class PublisherUtils
     /**
      * Includes scripts in HTML header.
      */
-    public static function cpHeader()
+    public static function cpHeader(): void
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -49,7 +50,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function getOrderBy($sort)
+    public static function getOrderBy(string $sort): string
     {
         if (in_array($sort, ['datesub', 'counter'], true)) {
             return 'DESC';
@@ -68,7 +69,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function substr($str, $start, $length, $trimmarker = '...')
+    public static function substr(string $str, int $start, int $length, string $trimmarker = '...'): string
     {
         // if the string is empty, let's get out ;-)
         if ('' === $str) {
@@ -94,7 +95,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function html2text($document)
+    public static function html2text(string $document): string
     {
         // PHP Manual:: function preg_replace
         // $document should contain an HTML document.
@@ -136,7 +137,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function moduleHome($withLink = true)
+    public static function moduleHome(bool $withLink = true): string
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -163,7 +164,7 @@ class PublisherUtils
      *
      * @return bool Returns true on success, false on failure
      */
-    public static function copyr($source, $dest)
+    public static function copyr(string $source, string $dest): bool
     {
         // Simple copy for a file
         if (is_file($source)) {
@@ -205,7 +206,7 @@ class PublisherUtils
      * @todo check undefined string
      * @return bool|int|string
      */
-    public static function getPathStatus($item, $getStatus = false)
+    public static function getPathStatus(string $item, bool $getStatus = false)
     {
         $publisher = Publisher::getInstance();
         if ('root' === $item) {
@@ -243,7 +244,7 @@ class PublisherUtils
      *
      * @return bool
      */
-    public static function mkdir($target)
+    public static function mkdir(string $target): bool
     {
         // http://www.php.net/manual/en/function.mkdir.php
         // saint at corenova.com
@@ -277,7 +278,7 @@ class PublisherUtils
      *
      * @return bool
      */
-    public static function chmod($target, $mode = 0777)
+    public static function chmod(string $target, int $mode = 0777): bool
     {
         return @chmod($target, $mode);
     }
@@ -288,7 +289,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function getUploadDir($hasPath = true, $item = false)
+    public static function getUploadDir(bool $hasPath = true, bool $item = false): string
     {
         $xoops = Xoops::getInstance();
         if ($item) {
@@ -314,7 +315,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function getImageDir($item = '', $hasPath = true)
+    public static function getImageDir(string $item = '', bool $hasPath = true): string
     {
         if ($item) {
             $item = "images/{$item}";
@@ -330,7 +331,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function formatErrors($errors = [])
+    public static function formatErrors(array $errors = []): string
     {
         $ret = '';
         foreach ($errors as $value) {
@@ -347,7 +348,7 @@ class PublisherUtils
      *
      * @return bool
      */
-    public static function IsUserAuthor($itemObj)
+    public static function IsUserAuthor($itemObj): bool
     {
         $xoops = Xoops::getInstance();
 
@@ -361,7 +362,7 @@ class PublisherUtils
      *
      * @return bool
      */
-    public static function IsUserModerator($itemObj)
+    public static function IsUserModerator(PublisherItem $itemObj): bool
     {
         $publisher = Publisher::getInstance();
         $categoriesGranted = $publisher->getPermissionHandler()->getGrantedItems('category_moderation');
@@ -384,7 +385,7 @@ class PublisherUtils
      * @todo Move to category class
      * @return bool : TRUE if the no errors occured
      */
-    public static function saveCategoryPermissions($groups, $categoryid, $perm_name)
+    public static function saveCategoryPermissions(array $groups, int $categoryid, string $perm_name): bool
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -413,7 +414,7 @@ class PublisherUtils
      * @param string $tabledsc
      * @param bool   $open
      */
-    public static function openCollapsableBar($tablename = '', $iconname = '', $tabletitle = '', $tabledsc = '', $open = true)
+    public static function openCollapsableBar(string $tablename = '', string $iconname = '', string $tabletitle = '', string $tabledsc = '', bool $open = true): void
     {
         $publisher = Publisher::getInstance();
         $image = 'open12.gif';
@@ -435,7 +436,7 @@ class PublisherUtils
      * @param string $name
      * @param string $icon
      */
-    public static function closeCollapsableBar($name, $icon)
+    public static function closeCollapsableBar(string $name, string $icon): void
     {
         echo '</div>';
 
@@ -461,7 +462,7 @@ class PublisherUtils
      * @param string $value
      * @param int    $time
      */
-    public static function setCookieVar($name, $value, $time = 0)
+    public static function setCookieVar(string $name, string $value, int $time = 0): void
     {
         if (0 === $time) {
             $time = time() + 3600 * 24 * 365;
@@ -475,7 +476,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function getCookieVar($name, $default = '')
+    public static function getCookieVar(string $name, string $default = ''): string
     {
         if (isset($_COOKIE[$name]) && ($_COOKIE[$name] > '')) {
             return $_COOKIE[$name];
@@ -487,12 +488,12 @@ class PublisherUtils
     /**
      * @return array
      */
-    public static function getCurrentUrls()
+    public static function getCurrentUrls(): array
     {
         $http = false === strpos(\XoopsBaseConfig::get('url'), 'https://') ? 'http://' : 'https://';
         $phpself = $_SERVER['PHP_SELF'];
         $httphost = $_SERVER['HTTP_HOST'];
-        $querystring = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+        $querystring = $_SERVER['QUERY_STRING'] ?? '';
 
         if ('' !== $querystring) {
             $querystring = '?'.$querystring;
@@ -513,7 +514,7 @@ class PublisherUtils
     /**
      * @return string
      */
-    public static function getCurrentPage()
+    public static function getCurrentPage(): string
     {
         $urls = self::getCurrentUrls();
 
@@ -529,7 +530,7 @@ class PublisherUtils
      * @todo move to ccategory class
      * @return string
      */
-    public static function addCategoryOption($categoryObj, $selectedid = 0, $level = 0, $ret = '')
+    public static function addCategoryOption($categoryObj, $selectedid = 0, $level = 0, $ret = ''): string
     {
         $publisher = Publisher::getInstance();
 
@@ -566,7 +567,7 @@ class PublisherUtils
      * @todo move to category class
      * @return string
      */
-    public static function createCategorySelect($selectedid = 0, $parentcategory = 0, $allCatOption = true, $selectname = 'options[0]')
+    public static function createCategorySelect(int $selectedid = 0, int $parentcategory = 0, bool $allCatOption = true, string $selectname = 'options[0]'): string
     {
         $publisher = Publisher::getInstance();
 
@@ -602,7 +603,7 @@ class PublisherUtils
      * @todo move to category class
      * @return string
      */
-    public static function createCategoryOptions($selectedid = 0, $parentcategory = 0, $allCatOption = true)
+    public static function createCategoryOptions(int $selectedid = 0, int $parentcategory = 0, bool $allCatOption = true): string
     {
         $publisher = Publisher::getInstance();
 
@@ -629,7 +630,7 @@ class PublisherUtils
      *
      * @todo check this undefined strings
      */
-    public static function renderErrors(&$err_arr, $reseturl = '')
+    public static function renderErrors(array &$err_arr, string $reseturl = ''): void
     {
         if (is_array($err_arr) && count($err_arr) > 0) {
             echo '<div id="readOnly" class="errorMsg" style="border:1px solid #D24D00; background:#FEFECC url('.PUBLISHER_URL.'/images/important-32.png) no-repeat 7px 50%;color:#333;padding-left:45px;">';
@@ -665,7 +666,7 @@ class PublisherUtils
      * @return string
      * @credit : xHelp module, developped by 3Dev
      */
-    public static function makeURI($page, $vars = [], $encodeAmp = true)
+    public static function makeURI(string $page, array $vars = [], bool $encodeAmp = true): string
     {
         $joinStr = '';
 
@@ -689,7 +690,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function tellafriend($subject = '')
+    public static function tellafriend(string $subject = ''): string
     {
         $xoops = Xoops::getInstance();
         if (stristr($subject, '%')) {
@@ -706,7 +707,7 @@ class PublisherUtils
      *
      * @return bool|string
      */
-    public static function uploadFile($another = false, $withRedirect = true, &$itemObj)
+    public static function uploadFile(bool $another = false, bool $withRedirect = true, &$itemObj)
     {
         $xoops = Xoops::getInstance();
 
@@ -715,8 +716,8 @@ class PublisherUtils
         $itemid = isset($_POST['itemid']) ? (int) ($_POST['itemid']) : 0;
         $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
         $session = new Session();
-        $session->set('publisher_file_filename', isset($_POST['item_file_name']) ? $_POST['item_file_name'] : '');
-        $session->set('publisher_file_description', isset($_POST['item_file_description']) ? $_POST['item_file_description'] : '');
+        $session->set('publisher_file_filename', $_POST['item_file_name'] ?? '');
+        $session->set('publisher_file_description', $_POST['item_file_description'] ?? '');
         $session->set('publisher_file_status', isset($_POST['item_file_status']) ? (int) ($_POST['item_file_status']) : 1);
         $session->set('publisher_file_uid', $uid);
         $session->set('publisher_file_itemid', $itemid);
@@ -726,8 +727,8 @@ class PublisherUtils
         }
 
         $fileObj = $publisher->getFileHandler()->create();
-        $fileObj->setVar('name', isset($_POST['item_file_name']) ? $_POST['item_file_name'] : '');
-        $fileObj->setVar('description', isset($_POST['item_file_description']) ? $_POST['item_file_description'] : '');
+        $fileObj->setVar('name', $_POST['item_file_name'] ?? '');
+        $fileObj->setVar('description', $_POST['item_file_description'] ?? '');
         $fileObj->setVar('status', isset($_POST['item_file_status']) ? (int) ($_POST['item_file_status']) : 1);
         $fileObj->setVar('uid', $uid);
         $fileObj->setVar('itemid', $itemObj->getVar('itemid'));
@@ -771,7 +772,7 @@ class PublisherUtils
     /**
      * @return string
      */
-    public static function newFeatureTag()
+    public static function newFeatureTag(): string
     {
         $ret = '<span style="padding-right: 4px; font-weight: bold; color: red;">'._CO_PUBLISHER_NEW_FEATURE.'</span>';
 
@@ -795,7 +796,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function truncateTagSafe($string, $length = 80, $etc = '...', $break_words = false)
+    public static function truncateTagSafe($string, $length = 80, $etc = '...', $break_words = false): string
     {
         if (0 === $length) {
             return '';
@@ -823,7 +824,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function closeTags($string)
+    public static function closeTags(string $string): string
     {
         // match opened tags
         if (preg_match_all('/<([a-z\:\-]+)[^\/]>/', $string, $start_tags)) {
@@ -859,7 +860,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function ratingBar($itemid)
+    public static function ratingBar(int $itemid): string
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -939,7 +940,7 @@ class PublisherUtils
      *
      * @return array
      */
-    public static function getEditors($allowed_editors = null)
+    public static function getEditors(array $allowed_editors = null): array
     {
         $ret = [];
         $nohtml = false;
@@ -968,7 +969,7 @@ class PublisherUtils
      *
      * @return int
      */
-    public static function stringToInt($string = '', $length = 5)
+    public static function stringToInt(string $string = '', int $length = 5): int
     {
         for ($i = 0, $final = '', $string = substr(md5($string), $length); $i < $length; $final .= (int) ($string[$i]), ++$i) {
         }
@@ -981,7 +982,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function convertCharset($item)
+    public static function convertCharset(string $item): string
     {
         if ('UTF-8' === XoopsLocale::getCharset()) {
             return $item;
@@ -1059,7 +1060,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function seoGenUrl($op, $id, $short_url = '')
+    public static function seoGenUrl(string $op, int $id, string $short_url = ''): string
     {
         $publisher = Publisher::getInstance();
         if ('none' !== $publisher->getConfig('seo_url_rewrite')) {
@@ -1096,7 +1097,7 @@ class PublisherUtils
      *
      * @return string
      */
-    public static function displayFlash($url, $width = 0, $height = 0)
+    public static function displayFlash(string $url, int $width = 0, int $height = 0): string
     {
         if (!$width || !$height) {
             if (!$dimension = @getimagesize($url)) {
@@ -1107,7 +1108,7 @@ class PublisherUtils
             } elseif (!empty($height)) {
                 $width = $dimension[0] * $height / $dimension[1];
             } else {
-                list($width, $height) = [$dimension[0], $dimension[1]];
+                [$width, $height] = [$dimension[0], $dimension[1]];
             }
         }
 

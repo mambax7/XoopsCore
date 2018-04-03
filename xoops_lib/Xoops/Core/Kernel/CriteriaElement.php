@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -65,21 +66,21 @@ abstract class CriteriaElement
      *
      * @return string
      */
-    abstract public function render();
+    abstract public function render(): string;
 
     /**
      * Make the criteria into a SQL "WHERE" clause.
      *
      * @return string
      */
-    abstract public function renderWhere();
+    abstract public function renderWhere(): string;
 
     /**
      * Generate an LDAP filter from criteria.
      *
      * @return string
      */
-    abstract public function renderLdap();
+    abstract public function renderLdap(): string;
 
     /**
      * Render as Doctrine QueryBuilder instructions.
@@ -90,7 +91,7 @@ abstract class CriteriaElement
      *
      * @return QueryBuilder query builder instance
      */
-    abstract public function renderQb(QueryBuilder $qb = null, $whereMode = '');
+    abstract public function renderQb(?QueryBuilder $qb = null, string $whereMode = ''): QueryBuilder;
 
     /**
      * Build an expression to be included in a Doctrine QueryBuilder instance.
@@ -104,14 +105,14 @@ abstract class CriteriaElement
      *
      * @return string expression
      */
-    abstract public function buildExpressionQb(QueryBuilder $qb);
+    abstract public function buildExpressionQb(QueryBuilder $qb): string;
 
     /**
      * set sort column.
      *
      * @param string $sort sort column
      */
-    public function setSort($sort)
+    public function setSort(string $sort): void
     {
         $this->sort = $sort;
     }
@@ -121,7 +122,7 @@ abstract class CriteriaElement
      *
      * @return string sort column
      */
-    public function getSort()
+    public function getSort(): string
     {
         return $this->sort;
     }
@@ -131,7 +132,7 @@ abstract class CriteriaElement
      *
      * @param string $order sort order ASC or DESC
      */
-    public function setOrder($order)
+    public function setOrder(string $order): void
     {
         if (is_string($order)) {
             $order = strtoupper($order);
@@ -146,7 +147,7 @@ abstract class CriteriaElement
      *
      * @return string sort order
      */
-    public function getOrder()
+    public function getOrder(): string
     {
         return $this->order;
     }
@@ -156,7 +157,7 @@ abstract class CriteriaElement
      *
      * @param int $limit row limit
      */
-    public function setLimit($limit = 0)
+    public function setLimit(int $limit = 0): void
     {
         $this->limit = (int) ($limit);
     }
@@ -166,7 +167,7 @@ abstract class CriteriaElement
      *
      * @return int row limit
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -176,7 +177,7 @@ abstract class CriteriaElement
      *
      * @param int $start offset of first row
      */
-    public function setStart($start = 0)
+    public function setStart(int $start = 0): void
     {
         $this->start = (int) ($start);
     }
@@ -186,7 +187,7 @@ abstract class CriteriaElement
      *
      * @return int start row offset
      */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->start;
     }
@@ -196,7 +197,7 @@ abstract class CriteriaElement
      *
      * @param string $group group by
      */
-    public function setGroupBy($group)
+    public function setGroupBy(string $group): void
     {
         $this->groupBy = $group;
     }
@@ -206,7 +207,7 @@ abstract class CriteriaElement
      *
      * @return string group by
      */
-    public function getGroupBy()
+    public function getGroupBy(): string
     {
         return isset($this->groupBy) ? $this->groupBy : '';
     }

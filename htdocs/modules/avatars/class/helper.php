@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Avatars extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Avatars
      */
-    public static function getInstance()
+    public static function getInstance(): Avatars
     {
         return parent::getInstance();
     }
@@ -38,7 +39,7 @@ class Avatars extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return AvatarsAvatarHandler
      */
-    public function getHandlerAvatar()
+    public function getHandlerAvatar(): AvatarsAvatarHandler
     {
         return $this->getHandler('avatar');
     }
@@ -46,7 +47,7 @@ class Avatars extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return AvatarsUserlinkHandler
      */
-    public function getHandlerUserlink()
+    public function getHandlerUserlink(): AvatarsUserlinkHandler
     {
         return $this->getHandler('userlink');
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,7 +40,7 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
      *           'uid' => author uid
      *           'image' => icon for search display
      */
-    public function search($queryArray, $andor, $limit, $offset, $userid)
+    public function search($queryArray, $andor, $limit, $offset, $userid): array
     {
         $andor = 'and' === strtolower($andor) ? 'and' : 'or';
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -83,7 +84,7 @@ class XoopsModule extends XoopsObject
      *
      * @todo module 'version' should be semver based -- 1.0.0 should be OK, not an error
      */
-    public function loadInfoAsVar($dirname, $verbose = true)
+    public function loadInfoAsVar(string $dirname, bool $verbose = true): void
     {
         $dirname = basename($dirname);
         if (!isset($this->modinfo)) {
@@ -119,7 +120,7 @@ class XoopsModule extends XoopsObject
      *
      * @param string $str message to add
      */
-    public function setMessage($str)
+    public function setMessage(string $str): void
     {
         $this->internalMessages[] = trim($str);
     }
@@ -129,7 +130,7 @@ class XoopsModule extends XoopsObject
      *
      * @return array an array of messages
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->internalMessages;
     }
@@ -142,7 +143,7 @@ class XoopsModule extends XoopsObject
      *
      * @return bool
      **/
-    public function setInfo($name, $value)
+    public function setInfo(string $name, $value): bool
     {
         if (empty($name)) {
             $this->modinfo = $value;
@@ -160,7 +161,7 @@ class XoopsModule extends XoopsObject
      *
      * @return string[]|string Array of module information, or just the single name requested
      */
-    public function getInfo($name = null)
+    public function getInfo(string $name = null)
     {
         if (!isset($this->modinfo)) {
             $this->loadInfo($this->getVar('dirname'));
@@ -199,7 +200,7 @@ class XoopsModule extends XoopsObject
      *
      * @return string
      */
-    public function subLink()
+    public function subLink(): string
     {
         $ret = [];
         if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
@@ -216,7 +217,7 @@ class XoopsModule extends XoopsObject
     /**
      * Load the admin menu for the module.
      */
-    public function loadAdminMenu()
+    public function loadAdminMenu(): void
     {
         $file = $this->xoops_root_path.'/modules/'.$this->getInfo('dirname').'/'.$this->getInfo('adminmenu');
         if ($this->getInfo('adminmenu') && '' !== $this->getInfo('adminmenu') && \XoopsLoad::fileExists($file)) {
@@ -231,7 +232,7 @@ class XoopsModule extends XoopsObject
      *
      * @return string
      */
-    public function getAdminMenu()
+    public function getAdminMenu(): string
     {
         if (!isset($this->adminmenu)) {
             $this->loadAdminMenu();
@@ -250,7 +251,7 @@ class XoopsModule extends XoopsObject
      *
      * @todo the $modVersions array should be built once when modules are installed/updated and then cached
      */
-    public function loadInfo($dirname, $verbose = true)
+    public function loadInfo(string $dirname, bool $verbose = true): bool
     {
         static $modVersions;
         if (empty($dirname)) {
@@ -289,7 +290,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('mid', $format);
     }
@@ -301,7 +302,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function mid($format = '')
+    public function mid(string $format = '')
     {
         return $this->getVar('mid', $format);
     }
@@ -313,7 +314,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function name($format = '')
+    public function name(string $format = '')
     {
         return $this->getVar('name', $format);
     }
@@ -325,7 +326,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function version($format = '')
+    public function version(string $format = '')
     {
         return $this->getVar('version', $format);
     }
@@ -337,7 +338,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function last_update($format = '')
+    public function last_update(string $format = '')
     {
         return $this->getVar('last_update', $format);
     }
@@ -349,7 +350,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function weight($format = '')
+    public function weight(string $format = '')
     {
         return $this->getVar('weight', $format);
     }
@@ -361,7 +362,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function isactive($format = '')
+    public function isactive(string $format = '')
     {
         return $this->getVar('isactive', $format);
     }
@@ -373,7 +374,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function dirname($format = '')
+    public function dirname(string $format = '')
     {
         return $this->getVar('dirname', $format);
     }
@@ -385,7 +386,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hasmain($format = '')
+    public function hasmain(string $format = '')
     {
         return $this->getVar('hasmain', $format);
     }
@@ -397,7 +398,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hasadmin($format = '')
+    public function hasadmin(string $format = '')
     {
         return $this->getVar('hasadmin', $format);
     }
@@ -409,7 +410,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hassearch($format = '')
+    public function hassearch(string $format = '')
     {
         return $this->getVar('hassearch', $format);
     }
@@ -421,7 +422,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hasconfig($format = '')
+    public function hasconfig(string $format = '')
     {
         return $this->getVar('hasconfig', $format);
     }
@@ -433,7 +434,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hascomments($format = '')
+    public function hascomments(string $format = '')
     {
         return $this->getVar('hascomments', $format);
     }
@@ -445,7 +446,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function hasnotification($format = '')
+    public function hasnotification(string $format = '')
     {
         return $this->getVar('hasnotification', $format);
     }
@@ -457,7 +458,7 @@ class XoopsModule extends XoopsObject
      *
      * @return XoopsModule
      */
-    public function getByDirname($dirname)
+    public function getByDirname(string $dirname): XoopsModule
     {
         return \Xoops::getInstance()->getModuleByDirname($dirname);
     }

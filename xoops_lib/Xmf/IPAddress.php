@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class IPAddress
      * IPAddress constructor.
      * @param string $ip IP address
      */
-    public function __construct($ip)
+    public function __construct(string $ip)
     {
         if (!filter_var((string) $ip, FILTER_VALIDATE_IP)) {
             $this->ip = false;
@@ -43,7 +44,7 @@ class IPAddress
      *
      * @return IPAddress
      */
-    public static function fromRequest()
+    public static function fromRequest(): IPAddress
     {
         $ip = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
         $class = get_called_class();
@@ -107,7 +108,7 @@ class IPAddress
      *
      * @return bool true if $this->ip and $matchIp are both in the specified subnet
      */
-    public function sameSubnet($matchIp, $netMask4, $netMask6)
+    public function sameSubnet(string $matchIp, int $netMask4, int $netMask6): bool
     {
         $match = new self($matchIp);
         if (false === $this->ipVersion() || ($this->ipVersion() !== $match->ipVersion())) {
@@ -140,7 +141,7 @@ class IPAddress
      *
      * @return string|false normalized address or false on failure
      */
-    protected function normalize($ip)
+    protected function normalize(string $ip)
     {
         $normal = inet_ntop(inet_pton($ip));
 
@@ -154,7 +155,7 @@ class IPAddress
      *
      * @return string
      */
-    protected function asBinaryString(self $ip)
+    protected function asBinaryString(self $ip): string
     {
         $length = (4 === $ip->ipVersion()) ? 4 : 16;
         $binaryIp = $ip->asBinary();

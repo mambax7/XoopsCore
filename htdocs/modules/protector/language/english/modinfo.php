@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined('_MI_PROTECTOR_LOADED')) {
     define('_MI_PROTECTOR_LOADED', 1);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test;
 
@@ -15,7 +15,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = FilterInput::getInstance();
     }
@@ -24,11 +24,11 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $this->assertInstanceOf('\Xmf\FilterInput', $this->object);
 
@@ -39,7 +39,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($instance, $this->object);
     }
 
-    public function testProcess()
+    public function testProcess(): void
     {
         $input = 'Lorem ipsum </i><script>alert();</script>';
         $expected = 'Lorem ipsum alert();';
@@ -49,7 +49,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($input, $this->object->process($input));
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         $input = 'Lorem ipsum </i><script>alert();</script>';
         $expected = 'Lorem ipsum alert();';
@@ -64,14 +64,14 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, FilterInput::clean($input, 'string'));
     }
 
-    public function testCleanVarDefault()
+    public function testCleanVarDefault(): void
     {
         $filter = FilterInput::getInstance();
         $safeTest = '<p>This is a <em>simple</em> test.</p>';
         $this->assertSame('This is a simple test.', $filter->cleanVar($safeTest));
     }
 
-    public function testCleanVarFilter()
+    public function testCleanVarFilter(): void
     {
         $filter = FilterInput::getInstance([], [], 1, 1);
 
@@ -79,7 +79,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($safeTest, $filter->cleanVar($safeTest));
     }
 
-    public function testCleanVarFilterXss()
+    public function testCleanVarFilterXss(): void
     {
         $filter = FilterInput::getInstance([], [], 1, 1);
 
@@ -108,7 +108,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTestForCleanVarType
      */
-    public function testCleanVarTypes($value, $type, $expected)
+    public function testCleanVarTypes($value, $type, $expected): void
     {
         $this->assertSame($expected, $this->object->cleanVar($value, $type));
     }

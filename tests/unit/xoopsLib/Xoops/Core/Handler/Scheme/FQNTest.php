@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Handler\Scheme;
 
@@ -17,7 +17,7 @@ class FQNTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new FQN();
     }
@@ -26,23 +26,23 @@ class FQNTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Handler\Scheme\SchemeInterface', $this->object);
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\XoopsUserHandler';
         $spec = Factory::getInstance()->newSpec()->scheme('fqn')->name($name);
         $this->assertInstanceOf($name, $this->object->build($spec));
     }
 
-    public function testBuild_exception()
+    public function testBuild_exception(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\NoSuchName';
         $spec = Factory::getInstance()->newSpec()->scheme('fqn')->name($name);
@@ -50,7 +50,7 @@ class FQNTest extends \PHPUnit\Framework\TestCase
         $this->object->build($spec);
     }
 
-    public function testBuild_optional()
+    public function testBuild_optional(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\NoSuchName';
         $spec = Factory::getInstance()->newSpec()->scheme('fqn')->name($name)->optional(true);

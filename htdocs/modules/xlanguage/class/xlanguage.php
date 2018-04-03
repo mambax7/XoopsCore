@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xlanguage extension module
  * You may not change or alter any portion of this comment or credits
@@ -46,7 +47,7 @@ class XlanguageLanguage extends XoopsObject
      *
      * @return array
      */
-    public function getValues($keys = null, $format = 's', $maxDepth = 1)
+    public function getValues($keys = null, string $format = 's', int $maxDepth = 1): array
     {
         $ret = parent::getValues();
         $ret['xlanguage_image'] = \XoopsBaseConfig::get('url').'/media/xoops/images/flags/'.\Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme').'/'.$this->getVar('xlanguage_image');
@@ -54,7 +55,7 @@ class XlanguageLanguage extends XoopsObject
         return $ret;
     }
 
-    public function cleanVarsForDB()
+    public function cleanVarsForDB(): void
     {
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
@@ -82,7 +83,7 @@ class XlanguageLanguage extends XoopsObject
  */
 class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'xlanguage', 'XlanguageLanguage', 'xlanguage_id', 'xlanguage_name');
         $this->loadConfig();
@@ -129,7 +130,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
     /**
      * @return array
      */
-    public function createConfig()
+    public function createConfig(): array
     {
         $cached_config = [];
         foreach ($this->getAllLanguage(false) as $key => $language) {
@@ -143,7 +144,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
     /**
      * @return bool
      */
-    public function writeConfig($data)
+    public function writeConfig($data): bool
     {
         if ($this->createPath($this->configPath)) {
             $path_file = $this->configPath.$this->configFile.$this->configFileExt;
@@ -179,7 +180,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getAllLanguage($asobject = true)
+    public function getAllLanguage(bool $asobject = true): array
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort('xlanguage_weight');
@@ -205,7 +206,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    private function createPath($pathname, $pathout = null)
+    private function createPath($pathname, $pathout = null): bool
     {
         $xoops = Xoops::getInstance();
         $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
@@ -232,7 +233,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
     /**
      * @return bool
      */
-    private function writeIndex($folder_in, $source_file, $folder_out)
+    private function writeIndex($folder_in, $source_file, $folder_out): bool
     {
         if (!is_dir($folder_out)) {
             if (!$this->createPath($folder_out)) {

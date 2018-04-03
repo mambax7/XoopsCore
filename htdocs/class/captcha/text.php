@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $form = $this->loadText().'&nbsp;&nbsp; <input type="text" name="'.$this->config['name']
             .'" id="'.$this->config['name'].'" size="'.$this->config['num_chars']
@@ -47,10 +48,10 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      *
      * @return string
      */
-    public function loadText()
+    public function loadText(): string
     {
-        $val_a = mt_rand(0, 9);
-        $val_b = mt_rand(0, 9);
+        $val_a = random_int(0, 9);
+        $val_b = random_int(0, 9);
         if ($val_a > $val_b) {
             $expression = "{$val_a} - {$val_b} = ?";
             $this->code = $val_a - $val_b;

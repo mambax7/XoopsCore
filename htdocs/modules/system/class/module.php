@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -86,7 +87,7 @@ class SystemModule
      *
      * @return array of modules
      */
-    public function getModuleList()
+    public function getModuleList(): array
     {
         // Get main instance
         $xoops = Xoops::getInstance();
@@ -164,7 +165,7 @@ class SystemModule
      *
      * @return array of installed modules
      */
-    public function getInstalledModules()
+    public function getInstalledModules(): array
     {
         // Get main instance
         $xoops = Xoops::getInstance();
@@ -202,7 +203,7 @@ class SystemModule
      *
      * @return bool|XoopsModule|XoopsObject
      */
-    public function install($mod = '', $force = false)
+    public function install(string $mod = '', bool $force = false)
     {
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
@@ -287,7 +288,7 @@ class SystemModule
                             // not reserved, so try to create one
                             try {
                                 $result = $xoops->db()->query($prefixed_query[0]);
-                            } catch (Exception $e) {
+                            } catch (\Throwable $e) {
                                 $xoops->events()->triggerEvent('core.exception', $e);
                                 $result = false;
                             }
@@ -325,7 +326,7 @@ class SystemModule
                         foreach ($created_tables as $table) {
                             try {
                                 $xoops->db()->query('DROP TABLE '.$xoops->db()->prefix($table));
-                            } catch (Exception $e) {
+                            } catch (\Throwable $e) {
                                 $xoops->events()->triggerEvent('core.exception', $e);
                             }
                         }
@@ -344,7 +345,7 @@ class SystemModule
                     foreach ($created_tables as $ct) {
                         try {
                             $xoops->db()->query('DROP TABLE '.$xoops->db()->prefix($ct));
-                        } catch (Exception $e) {
+                        } catch (\Throwable $e) {
                             $xoops->events()->triggerEvent('core.exception', $e);
                         }
                     }
@@ -485,7 +486,7 @@ class SystemModule
      *
      * @return bool|XoopsModule false on failure, module context on success
      */
-    public function uninstall($mod = '')
+    public function uninstall(string $mod = '')
     {
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
@@ -610,7 +611,7 @@ class SystemModule
      *
      * @return mixed boolean false if failed, XoopsModule if success
      */
-    public function update($mod = '')
+    public function update(string $mod = '')
     {
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
@@ -710,7 +711,7 @@ class SystemModule
      *
      * @return string
      */
-    public function getTemplate($dirname, $template, $type = '')
+    public function getTemplate(string $dirname, string $template, string $type = ''): string
     {
         $xoops = Xoops::getInstance();
         $ret = '';
@@ -746,7 +747,7 @@ class SystemModule
      *
      * @param XoopsModule $module module context
      */
-    public function installTemplates(XoopsModule $module)
+    public function installTemplates(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $templates = $module->getInfo('templates');
@@ -756,7 +757,7 @@ class SystemModule
             foreach ($templates as $tpl) {
                 $tpl['file'] = trim($tpl['file']);
                 if (!in_array($tpl['file'], $this->template_delng, true)) {
-                    $type = (isset($tpl['type']) ? $tpl['type'] : 'module');
+                    $type = ($tpl['type'] ?? 'module');
                     $tpldata = $this->getTemplate($module->getVar('dirname'), $tpl['file'], $type);
                     $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_refid', $module->getVar('mid'));
@@ -828,7 +829,7 @@ class SystemModule
      *
      * @param XoopsModule $module module context
      */
-    public function deleteTemplates(XoopsModule $module)
+    public function deleteTemplates(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $tplfile_handler = $xoops->getHandlerTplFile();
@@ -850,7 +851,7 @@ class SystemModule
      *
      * @param XoopsModule $module module context
      */
-    public function installBlocks(XoopsModule $module)
+    public function installBlocks(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $blocks = $module->getInfo('blocks');
@@ -892,11 +893,11 @@ class SystemModule
                         $block_obj[0]->setVar('content', '');
                         $block_obj[0]->setVar('c_type', XoopsBlock::CUSTOM_HTML);
                         $block_obj[0]->setVar('dirname', $module->getVar('dirname'));
-                        $block_obj[0]->setVar('options', isset($block['options']) ? $block['options'] : '');
+                        $block_obj[0]->setVar('options', $block['options'] ?? '');
                     }
                     $block_obj[0]->setVar('func_file', $block['file']);
-                    $block_obj[0]->setVar('show_func', isset($block['show_func']) ? $block['show_func'] : '');
-                    $block_obj[0]->setVar('edit_func', isset($block['edit_func']) ? $block['edit_func'] : '');
+                    $block_obj[0]->setVar('show_func', $block['show_func'] ?? '');
+                    $block_obj[0]->setVar('edit_func', $block['edit_func'] ?? '');
                     $template = $this->getTemplate($module->getVar('dirname'), $block['template'], 'blocks');
                     $block_obj[0]->setVar('template', !empty($template) ? $block['template'] : '');
                     $block_obj[0]->setVar('last_modified', time());
@@ -1031,7 +1032,7 @@ class SystemModule
     /**
      * deleteBlocks.
      */
-    public function deleteBlocks(XoopsModule $module)
+    public function deleteBlocks(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $block_handler = $xoops->getHandlerBlock();
@@ -1089,7 +1090,7 @@ class SystemModule
     /**
      * deleteConfigs.
      */
-    public function deleteConfigs(XoopsModule $module)
+    public function deleteConfigs(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
 
@@ -1122,7 +1123,7 @@ class SystemModule
      *
      * @param XoopsModule $module module being installed
      */
-    public function installConfigs(XoopsModule $module)
+    public function installConfigs(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         // now reinsert them with the new settings

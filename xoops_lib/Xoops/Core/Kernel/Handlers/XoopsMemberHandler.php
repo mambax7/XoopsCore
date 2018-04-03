@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -62,7 +63,7 @@ class XoopsMemberHandler
      *
      * @param Connection|null $db database connection
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         $this->groupHandler = \Xoops::getInstance()->getHandlerGroup();
         $this->userHandler = \Xoops::getInstance()->getHandlerUser();
@@ -74,7 +75,7 @@ class XoopsMemberHandler
      *
      * @return XoopsGroup reference to the new group
      */
-    public function createGroup()
+    public function createGroup(): XoopsGroup
     {
         $inst = $this->groupHandler->create();
 
@@ -86,7 +87,7 @@ class XoopsMemberHandler
      *
      * @return XoopsUser reference to the new user
      */
-    public function createUser()
+    public function createUser(): XoopsUser
     {
         $inst = $this->userHandler->create();
 
@@ -100,7 +101,7 @@ class XoopsMemberHandler
      *
      * @return XoopsGroup reference to the group
      */
-    public function getGroup($id)
+    public function getGroup(int $id): XoopsGroup
     {
         return $this->groupHandler->get($id);
     }
@@ -112,7 +113,7 @@ class XoopsMemberHandler
      *
      * @return XoopsUser
      */
-    public function getUser($id)
+    public function getUser(int $id): XoopsUser
     {
         if (!isset($this->membersWorkingList[$id])) {
             $this->membersWorkingList[$id] = $this->userHandler->get($id);
@@ -128,7 +129,7 @@ class XoopsMemberHandler
      *
      * @return bool FALSE if failed
      */
-    public function deleteGroup(XoopsGroup $group)
+    public function deleteGroup(XoopsGroup $group): bool
     {
         $ret = $this->groupHandler->delete($group);
         $this->membershipHandler->deleteAll(new Criteria('groupid', $group->getVar('groupid')));
@@ -143,7 +144,7 @@ class XoopsMemberHandler
      *
      * @return bool FALSE if failed
      */
-    public function deleteUser(XoopsUser $user)
+    public function deleteUser(XoopsUser $user): bool
     {
         $ret = $this->userHandler->delete($user);
         $this->membershipHandler->deleteAll(new Criteria('uid', $user->getVar('uid')));
@@ -158,7 +159,7 @@ class XoopsMemberHandler
      *
      * @return bool TRUE if already in database and unchanged, FALSE on failure
      */
-    public function insertGroup(XoopsGroup $group)
+    public function insertGroup(XoopsGroup $group): bool
     {
         return $this->groupHandler->insert($group);
     }
@@ -171,7 +172,7 @@ class XoopsMemberHandler
      *
      * @return bool TRUE if already in database and unchanged, FALSE on failure
      */
-    public function insertUser(XoopsUser $user, $force = false)
+    public function insertUser(XoopsUser $user, bool $force = false): bool
     {
         return $this->userHandler->insert($user, $force);
     }
@@ -184,7 +185,7 @@ class XoopsMemberHandler
      *
      * @return XoopsGroup[]
      */
-    public function getGroups(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getGroups(?CriteriaElement $criteria = null, bool $id_as_key = false)
     {
         return $this->groupHandler->getObjects($criteria, $id_as_key);
     }
@@ -197,7 +198,7 @@ class XoopsMemberHandler
      *
      * @return XoopsUser[]
      */
-    public function getUsers(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getUsers(?CriteriaElement $criteria = null, bool $id_as_key = false)
     {
         return $this->userHandler->getObjects($criteria, $id_as_key);
     }
@@ -209,7 +210,7 @@ class XoopsMemberHandler
      *
      * @return array associative array of group-IDs and names
      */
-    public function getGroupList(CriteriaElement $criteria = null)
+    public function getGroupList(?CriteriaElement $criteria = null): array
     {
         $realCriteria = new CriteriaCompo($criteria);
         $realCriteria->add(new Criteria('groupid', FixedGroups::REMOVED, '!='));
@@ -229,7 +230,7 @@ class XoopsMemberHandler
      *
      * @return array associative array of user-IDs and names
      */
-    public function getUserList(CriteriaElement $criteria = null)
+    public function getUserList(?CriteriaElement $criteria = null): array
     {
         $users = $this->userHandler->getObjects($criteria, true);
         $ret = [];
@@ -248,7 +249,7 @@ class XoopsMemberHandler
      *
      * @return XoopsMembership
      */
-    public function addUserToGroup($group_id, $user_id)
+    public function addUserToGroup(int $group_id, int $user_id): XoopsMembership
     {
         $mship = $this->membershipHandler->create();
         $mship->setVar('groupid', $group_id);
@@ -265,7 +266,7 @@ class XoopsMemberHandler
      *
      * @return bool success?
      */
-    public function removeUsersFromGroup($group_id, $user_ids = [])
+    public function removeUsersFromGroup(int $group_id, array $user_ids = []): bool
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('groupid', $group_id));
@@ -289,7 +290,7 @@ class XoopsMemberHandler
      * @return array Array of XoopsUser objects (if $asobject is TRUE)
      *                or of associative arrays matching the record structure
      */
-    public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0)
+    public function getUsersByGroup(int $group_id, bool $asobject = false, int $limit = 0, int $start = 0): array
     {
         $user_ids = $this->membershipHandler->getUsersByGroup($group_id, $limit, $start);
         if (!$asobject) {
@@ -315,7 +316,7 @@ class XoopsMemberHandler
      *
      * @return array array of objects or arrays
      */
-    public function getGroupsByUser($user_id, $asobject = false)
+    public function getGroupsByUser(int $user_id, bool $asobject = false): array
     {
         $ret = [];
         $group_ids = $this->membershipHandler->getGroupsByUser($user_id);
@@ -340,7 +341,7 @@ class XoopsMemberHandler
      *
      * @todo - md5 support should be completely removed eventually
      */
-    public function loginUser($uname, $pwd)
+    public function loginUser(string $uname, string $pwd)
     {
         $criteria = new Criteria('uname', $uname);
         //$criteria->add(new Criteria('pass', md5($pwd)));
@@ -380,7 +381,7 @@ class XoopsMemberHandler
      *
      * @return int
      */
-    public function getUserCount(CriteriaElement $criteria = null)
+    public function getUserCount(?CriteriaElement $criteria = null): int
     {
         return $this->userHandler->getCount($criteria);
     }
@@ -392,7 +393,7 @@ class XoopsMemberHandler
      *
      * @return int
      */
-    public function getUserCountByGroup($group_id)
+    public function getUserCountByGroup(int $group_id): int
     {
         return $this->membershipHandler->getCount(new Criteria('groupid', $group_id));
     }
@@ -406,7 +407,7 @@ class XoopsMemberHandler
      *
      * @return bool TRUE if success or unchanged, FALSE on failure
      */
-    public function updateUserByField(XoopsUser $user, $fieldName, $fieldValue)
+    public function updateUserByField(XoopsUser $user, string $fieldName, string $fieldValue): bool
     {
         $user->setVar($fieldName, $fieldValue);
 
@@ -422,7 +423,7 @@ class XoopsMemberHandler
      *
      * @return bool TRUE if success or unchanged, FALSE on failure
      */
-    public function updateUsersByField($fieldName, $fieldValue, CriteriaElement $criteria = null)
+    public function updateUsersByField(string $fieldName, string $fieldValue, ?CriteriaElement $criteria = null): bool
     {
         if (null === $criteria) {
             $criteria = new Criteria(''); // empty criteria resolves to 'WHERE (1)'
@@ -438,7 +439,7 @@ class XoopsMemberHandler
      *
      * @return bool successful?
      */
-    public function activateUser(XoopsUser $user)
+    public function activateUser(XoopsUser $user): bool
     {
         if (0 !== $user->getVar('level')) {
             return true;
@@ -461,11 +462,11 @@ class XoopsMemberHandler
      * or of associative arrays matching the record structure in the database.
      */
     public function getUsersByGroupLink(
-        $groups,
-        CriteriaElement $criteria = null,
-        $asobject = false,
-        $id_as_key = false
-    ) {
+        array $groups,
+        ?CriteriaElement $criteria = null,
+        bool $asobject = false,
+        bool $id_as_key = false
+    ): array {
         $qb = $this->userHandler->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
@@ -516,7 +517,7 @@ class XoopsMemberHandler
      *
      * @return int count of users
      */
-    public function getUserCountByGroupLink($groups, $criteria = null)
+    public function getUserCountByGroupLink(array $groups, ?CriteriaElement $criteria = null): int
     {
         $qb = $this->userHandler->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();

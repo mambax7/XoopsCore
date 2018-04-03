@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class XoopsPrivateMessageTest extends \PHPUnit\Framework\TestCase
 {
     public $myclass = 'Xoops\Core\Kernel\Handlers\XoopsPrivateMessage';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -25,63 +25,63 @@ class XoopsPrivateMessageTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['read_msg']));
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_msg_id()
+    public function test_msg_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->msg_id();
         $this->assertNull($value);
     }
 
-    public function test_msg_image()
+    public function test_msg_image(): void
     {
         $instance = new $this->myclass();
         $value = $instance->msg_image();
         $this->assertNull($value);
     }
 
-    public function test_subject()
+    public function test_subject(): void
     {
         $instance = new $this->myclass();
         $value = $instance->subject();
         $this->assertNull($value);
     }
 
-    public function test_from_userid()
+    public function test_from_userid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->from_userid();
         $this->assertNull($value);
     }
 
-    public function test_to_userid()
+    public function test_to_userid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->to_userid();
         $this->assertNull($value);
     }
 
-    public function test_msg_time()
+    public function test_msg_time(): void
     {
         $instance = new $this->myclass();
         $value = $instance->msg_time();
         $this->assertInternalType('numeric', $value);
     }
 
-    public function test_msg_text()
+    public function test_msg_text(): void
     {
         $instance = new $this->myclass();
         $value = $instance->msg_text();
         $this->assertNull($value);
     }
 
-    public function test_read_msg()
+    public function test_read_msg(): void
     {
         $instance = new $this->myclass();
         $value = $instance->read_msg();

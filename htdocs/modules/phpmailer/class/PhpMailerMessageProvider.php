@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits of supporting
  developers from this source code or any supporting source code which is considered
@@ -34,7 +35,7 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'phpmailermessage';
     }
@@ -44,12 +45,12 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'User messages by email using PHPMailer.';
     }
 
-    public function sendMessage(Response $response, Message $message)
+    public function sendMessage(Response $response, Message $message): void
     {
         try {
             $email = new Email(

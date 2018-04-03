@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ if (!class_exists('XoopsGTicket')) {
 
         public $messages = [];
 
-        public function XoopsGTicket()
+        public function XoopsGTicket(): void
         {
             $xoops = Xoops::getInstance();
             $language = $xoops->getConfig('language');
@@ -67,7 +68,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // add a ticket as Hidden Element into XoopsForm
-        public function addTicketXoopsFormElement(&$form, $salt = '', $timeout = 1800, $area = '')
+        public function addTicketXoopsFormElement(&$form, $salt = '', $timeout = 1800, $area = ''): void
         {
             $form->addElement(new Xoops\Form\Hidden('XOOPS_G_TICKET', $this->issue($salt, $timeout, $area)));
         }
@@ -90,7 +91,7 @@ if (!class_exists('XoopsGTicket')) {
             $xoops = Xoops::getInstance();
 
             // create a token
-            list($usec, $sec) = explode(' ', microtime());
+            [$usec, $sec] = explode(' ', microtime());
             $appendix_salt = empty($_SERVER['PATH']) ? \XoopsBaseConfig::get('db-name') : $_SERVER['PATH'];
             $token = crypt($salt.$usec.$appendix_salt.$sec);
             $this->_latest_token = $token;
@@ -204,7 +205,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // draw form for repost
-        public function draw_repost_form($area = '')
+        public function draw_repost_form($area = ''): void
         {
             // Notify which file is broken
             if (headers_sent()) {
@@ -230,7 +231,7 @@ if (!class_exists('XoopsGTicket')) {
                     $key = stripslashes($key);
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES), $val);
+                    [$tmp_table, $tmp_form] = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES), $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -250,7 +251,7 @@ if (!class_exists('XoopsGTicket')) {
         /**
          * @param string $key_name
          */
-        public function extract_post_recursive($key_name, $tmp_array)
+        public function extract_post_recursive(string $key_name, $tmp_array)
         {
             $table = '';
             $form = '';
@@ -259,7 +260,7 @@ if (!class_exists('XoopsGTicket')) {
                     $key = stripslashes($key);
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name.'['.htmlspecialchars($key, ENT_QUOTES).']', $val);
+                    [$tmp_table, $tmp_form] = $this->extract_post_recursive($key_name.'['.htmlspecialchars($key, ENT_QUOTES).']', $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -275,7 +276,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // clear all stubs
-        public function clear()
+        public function clear(): void
         {
             $_SESSION['XOOPS_G_STUBS'] = [];
         }
@@ -305,7 +306,7 @@ if (!class_exists('XoopsGTicket')) {
             return $ret;
         }
 
-        public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)
+        public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine): void
         {
             if (preg_match('?'.preg_quote(\XoopsBaseConfig::get('root-path')).'([^:]+)\:(\d+)?', $errStr, $regs)) {
                 echo 'Irregular output! check the file '.htmlspecialchars($regs[1]).' line '.htmlspecialchars($regs[2]);

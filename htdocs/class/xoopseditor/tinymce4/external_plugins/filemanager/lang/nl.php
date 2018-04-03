@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 define('lang_Select', 'Selecteren');
 define('lang_Erase', 'Verwijderen');

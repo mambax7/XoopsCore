@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -61,7 +62,7 @@ class Checkbox extends OptionElement
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $required = $this->has('required');
         $elementOptions = $this->getOptions();
@@ -122,7 +123,7 @@ class Checkbox extends OptionElement
      *
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         // render custom validation code if any
         if (!empty($this->customValidationCode)) {

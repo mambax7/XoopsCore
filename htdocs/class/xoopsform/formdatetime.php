@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ class XoopsFormDateTime extends Xoops\Form\DateTimeSelect
      *                           SHOW_DATE, false - only show date selector
      *                           SHOW_TIME        - only show time selector
      */
-    public function __construct($caption, $name, $size = 12, $value = 0, $showtime = true)
+    public function __construct(string $caption, string $name, int $size = 12, int $value = 0, $showtime = true)
     {
         parent::__construct($caption, $name, $value, $showtime);
     }

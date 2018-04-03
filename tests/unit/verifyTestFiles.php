@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 $_SERVER['HTTP_HOST'] = 'localhost';
 require_once __DIR__.'/init_new.php';
 
-function verify($file, $path)
+function verify($file, $path): void
 {
     $tmp = basename($file, '.php');
     $path1 = str_replace('xoops_lib', 'xoopsLib', $path);
@@ -16,7 +16,7 @@ function verify($file, $path)
     }
 }
 
-function browse($path = null)
+function browse($path = null): void
 {
     $xoops_root_path = \XoopsBaseConfig::get('root-path');
     $root = $xoops_root_path.DIRECTORY_SEPARATOR.$path;

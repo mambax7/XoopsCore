@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Publisher
      */
-    public static function getInstance()
+    public static function getInstance(): Publisher
     {
         return parent::getInstance();
     }
@@ -43,7 +44,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherItemHandler
      */
-    public function getItemHandler()
+    public function getItemHandler(): PublisherItemHandler
     {
         return $this->getHandler('item');
     }
@@ -51,7 +52,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherCategoryHandler
      */
-    public function getCategoryHandler()
+    public function getCategoryHandler(): PublisherCategoryHandler
     {
         return $this->getHandler('category');
     }
@@ -59,7 +60,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherPermissionHandler
      */
-    public function getPermissionHandler()
+    public function getPermissionHandler(): PublisherPermissionHandler
     {
         return $this->getHandler('permission');
     }
@@ -67,7 +68,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherFileHandler
      */
-    public function getFileHandler()
+    public function getFileHandler(): PublisherFileHandler
     {
         return $this->getHandler('file');
     }
@@ -75,7 +76,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherMimetypeHandler
      */
-    public function getMimetypeHandler()
+    public function getMimetypeHandler(): PublisherMimetypeHandler
     {
         return $this->getHandler('mimetype');
     }
@@ -83,7 +84,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherRatingHandler
      */
-    public function getRatingHandler()
+    public function getRatingHandler(): PublisherRatingHandler
     {
         return $this->getHandler('rating');
     }
@@ -91,7 +92,7 @@ class Publisher extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherGrouppermHandler
      */
-    public function getGrouppermHandler()
+    public function getGrouppermHandler(): PublisherGrouppermHandler
     {
         return $this->getHandler('groupperm');
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -74,7 +75,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigItem
      */
-    public function createConfig()
+    public function createConfig(): XoopsConfigItem
     {
         $instance = $this->itemHandler->create();
 
@@ -89,7 +90,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigItem
      */
-    public function getConfig($id, $withoptions = false)
+    public function getConfig(int $id, bool $withoptions = false): XoopsConfigItem
     {
         /* @var $config XoopsConfigItem */
         $config = $this->itemHandler->get($id);
@@ -107,7 +108,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function insertConfig(XoopsConfigItem $config)
+    public function insertConfig(XoopsConfigItem $config): bool
     {
         if (!$this->itemHandler->insert($config)) {
             return false;
@@ -137,7 +138,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function deleteConfig(XoopsConfigItem $config)
+    public function deleteConfig(XoopsConfigItem $config): bool
     {
         if (!$this->itemHandler->delete($config)) {
             return false;
@@ -168,7 +169,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigItem[]
      */
-    public function getConfigs(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getConfigs(?CriteriaElement $criteria = null, bool $id_as_key = false)
     {
         $criteria2 = new CriteriaCompo();
         if ($criteria) {
@@ -192,7 +193,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return int
      */
-    public function getConfigCount(CriteriaElement $criteria = null)
+    public function getConfigCount(?CriteriaElement $criteria = null): int
     {
         return $this->itemHandler->getCount($criteria);
     }
@@ -204,7 +205,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return array of configuration values
      */
-    public function getConfigsByModule($module = 0)
+    public function getConfigsByModule(int $module = 0): array
     {
         $ret = [];
         $criteria = new Criteria('conf_modid', (int) ($module));
@@ -228,7 +229,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @deprecated Use getConfigsByModule instead
      */
-    public function getConfigsByCat($category, $module = 0)
+    public function getConfigsByCat(int $category, int $module = 0): array
     {
         static $_cachedConfigs;
         if (!empty($_cachedConfigs[$module][$category])) {
@@ -255,7 +256,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigOption
      */
-    public function createConfigOption()
+    public function createConfigOption(): XoopsConfigOption
     {
         $inst = $this->optionHandler->create();
 
@@ -269,7 +270,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigOption
      */
-    public function getConfigOption($id)
+    public function getConfigOption(int $id): XoopsConfigOption
     {
         $inst = $this->optionHandler->get($id);
 
@@ -284,7 +285,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigOption[]
      */
-    public function getConfigOptions(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getConfigOptions(?CriteriaElement $criteria = null, bool $id_as_key = false)
     {
         return $this->optionHandler->getObjects($criteria, $id_as_key);
     }
@@ -296,7 +297,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return int Count of options matching $criteria
      */
-    public function getConfigOptionsCount(CriteriaElement $criteria = null)
+    public function getConfigOptionsCount(?CriteriaElement $criteria = null): int
     {
         return $this->optionHandler->getCount($criteria);
     }
@@ -309,7 +310,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @return array Associative array of name=>value pairs.
      */
-    public function getConfigList($conf_modid, $conf_catid = 0)
+    public function getConfigList(int $conf_modid, int $conf_catid = 0): array
     {
         if (!empty($this->cachedConfigs[$conf_modid][$conf_catid])) {
             return $this->cachedConfigs[$conf_modid][$conf_catid];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core;
 
@@ -46,7 +46,7 @@ class Psr0ClassLoader
      * @param string $ns          The namespace to use.
      * @param string $includePath Path to the namespaces top directory
      */
-    public function __construct($ns = null, $includePath = null)
+    public function __construct(string $ns = null, string $includePath = null)
     {
         $this->namespace = $ns;
         $this->includePath = $includePath;
@@ -62,7 +62,7 @@ class Psr0ClassLoader
      *
      * @return SplClassLoader
      */
-    public static function addLoader($namespace, $path, $separator = '\\', $extension = '.php')
+    public static function addLoader(type $namespace, type $path, type $separator = '\\', type $extension = '.php'): SplClassLoader
     {
         $loaderClass = get_called_class();
         $loader = new $loaderClass($namespace, $path);
@@ -78,7 +78,7 @@ class Psr0ClassLoader
      *
      * @param string $sep The separator to use.
      */
-    public function setNamespaceSeparator($sep)
+    public function setNamespaceSeparator(string $sep): void
     {
         $this->namespaceSeparator = $sep;
     }
@@ -88,7 +88,7 @@ class Psr0ClassLoader
      *
      * @return string
      */
-    public function getNamespaceSeparator()
+    public function getNamespaceSeparator(): string
     {
         return $this->namespaceSeparator;
     }
@@ -98,7 +98,7 @@ class Psr0ClassLoader
      *
      * @param string $includePath include path
      */
-    public function setIncludePath($includePath)
+    public function setIncludePath(string $includePath): void
     {
         $this->includePath = $includePath;
     }
@@ -108,7 +108,7 @@ class Psr0ClassLoader
      *
      * @return string $includePath include path
      */
-    public function getIncludePath()
+    public function getIncludePath(): string
     {
         return $this->includePath;
     }
@@ -118,7 +118,7 @@ class Psr0ClassLoader
      *
      * @param string $fileExtension file extension
      */
-    public function setFileExtension($fileExtension)
+    public function setFileExtension(string $fileExtension): void
     {
         $this->fileExtension = $fileExtension;
     }
@@ -128,7 +128,7 @@ class Psr0ClassLoader
      *
      * @return string $fileExtension
      */
-    public function getFileExtension()
+    public function getFileExtension(): string
     {
         return $this->fileExtension;
     }
@@ -136,7 +136,7 @@ class Psr0ClassLoader
     /**
      * Installs this class loader on the SPL autoload stack.
      */
-    public function register()
+    public function register(): void
     {
         spl_autoload_register([$this, 'loadClass']);
     }
@@ -144,7 +144,7 @@ class Psr0ClassLoader
     /**
      * Uninstalls this class loader from the SPL autoloader stack.
      */
-    public function unregister()
+    public function unregister(): void
     {
         spl_autoload_unregister([$this, 'loadClass']);
     }
@@ -154,7 +154,7 @@ class Psr0ClassLoader
      *
      * @param string $className The name of the class to load.
      */
-    public function loadClass($className)
+    public function loadClass(string $className): void
     {
         if (null === $this->namespace
             || $this->namespace.$this->namespaceSeparator

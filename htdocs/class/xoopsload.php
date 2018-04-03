@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class xoopsload
      *
      * @return array
      */
-    public static function addMap(array $map)
+    public static function addMap(array $map): array
     {
         self::$map = array_merge(self::$map, $map);
 
@@ -48,7 +49,7 @@ class xoopsload
      *
      * @return array
      */
-    public static function getMap()
+    public static function getMap(): array
     {
         return self::$map;
     }
@@ -61,7 +62,7 @@ class xoopsload
      *
      * @return bool
      */
-    public static function load($name, $type = 'core')
+    public static function load(string $name, string $type = 'core'): bool
     {
         static $loaded;
 
@@ -107,7 +108,7 @@ class xoopsload
      * @static
      * @return array
      */
-    public static function loadCoreConfig()
+    public static function loadCoreConfig(): array
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
 
@@ -337,7 +338,7 @@ class xoopsload
      *
      * @return array|bool
      */
-    public static function loadConfig($data = null)
+    public static function loadConfig(string $data = null)
     {
         $xoops = Xoops::getInstance();
         $configs = [];
@@ -369,7 +370,7 @@ class xoopsload
      *
      * @return bool
      */
-    public static function loadFile($file, $once = true)
+    public static function loadFile(string $file, bool $once = true): bool
     {
         self::securityCheck($file);
         if (self::fileExists($file)) {
@@ -392,7 +393,7 @@ class xoopsload
      *
      * @return bool
      */
-    public static function loadClass($class)
+    public static function loadClass(string $class): bool
     {
         if (class_exists($class, false) || interface_exists($class, false)) {
             return true;
@@ -421,7 +422,7 @@ class xoopsload
      *
      * @return mixed
      */
-    public static function fileExists($file)
+    public static function fileExists(string $file)
     {
         static $included = [];
         if (!isset($included[$file])) {
@@ -437,7 +438,7 @@ class xoopsload
      * @param string $path path of the library directory where composer managed
      *                     vendor directory can be found.
      */
-    public static function startAutoloader($path)
+    public static function startAutoloader(string $path): void
     {
         static $libPath = null;
 
@@ -457,7 +458,7 @@ class xoopsload
      *
      * @param string $filename file name
      */
-    protected static function securityCheck($filename)
+    protected static function securityCheck(string $filename): void
     {
         /*
          * Security check
@@ -474,7 +475,7 @@ class xoopsload
      *
      * @return bool|string
      */
-    private static function loadCore($name)
+    private static function loadCore(string $name)
     {
         $map = self::$map; //addMap(XoopsLoad::loadCoreConfig());
         if (isset($map[$name])) {
@@ -508,7 +509,7 @@ class xoopsload
      *
      * @return false|string
      */
-    private static function loadFramework($name)
+    private static function loadFramework(string $name)
     {
         if (!self::fileExists($file = \XoopsBaseConfig::get('root-path').'/Frameworks/'.$name.'/xoops'.$name.'.php')) {
             /*
@@ -537,7 +538,7 @@ class xoopsload
      *
      * @return bool
      */
-    private static function loadModule($name, $dirname = null)
+    private static function loadModule(string $name, ?string $dirname = null): bool
     {
         if (empty($dirname)) {
             return false;

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -121,7 +122,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      *
      * @param bool $checkperm true to check permissions, false to ignore permissions
      */
-    public function setCheckPermissions($checkperm)
+    public function setCheckPermissions(bool $checkperm): void
     {
         $this->checkperm = (bool) $checkperm;
     }
@@ -132,7 +133,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
      */
-    private function buildMainTab(PublisherItem $obj, ContainerInterface $mainTab)
+    private function buildMainTab(PublisherItem $obj, ContainerInterface $mainTab): void
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -257,7 +258,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
      */
-    private function buildEditors(PublisherItem $obj, ContainerInterface $mainTab)
+    private function buildEditors(PublisherItem $obj, ContainerInterface $mainTab): void
     {
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
@@ -324,7 +325,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
      */
-    private function buildTSOptions(PublisherItem $obj, ContainerInterface $mainTab)
+    private function buildTSOptions(PublisherItem $obj, ContainerInterface $mainTab): void
     {
         // VARIOUS OPTIONS
         if ($this->isGranted(_PUBLISHER_DOHTML)) {
@@ -356,7 +357,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      * @param PublisherItem      $obj      data source
      * @param ContainerInterface $filesTab add elements to this tab/form
      */
-    private function buildFilesTab(PublisherItem $obj, ContainerInterface $filesTab)
+    private function buildFilesTab(PublisherItem $obj, ContainerInterface $filesTab): void
     {
         $publisher = Publisher::getInstance();
 
@@ -444,7 +445,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $imagesTab add elements to this tab/form
      */
-    private function buildImagesTab(PublisherItem $obj, ContainerInterface $imagesTab)
+    private function buildImagesTab(PublisherItem $obj, ContainerInterface $imagesTab): void
     {
         $xoops = Xoops::getInstance();
         $group = $xoops->getUserGroups();
@@ -638,7 +639,7 @@ $(document).ready(function(){
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $othersTab add elements to this tab/form
      */
-    private function buildOthersTab(PublisherItem $obj, ContainerInterface $othersTab)
+    private function buildOthersTab(PublisherItem $obj, ContainerInterface $othersTab): void
     {
         // Meta Keywords
         if ($this->isGranted(_PUBLISHER_ITEM_META_KEYWORDS)) {
@@ -691,7 +692,7 @@ $(document).ready(function(){
      *
      * @return bool true if permission is granted, false if not
      */
-    private function isGranted($item)
+    private function isGranted(int $item): bool
     {
         $publisher = Publisher::getInstance();
         $ret = false;
@@ -709,7 +710,7 @@ $(document).ready(function(){
      *
      * @return bool true if form has tab named $tab
      */
-    private function hasTab($tab)
+    private function hasTab(string $tab): bool
     {
         if (!isset($tab) || !isset($this->tabs[$tab])) {
             return false;

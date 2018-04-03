@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -64,7 +65,7 @@ class Factory
      * Private unserialize method to prevent unserializing of the *Singleton*
      * instance.
      */
-    private function __wakeup()
+    private function __wakeup(): void
     {
     }
 
@@ -73,7 +74,7 @@ class Factory
      *
      * @return Factory the singleton instance.
      */
-    public static function getInstance()
+    public static function getInstance(): Factory
     {
         if (null === static::$instance) {
             static::$instance = new static();
@@ -104,7 +105,7 @@ class Factory
      *
      * @return XoopsObjectHandler|null
      */
-    public function create($name, $dirname = null, $optional = false)
+    public function create(string $name, ?string $dirname = null, bool $optional = false): ?XoopsObjectHandler
     {
         // have colon assume form of scheme:name
         $foundColon = strpos($name, ':');
@@ -142,7 +143,7 @@ class Factory
      * @param string $className fully qualified name of class that implements the scheme.
      *                           this class must implement the SchemeInterface
      */
-    public function registerScheme($name, $className)
+    public function registerScheme(string $name, string $className): void
     {
         $this->schemes[strtolower($name)] = $className;
     }
@@ -150,7 +151,7 @@ class Factory
     /**
      * @return FactorySpec
      */
-    public static function newSpec()
+    public static function newSpec(): FactorySpec
     {
         $instance = self::getInstance();
         $spec = FactorySpec::getInstance($instance);
@@ -169,7 +170,7 @@ class Factory
      * @throws InvalidHandlerSpecException
      * @throws NoHandlerException
      */
-    public function build(FactorySpec $spec)
+    public function build(FactorySpec $spec): XoopsObjectHandler
     {
         $scheme = $this->getSchemeObject($spec);
         if (null === $scheme) {
@@ -184,7 +185,7 @@ class Factory
     /**
      * @return Connection
      */
-    public function db()
+    public function db(): Connection
     {
         return static::$db;
     }
@@ -193,7 +194,7 @@ class Factory
      * @param  FactorySpec     $spec specification
      * @return SchemeInterface
      */
-    private function getSchemeObject(FactorySpec $spec)
+    private function getSchemeObject(FactorySpec $spec): SchemeInterface
     {
         $schemeName = $this->schemes[$spec->getScheme()];
         $scheme = null;

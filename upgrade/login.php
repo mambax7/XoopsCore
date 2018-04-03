@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 defined('XOOPS_ROOT_PATH') or die();
 
 if (empty($_POST['uname']) || empty($_POST['pass'])) {
@@ -38,7 +39,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         if (!is_object($user)) {
             $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
             $criteria->add(new Criteria('pass', md5($pass)));
-            list($user) = $member_handler->getUsers($criteria);
+            [$user] = $member_handler->getUsers($criteria);
         }
 
         $isAllowed = false;

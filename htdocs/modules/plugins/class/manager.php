@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,7 +20,7 @@ class PluginsManager
     /**
      * @return array returns an array of listeners in the form of listener=>caller
      */
-    public static function getListeners()
+    public static function getListeners(): array
     {
         $xoops = \Xoops::getInstance();
         $dirNames = $xoops->getActiveModules();
@@ -49,7 +50,7 @@ class PluginsManager
      *
      * @return bool
      */
-    public static function updatePlugins()
+    public static function updatePlugins(): bool
     {
         $ret = true;
         $handler = Plugins::getInstance()->getHandlerPlugin();

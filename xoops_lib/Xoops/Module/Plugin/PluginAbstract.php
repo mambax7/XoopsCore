@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class PluginAbstract
      *
      * @param string $dirname module dirname
      */
-    public function __construct($dirname)
+    public function __construct(string $dirname)
     {
         $xoops = \Xoops::getInstance();
         $xoops->loadLanguage('modinfo', $dirname);

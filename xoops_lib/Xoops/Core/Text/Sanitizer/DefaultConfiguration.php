@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -53,7 +54,7 @@ class DefaultConfiguration extends ConfigurationAbstract
      *
      * @return array
      */
-    public function buildDefaultConfiguration()
+    public function buildDefaultConfiguration(): array
     {
         $this->registerComponent(\Xoops\Core\Text\Sanitizer::getDefaultConfig());
         $extensions = File::getList(__DIR__.'/Extensions');
@@ -89,7 +90,7 @@ class DefaultConfiguration extends ConfigurationAbstract
      *
      * @param array $configArray extension configuration
      */
-    public function registerComponent($configArray)
+    public function registerComponent(array $configArray): void
     {
         if (is_array($configArray)) {
             foreach ($configArray as $key => $config) {

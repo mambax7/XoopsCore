@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -8,7 +8,7 @@ class ConfigCollectorTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Xoops\Module\Plugin\ConfigCollector';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $module = new XoopsModule();
         $configs = [];
@@ -17,7 +17,7 @@ class ConfigCollectorTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test_add()
+    public function test_add(): void
     {
         $module = new XoopsModule();
         $configs = [];
@@ -31,7 +31,7 @@ class ConfigCollectorTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) === count($new));
     }
 
-    public function test_module()
+    public function test_module(): void
     {
         $module = new XoopsModule();
         $configs = [];

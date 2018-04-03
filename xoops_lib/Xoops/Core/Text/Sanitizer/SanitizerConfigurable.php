@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ abstract class SanitizerConfigurable
      *
      * @return array [componentName] => [ ... configuration items ... ]
      */
-    final public static function getDefaultConfig()
+    final public static function getDefaultConfig(): array
     {
         $fullName = get_called_class();
         $shortName = ($pos = strrpos($fullName, '\\')) ? substr($fullName, $pos + 1) : $fullName;

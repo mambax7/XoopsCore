@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -61,7 +62,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return bool successful?
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function connect($selectdb = true)
+    public function connect(bool $selectdb = true): bool
     {
         $this->connect = (is_object($this->conn));
         $this->selectdb = $selectdb;
@@ -81,7 +82,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return int always 0, because mysql has support for autoincrement
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function genId($sequence)
+    public function genId(string $sequence): int
     {
         $this->deprecated();
 
@@ -96,7 +97,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return array
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function fetchRow($result)
+    public function fetchRow($result): array
     {
         $this->deprecated();
         if (!is_object($result)) {
@@ -114,7 +115,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return array
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function fetchArray($result)
+    public function fetchArray($result): array
     {
         $this->deprecated();
 
@@ -133,7 +134,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return array
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function fetchBoth($result)
+    public function fetchBoth($result): array
     {
         $this->deprecated();
 
@@ -169,7 +170,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return int
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getInsertId()
+    public function getInsertId(): int
     {
         $this->deprecated();
 
@@ -184,7 +185,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return int the number of rows to return
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getRowsNum($result)
+    public function getRowsNum($result): int
     {
         Xoops::getInstance()->deprecated('getRowsNum is deprecated and not dependable.');
         //$this->deprecated();
@@ -197,7 +198,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return int
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getAffectedRows()
+    public function getAffectedRows(): int
     {
         $this->deprecated();
 
@@ -224,7 +225,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return bool TRUE on success or FALSE on failure.
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function freeRecordSet($result)
+    public function freeRecordSet($result): bool
     {
         $this->deprecated();
 
@@ -238,7 +239,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * or '' (the empty string) if no error occurred.
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function error()
+    public function error(): bool
     {
         $this->deprecated();
 
@@ -253,7 +254,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * , or 0 (zero) if no error occurred.
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function errno()
+    public function errno(): int
     {
         $this->deprecated();
 
@@ -269,7 +270,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return string escaped string text with single quotes around
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function quoteString($str)
+    public function quoteString(string $str): string
     {
         $this->deprecated();
 
@@ -284,7 +285,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return string
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function quote($string)
+    public function quote(string $string): string
     {
         $this->deprecated();
 
@@ -299,7 +300,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return string
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function escape($string)
+    public function escape(string $string): string
     {
         $this->deprecated();
 
@@ -319,7 +320,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * or TRUE if successful and no result
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function queryF($sql, $limit = 0, $start = 0)
+    public function queryF(string $sql, int $limit = 0, int $start = 0)
     {
         $this->deprecated();
 
@@ -334,7 +335,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
         try {
             $result = $this->conn->query($sql);
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $result = false;
         }
         $this->lastResult = $result;
@@ -362,7 +363,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function query($sql, $limit = 0, $start = 0)
+    public function query(string $sql, int $limit = 0, int $start = 0): void
     {
         $this->deprecated();
     }
@@ -376,7 +377,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * if the file has been read and queries executed
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function queryFromFile($file)
+    public function queryFromFile(string $file): bool
     {
         $this->deprecated();
 
@@ -408,7 +409,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return string
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getFieldName($result, $offset)
+    public function getFieldName($result, $offset): string
     {
         $this->deprecated();
 
@@ -430,7 +431,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return string
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getFieldType($result, $offset)
+    public function getFieldType($result, $offset): string
     {
         $this->deprecated();
 
@@ -468,7 +469,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @return int
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function getFieldsNum($result)
+    public function getFieldsNum($result): int
     {
         $this->deprecated();
 
@@ -480,7 +481,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @return string
      */
-    public function getServerVersion()
+    public function getServerVersion(): string
     {
         $conn = \Xoops::getInstance()->db()->getWrappedConnection();
         $version = '(not available)';
@@ -494,7 +495,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Issue a deprecated warning once per session.
      */
-    protected function deprecated()
+    protected function deprecated(): void
     {
         static $warning_issued = false;
         if (!$warning_issued) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ $xoops->header();
 $indexAdmin = new \Xoops\Module\Admin();
 $indexAdmin->displayNavigation('user.php');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$op = $_REQUEST['op'] ?? 'list';
 if ('editordelete' === $op) {
     $op = isset($_REQUEST['delete']) ? 'delete' : 'edit';
 }
@@ -153,14 +154,14 @@ switch ($op) {
                     $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname], $user->getVar($fieldname, 'n'));
                     $user->setVar($fieldname, $value);
                 } else {
-                    $value = $fields[$i]->getValueForSave((isset($_REQUEST[$fieldname]) ? $_REQUEST[$fieldname]
-                                : ''), $profile->getVar($fieldname, 'n'));
+                    $value = $fields[$i]->getValueForSave(($_REQUEST[$fieldname]
+                                ?? ''), $profile->getVar($fieldname, 'n'));
                     $profile->setVar($fieldname, $value);
                 }
             }
         }
 
-        $new_groups = isset($_POST['groups']) ? $_POST['groups'] : [];
+        $new_groups = $_POST['groups'] ?? [];
 
         if (0 === count($errors)) {
             if ($handler->insertUser($user)) {

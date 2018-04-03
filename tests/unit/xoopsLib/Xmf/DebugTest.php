@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf;
 
@@ -15,7 +15,7 @@ class DebugTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Debug();
     }
@@ -24,11 +24,11 @@ class DebugTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -36,7 +36,7 @@ class DebugTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testBacktrace()
+    public function testBacktrace(): void
     {
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
@@ -46,39 +46,39 @@ class DebugTest extends \PHPUnit\Framework\TestCase
         //$this->assertTrue(is_string($x));
     }
 
-    public function testStartTimer()
+    public function testStartTimer(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function testStopTimer()
+    public function testStopTimer(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function testStartQueuedTimer()
+    public function testStartQueuedTimer(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function teststopQueuedTimer()
+    public function teststopQueuedTimer(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function testdumpQueuedTimers()
+    public function testdumpQueuedTimers(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function testStartTrace()
+    public function testStartTrace(): void
     {
         if (function_exists('xdebug_start_trace')) {
             $this->markTestIncomplete();
         }
     }
 
-    public function testStopTrace()
+    public function testStopTrace(): void
     {
         if (function_exists('xdebug_stop_trace')) {
             $this->markTestIncomplete();

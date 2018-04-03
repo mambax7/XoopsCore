@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -14,7 +14,7 @@ class CiBootstrapCommand extends Command
     /**
      * establish the command configuration.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('ci-bootstrap')
             ->setDescription('Create a mainfile for CI processes')
@@ -34,7 +34,7 @@ EOT
      * @param  string        $mainfile   fully qualified name of mainfile to write
      * @return integer|false
      */
-    protected function createMainfile($configFile, $mainfile)
+    protected function createMainfile(string $configFile, string $mainfile)
     {
         $lines = <<<'EOT'
 <?php
@@ -61,7 +61,7 @@ EOT;
      * @param  string        $baseDir    base directory
      * @return integer|false
      */
-    protected function createConfigFile($configFile, $baseDir)
+    protected function createConfigFile(string $configFile, string $baseDir)
     {
         $url = 'http://localhost';
         $webRoot = $baseDir.'/htdocs';
@@ -115,7 +115,7 @@ EOT;
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $XContainer = $this->getApplication()->XContainer;
         $configFile = $XContainer->get('configfile');

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -7,7 +7,7 @@ $config = null;
 
 class ConfigTextTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_100()
+    public function test_100(): void
     {
         global $config;
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class Plugins extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PluginsPluginHandler
      */
-    public function getHandlerPlugin()
+    public function getHandlerPlugin(): PluginsPluginHandler
     {
         return $this->getHandler('plugin');
     }

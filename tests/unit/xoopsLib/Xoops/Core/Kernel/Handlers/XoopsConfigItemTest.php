@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class ConfigItemTest extends \PHPUnit\Framework\TestCase
 {
     public $myclass = 'Xoops\Core\Kernel\Handlers\XoopsConfigItem';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -27,77 +27,77 @@ class ConfigItemTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['conf_order']));
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_conf_id()
+    public function test_conf_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_id();
         $this->assertNull($value);
     }
 
-    public function test_conf_modid()
+    public function test_conf_modid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_modid();
         $this->assertNull($value);
     }
 
-    public function test_conf_catid()
+    public function test_conf_catid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_catid();
         $this->assertNull($value);
     }
 
-    public function test_conf_name()
+    public function test_conf_name(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_name();
         $this->assertNull($value);
     }
 
-    public function test_conf_title()
+    public function test_conf_title(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_title();
         $this->assertNull($value);
     }
 
-    public function test_conf_value()
+    public function test_conf_value(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_value();
         $this->assertNull($value);
     }
 
-    public function test_conf_desc()
+    public function test_conf_desc(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_desc();
         $this->assertNull($value);
     }
 
-    public function test_conf_formtype()
+    public function test_conf_formtype(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_formtype();
         $this->assertNull($value);
     }
 
-    public function test_conf_valuetype()
+    public function test_conf_valuetype(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_valuetype();
         $this->assertNull($value);
     }
 
-    public function test_conf_order()
+    public function test_conf_order(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_order();

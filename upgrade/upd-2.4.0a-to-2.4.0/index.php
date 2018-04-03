@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class upgrade_240a extends xoopsUpgrade
         if (!$result = $db->queryF($sql)) {
             return false;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return ($count > 0) ? false : true;
     }
@@ -49,7 +50,7 @@ class upgrade_240a extends xoopsUpgrade
         if (!$result = $db->queryF($sql)) {
             return false;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return (1 === $count) ? false : true;
     }
@@ -68,7 +69,7 @@ class upgrade_240a extends xoopsUpgrade
             $config_installed = false;
             $sql = 'SELECT COUNT(*) FROM '.$db->prefix('config')." WHERE `conf_name` = '{$config}' AND `conf_modid` = 0";
             if ($result = $db->queryF($sql)) {
-                list($count) = $db->fetchRow($result);
+                [$count] = $db->fetchRow($result);
                 if (1 === $count) {
                     $config_installed = true;
                 }
@@ -91,7 +92,7 @@ class upgrade_240a extends xoopsUpgrade
         $configoption_installed = false;
         $sql = 'SELECT COUNT(*) FROM `'.$db->prefix('configoption').'`'." WHERE `confop_name` = '_MD_AM_AUTH_CONFOPTION_SOAP' AND `confop_value` = 'soap'";
         if ($result = $db->queryF($sql)) {
-            list($count) = $db->fetchRow($result);
+            [$count] = $db->fetchRow($result);
             if (1 === $count) {
                 $configoption_installed = true;
             }
@@ -107,7 +108,7 @@ class upgrade_240a extends xoopsUpgrade
         return true;
     }
 
-    public function upgrade_240a()
+    public function upgrade_240a(): void
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }

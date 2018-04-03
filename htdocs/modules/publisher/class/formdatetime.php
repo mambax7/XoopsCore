@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class PublisherFormDateTime extends Xoops\Form\ElementTray
      * @param int    $size
      * @param int    $value
      */
-    public function __construct($caption, $name, $size = 15, $value = 0)
+    public function __construct(string $caption, string $name, int $size = 15, int $value = 0)
     {
         parent::__construct($caption, '&nbsp;');
         $value = (int) ($value);

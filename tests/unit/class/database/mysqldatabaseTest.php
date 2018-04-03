@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,14 +6,14 @@ class XoopsMySQLDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsMySQLDatabase';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf('\XoopsMySQLDatabase', $instance);
         $this->assertInstanceOf('\XoopsDatabase', $instance);
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['conn'];
         foreach ($items as $item) {
@@ -22,7 +22,7 @@ class XoopsMySQLDatabaseTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_genId()
+    public function test_genId(): void
     {
         $instance = new $this->myclass();
         $sequence = 0;

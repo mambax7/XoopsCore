@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // Appended by Xoops Language Checker -GIJOE- in 2009-08-29 04:13:46
 define('_MD_PROTECTOR_FMT_REGISTER_MORATORIUM', 'Post it again %s minutes later. (for Anti-SPAMMING, sorry)');

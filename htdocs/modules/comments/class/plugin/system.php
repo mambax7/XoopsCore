@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Comments module.
  *
@@ -22,7 +23,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      *
      * @return int
      */
-    public function userPosts($uid)
+    public function userPosts(int $uid): int
     {
         $comments = \Xoops::getModuleHelper('comments'); //need this here to init constants
         $criteria = new CriteriaCompo();
@@ -35,7 +36,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
     /**
      * @return array
      */
-    public function waiting()
+    public function waiting(): array
     {
         $comments = \Xoops::getModuleHelper('comments'); //need this here to init constants
         $criteria = new CriteriaCompo(new Criteria('status', Comments::STATUS_PENDING));

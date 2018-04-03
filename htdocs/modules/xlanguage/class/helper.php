@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class Xlanguage extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Xlanguage
      */
-    public static function getInstance()
+    public static function getInstance(): Xlanguage
     {
         return parent::getInstance();
     }
@@ -46,7 +47,7 @@ class Xlanguage extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return XlanguageXlanguageHandler
      */
-    public function getHandlerLanguage()
+    public function getHandlerLanguage(): XlanguageXlanguageHandler
     {
         return $this->getHandler('xlanguage');
     }

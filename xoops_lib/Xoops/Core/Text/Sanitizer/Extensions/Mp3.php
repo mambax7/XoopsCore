@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class Mp3 extends ExtensionAbstract
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         $buttonCode = $this->getEditorButtonHtml(
             $textAreaId,
@@ -75,7 +76,7 @@ EOF;
     /**
      * Register extension with the supplied sanitizer instance.
      */
-    public function registerExtensionProcessing()
+    public function registerExtensionProcessing(): void
     {
         $this->shortcodes->addShortcode(
             'mp3',

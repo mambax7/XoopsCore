@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -62,7 +63,7 @@ class Manager implements AttributeInterface
     /**
      * Configure and start the session.
      */
-    public function sessionStart()
+    public function sessionStart(): void
     {
         /**
          * Revisit this once basics are working.
@@ -122,7 +123,7 @@ class Manager implements AttributeInterface
 
         // Give a 5% chance of the session id changing on any authenticated request
         //if ($this->has('xoopsUserId') && (rand(1, 100) <= 5)) {
-        if ((rand(1, 100) <= 5)) {
+        if ((random_int(1, 100) <= 5)) {
             $this->expireSession();
         }
     }
@@ -130,7 +131,7 @@ class Manager implements AttributeInterface
     /**
      * Clear the current session and reset fingerprint.
      */
-    public function clearSession()
+    public function clearSession(): void
     {
         $this->clear();
         $this->fingerprint->checkSessionPrint($this);
@@ -140,7 +141,7 @@ class Manager implements AttributeInterface
     /**
      * Expire the current session and replace with a fresh one.
      */
-    public function expireSession()
+    public function expireSession(): void
     {
         // If this session is obsolete it means there already is a new id
         if ($this->has('SESSION_MANAGER_OBSOLETE')) {
@@ -172,7 +173,7 @@ class Manager implements AttributeInterface
      *
      * This should be called whenever permission levels for a user change.
      */
-    public function regenerateSession()
+    public function regenerateSession(): void
     {
         session_regenerate_id(true);
     }
@@ -182,7 +183,7 @@ class Manager implements AttributeInterface
      *
      * @return SessionUser
      */
-    public function user()
+    public function user(): SessionUser
     {
         return $this->sessionUser;
     }
@@ -190,7 +191,7 @@ class Manager implements AttributeInterface
     /**
      * shutdown function.
      */
-    public function sessionShutdown()
+    public function sessionShutdown(): void
     {
         \Xoops::getInstance()->events()->triggerEvent('core.session.shutdown');
         session_write_close();
@@ -207,7 +208,7 @@ class Manager implements AttributeInterface
      *
      * @return mixed The value of the session variable, or $default if not set.
      */
-    public function get($name, $default = null)
+    public function get(string $name, $default = null)
     {
         return (isset($_SESSION[$name])) ? $_SESSION[$name] : $default;
     }
@@ -220,7 +221,7 @@ class Manager implements AttributeInterface
      *
      * @return $this
      */
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $_SESSION[$name] = $value;
 
@@ -234,7 +235,7 @@ class Manager implements AttributeInterface
      *
      * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return isset($_SESSION[$name]);
     }
@@ -247,7 +248,7 @@ class Manager implements AttributeInterface
      * @return mixed An attribute value, if the named attribute existed and
      *               has been removed, otherwise NULL.
      */
-    public function remove($name)
+    public function remove(string $name)
     {
         $value = (isset($_SESSION[$name])) ? $_SESSION[$name] : null;
         unset($_SESSION[$name]);
@@ -260,7 +261,7 @@ class Manager implements AttributeInterface
      *
      * @return array old values
      */
-    public function clear()
+    public function clear(): array
     {
         $oldValues = $_SESSION;
         $_SESSION = [];
@@ -273,7 +274,7 @@ class Manager implements AttributeInterface
      *
      * @return bool true is session is valid and not expired, otherwise false
      */
-    protected function validateSession()
+    protected function validateSession(): bool
     {
         // invalid to have obsolete and not expires
         if ($this->has('SESSION_MANAGER_OBSOLETE') && !$this->has('SESSION_MANAGER_EXPIRES')) {

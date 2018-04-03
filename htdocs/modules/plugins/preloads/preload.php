@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class PluginsPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         \XoopsLoad::addMap([
@@ -42,7 +43,7 @@ class PluginsPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventCoreModulePluginGetPlugins($args)
+    public static function eventCoreModulePluginGetPlugins(array $args): void
     {
         //Don't run during uninstall, getActiveModule('plugins') won't work.
         if (\Xoops::getInstance()->getModuleByDirname('plugins')) {
@@ -53,7 +54,7 @@ class PluginsPreload extends PreloadItem
     /**
      * Updates plugins on module install.
      */
-    public static function eventSystemModuleInstall($args)
+    public static function eventSystemModuleInstall($args): void
     {
         \Xoops::getInstance()->setActiveModules();
         //Adds new plugins if available and remove them if modules were deactivated

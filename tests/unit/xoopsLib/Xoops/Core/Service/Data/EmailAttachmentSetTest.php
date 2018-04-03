@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -18,7 +18,7 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailAttachmentSet();
     }
@@ -27,16 +27,16 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(EmailAttachmentSet::class, $this->object);
     }
 
-    public function testNewEmailAttachmentSetWithArguments()
+    public function testNewEmailAttachmentSetWithArguments(): void
     {
         $attachmentArray[] = new EmailAttachment(static::TEST_FILE);
 
@@ -45,14 +45,14 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($attachmentArray[0], $newAttachmentArray[0]);
     }
 
-    public function testNewEmailAttachmentSetWithBadArguments()
+    public function testNewEmailAttachmentSetWithBadArguments(): void
     {
         $attachmentArray[] = new EmailAttachment();
         $this->expectException(\InvalidArgumentException::class);
         $list = new EmailAttachmentSet($attachmentArray);
     }
 
-    public function testNewEmailAttachmentSetWithFluent()
+    public function testNewEmailAttachmentSetWithFluent(): void
     {
         $attachmentArray[] = new EmailAttachment(static::TEST_FILE);
         $attachmentArray[] = (new EmailAttachment())->withStringBody("This is a test body.\n");
@@ -68,14 +68,14 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
         $this->object->getAttachments();
     }
 
-    public function testWithBadAddedAttachments()
+    public function testWithBadAddedAttachments(): void
     {
         $attachmentArray[] = new EmailAttachment();
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withAddedAttachments($attachmentArray);
     }
 
-    public function testGetEachAttachment()
+    public function testGetEachAttachment(): void
     {
         $attachmentArray[] = (new EmailAttachment())->withStringBody('body1');
         $attachmentArray[] = (new EmailAttachment())->withStringBody('body2');
@@ -90,7 +90,7 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3, $count);
     }
 
-    public function testGetEachAttachmentException()
+    public function testGetEachAttachmentException(): void
     {
         $count = 0;
 

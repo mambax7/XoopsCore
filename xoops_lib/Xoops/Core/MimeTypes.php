@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class MimeTypes
      *
      * @return array of applicable extensions, empty if no match
      */
-    public static function findExtensions($type)
+    public static function findExtensions(string $type): array
     {
         $mt = new PhpRepository();
 
@@ -52,7 +53,7 @@ class MimeTypes
      *
      * @return string|null applicable mimetype (string) or null if no match
      */
-    public static function findType($extension)
+    public static function findType(string $extension): ?string
     {
         $mt = new PhpRepository();
 

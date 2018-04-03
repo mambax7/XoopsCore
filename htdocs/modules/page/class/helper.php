@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Page
      */
-    public static function getInstance()
+    public static function getInstance(): Page
     {
         return parent::getInstance();
     }
@@ -41,7 +42,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PagePage_contentHandler
      */
-    public function getContentHandler()
+    public function getContentHandler(): PagePage_contentHandler
     {
         return $this->getHandler('page_content');
     }
@@ -49,7 +50,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PagePage_ratingHandler
      */
-    public function getRatingHandler()
+    public function getRatingHandler(): PagePage_ratingHandler
     {
         return $this->getHandler('page_rating');
     }
@@ -57,7 +58,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PagePage_relatedHandler
      */
-    public function getRelatedHandler()
+    public function getRelatedHandler(): PagePage_relatedHandler
     {
         return $this->getHandler('page_related');
     }
@@ -65,7 +66,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PagePage_relatedHandler
      */
-    public function getLinkHandler()
+    public function getLinkHandler(): PagePage_relatedHandler
     {
         return $this->getHandler('page_related_link');
     }
@@ -73,7 +74,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return PublisherGrouppermHandler
      */
-    public function getGrouppermHandler()
+    public function getGrouppermHandler(): PublisherGrouppermHandler
     {
         return $this->getHandler('groupperm');
     }

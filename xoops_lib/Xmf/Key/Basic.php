@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class Basic extends KeyAbstract
      *
      * @return string verifying key, false on error
      */
-    public function getSigning()
+    public function getSigning(): string
     {
         return (string) $this->storage->fetch($this->name);
     }
@@ -41,7 +42,7 @@ class Basic extends KeyAbstract
      *
      * @return string verifying key, false on error
      */
-    public function getVerifying()
+    public function getVerifying(): string
     {
         return (string) $this->storage->fetch($this->name);
     }
@@ -51,7 +52,7 @@ class Basic extends KeyAbstract
      *
      * @return bool true if key was created and stored, otherwise false
      */
-    public function create()
+    public function create(): bool
     {
         if (!$this->storage->exists($this->name)) {
             return $this->storage->save($this->name, Random::generateKey());
@@ -65,7 +66,7 @@ class Basic extends KeyAbstract
      *
      * @return bool true if key was deleted, otherwise false
      */
-    public function kill()
+    public function kill(): bool
     {
         return $this->storage->delete($this->name);
     }

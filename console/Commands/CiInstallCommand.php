@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -15,7 +15,7 @@ class CiInstallCommand extends Command
     /**
      * establish the command configuration.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('ci-install')
             ->setDescription('Install a minimal XOOPS for CI processes')
@@ -36,7 +36,7 @@ EOT
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // install the 'system' module
         $xoops = Xoops::getInstance();

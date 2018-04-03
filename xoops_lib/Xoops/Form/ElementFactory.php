@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class ElementFactory
      *
      * @throws \DomainException
      */
-    public function create($specification)
+    public function create(array $specification): Element
     {
         $this->validateSpec($specification);
 
@@ -49,7 +50,7 @@ class ElementFactory
      *
      * @param ContainerInterface $container form or tray to contain generated elements
      */
-    public function setContainer(ContainerInterface $container)
+    public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
@@ -63,7 +64,7 @@ class ElementFactory
      *
      * @throws \DomainException
      */
-    protected function validateSpec(&$specification)
+    protected function validateSpec(array &$specification)
     {
         if (!array_key_exists(self::CLASS_KEY, $specification)) {
             throw new \DomainException('Specification CLASS_KEY required.');

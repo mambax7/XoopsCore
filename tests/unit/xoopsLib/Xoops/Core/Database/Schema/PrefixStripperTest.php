@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,14 +6,14 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Database\Schema\PrefixStripper';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf('Doctrine\DBAL\Schema\Schema', $instance);
     }
 
-    public function test_setTableFilter()
+    public function test_setTableFilter(): void
     {
         $instance = new $this->myClass();
 
@@ -22,7 +22,7 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true);
     }
 
-    public function test_addTable()
+    public function test_addTable(): void
     {
         $table = new Doctrine\DBAL\Schema\Table('system_group');
 
@@ -32,7 +32,7 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
         $this->assertinstanceOf('Doctrine\DBAL\Schema\Table', $value);
     }
 
-    public function test_addSequence()
+    public function test_addSequence(): void
     {
         $sequence = new Doctrine\DBAL\Schema\Sequence('sequence');
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test\Key;
 
@@ -22,7 +22,7 @@ class KeyAbstractTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->storage = new ArrayStorage();
         $this->object = $this->getMockForAbstractClass('Xmf\Key\KeyAbstract', [$this->storage, 'test']);
@@ -32,11 +32,11 @@ class KeyAbstractTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf('\Xmf\Key\KeyAbstract', $this->object);
 
@@ -45,7 +45,7 @@ class KeyAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($method->isAbstract());
     }
 
-    public function testMethodsExist()
+    public function testMethodsExist(): void
     {
         $this->assertTrue(method_exists($this->object, 'getSigning'));
         $this->assertTrue(method_exists($this->object, 'getVerifying'));

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ use Xoops\Core\Kernel\Dtype;
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_install_profile($module)
+function xoops_module_install_profile(XoopsModule $module): bool
 {
     $xoops = Xoops::getInstance();
     $xoops->registry()->set('profile_id', $module->getVar('mid'));
@@ -70,7 +71,7 @@ function xoops_module_install_profile($module)
     return true;
 }
 
-function profile_install_initializeProfiles()
+function profile_install_initializeProfiles(): void
 {
     $xoops = Xoops::getInstance();
     $xoops->db();
@@ -95,7 +96,7 @@ function profile_install_initializeProfiles()
  * @param int    $step_id
  * @param int    $length
  */
-function profile_install_addField($name, $title, $description, $category, $type, $valuetype, $weight, $canedit, $options, $step_id, $length, $visible = true)
+function profile_install_addField(string $name, $title, string $description, int $category, string $type, int $valuetype, int $weight, int $canedit, $options, int $step_id, int $length, $visible = true)
 {
     $xoops = Xoops::getInstance();
     $module_id = $xoops->registry()->get('profile_id');
@@ -162,7 +163,7 @@ function profile_install_addField($name, $title, $description, $category, $type,
 /**
  * @param bool $visible
  */
-function profile_install_setPermissions($field_id, $module_id, $canedit, $visible)
+function profile_install_setPermissions($field_id, $module_id, $canedit, bool $visible): void
 {
     $xoops = Xoops::getInstance();
     $xoops->db();
@@ -192,7 +193,7 @@ function profile_install_setPermissions($field_id, $module_id, $canedit, $visibl
 /**
  * @param int $weight
  */
-function profile_install_addCategory($name, $weight)
+function profile_install_addCategory($name, int $weight): void
 {
     $xoops = Xoops::getInstance();
     $xoops->db();
@@ -205,7 +206,7 @@ function profile_install_addCategory($name, $weight)
  * @param int    $order
  * @param int    $save
  */
-function profile_install_addStep($name, $desc, $order, $save)
+function profile_install_addStep($name, string $desc, int $order, int $save): void
 {
     $xoops = Xoops::getInstance();
     $xoops->db();

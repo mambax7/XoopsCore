@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -67,7 +68,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return bool
      */
-    public function notLoaded()
+    public function notLoaded(): bool
     {
         return $this->getVar('categoryid') === -1;
     }
@@ -75,7 +76,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return bool
      */
-    public function checkPermission()
+    public function checkPermission(): bool
     {
         $xoops = Xoops::getInstance();
         if ($this->publisher->isUserAdmin()) {
@@ -93,7 +94,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return mixed|string
      */
-    public function image($format = 's')
+    public function image(string $format = 's')
     {
         if ('' !== $this->getVar('image')) {
             return $this->getVar('image', $format);
@@ -107,7 +108,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return mixed
      */
-    public function template($format = 'n')
+    public function template(string $format = 'n')
     {
         return $this->getVar('template', $format);
     }
@@ -117,7 +118,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return array|bool|string
      */
-    public function getCategoryPath($withAllLink = true)
+    public function getCategoryPath(bool $withAllLink = true)
     {
         if (!$this->_categoryPath) {
             if ($withAllLink) {
@@ -161,7 +162,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return array|null
      */
-    public function getGroups_read()
+    public function getGroups_read(): ?array
     {
         return $this->publisher->getPermissionHandler()->getGrantedGroupsById('category_read', $this->getVar('categoryid'));
     }
@@ -169,7 +170,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return array|null
      */
-    public function getGroups_submit()
+    public function getGroups_submit(): ?array
     {
         return $this->publisher->getPermissionHandler()->getGrantedGroupsById('item_submit', $this->getVar('categoryid'));
     }
@@ -177,7 +178,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return array|null
      */
-    public function getGroups_moderation()
+    public function getGroups_moderation(): ?array
     {
         return $this->publisher->getPermissionHandler()->getGrantedGroupsById('category_moderation', $this->getVar('categoryid'));
     }
@@ -185,7 +186,7 @@ class PublisherCategory extends XoopsObject
     /**
      * @return string
      */
-    public function getCategoryUrl()
+    public function getCategoryUrl(): string
     {
         return PublisherUtils::seoGenUrl('category', $this->getVar('categoryid'), $this->getVar('short_url'));
     }
@@ -195,7 +196,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return string
      */
-    public function getCategoryLink($class = false)
+    public function getCategoryLink(bool $class = false): string
     {
         if ($class) {
             return "<a class='${class}' href='".$this->getCategoryUrl()."'>".$this->getVar('name').'</a>';
@@ -210,7 +211,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return mixed
      */
-    public function store($sendNotifications = true, $force = true)
+    public function store(bool $sendNotifications = true, bool $force = true)
     {
         $ret = $this->publisher->getCategoryHandler()->insert($this, $force);
         if ($sendNotifications && $ret && ($this->isNew())) {
@@ -224,7 +225,7 @@ class PublisherCategory extends XoopsObject
     /**
      * Send notifications.
      */
-    public function sendNotifications()
+    public function sendNotifications(): void
     {
         $xoops = Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
@@ -242,7 +243,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return array
      */
-    public function toArray($category = [])
+    public function toArray(array $category = []): array
     {
         $category['categoryid'] = $this->getVar('categoryid');
         $category['name'] = $this->getVar('name');
@@ -273,7 +274,7 @@ class PublisherCategory extends XoopsObject
      *
      * @return array
      */
-    public function toArrayTable($category = [])
+    public function toArrayTable(array $category = []): array
     {
         $category['categoryid'] = $this->getVar('categoryid');
         $category['categorylink'] = $this->getCategoryLink();
@@ -293,7 +294,7 @@ class PublisherCategory extends XoopsObject
         return $category;
     }
 
-    public function createMetaTags()
+    public function createMetaTags(): void
     {
         $publisher_metagen = new PublisherMetagen($this->getVar('name'), $this->getVar('meta_keywords'), $this->getVar('meta_description'));
         $publisher_metagen->createMetaTags();
@@ -326,7 +327,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return null|PublisherCategory
      */
-    public function get($id = null, $fields = null)
+    public function get($id = null, $fields = null): ?PublisherCategory
     {
         static $cats;
         if (null === $fields && isset($cats[$id])) {
@@ -348,7 +349,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $category, $force = true)
+    public function insert(XoopsObject $category, bool $force = true): bool
     {
         // Auto create meta tags if empty
         if (!$category->getVar('meta_keywords') || !$category->getVar('meta_description')) {
@@ -377,7 +378,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed.
      */
-    public function delete(XoopsObject $category, $force = false)
+    public function delete(XoopsObject $category, bool $force = false): bool
     {
         $xoops = Xoops::getInstance();
         // Deleting this category ITEMs
@@ -413,7 +414,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function &getCategories($limit = 0, $start = 0, $parentid = 0, $sort = 'weight', $order = 'ASC', $id_as_key = true)
+    public function &getCategories(int $limit = 0, int $start = 0, int $parentid = 0, string $sort = 'weight', string $order = 'ASC', bool $id_as_key = true): array
     {
         $xoops = Xoops::getInstance();
         $ret = [];
@@ -449,7 +450,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      * @param array $cat_array
      * @param array $cat_result
      */
-    public function getSubCatArray($category, $level, $cat_array, $cat_result)
+    public function getSubCatArray(array $category, int $level, array $cat_array, array $cat_result): void
     {
         global $theresult;
         $spaces = '';
@@ -508,7 +509,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
     /**
      * @return array
      */
-    public function &getCategoriesForSearch()
+    public function &getCategoriesForSearch(): array
     {
         global $theresult;
         $xoops = Xoops::getInstance();
@@ -553,7 +554,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return int
      */
-    public function getCategoriesCount($parentid = 0)
+    public function getCategoriesCount(int $parentid = 0): int
     {
         $xoops = Xoops::getInstance();
         if ($parentid === -1) {
@@ -585,7 +586,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function &getSubCats($categories)
+    public function &getSubCats(array $categories): array
     {
         $xoops = Xoops::getInstance();
         $criteria = new CriteriaCompo(new Criteria('parentid', '('.implode(',', array_keys($categories)).')', 'IN'));
@@ -617,7 +618,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return mixed
      */
-    public function publishedItemsCount($cat_id = 0)
+    public function publishedItemsCount(int $cat_id = 0)
     {
         return $this->itemsCount($cat_id, $status = [_PUBLISHER_STATUS_PUBLISHED]);
     }
@@ -628,7 +629,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return mixed
      */
-    public function itemsCount($cat_id = 0, $status = '')
+    public function itemsCount(int $cat_id = 0, string $status = '')
     {
         return $this->publisher->getItemHandler()->getCountsByCat($cat_id, $status);
     }

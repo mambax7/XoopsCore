@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return XoopsZipDownloader
      */
-    public function __construct($ext = '.zip', $mimyType = 'application/x-zip')
+    public function __construct(string $ext = '.zip', string $mimyType = 'application/x-zip')
     {
         $this->archiver = new zipfile();
         $this->ext = trim($ext);
@@ -51,7 +52,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addFile($filepath, $newfilename = null)
+    public function addFile(string $filepath, string $newfilename = null)
     {
         // Read in the file's contents
         $fp = @fopen($filepath, 'r');
@@ -74,7 +75,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addBinaryFile($filepath, $newfilename = null)
+    public function addBinaryFile(string $filepath, string $newfilename = null)
     {
         // Read in the file's contents
         $fp = @fopen($filepath, 'rb');
@@ -98,7 +99,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return result
      */
-    public function addFileData(&$data, $filename, $time = 0)
+    public function addFileData(string &$data, string $filename, int $time = 0): result
     {
         $result = $this->archiver->addFile($data, $filename, $time);
 
@@ -114,7 +115,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return result|null
      */
-    public function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData(string &$data, string $filename, int $time = 0): ?result
     {
         $result = $this->addFileData($data, $filename, $time);
 
@@ -127,7 +128,7 @@ class XoopsZipDownloader extends XoopsDownloader
      * @param string $name zip name
      * @param bool   $gzip unused
      */
-    public function download($name, $gzip = true)
+    public function download(string $name, bool $gzip = true): void
     {
         $this->_header($name.$this->ext);
         $result = $this->archiver->file();

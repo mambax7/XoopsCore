@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,7 +40,7 @@ abstract class HelperAbstract
     /**
      * initialize - nothing to do here.
      */
-    public function init()
+    public function init(): void
     {
     }
 
@@ -48,7 +49,7 @@ abstract class HelperAbstract
      *
      * @param bool $debug true to enable debugging log, false to disable
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
         $this->debug = (bool) $debug;
     }
@@ -58,7 +59,7 @@ abstract class HelperAbstract
      *
      * @return HelperAbstract
      */
-    public static function getInstance()
+    public static function getInstance(): HelperAbstract
     {
         static $instance = false;
         $id = $className = get_called_class();
@@ -78,7 +79,7 @@ abstract class HelperAbstract
     /**
      * @return null|XoopsModule
      */
-    public function getModule()
+    public function getModule(): ?XoopsModule
     {
         if (null === $this->module) {
             $this->initModule();
@@ -92,7 +93,7 @@ abstract class HelperAbstract
      *
      * @return \Xoops
      */
-    public function xoops()
+    public function xoops(): \Xoops
     {
         return \Xoops::getInstance();
     }
@@ -106,7 +107,7 @@ abstract class HelperAbstract
      * @return mixed string config item, array of config items,
      *                or null if config not found
      */
-    public function getConfig($name = null, $default = null)
+    public function getConfig(string $name = null, $default = null)
     {
         $configs = $this->xoops()->getModuleConfigs($this->dirname);
         if (empty($name)) {
@@ -131,7 +132,7 @@ abstract class HelperAbstract
      *
      * @return array of config items for module
      */
-    public function getConfigs()
+    public function getConfigs(): array
     {
         $result = $this->xoops()->getModuleConfigs($this->dirname);
         $this->addLog("Getting configs for {$this->dirname} module");
@@ -146,7 +147,7 @@ abstract class HelperAbstract
      *
      * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
-    public function getHandler($name)
+    public function getHandler(string $name): \Xoops\Core\Kernel\XoopsObjectHandler
     {
         $name = strtolower($name);
         $this->addLog("Getting handler '{$name}'");
@@ -157,7 +158,7 @@ abstract class HelperAbstract
     /**
      * Turn off caching for this module.
      */
-    public function disableCache()
+    public function disableCache(): void
     {
         $this->xoops()->appendConfig(
             'module_cache',
@@ -173,7 +174,7 @@ abstract class HelperAbstract
      *
      * @return bool
      */
-    public function isCurrentModule()
+    public function isCurrentModule(): bool
     {
         if ($this->xoops()->moduleDirname === $this->dirname) {
             return true;
@@ -187,7 +188,7 @@ abstract class HelperAbstract
      *
      * @return bool true is user has admin right, else false
      */
-    public function isUserAdmin()
+    public function isUserAdmin(): bool
     {
         if ($this->xoops()->isUser()) {
             return $this->xoops()->user->isAdmin($this->getModule()->getVar('mid'));
@@ -203,7 +204,7 @@ abstract class HelperAbstract
      *
      * @return string
      */
-    public function url($url = '')
+    public function url(string $url = ''): string
     {
         return $this->xoops()->url('modules/'.$this->dirname.'/'.$url);
     }
@@ -215,7 +216,7 @@ abstract class HelperAbstract
      *
      * @return string
      */
-    public function path($path = '')
+    public function path(string $path = ''): string
     {
         return $this->xoops()->path('modules/'.$this->dirname.'/'.$path);
     }
@@ -227,7 +228,7 @@ abstract class HelperAbstract
      * @param int    $time    time to delay
      * @param string $message message to show
      */
-    public function redirect($url, $time = 3, $message = '')
+    public function redirect(string $url, int $time = 3, string $message = ''): void
     {
         $this->xoops()->redirect($this->url($url), $time, $message, false, false);
     }
@@ -237,7 +238,7 @@ abstract class HelperAbstract
      *
      * @return string
      */
-    public function loadLanguage($language)
+    public function loadLanguage(string $language)
     {
         $this->xoops()->loadLanguage($language, $this->dirname);
         $this->addLog("Loading language '{$language}'");
@@ -246,7 +247,7 @@ abstract class HelperAbstract
     /**
      * Load locale for our dirname.
      */
-    public function loadLocale()
+    public function loadLocale(): void
     {
         $this->xoops()->loadLocale($this->dirname);
         $this->addLog('Loading locale');
@@ -258,7 +259,7 @@ abstract class HelperAbstract
      *
      * @return \Xoops\Form\Form|boolean
      */
-    public function getForm($obj, $name)
+    public function getForm(\Xoops\Core\Kernel\XoopsObject $obj, string $name)
     {
         $name = strtolower($name);
         $this->addLog("Loading form '{$name}'");
@@ -271,7 +272,7 @@ abstract class HelperAbstract
      *
      * @param string $message message to log
      */
-    public function addLog($message)
+    public function addLog(string $message): void
     {
         if ($this->debug) {
             $this->xoops()->events()->triggerEvent('core.module.addlog', [
@@ -284,7 +285,7 @@ abstract class HelperAbstract
     /**
      * @param string $dirname dirname of the module
      */
-    protected function setDirname($dirname)
+    protected function setDirname(string $dirname): void
     {
         $this->dirname = strtolower($dirname);
     }
@@ -292,7 +293,7 @@ abstract class HelperAbstract
     /**
      * Get a XoopsModule object for this module.
      */
-    private function initModule()
+    private function initModule(): void
     {
         if ($this->isCurrentModule()) {
             $this->module = $this->xoops()->module;

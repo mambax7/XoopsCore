@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ $settings = $_SESSION['settings'];
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $params = ['DB_NAME'];
     foreach ($params as $name) {
-        $settings[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
+        $settings[$name] = $_POST[$name] ?? '';
     }
     $settings['DB_PARAMETERS'] = serialize(getDbConnectionParams());
     $_SESSION['settings'] = $settings;
@@ -81,7 +82,7 @@ if (!$connection && !empty($settings['DB_NAME'])) {
                     } else {
                         $error = ERR_NO_DATABASE;
                     }
-                } catch (Exception $e) {
+                } catch (\Throwable $e) {
                     $error = $e->getMessage();
                 }
             } else {
@@ -110,7 +111,7 @@ if ($connection) {
     try {
         $sql = $platform->getListDatabasesSQL();
         $dbResults = $connection->fetchAll($sql);
-    } catch (Exception $e) {
+    } catch (\Throwable $e) {
         $dbResults = false;
     }
 

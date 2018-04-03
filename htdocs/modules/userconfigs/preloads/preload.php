@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class UserconfigsPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -40,7 +41,7 @@ class UserconfigsPreload extends PreloadItem
      *
      * @param XoopsModule $module module object
      */
-    public static function eventSystemModuleUninstall(XoopsModule $module)
+    public static function eventSystemModuleUninstall(XoopsModule $module): void
     {
         if ($plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'userconfigs')) {
             Userconfigs::getInstance()->getHandlerConfig()->deleteConfigsByModule($module->getVar('mid'));

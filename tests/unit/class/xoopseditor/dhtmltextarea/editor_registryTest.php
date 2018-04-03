@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -6,7 +6,7 @@ global $config;
 
 class Editor_registryTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_100()
+    public function test_100(): void
     {
         global $config;
         $config = null;

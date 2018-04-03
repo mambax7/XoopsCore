@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -21,7 +21,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Email();
     }
@@ -30,16 +30,16 @@ class EmailTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(Email::class, $this->object);
     }
 
-    public function testNewEmailWithArguments()
+    public function testNewEmailWithArguments(): void
     {
         $subject = 'subject';
         $body = 'body';
@@ -56,40 +56,40 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($body, $message->getBody());
     }
 
-    public function testNewEmailWithUntrimmedArguments()
+    public function testNewEmailWithUntrimmedArguments(): void
     {
         $message = new Email('subject  ', ' body ');
         $this->assertSame('subject', $message->getSubject());
         $this->assertSame('body', $message->getBody());
     }
 
-    public function testNewMessageBadBody()
+    public function testNewMessageBadBody(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $message = new Email(null, '');
     }
 
-    public function testNewEmailBadSubject()
+    public function testNewEmailBadSubject(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $message = new Email('');
     }
 
-    public function testNewEmailBadFrom()
+    public function testNewEmailBadFrom(): void
     {
         $emptyAddress = new EmailAddress();
         $this->expectException(\InvalidArgumentException::class);
         $message = new Email(null, null, $emptyAddress);
     }
 
-    public function testNewEmailBadToAddress()
+    public function testNewEmailBadToAddress(): void
     {
         $emptyAddress = new EmailAddress();
         $this->expectException(\InvalidArgumentException::class);
         $message = new Email(null, null, null, $emptyAddress);
     }
 
-    public function testForcedBadFromAddress()
+    public function testForcedBadFromAddress(): void
     {
         $message = new class() extends Email {
             public function __construct()
@@ -102,25 +102,25 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message->getFromAddress();
     }
 
-    public function testNoBody()
+    public function testNoBody(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getBody();
     }
 
-    public function testNoSubject()
+    public function testNoSubject(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getSubject();
     }
 
-    public function testNoToAddress()
+    public function testNoToAddress(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getToAddresses();
     }
 
-    public function testForcedBadToAddresses()
+    public function testForcedBadToAddresses(): void
     {
         $message = new class() extends Email {
             public function __construct()
@@ -133,7 +133,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message->getToAddresses();
     }
 
-    public function testWithBody()
+    public function testWithBody(): void
     {
         $message = $this->object->withBody('body');
         $this->assertNotSame($this->object, $message);
@@ -143,7 +143,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withBody('');
     }
 
-    public function testWithSubject()
+    public function testWithSubject(): void
     {
         $message = $this->object->withSubject('subject');
         $this->assertNotSame($this->object, $message);
@@ -153,7 +153,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withSubject('');
     }
 
-    public function testWithFromAddress()
+    public function testWithFromAddress(): void
     {
         $message = $this->object->withFromAddress(new EmailAddress('test@example.com'));
         $this->assertNotSame($this->object, $message);
@@ -164,7 +164,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withFromAddress(new EmailAddress());
     }
 
-    public function testWithBccAddresses()
+    public function testWithBccAddresses(): void
     {
         $this->assertNull($this->object->getBccAddresses());
 
@@ -178,7 +178,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withBccAddresses(new EmailAddressList());
     }
 
-    public function testWithCcAddresses()
+    public function testWithCcAddresses(): void
     {
         $this->assertNull($this->object->getCcAddresses());
 
@@ -192,7 +192,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withCcAddresses(new EmailAddressList());
     }
 
-    public function testWithReplyToAddresses()
+    public function testWithReplyToAddresses(): void
     {
         $this->assertNull($this->object->getReplyToAddresses());
 
@@ -206,7 +206,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withReplyToAddresses(new EmailAddressList());
     }
 
-    public function testWithToAddresses()
+    public function testWithToAddresses(): void
     {
         $list = new EmailAddressList([new EmailAddress('test@example.com')]);
         $message = $this->object->withToAddresses($list);
@@ -218,7 +218,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withToAddresses(new EmailAddressList());
     }
 
-    public function testWithReadReceiptAddress()
+    public function testWithReadReceiptAddress(): void
     {
         $message = $this->object->withReadReceiptAddress(new EmailAddress('test@example.com'));
         $this->assertNotSame($this->object, $message);
@@ -229,7 +229,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withReadReceiptAddress(new EmailAddress());
     }
 
-    public function testForcedBadReadReceiptAddress()
+    public function testForcedBadReadReceiptAddress(): void
     {
         $message = new class() extends Email {
             public function __construct()
@@ -242,19 +242,19 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message->getReadReceiptAddress();
     }
 
-    public function testNullGetToAddressesException()
+    public function testNullGetToAddressesException(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getToAddresses();
     }
 
-    public function testNullGetFromAddressException()
+    public function testNullGetFromAddressException(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getFromAddress();
     }
 
-    public function testWithAttachments()
+    public function testWithAttachments(): void
     {
         $attachments = new EmailAttachmentSet([new EmailAttachment(static::TEST_FILE)]);
         $message = $this->object->withAttachments($attachments);
@@ -266,7 +266,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withAttachments($attachments);
     }
 
-    public function testWithForcedBadAttachments()
+    public function testWithForcedBadAttachments(): void
     {
         $message = new class() extends Email {
             public function __construct()
@@ -279,7 +279,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message->getAttachments();
     }
 
-    public function testWithHtmlBody()
+    public function testWithHtmlBody(): void
     {
         $message = $this->object->withHtmlBody('<p>body</p>');
         $this->assertNotSame($this->object, $message);
@@ -291,7 +291,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $this->object->withBody('');
     }
 
-    public function testForcedBadHtmlBody()
+    public function testForcedBadHtmlBody(): void
     {
         $message = new class() extends Email {
             public function __construct()

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test\Key;
 
@@ -22,7 +22,7 @@ class BasicTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->storage = new ArrayStorage();
         $this->object = new Basic($this->storage, 'test');
@@ -32,11 +32,11 @@ class BasicTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetSigning()
+    public function testGetSigning(): void
     {
         $actual = $this->object->getSigning();
         $this->assertEmpty($actual);
@@ -47,7 +47,7 @@ class BasicTest extends \PHPUnit\Framework\TestCase
         $this->assertRegExp('/^[0-9a-f]{128}$/', $actual);
     }
 
-    public function testGetVerifying()
+    public function testGetVerifying(): void
     {
         $actual = $this->object->getVerifying();
         $this->assertEmpty($actual);
@@ -58,7 +58,7 @@ class BasicTest extends \PHPUnit\Framework\TestCase
         $this->assertRegExp('/^[0-9a-f]{128}$/', $actual);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $actual = $this->object->create();
         $this->assertTrue($actual);
@@ -67,7 +67,7 @@ class BasicTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($actual);
     }
 
-    public function testKill()
+    public function testKill(): void
     {
         $actual = $this->object->create();
         $this->assertTrue($actual);

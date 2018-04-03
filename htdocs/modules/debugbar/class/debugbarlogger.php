@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -79,7 +80,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @return \DebugBar\DebugBar
      */
-    public function getDebugbar()
+    public function getDebugbar(): \DebugBar\DebugBar
     {
         return $this->debugbar;
     }
@@ -87,7 +88,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * disable logging.
      */
-    public function disable()
+    public function disable(): void
     {
         //error_reporting(0);
         $this->activated = false;
@@ -99,7 +100,7 @@ class debugbarlogger implements LoggerInterface
      * If the string <!--<xo-logger-output>--> is found in the page content, the logger output will
      * replace it, otherwise it will be inserted after all the page output.
      */
-    public function enable()
+    public function enable(): void
     {
         error_reporting(-1);
 
@@ -130,7 +131,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @return bool
      */
-    public function isEnable()
+    public function isEnable(): bool
     {
         return $this->activated;
     }
@@ -138,7 +139,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * disable output for the benefit of ajax scripts.
      */
-    public function quiet()
+    public function quiet(): void
     {
         //$this->debugbar->sendDataInHeaders();
         $this->quietmode = true;
@@ -150,7 +151,7 @@ class debugbarlogger implements LoggerInterface
      * @param string      $name  name of the timer
      * @param string|null $label optional label for this timer
      */
-    public function startTime($name = 'XOOPS', $label = null)
+    public function startTime(string $name = 'XOOPS', ?string $label = null): void
     {
         if ($this->activated) {
             try {
@@ -166,7 +167,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @param string $name name of the timer
      */
-    public function stopTime($name = 'XOOPS')
+    public function stopTime(string $name = 'XOOPS'): void
     {
         $this->addToTheme();
 
@@ -187,7 +188,7 @@ class debugbarlogger implements LoggerInterface
      * @param int    $errno      error number
      * @param float  $query_time execution time
      */
-    public function addQuery($sql, $error = null, $errno = null, $query_time = null)
+    public function addQuery(string $sql, string $error = null, int $errno = null, float $query_time = null): void
     {
         if ($this->activated) {
             $level = LogLevel::INFO;
@@ -211,7 +212,7 @@ class debugbarlogger implements LoggerInterface
      * @param bool   $cached    was the block cached?
      * @param int    $cachetime cachetime of the block
      */
-    public function addBlock($name, $cached = false, $cachetime = 0)
+    public function addBlock(string $name, bool $cached = false, int $cachetime = 0): void
     {
         if ($this->activated) {
             $context = ['channel' => 'Blocks', 'cached' => $cached, 'cachetime' => $cachetime];
@@ -225,7 +226,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $name name for the entry
      * @param string $msg  text message for the entry
      */
-    public function addExtra($name, $msg)
+    public function addExtra(string $name, string $msg): void
     {
         if ($this->activated) {
             $context = ['channel' => 'Extra', 'name' => $name];
@@ -238,7 +239,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @param string $msg name for the entry
      */
-    public function addDeprecated($msg)
+    public function addDeprecated(string $msg): void
     {
         if ($this->activated) {
             $this->log(LogLevel::WARNING, $msg, ['channel' => 'Deprecated']);
@@ -250,7 +251,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @param Exception $e name for the entry
      */
-    public function addException($e)
+    public function addException(Exception $e): void
     {
         if ($this->activated) {
             $this->debugbar['exceptions']->addThrowable($e);
@@ -260,7 +261,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * Dump Smarty variables.
      */
-    public function addSmarty()
+    public function addSmarty(): void
     {
         if ($this->activated) {
             $data = Xoops::getInstance()->tpl()->getTemplateVars();
@@ -288,7 +289,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @param mixed $var variable to dump
      */
-    public function dump($var)
+    public function dump($var): void
     {
         $this->log(LogLevel::DEBUG, $var);
     }
@@ -296,7 +297,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * stackData - stash log data before a redirect.
      */
-    public function stackData()
+    public function stackData(): void
     {
         if ($this->activated) {
             $this->debugbar->stackData();
@@ -311,7 +312,7 @@ class debugbarlogger implements LoggerInterface
      * If the string <!--<xo-logger-output>--> is found in the page content, the logger output will
      * replace it, otherwise it will be inserted after all the page output.
      */
-    public function enableRendering()
+    public function enableRendering(): void
     {
         $this->renderingEnabled = true;
     }
@@ -323,7 +324,7 @@ class debugbarlogger implements LoggerInterface
      *
      * @return string output
      */
-    public function render($output)
+    public function render(string $output): string
     {
         if (!$this->activated) {
             return $output;
@@ -348,7 +349,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * dump everything we have  // was __destruct().
      */
-    public function renderDebugBar()
+    public function renderDebugBar(): void
     {
         if ($this->activated) {
             // include any queued time data from Xmf\Debug
@@ -394,7 +395,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::EMERGENCY, $message, $context);
@@ -410,7 +411,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function alert($message, array $context = [])
+    public function alert(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ALERT, $message, $context);
@@ -425,7 +426,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function critical($message, array $context = [])
+    public function critical(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::CRITICAL, $message, $context);
@@ -439,7 +440,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function error($message, array $context = [])
+    public function error(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ERROR, $message, $context);
@@ -455,7 +456,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function warning($message, array $context = [])
+    public function warning(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::WARNING, $message, $context);
@@ -468,7 +469,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function notice($message, array $context = [])
+    public function notice(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::NOTICE, $message, $context);
@@ -483,7 +484,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::INFO, $message, $context);
@@ -496,7 +497,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::DEBUG, $message, $context);
@@ -510,7 +511,7 @@ class debugbarlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         if (!$this->activated) {
             return;
@@ -605,7 +606,7 @@ class debugbarlogger implements LoggerInterface
     /**
      * Add our resources to the theme as soon as it is available, otherwise return.
      */
-    private function addToTheme()
+    private function addToTheme(): void
     {
         static $addedResource = false;
 
@@ -615,7 +616,7 @@ class debugbarlogger implements LoggerInterface
                 // don't include vendors - jquery already available, need workaround for font-awesome
                 $this->renderer->setIncludeVendors(true);
                 $this->renderer->setEnableJqueryNoConflict(false);
-                list($cssAssets, $jsAssets) = $this->renderer->getAssets();
+                [$cssAssets, $jsAssets] = $this->renderer->getAssets();
 
                 // font-awesome requires some special handling with cssmin
                 // see: https://code.google.com/p/cssmin/issues/detail?id=52&q=font

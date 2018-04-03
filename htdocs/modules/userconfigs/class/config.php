@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -63,7 +64,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      * @see     UserconfigsItem
      * @return UserconfigsItem {@link UserconfigsItem}
      */
-    public function createConfig()
+    public function createConfig(): UserconfigsItem
     {
         $instance = $this->_iHandler->create();
 
@@ -78,7 +79,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return UserconfigsItem {@link UserconfigsItem}
      */
-    public function getConfig($id, $withoptions = false)
+    public function getConfig(int $id, bool $withoptions = false): UserconfigsItem
     {
         /* @var $config UserconfigsItem */
         $config = $this->_iHandler->get($id);
@@ -96,7 +97,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function insertConfig(UserconfigsItem $config)
+    public function insertConfig(UserconfigsItem $config): bool
     {
         if (!$this->_iHandler->insert($config)) {
             return false;
@@ -126,7 +127,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function deleteConfig(UserconfigsItem $config)
+    public function deleteConfig(UserconfigsItem $config): bool
     {
         if (!$this->_iHandler->delete($config, true)) {
             return false;
@@ -157,7 +158,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link UserconfigsItem} objects
      */
-    public function getConfigs(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getConfigs(?CriteriaElement $criteria = null, bool $id_as_key = false): array
     {
         $criteria2 = new CriteriaCompo();
         if ($criteria) {
@@ -181,7 +182,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return int
      */
-    public function getConfigCount(CriteriaElement $criteria = null)
+    public function getConfigCount(?CriteriaElement $criteria = null): int
     {
         return $this->_iHandler->getCount($criteria);
     }
@@ -193,7 +194,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return array array of {@link UserconfigsConfig}s
      */
-    public function getConfigsByModule($module = 0)
+    public function getConfigsByModule(int $module = 0): array
     {
         $ret = [];
         $criteria = new Criteria('conf_modid', (int) ($module));
@@ -215,7 +216,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function deleteConfigsByModule($module = 0)
+    public function deleteConfigsByModule(int $module = 0): bool
     {
         $criteria = new Criteria('conf_modid', (int) ($module));
         $configs = $this->getConfigs($criteria, true);
@@ -238,7 +239,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return array array of {@link UserconfigsConfig}s
      */
-    public function getConfigsByUser($uid, $moduleId)
+    public function getConfigsByUser(int $uid, int $moduleId): array
     {
         static $_cachedConfigs;
         if (!empty($_cachedConfigs[$moduleId][$uid])) {
@@ -263,7 +264,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return UserconfigsOption {@link UserconfigsOption}
      */
-    public function createConfigOption()
+    public function createConfigOption(): UserconfigsOption
     {
         $inst = $this->_oHandler->create();
 
@@ -277,7 +278,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return UserconfigsOption {@link UserconfigsOption}
      */
-    public function getConfigOption($id)
+    public function getConfigOption(int $id): UserconfigsOption
     {
         $inst = $this->_oHandler->get($id);
 
@@ -292,7 +293,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link UserconfigsOption}s
      */
-    public function getConfigOptions(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getConfigOptions(?CriteriaElement $criteria = null, bool $id_as_key = false): array
     {
         return $this->_oHandler->getObjects($criteria, $id_as_key);
     }
@@ -304,7 +305,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return int Count of {@link UserconfigsOption}s matching $criteria
      */
-    public function getConfigOptionsCount(CriteriaElement $criteria = null)
+    public function getConfigOptionsCount(?CriteriaElement $criteria = null): int
     {
         return $this->_oHandler->getCount($criteria);
     }
@@ -317,7 +318,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      *
      * @return array Associative array of name=>value pairs.
      */
-    public function getConfigList($conf_modid, $conf_uid = 0)
+    public function getConfigList(int $conf_modid, int $conf_uid = 0): array
     {
         if (!empty($this->_cachedConfigs[$conf_modid][$conf_uid])) {
             return $this->_cachedConfigs[$conf_modid][$conf_uid];
@@ -339,7 +340,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         return $ret;
     }
 
-    public function createDefaultUserConfigs($uid, XoopsModule $module)
+    public function createDefaultUserConfigs($uid, XoopsModule $module): void
     {
         /* @var $plugin UserconfigsPluginInterface */
         if ($plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'userconfigs')) {

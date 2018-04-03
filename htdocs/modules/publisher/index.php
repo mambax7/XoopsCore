@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -88,7 +89,7 @@ foreach ($categoriesObj as $cat_id => $category) {
             /* @var $subcat PublisherCategory */
             foreach ($subcats[$cat_id] as $key => $subcat) {
                 // Get the items count of this very category
-                $subcat_total_items = isset($totalItems[$key]) ? $totalItems[$key] : 0;
+                $subcat_total_items = $totalItems[$key] ?? 0;
                 // Do we display empty sub-cats ?
                 if (($subcat_total_items > 0) || ('all' === $publisher->getConfig('idxcat_show_subcats'))) {
                     $subcat_id = $subcat->getVar('categoryid');

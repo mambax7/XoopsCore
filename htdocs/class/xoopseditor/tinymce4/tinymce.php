@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class tinymce
      *
      * @param string $config The configuration
      */
-    public function __construct($config)
+    public function __construct(string $config)
     {
         $this->setConfig($config);
         $this->rootpath = $this->config['rootpath'].'/tinymce/js/tinymce';
@@ -46,7 +47,7 @@ class tinymce
      *
      * @return TinyMCE $instance The instance of tinyMCE object
      */
-    public function &instance($config)
+    public function &instance(array $config): TinyMCE
     {
         static $instance;
         if (!isset($instance)) {
@@ -58,7 +59,7 @@ class tinymce
         return $instance;
     }
 
-    public function setConfig($config)
+    public function setConfig($config): void
     {
         foreach ($config as $key => $val) {
             $this->config[$key] = $val;
@@ -70,7 +71,7 @@ class tinymce
      *
      * @return boolean
      */
-    public function init()
+    public function init(): bool
     {
         // list of configured options
         $configured = [];
@@ -219,7 +220,7 @@ class tinymce
      *
      * @return array plugins
      */
-    public function loadPlugins()
+    public function loadPlugins(): array
     {
         $plugins = [];
         $plugins_list = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path').$this->rootpath.'/plugins');
@@ -243,7 +244,7 @@ class tinymce
      *
      * @return array plugins
      */
-    public function get_xoopsPlugins()
+    public function get_xoopsPlugins(): array
     {
         $xoopsPlugins = [];
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -288,7 +289,7 @@ class tinymce
      *
      * @return string $ret      The rendered HTML string
      */
-    public function render()
+    public function render(): string
     {
         static $rendered;
         if ($rendered) {

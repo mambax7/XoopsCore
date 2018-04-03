@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
      * or TRUE if successful and no result
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function query($sql, $limit = 0, $start = 0)
+    public function query(string $sql, int $limit = 0, int $start = 0)
     {
         $this->deprecated();
 

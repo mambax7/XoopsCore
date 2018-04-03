@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -101,7 +102,7 @@ class Manager
      *
      * @return Manager instance
      */
-    public static function getInstance()
+    public static function getInstance(): Manager
     {
         static $instance = false;
 
@@ -117,7 +118,7 @@ class Manager
      *
      * @return array of configured provider preferences
      */
-    public function readYamlProviderPrefs()
+    public function readYamlProviderPrefs(): array
     {
         $xoops = \Xoops::getInstance();
 
@@ -131,7 +132,7 @@ class Manager
             if (empty($providerPrefs)) {
                 $providerPrefs = [];
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
             $providerPrefs = [];
         }
@@ -148,7 +149,7 @@ class Manager
      * @param string $service the service name being set
      * @param array  $choices array of priorities for each of the named service providers
      */
-    public function saveChoice($service, $choices)
+    public function saveChoice(string $service, array $choices): void
     {
         // read current preferences
         $prefs = $this->readProviderPrefs();
@@ -169,7 +170,7 @@ class Manager
      * @param string $service the service name being set
      * @param array  $choices array of priorities for each of the named service providers
      */
-    public function registerChoice($service, $choices)
+    public function registerChoice(string $service, array $choices): void
     {
         $provider = $this->locate($service);
         $providers = $provider->getRegistered();
@@ -193,7 +194,7 @@ class Manager
      *
      * @return array of available service provider objects for this service.
      */
-    public function listChoices($service)
+    public function listChoices(string $service): array
     {
         $providers = $this->locate($service)->getRegistered();
 
@@ -207,7 +208,7 @@ class Manager
      *
      * @return Provider object for the requested service
      */
-    public function locate($service)
+    public function locate(string $service): Provider
     {
         $service = strtolower($service);
         if (isset($this->services[$service])) {
@@ -246,7 +247,7 @@ class Manager
      *
      * @return array of configured provider preferences
      */
-    protected function readProviderPrefs()
+    protected function readProviderPrefs(): array
     {
         $xoops = \Xoops::getInstance();
         $providerPrefs = $xoops->cache()->cacheRead(
@@ -263,7 +264,7 @@ class Manager
      *
      * @param array $providerPrefs array of provider preferences to save
      */
-    protected function saveProviderPrefs($providerPrefs)
+    protected function saveProviderPrefs(array $providerPrefs): void
     {
         if (is_array($providerPrefs)) {
             $xoops = \Xoops::getInstance();
@@ -271,7 +272,7 @@ class Manager
             try {
                 Yaml::save($providerPrefs, $xoops->path($this->providerPrefsFilename));
                 $xoops->cache()->write($this->providerPrefsCacheKey, $providerPrefs);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $xoops->events()->triggerEvent('core.exception', $e);
             }
         }

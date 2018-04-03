@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class Fingerprint implements FingerprintInterface
      *
      * @return bool true if matched, false if not
      */
-    public function checkSessionPrint(AttributeInterface $session)
+    public function checkSessionPrint(AttributeInterface $session): bool
     {
         $score = 0;   // combined levenshtein distance of changes
         $changes = 0; // number of changed fields
@@ -98,7 +99,7 @@ class Fingerprint implements FingerprintInterface
      *
      * @return string
      */
-    protected function makeInert($value)
+    protected function makeInert(string $value): string
     {
         return str_replace(['\\', '{', '}', ':'], '-', $value);
     }

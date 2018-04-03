@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
      * Xlanguage extension module
      * You may not change or alter any portion of this comment or credits
@@ -18,7 +19,7 @@
      *
      * @return array
      */
-function b_xlanguage_select_show($options)
+function b_xlanguage_select_show($options): array
 {
     $xoops = \Xoops::getInstance();
     $helper = \Xoops\Module\Helper::getHelper('xlanguage');
@@ -76,7 +77,7 @@ function b_xlanguage_select_show($options)
 /**
  * @return string
  */
-function b_xlanguage_select_edit($options)
+function b_xlanguage_select_edit($options): string
 {
     $block_form = new Xoops\Form\BlockForm();
 

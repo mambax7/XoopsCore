@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -47,7 +48,7 @@ class CriteriaCompo extends CriteriaElement
      * @param CriteriaElement|null $ele       a criteria element to start the compo
      * @param string               $condition joining condition for element, AND or OR
      */
-    public function __construct(CriteriaElement $ele = null, $condition = 'AND')
+    public function __construct(?CriteriaElement $ele = null, string $condition = 'AND')
     {
         if (isset($ele)) {
             $this->add($ele, $condition);
@@ -62,7 +63,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return CriteriaCompo
      */
-    public function add(CriteriaElement $criteriaElement, $condition = 'AND')
+    public function add(CriteriaElement $criteriaElement, string $condition = 'AND'): CriteriaCompo
     {
         $this->criteriaElements[] = $criteriaElement;
         $this->conditions[] = $condition;
@@ -75,7 +76,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = '';
         foreach ($this->criteriaElements as $i => $element) {
@@ -103,7 +104,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    public function renderWhere()
+    public function renderWhere(): string
     {
         $ret = $this->render();
         $ret = ('' !== $ret) ? 'WHERE '.$ret : $ret;
@@ -117,7 +118,7 @@ class CriteriaCompo extends CriteriaElement
      * @return string
      * @author Nathan Dial ndial@trillion21.com
      */
-    public function renderLdap()
+    public function renderLdap(): string
     {
         $ret = '';
         foreach ($this->criteriaElements as $i => $element) {
@@ -143,7 +144,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return QueryBuilder query builder instance
      */
-    public function renderQb(QueryBuilder $qb = null, $whereMode = '')
+    public function renderQb(?QueryBuilder $qb = null, string $whereMode = ''): QueryBuilder
     {
         if (null === $qb) {
             $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
@@ -209,7 +210,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string expression
      */
-    public function buildExpressionQb(QueryBuilder $qb)
+    public function buildExpressionQb(QueryBuilder $qb): string
     {
         $expr = false;
         foreach ($this->criteriaElements as $i => $element) {

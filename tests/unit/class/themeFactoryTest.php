@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,17 +6,17 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsThemeFactory';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf('\Xoops\Core\Theme\Factory', $instance);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $themefactory = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $themefactory);
@@ -37,7 +37,7 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
         return $value;
     }
 
-    public function test_createInstance()
+    public function test_createInstance(): void
     {
         $themefactory = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $themefactory);
@@ -45,7 +45,7 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Theme\XoopsTheme', $value);
     }
 
-    public function test_createInstance100()
+    public function test_createInstance100(): void
     {
         $themefactory = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $themefactory);
@@ -56,7 +56,7 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(!empty($value->folderName));
     }
 
-    public function test_isThemeAllowed()
+    public function test_isThemeAllowed(): void
     {
         $themefactory = new $this->myclass();
         $this->assertSame([], $themefactory->allowedThemes);

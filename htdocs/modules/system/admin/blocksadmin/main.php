@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -281,7 +282,7 @@ switch ($op) {
         /* @var $block XoopsBlock */
         $block = $block_handler->create();
         $block->setVars($_POST);
-        $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
+        $content = $_POST['content_block'] ?? '';
         $block->setVar('content', $content);
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();
         echo '<div id="xo-preview-dialog" title="'.$block->getVar('title', 's')
@@ -349,7 +350,7 @@ switch ($op) {
         $block->setVar('name', $name);
         $block->setVar('isactive', 1);
 
-        $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
+        $content = $_POST['content_block'] ?? '';
         $block->setVar('content', $content);
 
         if (!$newid = $block_handler->insertBlock($block)) {

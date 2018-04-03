@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@
  * @return bool|void
  * @todo this should be removed, it is now handled by schema
  */
-function xoops_module_install_pm($module)
+function xoops_module_install_pm(XoopsModule $module)
 {
     /*
     $xoops = Xoops::getInstance();

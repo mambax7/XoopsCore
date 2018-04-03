@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -153,7 +154,7 @@ switch ($op) {
     case 'del':
         /* @var $itemObj PublisherItem */
         $itemObj = $publisher->getItemHandler()->get($itemid);
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
+        $confirm = $_POST['confirm'] ?? 0;
 
         if ($confirm) {
             if (!$publisher->getItemHandler()->delete($itemObj)) {
@@ -385,7 +386,7 @@ switch ($op) {
 }
 $xoops->footer();
 
-function publisher_editItem($showmenu = false, $itemid = 0, $clone = false)
+function publisher_editItem($showmenu = false, $itemid = 0, $clone = false): void
 {
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();
@@ -467,7 +468,7 @@ function publisher_editItem($showmenu = false, $itemid = 0, $clone = false)
         $itemObj->setVarsFromRequest();
 
         $categoryObj = $publisher->getCategoryHandler()->create();
-        $sel_categoryid = isset($_GET['categoryid']) ? $_GET['categoryid'] : 0;
+        $sel_categoryid = $_GET['categoryid'] ?? 0;
         $categoryObj->setVar('categoryid', $sel_categoryid);
 
         PublisherUtils::openCollapsableBar('createitemtable', 'createitemicon', _AM_PUBLISHER_ITEM_CREATING, _AM_PUBLISHER_ITEM_CREATING_DSC);

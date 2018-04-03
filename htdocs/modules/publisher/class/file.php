@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class PublisherFile extends XoopsObject
     /**
      * @param null|int $id
      */
-    public function __construct($id = null)
+    public function __construct(?int $id = null)
     {
         $this->publisher = Publisher::getInstance();
         $this->initVar('fileid', XOBJ_DTYPE_INT, 0, false);
@@ -69,7 +70,7 @@ class PublisherFile extends XoopsObject
      *
      * @return bool
      */
-    public function checkUpload($post_field, $allowed_mimetypes = [], &$errors)
+    public function checkUpload(string $post_field, array $allowed_mimetypes = [], array &$errors): bool
     {
         $errors = [];
         if (!$this->publisher->getMimetypeHandler()->checkMimeTypes($post_field)) {
@@ -99,7 +100,7 @@ class PublisherFile extends XoopsObject
      *
      * @return bool
      */
-    public function storeUpload($post_field, $allowed_mimetypes = [], &$errors)
+    public function storeUpload(string $post_field, array $allowed_mimetypes = [], array &$errors): bool
     {
         $itemid = $this->getVar('itemid');
         if (empty($allowed_mimetypes)) {
@@ -139,7 +140,7 @@ class PublisherFile extends XoopsObject
      *
      * @return bool
      */
-    public function store($allowed_mimetypes = null, $force = true, $doupload = true)
+    public function store(?array $allowed_mimetypes = null, bool $force = true, bool $doupload = true): bool
     {
         if ($this->isNew()) {
             $errors = [];
@@ -166,7 +167,7 @@ class PublisherFile extends XoopsObject
      *
      * @return string
      */
-    public function datesub($dateFormat = 's', $format = 'S')
+    public function datesub(string $dateFormat = 's', string $format = 'S'): string
     {
         return XoopsLocale::formatTimestamp($this->getVar('datesub', $format), $dateFormat);
     }
@@ -174,7 +175,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return bool
      */
-    public function notLoaded()
+    public function notLoaded(): bool
     {
         return 0 === $this->getVar('itemid');
     }
@@ -182,7 +183,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function getFileUrl()
+    public function getFileUrl(): string
     {
         return PublisherUtils::getUploadDir(false).$this->getVar('filename');
     }
@@ -190,7 +191,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return PublisherUtils::getUploadDir().$this->getVar('filename');
     }
@@ -198,7 +199,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function getFileLink()
+    public function getFileLink(): string
     {
         return "<a href='".PUBLISHER_URL.'/visit.php?fileid='.$this->getVar('fileid')."'>".$this->getVar('name').'</a>';
     }
@@ -206,7 +207,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function getItemLink()
+    public function getItemLink(): string
     {
         return "<a href='".PUBLISHER_URL.'/item.php?itemid='.$this->getVar('itemid')."'>".$this->getVar('name').'</a>';
     }
@@ -214,7 +215,7 @@ class PublisherFile extends XoopsObject
     /**
      * Update Counter.
      */
-    public function updateCounter()
+    public function updateCounter(): void
     {
         $this->setVar('counter', $this->getVar('counter') + 1);
         $this->store();
@@ -223,7 +224,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function displayFlash()
+    public function displayFlash(): string
     {
         return PublisherUtils::displayFlash($this->getFileUrl());
     }
@@ -231,7 +232,7 @@ class PublisherFile extends XoopsObject
     /**
      * @return string
      */
-    public function getNameFromFilename()
+    public function getNameFromFilename(): string
     {
         $ret = $this->getVar('filename');
         $sep_pos = strpos($ret, '_');
@@ -266,7 +267,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed.
      */
-    public function delete(XoopsObject $file, $force = false)
+    public function delete(XoopsObject $file, bool $force = false): bool
     {
         $ret = false;
         // Delete the actual file
@@ -284,7 +285,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteItemFiles(&$itemObj)
+    public function deleteItemFiles(&$itemObj): bool
     {
         if ('publisheritem' !== strtolower(get_class($itemObj))) {
             return false;
@@ -313,7 +314,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of {@link PublisherFile} objects
      */
-    public function &getAllFiles($itemid = 0, $status = -1, $limit = 0, $start = 0, $sort = 'datesub', $order = 'DESC', $category = [])
+    public function &getAllFiles(int $itemid = 0, int $status = -1, int $limit = 0, int $start = 0, string $sort = 'datesub', string $order = 'DESC', array $category = []): array
     {
         $this->table_link = $this->db2->prefix('publisher_items');
         $this->field_object = 'itemid';

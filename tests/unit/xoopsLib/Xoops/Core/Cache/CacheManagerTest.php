@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -15,7 +15,7 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new CacheManager();
     }
@@ -24,11 +24,11 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetCache()
+    public function testGetCache(): void
     {
         $pool1 = $this->object->getCache('default');
         $this->assertInstanceOf('\Xoops\Core\Cache\Access', $pool1);

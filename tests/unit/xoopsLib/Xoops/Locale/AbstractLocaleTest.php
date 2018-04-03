@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -10,20 +10,20 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops_Locale_AbstractTestInstance';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         \Xoops\Locale::setCurrent('en_US');
         \Xoops\Locale::setTimeZone(new \DateTimeZone('America/New_York'));
     }
 
-    public function test_isMultiByte()
+    public function test_isMultiByte(): void
     {
         $instance = $this->myClass;
 
         $this->assertTrue($instance::isMultiByte());
     }
 
-    public function test_isRtl()
+    public function test_isRtl(): void
     {
         $instance = $this->myClass;
 
@@ -31,7 +31,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($x);
     }
 
-    public function test_setLocale()
+    public function test_setLocale(): void
     {
         $instance = $this->myClass;
 
@@ -43,7 +43,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($y, $x);
     }
 
-    public function test_getCharset()
+    public function test_getCharset(): void
     {
         $instance = $this->myClass;
 
@@ -51,7 +51,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('UTF-8', $x);
     }
 
-    public function test_getLocale()
+    public function test_getLocale(): void
     {
         $instance = $this->myClass;
 
@@ -59,7 +59,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('en_US', $x);
     }
 
-    public function test_getLangCode()
+    public function test_getLangCode(): void
     {
         $instance = $this->myClass;
 
@@ -67,7 +67,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('en-US', $x);
     }
 
-    public function test_getLegacyLanguage()
+    public function test_getLegacyLanguage(): void
     {
         $instance = $this->myClass;
 
@@ -75,7 +75,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('english', $x);
     }
 
-    public function test_getTimezone()
+    public function test_getTimezone(): void
     {
         $instance = $this->myClass;
 
@@ -83,7 +83,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('America/New_York', $x);
     }
 
-    public function test_getFonts()
+    public function test_getFonts(): void
     {
         $instance = $this->myClass;
 
@@ -100,7 +100,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($f, $x);
     }
 
-    public function test_getFontSizes()
+    public function test_getFontSizes(): void
     {
         $instance = $this->myClass;
 
@@ -118,7 +118,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($fs, $x);
     }
 
-    public function test_getAdminRssUrls()
+    public function test_getAdminRssUrls(): void
     {
         $instance = $this->myClass;
 
@@ -126,7 +126,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(['http://www.xoops.org/backend.php'], $x);
     }
 
-    public function test_substr()
+    public function test_substr(): void
     {
         $instance = $this->myClass;
 
@@ -138,7 +138,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('string', $x);
     }
 
-    public function test_utf8_encode()
+    public function test_utf8_encode(): void
     {
         $instance = $this->myClass;
 
@@ -147,7 +147,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($str, $x);
     }
 
-    public function test_convert_encoding()
+    public function test_convert_encoding(): void
     {
         $instance = $this->myClass;
 
@@ -155,7 +155,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('blah', $x);
     }
 
-    public function test_trim()
+    public function test_trim(): void
     {
         $instance = $this->myClass;
 
@@ -167,7 +167,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider formatTimestampProvider
      */
-    public function test_formatTimestamp($locale, $timezone, $format, $shortform, $expected)
+    public function test_formatTimestamp($locale, $timezone, $format, $shortform, $expected): void
     {
         $instance = $this->myClass;
 
@@ -218,7 +218,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider formatTimestampElapsedProvider
      */
-    public function test_formatTimestampElapsed($locale, $timezone, $format, $op, $interval, $expected)
+    public function test_formatTimestampElapsed($locale, $timezone, $format, $op, $interval, $expected): void
     {
         $instance = $this->myClass;
 
@@ -260,7 +260,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function test_number_format()
+    public function test_number_format(): void
     {
         $instance = $this->myClass;
 
@@ -273,7 +273,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_money_format()
+    public function test_money_format(): void
     {
         $instance = $this->myClass;
 

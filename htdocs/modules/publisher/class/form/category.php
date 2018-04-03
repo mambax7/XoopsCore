@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -214,7 +215,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
     /**
      * @param int $count
      */
-    public function setSubCatsCount($count)
+    public function setSubCatsCount(int $count): void
     {
         $this->_subCatsCount = (int) $count;
     }

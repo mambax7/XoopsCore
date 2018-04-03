@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -17,7 +17,7 @@ class EventsTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $class = $this->myclass;
         $this->object = $class::getInstance();
@@ -27,11 +27,11 @@ class EventsTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $class = $this->myclass;
         $instance = $class::getInstance();
@@ -41,7 +41,7 @@ class EventsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance1, $instance);
     }
 
-    public function test_initializeListeners()
+    public function test_initializeListeners(): void
     {
         $instance = $this->object;
 
@@ -49,12 +49,12 @@ class EventsTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $result);
     }
 
-    public function dummy_callback($arg)
+    public function dummy_callback($arg): void
     {
         $this->dummy_result = $arg;
     }
 
-    public function test_triggerEvent()
+    public function test_triggerEvent(): void
     {
         $instance = $this->object;
 
@@ -66,7 +66,7 @@ class EventsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame([1, 2], $this->dummy_result);
     }
 
-    public function test_hasListeners()
+    public function test_hasListeners(): void
     {
         $instance = $this->object;
 

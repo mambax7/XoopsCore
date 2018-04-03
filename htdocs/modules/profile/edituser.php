@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ if (!$xoops->isUser()) {
 }
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'editprofile';
+$op = $_REQUEST['op'] ?? 'editprofile';
 $xoops->getConfigs();
 
 if ('save' === $op) {

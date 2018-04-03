@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -235,7 +236,7 @@ break;
                             $chmod = modify_chmod($chmod, $path_file.$file, $count_file);
                             //Img
                             if ('picture' === $extension_verif) {
-                                list($width, $height) = getimagesize($path_file.$file);
+                                [$width, $height] = getimagesize($path_file.$file);
                                 if ($height > 60) {
                                     $img = '<img src="'.$url_file.$file.'" height="47" title="" alt="" />';
                                 } else {

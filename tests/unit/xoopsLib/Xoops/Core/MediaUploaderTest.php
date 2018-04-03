@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -6,11 +6,11 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = '\Xoops\Core\MediaUploader';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -47,7 +47,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($imageExtensions, $theme->imageExtensions);
     }
 
-    public function test___construct100()
+    public function test___construct100(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -61,7 +61,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($maxHeight, $theme->maxHeight);
     }
 
-    public function test_fetchMedia()
+    public function test_fetchMedia(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -70,7 +70,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_setTargetFileName()
+    public function test_setTargetFileName(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -80,7 +80,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($nom, $theme->targetFileName);
     }
 
-    public function test_setPrefix()
+    public function test_setPrefix(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -90,7 +90,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($nom, $theme->prefix);
     }
 
-    public function test_getMediaName()
+    public function test_getMediaName(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -101,7 +101,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function test_getMediaType()
+    public function test_getMediaType(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -112,7 +112,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function test_getMediaSize()
+    public function test_getMediaSize(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -123,7 +123,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($size, $value);
     }
 
-    public function test_getMediaTmpName()
+    public function test_getMediaTmpName(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -134,7 +134,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function test_getSavedFileName()
+    public function test_getSavedFileName(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -145,7 +145,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function test_getSavedDestination()
+    public function test_getSavedDestination(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
@@ -156,7 +156,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function test_upload()
+    public function test_upload(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -165,7 +165,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test__copyFile()
+    public function test__copyFile(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -174,7 +174,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_checkMaxFileSize()
+    public function test_checkMaxFileSize(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -183,7 +183,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_checkMaxWidth()
+    public function test_checkMaxWidth(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -192,7 +192,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_checkMaxHeight()
+    public function test_checkMaxHeight(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -201,7 +201,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_checkMimeType()
+    public function test_checkMimeType(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -210,7 +210,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_checkImageType()
+    public function test_checkImageType(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -219,7 +219,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_sanitizeMultipleExtensions()
+    public function test_sanitizeMultipleExtensions(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -228,7 +228,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_setErrors()
+    public function test_setErrors(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');
@@ -237,7 +237,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
     }
 
-    public function test_getErrors()
+    public function test_getErrors(): void
     {
         //$upload_dir = 'upload_dir';
         //$allowed_mime_types = array('toto');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,7 +40,7 @@ class Metagen
      *
      * @param string $title page title
      */
-    public static function assignTitle($title)
+    public static function assignTitle(string $title): void
     {
         $title = trim($title);
         $title = static::asPlainText($title);
@@ -51,7 +52,7 @@ class Metagen
      *
      * @param string[] $keywords keywords list
      */
-    public static function assignKeywords($keywords)
+    public static function assignKeywords($keywords): void
     {
         if (!empty($keywords) && is_array($keywords)) {
             $keyword_tag = implode(', ', $keywords);
@@ -64,7 +65,7 @@ class Metagen
      *
      * @param string $description page description
      */
-    public static function assignDescription($description)
+    public static function assignDescription(string $description): void
     {
         $description = trim($description);
         if (!empty($description)) {
@@ -83,11 +84,11 @@ class Metagen
      * @return array of keywords
      */
     public static function generateKeywords(
-        $body,
-        $count = 20,
-        $minLength = 4,
+        string $body,
+        int $count = 20,
+        int $minLength = 4,
         $forceKeys = null
-    ) {
+    ): array {
         $keyCount = [];
         if (!is_array($forceKeys)) {
             $forceKeys = [];
@@ -141,7 +142,7 @@ class Metagen
      *
      * @return string
      */
-    public static function generateDescription($body, $wordCount = 100)
+    public static function generateDescription(string $body, int $wordCount = 100): string
     {
         $text = static::asPlainText($body);
 
@@ -185,13 +186,13 @@ class Metagen
      * @param string[]|null $forceKeys associative array of keywords to force use
      */
     public static function generateMetaTags(
-        $title,
-        $body,
-        $count = 20,
-        $minLength = 4,
-        $wordCount = 100,
+        string $title,
+        string $body,
+        int $count = 20,
+        int $minLength = 4,
+        int $wordCount = 100,
         $forceKeys = null
-    ) {
+    ): void {
         $title_keywords = static::generateKeywords($title, $count, 3, $forceKeys);
         $keywords = static::generateKeywords($body, $count, $minLength, $title_keywords);
         $description = static::generateDescription($body, $wordCount);
@@ -210,7 +211,7 @@ class Metagen
      *
      * @author psylove
      */
-    public static function generateSeoTitle($title = '', $extension = '')
+    public static function generateSeoTitle(string $title = '', string $extension = ''): string
     {
         $title = preg_replace("/[^\p{N}\p{L}]/u", '-', $title);
         $title = \Normalizer::normalize($title, \Normalizer::FORM_C);
@@ -240,7 +241,7 @@ class Metagen
      *
      * @return string a substring of haystack
      */
-    public static function getSearchSummary($haystack, $needles = null, $length = 120)
+    public static function getSearchSummary(string $haystack, $needles = null, $length = 120): string
     {
         $haystack = static::asPlainText($haystack);
         $pos = static::getNeedlePositions($haystack, $needles);
@@ -297,7 +298,7 @@ class Metagen
      * @return bool True if word is significant, false if it is a stop word
      * @deprecated since v1.2.0 - use Xmf\StopWords::check()
      */
-    public static function checkStopWords($key)
+    public static function checkStopWords(string $key): bool
     {
         return static::stopWordsObject()->check($key);
     }
@@ -308,7 +309,7 @@ class Metagen
      * @param string $name  meta name (keywords, description)
      * @param string $value meta value
      */
-    protected static function assignThemeMeta($name, $value)
+    protected static function assignThemeMeta(string $name, string $value): void
     {
         if (class_exists('Xoops', false)) {
             \Xoops::getInstance()->theme()->addMeta('meta', $name, $value);
@@ -324,7 +325,7 @@ class Metagen
      * @param string $name  variable name (i.e. xoops_pagtitle)
      * @param string $value meta value
      */
-    protected static function assignTemplateVar($name, $value)
+    protected static function assignTemplateVar(string $name, string $value): void
     {
         if (class_exists('Xoops', false)) {
             \Xoops::getInstance()->tpl()->assign($name, $value);
@@ -343,7 +344,7 @@ class Metagen
      *
      * @author psylove
      */
-    protected static function nonEmptyString($var)
+    protected static function nonEmptyString(string $var): bool
     {
         return strlen($var) > 0;
     }
@@ -356,7 +357,7 @@ class Metagen
      *
      * @return string
      */
-    protected static function asPlainText($rawText)
+    protected static function asPlainText(string $rawText): string
     {
         $text = $rawText;
         $text = static::html2text($text);
@@ -378,7 +379,7 @@ class Metagen
      *
      * @return int[] array of initial positions of substring of haystack
      */
-    protected static function getNeedlePositions($haystack, $needles)
+    protected static function getNeedlePositions(string $haystack, $needles)
     {
         $pos = [];
         $needles = empty($needles) ? [] : (array) $needles;
@@ -404,7 +405,7 @@ class Metagen
      *
      * @return string cleaned text
      */
-    protected static function purifyText($text, $keyword = false)
+    protected static function purifyText(string $text, bool $keyword = false): string
     {
         $text = str_replace('&nbsp;', ' ', $text);
         $text = str_replace('<br />', ' ', $text);
@@ -445,7 +446,7 @@ class Metagen
      *
      * @return string Text version of $document parameter
      */
-    protected static function html2text($document)
+    protected static function html2text(string $document): string
     {
         $search = [
             "'<script[^>]*?>.*?</script>'si", // Strip out javascript
@@ -497,7 +498,7 @@ class Metagen
      *
      * @return StopWords
      */
-    protected static function stopWordsObject()
+    protected static function stopWordsObject(): StopWords
     {
         static $object;
         if (null === $object) {

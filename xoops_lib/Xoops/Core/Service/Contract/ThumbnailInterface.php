@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ interface ThumbnailInterface
      * @param int      $width    maximum width of thumbnail in pixels, 0 to use default
      * @param int      $height   maximum height of thumbnail in pixels, 0 to use default
      */
-    public function getImgUrl(Response $response, $imgPath, $width = 0, $height = 0);
+    public function getImgUrl(Response $response, string $imgPath, int $width = 0, int $height = 0): void;
 
     /**
      * getImgTag - get a full HTML img tag to display a thumbnail of the supplied image.
@@ -49,9 +50,9 @@ interface ThumbnailInterface
      */
     public function getImgTag(
         Response $response,
-        $imgPath,
-        $width = 0,
-        $height = 0,
-        $attributes = []
-    );
+        string $imgPath,
+        int $width = 0,
+        int $height = 0,
+        array $attributes = []
+    ): void;
 }

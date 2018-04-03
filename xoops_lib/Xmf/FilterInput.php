@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -81,11 +82,11 @@ class FilterInput
      * @param int   $xssAuto    - 0 = only auto clean essentials, 1 = allow clean blacklisted tags/attr
      */
     protected function __construct(
-        $tagsArray = [],
-        $attrArray = [],
-        $tagsMethod = 0,
-        $attrMethod = 0,
-        $xssAuto = 1
+        array $tagsArray = [],
+        array $attrArray = [],
+        int $tagsMethod = 0,
+        int $attrMethod = 0,
+        int $xssAuto = 1
     ) {
         // make sure user defined arrays are in lowercase
         $tagsArrayCount = count($tagsArray);
@@ -120,12 +121,12 @@ class FilterInput
      * @return FilterInput object.
      */
     public static function getInstance(
-        $tagsArray = [],
-        $attrArray = [],
-        $tagsMethod = 0,
-        $attrMethod = 0,
-        $xssAuto = 1
-    ) {
+        array $tagsArray = [],
+        array $attrArray = [],
+        int $tagsMethod = 0,
+        int $attrMethod = 0,
+        int $xssAuto = 1
+    ): FilterInput {
         static $instances;
 
         $className = get_called_class(); // so an extender gets an instance of itself
@@ -151,7 +152,7 @@ class FilterInput
      *
      * @return string $source - 'cleaned' version of input parameter
      */
-    public function process($source)
+    public function process($source): string
     {
         if (is_array($source)) {
             // clean all elements in this array
@@ -345,7 +346,7 @@ class FilterInput
      *
      * @deprecated
      */
-    public static function gather($source, $input_map, $require = false)
+    public static function gather(string $source, array $input_map, $require = false)
     {
         $output = [];
 
@@ -355,11 +356,11 @@ class FilterInput
                 // set defaults
                 if (isset($input[0])) {
                     $name = $input[0];
-                    $type = isset($input[1]) ? $input[1] : 'string';
+                    $type = $input[1] ?? 'string';
                     $default = isset($input[2]) ?
                         (($require && $require === $name) ? '' : $input[2]) : '';
-                    $trim = isset($input[3]) ? $input[3] : true;
-                    $maxlen = isset($input[4]) ? $input[4] : 0;
+                    $trim = $input[3] ?? true;
+                    $maxlen = $input[4] ?? 0;
                     $value = $default;
                     switch ($source) {
                         case 'get':
@@ -416,7 +417,7 @@ class FilterInput
      *
      * @return string $source - 'cleaned' version of input parameter
      */
-    protected function remove($source)
+    protected function remove(string $source): string
     {
         $loopCounter = 0;
         // provides nested-tag protection
@@ -435,7 +436,7 @@ class FilterInput
      *
      * @return string $source - 'cleaned' version of input parameter
      */
-    protected function filterTags($source)
+    protected function filterTags(string $source): string
     {
         // filter pass setup
         $preTag = null;
@@ -474,12 +475,12 @@ class FilterInput
             if ('/' === substr($currentTag, 0, 1)) {
                 // is end tag
                 $isCloseTag = true;
-                list($tagName) = explode(' ', $currentTag);
+                [$tagName] = explode(' ', $currentTag);
                 $tagName = substr($tagName, 1);
             } else {
                 // is start tag
                 $isCloseTag = false;
-                list($tagName) = explode(' ', $currentTag);
+                [$tagName] = explode(' ', $currentTag);
             }
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
             if ((!preg_match('/^[a-z][a-z0-9]*$/i', $tagName))
@@ -563,7 +564,7 @@ class FilterInput
      *
      * @return array $newSet stripped attributes
      */
-    protected function filterAttr($attrSet)
+    protected function filterAttr(array $attrSet): array
     {
         $newSet = [];
         // process attributes
@@ -575,7 +576,7 @@ class FilterInput
             }
             // split into attr name and value
             $attrSubSet = explode('=', trim($attrSet[$i]));
-            list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
+            [$attrSubSet[0]] = explode(' ', $attrSubSet[0]);
             // removes all "non-regular" attr names AND also attr blacklisted
             if ((!preg_match('/[a-z]*$/i', $attrSubSet[0]))
                 || (($this->xssAuto)
@@ -641,7 +642,7 @@ class FilterInput
      *
      * @return string $source decoded
      */
-    protected function decode($source)
+    protected function decode(string $source): string
     {
         // url decode
         $charset = defined('_CHARSET') ? constant('_CHARSET') : 'utf-8';

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -24,7 +25,7 @@ class upgrade_231 extends xoopsUpgrade
 {
     public $tasks = ['field'];
 
-    public function upgrade_231()
+    public function upgrade_231(): void
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -110,7 +111,7 @@ class Ldap extends AuthAbstract
      *
      * @param Connection|null $dao databse
      */
-    public function __construct(Connection $dao = null)
+    public function __construct(?Connection $dao = null)
     {
         if (!extension_loaded('ldap')) {
             trigger_error(sprintf(\XoopsLocale::F_EXTENSION_PHP_NOT_LOADED, 'LDAP'), E_USER_ERROR);
@@ -138,7 +139,7 @@ class Ldap extends AuthAbstract
      *
      * @return bool
      */
-    public function authenticate($uname, $pwd = null)
+    public function authenticate(string $uname, string $pwd = null): bool
     {
         $authenticated = false;
         $this->ds = ldap_connect($this->ldap_server, $this->ldap_port);
@@ -177,7 +178,7 @@ class Ldap extends AuthAbstract
      *
      * @return bool|string userDN or false
      */
-    public function getUserDN($uname)
+    public function getUserDN(string $uname)
     {
         $userDN = false;
         if (!$this->ldap_loginname_asdn) {
@@ -217,7 +218,7 @@ class Ldap extends AuthAbstract
      *
      * @return mixed|string
      */
-    public function getFilter($uname)
+    public function getFilter(string $uname)
     {
         if ('' !== $this->ldap_filter_person) {
             $filter = str_replace('@@loginname@@', $uname, $this->ldap_filter_person);
@@ -237,7 +238,7 @@ class Ldap extends AuthAbstract
      *
      * @return bool|XoopsUser
      */
-    public function loadXoopsUser($userdn, $uname, $pwd = null)
+    public function loadXoopsUser(string $userdn, string $uname, string $pwd = null)
     {
         $xoopsUser = false;
         $provisHandler = Provisioning::getInstance($this);

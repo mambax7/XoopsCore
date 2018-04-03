@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -52,7 +53,7 @@ abstract class GenericHelper extends AbstractHelper
     /**
      * Initialize parent::__construct calls this after verifying module object.
      */
-    public function init()
+    public function init(): void
     {
         $this->object = $this->module;
         $this->dirname = $this->object->getVar('dirname');
@@ -63,7 +64,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return \XoopsModule
      */
-    public function getModule()
+    public function getModule(): \XoopsModule
     {
         if (null === $this->object) {
             $this->initObject();
@@ -84,7 +85,7 @@ abstract class GenericHelper extends AbstractHelper
      * @return mixed string config item, array of config items,
      *                or null if config not found
      */
-    public function getConfig($name = null, $default = null)
+    public function getConfig(string $name = null, $default = null)
     {
         if (null === $this->configs) {
             $this->initConfig();
@@ -113,7 +114,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return bool|XoopsObjectHandler|XoopsPersistableObjectHandler
      */
-    public function getHandler($name)
+    public function getHandler(string $name)
     {
         $ret = false;
         $name = strtolower($name);
@@ -138,7 +139,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return bool
      */
-    public function loadLanguage($name)
+    public function loadLanguage(string $name): bool
     {
         if ($ret = Language::load($name, $this->dirname)) {
             $this->addLog("Loading language '{$name}'");
@@ -154,7 +155,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return bool
      */
-    public function isCurrentModule()
+    public function isCurrentModule(): bool
     {
         if ($GLOBALS['xoopsModule']->getVar('dirname') === $this->dirname) {
             return true;
@@ -168,7 +169,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return bool true is user has admin right, else false
      */
-    public function isUserAdmin()
+    public function isUserAdmin(): bool
     {
         return (isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser'] instanceof \XoopsUser)
             ? $GLOBALS['xoopsUser']->isAdmin($this->getModule()->getVar('mid')) : false;
@@ -181,7 +182,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return string
      */
-    public function url($url = '')
+    public function url(string $url = ''): string
     {
         return XOOPS_URL.'/modules/'.$this->dirname.'/'.$url;
     }
@@ -193,7 +194,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @return string
      */
-    public function path($path = '')
+    public function path(string $path = ''): string
     {
         return XOOPS_ROOT_PATH.'/modules/'.$this->dirname.'/'.$path;
     }
@@ -205,7 +206,7 @@ abstract class GenericHelper extends AbstractHelper
      * @param int    $time    time in seconds to show redirect message
      * @param string $message redirect message
      */
-    public function redirect($url, $time = 3, $message = '')
+    public function redirect(string $url, int $time = 3, string $message = ''): void
     {
         redirect_header($this->url($url), $time, $message);
     }
@@ -213,7 +214,7 @@ abstract class GenericHelper extends AbstractHelper
     /**
      * get a module object.
      */
-    protected function initObject()
+    protected function initObject(): void
     {
         global $xoopsModule;
         if (isset($xoopsModule) && is_object($xoopsModule)
@@ -231,7 +232,7 @@ abstract class GenericHelper extends AbstractHelper
     /**
      * get module configs.
      */
-    protected function initConfig()
+    protected function initConfig(): void
     {
         $this->addLog('INIT CONFIG');
         global $xoopsModule;
@@ -252,7 +253,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @param string $name name of handler to load
      */
-    protected function initHandler($name)
+    protected function initHandler(string $name): void
     {
         $this->addLog('INIT '.$name.' HANDLER');
 

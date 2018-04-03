@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -22,7 +22,7 @@ class Legacy_XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCa
 {
     protected $myclass = 'Legacy_XoopsPersistableObjectHandlerTestInstance';
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['db'];
         foreach ($items as $item) {
@@ -31,7 +31,7 @@ class Legacy_XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCa
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $conn = \Xoops\Core\Database\Factory::getConnection();
         $table = 'table';

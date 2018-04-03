@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 class upgrade_2018 extends xoopsUpgrade
 {
@@ -27,7 +27,7 @@ class upgrade_2018 extends xoopsUpgrade
         return false;
     }
 
-    public function query($sql)
+    public function query($sql): void
     {
         //echo $sql . "<br />";
         $xoops = Xoops::getInstance();

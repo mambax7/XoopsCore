@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -81,7 +82,7 @@ class monologlogger implements LoggerInterface
     /**
      * disable logging.
      */
-    public function disable()
+    public function disable(): void
     {
         //error_reporting(0);
         $this->activated = false;
@@ -90,7 +91,7 @@ class monologlogger implements LoggerInterface
     /**
      * Enable logger output.
      */
-    public function enable()
+    public function enable(): void
     {
         error_reporting(E_ALL | E_STRICT);
 
@@ -147,7 +148,7 @@ class monologlogger implements LoggerInterface
      *
      * @param array $record log record contents
      */
-    public function xoopsDataProcessor($record)
+    public function xoopsDataProcessor(array $record)
     {
         $xoops = \Xoops::getInstance();
         $record['extra']['user'] = '?';
@@ -161,7 +162,7 @@ class monologlogger implements LoggerInterface
      *
      * @param array $configs module/user configuration items
      */
-    public function setConfigs($configs)
+    public function setConfigs(array $configs): void
     {
         $this->configs = $configs;
     }
@@ -171,7 +172,7 @@ class monologlogger implements LoggerInterface
      *
      * @return bool
      */
-    public function isEnable()
+    public function isEnable(): bool
     {
         return $this->activated;
     }
@@ -179,7 +180,7 @@ class monologlogger implements LoggerInterface
     /**
      * disable output for the benefit of ajax scripts.
      */
-    public function quiet()
+    public function quiet(): void
     {
         //$this->activated = false;
     }
@@ -189,7 +190,7 @@ class monologlogger implements LoggerInterface
      *
      * @param string $name name of the timer
      */
-    public function startTime($name = 'XOOPS')
+    public function startTime(string $name = 'XOOPS'): void
     {
         $this->starttimes[$name] = microtime(true);
     }
@@ -199,7 +200,7 @@ class monologlogger implements LoggerInterface
      *
      * @param string $name name of the timer
      */
-    public function stopTime($name = 'XOOPS')
+    public function stopTime(string $name = 'XOOPS'): void
     {
         if ($this->activated) {
             if (array_key_exists($name, $this->starttimes)) {
@@ -221,7 +222,7 @@ class monologlogger implements LoggerInterface
      * @param int    $errno      error number
      * @param float  $query_time execution time
      */
-    public function addQuery($sql, $error = null, $errno = null, $query_time = null)
+    public function addQuery(string $sql, string $error = null, int $errno = null, float $query_time = null): void
     {
         if ($this->activated) {
             $level = LogLevel::INFO;
@@ -245,7 +246,7 @@ class monologlogger implements LoggerInterface
      * @param bool   $cached    was the block cached?
      * @param int    $cachetime cachetime of the block
      */
-    public function addBlock($name, $cached = false, $cachetime = 0)
+    public function addBlock(string $name, bool $cached = false, int $cachetime = 0): void
     {
         if ($this->activated) {
             $context = ['channel' => 'Blocks', 'cached' => $cached, 'cachetime' => $cachetime];
@@ -259,7 +260,7 @@ class monologlogger implements LoggerInterface
      * @param string $name name for the entry
      * @param string $msg  text message for the entry
      */
-    public function addExtra($name, $msg)
+    public function addExtra(string $name, string $msg): void
     {
         if ($this->activated) {
             $context = ['channel' => 'Extra', 'name' => $name];
@@ -272,7 +273,7 @@ class monologlogger implements LoggerInterface
      *
      * @param string $msg name for the entry
      */
-    public function addDeprecated($msg)
+    public function addDeprecated(string $msg): void
     {
         if ($this->activated) {
             $this->log(LogLevel::WARNING, $msg, ['channel' => 'Deprecated']);
@@ -284,7 +285,7 @@ class monologlogger implements LoggerInterface
      *
      * @param Exception $e name for the entry
      */
-    public function addException($e)
+    public function addException(Exception $e): void
     {
         if ($this->activated) {
             $this->error(
@@ -306,7 +307,7 @@ class monologlogger implements LoggerInterface
      *
      * @return string path with top levels removed
      */
-    public function sanitizePath($path)
+    public function sanitizePath(string $path): string
     {
         $path = str_replace(
             ['\\', \XoopsBaseConfig::get('root-path'), str_replace('\\', '/', realpath(\XoopsBaseConfig::get('root-path')))],
@@ -323,7 +324,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::EMERGENCY, $message, $context);
@@ -339,7 +340,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function alert($message, array $context = [])
+    public function alert(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ALERT, $message, $context);
@@ -354,7 +355,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function critical($message, array $context = [])
+    public function critical(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::CRITICAL, $message, $context);
@@ -368,7 +369,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function error($message, array $context = [])
+    public function error(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ERROR, $message, $context);
@@ -384,7 +385,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function warning($message, array $context = [])
+    public function warning(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::WARNING, $message, $context);
@@ -397,7 +398,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function notice($message, array $context = [])
+    public function notice(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::NOTICE, $message, $context);
@@ -412,7 +413,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::INFO, $message, $context);
@@ -425,7 +426,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::DEBUG, $message, $context);
@@ -439,7 +440,7 @@ class monologlogger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         if (!$this->activated) {
             return;
@@ -566,7 +567,7 @@ class monologlogger implements LoggerInterface
      *
      * @return string constant or default value
      */
-    private function messageTag($tag, $default)
+    private function messageTag(string $tag, string $default): string
     {
         return defined($tag) ? constant($tag) : $default;
     }

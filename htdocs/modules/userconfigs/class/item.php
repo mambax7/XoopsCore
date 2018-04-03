@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('conf_id', $format);
     }
@@ -64,7 +65,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_id($format = '')
+    public function conf_id(string $format = '')
     {
         return $this->getVar('conf_id', $format);
     }
@@ -73,7 +74,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_modid($format = '')
+    public function conf_modid(string $format = '')
     {
         return $this->getVar('conf_modid', $format);
     }
@@ -82,7 +83,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_uid($format = '')
+    public function conf_uid(string $format = '')
     {
         return $this->getVar('conf_uid', $format);
     }
@@ -91,7 +92,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_name($format = '')
+    public function conf_name(string $format = '')
     {
         return $this->getVar('conf_name', $format);
     }
@@ -100,7 +101,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_title($format = '')
+    public function conf_title(string $format = '')
     {
         return $this->getVar('conf_title', $format);
     }
@@ -109,7 +110,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_value($format = '')
+    public function conf_value(string $format = '')
     {
         return $this->getVar('conf_value', $format);
     }
@@ -118,7 +119,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_desc($format = '')
+    public function conf_desc(string $format = '')
     {
         return $this->getVar('conf_desc', $format);
     }
@@ -127,7 +128,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_formtype($format = '')
+    public function conf_formtype(string $format = '')
     {
         return $this->getVar('conf_formtype', $format);
     }
@@ -136,7 +137,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_valuetype($format = '')
+    public function conf_valuetype(string $format = '')
     {
         return $this->getVar('conf_valuetype', $format);
     }
@@ -145,7 +146,7 @@ class UserconfigsItem extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_order($format = '')
+    public function conf_order(string $format = '')
     {
         return $this->getVar('conf_order', $format);
     }
@@ -155,7 +156,7 @@ class UserconfigsItem extends XoopsObject
      *
      * @return string
      */
-    public function getConfValueForOutput()
+    public function getConfValueForOutput(): string
     {
         switch ($this->getVar('conf_valuetype')) {
         case 'int':
@@ -186,7 +187,7 @@ class UserconfigsItem extends XoopsObject
      *
      * @param mixed &$value Value
      */
-    public function setConfValueForInput(&$value)
+    public function setConfValueForInput(&$value): void
     {
         switch ($this->getVar('conf_valuetype')) {
         case 'array':
@@ -212,7 +213,7 @@ class UserconfigsItem extends XoopsObject
      *
      * @param mixed $option either a {@link XoopsConfigItemOption} object or an array of them
      */
-    public function setConfOptions($option)
+    public function setConfOptions($option): void
     {
         if (is_array($option)) {
             $count = count($option);
@@ -231,7 +232,7 @@ class UserconfigsItem extends XoopsObject
      *
      * @return array array of {@link XoopsConfigItemOption}
      */
-    public function getConfOptions()
+    public function getConfOptions(): array
     {
         return $this->_confOptions;
     }
@@ -240,7 +241,7 @@ class UserconfigsItem extends XoopsObject
      * Clear options from this item.
      *
      **/
-    public function clearConfOptions()
+    public function clearConfOptions(): void
     {
         $this->_confOptions = [];
     }
@@ -253,7 +254,7 @@ class UserconfigsItemHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'userconfigs_item', 'UserconfigsItem', 'conf_id', 'conf_name');
     }

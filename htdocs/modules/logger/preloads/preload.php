@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param Exception $e an exception
      */
-    public static function eventCoreException($e)
+    public static function eventCoreException(Exception $e): void
     {
         LegacyLogger::getInstance()->addException($e);
     }
@@ -41,7 +42,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -54,7 +55,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeCommonStart($args)
+    public static function eventCoreIncludeCommonStart($args): void
     {
         if (class_exists('LegacyLogger')) {
             LegacyLogger::getInstance()->enable(); //until we get a db connection debug is enabled
@@ -68,7 +69,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param array $args arguments
      */
-    public static function eventCoreDatabaseNoconn($args)
+    public static function eventCoreDatabaseNoconn(array $args): void
     {
         if (!class_exists('LegacyLogger')) {
             return;
@@ -83,7 +84,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDatabaseNodb($args)
+    public static function eventCoreDatabaseNodb($args): void
     {
         if (!class_exists('LegacyLogger')) {
             return;
@@ -98,7 +99,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDatabaseQueryComplete($args)
+    public static function eventCoreDatabaseQueryComplete($args): void
     {
         $sql = $args['sql'];
         //XoopsLoad::addMap(array('legacylogger' => dirname(__DIR__) . '/class/legacylogger.php'));
@@ -110,7 +111,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeCommonConfigsSuccess($args)
+    public static function eventCoreIncludeCommonConfigsSuccess($args): void
     {
         /*
         $xoops = Xoops::getInstance();
@@ -129,7 +130,7 @@ class LoggerPreload extends PreloadItem
     /**
      * eventCoreIncludeCommonAuthSuccess.
      */
-    public static function eventCoreIncludeCommonAuthSuccess()
+    public static function eventCoreIncludeCommonAuthSuccess(): void
     {
         $xoops = Xoops::getInstance();
         $logger = LegacyLogger::getInstance();
@@ -149,7 +150,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeCommonEnd($args)
+    public static function eventCoreIncludeCommonEnd($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logger->stopTime('XOOPS Boot');
@@ -161,7 +162,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreTemplateConstructStart($args)
+    public static function eventCoreTemplateConstructStart($args): void
     {
         $tpl = $args[0];
         $configs = self::getConfigs();
@@ -178,7 +179,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeRenderStart($args)
+    public static function eventCoreThemeRenderStart($args): void
     {
         LegacyLogger::getInstance()->startTime('Page rendering');
     }
@@ -188,7 +189,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeRenderEnd($args)
+    public static function eventCoreThemeRenderEnd($args): void
     {
         LegacyLogger::getInstance()->stopTime('Page rendering');
     }
@@ -198,7 +199,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeCheckcacheSuccess($args)
+    public static function eventCoreThemeCheckcacheSuccess($args): void
     {
         $template = $args[0];
         $theme = $args[1];
@@ -211,7 +212,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeblocksBuildblockStart($args)
+    public static function eventCoreThemeblocksBuildblockStart($args): void
     {
         /* @var $block XoopsBlock */
         $block = $args[0];
@@ -224,7 +225,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDeprecated($args)
+    public static function eventCoreDeprecated($args): void
     {
         $message = $args[0];
         LegacyLogger::getInstance()->addDeprecated($message);
@@ -235,7 +236,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDisableerrorreporting($args)
+    public static function eventCoreDisableerrorreporting($args): void
     {
         LegacyLogger::getInstance()->disable();
     }
@@ -245,7 +246,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreHeaderStart($args)
+    public static function eventCoreHeaderStart($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logger->stopTime('Module init');
@@ -257,7 +258,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreHeaderEnd($args)
+    public static function eventCoreHeaderEnd($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logger->stopTime('XOOPS output init');
@@ -269,7 +270,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreFooterStart($args)
+    public static function eventCoreFooterStart($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logger->stopTime('Module display');
@@ -280,7 +281,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreFooterEnd($args)
+    public static function eventCoreFooterEnd($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logger->stopTime();
@@ -291,7 +292,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeFunctionsRedirectheaderEnd($args)
+    public static function eventCoreIncludeFunctionsRedirectheaderEnd($args): void
     {
         $xoops = Xoops::getInstance();
         $logger = LegacyLogger::getInstance();
@@ -308,7 +309,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreSecurityValidatetokenEnd($args)
+    public static function eventCoreSecurityValidatetokenEnd($args): void
     {
         $logger = LegacyLogger::getInstance();
         $logs = $args[0];
@@ -322,7 +323,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreModuleAddlog($args)
+    public static function eventCoreModuleAddlog($args): void
     {
         LegacyLogger::getInstance()->addExtra($args[0], $args[1]);
     }
@@ -332,7 +333,7 @@ class LoggerPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventSystemPreferencesSave($args)
+    public static function eventSystemPreferencesSave($args): void
     {
         XoopsLoad::addMap(['legacylogger' => dirname(__DIR__).'/class/legacylogger.php']);
     }
@@ -342,7 +343,7 @@ class LoggerPreload extends PreloadItem
      *
      * @return array of config options
      */
-    private static function getConfigs()
+    private static function getConfigs(): array
     {
         static $configs = null;
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -67,7 +68,7 @@ $qrCode->setForegroundColor(normalizeColor($configs['qrcode_fgcolor']));
 
 try {
     $qrData = $qrCode->writeString();
-} catch (\Exception $e) {
+} catch (\Throwable $e) {
     $xoops->events()->triggerEvent('core.exception', $e);
     $qrData = '';
 }
@@ -88,7 +89,7 @@ exit;
  *
  * @return array of ints, RGB color values keyed as 'red', 'green' and 'blue'
  */
-function normalizeColor($color)
+function normalizeColor(string $color): array
 {
     $color = preg_replace('/[^a-fA-F0-9]+/', '', $color); // only hex digits
     $color = substr('000000'.$color, -6); // only 6 digits, pad with leading zeros

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test\Key;
 
@@ -15,7 +15,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ArrayStorage();
     }
@@ -24,11 +24,11 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $name = 'name';
         $data = 'data';
@@ -36,7 +36,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($data, $this->object[$name]);
     }
 
-    public function testFetch()
+    public function testFetch(): void
     {
         $name = 'name';
         $data = 'data';
@@ -45,7 +45,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->object->fetch($name), $data);
     }
 
-    public function testExists()
+    public function testExists(): void
     {
         $name = 'name';
         $data = 'data';
@@ -54,7 +54,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->object->exists($name));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $name = 'name';
         $data = 'data';

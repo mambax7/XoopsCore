@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class PrefixStripper extends Schema
     /**
      * constructor.
      */
-    public function __construct(array $tables = [], array $sequences = [], SchemaConfig $schemaConfig = null)
+    public function __construct(array $tables = [], array $sequences = [], ?SchemaConfig $schemaConfig = null)
     {
         $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix').'_');
         $this->xDbName = strtolower(\XoopsBaseConfig::get('db-name'));
@@ -55,7 +56,7 @@ class PrefixStripper extends Schema
      *
      * @param array $tableList list of tables to include
      */
-    public function setTableFilter(array $tableList)
+    public function setTableFilter(array $tableList): void
     {
         $this->tableList = $tableList;
     }
@@ -65,7 +66,7 @@ class PrefixStripper extends Schema
      *
      * @param Table $table table object to add
      */
-    public function addTable(Table $table)
+    public function addTable(Table $table): void
     {
         //echo '<h2>addTable()</h2>';
         try {
@@ -87,7 +88,7 @@ class PrefixStripper extends Schema
                 }
             }
             //Debug::dump($table);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
 
             throw $e;
@@ -97,13 +98,13 @@ class PrefixStripper extends Schema
     /**
      * Add a sequence to the schema.
      */
-    public function addSequence(Sequence $sequence)
+    public function addSequence(Sequence $sequence): void
     {
         //echo '<h2>addSequence()</h2>';
         try {
             $this->_addSequence($sequence);
             //Debug::dump($sequence);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
 
             throw $e;

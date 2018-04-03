@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,11 +6,11 @@ class XoopsDatabaseFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsDatabaseFactory';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test_getDatabaseConnection()
+    public function test_getDatabaseConnection(): void
     {
         $class = $this->myClass;
         $instance = $class::getDatabaseConnection();

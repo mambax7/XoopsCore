@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $mydirname = 'protector';

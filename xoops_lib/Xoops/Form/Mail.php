@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class Mail extends Text
      * @param string $value       Initial text
      * @param string $placeholder placeholder for this element.
      */
-    public function __construct($caption, $name, $size, $maxlength, $value = '', $placeholder = '')
+    public function __construct(string $caption, string $name, int $size, int $maxlength, string $value = '', string $placeholder = '')
     {
         parent::__construct($caption, $name, $size, $maxlength, $value, $placeholder);
         $this->set('type', 'email');

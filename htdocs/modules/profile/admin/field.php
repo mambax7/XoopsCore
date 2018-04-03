@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -216,7 +217,7 @@ switch ($op) {
             $obj->setVar('field_options', $options);
         }
         if ($obj->getVar('field_edit')) {
-            $required = isset($_REQUEST['field_required']) ? $_REQUEST['field_required'] : 0;
+            $required = $_REQUEST['field_required'] ?? 0;
             $obj->setVar('field_required', $required); //0 = no, 1 = yes
             if (isset($_REQUEST['field_maxlength'])) {
                 $obj->setVar('field_maxlength', $_REQUEST['field_maxlength']);

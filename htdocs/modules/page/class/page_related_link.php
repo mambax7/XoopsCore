@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -57,7 +58,7 @@ class PagePage_related_link extends XoopsObject
 
 class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'page_related_link', 'pagepage_related_link', 'link_id', 'link_related_id');
     }

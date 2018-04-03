@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class ConfigOptionTest extends \PHPUnit\Framework\TestCase
 {
     public $myclass = 'Xoops\Core\Kernel\Handlers\XoopsConfigOption';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -21,35 +21,35 @@ class ConfigOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['conf_id']));
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_confop_id()
+    public function test_confop_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->confop_id();
         $this->assertNull($value);
     }
 
-    public function test_confop_name()
+    public function test_confop_name(): void
     {
         $instance = new $this->myclass();
         $value = $instance->confop_name('');
         $this->assertNull($value);
     }
 
-    public function test_conf_id()
+    public function test_conf_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->conf_id();
         $this->assertSame(0, $value);
     }
 
-    public function test_confop_value()
+    public function test_confop_value(): void
     {
         $instance = new $this->myclass();
         $value = $instance->confop_value();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -8,7 +8,7 @@ class metaweblogapiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'MetaWeblogApi';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
@@ -18,32 +18,32 @@ class metaweblogapiTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('XoopsXmlRpcApi', $x);
     }
 
-    public function test_MetaWeblogApi()
+    public function test_MetaWeblogApi(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_newPost()
+    public function test_newPost(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_editPost()
+    public function test_editPost(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_getPost()
+    public function test_getPost(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_getRecentPosts()
+    public function test_getRecentPosts(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_getCategories()
+    public function test_getCategories(): void
     {
         $this->markTestSkipped();
     }

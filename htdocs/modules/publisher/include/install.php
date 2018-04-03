@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +23,7 @@ use Xmf\Database\TableLoad;
  * @param  XoopsModule $module
  * @return boolean
  */
-function xoops_module_install_publisher($module)
+function xoops_module_install_publisher(XoopsModule $module): bool
 {
     $xoops = Xoops::getInstance();
 

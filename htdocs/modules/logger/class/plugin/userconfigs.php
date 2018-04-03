@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class LoggerUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      *
      * @return array of categories
      */
-    public function categories()
+    public function categories(): array
     {
         $categories['cat_options'] = [
             'name' => _MI_LOGGER_UCONF_CAT_OPT,
@@ -56,7 +57,7 @@ class LoggerUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      *
      * @return array of user configurable items
      */
-    public function configs()
+    public function configs(): array
     {
         $config[] = [
             'name' => 'logger_enable',

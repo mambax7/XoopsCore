@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Cookie class.
  *
@@ -24,13 +25,13 @@ class cookie
     }
 
     // Alias for delete() function
-    public static function del($key)
+    public static function del($key): void
     {
         self::delete($key);
     }
 
     // Delete a cookie
-    public static function delete($key)
+    public static function delete($key): void
     {
         // Change string representation array to key/value array
         $key = self::_scrubKey($key);
@@ -40,7 +41,7 @@ class cookie
             // Check for key array
             if (is_array($key)) {
                 // Grab key/value pair
-                list($k, $v) = each($key);
+                [$k, $v] = each($key);
 
                 // Set string representation
                 $key = $k.'['.$v.']';
@@ -86,7 +87,7 @@ class cookie
         // Check for array
         if (is_array($key)) {
             // Grab key/value pair
-            list($k, $v) = each($key);
+            [$k, $v] = each($key);
 
             // Check for key/value pair and return
             if (isset($_COOKIE[$k][$v])) {
@@ -112,7 +113,7 @@ class cookie
         // Check for array
         if (is_array($key)) {
             // Grab key/value pair
-            list($k, $v) = each($key);
+            [$k, $v] = each($key);
 
             // Check for key/value pair and return
             if (isset($_COOKIE[$k][$v])) {
@@ -146,7 +147,7 @@ class cookie
         $domain = '',           /* Default domain */
         $secure = false,        /* Does this cookie need a secure HTTPS connection? */
         $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
-    ) {
+    ): void {
         // Make sure they aren't trying to set a reserved word
         if (!in_array($key, self::$_reserved, true)) {
             // If $key is in array format, change it to string representation
@@ -170,7 +171,7 @@ class cookie
             // If $key is in array format, change it to string representation
             if (is_array($key)) {
                 // Grab key/value pair
-                list($k, $v) = each($key);
+                [$k, $v] = each($key);
 
                 // Set string representation
                 $key = $k.'['.$v.']';

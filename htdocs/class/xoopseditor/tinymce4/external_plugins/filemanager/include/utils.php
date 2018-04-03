@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if ($_SESSION['RF']['verify'] !== 'RESPONSIVEfilemanager') {
     die('forbiden');
@@ -147,7 +147,7 @@ function filescount($path)
     return $total_count;
 }
 
-function create_folder($path = false, $path_thumbs = false)
+function create_folder($path = false, $path_thumbs = false): void
 {
     $oldumask = umask(0);
     if ($path && !file_exists($path)) {
@@ -159,7 +159,7 @@ function create_folder($path = false, $path_thumbs = false)
     umask($oldumask);
 }
 
-function check_files_extensions_on_path($path, $ext)
+function check_files_extensions_on_path($path, $ext): void
 {
     if (!is_dir($path)) {
         $fileinfo = pathinfo($path);
@@ -174,7 +174,7 @@ function check_files_extensions_on_path($path, $ext)
     }
 }
 
-function check_files_extensions_on_phar($phar, &$files, $basepath, $ext)
+function check_files_extensions_on_phar($phar, &$files, $basepath, $ext): void
 {
     foreach ($phar as $file) {
         if ($file->isFile()) {
@@ -385,7 +385,7 @@ function is_really_writable($dir)
 
     // Windows, safe ON. (have to write a file :S)
     if (is_dir($dir)) {
-        $dir = $dir.'/'.md5(mt_rand(1, 1000).mt_rand(1, 1000));
+        $dir = $dir.'/'.md5(random_int(1, 1000).random_int(1, 1000));
 
         if (false === ($fp = @fopen($dir, 'ab'))) {
             return false;
@@ -423,7 +423,7 @@ function is_function_callable($name)
 }
 
 // recursivly copies everything
-function rcopy($source, $destination, $is_rec = false)
+function rcopy($source, $destination, $is_rec = false): void
 {
     if (is_dir($source)) {
         if (false === $is_rec) {
@@ -458,7 +458,7 @@ function rcopy($source, $destination, $is_rec = false)
 // I know copy and rename could be done with just one function
 // but i split the 2 because sometimes rename fails on windows
 // Need more feedback from users and refactor if needed
-function rrename($source, $destination, $is_rec = false)
+function rrename($source, $destination, $is_rec = false): void
 {
     if (is_dir($source)) {
         if (false === $is_rec) {
@@ -509,7 +509,7 @@ function rrename_after_cleaner($source)
     return rmdir($source);
 }
 
-function debugger($input, $trace = false, $halt = fale)
+function debugger($input, $trace = false, $halt = fale): void
 {
     \Xmf\Debug::dump($input);
     if ($trace) {

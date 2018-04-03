@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -206,7 +207,7 @@ class AwesomeButton extends Xoops\Form\Button
     /**
      * @param array $attributes array of all attributes
      */
-    public function __construct($attributes)
+    public function __construct(array $attributes)
     {
         parent::__construct($attributes);
         $this->set('type', 'button');

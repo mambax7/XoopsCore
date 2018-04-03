@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -8,7 +8,7 @@ class movabletypeapiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'MovableTypeApi';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
@@ -18,27 +18,27 @@ class movabletypeapiTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('XoopsXmlRpcApi', $x);
     }
 
-    public function test_MovableTypeApi()
+    public function test_MovableTypeApi(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_getCategoryList()
+    public function test_getCategoryList(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_getPostCategories()
+    public function test_getPostCategories(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_setPostCategories()
+    public function test_setPostCategories(): void
     {
         $this->markTestSkipped();
     }
 
-    public function test_supportedMethods()
+    public function test_supportedMethods(): void
     {
         $this->markTestSkipped();
     }

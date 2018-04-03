@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -10,13 +10,13 @@ class Xoops_Locale_Mailer_AbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Xoops_Locale_Mailer_AbstractTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test_encodeFromName()
+    public function test_encodeFromName(): void
     {
         $instance = new $this->myclass();
         $text = 'foo';
@@ -24,7 +24,7 @@ class Xoops_Locale_Mailer_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($text, $value);
     }
 
-    public function test_encodeSubject()
+    public function test_encodeSubject(): void
     {
         $instance = new $this->myclass();
         $text = 'foo';

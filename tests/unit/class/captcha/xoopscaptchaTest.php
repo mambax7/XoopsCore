@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -15,7 +15,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $class = $this->myclass;
         $this->object = $class::getInstance();
@@ -25,11 +25,11 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['handler', 'active', 'path_basic', 'path_plugin', 'configPath', 'name', 'config', 'message'];
         foreach ($items as $item) {
@@ -38,7 +38,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $this->assertInstanceOf('XoopsCaptcha', $this->object);
 
@@ -54,7 +54,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->object, $instance2);
     }
 
-    public function testLoadConfig()
+    public function testLoadConfig(): void
     {
         $x = $this->object->loadConfig();
         $this->assertInternalType('array', $x);
@@ -69,7 +69,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['num_chars']));
     }
 
-    public function testLoadBasicConfig()
+    public function testLoadBasicConfig(): void
     {
         $x = $this->object->loadBasicConfig();
         $this->assertInternalType('array', $x);
@@ -80,7 +80,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['maxattempts']));
     }
 
-    public function testReadConfig()
+    public function testReadConfig(): void
     {
         $x = $this->object->readConfig('captcha.config');
         $this->assertInternalType('array', $x);
@@ -91,7 +91,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['maxattempts']));
     }
 
-    public function testWriteConfig()
+    public function testWriteConfig(): void
     {
         $instance = $this->object;
         $filename = 'test.config';
@@ -102,7 +102,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
     }
 
-    public function testIsActive()
+    public function testIsActive(): void
     {
         $instance = $this->object;
         $instance->active = true;
@@ -117,7 +117,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $instance->config['disabled'] = $save;
     }
 
-    public function testLoadHandler()
+    public function testLoadHandler(): void
     {
         $instance = $this->object;
         $handler = 'text';
@@ -125,7 +125,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertinstanceOf('XoopsCaptchaText', $x);
     }
 
-    public function testSetConfigs()
+    public function testSetConfigs(): void
     {
         $instance = $this->object;
         $config = ['dummy1' => 1, 'dummy2' => 2, 'message' => 'message'];
@@ -136,7 +136,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('message', $instance->message);
     }
 
-    public function testVerify()
+    public function testVerify(): void
     {
         $instance = $this->object;
         $instance->active = false;
@@ -149,14 +149,14 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function testGetCaption()
+    public function testGetCaption(): void
     {
         $instance = $this->object;
         $x = $instance->getCaption();
         $this->assertSame(XoopsLocale::CONFIRMATION_CODE, $x);
     }
 
-    public function testGetMessage()
+    public function testGetMessage(): void
     {
         $instance = $this->object;
         $instance->message = ['message1', 'message2'];
@@ -164,28 +164,28 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(implode('<br />', $instance->message), $x);
     }
 
-    public function testDestroyGarbage()
+    public function testDestroyGarbage(): void
     {
         $instance = $this->object;
         $x = $instance->destroyGarbage();
         $this->assertTrue($x);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $instance = $this->object;
         $x = $instance->render();
         $this->assertInternalType('string', $x);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $instance = $this->object;
         $x = $instance->renderValidationJS();
         $this->assertSame('', $x);
     }
 
-    public function testSetCode()
+    public function testSetCode(): void
     {
         $instance = $this->object;
         $x = $instance->setCode();
@@ -194,7 +194,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function testLoadForm()
+    public function testLoadForm(): void
     {
         $instance = $this->object;
         $x = $instance->loadForm();

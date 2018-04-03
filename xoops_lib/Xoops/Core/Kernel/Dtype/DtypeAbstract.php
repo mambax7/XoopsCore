@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -53,7 +54,7 @@ abstract class DtypeAbstract
      *
      * @return mixed
      */
-    public function cleanVar(XoopsObject $obj, $key)
+    public function cleanVar(XoopsObject $obj, string $key)
     {
         $value = $obj->vars[$key]['value'];
 
@@ -69,7 +70,7 @@ abstract class DtypeAbstract
      *
      * @return mixed
      */
-    public function getVar(XoopsObject $obj, $key, $format)
+    public function getVar(XoopsObject $obj, string $key, string $format)
     {
         $value = $obj->vars[$key]['value'];
         if ($obj->vars[$key]['options'] !== '' && '' !== $value) {

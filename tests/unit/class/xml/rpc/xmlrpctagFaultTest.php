@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -6,7 +6,7 @@ class XoopsXmlRpcFaultTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsXmlRpcFault';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $code = 109;
         $str = 'string';
@@ -15,7 +15,7 @@ class XoopsXmlRpcFaultTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('XoopsXmlRpcTag', $instance);
     }
 
-    public function test_render()
+    public function test_render(): void
     {
         $code = 999;
         $str = 'string';

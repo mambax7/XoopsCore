@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ abstract class Element extends Attributes
      *                           Control attributes:
      *                               ElementFactory::FORM_KEY optional form or tray to hold this element
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         if ($this->has(ElementFactory::FORM_KEY)
@@ -71,14 +72,14 @@ abstract class Element extends Attributes
      *
      * @return string
      */
-    abstract public function render();
+    abstract public function render(): string;
 
     /**
      * render attributes as a string to include in HTML output.
      *
      * @return string
      */
-    public function renderAttributeString()
+    public function renderAttributeString(): string
     {
         $this->suppressRender($this->suppressList);
 
@@ -105,7 +106,7 @@ abstract class Element extends Attributes
      *
      * @return mixed
      */
-    public function getValue($encode = false)
+    public function getValue(bool $encode = false)
     {
         $values = $this->get('value', '');
         if (is_array($values)) {
@@ -125,7 +126,7 @@ abstract class Element extends Attributes
      *
      * @param mixed $value value to assign to this element
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->set('value', $value);
     }
@@ -135,7 +136,7 @@ abstract class Element extends Attributes
      *
      * @param string $name "name" attribute for the element
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->set('name', $name);
     }
@@ -145,7 +146,7 @@ abstract class Element extends Attributes
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return (string) $this->get('name');
     }
@@ -155,7 +156,7 @@ abstract class Element extends Attributes
      *
      * @param string $key "accesskey" attribute for the element
      */
-    public function setAccessKey($key)
+    public function setAccessKey(string $key): void
     {
         $this->set('accesskey', $key);
     }
@@ -165,7 +166,7 @@ abstract class Element extends Attributes
      *
      * @return string "accesskey" attribute value
      */
-    public function getAccessKey()
+    public function getAccessKey(): string
     {
         return (string) $this->get('accesskey');
     }
@@ -177,7 +178,7 @@ abstract class Element extends Attributes
      *
      * @return string Enhanced string with the 1st occurrence of "accesskey underlined
      */
-    public function getAccessString($str)
+    public function getAccessString(string $str): string
     {
         $access = $this->getAccessKey();
         if (!empty($access) && (false !== ($pos = strpos($str, $access)))) {
@@ -195,7 +196,7 @@ abstract class Element extends Attributes
      *
      * @param string $class class attribute for the element
      */
-    public function setClass($class)
+    public function setClass(string $class): void
     {
         $this->add('class', (string) $class);
     }
@@ -205,7 +206,7 @@ abstract class Element extends Attributes
      *
      * @return string "class" attribute value
      */
-    public function getClass()
+    public function getClass(): string
     {
         $class = $this->get('class', false);
         if (false === $class) {
@@ -221,7 +222,7 @@ abstract class Element extends Attributes
      * @param string $pattern            pattern attribute for the element
      * @param string $patternDescription pattern description
      */
-    public function setPattern($pattern, $patternDescription = '')
+    public function setPattern(string $pattern, string $patternDescription = ''): void
     {
         $this->set('pattern', $pattern);
         $this->set(':pattern_description', $patternDescription);
@@ -232,7 +233,7 @@ abstract class Element extends Attributes
      *
      * @return string "pattern"
      */
-    public function getPattern()
+    public function getPattern(): string
     {
         return (string) $this->get('pattern', '');
     }
@@ -242,7 +243,7 @@ abstract class Element extends Attributes
      *
      * @return string "pattern_description"
      */
-    public function getPatternDescription()
+    public function getPatternDescription(): string
     {
         return (string) $this->get(':pattern_description', '');
     }
@@ -252,7 +253,7 @@ abstract class Element extends Attributes
      *
      * @param string[]|string $datalist datalist attribute for the element
      */
-    public function setDatalist($datalist)
+    public function setDatalist($datalist): void
     {
         $this->add('datalist', $datalist);
     }
@@ -262,7 +263,7 @@ abstract class Element extends Attributes
      *
      * @return string "datalist" attribute value
      */
-    public function renderDatalist()
+    public function renderDatalist(): string
     {
         if (!$this->isDatalist()) {
             return '';
@@ -281,7 +282,7 @@ abstract class Element extends Attributes
      *
      * @return bool true if element has a non-empty datalist
      */
-    public function isDatalist()
+    public function isDatalist(): bool
     {
         return $this->has('datalist');
     }
@@ -291,7 +292,7 @@ abstract class Element extends Attributes
      *
      * @param string $caption caption for element
      */
-    public function setCaption($caption)
+    public function setCaption(string $caption): void
     {
         $this->set('caption', $caption);
     }
@@ -301,7 +302,7 @@ abstract class Element extends Attributes
      *
      * @return string
      */
-    public function getCaption()
+    public function getCaption(): string
     {
         return $this->get('caption', '');
         //return htmlspecialchars($this->caption, ENT_QUOTES);
@@ -312,7 +313,7 @@ abstract class Element extends Attributes
      *
      * @param string $title title for element
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->set('title', $title);
     }
@@ -322,7 +323,7 @@ abstract class Element extends Attributes
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if ($this->has('title')) {
             return $this->get('title');
@@ -342,7 +343,7 @@ abstract class Element extends Attributes
      *
      * @param string $description description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->set('description', $description);
     }
@@ -354,7 +355,7 @@ abstract class Element extends Attributes
      *
      * @return string
      */
-    public function getDescription($encode = false)
+    public function getDescription(bool $encode = false): string
     {
         $description = $this->get('description', '');
 
@@ -364,7 +365,7 @@ abstract class Element extends Attributes
     /**
      * setHidden - flag the element as "hidden".
      */
-    public function setHidden()
+    public function setHidden(): void
     {
         $this->set('hidden');
     }
@@ -374,7 +375,7 @@ abstract class Element extends Attributes
      *
      * @return bool true if hidden
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->has('hidden');
     }
@@ -384,7 +385,7 @@ abstract class Element extends Attributes
      *
      * @param bool $bool true to set required entry for this element
      */
-    public function setRequired($bool = true)
+    public function setRequired(bool $bool = true): void
     {
         if ($bool) {
             $this->set('required');
@@ -396,7 +397,7 @@ abstract class Element extends Attributes
      *
      * @return bool true if entry is required
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         return $this->has('required');
     }
@@ -415,7 +416,7 @@ abstract class Element extends Attributes
      *
      * @deprecated please use attributes for event scripting
      */
-    public function setExtra($extra, $replace = false)
+    public function setExtra(string $extra, bool $replace = false)
     {
         if ($replace) {
             $this->extra = [trim($extra)];
@@ -435,7 +436,7 @@ abstract class Element extends Attributes
      *
      * @see setExtra() this is going to disappear
      */
-    public function getExtra($encode = false)
+    public function getExtra(bool $encode = false): string
     {
         if (!$encode) {
             return implode(' ', $this->extra);
@@ -458,7 +459,7 @@ abstract class Element extends Attributes
      * @param bool   $replace If true, passed string will replace current code,
      *                          otherwise it will be appended to it
      */
-    public function addCustomValidationCode($code, $replace = false)
+    public function addCustomValidationCode(string $code, bool $replace = false): void
     {
         if ($replace) {
             $this->customValidationCode = [$code];
@@ -504,7 +505,7 @@ abstract class Element extends Attributes
      *
      * @return int|false false if no match, or index of matching class
      */
-    public function hasClassLike($pattern)
+    public function hasClassLike(string $pattern)
     {
         $class = $this->get('class');
         if ($class) {
@@ -525,7 +526,7 @@ abstract class Element extends Attributes
      *
      * @todo this should ask the theme
      */
-    public function themeDecorateElement()
+    public function themeDecorateElement(): void
     {
         $class = 'form-control';
         if ($this instanceof Button) {
@@ -579,7 +580,7 @@ abstract class Element extends Attributes
      * @param mixed  $default default value
      * @param array  $enum    optional list of valid values
      */
-    public function setWithDefaults($name, $value, $default = null, $enum = null)
+    public function setWithDefaults(string $name, $value, $default = null, $enum = null): void
     {
         if (empty($value)) {
             $value = $default;
@@ -598,7 +599,7 @@ abstract class Element extends Attributes
      * @param string $name  attribute name
      * @param mixed  $value attribute value
      */
-    public function setIfNotEmpty($name, $value)
+    public function setIfNotEmpty(string $name, $value): void
     {
         // don't overwrite
         if (!$this->has($name) && !empty($value)) {
@@ -615,7 +616,7 @@ abstract class Element extends Attributes
      * @param string $name  attribute name
      * @param mixed  $value attribute value
      */
-    public function setIfNotSet($name, $value)
+    public function setIfNotSet(string $name, $value): void
     {
         // don't overwrite
         if (!$this->has($name)) {

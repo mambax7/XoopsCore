@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
@@ -22,7 +22,7 @@ class SoundCloudTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sanitizer = Sanitizer::getInstance();
         $this->object = new SoundCloud($this->sanitizer);
@@ -32,18 +32,18 @@ class SoundCloudTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\ExtensionAbstract', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\SanitizerComponent', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\SanitizerConfigurable', $this->object);
     }
 
-    public function testGetDhtmlEditorSupport()
+    public function testGetDhtmlEditorSupport(): void
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
         $this->assertTrue(2 === count($support));
@@ -51,7 +51,7 @@ class SoundCloudTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $support[1]);
     }
 
-    public function testRegisterExtensionProcessing()
+    public function testRegisterExtensionProcessing(): void
     {
         $this->sanitizer->enableComponentForTesting('soundcloud');
         $this->assertTrue($this->sanitizer->getShortCodes()->hasShortcode('soundcloud'));

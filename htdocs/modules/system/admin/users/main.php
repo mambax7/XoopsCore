@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -831,7 +831,7 @@ $xoops->footer();
  * @param int|string    $value    column value
  * @param int           $match    A XOOPS_MATCH_* value
  */
-function addCriteria(CriteriaCompo $criteria, $column, $value, $match)
+function addCriteria(CriteriaCompo $criteria, string $column, $value, $match): void
 {
     $relation = 'LIKE';
     switch ($match) {

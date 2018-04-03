@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -11,12 +11,12 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new $this->myclass();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('XoopsMailer', $instance);
@@ -25,7 +25,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('object', $prop);
     }
 
-    public function test_setHTML()
+    public function test_setHTML(): void
     {
         $instance = $this->object;
 
@@ -38,7 +38,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('text/plain', $x->ContentType);
     }
 
-    public function test_reset()
+    public function test_reset(): void
     {
         $instance = $this->object;
 
@@ -80,7 +80,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame("\n", $x);
     }
 
-    public function test_setTemplateDir()
+    public function test_setTemplateDir(): void
     {
         $instance = $this->object;
 
@@ -93,7 +93,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('aa/bb', $x);
     }
 
-    public function test_setTemplate()
+    public function test_setTemplate(): void
     {
         $instance = $this->object;
 
@@ -103,7 +103,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
     }
 
-    public function test_setFromEmail()
+    public function test_setFromEmail(): void
     {
         $instance = $this->object;
 
@@ -113,7 +113,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value), $x);
     }
 
-    public function test_setFromName()
+    public function test_setFromName(): void
     {
         $instance = $this->object;
 
@@ -123,7 +123,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value), $x);
     }
 
-    public function test_setFromUser()
+    public function test_setFromUser(): void
     {
         $instance = $this->object;
 
@@ -133,7 +133,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
     }
 
-    public function test_setPriority()
+    public function test_setPriority(): void
     {
         $instance = $this->object;
 
@@ -143,7 +143,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value), $x);
     }
 
-    public function test_setSubject()
+    public function test_setSubject(): void
     {
         $instance = $this->object;
 
@@ -153,7 +153,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value), $x);
     }
 
-    public function test_setBody()
+    public function test_setBody(): void
     {
         $instance = $this->object;
 
@@ -163,7 +163,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value), $x);
     }
 
-    public function test_useMail()
+    public function test_useMail(): void
     {
         $instance = $this->object;
 
@@ -172,7 +172,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function test_usePM()
+    public function test_usePM(): void
     {
         $instance = $this->object;
 
@@ -181,12 +181,12 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function test_send()
+    public function test_send(): void
     {
         $this->markTestincomplete();
     }
 
-    public function test_getErrors()
+    public function test_getErrors(): void
     {
         $instance = $this->object;
 
@@ -213,7 +213,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_getSuccess()
+    public function test_getSuccess(): void
     {
         $instance = $this->object;
 
@@ -240,7 +240,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_assign()
+    public function test_assign(): void
     {
         $instance = $this->object;
 
@@ -257,7 +257,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('value2', $x['TAG2']);
     }
 
-    public function test_addHeaders()
+    public function test_addHeaders(): void
     {
         $instance = $this->object;
 
@@ -268,7 +268,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(trim($value).$le, $x[0]);
     }
 
-    public function test_setToEmails()
+    public function test_setToEmails(): void
     {
         $instance = $this->object;
 
@@ -278,7 +278,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($emails, $x);
     }
 
-    public function test_setToUsers()
+    public function test_setToUsers(): void
     {
         $instance = $this->object;
 
@@ -288,7 +288,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($users, $x);
     }
 
-    public function test_setToGroups()
+    public function test_setToGroups(): void
     {
         $instance = $this->object;
 
@@ -301,7 +301,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\\Xoops\\Core\\Kernel\\Handlers\\XoopsUser', $x[0]);
     }
 
-    public function test_encodeFromName()
+    public function test_encodeFromName(): void
     {
         $instance = $this->object;
 
@@ -310,7 +310,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
     }
 
-    public function test_encodeSubject()
+    public function test_encodeSubject(): void
     {
         $instance = $this->object;
 
@@ -319,7 +319,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
     }
 
-    public function test_encodeBody()
+    public function test_encodeBody(): void
     {
         $instance = $this->object;
 

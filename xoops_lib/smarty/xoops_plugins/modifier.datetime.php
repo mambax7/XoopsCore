@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@
  *
  * @return string formatted representation of $datetime
  */
-function smarty_modifier_datetime($datetime, $format = 'medium')
+function smarty_modifier_datetime($datetime, $format = 'medium'): string
 {
     $string = \XoopsLocale::formatTimestamp($datetime, $format);
 

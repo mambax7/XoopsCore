@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -24,12 +24,12 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops\Core\Database\Factory::getConnection();
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['db2'];
         foreach ($items as $item) {
@@ -38,27 +38,27 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass($this->conn);
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test_create()
+    public function test_create(): void
     {
         $instance = new $this->myClass($this->conn);
         $x = $instance->create();
         $this->assertNull($x);
     }
 
-    public function test_get()
+    public function test_get(): void
     {
         $instance = new $this->myClass($this->conn);
         $x = $instance->get(1);
         $this->assertNull($x);
     }
 
-    public function test_insert()
+    public function test_insert(): void
     {
         $instance = new $this->myClass($this->conn);
         $object = new $this->classObject();
@@ -66,7 +66,7 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_delete()
+    public function test_delete(): void
     {
         $instance = new $this->myClass($this->conn);
         $object = new $this->classObject();

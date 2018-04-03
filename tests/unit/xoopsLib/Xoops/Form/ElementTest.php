@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('Xoops\Form\Element');
     }
@@ -24,11 +24,11 @@ class ElementTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testRenderAttributeString()
+    public function testRenderAttributeString(): void
     {
         $instance = $this->object;
 
@@ -40,7 +40,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $value);
     }
 
-    public function testRenderAttributeString100()
+    public function testRenderAttributeString100(): void
     {
         $arrAttr = ['caption' => 'caption_value'];
         $this->object->setAll($arrAttr);
@@ -57,7 +57,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $value);
     }
 
-    public function testRenderAttributeString120()
+    public function testRenderAttributeString120(): void
     {
         $instance = $this->object;
 
@@ -69,7 +69,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $value);
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $name = 'name';
         $this->object->setValue($name);
@@ -82,7 +82,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($names, $value);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $name = 'name';
         $this->object->setName($name);
@@ -90,7 +90,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetAccessKey()
+    public function testGetAccessKey(): void
     {
         $key = 'name';
         $this->object->setAccessKey($key);
@@ -98,7 +98,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($key, $value);
     }
 
-    public function testGetAccessString()
+    public function testGetAccessString(): void
     {
         $instance = $this->object;
 
@@ -116,7 +116,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($str, $result);
     }
 
-    public function testGetClass()
+    public function testGetClass(): void
     {
         $this->assertFalse($this->object->getClass());
 
@@ -126,7 +126,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetPattern()
+    public function testGetPattern(): void
     {
         $name = 'name';
         $this->object->setPattern($name);
@@ -134,7 +134,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetPatternDescription()
+    public function testGetPatternDescription(): void
     {
         $instance = $this->object;
 
@@ -152,7 +152,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($pattern, $result);
     }
 
-    public function testRenderDatalist()
+    public function testRenderDatalist(): void
     {
         $instance = $this->object;
 
@@ -173,7 +173,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testRenderDatalist100()
+    public function testRenderDatalist100(): void
     {
         $instance = $this->object;
 
@@ -196,7 +196,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIsDatalist()
+    public function testIsDatalist(): void
     {
         $instance = $this->object;
 
@@ -210,7 +210,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function testGetCaption()
+    public function testGetCaption(): void
     {
         $name = 'name';
         $this->object->setCaption($name);
@@ -218,7 +218,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $name = 'name';
         $this->object->setTitle($name);
@@ -236,7 +236,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name.' - '.$desc, $value);
     }
 
-    public function testGetDescription()
+    public function testGetDescription(): void
     {
         $name = 'name';
         $this->object->setDescription($name);
@@ -244,7 +244,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testIsHidden()
+    public function testIsHidden(): void
     {
         $value = $this->object->isHidden();
         $this->assertFalse($value);
@@ -253,7 +253,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function testIsRequired()
+    public function testIsRequired(): void
     {
         $value = $this->object->isRequired();
         $this->assertFalse($value);
@@ -262,7 +262,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function testGetExtra()
+    public function testGetExtra(): void
     {
         $name = 'name';
         $this->object->setExtra('one');
@@ -278,7 +278,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('three', $value);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertFalse($value);
@@ -303,7 +303,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, '');
     }
 
-    public function test_hasClassLike()
+    public function test_hasClassLike(): void
     {
         $name = 'class';
         $stem = 'stem';
@@ -317,7 +317,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertNotFalse($this->object->hasClassLike($stem));
     }
 
-    public function test_themeDecorateElement()
+    public function test_themeDecorateElement(): void
     {
         $class = 'class';
         $this->object->set($class, 'span3');
@@ -330,7 +330,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertNotFalse($this->object->hasClassLike('form-control'));
     }
 
-    public function test_setWithDefaults()
+    public function test_setWithDefaults(): void
     {
         $name = 'color';
         $enum = ['red', 'blue', 'green'];
@@ -343,7 +343,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('blue', $this->object->get($name));
     }
 
-    public function test_setIfNotEmpty()
+    public function test_setIfNotEmpty(): void
     {
         $name = 'name';
         $value = 'test';
@@ -360,7 +360,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $actual);
     }
 
-    public function test_setIfNotSet()
+    public function test_setIfNotSet(): void
     {
         $name = 'name';
         $value = 'test';
@@ -374,7 +374,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $actual);
     }
 
-    public function test_arrayAccess()
+    public function test_arrayAccess(): void
     {
         $key = 'value';
         $value = 'testvalue';

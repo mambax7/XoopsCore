@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -44,7 +45,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct(
             $db,
@@ -63,7 +64,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function deleteByGroup($gperm_groupid, $gperm_modid = null)
+    public function deleteByGroup(int $gperm_groupid, int $gperm_modid = null): bool
     {
         $criteria = new CriteriaCompo(new Criteria('gperm_groupid', (int) ($gperm_groupid)));
         if (isset($gperm_modid)) {
@@ -82,7 +83,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
+    public function deleteByModule(int $gperm_modid, string $gperm_name = null, int $gperm_itemid = null): bool
     {
         $criteria = new CriteriaCompo(new Criteria('gperm_modid', (int) ($gperm_modid)));
         if (isset($gperm_name)) {
@@ -106,7 +107,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE if permission is enabled
      */
-    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true)
+    public function checkRight(string $gperm_name, int $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true): bool
     {
         if (empty($gperm_groupid)) {
             return false;
@@ -150,7 +151,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE if success
      */
-    public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
+    public function addRight(string $gperm_name, int $gperm_itemid, int $gperm_groupid, int $gperm_modid = 1): bool
     {
         $perm = $this->create();
         $perm->setVar('gperm_name', (string) ($gperm_name));
@@ -170,7 +171,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of item IDs
      */
-    public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
+    public function getItemIds(string $gperm_name, $gperm_groupid, $gperm_modid = 1): array
     {
         $ret = [];
         $criteria = new CriteriaCompo(new Criteria('gperm_name', (string) ($gperm_name)));
@@ -201,7 +202,7 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of group IDs
      */
-    public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
+    public function getGroupIds(string $gperm_name, int $gperm_itemid, int $gperm_modid = 1): array
     {
         $ret = [];
         $criteria = new CriteriaCompo(new Criteria('gperm_name', (string) ($gperm_name)));

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,7 +6,7 @@ class xoopscacheTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCache';
 
-    public function test__construct()
+    public function test__construct(): void
     {
         if (!class_exists('XoopsCache', false)) {
             $xoops_root_path = \XoopsBaseConfig::get('root-path');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ function publisher_category_items_sel_show($options)
 
         /* @var $itemObj PublisherItem */
         foreach ($items as $itemObj) {
-            $item['title'] = $itemObj->title(isset($options[3]) ? $options[3] : 0);
+            $item['title'] = $itemObj->title($options[3] ?? 0);
             $item['itemurl'] = $itemObj->getItemUrl();
             $block['categories'][$catID]['items'][] = $item;
         }

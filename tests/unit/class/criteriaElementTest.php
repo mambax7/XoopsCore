@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,23 +6,23 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class CriteriaElementTestInstance extends CriteriaElement
 {
-    public function render()
+    public function render(): void
     {
     }
 
-    public function renderWhere()
+    public function renderWhere(): void
     {
     }
 
-    public function renderLdap()
+    public function renderLdap(): void
     {
     }
 
-    public function renderQb(QueryBuilder $qb = null, $whereMode = '')
+    public function renderQb(?QueryBuilder $qb = null, $whereMode = ''): void
     {
     }
 
-    public function buildExpressionQb(QueryBuilder $qb)
+    public function buildExpressionQb(QueryBuilder $qb): void
     {
     }
 }
@@ -31,7 +31,7 @@ class CriteriaElementTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'CriteriaElementTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $x = new $this->myclass();
         $this->assertInstanceOf('CriteriaElement', $x);

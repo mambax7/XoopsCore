@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -129,7 +130,7 @@ class Assets
      *
      * @return string URL to asset file
      */
-    public function getUrlToAssets($type, $assets, $filters = 'default', $target = null)
+    public function getUrlToAssets(string $type, array $assets, $filters = 'default', $target = null): string
     {
         if (is_scalar($assets)) {
             $assets = [$assets]; // just a single path name
@@ -252,7 +253,7 @@ class Assets
             }
 
             return $xoops->url('assets/'.$asset_path);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
 
             return null;
@@ -282,7 +283,7 @@ class Assets
      *
      * @return bool true if asset registers, false on error
      */
-    public function registerAssetReference($name, $assets, $filters = null)
+    public function registerAssetReference(string $name, $assets, $filters = null): bool
     {
         $xoops = \Xoops::getInstance();
 
@@ -361,14 +362,14 @@ class Assets
             $this->assetManager->set($name, $collection);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
 
             return false;
         }
     }
 
-    public function copyBaseFileAssets()
+    public function copyBaseFileAssets(): void
     {
         foreach ($this->default_file_assets as $fileSpec) {
             $this->copyFileAssets($fileSpec['path'], trim($fileSpec['pattern']), $fileSpec['type']);
@@ -388,7 +389,7 @@ class Assets
      * @return mixed boolean false if target directory is not writable, otherwise
      *               integer count of files copied
      */
-    public function copyFileAssets($fromPath, $pattern, $output)
+    public function copyFileAssets(string $fromPath, string $pattern, string $output)
     {
         $xoops = \Xoops::getInstance();
 
@@ -431,7 +432,7 @@ class Assets
      *
      * @return array of assets preferences
      */
-    protected function readAssetsPrefs()
+    protected function readAssetsPrefs(): array
     {
         $xoops = \Xoops::getInstance();
 
@@ -472,7 +473,7 @@ class Assets
             if (!empty($assetsPrefs['default_file_assets']) && is_array($assetsPrefs['default_file_assets'])) {
                 $this->default_file_assets = $assetsPrefs['default_file_assets'];
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
             $assetsPrefs = [];
         }
@@ -486,7 +487,7 @@ class Assets
      *
      * @param array $assets_prefs array of asset preferences to save
      */
-    protected function saveAssetsPrefs($assets_prefs)
+    protected function saveAssetsPrefs(array $assets_prefs): void
     {
         if (is_array($assets_prefs)) {
             $xoops = \Xoops::getInstance();
@@ -494,7 +495,7 @@ class Assets
             try {
                 Yaml::save($assets_prefs, $xoops->path($this->assetsPrefsFilename));
                 $xoops->cache()->write($this->assetsPrefsCacheKey, $assets_prefs);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $xoops->events()->triggerEvent('core.exception', $e);
             }
         }

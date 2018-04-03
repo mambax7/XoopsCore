@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,7 +22,7 @@ use Xoops\Core\PreloadItem;
  */
 class ImagesPreload extends PreloadItem
 {
-    public static function eventCoreIncludeCommonEnd($args)
+    public static function eventCoreIncludeCommonEnd($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -29,14 +30,14 @@ class ImagesPreload extends PreloadItem
         ]);
     }
 
-    public static function eventCoreClassXoopsformFormdhtmltextareaCodeicon($args)
+    public static function eventCoreClassXoopsformFormdhtmltextareaCodeicon($args): void
     {
         /* @var $dhtml Xoops\Form\DhtmlTextArea */
         $dhtml = $args[1];
         $args[0] .= "<img src='".\XoopsBaseConfig::get('url')."/images/image.gif' alt='".XoopsLocale::INSIDE_IMAGE."' title='".XoopsLocale::INSIDE_IMAGE."' onclick='openWithSelfMain(\"".\XoopsBaseConfig::get('url')."/modules/images/imagemanager.php?target={$dhtml->getName()}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
     }
 
-    public static function eventCoreImage($args)
+    public static function eventCoreImage($args): void
     {
         $uri = '';
         foreach (Request::get() as $k => $v) {
@@ -45,7 +46,7 @@ class ImagesPreload extends PreloadItem
         Xoops::getInstance()->redirect("modules/images/image.php?{$uri}", 0);
     }
 
-    public static function eventCoreImagemanager($args)
+    public static function eventCoreImagemanager($args): void
     {
         $uri = '';
         foreach (Request::get() as $k => $v) {

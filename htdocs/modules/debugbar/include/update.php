@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ function xoops_module_install_debugbar(XoopsModule $module)
  *
  * @return mixed boolean false on error, integer file count on success
  */
-function xoops_module_update_debugbar(XoopsModule $module, $version)
+function xoops_module_update_debugbar(XoopsModule $module, int $version)
 {
     return xoops_module_install_debugbar($module);
 }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ if ('start' === $op) {
     PublisherUtils::openCollapsableBar('wfsectionimport', 'wfsectionimporticon', sprintf(_AM_PUBLISHER_IMPORT_FROM, $importFromModuleName), _AM_PUBLISHER_IMPORT_INFO);
 
     $result = $xoopsDB->query('SELECT COUNT(*) FROM '.$xoopsDB->prefix('wfs_category'));
-    list($totalCat) = $xoopsDB->fetchRow($result);
+    [$totalCat] = $xoopsDB->fetchRow($result);
 
     if (0 === $totalCat) {
         echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">'._AM_PUBLISHER_IMPORT_NOCATSELECTED.'</span>';
@@ -45,7 +46,7 @@ if ('start' === $op) {
         include_once \XoopsBaseConfig::get('root-path').'/class/xoopstree.php';
 
         $result = $xoopsDB->query('SELECT COUNT(*) FROM '.$xoopsDB->prefix('wfs_article'));
-        list($totalArticles) = $xoopsDB->fetchRow($result);
+        [$totalArticles] = $xoopsDB->fetchRow($result);
 
         if (0 === $totalArticles) {
             echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">'.sprintf(_AM_PUBLISHER_IMPORT_MODULE_FOUND_NO_ITEMS, $importFromModuleName, $totalArticles).'</span>';
@@ -59,7 +60,7 @@ if ('start' === $op) {
             $result = $xoopsDB->query($sql);
             $cat_cbox_values = [];
             $cat_cbox_options = [];
-            while (false !== (list($cid, $pid, $cat_title, $art_count) = $xoopsDB->fetchRow($result))) {
+            while (false !== ([$cid, $pid, $cat_title, $art_count] = $xoopsDB->fetchRow($result))) {
                 $cat_title = $myts->displayTarea($cat_title);
                 $cat_cbox_options[$cid] = "${cat_title} (${art_count})";
             }

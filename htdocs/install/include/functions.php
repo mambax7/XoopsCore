@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,12 +30,12 @@ function installHtmlSpecialCharacters($value)
  * @param  string $hash
  * @return bool
  */
-function install_acceptUser($hash = '')
+function install_acceptUser(string $hash = ''): bool
 {
     $xoops = Xoops::getInstance();
     $xoops->user = null;
     $hash_data = @explode('-', $_COOKIE['xo_install_user'], 2);
-    list($uname, $hash_login) = [$hash_data[0], (string) (@$hash_data[1])];
+    [$uname, $hash_login] = [$hash_data[0], (string) (@$hash_data[1])];
     if (empty($uname) || empty($hash_login)) {
         return false;
     }
@@ -53,7 +54,7 @@ function install_acceptUser($hash = '')
     return true;
 }
 
-function install_finalize($installer_modified)
+function install_finalize($installer_modified): void
 {
     // Set mainfile.php readonly
     @chmod(XOOPS_ROOT_PATH.'/mainfile.php', 0444);
@@ -71,7 +72,7 @@ function install_finalize($installer_modified)
  * @param string $label label
  * @param string $help  help text
  */
-function xoFormField($name, $value, $label, $help = '')
+function xoFormField(string $name, string $value, string $label, string $help = ''): void
 {
     $label = installHtmlSpecialCharacters($label);
     $name = installHtmlSpecialCharacters($name);
@@ -95,7 +96,7 @@ function xoFormField($name, $value, $label, $help = '')
  * @param string $label label
  * @param string $help  help text
  */
-function xoPassField($name, $value, $label, $help = '')
+function xoPassField(string $name, string $value, string $label, string $help = ''): void
 {
     $label = installHtmlSpecialCharacters($label);
     $name = installHtmlSpecialCharacters($name);
@@ -120,7 +121,7 @@ function xoPassField($name, $value, $label, $help = '')
  * @param string $label label
  * @param string $help  help text
  */
-function xoBoolField($name, $value, $label, $help = '')
+function xoBoolField(string $name, string $value, string $label, string $help = ''): void
 {
     $label = installHtmlSpecialCharacters($label);
     $name = installHtmlSpecialCharacters($name);
@@ -161,7 +162,7 @@ function getDirList($dirname)
  * @param  string $str
  * @return string
  */
-function xoDiag($status = -1, $str = '')
+function xoDiag($status = -1, string $str = ''): string
 {
     if ($status === -1) {
         $_SESSION['error'] = true;
@@ -181,7 +182,7 @@ function xoDiag($status = -1, $str = '')
  * @param  bool   $severe
  * @return string
  */
-function xoDiagBoolSetting($name, $wanted = false, $severe = false)
+function xoDiagBoolSetting(string $name, bool $wanted = false, bool $severe = false): string
 {
     $setting = strtolower(ini_get($name));
     $setting = (empty($setting) || 'off' === $setting || 'false' === $setting) ? false : true;
@@ -196,7 +197,7 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
  * @param  string $path
  * @return string
  */
-function xoDiagIfWritable($path)
+function xoDiagIfWritable(string $path): string
 {
     $path = '../'.$path;
     $error = true;
@@ -216,7 +217,7 @@ function xoDiagIfWritable($path)
 /**
  * @return string
  */
-function xoPhpVersion()
+function xoPhpVersion(): string
 {
     if (version_compare(PHP_VERSION, '7.1.0', '>=')) {
         return xoDiag(1, PHP_VERSION);
@@ -230,7 +231,7 @@ function xoPhpVersion()
  * @param  bool   $valid
  * @return string
  */
-function genPathCheckHtml($path, $valid)
+function genPathCheckHtml(string $path, bool $valid): string
 {
     if ($valid) {
         switch ($path) {
@@ -272,7 +273,7 @@ function genPathCheckHtml($path, $valid)
  *
  * @return array of Doctrine Connection parameters
  */
-function getDbConnectionParams()
+function getDbConnectionParams(): array
 {
     $wizard = $_SESSION['wizard'];
     $settings = $_SESSION['settings'];
@@ -308,7 +309,7 @@ function getDbConnectionParams()
  *
  * @return Connection a database connection instance
  */
-function getDbConnection(&$error)
+function getDbConnection(string &$error): Connection
 {
     //New database connector
     $config = new \Doctrine\DBAL\Configuration();
@@ -316,7 +317,7 @@ function getDbConnection(&$error)
 
     try {
         $instance = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-    } catch (Exception $e) {
+    } catch (\Throwable $e) {
         $error = $e->getMessage();
 
         return false;
@@ -329,7 +330,7 @@ function getDbConnection(&$error)
 
     try {
         $instance->connect();
-    } catch (Exception $e) {
+    } catch (\Throwable $e) {
         $error = $e->getMessage();
 
         return false;

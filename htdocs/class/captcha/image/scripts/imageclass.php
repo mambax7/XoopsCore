@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -87,7 +88,7 @@ class XoopsCaptchaImageHandler
     /**
      * load an image.
      */
-    public function loadImage()
+    public function loadImage(): void
     {
         $this->generateCode();
         $this->createImage();
@@ -98,7 +99,7 @@ class XoopsCaptchaImageHandler
      *
      * @return bool
      */
-    public function generateCode()
+    public function generateCode(): bool
     {
         if ($this->invalid) {
             return false;
@@ -106,7 +107,7 @@ class XoopsCaptchaImageHandler
 
         if ('bmp' === $this->mode) {
             $this->config['num_chars'] = 4;
-            $this->code = mt_rand(pow(10, $this->config['num_chars'] - 1), (int) (str_pad('9', $this->config['num_chars'], '9')));
+            $this->code = random_int(pow(10, $this->config['num_chars'] - 1), (int) (str_pad('9', $this->config['num_chars'], '9')));
         } else {
             $raw_code = md5(uniqid(mt_rand(), 1));
             if (!empty($this->config['skip_characters'])) {
@@ -153,7 +154,7 @@ class XoopsCaptchaImageHandler
      *
      * @return array|mixed
      */
-    public function getList($name, $extension = '')
+    public function getList(string $name, string $extension = '')
     {
         if ($items = Cache::read("captcha_captcha_{$name}")) {
             return $items;
@@ -181,7 +182,7 @@ class XoopsCaptchaImageHandler
      * @author          DuGris aka L. Jen <http://www.dugris.info> <DuGris@wanadoo.fr>
      * @version         $Id$
      */
-    public function createImageGd()
+    public function createImageGd(): void
     {
         $this->loadFont();
         $this->setImageSize();
@@ -236,7 +237,7 @@ default:
     /**
      * loads a font.
      */
-    public function loadFont()
+    public function loadFont(): void
     {
         $fonts = $this->getList('fonts', 'ttf');
         $this->font = $this->xoops_root_path.'/class/captcha/image/fonts/'.$fonts[array_rand($fonts)];
@@ -245,7 +246,7 @@ default:
     /**
      * sets the size of the image.
      */
-    public function setImageSize()
+    public function setImageSize(): void
     {
         if (empty($this->font)) {
             $this->loadFont();
@@ -279,7 +280,7 @@ default:
      *
      * @return string|null
      */
-    public function loadBackground()
+    public function loadBackground(): ?string
     {
         $RandBackground = null;
         if ($backgrounds = $this->getList('backgrounds', '(gif|jpg|png)')) {
@@ -292,7 +293,7 @@ default:
     /**
      * Draw Image background.
      */
-    public function createFromFile()
+    public function createFromFile(): void
     {
         if ($RandImage = $this->loadBackground()) {
             $ImageType = @getimagesize($RandImage);
@@ -325,7 +326,7 @@ break;
     /**
      * Draw Code.
      */
-    public function drawCode()
+    public function drawCode(): void
     {
         for ($i = 0; $i < $this->config['num_chars'];
 ++$i) {
@@ -362,7 +363,7 @@ break;
     /**
      * Draw Border.
      */
-    public function drawBorder()
+    public function drawBorder(): void
     {
         $rgb = mt_rand(50, 150);
         $border_color = imagecolorallocate($this->object, $rgb, $rgb, $rgb);
@@ -372,7 +373,7 @@ break;
     /**
      * Draw Circles background.
      */
-    public function drawCircles()
+    public function drawCircles(): void
     {
         for ($i = 1; $i <= $this->config['background_num'];
 ++$i) {
@@ -384,7 +385,7 @@ break;
     /**
      * Draw Lines background.
      */
-    public function drawLines()
+    public function drawLines(): void
     {
         for ($i = 0; $i < $this->config['background_num'];
 ++$i) {
@@ -396,7 +397,7 @@ break;
     /**
      * Draw Rectangles background.
      */
-    public function drawRectangles()
+    public function drawRectangles(): void
     {
         for ($i = 1; $i <= $this->config['background_num'];
 ++$i) {
@@ -408,7 +409,7 @@ break;
     /**
      * Draw Bars background.
      */
-    public function drawBars()
+    public function drawBars(): void
     {
         for ($i = 0; $i <= $this->height;
 ) {
@@ -427,7 +428,7 @@ break;
     /**
      * Draw Ellipses background.
      */
-    public function drawEllipses()
+    public function drawEllipses(): void
     {
         for ($i = 1; $i <= $this->config['background_num'];
 ++$i) {
@@ -465,7 +466,7 @@ break;
      *
      * @return string of image
      */
-    public function createImageBmp($file = '')
+    public function createImageBmp(string $file = ''): string
     {
         $image = '';
         if (empty($file)) {

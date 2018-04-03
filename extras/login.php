@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // This script displays a login screen in a popupbox when SSL is enabled in the preferences. You should use this script only when your server supports SSL. Place this file under your SSL directory
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class ProfileRegstep extends XoopsObject
 
 class ProfileRegstepHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'profile_regstep', 'profileregstep', 'step_id', 'step_name');
     }
@@ -51,7 +52,7 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteRegstep(XoopsObject $obj, $force = false)
+    public function deleteRegstep(XoopsObject $obj, bool $force = false): bool
     {
         if (parent::delete($obj, $force)) {
             $field_handler = \Xoops::getModuleHelper('profile')->getHandler('field');

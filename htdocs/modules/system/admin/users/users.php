@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ if (!$xoops->getModuleConfig('active_users', 'system')) {
  * @param int    $uid  uid of user row
  * @param string $type type of processing, 'user' for one user, 'all users' for all
  */
-function synchronize($uid, $type)
+function synchronize(int $uid, string $type): void
 {
     $xoops = Xoops::getInstance();
     $db = $xoops->db();

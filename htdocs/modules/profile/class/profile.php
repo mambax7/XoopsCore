@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class ProfileProfile extends XoopsObject
     /**
      * @param array $fields
      */
-    public function __construct($fields)
+    public function __construct(array $fields)
     {
         $this->initVar('profile_id', Dtype::TYPE_INTEGER, null, true);
         $this->init($fields);
@@ -45,7 +46,7 @@ class ProfileProfile extends XoopsObject
      *
      * @param array $fields field information array of {@link ProfileField} objects
      */
-    public function init($fields)
+    public function init(array $fields): void
     {
         if (is_array($fields) && count($fields) > 0) {
             /* @var ProfileField $field */
@@ -84,7 +85,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return ProfileProfile {@link ProfileProfile}
      */
-    public function create($isNew = true)
+    public function create(bool $isNew = true): ProfileProfile
     {
         /* @var $obj ProfileProfile */
         $obj = new $this->className($this->loadFields());
@@ -104,7 +105,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return null|ProfileProfile|XoopsObject
      */
-    public function getProfile($uid, $createOnFailure = true)
+    public function getProfile($uid, bool $createOnFailure = true)
     {
         $obj = parent::get($uid);
         if (!is_object($obj) && $createOnFailure) {
@@ -121,7 +122,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return ProfileField
      */
-    public function createField($isNew = true)
+    public function createField(bool $isNew = true): ProfileField
     {
         $return = $this->_fHandler->create($isNew);
 
@@ -133,7 +134,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function loadFields()
+    public function loadFields(): array
     {
         if (0 === count($this->_fields)) {
             $this->_fields = $this->_fHandler->loadFields();
@@ -151,7 +152,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      **/
-    public function getFields(CriteriaElement $criteria, $id_as_key = true, $as_object = true)
+    public function getFields(CriteriaElement $criteria, bool $id_as_key = true, bool $as_object = true): array
     {
         return $this->_fHandler->getObjects($criteria, $id_as_key, $as_object);
     }
@@ -164,7 +165,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function insertField(ProfileField $field, $force = false)
+    public function insertField(ProfileField $field, bool $force = false): bool
     {
         return $this->_fHandler->insert($field, $force);
     }
@@ -177,7 +178,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteField(ProfileField $field, $force = false)
+    public function deleteField(ProfileField $field, bool $force = false): bool
     {
         return $this->_fHandler->delete($field, $force);
     }
@@ -190,7 +191,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return string
      */
-    public function saveField($vars, $weight = 0)
+    public function saveField(array $vars, int $weight = 0): string
     {
         $field = $this->createField();
         $field->setVar('field_name', $vars['name']);
@@ -247,7 +248,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $obj, $force = false)
+    public function insert(XoopsObject $obj, bool $force = false): bool
     {
         $uservars = $this->getUserVars();
         foreach ($uservars as $var) {
@@ -265,7 +266,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getUserVars()
+    public function getUserVars(): array
     {
         return $this->_fHandler->getUserVars();
     }
@@ -279,7 +280,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function search(CriteriaElement $criteria, $searchvars = [], $groups = null)
+    public function search(CriteriaElement $criteria, array $searchvars = [], array $groups = null): array
     {
         $xoops = Xoops::getInstance();
         $uservars = $this->getUserVars();

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -157,7 +158,7 @@ class PagePage_content extends XoopsObject
 
 class PagePage_contentHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'page_content', 'pagepage_content', 'content_id', 'content_title');
     }

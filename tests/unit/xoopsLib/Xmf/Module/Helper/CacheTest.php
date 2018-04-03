@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Module\Helper;
 
@@ -15,7 +15,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Cache();
     }
@@ -24,19 +24,11 @@ class CacheTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testInit()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    public function testWrite()
+    public function testInit(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -44,7 +36,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRead()
+    public function testWrite(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -52,7 +44,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDelete()
+    public function testRead(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -60,7 +52,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCacheRead()
+    public function testDelete(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -68,7 +60,15 @@ class CacheTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testClear()
+    public function testCacheRead(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
+    public function testClear(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class Factory
      *
      * @return XoopsTheme
      */
-    public function createInstance($options = [])
+    public function createInstance(array $options = []): XoopsTheme
     {
         $xoops = \Xoops::getInstance();
         // Grab the theme folder from request vars if present
@@ -93,7 +94,7 @@ class Factory
      *
      * @return bool
      */
-    public function isThemeAllowed($name)
+    public function isThemeAllowed(string $name): bool
     {
         return empty($this->allowedThemes) || in_array($name, $this->allowedThemes, true);
     }

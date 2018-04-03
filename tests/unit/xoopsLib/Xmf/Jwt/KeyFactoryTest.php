@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test\Jwt;
 
@@ -26,7 +26,7 @@ class KeyFactoryTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         //$this->object = new KeyFactory;
         $this->storage = new ArrayStorage();
@@ -36,12 +36,12 @@ class KeyFactoryTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->storage->delete($this->testKey);
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $instance = KeyFactory::build($this->testKey, $this->storage);
         $this->assertInstanceOf('\Xmf\Key\Basic', $instance);
@@ -53,7 +53,7 @@ class KeyFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance->getSigning(), $actual->getSigning());
     }
 
-    public function testBuildException()
+    public function testBuildException(): void
     {
         $this->expectException('\InvalidArgumentException');
         $instance = KeyFactory::build(['muck'], $this->storage);

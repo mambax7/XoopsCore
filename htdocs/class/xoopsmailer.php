@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -173,7 +174,7 @@ class xoopsmailer
      *
      * @param bool $value
      */
-    public function setHTML($value = true)
+    public function setHTML(bool $value = true): void
     {
         $this->multimailer->isHTML($value);
     }
@@ -181,7 +182,7 @@ class xoopsmailer
     /**
      * reset all properties to default.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->fromEmail = '';
         $this->fromName = '';
@@ -206,7 +207,7 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setTemplateDir($value = null)
+    public function setTemplateDir(string $value = null): void
     {
         $xoops = Xoops::getInstance();
         if (null === $value && $xoops->isModule()) {
@@ -220,7 +221,7 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setTemplate($value)
+    public function setTemplate(string $value): void
     {
         $this->template = $value;
     }
@@ -228,7 +229,7 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setFromEmail($value)
+    public function setFromEmail(string $value): void
     {
         $this->fromEmail = trim($value);
     }
@@ -236,12 +237,12 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setFromName($value)
+    public function setFromName(string $value): void
     {
         $this->fromName = trim($value);
     }
 
-    public function setFromUser(XoopsUser $user)
+    public function setFromUser(XoopsUser $user): void
     {
         $this->fromUser = $user;
     }
@@ -249,7 +250,7 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setPriority($value)
+    public function setPriority(string $value): void
     {
         $this->priority = trim($value);
     }
@@ -257,7 +258,7 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setSubject($value)
+    public function setSubject(string $value): void
     {
         $this->subject = trim($value);
     }
@@ -265,17 +266,17 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function setBody($value)
+    public function setBody(string $value): void
     {
         $this->body = trim($value);
     }
 
-    public function useMail()
+    public function useMail(): void
     {
         $this->isMail = true;
     }
 
-    public function usePM()
+    public function usePM(): void
     {
         $this->isPM = true;
     }
@@ -284,7 +285,7 @@ class xoopsmailer
      * @param  bool $debug
      * @return bool
      */
-    public function send($debug = false)
+    public function send(bool $debug = false): bool
     {
         $xoops = Xoops::getInstance();
         if ('' === $this->body && '' === $this->template) {
@@ -395,7 +396,7 @@ class xoopsmailer
      * @param  bool   $ashtml
      * @return string
      */
-    public function getErrors($ashtml = true)
+    public function getErrors(bool $ashtml = true): string
     {
         if (!$ashtml) {
             return $this->errors;
@@ -431,7 +432,7 @@ class xoopsmailer
      * @param string|array $tag
      * @param null         $value
      */
-    public function assign($tag, $value = null)
+    public function assign($tag, $value = null): void
     {
         if (is_array($tag)) {
             foreach ($tag as $k => $v) {
@@ -452,12 +453,12 @@ class xoopsmailer
     /**
      * @param string $value
      */
-    public function addHeaders($value)
+    public function addHeaders(string $value): void
     {
         $this->headers[] = trim($value).$this->LE;
     }
 
-    public function setToEmails($email)
+    public function setToEmails($email): void
     {
         if (!is_array($email)) {
             $xoops = Xoops::getInstance();
@@ -471,7 +472,7 @@ class xoopsmailer
         }
     }
 
-    public function setToUsers($users)
+    public function setToUsers($users): void
     {
         if ($users instanceof XoopsUser) {
             array_push($this->toUsers, $users);
@@ -482,7 +483,7 @@ class xoopsmailer
         }
     }
 
-    public function setToGroups($groups)
+    public function setToGroups($groups): void
     {
         if ($groups instanceof XoopsGroup) {
             $this->setToUsers(Xoops::getInstance()
@@ -509,7 +510,7 @@ class xoopsmailer
      * @param  string $text
      * @return string
      */
-    public function encodeSubject($text)
+    public function encodeSubject(string $text): string
     {
         return $text;
     }
@@ -519,7 +520,7 @@ class xoopsmailer
      *
      * @param string $text
      */
-    public function encodeBody(&$text)
+    public function encodeBody(string &$text): void
     {
     }
 
@@ -553,7 +554,7 @@ class xoopsmailer
      * @param  string $body
      * @return bool
      */
-    private function sendPM($uid, $subject, $body)
+    private function sendPM(int $uid, string $subject, string $body): bool
     {
         $xoops = Xoops::getInstance();
         $pm_handler = $xoops->getHandlerPrivateMessage();
@@ -583,7 +584,7 @@ class xoopsmailer
      * @param  array  $headers
      * @return bool
      */
-    private function sendMail($email, $subject, $body, $headers)
+    private function sendMail(string $email, string $subject, string $body, array $headers): bool
     {
         $subject = $this->encodeSubject($subject);
         $this->encodeBody($body);

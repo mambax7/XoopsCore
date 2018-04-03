@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
     /**
      * Maintenance Form.
      */
-    public function getMaintenance()
+    public function getMaintenance(): void
     {
         $maintenance = new Maintenance();
         parent::__construct('', 'form_maintenance', 'center.php', 'post', true);
@@ -61,7 +62,7 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Button('', 'maintenance_save', XoopsLocale::A_SUBMIT, 'submit'));
     }
 
-    public function getDump()
+    public function getDump(): void
     {
         $xoops = Xoops::getInstance();
         $maintenance = new Maintenance();

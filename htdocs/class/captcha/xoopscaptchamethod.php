@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -60,7 +61,7 @@ abstract class Abstractxoopscaptchamethod
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return true;
     }
@@ -72,7 +73,7 @@ abstract class Abstractxoopscaptchamethod
      *
      * @return array
      */
-    public function loadConfig($name = '')
+    public function loadConfig(string $name = '')
     {
         if (!is_object($this->xoopsCaptcha)) {
             $this->config = [];
@@ -88,7 +89,7 @@ abstract class Abstractxoopscaptchamethod
      *
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return (string) ($this->code);
     }
@@ -98,7 +99,7 @@ abstract class Abstractxoopscaptchamethod
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '';
     }
@@ -106,7 +107,7 @@ abstract class Abstractxoopscaptchamethod
     /**
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         return '';
     }
@@ -118,7 +119,7 @@ abstract class Abstractxoopscaptchamethod
      *
      * @return bool
      */
-    public function verify($sessionName = null)
+    public function verify(?string $sessionName = null): bool
     {
         $is_valid = false;
         if (!empty($_SESSION["{$sessionName}_code"])) {
@@ -132,7 +133,7 @@ abstract class Abstractxoopscaptchamethod
     /**
      * @return bool
      */
-    public function destroyGarbage()
+    public function destroyGarbage(): bool
     {
         return true;
     }

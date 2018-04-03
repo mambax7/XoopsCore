@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -79,7 +80,7 @@ class XoopsFileHandler
      *
      * @todo reconsider validity this class, if valid add exceptions to __construct()
      */
-    public function __construct($path, $create = false, $mode = 0755)
+    public function __construct(string $path, bool $create = false, int $mode = 0755)
     {
         $this->folder = XoopsFile::getHandler('folder', dirname($path), $create, $mode);
         if (!is_dir($path)) {
@@ -113,7 +114,7 @@ class XoopsFileHandler
      *
      * @return bool Success
      */
-    public function create()
+    public function create(): bool
     {
         $dir = $this->folder->pwd();
         if (is_dir($dir) && is_writable($dir) && !$this->exists()) {
@@ -134,7 +135,7 @@ class XoopsFileHandler
      *
      * @return bool True on success, false on failure
      */
-    public function open($mode = 'r', $force = false)
+    public function open(string $mode = 'r', bool $force = false): bool
     {
         if (!$force && is_resource($this->handle)) {
             return true;
@@ -223,7 +224,7 @@ class XoopsFileHandler
      *
      * @return string
      */
-    public function prepare($data)
+    public function prepare(string $data): string
     {
         $lineBreak = "\n";
         if ('WIN' === substr(PHP_OS, 0, 3)) {
@@ -242,7 +243,7 @@ class XoopsFileHandler
      *
      * @return bool Success
      */
-    public function write($data, $mode = 'w', $force = false)
+    public function write(string $data, string $mode = 'w', bool $force = false): bool
     {
         $success = false;
         if (true === $this->open($mode, $force)) {
@@ -270,7 +271,7 @@ class XoopsFileHandler
      *
      * @return bool Success
      */
-    public function append($data, $force = false)
+    public function append(string $data, bool $force = false): bool
     {
         return $this->write($data, 'a', $force);
     }
@@ -280,7 +281,7 @@ class XoopsFileHandler
      *
      * @return bool True if closing was successful or file was already closed, otherwise false
      */
-    public function close()
+    public function close(): bool
     {
         if (!is_resource($this->handle)) {
             return true;
@@ -294,7 +295,7 @@ class XoopsFileHandler
      *
      * @return bool Success
      */
-    public function delete()
+    public function delete(): bool
     {
         if ($this->exists()) {
             return unlink($this->pwd());
@@ -308,7 +309,7 @@ class XoopsFileHandler
      *
      * @return array The File information
      */
-    public function info()
+    public function info(): array
     {
         if (null === $this->info) {
             $this->info = pathinfo($this->pwd());
@@ -325,7 +326,7 @@ class XoopsFileHandler
      *
      * @return string The File extension
      */
-    public function ext()
+    public function ext(): string
     {
         if (null === $this->info) {
             $this->info();
@@ -342,7 +343,7 @@ class XoopsFileHandler
      *
      * @return string The File name without extension.
      */
-    public function name()
+    public function name(): string
     {
         if (null === $this->info) {
             $this->info();
@@ -364,7 +365,7 @@ class XoopsFileHandler
      *
      * @return string
      */
-    public function safe($name = null, $ext = null)
+    public function safe(?string $name = null, ?string $ext = null): string
     {
         if (!$name) {
             $name = $this->name;
@@ -383,7 +384,7 @@ class XoopsFileHandler
      *
      * @return string md5 Checksum {@link http://php.net/md5_file See md5_file()}
      */
-    public function md5($maxsize = 5)
+    public function md5(int $maxsize = 5): string
     {
         if (true === $maxsize) {
             return md5_file($this->pwd());
@@ -401,7 +402,7 @@ class XoopsFileHandler
      *
      * @return string Full path to file
      */
-    public function pwd()
+    public function pwd(): string
     {
         return $this->folder->slashTerm($this->folder->pwd()).$this->name;
     }
@@ -411,7 +412,7 @@ class XoopsFileHandler
      *
      * @return bool true if it exists, false otherwise
      */
-    public function exists()
+    public function exists(): bool
     {
         $exists = is_file($this->pwd());
 
@@ -423,7 +424,7 @@ class XoopsFileHandler
      *
      * @return string Permissions for the file
      */
-    public function perms()
+    public function perms(): string
     {
         if ($this->exists()) {
             return substr(sprintf('%o', fileperms($this->pwd())), -4);
@@ -453,7 +454,7 @@ class XoopsFileHandler
      *
      * @return bool true if its writable, false otherwise
      */
-    public function writable()
+    public function writable(): bool
     {
         return is_writable($this->pwd());
     }
@@ -463,7 +464,7 @@ class XoopsFileHandler
      *
      * @return bool true if its executable, false otherwise
      */
-    public function executable()
+    public function executable(): bool
     {
         return is_executable($this->pwd());
     }
@@ -473,7 +474,7 @@ class XoopsFileHandler
      *
      * @return bool true if file is readable, false otherwise
      */
-    public function readable()
+    public function readable(): bool
     {
         return is_readable($this->pwd());
     }
@@ -539,7 +540,7 @@ class XoopsFileHandler
      *
      * @return XoopsFolderHandler Current folder
      */
-    public function folder()
+    public function folder(): XoopsFolderHandler
     {
         return $this->folder;
     }

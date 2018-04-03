@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,27 +19,27 @@
  */
 class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
-    public function hasAccess($menu, &$hasAccess)
+    public function hasAccess($menu, &$hasAccess): void
     {
     }
 
-    public function accessFilter(&$accessFilter)
+    public function accessFilter(&$accessFilter): void
     {
     }
 
-    public function formLinkDescription($registry)
+    public function formLinkDescription($registry): void
     {
     }
 
-    public function start()
+    public function start(): void
     {
     }
 
-    public function end(&$menus)
+    public function end(&$menus): void
     {
     }
 
-    public function decorateMenu(&$menu)
+    public function decorateMenu(&$menu): void
     {
         $decorations = ['link', 'image', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
@@ -53,7 +54,7 @@ class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDeco
         }
 
         $expression = $reg[0];
-        list($validator, $value) = array_map('strtoupper', explode('|', $reg[1]));
+        [$validator, $value] = array_map('strtoupper', explode('|', $reg[1]));
 
         if ('CONSTANT' === $validator) {
             if (defined($value)) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -46,7 +47,7 @@ class JsonWebToken
      * @param KeyAbstract $key       key for signing/validating
      * @param string      $algorithm algorithm to use for signing/validating
      */
-    public function __construct(KeyAbstract $key, $algorithm = 'HS256')
+    public function __construct(KeyAbstract $key, string $algorithm = 'HS256')
     {
         $this->key = $key;
         $this->setAlgorithm($algorithm);
@@ -59,7 +60,7 @@ class JsonWebToken
      *
      * @throws \DomainException
      */
-    public function setAlgorithm($algorithm)
+    public function setAlgorithm(string $algorithm): JsonWebToken
     {
         if (array_key_exists($algorithm, JWT::$supported_algs)) {
             $this->algorithm = $algorithm;
@@ -79,13 +80,13 @@ class JsonWebToken
      *
      * @return object|false
      */
-    public function decode($jwtString, $assertClaims = [])
+    public function decode(string $jwtString, $assertClaims = [])
     {
         $allowedAlgorithms = [$this->algorithm];
 
         try {
             $values = JWT::decode($jwtString, $this->key->getVerifying(), $allowedAlgorithms);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             trigger_error($e->getMessage(), E_USER_NOTICE);
 
             return false;
@@ -114,7 +115,7 @@ class JsonWebToken
      * @throws \InvalidArgumentException;
      * @throws \UnexpectedValueException;
      */
-    public function create($payload, $expirationOffset = 0)
+    public function create($payload, $expirationOffset = 0): string
     {
         if ((int) $expirationOffset > 0) {
             $payload['exp'] = time() + (int) $expirationOffset;

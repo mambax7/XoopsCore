@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 //todo, check this file
 
 altsys_set_module_config();
-function altsys_set_module_config()
+function altsys_set_module_config(): void
 {
     global $altsysModuleConfig, $altsysModuleId;
     $module_handler = xoops_gethandler('module');
@@ -18,7 +18,7 @@ function altsys_set_module_config()
     }
 }
 
-function altsys_include_mymenu()
+function altsys_include_mymenu(): void
 {
     global $xoopsModule, $xoopsConfig, $mydirname, $mydirpath, $mytrustdirname, $mytrustdirpath, $mymenu_fake_uri;
     $mymenu_find_paths = [
@@ -37,7 +37,7 @@ function altsys_include_mymenu()
     }
 }
 
-function altsys_include_language_file($type)
+function altsys_include_language_file($type): void
 {
     $mylang = Xoops::getInstance()->getConfig('language');
     if (file_exists(XOOPS_ROOT_PATH.'/modules/altsys/language/'.$mylang.'/'.$type.'.php')) {
@@ -108,7 +108,7 @@ return XOOPS_URL.'/modules/legacy/admin/index.php?action=PreferenceEdit&confmod_
 }
 }
 
-function altsys_template_touch($tpl_id)
+function altsys_template_touch($tpl_id): void
 {
     if (ALTSYS_CORE_TYPE_X20S === altsys_get_core_type()) {
         // need to delete all files under templates_c/
@@ -119,7 +119,7 @@ function altsys_template_touch($tpl_id)
     }
 }
 
-function altsys_clear_templates_c()
+function altsys_clear_templates_c(): void
 {
     $dh = opendir(XOOPS_COMPILE_PATH);
     while ($file = readdir($dh)) {

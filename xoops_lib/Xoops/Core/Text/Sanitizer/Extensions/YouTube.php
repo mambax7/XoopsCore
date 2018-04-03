@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class YouTube extends ExtensionAbstract
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         $buttonCode = $this->getEditorButtonHtml(
             $textAreaId,
@@ -88,14 +89,14 @@ EOH;
     /**
      * Register extension with the supplied sanitizer instance.
      */
-    public function registerExtensionProcessing()
+    public function registerExtensionProcessing(): void
     {
         $this->shortcodes->addShortcode(
             'youtube',
             function ($attributes, $content, $tagName) {
                 if (array_key_exists(0, $attributes) && '=' === substr($attributes[0], 0, 1)) {
                     $args = ltrim($attributes[0], '=');
-                    list($width, $height) = explode(',', $args);
+                    [$width, $height] = explode(',', $args);
                     $url = $content;
                 } else {
                     $defaults = [

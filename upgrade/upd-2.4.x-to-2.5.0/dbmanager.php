@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * database manager for XOOPS installer.
  *
@@ -45,7 +46,7 @@ class db_manager
      'drop' => 'error',
  ];
 
-    public function db_manager()
+    public function db_manager(): void
     {
         $this->db = XoopsDatabaseFactory::getDatabase();
         $this->db->setPrefix(XOOPS_DB_PREFIX);

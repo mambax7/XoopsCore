@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class PhpmailerPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateEmail(Provider $provider)
+    public static function eventCoreServiceLocateEmail(Provider $provider): void
     {
         $path = dirname(__DIR__).'/class/PhpMailerEmailProvider.php';
         require $path;
@@ -42,7 +43,7 @@ class PhpmailerPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateUserEmailMessage(Provider $provider)
+    public static function eventCoreServiceLocateUserEmailMessage(Provider $provider): void
     {
         $path = dirname(__DIR__).'/class/PhpMailerMessageProvider.php';
         require $path;

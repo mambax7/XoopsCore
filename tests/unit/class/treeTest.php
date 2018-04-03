@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,11 +6,11 @@ use Xoops\Core\Kernel\Handlers\XoopsConfigItem;
 
 class treeTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $myId = 'Id';
         $parentId = 'parentId';
@@ -41,12 +41,12 @@ class treeTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(72, $ret->getVar('Id'));
     }
 
-    public function test_getTree()
+    public function test_getTree(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_getByKey()
+    public function test_getByKey(): void
     {
         $this->markTestIncomplete();
     }

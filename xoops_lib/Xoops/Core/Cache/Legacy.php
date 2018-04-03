@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class Legacy
      *
      * @return false
      */
-    public function __call($name, $args)
+    public function __call(string $name, array $args)
     {
         self::deprecated(sprintf('XoopsCache->%s() is no longer used', $name));
 
@@ -43,7 +44,7 @@ class Legacy
      *
      * @return false
      */
-    public static function __callStatic($name, $args)
+    public static function __callStatic(string $name, array $args)
     {
         self::deprecated(sprintf('XoopsCache::%s() is no longer used', $name));
 
@@ -55,7 +56,7 @@ class Legacy
      *
      * @return bool true on success
      */
-    public static function gc()
+    public static function gc(): bool
     {
         self::deprecated();
         $cache = self::getCache();
@@ -72,7 +73,7 @@ class Legacy
      *
      * @return bool True if the data was successfully cached, false on failure
      */
-    public static function write($key, $value, $duration = 0)
+    public static function write(string $key, $value, $duration = 0): bool
     {
         self::deprecated();
         $ttl = (int) ($duration);
@@ -91,7 +92,7 @@ class Legacy
      *
      * @return mixed The cached data, or false if the data has expired or cannot be read
      */
-    public static function read($key)
+    public static function read(string $key)
     {
         self::deprecated();
         $cache = self::getCache();
@@ -106,7 +107,7 @@ class Legacy
      *
      * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      */
-    public static function delete($key)
+    public static function delete(string $key): bool
     {
         self::deprecated();
         $cache = self::getCache();
@@ -119,7 +120,7 @@ class Legacy
      *
      * @return bool True if the cache was successfully cleared, false otherwise
      */
-    public static function clear()
+    public static function clear(): bool
     {
         self::deprecated();
         $cache = self::getCache();
@@ -132,12 +133,12 @@ class Legacy
      *
      * @param string $message message to show, or empty to use default
      */
-    private static function deprecated($message = 'Obsolete cache call.')
+    private static function deprecated(string $message = 'Obsolete cache call.'): void
     {
         //\Xoops::getInstance()->deprecated($message);
         $stack = debug_backtrace();
         $frameSelf = $stack[1];
-        $frame = isset($stack[2]) ? $stack[2] : false;
+        $frame = $stack[2] ?? false;
         $append = ' '.get_called_class().'::'.$frameSelf['function'].'() called from ';
         if (false !== $frame) {
             $append .= $frame['function'].'() in ';
@@ -151,7 +152,7 @@ class Legacy
      *
      * @return Access cache access object
      */
-    private static function getCache()
+    private static function getCache(): Access
     {
         return \Xoops::getInstance()->cache();
     }

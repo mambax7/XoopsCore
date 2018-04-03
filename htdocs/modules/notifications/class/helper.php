@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return string
      */
-    public static function getInstance()
+    public static function getInstance(): string
     {
         return parent::getInstance();
     }
@@ -53,7 +54,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return NotificationsNotificationHandler
      */
-    public function getHandlerNotification()
+    public function getHandlerNotification(): NotificationsNotificationHandler
     {
         return $this->getHandler('notification');
     }
@@ -64,7 +65,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return bool
      */
-    public function enabled($style, $module_dirname = null)
+    public function enabled(string $style, ?string $module_dirname = null): bool
     {
         $xoops = Xoops::getInstance();
         if ($status = $xoops->getModuleConfig('notifications_enabled')) {
@@ -94,7 +95,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return array|bool
      */
-    public function getItem($category, $item_id, $dirname = null)
+    public function getItem(string $category, int $item_id, string $dirname = null)
     {
         $xoops = Xoops::getInstance();
         if (!isset($dirname)) {
@@ -117,7 +118,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return array|bool
      */
-    public function getTags($category, $item_id, $event, $dirname = null)
+    public function getTags(string $category, int $item_id, string $event, string $dirname = null)
     {
         $xoops = Xoops::getInstance();
         if (!isset($dirname)) {
@@ -142,7 +143,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed
      */
-    public function getCategory($category_name = '', $dirname = null)
+    public function getCategory(string $category_name = '', string $dirname = null)
     {
         $xoops = Xoops::getInstance();
         if (!isset($dirname)) {
@@ -175,7 +176,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed Associative array of category info
      */
-    public function getCommentsCategory($dirname = null)
+    public function getCommentsCategory(string $dirname = null)
     {
         $ret = [];
         $all_categories = $this->getCategory('', $dirname);
@@ -209,7 +210,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed
      */
-    public function getEvents($category_name, $enabled_only, $dirname = null)
+    public function getEvents(string $category_name, bool $enabled_only, string $dirname = null)
     {
         $xoops = Xoops::getInstance();
         $helper = self::getInstance();
@@ -364,7 +365,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return bool
      **/
-    public function eventEnabled(&$category, &$event, $dirname)
+    public function eventEnabled(array &$category, array &$event, string $dirname): bool
     {
         $xoops = Xoops::getInstance();
 
@@ -390,7 +391,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed
      */
-    public function getEvent($category_name, $event_name, $module_dirname = null)
+    public function getEvent(string $category_name, string $event_name, string $module_dirname = null)
     {
         $all_events = $this->getEvents($category_name, false, $module_dirname);
         foreach ($all_events as $event) {
@@ -410,7 +411,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed
      */
-    public function getSubscribableCategories($module_dirname = null)
+    public function getSubscribableCategories(string $module_dirname = null)
     {
         $all_categories = $this->getCategory('', $module_dirname);
 
@@ -469,7 +470,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      *
      * @return bool|string
      */
-    public function generateConfig(&$category, &$event, $type)
+    public function generateConfig(array &$category, array &$event, string $type)
     {
         switch ($type) {
             case 'option_value':
@@ -488,7 +489,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         }
     }
 
-    public function insertModuleRelations(XoopsModule $module)
+    public function insertModuleRelations(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $config_handler = $xoops->getHandlerConfig();
@@ -527,7 +528,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         }
     }
 
-    public function deleteModuleRelations(XoopsModule $module)
+    public function deleteModuleRelations(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $this->getHandlerNotification()->unsubscribeByModule($module->getVar('mid'));
@@ -549,7 +550,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return array
      */
-    public function getPluginableConfigs(XoopsModule $module)
+    public function getPluginableConfigs(XoopsModule $module): array
     {
         $configs = [];
         $options['_MD_NOTIFICATIONS_CONFIG_DISABLE'] = NOTIFICATIONS_DISABLE;

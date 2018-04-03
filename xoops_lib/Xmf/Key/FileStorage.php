@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class FileStorage implements StorageInterface
      * @param string|null $storagePath  filesystem path to storage (without trailing slash)
      * @param string|null $systemSecret prefix unique to this system
      */
-    public function __construct($storagePath = null, $systemSecret = null)
+    public function __construct(?string $storagePath = null, ?string $systemSecret = null)
     {
         $this->storagePath = (null === $storagePath) ? XOOPS_VAR_PATH.'/data' : $storagePath;
         $this->systemSecret = (null === $systemSecret) ? $this->generateSystemSecret() : $systemSecret;
@@ -54,7 +55,7 @@ class FileStorage implements StorageInterface
      *
      * @return bool true if key saved, otherwise false
      */
-    public function save($name, $data)
+    public function save(string $name, string $data): bool
     {
         if (empty($data) || !is_string($data)) {
             throw new \DomainException('Invalid key data');
@@ -72,7 +73,7 @@ class FileStorage implements StorageInterface
      *
      * @return string|false key data (possibly serialized) or false on error
      */
-    public function fetch($name)
+    public function fetch(string $name)
     {
         return include $this->fileName($name);
     }
@@ -84,7 +85,7 @@ class FileStorage implements StorageInterface
      *
      * @return bool true if key exists, otherwise false
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return file_exists($this->fileName($name));
     }
@@ -96,7 +97,7 @@ class FileStorage implements StorageInterface
      *
      * @return bool true if key deleted, otherwise false
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         return unlink($this->fileName($name));
     }
@@ -108,7 +109,7 @@ class FileStorage implements StorageInterface
      *
      * @return string file name
      */
-    protected function fileName($name)
+    protected function fileName(string $name): string
     {
         return $this->storagePath."/{$this->systemSecret}-key-{$name}.php";
     }
@@ -118,7 +119,7 @@ class FileStorage implements StorageInterface
      *
      * @return string
      */
-    protected function generateSystemSecret()
+    protected function generateSystemSecret(): string
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
         $prefix = $db->prefix();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -24,7 +24,7 @@ class Xoops_Module_Helper_AbstractTestInstance extends Xoops\Module\Helper\Helpe
         return parent::setDebug($debug);
     }
 
-    public function clearModule()
+    public function clearModule(): void
     {
         $this->module = null;
     }
@@ -34,7 +34,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops_Module_Helper_AbstractTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         $dir = $xoops_root_path.'/modules/avatar';
@@ -42,7 +42,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test_init()
+    public function test_init(): void
     {
         $instance = new $this->myClass();
 
@@ -50,7 +50,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_setDirname()
+    public function test_setDirname(): void
     {
         $instance = new $this->myClass();
 
@@ -62,7 +62,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($dir, $x);
     }
 
-    public function test_setDebug()
+    public function test_setDebug(): void
     {
         $instance = new $this->myClass();
 
@@ -74,7 +74,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($debug, $x);
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $instance = $this->myClass;
         $x = $instance::getInstance();
@@ -84,7 +84,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($x, $y);
     }
 
-    public function test_getModule()
+    public function test_getModule(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -93,7 +93,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Xoops\Core\Kernel\Handlers\XoopsModule', $x);
     }
 
-    public function test_xoops()
+    public function test_xoops(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -102,7 +102,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Xoops', $x);
     }
 
-    public function test_getConfig()
+    public function test_getConfig(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -114,7 +114,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(!empty($x));
     }
 
-    public function test_getConfigs()
+    public function test_getConfigs(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -127,7 +127,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertArrayHasKey($name, $x);
     }
 
-    public function test_getHandler()
+    public function test_getHandler(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -138,7 +138,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $x);
     }
 
-    public function test_disableCache()
+    public function test_disableCache(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -151,7 +151,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame([$instance->getModule()->getVar('mid') => 0], $x);
     }
 
-    public function test_isCurrentModule()
+    public function test_isCurrentModule(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -173,7 +173,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_isUserAdmin()
+    public function test_isUserAdmin(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -182,7 +182,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_url()
+    public function test_url(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -197,7 +197,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         //$this->assertSame('htdocs', basename(dirname(dirname(dirname($x)))));
     }
 
-    public function test_path()
+    public function test_path(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -211,22 +211,22 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_dir($x));
     }
 
-    public function test_redirect()
+    public function test_redirect(): void
     {
         $this->markTestSkipped('');
     }
 
-    public function test_loadLanguage()
+    public function test_loadLanguage(): void
     {
         $this->markTestSkipped('');
     }
 
-    public function test_loadLocale()
+    public function test_loadLocale(): void
     {
         $this->markTestSkipped('');
     }
 
-    public function test_getForm()
+    public function test_getForm(): void
     {
         $this->markTestSkipped('');
     }

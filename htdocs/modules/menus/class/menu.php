@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -46,12 +47,12 @@ class MenusMenu extends XoopsObject
 
 class MenusMenuHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'menus_menu', 'MenusMenu', 'id', 'title');
     }
 
-    public function update_weights(MenusMenu $obj)
+    public function update_weights(MenusMenu $obj): void
     {
         $sql = 'UPDATE '.$this->table
         .' SET weight = weight+1'
@@ -69,7 +70,7 @@ class MenusMenuHandler extends XoopsPersistableObjectHandler
         ;
         $result = $this->db->query($sql);
         $i = 1;  //lets start at 1 please!
-        while (false !== (list($id) = $this->db->fetchRow($result))) {
+        while (false !== ([$id] = $this->db->fetchRow($result))) {
             $sql = 'UPDATE '.$this->table
             ." SET weight = {$i}"
             ." WHERE id = {$id}"

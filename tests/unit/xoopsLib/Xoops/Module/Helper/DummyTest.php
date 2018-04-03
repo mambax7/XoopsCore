@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -6,14 +6,14 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = '\Xoops\Module\Helper\Dummy';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf('\Xoops\Module\Helper\Dummy', $instance);
     }
 
-    public function test_init()
+    public function test_init(): void
     {
         $instance = new $this->myClass();
 
@@ -21,7 +21,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $instance = new $this->myClass();
 
@@ -29,7 +29,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Module\Helper\Dummy', $x);
     }
 
-    public function test_setDirname()
+    public function test_setDirname(): void
     {
         $instance = new $this->myClass();
 
@@ -37,7 +37,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_setDebug()
+    public function test_setDebug(): void
     {
         $instance = new $this->myClass();
 
@@ -45,7 +45,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($x);
     }
 
-    public function test_addLog()
+    public function test_addLog(): void
     {
         $instance = new $this->myClass();
 

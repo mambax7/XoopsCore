@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -51,7 +52,7 @@ class RemovePrefixes implements Visitor
      *
      * @return Schema the generated schema object
      */
-    public function getNewSchema()
+    public function getNewSchema(): Schema
     {
         return $this->newSchema;
     }
@@ -63,7 +64,7 @@ class RemovePrefixes implements Visitor
      *
      * @param array $tableList list of tables to allow
      */
-    public function setTableFilter(array $tableList)
+    public function setTableFilter(array $tableList): void
     {
         $this->newSchema->setTableFilter($tableList);
     }
@@ -73,7 +74,7 @@ class RemovePrefixes implements Visitor
      *
      * @param Schema $schema a schema object
      */
-    public function acceptSchema(Schema $schema)
+    public function acceptSchema(Schema $schema): void
     {
     }
 
@@ -82,7 +83,7 @@ class RemovePrefixes implements Visitor
      *
      * @param Table $table a table object
      */
-    public function acceptTable(Table $table)
+    public function acceptTable(Table $table): void
     {
         $this->newSchema->addTable($table);
     }
@@ -93,7 +94,7 @@ class RemovePrefixes implements Visitor
      * @param Table  $table  a table object to accept a column into
      * @param Column $column a column object to be accepted
      */
-    public function acceptColumn(Table $table, Column $column)
+    public function acceptColumn(Table $table, Column $column): void
     {
     }
 
@@ -103,7 +104,7 @@ class RemovePrefixes implements Visitor
      *
      * @param Table $localTable local table to have foreign key
      */
-    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint): void
     {
     }
 
@@ -113,7 +114,7 @@ class RemovePrefixes implements Visitor
      * @param Table $table indexed table
      * @param Index $index index to accept
      */
-    public function acceptIndex(Table $table, Index $index)
+    public function acceptIndex(Table $table, Index $index): void
     {
     }
 
@@ -122,7 +123,7 @@ class RemovePrefixes implements Visitor
      *
      * @param Sequence $sequence sequence to accept
      */
-    public function acceptSequence(Sequence $sequence)
+    public function acceptSequence(Sequence $sequence): void
     {
         $this->newSchema->addSequence($sequence);
     }

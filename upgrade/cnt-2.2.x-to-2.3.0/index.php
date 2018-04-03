@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Upgrader from 2.2.* to 2.3.0
  * You may not change or alter any portion of this comment or credits
@@ -18,7 +19,7 @@ class upgrade_220 extends xoopsUpgrade
 {
     public $tasks = ['config', 'profile', 'block' /*, 'pm', 'module'*/];
 
-    public function upgrade_220()
+    public function upgrade_220(): void
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }
@@ -337,7 +338,7 @@ class upgrade_220 extends xoopsUpgrade
         $sql = 'SELECT MAX(instanceid) FROM '.
                 $xoops->db()->prefix('block_instance');
         $result = $xoops->db()->query($sql);
-        list($MaxInstanceId) = $xoops->db()->fetchRow($result);
+        [$MaxInstanceId] = $xoops->db()->fetchRow($result);
 
         // Change custom block mid from 1 to 0
         $sql = 'UPDATE `'.
@@ -456,7 +457,7 @@ class upgrade_220 extends xoopsUpgrade
         $sql = 'SELECT bid, options FROM `'.$xoops->db()
             ->prefix('newblocks')."` WHERE show_func='b_system_custom_show'";
         $result = $xoops->db()->query($sql);
-        while (false !== (list($bid, $options) = $xoops->db()->fetchRow($result))) {
+        while (false !== ([$bid, $options] = $xoops->db()->fetchRow($result))) {
             $_options = unserialize($options);
             $content = $_options[0];
             $type = $_options[1];
@@ -472,7 +473,7 @@ class upgrade_220 extends xoopsUpgrade
         $sql = 'SELECT bid, options FROM `'.$xoops->db()
             ->prefix('newblocks')."` WHERE show_func <> 'b_system_custom_show' AND options <> ''";
         $result = $xoops->db()->query($sql);
-        while (false !== (list($bid, $_options) = $xoops->db()->fetchRow($result))) {
+        while (false !== ([$bid, $_options] = $xoops->db()->fetchRow($result))) {
             $options = unserialize($_options);
             if (empty($options) || !is_array($options)) {
                 $options = [];

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Copyright (c) 2013 PHP Framework Interop Group.
  *
@@ -107,7 +108,7 @@ class Psr4ClassLoader
      *
      * @return SplClassLoader
      */
-    public static function addLoader($namespace, $path)
+    public static function addLoader(type $namespace, $path): SplClassLoader
     {
         $loaderClass = get_called_class();
         $loader = new $loaderClass($namespace, $path);
@@ -126,7 +127,7 @@ class Psr4ClassLoader
     /**
      * Register loader with SPL autoloader stack.
      */
-    public function register()
+    public function register(): void
     {
         spl_autoload_register([$this, 'loadClass']);
     }
@@ -140,7 +141,7 @@ class Psr4ClassLoader
      *                         stack instead of appending it; this causes
      *                         it to be searched first rather than last.
      */
-    public function addNamespace($prefix, $base_dir, $prepend = false)
+    public function addNamespace(string $prefix, string $base_dir, bool $prepend = false): void
     {
         // normalize namespace prefix
         $prefix = trim($prefix, '\\').'\\';
@@ -170,7 +171,7 @@ class Psr4ClassLoader
      * @return string|false The mapped file name on success, or boolean false on
      * failure.
      */
-    public function loadClass($class)
+    public function loadClass(string $class)
     {
         // the current namespace prefix
         $prefix = $class;
@@ -208,7 +209,7 @@ class Psr4ClassLoader
      * @return false|string Boolean false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
      */
-    protected function loadMappedFile($prefix, $relative_class)
+    protected function loadMappedFile(string $prefix, string $relative_class)
     {
         // are there any base directories for this namespace prefix?
         if (false === isset($this->prefixes[$prefix])) {
@@ -242,7 +243,7 @@ class Psr4ClassLoader
      *
      * @return bool True if the file exists, false if not.
      */
-    protected function requireFile($file)
+    protected function requireFile(string $file): bool
     {
         if (file_exists($file)) {
             require $file;

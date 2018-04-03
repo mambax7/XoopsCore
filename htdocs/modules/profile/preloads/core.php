@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class ProfileCorePreload extends PreloadItem
     /**
      * @param array $args
      */
-    public static function eventCoreUserStart($args)
+    public static function eventCoreUserStart(array $args): void
     {
         $op = 'main';
         if (isset($_POST['op'])) {
@@ -49,7 +50,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    public static function eventCoreEdituserStart($args)
+    public static function eventCoreEdituserStart(array $args): void
     {
         \Xoops::simpleRedirect('./modules/profile/edituser.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }
@@ -58,7 +59,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    public static function eventCoreLostpassStart($args)
+    public static function eventCoreLostpassStart(array $args): void
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
@@ -69,7 +70,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    public static function eventCoreRegisterStart($args)
+    public static function eventCoreRegisterStart(array $args): void
     {
         \Xoops::simpleRedirect('./modules/profile/register.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }
@@ -78,7 +79,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    public static function eventCoreUserinfoStart($args)
+    public static function eventCoreUserinfoStart(array $args): void
     {
         \Xoops::simpleRedirect('./modules/profile/userinfo.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }

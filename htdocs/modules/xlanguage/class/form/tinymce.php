@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xlanguage module
  * You may not change or alter any portion of this comment or credits
@@ -25,7 +26,7 @@ class XlanguageTinymceForm extends Xoops\Form\SimpleForm
      *
      * @param array $xlanguage language options array
      */
-    public function __construct($xlanguage)
+    public function __construct(array $xlanguage)
     {
         $xoops = Xoops::getInstance();
 

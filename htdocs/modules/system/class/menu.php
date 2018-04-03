@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class SystemMenuHandler
         $this->_obj = $xoops->module;
     }
 
-    public function getAddon($addon)
+    public function getAddon($addon): void
     {
         $this->_obj = $addon;
     }
@@ -50,12 +51,12 @@ class SystemMenuHandler
     /**
      * @param string $link
      */
-    public function addMenuTop($link, $name = '')
+    public function addMenuTop(string $link, $name = ''): void
     {
         $this->_menutop[] = ['link' => $link, 'name' => $name];
     }
 
-    public function addMenuTopArray($options, $multi = true)
+    public function addMenuTopArray($options, $multi = true): void
     {
         if (is_array($options)) {
             if (true === $multi) {
@@ -73,12 +74,12 @@ class SystemMenuHandler
     /**
      * @param string $link
      */
-    public function addMenuTabs($link, $name = '')
+    public function addMenuTabs(string $link, $name = ''): void
     {
         $this->_menutabs[] = ['link' => $link, 'name' => $name, 'current' => 0];
     }
 
-    public function addMenuTabsArray($options, $multi = true)
+    public function addMenuTabsArray($options, $multi = true): void
     {
         if (is_array($options)) {
             if (true === $multi) {
@@ -93,12 +94,12 @@ class SystemMenuHandler
         }
     }
 
-    public function addHeader($value)
+    public function addHeader($value): void
     {
         $this->_header = $value;
     }
 
-    public function addSubHeader($value)
+    public function addSubHeader($value): void
     {
         $this->_subheader = $value;
     }
@@ -128,7 +129,7 @@ class SystemMenuHandler
         return $return_str;
     }
 
-    public function render($currentoption = 1, $display = true)
+    public function render($currentoption = 1, $display = true): void
     {
         $xoops = Xoops::getInstance();
         $xoops->tpl()->assign('xo_module_menu_top', $this->_menutop);

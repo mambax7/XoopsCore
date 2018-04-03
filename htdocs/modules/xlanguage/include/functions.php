@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xlanguage extension module
  * You may not change or alter any portion of this comment or credits
@@ -42,7 +43,7 @@ function xlanguage_convert_encoding($value, $out_charset, $in_charset)
  *
  * @return string
  */
-function xlanguage_convert_item($value, $out_charset, $in_charset)
+function xlanguage_convert_item(string $value, string $out_charset, string $in_charset): string
 {
     $xoops = Xoops::getInstance();
     if (strtolower($in_charset) === strtolower($out_charset)) {
@@ -71,7 +72,7 @@ function xlanguage_convert_item($value, $out_charset, $in_charset)
  *
  * @return int|string
  */
-function xlanguage_lang_detect($str = '', $envType = 0)
+function xlanguage_lang_detect(string $str = '', int $envType = 0)
 {
     $xoops = Xoops::getInstance();
     $lang = 'en';
@@ -95,7 +96,7 @@ function xlanguage_lang_detect($str = '', $envType = 0)
 /**
  * @return string
  */
-function xlanguage_detectLang()
+function xlanguage_detectLang(): string
 {
     $xoops = Xoops::getInstance();
 
@@ -140,7 +141,7 @@ function xlanguage_detectLang()
  *
  * @return array|mixed|string
  */
-function xlanguage_encoding($output)
+function xlanguage_encoding(string $output)
 {
     $xoops = Xoops::getInstance();
     $xlanguage = $xoops->registry()->get('XLANGUAGE');
@@ -160,7 +161,7 @@ function xlanguage_encoding($output)
  *
  * @return mixed
  */
-function xlanguage_ml($s)
+function xlanguage_ml(string $s)
 {
     static $xlanguage_langs;
 
@@ -231,7 +232,7 @@ function xlanguage_ml($s)
  *
  * @return mixed
  */
-function xlanguage_ml_escape_bracket($matches)
+function xlanguage_ml_escape_bracket(array $matches)
 {
     $xoops = Xoops::getInstance();
     $xlanguage_langs = $xoops->registry()->get('XLANGUAGE_LANGS');
@@ -250,7 +251,7 @@ function xlanguage_ml_escape_bracket($matches)
  *
  * @return bool
  */
-function xlanguage_select_show($options = null)
+function xlanguage_select_show($options = null): bool
 {
     $xoops = Xoops::getInstance();
     if (!$xoops->registry()->get('XLANGUAGE_THEME_ENABLE')) {

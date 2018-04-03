@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -15,7 +15,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Assets();
     }
@@ -24,16 +24,16 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test_getUrlToAssets()
+    public function test_getUrlToAssets(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_setDebug()
+    public function test_setDebug(): void
     {
         $instance = $this->object;
 
@@ -41,12 +41,12 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function test_registerAssetReference()
+    public function test_registerAssetReference(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_copyFileAssets()
+    public function test_copyFileAssets(): void
     {
         $instance = $this->object;
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ class ProtectorFilterAbstract
 
     public $errors = [];
 
-    public function ProtectorFilterAbstract()
+    public function ProtectorFilterAbstract(): void
     {
         $xoops = Xoops::getInstance();
         $language = $xoops->getConfig('language');
@@ -61,7 +62,7 @@ class ProtectorFilterHandler
 
     public $filters_base = '';
 
-    public function ProtectorFilterHandler()
+    public function ProtectorFilterHandler(): void
     {
         $this->protector = Protector::getInstance();
         $this->filters_base = dirname(__DIR__).'/filters_enabled';

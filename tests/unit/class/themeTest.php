@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,17 +6,17 @@ class themeTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsTheme';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf('\Xoops\Core\Theme\XoopsTheme', $instance);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $theme = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $theme);

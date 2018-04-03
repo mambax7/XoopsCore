@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -52,7 +53,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($save_path, $name)
+    public function open(string $save_path, string $name): bool
     {
         return true;
     }
@@ -62,7 +63,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         return true;
     }
@@ -74,7 +75,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return string Session data
      */
-    public function read($session_id)
+    public function read(string $session_id): string
     {
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -88,7 +89,7 @@ class Handler implements \SessionHandlerInterface
         $session_data = '';
         if ($result = $qb->execute()) {
             if ($row = $result->fetch(\PDO::FETCH_NUM)) {
-                list($session_data) = $row;
+                [$session_data] = $row;
             }
         }
 
@@ -108,7 +109,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return bool
      **/
-    public function write($session_id, $session_data)
+    public function write(string $session_id, string $session_data): bool
     {
         $expires = (isset($_SESSION['SESSION_MANAGER_EXPIRES']))
             ? (int) ($_SESSION['SESSION_MANAGER_EXPIRES'])
@@ -155,7 +156,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($session_id)
+    public function destroy(string $session_id): bool
     {
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -175,7 +176,7 @@ class Handler implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxlifetime)
+    public function gc(string $maxlifetime): bool
     {
         $mintime = time();
         $qb = $this->db->createXoopsQueryBuilder();

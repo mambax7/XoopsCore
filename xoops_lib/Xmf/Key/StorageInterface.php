@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ interface StorageInterface
      *
      * @return bool true if key saved, otherwise false
      */
-    public function save($name, $data);
+    public function save(string $name, string $data): bool;
 
     /**
      * Fetch key data by name.
@@ -41,7 +42,7 @@ interface StorageInterface
      *
      * @return string|false key data (possibly serialized) or false on error
      */
-    public function fetch($name);
+    public function fetch(string $name);
 
     /**
      * Fetch key data by name.
@@ -50,7 +51,7 @@ interface StorageInterface
      *
      * @return bool true if key exists, otherwise false
      */
-    public function exists($name);
+    public function exists(string $name): bool;
 
     /**
      * Delete a key.
@@ -59,5 +60,5 @@ interface StorageInterface
      *
      * @return bool true if key deleted, otherwise false
      */
-    public function delete($name);
+    public function delete(string $name): bool;
 }

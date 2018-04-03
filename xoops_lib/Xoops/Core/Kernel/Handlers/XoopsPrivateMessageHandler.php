@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -40,7 +41,7 @@ class XoopsPrivateMessageHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct(
             $db,
@@ -58,7 +59,7 @@ class XoopsPrivateMessageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      **/
-    public function setRead(XoopsPrivateMessage $pm)
+    public function setRead(XoopsPrivateMessage $pm): bool
     {
         $qb = $this->db2->createXoopsQueryBuilder()
             ->update($this->table)

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -8,13 +8,13 @@ class Service_ManagerTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $class = $this->myClass;
         $this->object = $class::getInstance();
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf($this->myClass, $instance);
@@ -24,7 +24,7 @@ class Service_ManagerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $instance2);
     }
 
-    public function test_constants()
+    public function test_constants(): void
     {
         $instance = $this->object;
 

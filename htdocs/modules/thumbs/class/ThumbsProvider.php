@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'thumbs';
     }
@@ -44,7 +45,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Thumbnail generation using stefangabos/zebra_image';
     }
@@ -57,7 +58,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      * @param int      $width    maximum width of thumbnail in pixels, 0 to use default
      * @param int      $height   maximum height of thumbnail in pixels, 0 to use default
      */
-    public function getImgUrl(Response $response, $imgPath, $width = 0, $height = 0)
+    public function getImgUrl(Response $response, string $imgPath, int $width = 0, int $height = 0): void
     {
         $response->setValue($this->getThumbnailUrl($imgPath, $width, $height));
     }
@@ -73,11 +74,11 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      */
     public function getImgTag(
         Response $response,
-        $imgPath,
-        $width = 0,
-        $height = 0,
-        $attributes = []
-    ) {
+        string $imgPath,
+        int $width = 0,
+        int $height = 0,
+        array $attributes = []
+    ): void {
         $url = $this->getThumbnailUrl($imgPath, $width, $height);
         if (!is_array($attributes)) {
             $attributes = [];
@@ -97,7 +98,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      *
      * @return string URL to obtain QR Code image of $qrText
      */
-    private function getThumbnailUrl($imgPath, $width, $height)
+    private function getThumbnailUrl(string $imgPath, int $width, int $height): string
     {
         $xoops = \Xoops::getInstance();
         $helper = $xoops->getModuleHelper('thumbs');

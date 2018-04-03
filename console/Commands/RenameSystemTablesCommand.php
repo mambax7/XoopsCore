@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -10,7 +10,7 @@ use Xmf\Database\Tables;
 
 class RenameSystemTablesCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('rename-system-tables')
             ->setDescription('Update the XOOPS Kernel tables')
@@ -23,7 +23,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $tableNames = [
             'newblocks' => 'system_block',

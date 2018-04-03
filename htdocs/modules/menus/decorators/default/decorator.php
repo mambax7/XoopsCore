@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
 
     protected $get_uid;
 
-    public function start()
+    public function start(): void
     {
         $xoops = Xoops::getInstance();
         $member_handler = $xoops->getHandlerMember();
@@ -57,7 +58,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $this->get_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : 0;
     }
 
-    public function accessFilter(&$access_filter)
+    public function accessFilter(&$access_filter): void
     {
         $access_filter['is_owner']['name'] = _PL_MENUS_MENUS_ISOWNER;
         $access_filter['is_owner']['method'] = 'isOwner';
@@ -65,7 +66,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $access_filter['is_not_owner']['method'] = 'isNotOwner';
     }
 
-    public function decorateMenu(&$menu)
+    public function decorateMenu(&$menu): void
     {
         $decorations = ['link', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
@@ -81,12 +82,12 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         }
     }
 
-    public function end(&$menus)
+    public function end(&$menus): void
     {
         // TODO: Implement end() method.
     }
 
-    public function hasAccess($menu, &$hasAccess)
+    public function hasAccess($menu, &$hasAccess): void
     {
         $groups = $this->user_groups;
         if (0 === $menu['visible'] || !array_intersect($menu['groups'], $groups)) {
@@ -113,7 +114,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         }
 
         $expression = $reg[0];
-        list($validator, $value) = array_map('strtolower', explode('|', $reg[1]));
+        [$validator, $value] = array_map('strtolower', explode('|', $reg[1]));
 
         //just to prevent any bad admin to get easy passwords
         if ('pass' === $value) {
@@ -126,7 +127,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         }
 
         if ('uri' === $validator) {
-            $value = isset($_GET[$value]) ? $_GET[$value] : 0;
+            $value = $_GET[$value] ?? 0;
             $string = str_replace($expression, $value, $string);
         }
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -8,7 +8,7 @@ class xoopsapiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsApi';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
@@ -18,32 +18,32 @@ class xoopsapiTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('XoopsXmlRpcApi', $x);
     }
 
-    public function test_newPost()
+    public function test_newPost(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_editPost()
+    public function test_editPost(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_deletePost()
+    public function test_deletePost(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_getPost()
+    public function test_getPost(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_getRecentPosts()
+    public function test_getRecentPosts(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_getCategories()
+    public function test_getCategories(): void
     {
         $this->markTestIncomplete();
     }

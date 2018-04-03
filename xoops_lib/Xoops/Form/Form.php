@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -91,7 +92,7 @@ abstract class Form implements ContainerInterface
      * @param bool   $addtoken whether to add a security token to the form
      * @param string $display  class for the form, i.e. horizontal, vertical, inline
      */
-    public function __construct($title, $name, $action, $method = 'post', $addtoken = false, $display = '')
+    public function __construct(string $title, string $name, string $action, string $method = 'post', bool $addtoken = false, string $display = '')
     {
         $this->title = $title;
         $this->name = $name;
@@ -110,7 +111,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getDisplay($encode = false)
+    public function getDisplay(bool $encode = false): string
     {
         return $encode ? htmlspecialchars($this->display, ENT_QUOTES) : $this->display;
     }
@@ -122,7 +123,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getTitle($encode = false)
+    public function getTitle(bool $encode = false): string
     {
         return $encode ? htmlspecialchars($this->title, ENT_QUOTES) : $this->title;
     }
@@ -134,7 +135,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -148,7 +149,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getName($encode = true)
+    public function getName(bool $encode = true): string
     {
         return $encode ? htmlspecialchars($this->name, ENT_QUOTES) : $this->name;
     }
@@ -158,7 +159,7 @@ abstract class Form implements ContainerInterface
      *
      * @param string $value URL of form action
      */
-    public function setAction($value = '')
+    public function setAction(string $value = ''): void
     {
         $this->action = $value;
     }
@@ -170,7 +171,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getAction($encode = true)
+    public function getAction(bool $encode = true): string
     {
         // Convert &amp; to & for backward compatibility
         return $encode ? htmlspecialchars(str_replace('&amp;', '&', $this->action), ENT_QUOTES) : $this->action;
@@ -181,7 +182,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return ('get' === strtolower($this->method)) ? 'get' : 'post';
     }
@@ -192,7 +193,7 @@ abstract class Form implements ContainerInterface
      * @param Element $formElement Xoops\Form\Element to add
      * @param bool    $required    true if this is a required element
      */
-    public function addElement(Element $formElement, $required = false)
+    public function addElement(Element $formElement, bool $required = false): void
     {
         $this->elements[] = $formElement;
         if ($required) {
@@ -207,7 +208,7 @@ abstract class Form implements ContainerInterface
      *
      * @return Element[]
      */
-    public function getElements($recurse = false)
+    public function getElements(bool $recurse = false)
     {
         if (!$recurse) {
             return $this->elements;
@@ -256,7 +257,7 @@ abstract class Form implements ContainerInterface
      *
      * @return null|Element
      */
-    public function getElementByName($name)
+    public function getElementByName(string $name): ?Element
     {
         $elements = $this->getElements(true);
         foreach ($elements as $ele) {
@@ -276,7 +277,7 @@ abstract class Form implements ContainerInterface
      * @param string $name  the "name" attribute of a form element
      * @param string $value the "value" attribute of a form element
      */
-    public function setElementValue($name, $value)
+    public function setElementValue(string $name, string $value): void
     {
         $ele = $this->getElementByName($name);
         if (is_object($ele)) {
@@ -289,7 +290,7 @@ abstract class Form implements ContainerInterface
      *
      * @param array $values array of name/value pairs to be assigned to form elements
      */
-    public function setElementValues($values)
+    public function setElementValues(array $values): void
     {
         if (is_array($values) && !empty($values)) {
             // will not use getElementByName() for performance..
@@ -312,7 +313,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string|null the value attribute assigned to a form element, null if not set
      */
-    public function getElementValue($name, $encode = false)
+    public function getElementValue(string $name, bool $encode = false): ?string
     {
         $ele = $this->getElementByName($name);
 
@@ -326,7 +327,7 @@ abstract class Form implements ContainerInterface
      *
      * @return array array of name/value pairs assigned to form elements
      */
-    public function getElementValues($encode = false)
+    public function getElementValues(bool $encode = false): array
     {
         // will not use getElementByName() for performance..
         $elements = $this->getElements(true);
@@ -347,7 +348,7 @@ abstract class Form implements ContainerInterface
      *
      * @param string $extra extra attributes for the <form> tag
      */
-    public function setExtra($extra)
+    public function setExtra(string $extra): void
     {
         if (!empty($extra)) {
             $this->extra[] = $extra;
@@ -359,7 +360,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function getExtra()
+    public function getExtra(): string
     {
         $extra = empty($this->extra) ? '' : ' '.implode(' ', $this->extra);
 
@@ -374,7 +375,7 @@ abstract class Form implements ContainerInterface
      *
      * @deprecated set required attribute on element directly or when calling addElement
      */
-    public function setRequired(Element $formElement)
+    public function setRequired(Element $formElement): void
     {
         $formElement->setRequired();
     }
@@ -384,7 +385,7 @@ abstract class Form implements ContainerInterface
      *
      * @return array array of Xoops\Form\Element
      */
-    public function getRequired()
+    public function getRequired(): array
     {
         $required = [];
         foreach ($this->elements as $el) {
@@ -403,12 +404,12 @@ abstract class Form implements ContainerInterface
      *
      * @return string the rendered form
      */
-    abstract public function render();
+    abstract public function render(): string;
 
     /**
      * display - displays rendered form.
      */
-    public function display()
+    public function display(): void
     {
         echo $this->render();
     }
@@ -437,7 +438,7 @@ abstract class Form implements ContainerInterface
      *
      * @return string
      */
-    public function renderValidationJS($withtags = true)
+    public function renderValidationJS(bool $withtags = true): string
     {
         $js = '';
         if ($withtags) {
@@ -464,7 +465,7 @@ abstract class Form implements ContainerInterface
      *
      * @param \XoopsTpl $tpl template
      */
-    public function assign(XoopsTpl $tpl)
+    public function assign(XoopsTpl $tpl): void
     {
         $i = -1;
         $elements = [];

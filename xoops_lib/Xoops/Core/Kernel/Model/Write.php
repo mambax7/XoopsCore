@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class Write extends XoopsModelAbstract
      *
      * @return bool true if successful
      */
-    public function cleanVars(XoopsObject $object)
+    public function cleanVars(XoopsObject $object): bool
     {
         $vars = $object->getVars();
         $object->cleanVars = [];
@@ -61,7 +62,7 @@ class Write extends XoopsModelAbstract
      *
      * @return int|false id of insert, or false on error
      */
-    public function insert(XoopsObject $object, $force = true)
+    public function insert(XoopsObject $object, bool $force = true)
     {
         if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
@@ -131,7 +132,7 @@ class Write extends XoopsModelAbstract
      *
      * @return bool FALSE if failed.
      */
-    public function delete(XoopsObject $object, $force = false)
+    public function delete(XoopsObject $object, bool $force = false): bool
     {
         if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
@@ -189,7 +190,7 @@ class Write extends XoopsModelAbstract
      *
      * @return bool
      */
-    public function deleteAll(CriteriaElement $criteria = null, $force = false, $asObject = false)
+    public function deleteAll(?CriteriaElement $criteria = null, bool $force = false, bool $asObject = false): bool
     {
         if ($asObject) {
             $objects = $this->handler->getAll($criteria);
@@ -224,7 +225,7 @@ class Write extends XoopsModelAbstract
      *
      * @return bool
      */
-    public function updateAll($fieldName, $fieldValue, CriteriaElement $criteria = null, $force = false)
+    public function updateAll(string $fieldName, $fieldValue, ?CriteriaElement $criteria = null, $force = false): bool
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 

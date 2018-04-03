@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class DtypeMoney extends DtypeAbstract
      *
      * @return mixed
      */
-    public function getVar(XoopsObject $obj, $key, $format)
+    public function getVar(XoopsObject $obj, string $key, string $format)
     {
         $storedValue = $obj->vars[$key]['value'];
         switch (strtolower($format)) {
@@ -63,7 +64,7 @@ class DtypeMoney extends DtypeAbstract
      *
      * @return string|null
      */
-    public function cleanVar(XoopsObject $obj, $key)
+    public function cleanVar(XoopsObject $obj, string $key): ?string
     {
         $value = $obj->vars[$key]['value'];
 
@@ -77,7 +78,7 @@ class DtypeMoney extends DtypeAbstract
      *
      * @return string json encoded data to un
      */
-    private function serializeAsJson(Money $value)
+    private function serializeAsJson(Money $value): string
     {
         return json_encode($value);
     }
@@ -89,7 +90,7 @@ class DtypeMoney extends DtypeAbstract
      *
      * @return Money|null
      */
-    private function unserializeJson($value)
+    private function unserializeJson(string $value): ?Money
     {
         $decoded = json_decode($value, true, 2, JSON_BIGINT_AS_STRING);
         if (false === $decoded || !(isset($decoded['amount']) && isset($decoded['currency']))) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class Session extends AbstractHelper
     /**
      * Initialize parent::__construct calls this after verifying module object.
      */
-    public function init()
+    public function init(): void
     {
         $this->prefix = $this->module->getVar('dirname').'_';
     }
@@ -45,7 +46,7 @@ class Session extends AbstractHelper
      * @param string $name  name of variable
      * @param mixed  $value value of variable
      */
-    public function set($name, $value)
+    public function set(string $name, $value): void
     {
         $prefixedName = $this->prefix($name);
         $_SESSION[$prefixedName] = serialize($value);
@@ -59,7 +60,7 @@ class Session extends AbstractHelper
      *
      * @return mixed $value value of session variable or false if not set
      */
-    public function get($name, $default = false)
+    public function get(string $name, $default = false)
     {
         $prefixedName = $this->prefix($name);
         if (isset($_SESSION[$prefixedName])) {
@@ -74,7 +75,7 @@ class Session extends AbstractHelper
      *
      * @param string $name name of variable
      */
-    public function del($name)
+    public function del(string $name): void
     {
         $prefixedName = $this->prefix($name);
         $_SESSION[$prefixedName] = null;
@@ -84,7 +85,7 @@ class Session extends AbstractHelper
     /**
      * Delete all session variable starting with our module prefix.
      */
-    public function destroy()
+    public function destroy(): void
     {
         foreach ($_SESSION as $key => $value) {
             if (0 === substr_compare($key, $this->prefix, 0, strlen($this->prefix))) {
@@ -101,7 +102,7 @@ class Session extends AbstractHelper
      *
      * @return string module prefixed name
      */
-    protected function prefix($name)
+    protected function prefix(string $name): string
     {
         $prefixedName = $this->prefix.$name;
 

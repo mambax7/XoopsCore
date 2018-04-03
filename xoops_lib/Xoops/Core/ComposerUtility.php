@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -49,7 +50,7 @@ class ComposerUtility
      *
      * @return bool true on success, false if command failed or could not execute
      */
-    public function composerExecute($command_line)
+    public function composerExecute(string $command_line): bool
     {
         $this->output = [];
         $this->errors = [];
@@ -83,7 +84,7 @@ class ComposerUtility
 
         try {
             $process->run(
-                function ($type, $buffer) use (&$errors, &$output) {
+                function ($type, $buffer) use (&$errors, &$output): void {
                     if (Process::ERR === $type) {
                         $errors[] = $buffer;
                     } else {
@@ -91,7 +92,7 @@ class ComposerUtility
                     }
                 }
             );
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->errors[] = $e->getMessage();
         }
 
@@ -115,7 +116,7 @@ class ComposerUtility
      *
      * @return array
      */
-    public function getLastOutput()
+    public function getLastOutput(): array
     {
         return $this->output;
     }
@@ -125,7 +126,7 @@ class ComposerUtility
      *
      * @return array
      */
-    public function getLastError()
+    public function getLastError(): array
     {
         return $this->errors;
     }
@@ -139,7 +140,7 @@ class ComposerUtility
      *
      * @param string $overrideExe command line to invoke composer
      */
-    public function setComposerExe($overrideExe)
+    public function setComposerExe(string $overrideExe): void
     {
         $this->exe = $overrideExe;
     }

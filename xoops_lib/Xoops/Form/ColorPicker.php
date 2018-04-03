@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -57,7 +58,7 @@ class ColorPicker extends Text
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $xoops = \Xoops::getInstance();
         if ($xoops->theme()) {
@@ -89,7 +90,7 @@ class ColorPicker extends Text
      *
      * @return string Element validation Javascript
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         $eltname = $this->getName();
         $eltcaption = $this->getCaption();

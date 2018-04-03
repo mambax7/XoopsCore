@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class Embed extends FilterAbstract
      *
      * @return mixed
      */
-    public function applyFilter($text)
+    public function applyFilter(string $text)
     {
         if (!$this->config['enabled']) {
             return $text;
@@ -64,7 +65,7 @@ class Embed extends FilterAbstract
      *
      * @return string
      */
-    protected function decorateUrl($match)
+    protected function decorateUrl(string $match): string
     {
         $url = $match[1];
         $decorated = null;
@@ -80,7 +81,7 @@ class Embed extends FilterAbstract
 
                 try {
                     $info = \Embed\Embed::create($url);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     $info = null;
                 }
                 if (is_object($info)) {
@@ -137,7 +138,7 @@ EOT;
      *
      * @return bool true if responsive should be enabled, false otherwise
      */
-    protected function enableResponsive($code)
+    protected function enableResponsive(string $code): bool
     {
         // sites in this list are known to have problems
         $excludeList = [

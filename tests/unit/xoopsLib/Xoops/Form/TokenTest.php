@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class TokenTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Token();
     }
@@ -24,11 +24,11 @@ class TokenTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);
@@ -37,7 +37,7 @@ class TokenTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, 'name="XOOPS_TOKEN_REQUEST"'));
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         // '<input hidden type="hidden" name="XOOPS_TOKEN_REQUEST" value="'
         $oldWay = new Token();

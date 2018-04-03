@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class KeyFactory
      *
      * @throws \InvalidArgumentException on unusable key name
      */
-    public static function build($keyName, StorageInterface $storage = null)
+    public static function build(string $keyName, ?StorageInterface $storage = null): Basic
     {
         if (empty($keyName) || !is_string($keyName)) {
             throw new \InvalidArgumentException('keyName must be a non-empty string');

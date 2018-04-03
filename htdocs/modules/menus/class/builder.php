@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class MenusBuilder
     /**
      * @param array $array
      */
-    public function __construct($array)
+    public function __construct(array $array)
     {
         $this->addMenu($array);
     }
@@ -39,14 +40,14 @@ class MenusBuilder
     /**
      * @param array $array
      */
-    public function addMenu($array)
+    public function addMenu(array $array): void
     {
         foreach ($array as $item) {
             $this->add($item);
         }
     }
 
-    public function add($item)
+    public function add($item): void
     {
         $this->parents[$item['pid']][] = $item;
     }
@@ -54,7 +55,7 @@ class MenusBuilder
     /**
      * @param int $pid
      */
-    public function buildMenus($pid = 0)
+    public function buildMenus(int $pid = 0): void
     {
         static $idx = -1;
         static $level = -1;
@@ -95,7 +96,7 @@ class MenusBuilder
     /**
      * @param int $pid
      */
-    public function buildUpDown($pid = 0)
+    public function buildUpDown(int $pid = 0): void
     {
         static $idx = -1;
         $prevWeight = null;
@@ -127,7 +128,7 @@ class MenusBuilder
         }
     }
 
-    public function buildSelected()
+    public function buildSelected(): void
     {
         //get the currentpage
         $sel = [];
@@ -176,7 +177,7 @@ class MenusBuilder
     /**
      * @param int $pid
      */
-    public function addSelectedParents($pid)
+    public function addSelectedParents(int $pid): void
     {
         foreach ($this->output as $idx => $menu) {
             if ($menu['id'] === $pid) {
@@ -189,7 +190,7 @@ class MenusBuilder
     /**
      * @return array
      */
-    public function render()
+    public function render(): array
     {
         $this->buildMenus();
         $this->buildUpDown();

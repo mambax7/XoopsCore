@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -13,7 +13,7 @@ use XoopsLoad;
 
 class UpdateModuleCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('update-module')
             ->setDescription('Update a module')
@@ -29,7 +29,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $module = $input->getArgument('module');
         $output->writeln(sprintf('Updating %s', $module));

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,11 +30,11 @@ $pick = isset($_POST['pick']) ? (int) ($_POST['pick']) : $pick;
 $statussel = isset($_GET['statussel']) ? (int) ($_GET['statussel']) : 0;
 $statussel = isset($_POST['statussel']) ? (int) ($_POST['statussel']) : $statussel;
 
-$sortsel = isset($_GET['sortsel']) ? $_GET['sortsel'] : 'itemid';
-$sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $sortsel;
+$sortsel = $_GET['sortsel'] ?? 'itemid';
+$sortsel = $_POST['sortsel'] ?? $sortsel;
 
-$ordersel = isset($_GET['ordersel']) ? $_GET['ordersel'] : 'DESC';
-$ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] : $ordersel;
+$ordersel = $_GET['ordersel'] ?? 'DESC';
+$ordersel = $_POST['ordersel'] ?? $ordersel;
 
 $module_id = $publisher->getModule()->mid();
 $gperm_handler = $xoops->getHandlerGroupPermission();
@@ -315,7 +316,7 @@ $xoops->footer();
 
 // auto create folders----------------------------------------
 //TODO rename this function? And exclude image folder?
-function createDir()
+function createDir(): void
 {
     // auto crate folders
     $thePath = PublisherUtils::getUploadDir();
@@ -369,7 +370,7 @@ function createDir()
     }
 }
 
-function buildTable()
+function buildTable(): void
 {
     echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
     echo '<tr>';

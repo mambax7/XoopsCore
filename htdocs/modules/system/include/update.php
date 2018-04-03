@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  *
  * @return bool
  */
-function xoops_module_update_system(XoopsModule $module)
+function xoops_module_update_system(XoopsModule $module): bool
 {
     $xoops = Xoops::getInstance();
     if (100 === $module->getVar('version')) {
@@ -43,7 +44,7 @@ function xoops_module_update_system(XoopsModule $module)
             ->andWhere($eb->eq('t1.tpl_id', 't2.tpl_id'));
         $result = $sql->execute();
         $tplids = [];
-        while (list($tplid) = $result->fetch(PDO::FETCH_NUM)) {
+        while ([$tplid] = $result->fetch(PDO::FETCH_NUM)) {
             $tplids[] = $tplid;
         }
         if (count($tplids) > 0) {

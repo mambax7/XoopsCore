@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
     /**
      * @param int $time
      */
-    public function getMd5($time = null)
+    public function getMd5(int $time = null)
     {
         if (empty($time)) {
             $time = time();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Select('Caption', 'name', 'value');
     }
@@ -24,11 +24,11 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testIsMultiple()
+    public function testIsMultiple(): void
     {
         $value = $this->object->isMultiple();
         $this->assertFalse($value);
@@ -38,13 +38,13 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function testGetSize()
+    public function testGetSize(): void
     {
         $value = $this->object->getSize();
         $this->assertSame(1, $value);
     }
 
-    public function testAddOption()
+    public function testAddOption(): void
     {
         $this->object->addOption('opt_key', 'opt_name');
         $this->object->addOption('opt_just_key');
@@ -54,7 +54,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('opt_just_key', $value['opt_just_key']);
     }
 
-    public function testAddOptionArray()
+    public function testAddOptionArray(): void
     {
         $this->object->addOptionArray(['opt_key' => 'opt_name', 'opt_just_key' => null]);
         $value = $this->object->getOptions();
@@ -63,7 +63,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('opt_just_key', $value['opt_just_key']);
     }
 
-    public function testAddOptionGroup()
+    public function testAddOptionGroup(): void
     {
         $groups = ['grp_key' => 'grp_name', 'grp_key1' => 'grp_name1'];
         $this->object->addOptionGroup('opt_grp_name', $groups);
@@ -72,7 +72,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($groups, $value['opt_grp_name']);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $this->object->addOptionArray(['opt_key' => 'opt_name', 'opt_just_key' => null]);
         $this->object->setValue('opt_key');
@@ -108,7 +108,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, '>grp_name1</option>'));
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertSame('', $value);
@@ -119,7 +119,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, 'window.alert'));
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new Select('mycaption', 'myname', 'opt1');
         $oldWay->addOption('opt1', 'optname1');

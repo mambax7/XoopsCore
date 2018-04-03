@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class CommentsWaitingPlugin implements WaitingPluginInterface
     /**
      * @return array
      */
-    public function waiting()
+    public function waiting(): array
     {
         /* @var $comments Comments */
         $comments = \Xoops::getModuleHelper('comments'); //need this here to init constants

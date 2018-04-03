@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // $Id$
 
@@ -127,7 +127,7 @@ class tar
      * @param  string     $bytestring
      * @return int|string
      */
-    private function __computeUnsignedChecksum($bytestring)
+    private function __computeUnsignedChecksum(string $bytestring)
     {
         $unsigned_chksum = '';
         for ($i = 0; $i < 512; ++$i) {
@@ -147,7 +147,7 @@ class tar
      * @param  string $string
      * @return string
      */
-    private function __parseNullPaddedString($string)
+    private function __parseNullPaddedString(string $string): string
     {
         $position = strpos($string, chr(0));
 
@@ -159,7 +159,7 @@ class tar
      *
      * @return bool always TRUE
      */
-    private function __parseTar()
+    private function __parseTar(): bool
     {
         // Read Files from archive
         $tar_length = strlen($this->tar_file);
@@ -251,7 +251,7 @@ class tar
      * @param  string $filename full filename
      * @return bool   always TRUE
      */
-    private function __readTar($filename = '')
+    private function __readTar(string $filename = ''): bool
     {
         // Set the filename to load
         if (!$filename) {
@@ -280,7 +280,7 @@ class tar
      *
      * @return bool always TRUE
      */
-    private function __generateTar()
+    private function __generateTar(): bool
     {
         // Clear any data currently in $this->tar_file
         unset($this->tar_file);
@@ -371,7 +371,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    public function openTAR($filename)
+    public function openTAR(string $filename): bool
     {
         // Clear any values from previous tar archives
         unset($this->filename);
@@ -399,7 +399,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    public function appendTar($filename)
+    public function appendTar(string $filename): bool
     {
         // If the tar file doesn't exist...
         if (!XoopsLoad::fileExists($filename)) {
@@ -416,7 +416,7 @@ class tar
      * @param  string $filename
      * @return string FALSE on fail
      */
-    public function getFile($filename)
+    public function getFile(string $filename): string
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $information) {
@@ -435,7 +435,7 @@ class tar
      * @param  string $dirname
      * @return string FALSE on fail
      */
-    public function getDirectory($dirname)
+    public function getDirectory(string $dirname): string
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $information) {
@@ -454,7 +454,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    public function containsFile($filename)
+    public function containsFile(string $filename): bool
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $information) {
@@ -473,7 +473,7 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    public function containsDirectory($dirname)
+    public function containsDirectory(string $dirname): bool
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $information) {
@@ -492,7 +492,7 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    public function addDirectory($dirname)
+    public function addDirectory(string $dirname): bool
     {
         if (!XoopsLoad::fileExists($dirname)) {
             return false;
@@ -507,7 +507,7 @@ class tar
         $activeDir['time'] = $file_information['time'];
         $activeDir['user_id'] = $file_information['uid'];
         $activeDir['group_id'] = $file_information['gid'];
-        $activeDir['checksum'] = isset($checksum) ? $checksum : '';
+        $activeDir['checksum'] = $checksum ?? '';
 
         return true;
     }
@@ -519,7 +519,7 @@ class tar
      * @param  bool   $binary   Binary file?
      * @return bool
      */
-    public function addFile($filename, $binary = false)
+    public function addFile(string $filename, bool $binary = false): bool
     {
         // Make sure the file we are adding exists!
         if (!XoopsLoad::fileExists($filename)) {
@@ -548,7 +548,7 @@ class tar
         $activeFile['group_id'] = $file_information['gid'];
         $activeFile['size'] = $file_information['size'];
         $activeFile['time'] = $file_information['mtime'];
-        $activeFile['checksum'] = isset($checksum) ? $checksum : '';
+        $activeFile['checksum'] = $checksum ?? '';
         $activeFile['user_name'] = '';
         $activeFile['group_name'] = '';
         $activeFile['file'] = trim($file_contents);
@@ -562,7 +562,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    public function removeFile($filename)
+    public function removeFile(string $filename): bool
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $key => $information) {
@@ -584,7 +584,7 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    public function removeDirectory($dirname)
+    public function removeDirectory(string $dirname): bool
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $key => $information) {
@@ -605,7 +605,7 @@ class tar
      *
      * @return bool
      */
-    public function saveTar()
+    public function saveTar(): bool
     {
         if (!$this->filename) {
             return false;
@@ -623,7 +623,7 @@ class tar
      * @param  bool   $useGzip  Use GZ compression?
      * @return bool
      */
-    public function toTar($filename, $useGzip)
+    public function toTar(string $filename, bool $useGzip): bool
     {
         if (!$filename) {
             return false;
@@ -655,7 +655,7 @@ class tar
      * @param  bool   $useGzip  Use GZ compression?
      * @return string
      */
-    public function toTarOutput($filename, $useGzip)
+    public function toTarOutput(string $filename, bool $useGzip): string
     {
         if (!$filename) {
             return false;

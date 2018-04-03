@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -49,7 +50,7 @@ class SessionUser
      *
      * If no user data, check if "remember me" data should be applied
      */
-    public function establish()
+    public function establish(): void
     {
         $session = $this->session;
 
@@ -77,7 +78,7 @@ class SessionUser
      * @param int  $userId     id of user to establish in the session
      * @param bool $rememberMe add a persistent login cookie
      */
-    public function recordUserLogin($userId, $rememberMe = false)
+    public function recordUserLogin(int $userId, bool $rememberMe = false): void
     {
         $this->setConfirmed();
         $this->addUserToSession($userId);
@@ -92,7 +93,7 @@ class SessionUser
      * process, i.e. the user has entered the name and password, and that
      * combination was found valid.
      */
-    public function recordUserLogout()
+    public function recordUserLogout(): void
     {
         $remember = new RememberMe();
         $remember->forget();
@@ -104,7 +105,7 @@ class SessionUser
      *
      * @param int $userId id of user to establish in the session
      */
-    public function addUserToSession($userId)
+    public function addUserToSession(int $userId): void
     {
         $session = $this->session;
         $memberHandler = $this->xoops->getHandlerMember();
@@ -130,7 +131,7 @@ class SessionUser
     /**
      * set authorization status to needs confirmed.
      */
-    public function setNeedsConfirmed()
+    public function setNeedsConfirmed(): void
     {
         $this->session->set('SESSION_AUTHSTATUS', 'confirm');
     }
@@ -138,7 +139,7 @@ class SessionUser
     /**
      * set authorization status to is confirmed.
      */
-    public function setConfirmed()
+    public function setConfirmed(): void
     {
         $this->session->set('SESSION_AUTHSTATUS', 'ok');
     }
@@ -148,7 +149,7 @@ class SessionUser
      *
      * @return bool true if confirmed, otherwise false
      */
-    public function checkConfirmed()
+    public function checkConfirmed(): bool
     {
         return $this->session->has('xoopsUserId') &&
                 ('ok' === $this->session->get('SESSION_AUTHSTATUS', 'failed'));

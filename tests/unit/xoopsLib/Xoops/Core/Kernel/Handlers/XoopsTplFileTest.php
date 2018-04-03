@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class XoopsTplFileTest extends \PHPUnit\Framework\TestCase
 {
     public $myclass = 'Xoops\Core\Kernel\Handlers\XoopsTplFile';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -27,91 +27,91 @@ class XoopsTplFileTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['tpl_source']));
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_tpl_id()
+    public function test_tpl_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_id();
         $this->assertNull($value);
     }
 
-    public function test_tpl_refid()
+    public function test_tpl_refid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_refid();
         $this->assertSame(0, $value);
     }
 
-    public function test_tpl_tplset()
+    public function test_tpl_tplset(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_tplset();
         $this->assertNull($value);
     }
 
-    public function test_tpl_file()
+    public function test_tpl_file(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_file();
         $this->assertNull($value);
     }
 
-    public function test_tpl_desc()
+    public function test_tpl_desc(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_desc();
         $this->assertNull($value);
     }
 
-    public function test_tpl_lastmodified()
+    public function test_tpl_lastmodified(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_lastmodified();
         $this->assertSame(0, $value);
     }
 
-    public function test_tpl_lastimported()
+    public function test_tpl_lastimported(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_lastimported();
         $this->assertSame(0, $value);
     }
 
-    public function tpl_module()
+    public function tpl_module(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_module();
         $this->assertNull($value);
     }
 
-    public function test_tpl_type()
+    public function test_tpl_type(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_type();
         $this->assertNull($value);
     }
 
-    public function test_tpl_source()
+    public function test_tpl_source(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_source();
         $this->assertNull($value);
     }
 
-    public function test_getSource()
+    public function test_getSource(): void
     {
         $instance = new $this->myclass();
         $value = $instance->getSource();
         $this->assertNull($value);
     }
 
-    public function test_getLastModified()
+    public function test_getLastModified(): void
     {
         $instance = new $this->myclass();
         $value = $instance->getLastModified();

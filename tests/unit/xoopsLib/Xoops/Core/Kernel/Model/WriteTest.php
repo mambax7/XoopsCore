@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -16,19 +16,19 @@ class WriteTest extends \PHPUnit\Framework\TestCase
 
     protected $myAbstractClass = 'Xoops\Core\Kernel\XoopsModelAbstract';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = \Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf($this->myAbstractClass, $instance);
     }
 
-    public function test_cleanVars()
+    public function test_cleanVars(): void
     {
         $instance = new $this->myClass();
 
@@ -45,17 +45,17 @@ class WriteTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(2, $cleanVars['dummyVar2']);
     }
 
-    public function test_insert()
+    public function test_insert(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_delete()
+    public function test_delete(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_deleteAll()
+    public function test_deleteAll(): void
     {
         $instance = new $this->myClass();
 
@@ -68,7 +68,7 @@ class WriteTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $x);
     }
 
-    public function test_updateAll()
+    public function test_updateAll(): void
     {
         $instance = new $this->myClass();
 

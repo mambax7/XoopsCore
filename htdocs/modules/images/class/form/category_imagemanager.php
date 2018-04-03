@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -24,7 +25,7 @@ class ImagesCategory_imagemanagerForm extends Xoops\Form\ThemeForm
      *                      'obj'     => ImagesCategory|XoopsObject $obj
      *                      'target'  => textarea id
      */
-    public function __construct($param)
+    public function __construct(array $param)
     {
         $xoops = Xoops::getInstance();
         $groups = $xoops->getUserGroups();

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Menus
      */
-    public static function getInstance()
+    public static function getInstance(): Menus
     {
         return parent::getInstance();
     }
@@ -38,7 +39,7 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return MenusMenusHandler
      */
-    public function getHandlerMenus()
+    public function getHandlerMenus(): MenusMenusHandler
     {
         return $this->getHandler('menus');
     }
@@ -46,7 +47,7 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return MenusMenuHandler
      */
-    public function getHandlerMenu()
+    public function getHandlerMenu(): MenusMenuHandler
     {
         return $this->getHandler('menu');
     }
@@ -57,7 +58,7 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
      *
      * @return array
      */
-    public function getSkinInfo($skin, $skin_from_theme = false)
+    public function getSkinInfo(string $skin, bool $skin_from_theme = false): array
     {
         $error = false;
         $path = '';

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ abstract class AbstractContract
      *
      * @param int $priority - priority of this contract provider
      */
-    public function setPriority($priority)
+    public function setPriority(int $priority): void
     {
         $this->priority = (int) $priority;
     }
@@ -45,7 +46,7 @@ abstract class AbstractContract
      *
      * @return int - priority of this contract provider
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->priority;
     }
@@ -56,7 +57,7 @@ abstract class AbstractContract
      *
      * @return int - a MODE constant indicating how multiple services are handled
      */
-    public function getMode()
+    public function getMode(): int
     {
         $class = get_called_class();
 
@@ -69,12 +70,12 @@ abstract class AbstractContract
      *
      * @return string - a unique name for the service provider
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
-    abstract public function getDescription();
+    abstract public function getDescription(): string;
 }

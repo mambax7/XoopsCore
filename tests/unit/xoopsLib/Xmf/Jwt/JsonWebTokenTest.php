@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test\Jwt;
 
@@ -25,7 +25,7 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->storage = new ArrayStorage();
         $this->key = new Basic($this->storage, 'testkey');
@@ -37,11 +37,11 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $this->assertInstanceOf('\Xmf\Jwt\JsonWebToken', $this->object);
 
@@ -49,7 +49,7 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
         $actual = new JsonWebToken($this->key, 'badalgo');
     }
 
-    public function testSetAlgorithm()
+    public function testSetAlgorithm(): void
     {
         $actual = $this->object->setAlgorithm('HS512');
         $this->assertSame($this->object, $actual);
@@ -58,7 +58,7 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
         $actual = $this->object->setAlgorithm('xxxxx');
     }
 
-    public function testCreateDecode()
+    public function testCreateDecode(): void
     {
         $token = $this->object->create(['test' => 'create'], 6);
         $this->assertInternalType('string', $token);

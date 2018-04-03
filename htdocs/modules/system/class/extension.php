@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class SystemExtension extends SystemModule
      *
      * @return type
      */
-    public function getExtension($mod = '')
+    public function getExtension(string $mod = ''): type
     {
         $ret = [];
         $extension = self::getExtensionList();
@@ -54,7 +55,7 @@ class SystemExtension extends SystemModule
      *
      * @return array
      */
-    public function getExtensionList()
+    public function getExtensionList(): array
     {
         // Get main instance
         $xoops = Xoops::getInstance();
@@ -143,7 +144,7 @@ class SystemExtension extends SystemModule
      *
      * @return array
      */
-    public function getInstalledExtensions()
+    public function getInstalledExtensions(): array
     {
         // Get main instance
         $xoops = Xoops::getInstance();

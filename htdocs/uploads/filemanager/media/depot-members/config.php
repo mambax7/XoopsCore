@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 //------------------------------------------------------------------------------
 // YOU CAN COPY AND CHANGE THESE VARIABLES IN FOLDERS config.php FILES

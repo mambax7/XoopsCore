@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -15,7 +15,7 @@ class MimeTypesTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         // $this->object = new \Xoops\Core\MimeTypes;
     }
@@ -24,11 +24,11 @@ class MimeTypesTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testFindExtensions()
+    public function testFindExtensions(): void
     {
         $this->assertTrue(in_array('txt', MimeTypes::findExtensions('text/plain'), true), 'match .txt extension');
         $matches = MimeTypes::findExtensions('image/jpeg');
@@ -38,7 +38,7 @@ class MimeTypesTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($x, 'match garbage mimetype');
     }
 
-    public function testFindType()
+    public function testFindType(): void
     {
         $this->assertSame('text/plain', MimeTypes::findType('txt'), 'get mimetype for .txt extension');
         $this->assertSame('image/jpeg', MimeTypes::findType('jpg'), 'get mimetype for .jpg extension');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class Factory
      *
      * @return AuthAbstract|bool Reference to the only instance of authentication class
      */
-    public static function getAuthConnection($uname, $_force = false)
+    public static function getAuthConnection(string $uname, bool $_force = false)
     {
         $xoops = \Xoops::getInstance();
         static $auth_instance;

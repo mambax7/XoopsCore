@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class ElementFactoryTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ElementFactory();
     }
@@ -24,17 +24,17 @@ class ElementFactoryTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testConst()
+    public function testConst(): void
     {
         $this->assertTrue(defined('\Xoops\Form\ElementFactory::CLASS_KEY'));
         $this->assertTrue(defined('\Xoops\Form\ElementFactory::FORM_KEY'));
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $spec = [
             ElementFactory::CLASS_KEY => 'Raw',
@@ -44,13 +44,13 @@ class ElementFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Form\Raw', $actual);
     }
 
-    public function testValidateException1()
+    public function testValidateException1(): void
     {
         $this->expectException('\DomainException');
         $value = $this->object->create([]);
     }
 
-    public function testValidateException2()
+    public function testValidateException2(): void
     {
         $spec = [
             ElementFactory::CLASS_KEY => 'NoSuchClassExists',
@@ -59,7 +59,7 @@ class ElementFactoryTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->create($spec);
     }
 
-    public function testValidateException3()
+    public function testValidateException3(): void
     {
         $spec = [
             ElementFactory::CLASS_KEY => '\ArrayObject',
@@ -68,7 +68,7 @@ class ElementFactoryTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->create($spec);
     }
 
-    public function testSetContainer()
+    public function testSetContainer(): void
     {
         $container = new ElementTray([]);
         $this->object->setContainer($container);

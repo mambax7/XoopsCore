@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -81,7 +82,7 @@ class xoopscaptcha
      *
      * @return XoopsCaptcha
      */
-    public static function getInstance()
+    public static function getInstance(): XoopsCaptcha
     {
         static $instance;
         if (!isset($instance)) {
@@ -99,7 +100,7 @@ class xoopscaptcha
      *
      * @return array
      */
-    public function loadConfig($name = 'config')
+    public function loadConfig(string $name = 'config'): array
     {
         if ('config' === $name) {
             $filename = 'captcha.config';
@@ -121,7 +122,7 @@ class xoopscaptcha
      *
      * @return array
      */
-    public function loadBasicConfig($filename = 'config')
+    public function loadBasicConfig(string $filename = 'config'): array
     {
         $basic_config = [];
         $plugin_config = [];
@@ -145,7 +146,7 @@ class xoopscaptcha
      *
      * @return array
      */
-    public function readConfig($filename = 'config')
+    public function readConfig(string $filename = 'config'): array
     {
         $path_file = $this->configPath.$filename.'.php';
         $file = XoopsFile::getHandler('file', $path_file);
@@ -161,7 +162,7 @@ class xoopscaptcha
      *
      * @return array
      */
-    public function writeConfig($filename = 'config', $config)
+    public function writeConfig(string $filename = 'config', array $config): array
     {
         $path_file = $this->configPath.$filename.'.php';
         $file = XoopsFile::getHandler('file', $path_file);
@@ -174,7 +175,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         $xoops = Xoops::getInstance();
         if (isset($this->active)) {
@@ -205,7 +206,7 @@ class xoopscaptcha
      *
      * @return XoopsCaptchaMethod|null
      */
-    public function loadHandler($name = null)
+    public function loadHandler(?string $name = null): ?XoopsCaptchaMethod
     {
         $name = !empty($name) ? $name : (empty($this->config['mode']) ? 'text' : $this->config['mode']);
         $class = 'XoopsCaptcha'.ucfirst($name);
@@ -242,7 +243,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function setConfigs($configs)
+    public function setConfigs($configs): bool
     {
         foreach ($configs as $key => $val) {
             $this->setConfig($key, $val);
@@ -259,7 +260,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function setConfig($name, $val)
+    public function setConfig($name, $val): bool
     {
         if (isset($this->{$name})) {
             $this->{$name} = $val;
@@ -280,7 +281,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function verify($skipMember = null, $name = null)
+    public function verify(?bool $skipMember = null, ?string $name = null): bool
     {
         $xoops = Xoops::getInstance();
         $sessionName = empty($name) ? $this->name : $name;
@@ -325,7 +326,7 @@ class xoopscaptcha
      *
      * @return string
      */
-    public function getCaption()
+    public function getCaption(): string
     {
         return XoopsLocale::CONFIRMATION_CODE;
     }
@@ -335,7 +336,7 @@ class xoopscaptcha
      *
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return implode('<br />', $this->message);
     }
@@ -347,7 +348,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function destroyGarbage($clearSession = false)
+    public function destroyGarbage(bool $clearSession = false): bool
     {
         $this->loadHandler();
         $this->xoopsCaptchaMethod->destroyGarbage();
@@ -365,7 +366,7 @@ class xoopscaptcha
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $sessionName = $this->config['name'];
         $_SESSION[$sessionName.'_name'] = $sessionName;
@@ -378,7 +379,7 @@ class xoopscaptcha
         }
 
         $maxAttempts = $this->config['maxattempts'];
-        $attempt = isset($_SESSION[$sessionName.'_attempt']) ? $_SESSION[$sessionName.'_attempt'] : 0;
+        $attempt = $_SESSION[$sessionName.'_attempt'] ?? 0;
         $_SESSION[$sessionName.'_attempt'] = $attempt;
         // Failure on too many attempts
         if (!empty($maxAttempts) && $attempt > $maxAttempts) {
@@ -396,7 +397,7 @@ class xoopscaptcha
      *
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         if (!$this->active || empty($this->config['name'])) {
             return '';
@@ -412,7 +413,7 @@ class xoopscaptcha
      *
      * @return bool
      */
-    public function setCode($code = null)
+    public function setCode($code = null): bool
     {
         $code = (null === $code) ? $this->xoopsCaptchaMethod->getCode() : $code;
         if (!empty($code)) {
@@ -429,7 +430,7 @@ class xoopscaptcha
      *
      * @return string
      */
-    public function loadForm()
+    public function loadForm(): string
     {
         $form = $this->xoopsCaptchaMethod->render();
         $this->setCode();

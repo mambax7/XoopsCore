@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Xoops\Core\XoopsTpl;
 
@@ -8,7 +8,7 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsPageNav';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $xoops = Xoops::getinstance();
         $tpl = $xoops->tpl();
@@ -17,7 +17,7 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $total_items = 10;
         $items_perpage = 3;
@@ -28,7 +28,7 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test_renderNav()
+    public function test_renderNav(): void
     {
         $total_items = 10;
         $items_perpage = 3;
@@ -39,7 +39,7 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $ret);
     }
 
-    public function test_renderNav100()
+    public function test_renderNav100(): void
     {
         $total_items = 10;
         $items_perpage = 3;

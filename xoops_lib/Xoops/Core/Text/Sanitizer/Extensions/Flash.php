@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,7 +44,7 @@ class Flash extends ExtensionAbstract
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         $buttonCode = $this->getEditorButtonHtml(
             $textAreaId,
@@ -89,12 +90,12 @@ EOF;
     /**
      * Register extension with the supplied sanitizer instance.
      */
-    public function registerExtensionProcessing()
+    public function registerExtensionProcessing(): void
     {
         $function = function ($attributes, $content, $tagName) {
             if (array_key_exists(0, $attributes) && '=' === substr($attributes[0], 0, 1)) {
                 $args = ltrim($attributes[0], '=');
-                list($width, $height) = explode(',', $args);
+                [$width, $height] = explode(',', $args);
                 $url = $content;
             } else {
                 $defaults = [
@@ -110,7 +111,7 @@ EOF;
             if ((empty($width) || empty($height)) && (bool) $this->config['detect_dimension']) {
                 $dimension = @getimagesize($content);
                 if (false !== $dimension) {
-                    list($width, $height) = $dimension;
+                    [$width, $height] = $dimension;
                 }
             }
             if (empty($width) || empty($height)) {

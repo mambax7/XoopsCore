@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -46,7 +47,7 @@ class maintenance
      *
      * @return array|string list of tables
      */
-    public function displayTables($array = true)
+    public function displayTables(bool $array = true)
     {
         $tables = [];
         $result = $this->db->queryF('SHOW TABLES');
@@ -70,7 +71,7 @@ class maintenance
      *
      * @return array 'ret[sql_text] = dump, ret[structure] = display structure
      */
-    public function dumpTableStructure($table, $drop)
+    public function dumpTableStructure(string $table, int $drop): array
     {
         $sql_text = '';
         $verif = false;
@@ -99,7 +100,7 @@ class maintenance
      *
      * @return array 'ret[sql_text] = dump, ret[records] = display records
      */
-    public function dumpTableData($table)
+    public function dumpTableData(string $table): array
     {
         $sql_text = '';
         $count = 0;
@@ -164,7 +165,7 @@ class maintenance
      *
      * @return array 'ret[file_name] = file name, ret[write] = write
      */
-    public function dump_write($sql_text)
+    public function dump_write(string $sql_text): array
     {
         $file_name = 'dump_'.date('Y.m.d').'_'.date('H.i.s').'.sql';
         $path_file = '../dump/'.$file_name;

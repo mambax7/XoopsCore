@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -69,7 +70,7 @@ class GroupPermissionForm extends Form
      * @param string $url       redirect url
      * @param bool   $anonymous true to include anonymous group
      */
-    public function __construct($title, $modid, $permname, $permdesc, $url = '', $anonymous = true)
+    public function __construct(string $title, int $modid, string $permname, string $permdesc, string $url = '', bool $anonymous = true)
     {
         parent::__construct($title, 'groupperm_form', XOOPS_URL.'/modules/system/admin/groupperm.php', 'post');
         $this->modid = (int) ($modid);
@@ -90,7 +91,7 @@ class GroupPermissionForm extends Form
      * @param string $itemName   item name
      * @param int    $itemParent item parent
      */
-    public function addItem($itemId, $itemName, $itemParent = 0)
+    public function addItem(int $itemId, string $itemName, int $itemParent = 0): void
     {
         $this->itemTree[$itemParent]['children'][] = $itemId;
         $this->itemTree[$itemId]['parent'] = $itemParent;
@@ -103,7 +104,7 @@ class GroupPermissionForm extends Form
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $xoops = \Xoops::getInstance();
         // load all child ids for javascript codes
@@ -166,7 +167,7 @@ class GroupPermissionForm extends Form
      * @param int   $itemId   item id
      * @param array $childIds child ids by reference
      */
-    private function loadAllChildItemIds($itemId, &$childIds)
+    private function loadAllChildItemIds(int $itemId, array &$childIds): void
     {
         if (!empty($this->itemTree[$itemId]['children'])) {
             $children = $this->itemTree[$itemId]['children'];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,12 +8,12 @@ class MembershipHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertRegExp('/^.*system_usergroup$/', $instance->table);
@@ -22,21 +22,21 @@ class MembershipHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('groupid', $instance->identifierName);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsMembershipHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
 
-    public function test_getGroupsByUser()
+    public function test_getGroupsByUser(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getGroupsByUser(1);
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getGroupsByGroup()
+    public function test_getGroupsByGroup(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getGroupsByGroup(1);

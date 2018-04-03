@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -53,7 +54,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('msg_id', $format);
     }
@@ -65,7 +66,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function msg_id($format = '')
+    public function msg_id(string $format = '')
     {
         return $this->getVar('msg_id', $format);
     }
@@ -77,7 +78,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function msg_image($format = '')
+    public function msg_image(string $format = '')
     {
         return $this->getVar('msg_image', $format);
     }
@@ -89,7 +90,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function subject($format = '')
+    public function subject(string $format = '')
     {
         return $this->getVar('subject', $format);
     }
@@ -101,7 +102,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function from_userid($format = '')
+    public function from_userid(string $format = '')
     {
         return $this->getVar('from_userid', $format);
     }
@@ -113,7 +114,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function to_userid($format = '')
+    public function to_userid(string $format = '')
     {
         return $this->getVar('to_userid', $format);
     }
@@ -125,7 +126,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function msg_time($format = '')
+    public function msg_time(string $format = '')
     {
         return $this->getVar('msg_time', $format);
     }
@@ -137,7 +138,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function msg_text($format = '')
+    public function msg_text(string $format = '')
     {
         return $this->getVar('msg_text', $format);
     }
@@ -149,7 +150,7 @@ class XoopsPrivateMessage extends XoopsObject
      *
      * @return mixed
      */
-    public function read_msg($format = '')
+    public function read_msg(string $format = '')
     {
         return $this->getVar('read_msg', $format);
     }

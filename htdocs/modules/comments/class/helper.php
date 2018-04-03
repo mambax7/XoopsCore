@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -54,7 +55,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return string
      */
-    public static function getInstance()
+    public static function getInstance(): string
     {
         return parent::getInstance();
     }
@@ -62,7 +63,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return CommentsCommentHandler
      */
-    public function getHandlerComment()
+    public function getHandlerComment(): CommentsCommentHandler
     {
         return $this->getHandler('comment');
     }
@@ -72,7 +73,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
      *
      * @return mixed
      */
-    public function getUserConfig($config)
+    public function getUserConfig(string $config)
     {
         static $configs = [];
         static $fetched = false;
@@ -86,18 +87,18 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         }
         $fetched = true;
 
-        return isset($configs[$config]) ? $configs[$config] : $this->getConfig($config);
+        return $configs[$config] ?? $this->getConfig($config);
     }
 
     /**
      * @param CommentsComment $obj comment object
      */
-    public function displayCommentForm(CommentsComment $obj)
+    public function displayCommentForm(CommentsComment $obj): void
     {
         $this->getForm($obj, 'comment')->display();
     }
 
-    public function displayNew()
+    public function displayNew(): void
     {
         $xoops = Xoops::getInstance();
         /* @var $obj CommentsComment */
@@ -131,10 +132,10 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
             $uid = 0;
             $timestamp = 0;
             if (is_array($itemInfo = $plugin->itemInfo($itemid))) {
-                $title = isset($itemInfo['title']) ? $itemInfo['title'] : $title;
-                $text = isset($itemInfo['text']) ? $itemInfo['text'] : $text;
-                $uid = isset($itemInfo['uid']) ? $itemInfo['uid'] : $uid;
-                $timestamp = isset($itemInfo['timestamp']) ? $itemInfo['timestamp'] : $timestamp;
+                $title = $itemInfo['title'] ?? $title;
+                $text = $itemInfo['text'] ?? $text;
+                $uid = $itemInfo['uid'] ?? $uid;
+                $timestamp = $itemInfo['timestamp'] ?? $timestamp;
             }
 
             echo $this->renderHeader($title, $text, $uid, $timestamp);
@@ -153,7 +154,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         $xoops->redirect(\XoopsBaseConfig::get('url'), 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
     }
 
-    public function displayPost()
+    public function displayPost(): void
     {
         $xoops = Xoops::getInstance();
         if ('POST' !== Request::getMethod()) {
@@ -526,7 +527,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         }
     }
 
-    public function displayReply()
+    public function displayReply(): void
     {
         $xoops = Xoops::getInstance();
 
@@ -584,7 +585,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
      *
      * @return string
      */
-    public function renderHeader($title, $text, $uid, $timestamp)
+    public function renderHeader(string $title, string $text, int $uid, int $timestamp): string
     {
         $ret = '<table cellpadding="4" cellspacing="1" width="98%" class="outer">
       <tr><td class="head">'.$title.'</td></tr><tr><td><br />';
@@ -598,7 +599,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         return $ret;
     }
 
-    public function renderView()
+    public function renderView(): void
     {
         $xoops = Xoops::getInstance();
         /* @var $plugin CommentsPluginInterface */
@@ -784,7 +785,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         }
     }
 
-    public function displayEdit()
+    public function displayEdit(): void
     {
         $xoops = Xoops::getInstance();
 
@@ -815,7 +816,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
         $xoops->redirect(\XoopsBaseConfig::get('url'), 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
     }
 
-    public function displayDelete()
+    public function displayDelete(): void
     {
         $xoops = Xoops::getInstance();
         $op = Request::getCmd('op', 'delete', 'POST');
@@ -1033,7 +1034,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
     /**
      * @param XoopsModule $module module supporting comments
      */
-    public function insertModuleRelations(XoopsModule $module)
+    public function insertModuleRelations(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $config_handler = $xoops->getHandlerConfig();
@@ -1075,7 +1076,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
     /**
      * @param XoopsModule $module module supporting comments
      */
-    public function deleteModuleRelations(XoopsModule $module)
+    public function deleteModuleRelations(XoopsModule $module): void
     {
         $xoops = Xoops::getInstance();
         $this->getHandlerComment()->deleteByModule($module->getVar('mid'));
@@ -1097,7 +1098,7 @@ class Comments extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return array
      */
-    public function getPluginableConfigs()
+    public function getPluginableConfigs(): array
     {
         $configs = [];
         array_push($configs, [

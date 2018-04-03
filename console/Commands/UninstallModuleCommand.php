@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -13,7 +13,7 @@ use XoopsLoad;
 
 class UninstallModuleCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('uninstall-module')
             ->setDescription('Uninstall a module')
@@ -26,7 +26,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $module = $input->getArgument('module');
         $output->writeln(sprintf('Uninstalling %s', $module));

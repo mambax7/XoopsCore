@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class Blocks extends PluginAbstract
      *
      * @return boolean
      */
-    public function xoInit()
+    public function xoInit(): bool
     {
         $this->retrieveBlocks();
         if ($this->theme) {
@@ -65,7 +66,7 @@ class Blocks extends PluginAbstract
      *
      * @param string $zone zone being rendered
      */
-    public function preRender($zone = '')
+    public function preRender(string $zone = ''): void
     {
     }
 
@@ -74,14 +75,14 @@ class Blocks extends PluginAbstract
      *
      * @param string $zone zone being rendered
      */
-    public function postRender($zone = '')
+    public function postRender(string $zone = ''): void
     {
     }
 
     /**
      * Blocks::retrieveBlocks().
      */
-    public function retrieveBlocks()
+    public function retrieveBlocks(): void
     {
         $xoops = \Xoops::getInstance();
 
@@ -130,7 +131,7 @@ class Blocks extends PluginAbstract
             }
         }
         if ($this->theme) {
-            list($template->caching, $template->cache_lifetime) = $backup;
+            [$template->caching, $template->cache_lifetime] = $backup;
         }
     }
 
@@ -141,7 +142,7 @@ class Blocks extends PluginAbstract
      *
      * @return string
      */
-    public function generateCacheId($cache_id)
+    public function generateCacheId(string $cache_id): string
     {
         if ($this->theme) {
             $cache_id = $this->theme->generateCacheId($cache_id);

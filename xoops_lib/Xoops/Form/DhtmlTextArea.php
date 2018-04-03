@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -96,13 +97,13 @@ class DhtmlTextArea extends \XoopsEditor
      * @param array  $options    Extra options
      */
     public function __construct(
-        $caption,
-        $name,
-        $value = '',
-        $rows = 5,
-        $cols = 50,
-        $hiddentext = 'xoopsHiddenText',
-        $options = []
+        string $caption,
+        string $name,
+        string $value = '',
+        int $rows = 5,
+        int $cols = 50,
+        string $hiddentext = 'xoopsHiddenText',
+        array $options = []
     ) {
         static $inLoop = 0;
 
@@ -141,7 +142,7 @@ class DhtmlTextArea extends \XoopsEditor
                     $this->htmlEditor = null;
                 }
             } else {
-                list($class, $path) = $this->htmlEditor;
+                [$class, $path] = $this->htmlEditor;
                 include_once \XoopsBaseConfig::get('root-path').$path;
                 if (class_exists($class)) {
                     $this->htmlEditor = new $class($options);
@@ -160,7 +161,7 @@ class DhtmlTextArea extends \XoopsEditor
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         if ($this->htmlEditor && is_object($this->htmlEditor)) {
             if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
@@ -218,7 +219,7 @@ class DhtmlTextArea extends \XoopsEditor
      *
      * @return string
      */
-    public function codeIcon()
+    public function codeIcon(): string
     {
         $textarea_id = $this->getName();
         $xoops = \Xoops::getInstance();
@@ -244,7 +245,7 @@ class DhtmlTextArea extends \XoopsEditor
 
         $extensions = array_filter($myts->listExtensions());
         foreach ($extensions as $extension) {
-            list($button, $js) = $myts->getDhtmlEditorSupport($extension, $textarea_id);
+            [$button, $js] = $myts->getDhtmlEditorSupport($extension, $textarea_id);
             if (!empty($button)) {
                 $code .= $button;
             }
@@ -274,7 +275,7 @@ class DhtmlTextArea extends \XoopsEditor
      *
      * @return string
      */
-    public function fontArray()
+    public function fontArray(): string
     {
         $textarea_id = $this->getName();
         $hiddentext = $this->hiddenText;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf;
 
@@ -15,7 +15,7 @@ class LanguageTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Language();
     }
@@ -24,18 +24,18 @@ class LanguageTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $str = 'string';
         $x = Language::translate($str);
         $this->assertSame($str, $x);
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $this->assertTrue(Language::load('xmf'));
 
@@ -44,7 +44,7 @@ class LanguageTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse(Language::load('xmf/Program Files/stuff'));
     }
 
-    public function testLoadException()
+    public function testLoadException(): void
     {
         $str = "Test\0Test";
         $this->expectException(\InvalidArgumentException::class);

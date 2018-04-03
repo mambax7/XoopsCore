@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class Smarty_Resource_Module extends Smarty_Resource_Custom
      * @param string $source template source
      * @param int    $mtime  template modification timestamp (epoch)
      */
-    protected function fetch($name, &$source, &$mtime)
+    protected function fetch(string $name, string &$source, int &$mtime): void
     {
         $tpl = $this->moduleTplInfo($name);
         $stat = stat($tpl);
@@ -48,7 +49,7 @@ class Smarty_Resource_Module extends Smarty_Resource_Custom
      *
      * @return string absolute file name path
      */
-    private function moduleTplInfo($tpl_name)
+    private function moduleTplInfo(string $tpl_name): string
     {
         static $cache = [];
         $xoops = \Xoops::getInstance();

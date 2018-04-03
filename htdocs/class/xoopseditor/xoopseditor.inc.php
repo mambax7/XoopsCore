@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +23,7 @@ if (!function_exists('xoopseditor_get_rootpath')) {
     /**
      * @return string
      */
-    function xoopseditor_get_rootpath()
+    function xoopseditor_get_rootpath(): string
     {
         return \XoopsBaseConfig::get('root-path').'/class/xoopseditor';
     }

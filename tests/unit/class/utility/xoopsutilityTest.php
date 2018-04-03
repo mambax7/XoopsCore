@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -17,7 +17,7 @@ class xoopsutilityTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsUtility';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
@@ -26,7 +26,7 @@ class xoopsutilityTest extends \PHPUnit\Framework\TestCase
         return -1 * $a;
     }
 
-    public function test_recursive()
+    public function test_recursive(): void
     {
         $class = $this->myClass;
         $value = 1;
@@ -38,7 +38,7 @@ class xoopsutilityTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $test);
     }
 
-    public function test_recursive100()
+    public function test_recursive100(): void
     {
         $class = $this->myClass;
         $value = 1;
@@ -50,7 +50,7 @@ class xoopsutilityTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $test);
     }
 
-    public function test_recursive200()
+    public function test_recursive200(): void
     {
         $class = $this->myClass;
         $value = [1, 2, 3];
@@ -63,7 +63,7 @@ class xoopsutilityTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($item, $test);
     }
 
-    public function test_recursive300()
+    public function test_recursive300(): void
     {
         $class = $this->myClass;
         $value = [1, 2, 3, [10, 20, 30]];

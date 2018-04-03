@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -8,13 +8,13 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['tempArr', 'themeSetData', 'imagesData', 'templatesData'];
         foreach ($items as $item) {
@@ -23,7 +23,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('SaxParser', $instance);
@@ -35,7 +35,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getThemeSetData()
+    public function test_getThemeSetData(): void
     {
         $instance = $this->object;
 
@@ -52,7 +52,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($x) and ($x[$name] === $value));
     }
 
-    public function test_getImagesData()
+    public function test_getImagesData(): void
     {
         $instance = $this->object;
 
@@ -67,7 +67,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($x) and (2 === count($x)));
     }
 
-    public function test_getTemplatesData()
+    public function test_getTemplatesData(): void
     {
         $instance = $this->object;
 
@@ -82,7 +82,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($x) and (2 === count($x)));
     }
 
-    public function test_getTempArr()
+    public function test_getTempArr(): void
     {
         $instance = $this->object;
 
@@ -104,7 +104,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value.$delim.$value, $x);
     }
 
-    public function test_resetTempArr()
+    public function test_resetTempArr(): void
     {
         $instance = $this->object;
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits of supporting
  developers from this source code or any supporting source code which is considered
@@ -36,5 +37,5 @@ interface UserMessageInterface
      * @param Response $response response object
      * @param Message  $message  message to be sent
      */
-    public function sendMessage(Response $response, Message $message);
+    public function sendMessage(Response $response, Message $message): void;
 }

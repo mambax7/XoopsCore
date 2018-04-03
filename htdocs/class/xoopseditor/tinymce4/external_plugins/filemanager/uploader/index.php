@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 include '../config/config.php';
 if (!$java_upload) {

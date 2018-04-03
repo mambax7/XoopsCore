@@ -1,94 +1,94 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
 class XoopsDatabaseTestInstance extends XoopsDatabase
 {
-    public function connect($selectdb = true)
+    public function connect($selectdb = true): void
     {
     }
 
-    public function genId($sequence)
+    public function genId($sequence): void
     {
     }
 
-    public function fetchRow($result)
+    public function fetchRow($result): void
     {
     }
 
-    public function fetchArray($result)
+    public function fetchArray($result): void
     {
     }
 
-    public function fetchBoth($result)
+    public function fetchBoth($result): void
     {
     }
 
-    public function fetchObject($result)
+    public function fetchObject($result): void
     {
     }
 
-    public function getInsertId()
+    public function getInsertId(): void
     {
     }
 
-    public function getRowsNum($result)
+    public function getRowsNum($result): void
     {
     }
 
-    public function getAffectedRows()
+    public function getAffectedRows(): void
     {
     }
 
-    public function close()
+    public function close(): void
     {
     }
 
-    public function freeRecordSet($result)
+    public function freeRecordSet($result): void
     {
     }
 
-    public function error()
+    public function error(): void
     {
     }
 
-    public function errno()
+    public function errno(): void
     {
     }
 
-    public function quoteString($str)
+    public function quoteString($str): void
     {
     }
 
-    public function quote($string)
+    public function quote($string): void
     {
     }
 
-    public function escape($string)
+    public function escape($string): void
     {
     }
 
-    public function queryF($sql, $limit = 0, $start = 0)
+    public function queryF($sql, $limit = 0, $start = 0): void
     {
     }
 
-    public function query($sql, $limit = 0, $start = 0)
+    public function query($sql, $limit = 0, $start = 0): void
     {
     }
 
-    public function queryFromFile($file)
+    public function queryFromFile($file): void
     {
     }
 
-    public function getFieldName($result, $offset)
+    public function getFieldName($result, $offset): void
     {
     }
 
-    public function getFieldType($result, $offset)
+    public function getFieldType($result, $offset): void
     {
     }
 
-    public function getFieldsNum($result)
+    public function getFieldsNum($result): void
     {
     }
 }
@@ -97,13 +97,13 @@ class XoopsDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsDatabaseTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['conn', 'prefix', 'allowWebChanges'];
         foreach ($items as $item) {
@@ -112,7 +112,7 @@ class XoopsDatabaseTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_setPrefix()
+    public function test_setPrefix(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -121,7 +121,7 @@ class XoopsDatabaseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($prefix, $instance->prefix);
     }
 
-    public function test_prefix()
+    public function test_prefix(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);

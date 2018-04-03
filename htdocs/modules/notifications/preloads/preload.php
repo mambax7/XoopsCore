@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class NotificationsPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -38,7 +39,7 @@ class NotificationsPreload extends PreloadItem
         ]);
     }
 
-    public static function eventCoreFooterStart($args)
+    public static function eventCoreFooterStart($args): void
     {
         $xoops = Xoops::getInstance();
         $helper = Notifications::getInstance();
@@ -117,7 +118,7 @@ class NotificationsPreload extends PreloadItem
         $xoops->tpl()->assign('notifications', $notifications);
     }
 
-    public static function eventSystemModuleUpdateConfigs(ConfigCollector $collector)
+    public static function eventSystemModuleUpdateConfigs(ConfigCollector $collector): void
     {
         $helper = \Xoops::getModuleHelper('notifications');
         if ($plugin = Plugin::getPlugin(
@@ -130,7 +131,7 @@ class NotificationsPreload extends PreloadItem
         }
     }
 
-    public static function eventSystemModuleInstallConfigs(XoopsModule $module)
+    public static function eventSystemModuleInstallConfigs(XoopsModule $module): void
     {
         if ($plugin = Plugin::getPlugin($module->getVar('dirname'), 'notifications', true)) {
             Notifications::getInstance()->insertModuleRelations($module);
@@ -142,14 +143,14 @@ class NotificationsPreload extends PreloadItem
      *
      * @param XoopsModule $module module object
      */
-    public static function eventSystemModuleUninstall(XoopsModule $module)
+    public static function eventSystemModuleUninstall(XoopsModule $module): void
     {
         if ($plugin = Plugin::getPlugin($module->getVar('dirname'), 'notifications')) {
             Notifications::getInstance()->deleteModuleRelations($module);
         }
     }
 
-    public static function eventSystemPreferencesForm(XoopsModule $module)
+    public static function eventSystemPreferencesForm(XoopsModule $module): void
     {
         if ($plugin = Plugin::getPlugin($module->getVar('dirname'), 'notifications')) {
             Notifications::getInstance()->loadLanguage('main');
@@ -159,7 +160,7 @@ class NotificationsPreload extends PreloadItem
     /**
      * core.include.checklogin.success.
      */
-    public static function eventCoreIncludeCheckloginSuccess()
+    public static function eventCoreIncludeCheckloginSuccess(): void
     {
         // This was in include checklogin.php, moving here for now
         // RMV-NOTIFY

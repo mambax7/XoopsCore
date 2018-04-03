@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * Smarty plugin to enable shortcodes in templates
  */

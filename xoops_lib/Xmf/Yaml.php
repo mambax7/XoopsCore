@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -48,7 +49,7 @@ class Yaml
     {
         try {
             $ret = VendorYaml::dump($var, $inline, $indent);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -63,11 +64,11 @@ class Yaml
      *
      * @return array|bool PHP array or false on error
      */
-    public static function load($yamlString)
+    public static function load(string $yamlString)
     {
         try {
             $ret = VendorYaml::parse($yamlString);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -82,12 +83,12 @@ class Yaml
      *
      * @return array|bool PHP array or false on error
      */
-    public static function read($yamlFile)
+    public static function read(string $yamlFile)
     {
         try {
             $yamlString = file_get_contents($yamlFile);
             $ret = VendorYaml::parse($yamlString);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -105,12 +106,12 @@ class Yaml
      *
      * @return int|bool number of bytes written, or false on error
      */
-    public static function save($var, $yamlFile, $inline = 4, $indent = 4)
+    public static function save(array $var, string $yamlFile, int $inline = 4, int $indent = 4)
     {
         try {
             $yamlString = VendorYaml::dump($var, $inline, $indent);
             $ret = file_put_contents($yamlFile, $yamlString);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -137,7 +138,7 @@ class Yaml
         try {
             $yamlString = VendorYaml::dump($var, $inline, $indent);
             $ret = empty($yamlString) ? false : "<?php\n/*\n---\n".$yamlString."\n...\n*/\n";
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -157,7 +158,7 @@ class Yaml
      *
      * @return array|bool PHP array or false on error
      */
-    public static function loadWrapped($yamlString)
+    public static function loadWrapped(string $yamlString)
     {
         try {
             $lines = preg_split('/\R/', $yamlString);
@@ -179,7 +180,7 @@ class Yaml
             }
             $unwrapped = implode("\n", $lines);
             $ret = VendorYaml::parse($unwrapped);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -199,12 +200,12 @@ class Yaml
      *
      * @return array|bool PHP array or false on error
      */
-    public static function readWrapped($yamlFile)
+    public static function readWrapped(string $yamlFile)
     {
         try {
             $yamlString = file_get_contents($yamlFile);
             $ret = static::loadWrapped($yamlString);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -227,12 +228,12 @@ class Yaml
      *
      * @return int|bool number of bytes written, or false on error
      */
-    public static function saveWrapped($var, $yamlFile, $inline = 4, $indent = 4)
+    public static function saveWrapped(array $var, string $yamlFile, int $inline = 4, int $indent = 4)
     {
         try {
             $yamlString = static::dumpWrapped($var, $inline, $indent);
             $ret = file_put_contents($yamlFile, $yamlString);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             static::logError($e);
             $ret = false;
         }
@@ -243,7 +244,7 @@ class Yaml
     /**
      * @param \Exception $e throwable to log
      */
-    protected static function logError($e)
+    protected static function logError(\Exception $e): void
     {
         if (class_exists('Xoops')) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -61,7 +62,7 @@ class Criteria extends CriteriaElement
      * @param string $prefix   prefix to append to column
      * @param string $function sprintf string taking one string argument applied to column
      */
-    public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '')
+    public function __construct(string $column, string $value = '', string $operator = '=', string $prefix = '', string $function = '')
     {
         $this->prefix = $prefix;
         $this->function = $function;
@@ -75,7 +76,7 @@ class Criteria extends CriteriaElement
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $clause = (!empty($this->prefix) ? "{$this->prefix}." : '').$this->column;
         if (!empty($this->function)) {
@@ -108,7 +109,7 @@ class Criteria extends CriteriaElement
      * @return string
      * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
      */
-    public function renderLdap()
+    public function renderLdap(): string
     {
         $clause = '';
         if ('>' === $this->operator) {
@@ -142,7 +143,7 @@ class Criteria extends CriteriaElement
      *
      * @return string
      */
-    public function renderWhere()
+    public function renderWhere(): string
     {
         $cond = $this->render();
 
@@ -158,7 +159,7 @@ class Criteria extends CriteriaElement
      *
      * @return QueryBuilder query builder instance
      */
-    public function renderQb(QueryBuilder $qb = null, $whereMode = '')
+    public function renderQb(?QueryBuilder $qb = null, string $whereMode = ''): QueryBuilder
     {
         if (null === $qb) { // initialize query builder if not passed in
             $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
@@ -209,7 +210,7 @@ class Criteria extends CriteriaElement
      *
      * @return string expression
      */
-    public function buildExpressionQb(QueryBuilder $qb)
+    public function buildExpressionQb(QueryBuilder $qb): string
     {
         $eb = $qb->expr();
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class PmPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventCorePmliteStart($args)
+    public static function eventCorePmliteStart(array $args): void
     {
         header('location: ./modules/pm/pmlite.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
@@ -39,7 +40,7 @@ class PmPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventCoreReadpmsgStart($args)
+    public static function eventCoreReadpmsgStart(array $args): void
     {
         header('location: ./modules/pm/readpmsg.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
@@ -50,7 +51,7 @@ class PmPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventCoreViewpmsgStart($args)
+    public static function eventCoreViewpmsgStart(array $args): void
     {
         header('location: ./modules/pm/viewpmsg.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
@@ -61,7 +62,7 @@ class PmPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventCoreClassSmartyXoops_pluginsXoinboxcount($args)
+    public static function eventCoreClassSmartyXoops_pluginsXoinboxcount(array $args): void
     {
         $args[0] = Xoops::getInstance()->getModuleHandler('message', 'pm');
     }
@@ -71,7 +72,7 @@ class PmPreload extends PreloadItem
      *
      * @param array $args
      */
-    public static function eventSystemBlocksSystem_blocksUsershow($args)
+    public static function eventSystemBlocksSystem_blocksUsershow(array $args): void
     {
         $args[0] = Xoops::getInstance()->getModuleHandler('message', 'pm');
     }
@@ -81,7 +82,7 @@ class PmPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateUserMessage(Provider $provider)
+    public static function eventCoreServiceLocateUserMessage(Provider $provider): void
     {
         $path = dirname(__DIR__).'/class/PMProvider.php';
         require $path;

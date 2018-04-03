@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ defined('XOOPS_INSTALL') or die('XOOPS Custom Installation die');
 /**
  * @return array
  */
-function createConfigform($config)
+function createConfigform($config): array
 {
     $xoops = Xoops::getInstance();
     $config_handler = $xoops->getHandlerConfig();

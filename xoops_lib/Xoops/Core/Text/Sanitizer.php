@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -77,7 +78,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return Sanitizer The *Singleton* instance.
      */
-    public static function getInstance()
+    public static function getInstance(): Sanitizer
     {
         if (null === static::$instance) {
             static::$instance = new static();
@@ -95,7 +96,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @throws \ErrorException
      */
-    public function getShortCodesInstance()
+    public function getShortCodesInstance(): ShortCodes
     {
         return $this->shortcodes;
     }
@@ -107,7 +108,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @throws \ErrorException
      */
-    public function getShortCodes()
+    public function getShortCodes(): ShortCodes
     {
         $this->registerExtensions();
 
@@ -120,7 +121,7 @@ class Sanitizer extends SanitizerConfigurable
      * @param string   $pattern  a pattern as used in preg_replace_callback
      * @param callable $callback callback to do processing as used in preg_replace_callback
      */
-    public function addPatternCallback($pattern, $callback)
+    public function addPatternCallback(string $pattern, callable $callback): void
     {
         $this->patterns[] = ['pattern' => $pattern, 'callback' => $callback];
     }
@@ -132,7 +133,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function smiley($text)
+    public function smiley(string $text): string
     {
         $response = \Xoops::getInstance()->service('emoji')->renderEmoji($text);
 
@@ -146,7 +147,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function makeClickable($text)
+    public function makeClickable(string $text): string
     {
         return $this->executeFilter('clickable', $text);
     }
@@ -162,7 +163,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function nl2Br($text)
+    public function nl2Br(string $text): string
     {
         return preg_replace("/(\r\n)|(\n\r)|(\n)|(\r)/", "\n<br />\n", $text);
     }
@@ -177,7 +178,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = ENT_QUOTES)
+    public function htmlSpecialChars(string $text, int $quote_style = ENT_QUOTES): string
     {
         $text = htmlspecialchars($text, $quote_style | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
 
@@ -194,7 +195,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function escapeForJavascript($text)
+    public function escapeForJavascript(string $text): string
     {
         $text = str_replace(["'", '"'], ['\x27', '\x22'], $text);
 
@@ -208,7 +209,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function escapeShortCodes($text)
+    public function escapeShortCodes(string $text): string
     {
         $text = str_replace(['[', ']'], ['&#91;', '&#93;'], $text);
 
@@ -222,7 +223,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function undoHtmlSpecialChars($text)
+    public function undoHtmlSpecialChars(string $text): string
     {
         return htmlspecialchars_decode($text, ENT_QUOTES);
     }
@@ -239,7 +240,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function filterForDisplay($text, $html = false, $smiley = true, $xcode = true, $image = true, $br = true)
+    public function filterForDisplay(string $text, bool $html = false, bool $smiley = true, bool $xcode = true, bool $image = true, bool $br = true): string
     {
         $config = $this->getConfig();
 
@@ -289,7 +290,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @todo remove as it adds no value
      */
-    public function displayTarea($text, $html = false, $smiley = true, $xcode = true, $image = true, $br = true)
+    public function displayTarea(string $text, bool $html = false, bool $smiley = true, bool $xcode = true, bool $image = true, bool $br = true): string
     {
         return $this->filterForDisplay($text, $html, $smiley, $xcode, $image, $br);
     }
@@ -308,7 +309,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @todo remove as it adds no value
      */
-    public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+    public function previewTarea(string $text, int $html = 0, int $smiley = 1, int $xcode = 1, int $image = 1, int $br = 1): string
     {
         return $this->filterForDisplay($text, $html, $smiley, $xcode, $image, $br);
     }
@@ -320,7 +321,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    public function censorString($text)
+    public function censorString(string $text): string
     {
         return $this->executeFilter('censor', $text);
     }
@@ -350,7 +351,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($extension, $textAreaId)
+    public function getDhtmlEditorSupport(string $extension, string $textAreaId)
     {
         return $this->loadExtension($extension)->getDhtmlEditorSupport($textAreaId);
     }
@@ -362,7 +363,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return array
      */
-    public function getConfig($componentName = 'sanitizer')
+    public function getConfig(string $componentName = 'sanitizer'): array
     {
         return $this->config->get(strtolower($componentName), []);
     }
@@ -374,7 +375,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return mixed
      */
-    public function executeFilter($name)
+    public function executeFilter(string $name)
     {
         $filter = $this->loadFilter($name);
         $args = array_slice(func_get_args(), 1);
@@ -390,7 +391,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string filtered text
      */
-    public function textFilter($text, $force = false)
+    public function textFilter(string $text, bool $force = false): string
     {
         return $this->executeFilter('textfilter', $text, $force);
     }
@@ -402,7 +403,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string filtered text
      */
-    public function filterXss($text)
+    public function filterXss(string $text): string
     {
         return $this->executeFilter('xss', $text);
     }
@@ -417,7 +418,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return mixed matched string, or default if no match
      */
-    public function cleanEnum($text, $enumSet, $default = '', $firstLetter = false)
+    public function cleanEnum(string $text, $enumSet, $default = '', $firstLetter = false)
     {
         if ($firstLetter) {
             $test = strtolower(substr($text, 0, 1));
@@ -445,7 +446,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @param string $name component to enable
      */
-    public function enableComponentForTesting($name)
+    public function enableComponentForTesting(string $name): void
     {
         if ($this->config->has($name)) {
             $this->config[$name]['enabled'] = true;
@@ -464,7 +465,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    protected function xoopsCodeDecode($text, $allowImage = false)
+    protected function xoopsCodeDecode(string $text, bool $allowImage = false): string
     {
         $holdAllowImage = $this->config['image']['allowimage'];
         $this->config['image']['allowimage'] = $allowImage;
@@ -495,7 +496,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    protected function prefilterCodeBlocks($text)
+    protected function prefilterCodeBlocks(string $text): string
     {
         $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
         $text = preg_replace_callback(
@@ -516,7 +517,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return string
      */
-    protected function postfilterCodeBlocks($text)
+    protected function postfilterCodeBlocks(string $text): string
     {
         $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
         $text = preg_replace_callback(
@@ -540,7 +541,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * This sets up the shortcode processing that will be applied to text to be displayed
      */
-    protected function registerExtensions()
+    protected function registerExtensions(): void
     {
         if (!$this->extensionsLoaded) {
             $this->extensionsLoaded = true;
@@ -578,7 +579,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return object|null
      */
-    protected function loadComponent($name)
+    protected function loadComponent(string $name)
     {
         $component = null;
         $config = $this->getConfig($name);
@@ -596,7 +597,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return Sanitizer\ExtensionAbstract
      */
-    protected function loadExtension($name)
+    protected function loadExtension(string $name): Sanitizer\ExtensionAbstract
     {
         $extension = $this->loadComponent($name);
         if (!($extension instanceof Sanitizer\ExtensionAbstract)) {
@@ -613,7 +614,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return Sanitizer\FilterAbstract
      */
-    protected function loadFilter($name)
+    protected function loadFilter(string $name): Sanitizer\FilterAbstract
     {
         $filter = $this->loadComponent($name);
         if (!($filter instanceof Sanitizer\FilterAbstract)) {
@@ -630,7 +631,7 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @return mixed
      */
-    protected function registerExtension($name)
+    protected function registerExtension(string $name)
     {
         $extension = $this->loadExtension($name);
         $args = array_slice(func_get_args(), 1);

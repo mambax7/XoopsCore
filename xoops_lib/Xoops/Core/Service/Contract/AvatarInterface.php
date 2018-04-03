@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ interface AvatarInterface
      *                           array     user info, 'uid', 'uname' and 'email' required
      *                           int       user uid
      */
-    public function getAvatarUrl($response, $userinfo);
+    public function getAvatarUrl(Response $response, $userinfo): void;
 
     /**
      * getAvatarEditUrl - given user info return absolute URL to edit avatar data.
@@ -44,5 +45,5 @@ interface AvatarInterface
      * @param Response  $response \Xoops\Core\Service\Response object
      * @param XoopsUser $userinfo XoopsUser object for user
      */
-    public function getAvatarEditUrl($response, XoopsUser $userinfo);
+    public function getAvatarEditUrl(Response $response, XoopsUser $userinfo): void;
 }

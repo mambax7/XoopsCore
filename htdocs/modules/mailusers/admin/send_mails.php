@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -224,7 +225,7 @@ switch ($op) {
                 $criteria_object->setStart($mail_start);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
-                    list($field, $op, $value) = explode(' ', $c);
+                    [$field, $op, $value] = explode(' ', $c);
                     $crit = new Criteria($field, $value, $op);
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');

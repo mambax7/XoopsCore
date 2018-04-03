@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -19,7 +19,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = HttpRequest::getInstance();
         $this->save_SERVER = $_SERVER;
@@ -29,12 +29,12 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $_SERVER = $this->save_SERVER;
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $instance = HttpRequest::getInstance();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -42,7 +42,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $this->object);
     }
 
-    public function testGetHeader()
+    public function testGetHeader(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -50,7 +50,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetScheme()
+    public function testGetScheme(): void
     {
         $instance = $this->object;
 
@@ -63,7 +63,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('https', $result);
     }
 
-    public function testGetHost()
+    public function testGetHost(): void
     {
         $instance = $this->object;
 
@@ -76,7 +76,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_SERVER['HTTP_HOST'], $result);
     }
 
-    public function testGetUri()
+    public function testGetUri(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -84,7 +84,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetReferer()
+    public function testGetReferer(): void
     {
         $instance = $this->object;
 
@@ -97,7 +97,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_SERVER['HTTP_REFERER'], $result);
     }
 
-    public function testGetScriptName()
+    public function testGetScriptName(): void
     {
         $instance = $this->object;
 
@@ -114,7 +114,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_SERVER['SCRIPT_NAME'], $result);
     }
 
-    public function testGetDomain()
+    public function testGetDomain(): void
     {
         $instance = $this->object;
 
@@ -123,7 +123,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('example.com', $result);
     }
 
-    public function testGetSubdomains()
+    public function testGetSubdomains(): void
     {
         $instance = $this->object;
 
@@ -132,7 +132,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('subdomain', $result);
     }
 
-    public function testGetClientIp()
+    public function testGetClientIp(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -140,7 +140,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -148,7 +148,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetEnv()
+    public function testGetEnv(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -156,7 +156,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function test_getEnv_https()
+    public function test_getEnv_https(): void
     {
         $instance = $this->object;
 
@@ -179,7 +179,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($x);
     }
 
-    public function test_getEnv_script_filename()
+    public function test_getEnv_script_filename(): void
     {
         $instance = $this->object;
 
@@ -191,7 +191,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('\a\test\test.php', $instance->getEnv('SCRIPT_FILENAME'));
     }
 
-    public function test_getEnv_document_root()
+    public function test_getEnv_document_root(): void
     {
         $_SERVER = [];
         $_SERVER['SCRIPT_NAME'] = 'test/filename';
@@ -199,7 +199,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('/a/', $this->object->getEnv('DOCUMENT_ROOT'));
     }
 
-    public function test_getEnv_php_self()
+    public function test_getEnv_php_self(): void
     {
         $_SERVER = [];
         $_SERVER['DOCUMENT_ROOT'] = '/a/dir';
@@ -207,13 +207,13 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('/test/filename.php', $this->object->getEnv('PHP_SELF'));
     }
 
-    public function test_getEnv_cgi_mode()
+    public function test_getEnv_cgi_mode(): void
     {
         $b = (PHP_SAPI === 'cgi');
         $this->assertSame($b, $this->object->getEnv('CGI_MODE'));
     }
 
-    public function test_getEnv_http_base()
+    public function test_getEnv_http_base(): void
     {
         $instance = $this->object;
 
@@ -267,7 +267,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('.中国化工集团公司.公司', $instance->getEnv('HTTP_BASE'));
     }
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -275,7 +275,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testIs()
+    public function testIs(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -283,7 +283,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddDetector()
+    public function testAddDetector(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -291,7 +291,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testClientAcceptsType()
+    public function testClientAcceptsType(): void
     {
         $_SERVER['HTTP_ACCEPT'] = 'text/html,application/xml;q=0.9,image/webp';
         $this->assertTrue($this->object->clientAcceptsType('text/html'));
@@ -306,7 +306,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->object->clientAcceptsType('application/shockwave'));
     }
 
-    public function testGetAcceptMediaTypes()
+    public function testGetAcceptMediaTypes(): void
     {
         $_SERVER['HTTP_ACCEPT'] = 'text/html,application/xml;q=0.9,*/*;q=0.1';
         $expected = [
@@ -318,7 +318,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testGetAcceptedLanguages()
+    public function testGetAcceptedLanguages(): void
     {
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-ca,en;q=0.8,en-us;q=0.6,de-de;q=0.4,de;q=0.2';
         $expected = [

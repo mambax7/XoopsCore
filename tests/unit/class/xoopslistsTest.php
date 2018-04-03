@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -8,14 +8,14 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (empty($this->conn)) {
             $this->conn = Xoops::getInstance()->db();
         }
     }
 
-    public function test_getTimeZoneList()
+    public function test_getTimeZoneList(): void
     {
         $class = $this->myClass;
         $value = $class::getTimeZoneList();
@@ -25,7 +25,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getThemesList()
+    public function test_getThemesList(): void
     {
         $class = $this->myClass;
         $theme_path = \XoopsBaseConfig::get('themes-path');
@@ -38,7 +38,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($list_ref, $value);
     }
 
-    public function test_getModulesList()
+    public function test_getModulesList(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -47,7 +47,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($list_ref, $value);
     }
 
-    public function test_getEditorList()
+    public function test_getEditorList(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -56,7 +56,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($list_ref, $value);
     }
 
-    public function test_getFileListAsArray()
+    public function test_getFileListAsArray(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -68,7 +68,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
-    public function test_getImgListAsArray()
+    public function test_getImgListAsArray(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -80,7 +80,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
-    public function test_getHtmlListAsArray()
+    public function test_getHtmlListAsArray(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -92,7 +92,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
-    public function test_getSubjectsList()
+    public function test_getSubjectsList(): void
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
@@ -116,7 +116,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         @rmdir($d_subject);
     }
 
-    public function test_getLangList()
+    public function test_getLangList(): void
     {
         $class = $this->myClass;
         $value = $class::getLangList();
@@ -124,7 +124,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_getLocaleList()
+    public function test_getLocaleList(): void
     {
         $class = $this->myClass;
         $value = $class::getLocaleList();
@@ -132,7 +132,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_340()
+    public function test_340(): void
     {
         $class = $this->myClass;
         $value = $class::getCountryList();

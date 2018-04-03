@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text\Sanitizer;
 
@@ -22,7 +22,7 @@ class ExtensionAbstractTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $ts = Sanitizer::getInstance();
         $this->object = $this->getMockForAbstractClass('\Xoops\Core\Text\Sanitizer\ExtensionAbstract', [$ts]);
@@ -33,11 +33,11 @@ class ExtensionAbstractTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertTrue($this->reflectedObject->isAbstract());
         $this->assertTrue($this->reflectedObject->hasMethod('getDhtmlEditorSupport'));
@@ -45,7 +45,7 @@ class ExtensionAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->reflectedObject->hasMethod('getEditorButtonHtml'));
     }
 
-    public function testGetDhtmlEditorSupport()
+    public function testGetDhtmlEditorSupport(): void
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
         $this->assertTrue(2 === count($support));

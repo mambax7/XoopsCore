@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS kernel class.
  *
@@ -40,7 +41,7 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct(
             $db,
@@ -58,7 +59,7 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
      *
      * @return XoopsTplSet|false reference to the tplsets
      */
-    public function getByName($tplset_name)
+    public function getByName(string $tplset_name)
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -91,7 +92,7 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of tplsets matching the conditions
      **/
-    public function getNameList(CriteriaElement $criteria = null)
+    public function getNameList(?CriteriaElement $criteria = null): array
     {
         $ret = [];
         $tplsets = $this->getObjects($criteria, true);

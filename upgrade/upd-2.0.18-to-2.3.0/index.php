@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class upgrade_230 extends xoopsUpgrade
 
     public $tasks = ['config', 'cache', 'path', 'db', 'bmlink'];
 
-    public function upgrade_230()
+    public function upgrade_230(): void
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }
@@ -44,7 +45,7 @@ class upgrade_230 extends xoopsUpgrade
         if (!$result = $db->queryF($sql)) {
             return false;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return (2 === $count) ? true : false;
     }
@@ -142,7 +143,7 @@ class upgrade_230 extends xoopsUpgrade
         $welcometype_installed = false;
         $sql = 'SELECT COUNT(*) FROM `'.$db->prefix('config')."` WHERE `conf_name` = 'welcome_type'";
         if ($result = $db->queryF($sql)) {
-            list($count) = $db->fetchRow($result);
+            [$count] = $db->fetchRow($result);
             if (1 === $count) {
                 $welcometype_installed = true;
             }
@@ -241,7 +242,7 @@ class upgrade_230 extends xoopsUpgrade
             return false;
         }
         $tables = [];
-        while (false !== (list($table) = $db->fetchRow($result))) {
+        while (false !== ([$table] = $db->fetchRow($result))) {
             $tables[] = $table;
             //$db->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $db->quote($charset) . " COLLATE " . $db->quote($collation) );
             //$db->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $db->quote($charset) . " COLLATE " . $db->quote($collation) );

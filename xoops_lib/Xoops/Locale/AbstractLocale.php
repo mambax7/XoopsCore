@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ abstract class AbstractLocale
      *
      * @deprecated since 2.6.0 -- UTF-8 is always used
      */
-    public static function isMultiByte()
+    public static function isMultiByte(): bool
     {
         return true;
     }
@@ -44,7 +45,7 @@ abstract class AbstractLocale
      *
      * @return bool true if right to left
      */
-    public static function isRtl()
+    public static function isRtl(): bool
     {
         return 'right-to-left' === Misc::getCharacterOrder();
     }
@@ -62,7 +63,7 @@ abstract class AbstractLocale
      *
      * @return string character set
      */
-    public static function getCharset()
+    public static function getCharset(): string
     {
         return 'UTF-8';
     }
@@ -72,7 +73,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function getLocale()
+    public static function getLocale(): string
     {
         return \Xoops\Locale::getCurrent();
     }
@@ -82,7 +83,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function getLangCode()
+    public static function getLangCode(): string
     {
         return \Xoops\Locale::normalizeLocale(\Xoops\Locale::getCurrent(), '-', false);
     }
@@ -91,7 +92,7 @@ abstract class AbstractLocale
      * getLegacyLanguage - return legacy language code for the current locale.
      * @return string
      */
-    public static function getLegacyLanguage()
+    public static function getLegacyLanguage(): string
     {
         $legacyLanguages = \Xoops\Core\Locale\LegacyCodes::getLegacyName(\Xoops\Locale::getCurrent());
 
@@ -101,7 +102,7 @@ abstract class AbstractLocale
     /**
      * @return string
      */
-    public static function getTimezone()
+    public static function getTimezone(): string
     {
         return \Xoops\Locale::getTimeZone()->getName();
     }
@@ -139,7 +140,7 @@ abstract class AbstractLocale
      *
      * @return array
      */
-    public static function getFontSizes()
+    public static function getFontSizes(): array
     {
         return [
             'xx-small' => 'xx-Small',
@@ -168,7 +169,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function substr($str, $start, $length, $ellipsis = '…')
+    public static function substr($str, $start, $length, $ellipsis = '…'): string
     {
         $str2 = mb_strcut($str, $start, $length - strlen($ellipsis));
 
@@ -182,7 +183,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function utf8_encode($text)
+    public static function utf8_encode($text): string
     {
         return Utf8::filter($text);
     }
@@ -196,7 +197,7 @@ abstract class AbstractLocale
      *
      * @deprecated
      */
-    public static function convert_encoding($text, $to = 'utf-8', $from = '')
+    public static function convert_encoding($text, $to = 'utf-8', $from = ''): string
     {
         return $text;
     }
@@ -208,7 +209,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function trim($text)
+    public static function trim($text): string
     {
         $ret = Utf8::trim($text);
 
@@ -230,7 +231,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function formatTimestamp($time, $format = 'l')
+    public static function formatTimestamp($time, $format = 'l'): string
     {
         $workingTime = Time::cleanTime($time);
 
@@ -312,7 +313,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function number_format($number)
+    public static function number_format(int $number): string
     {
         return number_format($number, 2, '.', ',');
     }
@@ -323,7 +324,7 @@ abstract class AbstractLocale
      *
      * @return string
      */
-    public static function money_format($format, $number)
+    public static function money_format(string $format, string $number): string
     {
         if (function_exists('money_format')) {
             $result = money_format($format, $number);
@@ -339,7 +340,7 @@ abstract class AbstractLocale
      *
      * @param array $array to sort
      */
-    public static function asort(&$array)
+    public static function asort(array &$array): void
     {
         //if (class_exists('\Collator')) {
         //    $col = new \Collator(self::getLocale());

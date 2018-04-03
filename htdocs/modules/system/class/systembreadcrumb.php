@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class systembreadcrumb
      *
      * @param string $fct
      */
-    private function __construct($fct)
+    private function __construct(string $fct)
     {
         if ('' !== $fct) {
             $this->_directory = $fct;
@@ -53,7 +54,7 @@ class systembreadcrumb
      * @staticvar SystemBreadcrumb
      * @return SystemBreadcrumb
      */
-    public static function getInstance($fct = '')
+    public static function getInstance(string $fct = ''): SystemBreadcrumb
     {
         static $instance;
         if (!isset($instance)) {
@@ -64,7 +65,7 @@ class systembreadcrumb
         return $instance;
     }
 
-    public function setDirectory($fct)
+    public function setDirectory($fct): void
     {
         $this->_directory = $fct;
     }
@@ -72,7 +73,7 @@ class systembreadcrumb
     /**
      * Add link to breadcrumb.
      */
-    public function addLink($title = '', $link = '', $home = false)
+    public function addLink($title = '', $link = '', $home = false): void
     {
         $this->_bread[] = [
             'link' => $link, 'title' => $title, 'home' => $home,
@@ -82,7 +83,7 @@ class systembreadcrumb
     /**
      * Add Help link.
      */
-    public function addHelp($link = '')
+    public function addHelp($link = ''): void
     {
         $this->_help = $link;
     }
@@ -90,7 +91,7 @@ class systembreadcrumb
     /**
      * Add Tips.
      */
-    public function addTips($value)
+    public function addTips($value): void
     {
         $this->_tips = $value;
     }
@@ -98,7 +99,7 @@ class systembreadcrumb
     /**
      * Render System BreadCrumb.
      */
-    public function render()
+    public function render(): void
     {
         $xoops = Xoops::getInstance();
         if ($xoops->tpl()) {

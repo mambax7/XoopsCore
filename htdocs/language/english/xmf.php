@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 define('_AM_XMF_MODULE_NOTFOUND', 'Please install or reactivate %1$s module. Minimum version required: %2$s');
 define('_AM_XMF_MODULE_VERSION', 'Minimum %1$s module version required: %2$s (your version is %3$s)');

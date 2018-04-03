@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -60,7 +61,7 @@ class Select extends OptionElement
      *
      * @return bool
      */
-    public function isMultiple()
+    public function isMultiple(): bool
     {
         return $this->has('multiple');
     }
@@ -70,7 +71,7 @@ class Select extends OptionElement
      *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
         return (int) $this->get('size');
     }
@@ -81,7 +82,7 @@ class Select extends OptionElement
      * @param string $name     name attribute
      * @param array  $optgroup Associative array of value->name pairs
      */
-    public function addOptionGroup($name, $optgroup)
+    public function addOptionGroup(string $name, array $optgroup): void
     {
         $this->setArrayItem('option', $name, $optgroup);
     }
@@ -91,7 +92,7 @@ class Select extends OptionElement
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $selected = (array) $this->getValue();
 
@@ -124,7 +125,7 @@ class Select extends OptionElement
      *
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         // render custom validation code if any
         if (!empty($this->customValidationCode)) {
@@ -157,7 +158,7 @@ class Select extends OptionElement
      *
      * @return string
      */
-    protected function renderOption($optionValue, $optionDisplay, $selected)
+    protected function renderOption(string $optionValue, string $optionDisplay, $selected): string
     {
         $rendered = '<option value="'.htmlspecialchars($optionValue, ENT_QUOTES).'"';
         if (in_array($optionValue, $selected, true)) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -24,7 +25,7 @@ $xoops = Xoops::getInstance();
 
 $op = Request::getString('op');
 
-function publisher_editFile($showmenu = false, $fileid = 0, $itemid = 0)
+function publisher_editFile($showmenu = false, $fileid = 0, $itemid = 0): void
 {
     $publisher = Publisher::getInstance();
     $xoops = Xoops::getInstance();
@@ -86,8 +87,8 @@ switch ($op) {
         break;
 
     case 'mod':
-        $fileid = isset($_GET['fileid']) ? $_GET['fileid'] : 0;
-        $itemid = isset($_GET['itemid']) ? $_GET['itemid'] : 0;
+        $fileid = $_GET['fileid'] ?? 0;
+        $itemid = $_GET['itemid'] ?? 0;
         if ((0 === $fileid) && (0 === $itemid)) {
             $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_NOITEMSELECTED);
         }
@@ -131,8 +132,8 @@ switch ($op) {
 
         $fileObj = $publisher->getFileHandler()->get($fileid);
 
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $confirm = $_POST['confirm'] ?? 0;
+        $title = $_POST['title'] ?? '';
 
         if ($confirm) {
             if (!$publisher->getFileHandler()->delete($fileObj)) {

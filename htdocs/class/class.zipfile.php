@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // $Id$
 
@@ -64,7 +64,7 @@ class zipfile
      * @param  int $unixtime the current Unix timestamp
      * @return int the current date in a four byte DOS format
      */
-    public function unix2DosTime($unixtime = 0)
+    public function unix2DosTime(int $unixtime = 0): int
     {
         $timearray = (0 === $unixtime) ? getdate() : getdate($unixtime);
         if ($timearray['year'] < 1980) {
@@ -87,7 +87,7 @@ class zipfile
      * @param string $name name of the file in the archive (may contains the path)
      * @param int    $time the current timestamp
      */
-    public function addFile($data, $name, $time = 0)
+    public function addFile(string $data, string $name, int $time = 0): void
     {
         $name = str_replace('\\', '/', $name);
 
@@ -153,7 +153,7 @@ class zipfile
      *
      * @return string the zipped file
      */
-    public function file()
+    public function file(): string
     {
         $data = implode('', $this->datasec);
         $ctrldir = implode('', $this->ctrl_dir);

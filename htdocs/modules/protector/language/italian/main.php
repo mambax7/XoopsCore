@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 //Italian translation: Defkon1 - defkon1(at)gmail(dot)com - www.xoopsitalia.org
 //Updated by Ianez - Xoops Italia Staff

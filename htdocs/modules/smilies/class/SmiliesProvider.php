@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'smilies';
     }
@@ -40,7 +41,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Traditional XOOPS Smilies';
     }
@@ -52,7 +53,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $buffer   source text to be processed
      */
-    public function renderEmoji(Response $response, $buffer)
+    public function renderEmoji(Response $response, string $buffer): void
     {
         $emojiList = $this->getSmileyList();
         $emojiName = array_column($emojiList, 'name');
@@ -68,7 +69,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function getEmojiList(Response $response)
+    public function getEmojiList(Response $response): void
     {
         $response->setValue($this->getSmileyList());
     }
@@ -83,7 +84,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $identifier element identifier to receive emoji from selector
      */
-    public function renderEmojiSelector(Response $response, $identifier)
+    public function renderEmojiSelector(Response $response, string $identifier): void
     {
         $selector = '<img src="'.\XoopsBaseConfig::get('url').'/images/smiley.gif" alt="'
             .\XoopsLocale::SMILIES.'" title="'.\XoopsLocale::SMILIES.'" onclick=\'openWithSelfMain("'
@@ -98,7 +99,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      *
      * @return array emoji list
      */
-    private function getSmileyList()
+    private function getSmileyList(): array
     {
         static $emojiList = null;
 

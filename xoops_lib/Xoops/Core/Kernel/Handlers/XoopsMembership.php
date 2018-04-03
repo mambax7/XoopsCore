@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -49,7 +50,7 @@ class XoopsMembership extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->linkid($format);
     }
@@ -61,7 +62,7 @@ class XoopsMembership extends XoopsObject
      *
      * @return mixed
      */
-    public function linkid($format = '')
+    public function linkid(string $format = '')
     {
         return $this->getVar('linkid', $format);
     }
@@ -73,7 +74,7 @@ class XoopsMembership extends XoopsObject
      *
      * @return mixed
      */
-    public function uid($format = '')
+    public function uid(string $format = '')
     {
         return $this->getVar('uid', $format);
     }

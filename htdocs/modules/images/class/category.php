@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -48,7 +49,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Xoops\Core\Database\Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'imagecategory', 'ImagesCategory', 'imgcat_id', 'imgcat_name');
     }
@@ -59,7 +60,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getPermittedObjects($criteria = null, $start = 0, $limit = 0, $id_as_key = false, $asobject = true)
+    public function getPermittedObjects(?CriteriaElement $criteria = null, $start = 0, $limit = 0, bool $id_as_key = false, $asobject = true): array
     {
         $this->table_link = $this->db2->prefix('system_permission');
 
@@ -86,7 +87,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
      *
      * @return array Array of {@link ImagesImage} objects
      */
-    public function getListByPermission($groups = [], $perm = 'imgcat_read', $display = null, $storetype = null)
+    public function getListByPermission(array $groups = [], string $perm = 'imgcat_read', $display = null, $storetype = null): array
     {
         $xoops = Xoops::getInstance();
         $criteria = new CriteriaCompo();

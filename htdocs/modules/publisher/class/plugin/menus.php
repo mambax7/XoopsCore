@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class PublisherMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      *
      * @return array
      */
-    public function subMenus()
+    public function subMenus(): array
     {
         $ret = [];
         $helper = Publisher::getInstance();

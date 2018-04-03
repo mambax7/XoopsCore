@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -78,7 +79,7 @@ $xoops->footer();
 
 // work around for PHP < 5.0.x
 if (!function_exists('file_put_contents')) {
-    function file_put_contents($filename, $data, $file_append = false)
+    function file_put_contents($filename, $data, $file_append = false): void
     {
         if ($fp = fopen($filename, (!$file_append ? 'w+' : 'a+'))) {
             fwrite($fp, $data);
@@ -88,7 +89,7 @@ if (!function_exists('file_put_contents')) {
 }
 
 // recursive clonning script
-function publisher_cloneFileFolder($path)
+function publisher_cloneFileFolder($path): void
 {
     global $patKeys;
     global $patValues;

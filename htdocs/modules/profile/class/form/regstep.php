@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of obj comment or credits
  of supporting developers from obj source code or any supporting source code

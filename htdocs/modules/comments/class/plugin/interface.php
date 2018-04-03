@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ interface CommentsPluginInterface
      *
      * @return string
      */
-    public function itemName();
+    public function itemName(): string;
 
     /**
      * You must return the page where the comment form is displayed
@@ -31,12 +32,12 @@ interface CommentsPluginInterface
      *
      * @return string
      */
-    public function pageName();
+    public function pageName(): string;
 
     /**
      * @return array
      */
-    public function extraParams();
+    public function extraParams(): array;
 
     /**
      * This method will be executed upon successful post of an approved comment.
@@ -45,7 +46,7 @@ interface CommentsPluginInterface
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
      */
-    public function approve(CommentsComment $comment);
+    public function approve(CommentsComment $comment): void;
 
     /**
      * This method will be executed whenever the total number of 'active' comments for an item is changed.
@@ -53,7 +54,7 @@ interface CommentsPluginInterface
      * @param int $item_id   The unique ID of an item
      * @param int $total_num The total number of active comments
      */
-    public function update($item_id, $total_num);
+    public function update(int $item_id, int $total_num): void;
 
     /**
      * This method will be executed whenever a new comment form is displayed.
@@ -68,5 +69,5 @@ interface CommentsPluginInterface
      *
      * @return array
      */
-    public function itemInfo($item_id);
+    public function itemInfo(int $item_id): array;
 }

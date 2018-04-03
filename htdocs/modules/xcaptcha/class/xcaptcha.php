@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xcaptcha extension module
  * You may not change or alter any portion of this comment or credits

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class XoopsDebugStack extends DebugStack
      * @param array  $params The SQL parameters.
      * @param array  $types  The SQL parameter types.
      */
-    public function startQuery($sql, array $params = null, array $types = null)
+    public function startQuery(string $sql, ?array $params = null, ?array $types = null): void
     {
         \Xoops::getInstance()->events()->triggerEvent(
             'core.database.query.begin',
@@ -53,7 +54,7 @@ class XoopsDebugStack extends DebugStack
      *   - 'types'       => array of parameter types
      *   - 'executionMS' => float of execution time in microseconds
      */
-    public function stopQuery()
+    public function stopQuery(): void
     {
         parent::stopQuery();
         \Xoops::getInstance()->events()->triggerEvent(

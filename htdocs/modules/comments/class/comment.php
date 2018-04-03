@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ class CommentsComment extends XoopsObject
     /**
      * @return bool
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return $this->getVar('id') === $this->getVar('rootid');
     }
@@ -77,7 +78,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'comments', 'CommentsComment', 'id', 'title');
     }
@@ -94,7 +95,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @return array Array of {@link CommentsComment} objects
      **/
-    public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
+    public function getByItemId(int $module_id, int $item_id, string $order = null, int $status = null, int $limit = null, int $start = 0): array
     {
         $criteria = new CriteriaCompo(new Criteria('modid', (int) ($module_id)));
         $criteria->add(new Criteria('itemid', (int) ($item_id)));
@@ -121,7 +122,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @return int Array of {@link CommentsComment} objects
      **/
-    public function getCountByItemId($module_id, $item_id, $status = null)
+    public function getCountByItemId(int $module_id, int $item_id, int $status = null): int
     {
         $criteria = new CriteriaCompo(new Criteria('modid', (int) ($module_id)));
         $criteria->add(new Criteria('itemid', (int) ($item_id)));
@@ -137,7 +138,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      * @param  int|null $item_id
      * @return int
      */
-    public function getCountByModuleId($module_id, $item_id = null)
+    public function getCountByModuleId(int $module_id, ?int $item_id = null): int
     {
         $criteria = new CriteriaCompo(new Criteria('modid', (int) ($module_id)));
         if (isset($item_id)) {
@@ -157,7 +158,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @return array Array of {@link CommentsComment} objects
      **/
-    public function getTopComments($module_id, $item_id, $order, $status = null)
+    public function getTopComments(int $module_id, int $item_id, string $order, int $status = null): array
     {
         $criteria = new CriteriaCompo(new Criteria('modid', (int) ($module_id)));
         $criteria->add(new Criteria('itemid', (int) ($item_id)));
@@ -179,7 +180,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @return array Array of {@link CommentsComment} objects
      **/
-    public function getThread($comment_rootid, $comment_id, $status = null)
+    public function getThread(int $comment_rootid, int $comment_id, int $status = null): array
     {
         $criteria = new CriteriaCompo(new Criteria('rootid', (int) ($comment_rootid)));
         $criteria->add(new Criteria('id', (int) ($comment_id), '>='));
@@ -199,7 +200,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      **/
-    public function updateByField(CommentsComment $comment, $field_name, $field_value)
+    public function updateByField(CommentsComment $comment, string $field_name, $field_value): bool
     {
         $comment->unsetNew();
         $comment->setVar($field_name, $field_value);
@@ -213,7 +214,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      * @param  int  $module_id ID of the module
      * @return bool
      **/
-    public function deleteByModule($module_id)
+    public function deleteByModule(int $module_id): bool
     {
         return $this->deleteAll(new Criteria('modid', (int) ($module_id)));
     }
@@ -223,7 +224,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      * @param  int  $item_id
      * @return bool
      */
-    public function deleteByItemId($module_id, $item_id)
+    public function deleteByItemId(int $module_id, int $item_id): bool
     {
         $module_id = (int) ($module_id);
         $item_id = (int) ($item_id);

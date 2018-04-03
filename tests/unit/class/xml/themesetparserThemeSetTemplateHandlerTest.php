@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -8,19 +8,19 @@ class ThemeSetTemplateHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('XmlTagHandler', $instance);
     }
 
-    public function test_getName()
+    public function test_getName(): void
     {
         $instance = $this->object;
 
@@ -28,7 +28,7 @@ class ThemeSetTemplateHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('template', $name);
     }
 
-    public function test_handleBeginElement()
+    public function test_handleBeginElement(): void
     {
         $instance = $this->object;
 
@@ -39,7 +39,7 @@ class ThemeSetTemplateHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('name', $parser->getTempArr('name'));
     }
 
-    public function test_handleEndElement()
+    public function test_handleEndElement(): void
     {
         $instance = $this->object;
 

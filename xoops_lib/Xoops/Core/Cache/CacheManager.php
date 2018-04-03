@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -83,7 +84,7 @@ class CacheManager
      *
      * Installing the pdo_sqlite3 extension is highly recommended to avoid problems.
      */
-    public static function createDefaultConfig()
+    public static function createDefaultConfig(): void
     {
         $configFile = \XoopsBaseConfig::get('var-path').'/configs/cache.php';
         if (file_exists($configFile)) {
@@ -110,7 +111,7 @@ class CacheManager
      *
      * @return Access object
      */
-    public function getCache($name)
+    public function getCache(string $name): Access
     {
         $pool = false;
         if (array_key_exists($name, $this->pools)) {
@@ -135,7 +136,7 @@ class CacheManager
      *
      * @return Access|false pool or false if a pool cannot be created
      */
-    protected function startPoolAccess($name)
+    protected function startPoolAccess(string $name)
     {
         $pool = false;
         $options = false;
@@ -176,7 +177,7 @@ class CacheManager
      *
      * @return DriverInterface|false driver object or false if it could not be instantiated
      */
-    protected function getDriver($driverName, $options)
+    protected function getDriver(string $driverName, array $options)
     {
         $driver = false;
         $driverClass = DriverList::getDriverClass($driverName);
@@ -197,7 +198,7 @@ class CacheManager
      *
      * @return Access object
      */
-    protected function getDefaultPool($originalName)
+    protected function getDefaultPool(string $originalName): Access
     {
         $this->xoops->events()->triggerEvent('debug.log', 'Substituting default cache pool for '.$originalName);
         $name = 'default';
@@ -219,7 +220,7 @@ class CacheManager
      *
      * @return array cache configuration
      */
-    private static function getDefaults()
+    private static function getDefaults(): array
     {
         $defaults = [
             'default' => [

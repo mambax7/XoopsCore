@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -38,7 +39,7 @@ class TokenFactory
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
-    public static function build($key, $payload, $expirationOffset = 0)
+    public static function build($key, $payload, $expirationOffset = 0): string
     {
         $key = ($key instanceof KeyAbstract) ? $key : KeyFactory::build($key);
         $token = new JsonWebToken($key);

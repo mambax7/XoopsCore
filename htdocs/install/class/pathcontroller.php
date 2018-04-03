@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -116,7 +117,7 @@ class XoopsPathController
         }
     }
 
-    public function execute()
+    public function execute(): void
     {
         /* @var $wizard XoopsInstallWizard */
         $wizard = $_SESSION['wizard'];
@@ -136,7 +137,7 @@ class XoopsPathController
         }
     }
 
-    public function readRequest()
+    public function readRequest(): void
     {
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $request = $_POST;
@@ -216,7 +217,7 @@ class XoopsPathController
         return $ret;
     }
 
-    public function setPermission($parent, $path, &$error)
+    public function setPermission($parent, $path, &$error): void
     {
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
@@ -243,7 +244,7 @@ class XoopsPathController
      * @param  string $path
      * @return bool
      */
-    public function checkPermissions($path)
+    public function checkPermissions(string $path): bool
     {
         $paths = [
             'root' => ['mainfile.php', 'uploads'/*'templates_c', 'cache'*/], 'data' => $this->dataPath,
@@ -273,7 +274,7 @@ class XoopsPathController
      * @param  bool         $create
      * @return false|string false on failure, method (u-ser,g-roup,w-orld) on success
      */
-    public function makeWritable($path, $create = true)
+    public function makeWritable(string $path, bool $create = true)
     {
         $mode = intval('0777', 8);
         if (!file_exists($path)) {

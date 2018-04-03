@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'avatars';
     }
@@ -51,7 +52,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Traditional XOOPS avatars.';
     }
@@ -63,7 +64,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
      * @param mixed    $userinfo XoopsUser object for user or
      *                           array of user info, 'uid', 'uname' and 'email' required
      */
-    public function getAvatarUrl($response, $userinfo)
+    public function getAvatarUrl(Response $response, $userinfo): void
     {
         $noInfo = true;
         if (is_object($userinfo)) {
@@ -102,7 +103,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
      * @param Response  $response \Xoops\Core\Service\Response object
      * @param XoopsUser $userinfo XoopsUser object for user
      */
-    public function getAvatarEditUrl($response, XoopsUser $userinfo)
+    public function getAvatarEditUrl(Response $response, XoopsUser $userinfo): void
     {
         $noInfo = true;
         if ($userinfo instanceof XoopsUser) {
@@ -122,7 +123,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return object|null
      */
-    private function getUserById($uid)
+    private function getUserById(int $uid)
     {
         $user = \Xoops::getInstance()->getHandlerMember()->getUser((int) $uid);
 

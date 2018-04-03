@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ abstract class ExtensionAbstract extends SanitizerComponent
      *
      * was load()
      */
-    abstract public function registerExtensionProcessing();
+    abstract public function registerExtensionProcessing(): void;
 
     /**
      * Provide button and javascript code used by the DhtmlTextArea.
@@ -43,7 +44,7 @@ abstract class ExtensionAbstract extends SanitizerComponent
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         return ['', ''];
     }
@@ -60,7 +61,7 @@ abstract class ExtensionAbstract extends SanitizerComponent
      *
      * @return string
      */
-    protected function getEditorButtonHtml($textAreaId, $imageName, $altText, $onclick, $varArgs)
+    protected function getEditorButtonHtml(string $textAreaId, string $imageName, string $altText, string $onclick, string $varArgs): string
     {
         $input = func_get_args();
         $prompts = array_slice($input, 4);

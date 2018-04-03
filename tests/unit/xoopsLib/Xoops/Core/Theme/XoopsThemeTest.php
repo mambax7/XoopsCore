@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Theme;
 
@@ -15,7 +15,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new XoopsTheme();
     }
@@ -24,19 +24,11 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testXoInit()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testGenerateCacheId()
+    public function testXoInit(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -44,7 +36,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCheckCache()
+    public function testGenerateCacheId(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -52,7 +44,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRender()
+    public function testCheckCache(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -60,7 +52,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetLocalizationAssets()
+    public function testRender(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -68,7 +60,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddScript()
+    public function testGetLocalizationAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -76,7 +68,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddStylesheet()
+    public function testAddScript(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -84,7 +76,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddScriptAssets()
+    public function testAddStylesheet(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -92,7 +84,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddStylesheetAssets()
+    public function testAddScriptAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -100,7 +92,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddBaseAssets()
+    public function testAddStylesheetAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -108,7 +100,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddBaseScriptAssets()
+    public function testAddBaseAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -116,7 +108,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddBaseStylesheetAssets()
+    public function testAddBaseScriptAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -124,7 +116,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetNamedAsset()
+    public function testAddBaseStylesheetAssets(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -132,7 +124,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddLink()
+    public function testSetNamedAsset(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -140,7 +132,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddHttpMeta()
+    public function testAddLink(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -148,7 +140,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddMeta()
+    public function testAddHttpMeta(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -156,7 +148,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testHeadContent()
+    public function testAddMeta(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -164,7 +156,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderMetas()
+    public function testHeadContent(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -172,7 +164,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderMetasByType()
+    public function testRenderMetas(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -180,7 +172,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGenElementId()
+    public function testRenderMetasByType(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -188,7 +180,7 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderAttributes()
+    public function testGenElementId(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -196,7 +188,15 @@ class XoopsThemeTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testResourcePath()
+    public function testRenderAttributes(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    public function testResourcePath(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

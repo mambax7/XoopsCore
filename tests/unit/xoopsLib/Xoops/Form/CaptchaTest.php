@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class CaptchaTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Captcha('Caption', 'name');
     }
@@ -24,11 +24,11 @@ class CaptchaTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testSetConfig()
+    public function testSetConfig(): void
     {
         $value = $this->object->setConfig('dummy_name', 'dummy_value');
         $this->assertTrue($value);
@@ -39,13 +39,13 @@ class CaptchaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('dummy_value', $configs['dummy_name']);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertInternalType('string', $value);

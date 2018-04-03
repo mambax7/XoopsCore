@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class QrcodePreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateQrcode(Provider $provider)
+    public static function eventCoreServiceLocateQrcode(Provider $provider): void
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
             $path = dirname(__DIR__).'/class/QrcodeProvider.php';

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class PublisherItem extends XoopsObject
     /**
      * @param int|null $id
      */
-    public function __construct($id = null)
+    public function __construct(?int $id = null)
     {
         $this->publisher = Publisher::getInstance();
         $this->initVar('itemid', XOBJ_DTYPE_INT, 0);
@@ -85,7 +86,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return null|PublisherCategory
      */
-    public function category()
+    public function category(): ?PublisherCategory
     {
         if (!isset($this->_category)) {
             $this->_category = $this->publisher->getCategoryHandler()->get($this->getVar('categoryid'));
@@ -100,7 +101,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function title($maxLength = 0, $format = 'S')
+    public function title(int $maxLength = 0, string $format = 'S'): string
     {
         $ret = $this->getVar('title', $format);
         if (0 !== $maxLength) {
@@ -120,7 +121,7 @@ class PublisherItem extends XoopsObject
      *
      * @return mixed|string
      */
-    public function subtitle($maxLength = 0, $format = 'S')
+    public function subtitle(int $maxLength = 0, string $format = 'S')
     {
         $ret = $this->getVar('subtitle', $format);
         if (0 !== $maxLength) {
@@ -141,7 +142,7 @@ class PublisherItem extends XoopsObject
      *
      * @return mixed|string
      */
-    public function summary($maxLength = 0, $format = 'S', $stripTags = '')
+    public function summary(int $maxLength = 0, string $format = 'S', string $stripTags = '')
     {
         $ret = $this->getVar('summary', $format);
         if (!empty($stripTags)) {
@@ -165,7 +166,7 @@ class PublisherItem extends XoopsObject
      *
      * @return mixed|string
      */
-    public function getBlockSummary($maxLength = 0, $fullSummary = false)
+    public function getBlockSummary(int $maxLength = 0, bool $fullSummary = false)
     {
         if ($fullSummary) {
             $ret = $this->summary(0, 's', '<br></ br>');
@@ -185,7 +186,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function wrappage($file_name)
+    public function wrappage(string $file_name): string
     {
         $content = '';
         $page = PublisherUtils::getUploadDir(true, 'content').$file_name;
@@ -220,7 +221,7 @@ class PublisherItem extends XoopsObject
      *
      * @return mixed|string
      */
-    public function body($maxLength = 0, $format = 'S', $stripTags = '')
+    public function body(int $maxLength = 0, string $format = 'S', string $stripTags = '')
     {
         $ret = $this->getVar('body', $format);
         $wrap_pos = strpos($ret, '[pagewrap=');
@@ -267,7 +268,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function datesub($dateFormat = '', $format = 'S')
+    public function datesub(string $dateFormat = '', string $format = 'S'): string
     {
         if (empty($dateformat)) {
             $dateFormat = $this->publisher->getConfig('format_date');
@@ -281,7 +282,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function posterName($realName = -1)
+    public function posterName(int $realName = -1): string
     {
         if ($realName === -1) {
             $realName = $this->publisher->getConfig('format_realname');
@@ -297,7 +298,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function posterAvatar()
+    public function posterAvatar(): string
     {
         $xoops = Xoops::getInstance();
         $ret = 'blank.gif';
@@ -313,7 +314,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function linkedPosterName()
+    public function linkedPosterName(): string
     {
         $ret = $this->getVar('author_alias');
         if ('' === $ret) {
@@ -336,7 +337,7 @@ class PublisherItem extends XoopsObject
      *
      * @return bool
      */
-    public function store($force = true)
+    public function store(bool $force = true): bool
     {
         $xoops = Xoops::getInstance();
         $isNew = $this->isNew();
@@ -364,7 +365,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getCategoryName()
+    public function getCategoryName(): string
     {
         return $this->category()->getVar('name');
     }
@@ -372,7 +373,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getCategoryUrl()
+    public function getCategoryUrl(): string
     {
         return $this->category()->getCategoryUrl();
     }
@@ -380,7 +381,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getCategoryLink()
+    public function getCategoryLink(): string
     {
         return $this->category()->getCategoryLink();
     }
@@ -390,7 +391,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function getCategoryPath($withAllLink = true)
+    public function getCategoryPath(bool $withAllLink = true): string
     {
         return $this->category()->getCategoryPath($withAllLink);
     }
@@ -398,7 +399,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getCategoryImagePath()
+    public function getCategoryImagePath(): string
     {
         return PublisherUtils::getImageDir('category', false).$this->category()->image();
     }
@@ -414,7 +415,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getAdminLinks()
+    public function getAdminLinks(): string
     {
         $xoops = Xoops::getInstance();
         $adminLinks = '';
@@ -460,7 +461,7 @@ class PublisherItem extends XoopsObject
     /**
      * @param array $notifications
      */
-    public function sendNotifications($notifications = [])
+    public function sendNotifications(array $notifications = []): void
     {
         $xoops = Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
@@ -502,7 +503,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return bool
      */
-    public function notLoaded()
+    public function notLoaded(): bool
     {
         return $this->getVar('itemid') === -1;
     }
@@ -510,7 +511,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getItemUrl()
+    public function getItemUrl(): string
     {
         return PublisherUtils::seoGenUrl('item', $this->getVar('itemid'), $this->getVar('short_url'));
     }
@@ -521,7 +522,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function getItemLink($class = false, $maxsize = 0)
+    public function getItemLink(bool $class = false, int $maxsize = 0): string
     {
         if ($class) {
             return '<a class='.$class.' href="'.$this->getItemUrl().'">'.$this->title($maxsize).'</a>';
@@ -533,7 +534,7 @@ class PublisherItem extends XoopsObject
     /**
      * @return string
      */
-    public function getWhoAndWhen()
+    public function getWhoAndWhen(): string
     {
         $posterName = $this->linkedPosterName();
         $postdate = $this->datesub();
@@ -546,7 +547,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function plain_maintext($body = null)
+    public function plain_maintext(?string $body = null): string
     {
         $ret = '';
         if (!$body) {
@@ -563,7 +564,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function buildmaintext($item_page_id = -1, $body = null)
+    public function buildmaintext(int $item_page_id = -1, ?string $body = null): string
     {
         if (!$body) {
             $body = $this->body();
@@ -640,7 +641,7 @@ class PublisherItem extends XoopsObject
      *
      * @return array
      */
-    public function toArray($display = 'default', $max_char_title = 0, $max_char_summary = 0, $full_summary = false)
+    public function toArray(string $display = 'default', int $max_char_title = 0, int $max_char_summary = 0, bool $full_summary = false): array
     {
         $item_page_id = -1;
         if (is_numeric($display)) {
@@ -695,7 +696,7 @@ class PublisherItem extends XoopsObject
      *
      * @return array
      */
-    public function toArrayFull($item)
+    public function toArrayFull(array $item): array
     {
         $item['title'] = $this->title();
         $item['clean_title'] = $this->title();
@@ -716,7 +717,7 @@ class PublisherItem extends XoopsObject
      *
      * @return array
      */
-    public function toArrayAll($item, $item_page_id)
+    public function toArrayAll(array $item, int $item_page_id): array
     {
         $item['maintext'] = $this->buildmaintext($item_page_id, $this->body());
         $item = $this->getOtherImages($item);
@@ -729,7 +730,7 @@ class PublisherItem extends XoopsObject
      *
      * @return array
      */
-    public function getMainImage($item = [])
+    public function getMainImage(array $item = []): array
     {
         $images = $this->getImages();
         $item['image_path'] = '';
@@ -758,7 +759,7 @@ class PublisherItem extends XoopsObject
      *
      * @return array
      */
-    public function getOtherImages($item = [])
+    public function getOtherImages(array $item = []): array
     {
         $thumbService = \Xoops::getInstance()->service('thumbnail');
         $images = $this->getImages();
@@ -786,7 +787,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string Text
      */
-    public function highlight($content, $keywords)
+    public function highlight(string $content, $keywords): string
     {
         $color = $this->publisher->getConfig('format_highlight_color');
         if ('#' !== substr($color, 0, 1)) {
@@ -801,7 +802,7 @@ class PublisherItem extends XoopsObject
     /**
      *  Create metada and assign it to template.
      */
-    public function createMetaTags()
+    public function createMetaTags(): void
     {
         $publisher_metagen = new PublisherMetagen($this->title(), $this->getVar('meta_keywords'), $this->getVar('meta_description'), $this->_category->_categoryPath);
         $publisher_metagen->createMetaTags();
@@ -812,7 +813,7 @@ class PublisherItem extends XoopsObject
      *
      * @return string
      */
-    public function _convert_for_japanese($str)
+    public function _convert_for_japanese(string $str): string
     {
         global $xoopsConfig;
         // no action, if not flag
@@ -853,7 +854,7 @@ class PublisherItem extends XoopsObject
      *
      * @return bool : TRUE if the no errors occured
      */
-    public function accessGranted()
+    public function accessGranted(): bool
     {
         if (PublisherUtils::IsUserAdmin()) {
             return true;
@@ -872,7 +873,7 @@ class PublisherItem extends XoopsObject
     /**
      * The name says it all.
      */
-    public function setVarsFromRequest()
+    public function setVarsFromRequest(): void
     {
         $xoops = Xoops::getInstance();
         //Required fields
@@ -1017,7 +1018,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $item, $force = true)
+    public function insert(XoopsObject $item, bool $force = true): bool
     {
         $xoops = Xoops::getInstance();
         if (!$item->getVar('meta_keywords') || !$item->getVar('meta_description') || !$item->getVar('short_url')) {
@@ -1054,7 +1055,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return bool FALSE if failed.
      */
-    public function delete(XoopsObject $item, $force = false)
+    public function delete(XoopsObject $item, bool $force = false): bool
     {
         $xoops = Xoops::getInstance();
         // Deleting the files
@@ -1084,7 +1085,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of {@link PublisherItem} objects
      */
-    public function getItemObjects($criteria = null, $id_key = 'none', $notNullFields = '')
+    public function getItemObjects($criteria = null, $id_key = 'none', $notNullFields = ''): array
     {
         $ret = [];
         $whereMode = '';
@@ -1129,7 +1130,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return int count of items
      */
-    public function getItemCount($criteria = null, $notNullFields = '')
+    public function getItemCount($criteria = null, $notNullFields = ''): int
     {
         $whereMode = '';
 
@@ -1146,7 +1147,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         if (!$result) {
             return 0;
         }
-        list($count) = $result->fetch(PDO::FETCH_NUM);
+        [$count] = $result->fetch(PDO::FETCH_NUM);
 
         return $count;
     }
@@ -1157,7 +1158,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return int
      */
-    public function getItemsCount($categoryid = -1, $status = '', $notNullFields = '')
+    public function getItemsCount($categoryid = -1, string $status = '', string $notNullFields = ''): int
     {
         global $publisher_isAdmin;
         if (!$publisher_isAdmin) {
@@ -1208,7 +1209,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getAllPublished($limit = 0, $start = 0, $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $id_key = 'none')
+    public function getAllPublished(int $limit = 0, int $start = 0, int $categoryid = -1, string $sort = 'datesub', string $order = 'DESC', string $notNullFields = '', bool $asobject = true, string $id_key = 'none'): array
     {
         $otherCriteria = new Criteria('datesub', time(), '<=');
 
@@ -1220,7 +1221,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function getPreviousPublished($obj)
+    public function getPreviousPublished(PublisherItem $obj): bool
     {
         $ret = false;
         $otherCriteria = new CriteriaCompo();
@@ -1238,7 +1239,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function getNextPublished($obj)
+    public function getNextPublished(PublisherItem $obj): bool
     {
         $ret = false;
         $otherCriteria = new CriteriaCompo();
@@ -1264,7 +1265,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getAllSubmitted($limit = 0, $start = 0, $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $id_key = 'none')
+    public function getAllSubmitted(int $limit = 0, int $start = 0, int $categoryid = -1, string $sort = 'datesub', string $order = 'DESC', string $notNullFields = '', bool $asobject = true, string $id_key = 'none'): array
     {
         return $this->getItems($limit, $start, [_PUBLISHER_STATUS_SUBMITTED], $categoryid, $sort, $order, $notNullFields, $asobject, null, $id_key);
     }
@@ -1281,7 +1282,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getAllOffline($limit = 0, $start = 0, $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $id_key = 'none')
+    public function getAllOffline(int $limit = 0, int $start = 0, int $categoryid = -1, string $sort = 'datesub', string $order = 'DESC', string $notNullFields = '', bool $asobject = true, string $id_key = 'none'): array
     {
         return $this->getItems($limit, $start, [_PUBLISHER_STATUS_OFFLINE], $categoryid, $sort, $order, $notNullFields, $asobject, null, $id_key);
     }
@@ -1298,7 +1299,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getAllRejected($limit = 0, $start = 0, $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $id_key = 'none')
+    public function getAllRejected(int $limit = 0, int $start = 0, int $categoryid = -1, string $sort = 'datesub', string $order = 'DESC', string $notNullFields = '', bool $asobject = true, string $id_key = 'none'): array
     {
         return $this->getItems($limit, $start, [_PUBLISHER_STATUS_REJECTED], $categoryid, $sort, $order, $notNullFields, $asobject, null, $id_key);
     }
@@ -1317,7 +1318,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getItems($limit = 0, $start = 0, $status = '', $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $otherCriteria = null, $id_key = 'none')
+    public function getItems(int $limit = 0, int $start = 0, string $status = '', int $categoryid = -1, string $sort = 'datesub', string $order = 'DESC', string $notNullFields = '', bool $asobject = true, $otherCriteria = null, string $id_key = 'none'): array
     {
         global $publisher_isAdmin;
         if (!$publisher_isAdmin) {
@@ -1372,7 +1373,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function getRandomItem($field = '', $status = '', $categoryId = -1)
+    public function getRandomItem(string $field = '', string $status = '', int $categoryId = -1): bool
     {
         $ret = false;
         $notNullFields = $field;
@@ -1381,7 +1382,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         if ($totalItems > 0) {
             $totalItems = $totalItems - 1;
             mt_srand((float) microtime() * 1000000);
-            $entrynumber = mt_rand(0, $totalItems);
+            $entrynumber = random_int(0, $totalItems);
             $item = $this->getItems(1, $entrynumber, $status, $categoryId, $sort = 'datesub', $order = 'DESC', $notNullFields);
             if ($item) {
                 $ret = $item[0];
@@ -1394,7 +1395,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     /**
      * @return bool
      */
-    public function updateCounter($itemid)
+    public function updateCounter($itemid): bool
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $qb->updatePrefix('publisher_items', 'i')
@@ -1422,7 +1423,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getItemsFromSearch($queryarray = [], $andor = 'AND', $limit = 0, $offset = 0, $userid = 0, $categories = [], $sortby = 0, $searchin = '', $extra = '')
+    public function getItemsFromSearch(array $queryarray = [], string $andor = 'AND', int $limit = 0, int $offset = 0, int $userid = 0, array $categories = [], int $sortby = 0, string $searchin = '', string $extra = ''): array
     {
         $xoops = Xoops::getInstance();
         $ret = [];
@@ -1522,7 +1523,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getLastPublishedByCat($categoriesObj, $status = [_PUBLISHER_STATUS_PUBLISHED])
+    public function getLastPublishedByCat(array $categoriesObj, array $status = [_PUBLISHER_STATUS_PUBLISHED]): array
     {
         $ret = [];
         $catIds = [];
@@ -1577,7 +1578,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return int
      */
-    public function countArticlesByCat($parentid, &$catsCount, $spaces = '', $resultCatCounts = [])
+    public function countArticlesByCat(int $parentid, array &$catsCount, string $spaces = '', array $resultCatCounts = []): int
     {
         $newspaces = $spaces.'--';
         $thecount = 0;
@@ -1600,7 +1601,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getCountsByCat($cat_id = 0, $status, $inSubCat = false)
+    public function getCountsByCat(int $cat_id = 0, array $status, bool $inSubCat = false): array
     {
         $ret = [];
         $catsCount = [];
@@ -1663,7 +1664,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return QueryBuilder instance
      */
-    protected function addNotNullFieldClause(\Xoops\Core\Database\QueryBuilder $qb, $notNullFields = [], $whereMode = '')
+    protected function addNotNullFieldClause(\Xoops\Core\Database\QueryBuilder $qb, $notNullFields = [], $whereMode = ''): QueryBuilder
     {
         $eb = $qb->expr();
         if (!empty($notNullFields)) {

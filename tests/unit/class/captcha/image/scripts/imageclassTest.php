@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
 class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
 {
-    public function test___construct()
+    public function test___construct(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
         $this->assertInstanceOf('XoopsCaptchaImageHandler', $image_handler);
@@ -12,7 +12,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $image_handler->config);
     }
 
-    public function test_loadImage()
+    public function test_loadImage(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -22,7 +22,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true); // loadImage returns void
     }
 
-    public function test_generateCode()
+    public function test_generateCode(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -33,7 +33,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($x);
     }
 
-    public function test_createImage()
+    public function test_createImage(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -43,14 +43,14 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_getList()
+    public function test_getList(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
         $fonts = $image_handler->getList('fonts', 'ttf');
         $this->assertInternalType('array', $fonts);
     }
 
-    public function test_loadFont()
+    public function test_loadFont(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
         $image_handler->loadFont();
@@ -58,7 +58,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($image_handler->font, '.ttf'));
     }
 
-    public function test_setImageSize()
+    public function test_setImageSize(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
         $image_handler->setImageSize();
@@ -67,7 +67,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('int', $image_handler->height);
     }
 
-    public function test_loadBackground()
+    public function test_loadBackground(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
         $value = $image_handler->loadBackground();
@@ -75,7 +75,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, 'image/backgrounds/'));
     }
 
-    public function test_createFromFile()
+    public function test_createFromFile(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -85,7 +85,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawCode()
+    public function test_drawCode(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -95,7 +95,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawBorder()
+    public function test_drawBorder(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -105,7 +105,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawCircles()
+    public function test_drawCircles(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -115,7 +115,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawLines()
+    public function test_drawLines(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -125,7 +125,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawRectangles()
+    public function test_drawRectangles(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -135,7 +135,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawBars()
+    public function test_drawBars(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -145,7 +145,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawEllipses()
+    public function test_drawEllipses(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -155,7 +155,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_drawPolygons()
+    public function test_drawPolygons(): void
     {
         $image_handler = new XoopsCaptchaImageHandler();
 
@@ -165,7 +165,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_createImageBmp()
+    public function test_createImageBmp(): void
     {
         Xoops::getInstance()->disableErrorReporting();
         $image_handler = new XoopsCaptchaImageHandler();

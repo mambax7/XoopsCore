@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class TableLoad
      *
      * @return int number of rows inserted
      */
-    public static function loadTableFromArray($table, $data)
+    public static function loadTableFromArray(string $table, array $data): int
     {
         $db = \Xoops::getInstance()->db();
         $count = 0;
@@ -58,7 +59,7 @@ class TableLoad
      *
      * @return int number of rows inserted
      */
-    public static function loadTableFromYamlFile($table, $yamlFile)
+    public static function loadTableFromYamlFile(string $table, string $yamlFile): int
     {
         $count = 0;
 
@@ -77,7 +78,7 @@ class TableLoad
      *
      * @return int number of affected rows
      */
-    public static function truncateTable($table)
+    public static function truncateTable(string $table): int
     {
         $db = \Xoops::getInstance()->db();
         $platform = $db->getDatabasePlatform();
@@ -94,7 +95,7 @@ class TableLoad
      *
      * @return int number of rows
      */
-    public static function countRows($table, CriteriaElement $criteria = null)
+    public static function countRows(string $table, ?CriteriaElement $criteria = null): int
     {
         $db = \Xoops::getInstance()->db();
         $qb = $db->createXoopsQueryBuilder();
@@ -118,7 +119,7 @@ class TableLoad
      *
      * @return array of table rows
      */
-    public static function extractRows($table, CriteriaElement $criteria = null, $skipColumns = [])
+    public static function extractRows(string $table, ?CriteriaElement $criteria = null, $skipColumns = []): array
     {
         $db = \Xoops::getInstance()->db();
         $qb = $db->createXoopsQueryBuilder();
@@ -150,7 +151,7 @@ class TableLoad
      *
      * @return bool true on success, false on error
      */
-    public static function saveTableToYamlFile($table, $yamlFile, $criteria = null, $skipColumns = [])
+    public static function saveTableToYamlFile(string $table, string $yamlFile, CriteriaElement $criteria = null, $skipColumns = []): bool
     {
         $rows = static::extractRows($table, $criteria, $skipColumns);
 

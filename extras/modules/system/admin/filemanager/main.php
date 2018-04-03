@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -173,7 +174,7 @@ break;
                     $file_arr['chmod'] = substr($folder->perms(), 1);
                     $file_arr['chmod'] = modify_chmod($file_arr['chmod'], $file_arr['path_file'], $count_file);
                     if ('picture' === $extension_verif) {
-                        list($width, $height) = getimagesize($root.$file);
+                        [$width, $height] = getimagesize($root.$file);
                         if ($height > 60) {
                             $file_arr['img'] = '<img src="'.$url_file.$file.'" height="47" title="" alt="" />';
                         } else {

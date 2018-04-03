@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class Language
      *
      * @todo do something useful
      */
-    public static function translate($string, $domain = null)
+    public static function translate(string $string, string $domain = null): string
     {
         return $string;
     }
@@ -46,7 +47,7 @@ class Language
      *
      * @return bool true if loaded, otherwise false
      */
-    public static function load($name, $domain = '', $language = null)
+    public static function load(string $name, string $domain = '', string $language = null): bool
     {
         if (empty($language)) {
             if (!empty($GLOBALS['xoopsConfig']['language'])) {
@@ -73,7 +74,7 @@ class Language
      *
      * @throws \InvalidArgumentException
      */
-    protected static function loadFile($filename)
+    protected static function loadFile(string $filename): bool
     {
         if (preg_match('/[[:cntrl:]]/i', $filename)) {
             throw new \InvalidArgumentException('Security check: Illegal character in filename');

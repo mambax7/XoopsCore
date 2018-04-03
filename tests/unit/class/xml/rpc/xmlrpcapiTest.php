@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -11,7 +11,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
@@ -19,7 +19,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->object = new $this->myclass($params, $response, $module);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
 
@@ -31,7 +31,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_a($prop, 'Xoops\Core\Kernel\Handlers\XoopsModule'));
     }
 
-    public function test__setUser()
+    public function test__setUser(): void
     {
         $instance = $this->object;
 
@@ -47,7 +47,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($prop);
     }
 
-    public function test__checkUser()
+    public function test__checkUser(): void
     {
         $instance = $this->object;
 
@@ -59,7 +59,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($prop);
     }
 
-    public function test__checkAdmin()
+    public function test__checkAdmin(): void
     {
         $instance = $this->object;
 
@@ -73,7 +73,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function test__getPostFields()
+    public function test__getPostFields(): void
     {
         $instance = $this->object;
 
@@ -85,7 +85,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $x['categories']);
     }
 
-    public function test__setXoopsTagMap()
+    public function test__setXoopsTagMap(): void
     {
         $instance = $this->object;
 
@@ -96,7 +96,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $prop[$tag]);
     }
 
-    public function test__getXoopsTagMap()
+    public function test__getXoopsTagMap(): void
     {
         $instance = $this->object;
 
@@ -107,7 +107,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
     }
 
-    public function test__getTagCdata()
+    public function test__getTagCdata(): void
     {
         $instance = $this->object;
 
@@ -125,7 +125,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($text1, $text);
     }
 
-    public function test__getXoopsApi()
+    public function test__getXoopsApi(): void
     {
         $instance = $this->object;
 

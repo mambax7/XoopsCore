@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -52,7 +53,7 @@ class Access
      *
      * @return bool True if the data was successfully cached, false on failure
      */
-    public function write($key, $value, $ttl = null)
+    public function write(string $key, $value, $ttl = null): bool
     {
         $item = $this->pool->getItem($key);
 
@@ -82,7 +83,7 @@ class Access
      *
      * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $item = $this->pool->getItem($key);
 
@@ -151,7 +152,7 @@ class Access
      *
      * @return bool True if the cache was successfully cleared, false otherwise
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->pool->clear();
     }
@@ -164,7 +165,7 @@ class Access
      *
      * @return PoolInterface the current pool
      */
-    public function pool()
+    public function pool(): PoolInterface
     {
         return $this->pool;
     }

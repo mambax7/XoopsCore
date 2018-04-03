@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -76,7 +77,7 @@ class XoopsTpl extends \Smarty
      *
      * @return string source with any legacy delimiters converted to standard default delimiters
      */
-    public function convertLegacyDelimiters($tpl_source, \Smarty_Internal_Template $template)
+    public function convertLegacyDelimiters(string $tpl_source, \Smarty_Internal_Template $template): string
     {
         $countLeft = 0;
         $countRight = -1;
@@ -95,7 +96,7 @@ class XoopsTpl extends \Smarty
      *
      * @return bool
      */
-    public function touch($resourceName)
+    public function touch(string $resourceName): bool
     {
         $isForced = $this->force_compile;
         $this->force_compile = true;
@@ -113,7 +114,7 @@ class XoopsTpl extends \Smarty
      * @param mixed $theme_set      theme set
      * @param mixed $template_set   template set
      */
-    public function setCompileId($module_dirname = null, $theme_set = null, $template_set = null)
+    public function setCompileId($module_dirname = null, $theme_set = null, $template_set = null): void
     {
         $xoops = \Xoops::getInstance();
 
@@ -138,7 +139,7 @@ class XoopsTpl extends \Smarty
      *
      * @return int number of deleted cache and compiler files
      */
-    public function clearModuleCompileCache($module_dirname = null, $theme_set = null, $template_set = null)
+    public function clearModuleCompileCache($module_dirname = null, $theme_set = null, $template_set = null): int
     {
         $hold_compile_id = $this->compile_id;
         // $this->setCompileId($module_dirname, $template_set, $theme_set);
@@ -177,7 +178,7 @@ class XoopsTpl extends \Smarty
      *
      * @return int number of cache files deleted
      */
-    public function clearCache($template_name, $cache_id = null, $compile_id = null, $exp_time = null, $type = null)
+    public function clearCache(string $template_name, string $cache_id = null, string $compile_id = null, int $exp_time = null, string $type = null): int
     {
         \Xoops::getInstance()->deprecated('XoopsTpl::clearCache() is potentially ambiguous');
 

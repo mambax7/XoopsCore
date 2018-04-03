@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -9,11 +9,11 @@ class AbstractContractTestInstance extends AbstractContract
 {
     public const MODE = Manager::MODE_EXCLUSIVE;
 
-    public function getName()
+    public function getName(): void
     {
     }
 
-    public function getDescription()
+    public function getDescription(): void
     {
     }
 }
@@ -22,7 +22,7 @@ class AbstractContractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'AbstractContractTestInstance';
 
-    public function test_setPriority()
+    public function test_setPriority(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -36,7 +36,7 @@ class AbstractContractTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getMode()
+    public function test_getMode(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);

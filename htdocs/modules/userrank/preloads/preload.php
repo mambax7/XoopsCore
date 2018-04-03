@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class UserrankPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateUserrank(Provider $provider)
+    public static function eventCoreServiceLocateUserrank(Provider $provider): void
     {
         require dirname(__DIR__).'/class/UserRankProvider.php';
         $object = new UserRankProvider();

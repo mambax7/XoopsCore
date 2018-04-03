@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class Directory extends ListAbstract
      *
      * @return array
      */
-    public static function getList($path = '', $ignored = [])
+    public static function getList(string $path = '', $ignored = []): array
     {
         $ignored = (array) $ignored;
         $list = [];

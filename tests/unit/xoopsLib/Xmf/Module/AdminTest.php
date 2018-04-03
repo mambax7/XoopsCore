@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Module;
 
@@ -15,7 +15,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestSkipped('side effects');
         $this->object = Admin::getInstance();
@@ -25,19 +25,11 @@ class AdminTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetInstance()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    public function testMenuIconPath()
+    public function testGetInstance(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -45,7 +37,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddConfigBoxLine()
+    public function testMenuIconPath(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -53,7 +45,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddInfoBox()
+    public function testAddConfigBoxLine(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -61,7 +53,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddInfoBoxLine()
+    public function testAddInfoBox(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -69,7 +61,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddItemButton()
+    public function testAddInfoBoxLine(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -77,7 +69,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderButton()
+    public function testAddItemButton(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -85,7 +77,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDisplayButton()
+    public function testRenderButton(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -93,7 +85,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderInfoBox()
+    public function testDisplayButton(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -101,7 +93,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDisplayInfoBox()
+    public function testRenderInfoBox(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -109,7 +101,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderIndex()
+    public function testDisplayInfoBox(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -117,7 +109,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDisplayIndex()
+    public function testRenderIndex(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -125,7 +117,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDisplayNavigation()
+    public function testDisplayIndex(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -133,7 +125,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderAbout()
+    public function testDisplayNavigation(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -141,7 +133,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetPaypal()
+    public function testRenderAbout(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -149,7 +141,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDisplayAbout()
+    public function testSetPaypal(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -157,7 +149,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddConfigError()
+    public function testDisplayAbout(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -165,7 +157,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddConfigAccept()
+    public function testAddConfigError(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -173,7 +165,7 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testIconUrl()
+    public function testAddConfigAccept(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -181,7 +173,15 @@ class AdminTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCheckModuleVersion()
+    public function testIconUrl(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
+    public function testCheckModuleVersion(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -75,7 +76,7 @@ class Provisioning
      *
      * @return Provisioning Xoops\Auth\Provisioning
      */
-    public static function getInstance(AuthAbstract $auth_instance)
+    public static function getInstance(AuthAbstract $auth_instance): Provisioning
     {
         static $provis_instance;
         if (!isset($provis_instance)) {
@@ -92,7 +93,7 @@ class Provisioning
      *
      * @return mixed bool|XoopsUser
      */
-    public function getXoopsUser($uname)
+    public function getXoopsUser(string $uname)
     {
         $xoops = \Xoops::getInstance();
         $member_handler = $xoops->getHandlerMember();
@@ -114,7 +115,7 @@ class Provisioning
      *
      * @return bool|XoopsUser
      */
-    public function sync($data, $uname, $pwd = null)
+    public function sync(string $data, string $uname, string $pwd = null)
     {
         $xoopsUser = $this->getXoopsUser($uname);
         if (!$xoopsUser) { // Xoops User Database not exists
@@ -144,7 +145,7 @@ class Provisioning
      *
      * @return mixed XoopsUser or false
      */
-    public function add($data, $uname, $pwd = null)
+    public function add(string $data, string $uname, string $pwd = null)
     {
         $xoops = \Xoops::getInstance();
         $ret = false;
@@ -186,7 +187,7 @@ class Provisioning
      *
      * @return bool|XoopsUser
      */
-    public function change(XoopsUser $xoopsUser, $data, $uname, $pwd = null)
+    public function change(XoopsUser $xoopsUser, string $data, string $uname, string $pwd = null)
     {
         $xoops = \Xoops::getInstance();
         $ret = false;
@@ -245,7 +246,7 @@ class Provisioning
      * @param object $object user object
      * @param array  $data   data
      */
-    protected function setVarsMapping($object, $data)
+    protected function setVarsMapping($object, $data): void
     {
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class TableForm extends Form
     /**
      * Insert an empty row in the table to serve as a separator.
      */
-    public function insertBreak()
+    public function insertBreak(): void
     {
         $value = '<tr valign="top" align="left"><td></td></tr>';
         $ele = new Raw($value);
@@ -39,7 +40,7 @@ class TableForm extends Form
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = $this->getTitle()."\n".'<form name="'.$this->getName().'" id="'
             .$this->getName().'" action="'.$this->getAction().'" method="'.$this->getMethod()

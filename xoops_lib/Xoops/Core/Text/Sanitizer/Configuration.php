@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -49,7 +50,7 @@ class Configuration extends ConfigurationAbstract
      *
      * @return array of sanitizer preferences
      */
-    protected function readSanitizerPreferences()
+    protected function readSanitizerPreferences(): array
     {
         $xoops = \Xoops::getInstance();
 
@@ -58,7 +59,7 @@ class Configuration extends ConfigurationAbstract
         try {
             $file = $xoops->path($this->sanitizerPrefsFilename);
             $sanitizerPrefs = Yaml::read($file);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
         }
         if (!is_array($sanitizerPrefs)) {
@@ -84,14 +85,14 @@ class Configuration extends ConfigurationAbstract
      *
      * @param array $sanitizerPrefs array of sanitizer preferences to save
      */
-    protected function saveSanitizerPrefrences($sanitizerPrefs)
+    protected function saveSanitizerPrefrences(array $sanitizerPrefs): void
     {
         if (is_array($sanitizerPrefs)) {
             $xoops = \Xoops::getInstance();
 
             try {
                 Yaml::save($sanitizerPrefs, $xoops->path($this->sanitizerPrefsFilename));
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $xoops->events()->triggerEvent('core.exception', $e);
             }
         }

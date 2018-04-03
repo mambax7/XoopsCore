@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @param array $attributes array of attribute name => value pairs
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct([]);
         if (!empty($attributes)) {
@@ -48,7 +49,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      * @param string          $name  name of the attribute
      * @param string|string[] $value value for the attribute
      */
-    public function add($name, $value)
+    public function add(string $name, $value): void
     {
         if (is_scalar($value)) {
             $value = explode(' ', (string) $value);
@@ -70,7 +71,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return string
      */
-    public function renderAttributeString()
+    public function renderAttributeString(): string
     {
         $rendered = '';
         foreach ($this as $name => $value) {
@@ -106,7 +107,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return mixed The value of the attribute, or $default if not set.
      */
-    public function get($name, $default = false)
+    public function get(string $name, $default = false)
     {
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
@@ -123,7 +124,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return $this
      */
-    public function set($name, $value = null)
+    public function set(string $name, $value = null)
     {
         // convert boolean to strings, so getAttribute can return boolean
         // false for attributes that are not defined
@@ -142,7 +143,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return $this->offsetExists($name);
     }
@@ -155,7 +156,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      * @return mixed An attribute value, if the named attribute existed and
      *               has been removed, otherwise NULL.
      */
-    public function remove($name)
+    public function remove(string $name)
     {
         $value = null;
         if ($this->offsetExists($name)) {
@@ -171,7 +172,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return array old values
      */
-    public function clear()
+    public function clear(): array
     {
         return $this->exchangeArray([]);
     }
@@ -183,7 +184,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return array An array of attributes
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getArrayCopy();
     }
@@ -193,7 +194,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return array An array of attribute names/keys
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys((array) $this);
     }
@@ -205,7 +206,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return array old values
      */
-    public function setAll($values)
+    public function setAll($values): array
     {
         $oldValues = $this->exchangeArray($values);
 
@@ -217,7 +218,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @param array $values array of new attributes
      */
-    public function setMerge($values)
+    public function setMerge(array $values): void
     {
         $oldValues = $this->getArrayCopy();
         $this->exchangeArray(array_merge($oldValues, $values));
@@ -235,7 +236,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *                      array rather than added with the key $name.
      * @param mixed $value An attribute array item value.
      */
-    public function setArrayItem($stem, $name, $value)
+    public function setArrayItem(string $stem, string $name, $value): void
     {
         $newValue = [];
         if ($this->offsetExists($stem)) {
@@ -260,7 +261,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return array an array of all attributes with names matching $nameLike
      */
-    public function getAllLike($nameLike = null)
+    public function getAllLike(?string $nameLike = null): array
     {
         if (null === $nameLike) {
             return $this->getArrayCopy();
@@ -281,7 +282,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @param string|string[] $names attributes to suppress
      */
-    protected function suppressRender($names)
+    protected function suppressRender($names): void
     {
         $names = (array) $names;
         $this->suppressRenderAttributes = array_unique(
@@ -302,7 +303,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @return bool true if this attribute should be rendered, false otherwise
      */
-    protected function doRender($name)
+    protected function doRender(string $name): bool
     {
         if ((':' === substr($name, 0, 1))
             || (in_array($name, $this->suppressRenderAttributes, true))) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -64,7 +65,7 @@ class Logger implements LoggerInterface
      *
      * @deprecated
      */
-    public function __set($var, $val)
+    public function __set(string $var, string $val): void
     {
         $this->deprecatedMessage();
         // legacy compatibility: turn off logger display for $xoopsLogger->activated = false; usage
@@ -81,7 +82,7 @@ class Logger implements LoggerInterface
      *
      * @deprecated
      */
-    public function __get($var)
+    public function __get(string $var): void
     {
         $this->deprecatedMessage();
     }
@@ -95,7 +96,7 @@ class Logger implements LoggerInterface
      *
      * @deprecated
      */
-    public function __call($method, $args)
+    public function __call(string $method, string $args): void
     {
         $this->deprecatedMessage();
     }
@@ -110,7 +111,7 @@ class Logger implements LoggerInterface
      *
      * @return Logger object
      */
-    public static function getInstance()
+    public static function getInstance(): Logger
     {
         static $instance;
         if (!isset($instance)) {
@@ -135,7 +136,7 @@ class Logger implements LoggerInterface
      * @param string $errorFile   file
      * @param int    $errorLine   line number
      */
-    public function handleError($errorNumber, $errorString, $errorFile, $errorLine)
+    public function handleError(int $errorNumber, string $errorString, string $errorFile, int $errorLine): void
     {
         if ($this->logging_active && ($errorNumber & error_reporting())) {
             // if an error occurs before a locale is established,
@@ -217,7 +218,7 @@ class Logger implements LoggerInterface
      *
      * @param \Exception|\Throwable $e uncaught Exception or Error
      */
-    public function handleException($e)
+    public function handleException($e): void
     {
         if ($this->isThrowable($e)) {
             $msg = $e->getMessage();
@@ -232,7 +233,7 @@ class Logger implements LoggerInterface
      *
      * @return string sanitized message
      */
-    public function sanitizePath($message)
+    public function sanitizePath(string $message): string
     {
         $cleaners = [
             ['\\', '/'],
@@ -261,7 +262,7 @@ class Logger implements LoggerInterface
      *
      * @param object $logger a PSR-3 compatible logger object
      */
-    public function addLogger($logger)
+    public function addLogger($logger): void
     {
         if (is_object($logger) && method_exists($logger, 'log')) {
             $this->loggers[] = $logger;
@@ -275,7 +276,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string $message, array $context = []): void
     {
         $this->log(LogLevel::EMERGENCY, $message, $context);
     }
@@ -289,7 +290,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function alert($message, array $context = [])
+    public function alert(string $message, array $context = []): void
     {
         $this->log(LogLevel::ALERT, $message, $context);
     }
@@ -302,7 +303,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function critical($message, array $context = [])
+    public function critical(string $message, array $context = []): void
     {
         $this->log(LogLevel::CRITICAL, $message, $context);
     }
@@ -314,7 +315,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function error($message, array $context = [])
+    public function error(string $message, array $context = []): void
     {
         $this->log(LogLevel::ERROR, $message, $context);
     }
@@ -328,7 +329,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function warning($message, array $context = [])
+    public function warning(string $message, array $context = []): void
     {
         $this->log(LogLevel::WARNING, $message, $context);
     }
@@ -339,7 +340,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function notice($message, array $context = [])
+    public function notice(string $message, array $context = []): void
     {
         $this->log(LogLevel::NOTICE, $message, $context);
     }
@@ -352,7 +353,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         $this->log(LogLevel::INFO, $message, $context);
     }
@@ -363,7 +364,7 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         $this->log(LogLevel::DEBUG, $message, $context);
     }
@@ -375,14 +376,14 @@ class Logger implements LoggerInterface
      * @param string $message message
      * @param array  $context array of context data for this log entry
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         if (!empty($this->loggers)) {
             foreach ($this->loggers as $logger) {
                 if (is_object($logger)) {
                     try {
                         $logger->log($level, $message, $context);
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         // just ignore, as we can't do anything, not even log it.
                     }
                 }
@@ -398,14 +399,14 @@ class Logger implements LoggerInterface
      * It should have no effect on loggers using other methods, such a write
      * to file.
      */
-    public function quiet()
+    public function quiet(): void
     {
         if (!empty($this->loggers)) {
             foreach ($this->loggers as $logger) {
                 if (is_object($logger) && method_exists($logger, 'quiet')) {
                     try {
                         $logger->quiet();
-                    } catch (\Exception $e) {
+                    } catch (\Throwable $e) {
                         // just ignore, as we can't do anything, not even log it.
                     }
                 }
@@ -420,7 +421,7 @@ class Logger implements LoggerInterface
      *
      * @return bool true if related to Throwable or Exception, otherwise false
      */
-    protected function isThrowable($e)
+    protected function isThrowable($e): bool
     {
         $type = interface_exists('\Throwable', false) ? '\Throwable' : '\Exception';
 
@@ -432,7 +433,7 @@ class Logger implements LoggerInterface
      *
      * @param string $msg error message to report
      */
-    private function reportFatalError($msg)
+    private function reportFatalError(string $msg): void
     {
         $msg = $this->sanitizePath($msg);
         if ('cli' === PHP_SAPI) {
@@ -450,7 +451,7 @@ class Logger implements LoggerInterface
     /**
      * issue a deprecated warning.
      */
-    private function deprecatedMessage()
+    private function deprecatedMessage(): void
     {
         $xoops = \Xoops::getInstance();
         $xoops->deprecated('This use of XoopsLogger is deprecated since 2.6.0.');

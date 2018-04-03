@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,11 +27,11 @@
  *
  * @return string
  */
-function smarty_function_thumbnail($params, &$smarty)
+function smarty_function_thumbnail(array $params, &$smarty): string
 {
-    $image = isset($params['image']) ? $params['image'] : '';
-    $w = isset($params['w']) ? $params['w'] : 0;
-    $h = isset($params['h']) ? $params['h'] : 0;
+    $image = $params['image'] ?? '';
+    $w = $params['w'] ?? 0;
+    $h = $params['h'] ?? 0;
 
     return \Xoops::getInstance()->service('thumbnail')->getImgUrl($image, $w, $h)->getValue();
 }

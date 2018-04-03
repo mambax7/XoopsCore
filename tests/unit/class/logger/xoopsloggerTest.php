@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -10,7 +10,7 @@ class xoopsloggerTest extends \PHPUnit\Framework\TestCase
 
     protected $myclass = 'XoopsLogger';
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $instance = XoopsLogger::getInstance();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -20,7 +20,7 @@ class xoopsloggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $instance1);
     }
 
-    public function test___get()
+    public function test___get(): void
     {
         $instance = XoopsLogger::getInstance();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -28,7 +28,7 @@ class xoopsloggerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test___class()
+    public function test___class(): void
     {
         $instance = XoopsLogger::getInstance();
         $this->assertInstanceOf($this->myclass, $instance);

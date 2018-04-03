@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xoops Functions.
  *
@@ -25,7 +26,7 @@ use Xoops\Core\Handler\Factory;
  *
  * @return Xoops
  */
-function xoops_functions_php_deprecated($function, $file, $line)
+function xoops_functions_php_deprecated(string $function, string $file, int $line): Xoops
 {
     $xoops = \Xoops::getInstance();
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
@@ -45,7 +46,7 @@ function xoops_functions_php_deprecated($function, $file, $line)
  *
  * @return Xoops
  */
-function xoops_functions_php_replaced_by_mod($function, $module)
+function xoops_functions_php_replaced_by_mod(string $function, string $module): Xoops
 {
     $xoops = \Xoops::getInstance();
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
@@ -63,7 +64,7 @@ function xoops_functions_php_replaced_by_mod($function, $module)
  * @param  bool                                                  $optional is this optional, causes error if false and no handler is available
  * @return XoopsObjectHandler|XoopsPersistableObjectHandler|null
  */
-function xoops_getHandler($name, $optional = false)
+function xoops_getHandler(string $name, bool $optional = false)
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     // Also can use: dedicated alias, i.e. $handler = $xoops->getHandlerConfig($optional);
@@ -79,7 +80,7 @@ function xoops_getHandler($name, $optional = false)
  * @param  bool                                                  $optional   is this optional, causes error if false and no handler is available
  * @return XoopsObjectHandler|XoopsPersistableObjectHandler|null
  */
-function xoops_getModuleHandler($name = null, $module_dir = null, $optional = false)
+function xoops_getModuleHandler(?string $name = null, ?string $module_dir = null, bool $optional = false)
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -95,7 +96,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
  *                       other - module class, located in /modules/[$type]/class/
  * @return boolean
  */
-function xoops_load($name, $type = 'core')
+function xoops_load(string $name, string $type = 'core'): bool
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     // Note: most classes will autoload (i.e. $nav = new XoopsPageNav();) with no need for xoops_load()
@@ -110,7 +111,7 @@ function xoops_load($name, $type = 'core')
  * @param  string  $language Language to be loaded, current language content will be loaded if not specified
  * @return boolean
  */
-function xoops_loadLanguage($name, $domain = '', $language = null)
+function xoops_loadLanguage(string $name, string $domain = '', string $language = null): bool
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -121,7 +122,7 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
  * @deprecated
  * @return array
  */
-function xoops_getActiveModules()
+function xoops_getActiveModules(): array
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -132,7 +133,7 @@ function xoops_getActiveModules()
  * @deprecated
  * @return array
  */
-function xoops_setActiveModules()
+function xoops_setActiveModules(): array
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -144,7 +145,7 @@ function xoops_setActiveModules()
  * @param  string $dirname module directory name
  * @return bool
  */
-function xoops_isActiveModule($dirname)
+function xoops_isActiveModule(string $dirname): bool
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -155,7 +156,7 @@ function xoops_isActiveModule($dirname)
  * @deprecated
  * @param bool $closehead true to close the header
  */
-function xoops_header($closehead = true)
+function xoops_header(bool $closehead = true): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $xoops->simpleHeader($closehead);
@@ -164,7 +165,7 @@ function xoops_header($closehead = true)
 /**
  * @deprecated
  */
-function xoops_footer()
+function xoops_footer(): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $xoops->simpleFooter();
@@ -175,7 +176,7 @@ function xoops_footer()
  * @param mixed  $msg   message
  * @param string $title title for message display
  */
-function xoops_error($msg, $title = '')
+function xoops_error($msg, $title = ''): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     echo $xoops->alert('error', $msg, $title);
@@ -186,7 +187,7 @@ function xoops_error($msg, $title = '')
  * @param mixed  $msg   message
  * @param string $title title for message display
  */
-function xoops_result($msg, $title = '')
+function xoops_result($msg, $title = ''): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     echo $xoops->alert('info', $msg, $title);
@@ -200,7 +201,7 @@ function xoops_result($msg, $title = '')
  * @param string $submit   submit button message
  * @param bool   $addtoken true to add CSRF token
  */
-function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
+function xoops_confirm(array $hiddens, string $action, string $msg, string $submit = '', bool $addtoken = true): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     echo $xoops->confirm($hiddens, $action, $msg, $submit, $addtoken);
@@ -212,7 +213,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
  * @param  string        $timeoffset unused
  * @return int
  */
-function xoops_getUserTimestamp($time, $timeoffset = '')
+function xoops_getUserTimestamp($time, $timeoffset = ''): int
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -226,7 +227,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
  * @param  string $timeoffset unused
  * @return string
  */
-function formatTimestamp($time, $format = 'l', $timeoffset = '')
+function formatTimestamp(int $time, string $format = 'l', string $timeoffset = ''): string
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -239,7 +240,7 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
  * @param  null $userTZ    timezone
  * @return int
  */
-function userTimeToServerTime($timestamp, $userTZ = null)
+function userTimeToServerTime(int $timestamp, $userTZ = null): int
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -250,7 +251,7 @@ function userTimeToServerTime($timestamp, $userTZ = null)
  * @deprecated
  * @return string
  */
-function xoops_makepass()
+function xoops_makepass(): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -263,7 +264,7 @@ function xoops_makepass()
  * @param  bool         $antispam true to use spam harvester protection
  * @return false|string
  */
-function checkEmail($email, $antispam = false)
+function checkEmail(string $email, bool $antispam = false)
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -275,7 +276,7 @@ function checkEmail($email, $antispam = false)
  * @param  string $url URL
  * @return string
  */
-function formatURL($url)
+function formatURL(string $url): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -286,7 +287,7 @@ function formatURL($url)
  * @deprecated
  * @return string
  */
-function xoops_getbanner()
+function xoops_getbanner(): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -302,7 +303,7 @@ function xoops_getbanner()
  *                                   URL -  used for return from login redirect
  * @param bool $allowExternalLink allow redirect to external URL
  */
-function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
+function redirect_header(string $url, int $time = 3, string $message = '', bool $addredirect = true, bool $allowExternalLink = false): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $xoops->redirect($url, $time, $message, $addredirect, $allowExternalLink);
@@ -313,7 +314,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
  * @param  string $key key
  * @return string
  */
-function xoops_getenv($key)
+function xoops_getenv(string $key): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -325,7 +326,7 @@ function xoops_getenv($key)
  * @param  string $theme theme
  * @return string
  */
-function xoops_getcss($theme = '')
+function xoops_getcss(string $theme = ''): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -349,7 +350,7 @@ function xoops_getMailer()
  * @param  int   $posts   posts
  * @return array
  */
-function xoops_getrank($rank_id = 0, $posts = 0)
+function xoops_getrank(int $rank_id = 0, int $posts = 0): array
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -364,7 +365,7 @@ function xoops_getrank($rank_id = 0, $posts = 0)
  * @param  string $trimmarker elipsis
  * @return string
  */
-function xoops_substr($str, $start, $length, $trimmarker = '...')
+function xoops_substr(string $str, int $start, int $length, string $trimmarker = '...'): string
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -376,7 +377,7 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
  * @param  int          $module_id module
  * @return boolean|null
  */
-function xoops_notification_deletebymodule($module_id)
+function xoops_notification_deletebymodule(int $module_id)
 {
     xoops_functions_php_replaced_by_mod(__FUNCTION__, 'Notifications module');
 }
@@ -386,7 +387,7 @@ function xoops_notification_deletebymodule($module_id)
  * @param  int          $user_id user
  * @return boolean|null
  */
-function xoops_notification_deletebyuser($user_id)
+function xoops_notification_deletebyuser(int $user_id)
 {
     xoops_functions_php_replaced_by_mod(__FUNCTION__, 'Notifications module');
 }
@@ -398,7 +399,7 @@ function xoops_notification_deletebyuser($user_id)
  * @param  int          $item_id   item
  * @return boolean|null
  */
-function xoops_notification_deletebyitem($module_id, $category, $item_id)
+function xoops_notification_deletebyitem(int $module_id, int $category, int $item_id)
 {
     xoops_functions_php_replaced_by_mod(__FUNCTION__, 'Notifications module');
 }
@@ -409,7 +410,7 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
  * @param  int|null $item_id   item
  * @return int
  */
-function xoops_comment_count($module_id, $item_id = null)
+function xoops_comment_count(int $module_id, ?int $item_id = null)
 {
     xoops_functions_php_replaced_by_mod(__FUNCTION__, 'Comments module');
 }
@@ -420,7 +421,7 @@ function xoops_comment_count($module_id, $item_id = null)
  * @param  int          $item_id   item
  * @return boolean|null
  */
-function xoops_comment_delete($module_id, $item_id)
+function xoops_comment_delete(int $module_id, int $item_id)
 {
     xoops_functions_php_replaced_by_mod(__FUNCTION__, 'Comments module');
 }
@@ -432,7 +433,7 @@ function xoops_comment_delete($module_id, $item_id)
  * @param  int|null $item_id   item
  * @return bool
  */
-function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
+function xoops_groupperm_deletebymoditem(int $module_id, string $perm_name, ?int $item_id = null): bool
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -443,7 +444,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
  * @deprecated
  * @param string $text text
  */
-function xoops_utf8_encode(&$text)
+function xoops_utf8_encode(string &$text): void
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $text = XoopsLocale::utf8_encode($text);
@@ -453,7 +454,7 @@ function xoops_utf8_encode(&$text)
  * @deprecated
  * @param string $text text
  */
-function xoops_convert_encoding(&$text)
+function xoops_convert_encoding(string &$text): void
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $text = XoopsLocale::utf8_encode($text);
@@ -464,7 +465,7 @@ function xoops_convert_encoding(&$text)
  * @param  string $text text
  * @return string
  */
-function xoops_trim($text)
+function xoops_trim(string $text): string
 {
     xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -476,7 +477,7 @@ function xoops_trim($text)
  * @param  string $option option name
  * @return string
  */
-function xoops_getOption($option)
+function xoops_getOption(string $option): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -489,7 +490,7 @@ function xoops_getOption($option)
  * @param  string|int|array $type   option type
  * @return mixed
  */
-function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
+function xoops_getConfigOption(string $option, $type = 'XOOPS_CONF')
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -501,7 +502,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  * @param string $option config name
  * @param mixed  $new    value
  */
-function xoops_setConfigOption($option, $new = null)
+function xoops_setConfigOption(string $option, $new = null): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $xoops->setConfig($option, $new);
@@ -513,7 +514,7 @@ function xoops_setConfigOption($option, $new = null)
  * @param  string $dirname module directory
  * @return mixed
  */
-function xoops_getModuleOption($option, $dirname = '')
+function xoops_getModuleOption(string $option, string $dirname = '')
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -526,7 +527,7 @@ function xoops_getModuleOption($option, $dirname = '')
  * @param  int    $debug unused
  * @return string
  */
-function xoops_getBaseDomain($url, $debug = 0)
+function xoops_getBaseDomain(string $url, int $debug = 0): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -538,7 +539,7 @@ function xoops_getBaseDomain($url, $debug = 0)
  * @param  string $url URL
  * @return string
  */
-function xoops_getUrlDomain($url)
+function xoops_getUrlDomain(string $url): string
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -552,7 +553,7 @@ function xoops_getUrlDomain($url)
  * @param  bool    $clear_old unused
  * @return boolean
  */
-function xoops_template_touch($tpl_id, $clear_old = true)
+function xoops_template_touch(string $tpl_id, bool $clear_old = true): bool
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
 
@@ -564,7 +565,7 @@ function xoops_template_touch($tpl_id, $clear_old = true)
  *
  * @param int $mid Module ID
  */
-function xoops_template_clear_module_cache($mid)
+function xoops_template_clear_module_cache(int $mid): void
 {
     $xoops = xoops_functions_php_deprecated(__FUNCTION__, __FILE__, (__LINE__ + 1));
     $xoops->templateClearModuleCache($mid);

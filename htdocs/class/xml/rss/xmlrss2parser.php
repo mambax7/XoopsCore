@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,7 +44,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * XoopsXmlRss2Parser constructor.
      * @param string $input xml document to parse
      */
-    public function __construct(&$input)
+    public function __construct(string &$input)
     {
         parent::__construct($input);
         $this->useUtfEncoding();
@@ -76,7 +77,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param string $name  channel name
      * @param string $value value
      */
-    public function setChannelData($name, &$value)
+    public function setChannelData(string $name, string &$value): void
     {
         if (!isset($this->_channelData[$name])) {
             $this->_channelData[$name] = $value;
@@ -89,7 +90,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param  string     $name channel name
      * @return array|bool
      */
-    public function getChannelData($name = null)
+    public function getChannelData(?string $name = null)
     {
         if (isset($name)) {
             if (isset($this->_channelData[$name])) {
@@ -106,7 +107,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param string $name  image data name
      * @param string $value value
      */
-    public function setImageData($name, &$value)
+    public function setImageData(string $name, string &$value): void
     {
         $this->_imageData[$name] = $value;
     }
@@ -115,7 +116,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param  string     $name image data name
      * @return array|bool
      */
-    public function getImageData($name = null)
+    public function getImageData(?string $name = null)
     {
         if (isset($name)) {
             if (isset($this->_imageData[$name])) {
@@ -132,7 +133,7 @@ class XoopsXmlRss2Parser extends SaxParser
     /**
      * @param array $itemarr
      */
-    public function setItems(&$itemarr)
+    public function setItems(array &$itemarr): void
     {
         $this->_items[] = $itemarr;
     }
@@ -140,7 +141,7 @@ class XoopsXmlRss2Parser extends SaxParser
     /**
      * @return array
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->_items;
     }
@@ -150,7 +151,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param array  $value
      * @param string $delim
      */
-    public function setTempArr($name, &$value, $delim = '')
+    public function setTempArr(string $name, array &$value, string $delim = ''): void
     {
         if (!isset($this->_tempArr[$name])) {
             $this->_tempArr[$name] = $value;
@@ -162,12 +163,12 @@ class XoopsXmlRss2Parser extends SaxParser
     /**
      * @return array
      */
-    public function getTempArr()
+    public function getTempArr(): array
     {
         return $this->_tempArr;
     }
 
-    public function resetTempArr()
+    public function resetTempArr(): void
     {
         unset($this->_tempArr);
         $this->_tempArr = [];
@@ -182,7 +183,7 @@ class RssChannelHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'channel';
     }
@@ -196,7 +197,7 @@ class RssTitleHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'title';
     }
@@ -205,7 +206,7 @@ class RssTitleHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -235,7 +236,7 @@ class RssLinkHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'link';
     }
@@ -244,7 +245,7 @@ class RssLinkHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -274,7 +275,7 @@ class RssDescriptionHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'description';
     }
@@ -283,7 +284,7 @@ class RssDescriptionHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -313,7 +314,7 @@ class RssGeneratorHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'generator';
     }
@@ -322,7 +323,7 @@ class RssGeneratorHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -343,7 +344,7 @@ class RssCopyrightHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'copyright';
     }
@@ -352,7 +353,7 @@ class RssCopyrightHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data   data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -373,7 +374,7 @@ class RssNameHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'name';
     }
@@ -382,7 +383,7 @@ class RssNameHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'textInput':
@@ -403,7 +404,7 @@ class RssManagingEditorHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'managingEditor';
     }
@@ -412,7 +413,7 @@ class RssManagingEditorHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -433,7 +434,7 @@ class RssLanguageHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'language';
     }
@@ -442,7 +443,7 @@ class RssLanguageHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -463,7 +464,7 @@ class RssWebMasterHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'webMaster';
     }
@@ -472,7 +473,7 @@ class RssWebMasterHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -493,7 +494,7 @@ class RssDocsHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'docs';
     }
@@ -502,7 +503,7 @@ class RssDocsHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -523,7 +524,7 @@ class RssTtlHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'ttl';
     }
@@ -532,7 +533,7 @@ class RssTtlHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -553,7 +554,7 @@ class RssTextInputHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'textInput';
     }
@@ -562,7 +563,7 @@ class RssTextInputHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser     parser
      * @param array              $attributes
      */
-    public function handleBeginElement(SaxParser $parser, &$attributes)
+    public function handleBeginElement(SaxParser $parser, array &$attributes): void
     {
         $parser->resetTempArr();
     }
@@ -570,7 +571,7 @@ class RssTextInputHandler extends XmlTagHandler
     /**
      * @param XoopsXmlRss2Parser $parser parser
      */
-    public function handleEndElement(SaxParser $parser)
+    public function handleEndElement(SaxParser $parser): void
     {
         $parser->setChannelData('textinput', $parser->getTempArr());
     }
@@ -584,7 +585,7 @@ class RssLastBuildDateHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'lastBuildDate';
     }
@@ -593,7 +594,7 @@ class RssLastBuildDateHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -614,7 +615,7 @@ class RssImageHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'image';
     }
@@ -628,7 +629,7 @@ class RssUrlHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'url';
     }
@@ -637,7 +638,7 @@ class RssUrlHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('image' === $parser->getParentTag()) {
             $parser->setImageData('url', $data);
@@ -653,7 +654,7 @@ class RssWidthHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'width';
     }
@@ -662,7 +663,7 @@ class RssWidthHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('image' === $parser->getParentTag()) {
             $parser->setImageData('width', $data);
@@ -678,7 +679,7 @@ class RssHeightHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'height';
     }
@@ -687,7 +688,7 @@ class RssHeightHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('image' === $parser->getParentTag()) {
             $parser->setImageData('height', $data);
@@ -703,7 +704,7 @@ class RssItemHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'item';
     }
@@ -712,7 +713,7 @@ class RssItemHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser     parser
      * @param array              $attributes
      */
-    public function handleBeginElement(SaxParser $parser, &$attributes)
+    public function handleBeginElement(SaxParser $parser, array &$attributes): void
     {
         $parser->resetTempArr();
     }
@@ -720,7 +721,7 @@ class RssItemHandler extends XmlTagHandler
     /**
      * @param XoopsXmlRss2Parser $parser parser
      */
-    public function handleEndElement(SaxParser $parser)
+    public function handleEndElement(SaxParser $parser): void
     {
         $items = $parser->getTempArr();
         $parser->setItems($items);
@@ -735,7 +736,7 @@ class RssCategoryHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'category';
     }
@@ -744,7 +745,7 @@ class RssCategoryHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -769,7 +770,7 @@ class RssCommentsHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'comments';
     }
@@ -778,7 +779,7 @@ class RssCommentsHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('item' === $parser->getParentTag()) {
             $parser->setTempArr('comments', $data);
@@ -794,7 +795,7 @@ class RssPubDateHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'pubDate';
     }
@@ -803,7 +804,7 @@ class RssPubDateHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -828,7 +829,7 @@ class RssGuidHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'guid';
     }
@@ -837,7 +838,7 @@ class RssGuidHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('item' === $parser->getParentTag()) {
             $parser->setTempArr('guid', $data);
@@ -853,7 +854,7 @@ class RssAuthorHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'author';
     }
@@ -862,7 +863,7 @@ class RssAuthorHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('item' === $parser->getParentTag()) {
             $parser->setTempArr('author', $data);
@@ -878,7 +879,7 @@ class RssSourceHandler extends XmlTagHandler
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'source';
     }
@@ -887,7 +888,7 @@ class RssSourceHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser     parser
      * @param array              $attributes
      */
-    public function handleBeginElement(SaxParser $parser, &$attributes)
+    public function handleBeginElement(SaxParser $parser, array &$attributes): void
     {
         if ('item' === $parser->getParentTag()) {
             $parser->setTempArr('source_url', $attributes['url']);
@@ -898,7 +899,7 @@ class RssSourceHandler extends XmlTagHandler
      * @param XoopsXmlRss2Parser $parser parser
      * @param array              $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, array &$data): void
     {
         if ('item' === $parser->getParentTag()) {
             $parser->setTempArr('source', $data);

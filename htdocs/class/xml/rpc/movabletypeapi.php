@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class movabletypeapi extends XoopsXmlRpcApi
         parent::__construct($params, $response, $module);
     }
 
-    public function getCategoryList()
+    public function getCategoryList(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -47,17 +48,17 @@ class movabletypeapi extends XoopsXmlRpcApi
         }
     }
 
-    public function getPostCategories()
+    public function getPostCategories(): void
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
-    public function setPostCategories()
+    public function setPostCategories(): void
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
-    public function supportedMethods()
+    public function supportedMethods(): void
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }

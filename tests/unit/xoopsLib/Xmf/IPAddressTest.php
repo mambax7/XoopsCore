@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test;
 
@@ -26,7 +26,7 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new IPAddress($this->testIPV4);
         $this->objectV6 = new IPAddress($this->testIPV6);
@@ -36,11 +36,11 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testFromRequest()
+    public function testFromRequest(): void
     {
         $testAddress = '192.168.20.16';
         $_SERVER['REMOTE_ADDR'] = $testAddress;
@@ -55,13 +55,13 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($testAddress, $actual);
     }
 
-    public function testAsReadable()
+    public function testAsReadable(): void
     {
         $this->assertSame($this->testIPV4, $this->object->asReadable());
         $this->assertSame($this->testIPV6, $this->objectV6->asReadable());
     }
 
-    public function testAsBinary()
+    public function testAsBinary(): void
     {
         $addressV6 = '3031:3233:3435:3637:3839:584F:4F50:5334';
         $instanceV6 = new IPAddress($addressV6);
@@ -72,7 +72,7 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instanceV4->asBinary(), 'C0DE');
     }
 
-    public function testIpVersion()
+    public function testIpVersion(): void
     {
         $this->assertSame(4, $this->object->ipVersion());
         $this->assertSame(6, $this->objectV6->ipVersion());
@@ -81,7 +81,7 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($instance->ipVersion());
     }
 
-    public function testSameSubnet()
+    public function testSameSubnet(): void
     {
         $instanceV6 = new IPAddress('FE80:0000:0000:0000:0202:B3FF:FE1E:8329');
         $addressV6 = 'FE80:0000:0000:0000:8000:0000:0000:0000';

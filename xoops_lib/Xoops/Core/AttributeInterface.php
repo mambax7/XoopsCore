@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ interface AttributeInterface
      *
      * @return mixed The value of the session variable, or $default if not set.
      */
-    public function get($name, $default = null);
+    public function get(string $name, $default = null);
 
     /**
      * Set an attribute value.
@@ -40,7 +41,7 @@ interface AttributeInterface
      *
      * @return $this
      */
-    public function set($name, $value);
+    public function set(string $name, $value);
 
     /**
      * Determine if an attribute exists.
@@ -49,7 +50,7 @@ interface AttributeInterface
      *
      * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
-    public function has($name);
+    public function has(string $name): bool;
 
     /**
      * Remove an attribute.
@@ -59,12 +60,12 @@ interface AttributeInterface
      * @return mixed An attribute value, if the named attribute existed and
      *               has been removed, otherwise NULL.
      */
-    public function remove($name);
+    public function remove(string $name);
 
     /**
      * Remove all attributes, return previous values.
      *
      * @return array old attributes values
      */
-    public function clear();
+    public function clear(): array;
 }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS kernel class.
  *
@@ -51,7 +52,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('tplset_id', $format);
     }
@@ -63,7 +64,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function tplset_id($format = '')
+    public function tplset_id(string $format = '')
     {
         return $this->getVar('tplset_id', $format);
     }
@@ -75,7 +76,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function tplset_name($format = '')
+    public function tplset_name(string $format = '')
     {
         return $this->getVar('tplset_name', $format);
     }
@@ -87,7 +88,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function tplset_desc($format = '')
+    public function tplset_desc(string $format = '')
     {
         return $this->getVar('tplset_desc', $format);
     }
@@ -99,7 +100,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function tplset_credits($format = '')
+    public function tplset_credits(string $format = '')
     {
         return $this->getVar('tplset_credits', $format);
     }
@@ -111,7 +112,7 @@ class XoopsTplSet extends XoopsObject
      *
      * @return mixed
      */
-    public function tplset_created($format = '')
+    public function tplset_created(string $format = '')
     {
         return $this->getVar('tplset_created', $format);
     }

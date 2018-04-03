@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class ButtonTray extends Element
      *
      * @return string type
      */
-    public function getType()
+    public function getType(): string
     {
         return (string) $this->get('type', '');
     }
@@ -65,7 +66,7 @@ class ButtonTray extends Element
      *
      * @return string rendered button tray
      */
-    public function render()
+    public function render(): string
     {
         $ret = '';
         $this->add('class', 'btn');

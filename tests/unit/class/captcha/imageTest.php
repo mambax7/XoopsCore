@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,14 +6,14 @@ class imageTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCaptchaImage';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
         $this->assertInstanceOf('XoopsCaptchaMethod', $instance);
     }
 
-    public function test_isActive()
+    public function test_isActive(): void
     {
         $instance = new $this->myclass();
 
@@ -21,7 +21,7 @@ class imageTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_render()
+    public function test_render(): void
     {
         $instance = new $this->myclass();
 
@@ -29,7 +29,7 @@ class imageTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $value);
     }
 
-    public function test_loadImage()
+    public function test_loadImage(): void
     {
         $instance = new $this->myclass();
 

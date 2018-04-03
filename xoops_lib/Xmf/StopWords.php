@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -56,7 +57,7 @@ class StopWords
      *
      * @return bool True if word is significant, false if it is a stop word
      */
-    public function check($key)
+    public function check(string $key): bool
     {
         $key = function_exists('mb_strtolower')
             ? mb_strtolower($key, static::ENCODING)

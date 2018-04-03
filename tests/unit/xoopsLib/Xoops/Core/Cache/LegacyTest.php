@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -15,7 +15,7 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
@@ -23,18 +23,18 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGc()
+    public function testGc(): void
     {
         $this->markTestSkipped(); // something in gc() outputs "<script>history.go(-1);</script>"????
         $ret = Legacy::gc();
         $this->assertTrue($ret);
     }
 
-    public function testReadWriteDelete()
+    public function testReadWriteDelete(): void
     {
         $key = 'offhandname';
         $value = 'Fred';
@@ -50,7 +50,7 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($ret);
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $key = 'anothename';
         $value = 'Fish';
@@ -66,7 +66,7 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($ret);
     }
 
-    public function test__call()
+    public function test__call(): void
     {
         $instance = new Legacy();
         $this->assertInstanceOf('\Xoops\Core\Cache\Legacy', $instance);
@@ -75,7 +75,7 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($ret);
     }
 
-    public function test__callStatic()
+    public function test__callStatic(): void
     {
         $ret = Legacy::noSuchMethod();
         $this->assertFalse($ret);

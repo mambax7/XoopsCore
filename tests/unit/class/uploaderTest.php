@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,11 +6,11 @@ class uploaderTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsMediaUploader';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];

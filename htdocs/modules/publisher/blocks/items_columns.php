@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ include_once dirname(__DIR__).'/include/common.php';
  *
  * @return array|bool
  */
-function publisher_items_columns_show($options)
+function publisher_items_columns_show(array $options)
 {
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();
@@ -80,7 +81,7 @@ function publisher_items_columns_show($options)
         if ($scount > 0 && is_array($categoryItemsObj)) {
             reset($categoryItemsObj);
             //First Item
-            list($itemid, $thisitem) = each($categoryItemsObj);
+            [$itemid, $thisitem] = each($categoryItemsObj);
 
             /* @var $thisitem PublisherItem */
             $mainitem['item_title'] = $thisitem->title();
@@ -106,7 +107,7 @@ function publisher_items_columns_show($options)
 
             //The Rest
             if ($scount > 1) {
-                while (list($itemid, $thisitem) = each($categoryItemsObj)) {
+                while ([$itemid, $thisitem] = each($categoryItemsObj)) {
                     $subitem['title'] = $thisitem->title();
                     $subitem['cleantitle'] = strip_tags($thisitem->title());
                     $subitem['link'] = $thisitem->getItemLink();
@@ -141,7 +142,7 @@ function publisher_items_columns_show($options)
  *
  * @return string
  */
-function publisher_items_columns_edit($options)
+function publisher_items_columns_edit(array $options): string
 {
     $form = new Xoops\Form\BlockForm();
     $colEle = new Xoops\Form\Select(_MB_PUBLISHER_NUMBER_COLUMN_VIEW, 'options[0]', $options[0]);

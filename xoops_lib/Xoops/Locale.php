@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class Locale
      *
      * @return string current locale
      */
-    public static function getCurrent()
+    public static function getCurrent(): string
     {
         // if none set, take the top of the user locales
         if (null === static::$currentLocale) {
@@ -63,7 +64,7 @@ class Locale
      *
      * @throws InvalidLocale
      */
-    public static function setCurrent($locale)
+    public static function setCurrent(string $locale): void
     {
         Data::setDefaultLocale($locale);
         static::$currentLocale = static::normalizeLocale($locale);
@@ -74,7 +75,7 @@ class Locale
      *
      * @return \DateTimeZone current timezone
      */
-    public static function getTimeZone()
+    public static function getTimeZone(): \DateTimeZone
     {
         if (null === static::$currentTimeZone) {
             $xoops = \Xoops::getInstance();
@@ -95,7 +96,7 @@ class Locale
     /**
      * Set the current timezone.
      */
-    public static function setTimeZone(\DateTimeZone $timeZone)
+    public static function setTimeZone(\DateTimeZone $timeZone): void
     {
         static::$currentTimeZone = $timeZone;
     }
@@ -105,7 +106,7 @@ class Locale
      *
      * @return \DateTimeZone
      */
-    public static function getDefaultTimeZone()
+    public static function getDefaultTimeZone(): \DateTimeZone
     {
         if (null === static::$defaultTimeZone) {
             $tz = \Xoops::getInstance()->getConfig('default_TZ');
@@ -123,7 +124,7 @@ class Locale
      *
      * @return \DateTimeZone
      */
-    public static function getSystemTimeZone()
+    public static function getSystemTimeZone(): \DateTimeZone
     {
         if (null === static::$systemTimeZone) {
             $tz = \Xoops::getInstance()->getConfig('server_TZ');
@@ -145,7 +146,7 @@ class Locale
      *
      * @return boolean
      */
-    public static function loadLanguage($name, $domain = '', $language = null)
+    public static function loadLanguage(string $name, $domain = '', $language = null): bool
     {
         if (empty($name)) {
             return false;
@@ -173,7 +174,7 @@ class Locale
      *
      * @return boolean
      */
-    public static function loadLocale($domain = null, $forcedLocale = null)
+    public static function loadLocale(string $domain = null, string $forcedLocale = null): bool
     {
         $xoops = \Xoops::getInstance();
         // expanded domain to multiple categories, e.g. module:system, framework:filter, etc.
@@ -226,7 +227,7 @@ class Locale
      *
      * @return bool
      */
-    public static function loadThemeLocale(XoopsTheme $theme)
+    public static function loadThemeLocale(XoopsTheme $theme): bool
     {
         $xoops = \Xoops::getInstance();
         $locales = self::getUserLocales();
@@ -249,7 +250,7 @@ class Locale
     /**
      * @return boolean
      */
-    public static function loadMailerLocale()
+    public static function loadMailerLocale(): bool
     {
         $xoops = \Xoops::getInstance();
         $locales = self::getUserLocales();
@@ -271,7 +272,7 @@ class Locale
      * @param  array  $params
      * @return string
      */
-    public static function translate($key, $dirname = 'xoops', $params = [])
+    public static function translate(string $key, string $dirname = 'xoops', array $params = []): string
     {
         $class = self::getClassFromDirname($dirname);
         $message = self::getMessage($class, $key);
@@ -285,7 +286,7 @@ class Locale
      * @param  array  $params
      * @return string
      */
-    public static function translateTheme($key, $dirname = '', $params = [])
+    public static function translateTheme(string $key, string $dirname = '', array $params = []): string
     {
         $class = self::getThemeClassFromDirname($dirname);
         $message = self::getMessage($class, $key);
@@ -306,7 +307,7 @@ class Locale
      *
      * @return array with the user locales sorted by priority. Highest is best.
      */
-    public static function getUserLocales()
+    public static function getUserLocales(): array
     {
         if (empty(self::$userLocales)) {
             // reset user_lang array
@@ -361,7 +362,7 @@ class Locale
      *
      * @return string normalized locale, or empty string on error
      */
-    public static function normalizeLocale($locale, $separator = '_', $withScript = true)
+    public static function normalizeLocale(string $locale, string $separator = '_', bool $withScript = true): string
     {
         try {
             $keys = Data::explodeLocale($locale);
@@ -383,7 +384,7 @@ class Locale
      *
      * @return string normalized resource domain
      */
-    public static function normalizeDomain($domain)
+    public static function normalizeDomain(string $domain): string
     {
         return strtolower($domain);
     }
@@ -395,11 +396,11 @@ class Locale
      *
      * @return \DateTimeZone
      */
-    protected static function newDateTimeZone($timeZoneName)
+    protected static function newDateTimeZone(string $timeZoneName): \DateTimeZone
     {
         try {
             $timeZone = new \DateTimeZone($timeZoneName);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $timeZone = new \DateTimeZone('UTC');
         }
 
@@ -411,7 +412,7 @@ class Locale
      *
      * @return string
      */
-    protected static function getClassFromDirname($dirname)
+    protected static function getClassFromDirname(string $dirname): string
     {
         return ucfirst($dirname).'Locale';
     }
@@ -421,7 +422,7 @@ class Locale
      *
      * @return string
      */
-    protected static function getThemeClassFromDirname($dirname = '')
+    protected static function getThemeClassFromDirname(string $dirname = ''): string
     {
         if (!$dirname) {
             $dirname = \Xoops::getInstance()->theme()->folderName;
@@ -437,7 +438,7 @@ class Locale
      * @param  string $key
      * @return string
      */
-    private static function getMessage($class, $key)
+    private static function getMessage(string $class, string $key): string
     {
         if (defined("${class}::${key}")) {
             return constant("${class}::${key}");
@@ -458,7 +459,7 @@ class Locale
      * @param  string $language the language code (e.g. `en-US`, `en`).
      * @return string the formatted message.
      */
-    private static function format($message, $params, $language)
+    private static function format(string $message, array $params, string $language): string
     {
         $params = (array) $params;
         if ($params === []) {
@@ -490,7 +491,7 @@ class Locale
      * Returns the message formatter instance.
      * @return MessageFormatter the message formatter to be used to format message via ICU message format.
      */
-    private static function getMessageFormatter()
+    private static function getMessageFormatter(): MessageFormatter
     {
         static $messageFormatter = null;
         if (null === $messageFormatter) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class XoopsModelFactory
      *
      * @return XoopsModelFactory
      */
-    public static function getInstance()
+    public static function getInstance(): XoopsModelFactory
     {
         static $instance;
         if (!isset($instance)) {
@@ -53,7 +54,7 @@ class XoopsModelFactory
      *
      * @return null|XoopsModelAbstract
      */
-    public function loadHandler(XoopsPersistableObjectHandler $oHandler, $name, $args = null)
+    public function loadHandler(XoopsPersistableObjectHandler $oHandler, string $name, $args = null): ?XoopsModelAbstract
     {
         if (!isset(self::$handlers[$name])) {
             $handler = null;

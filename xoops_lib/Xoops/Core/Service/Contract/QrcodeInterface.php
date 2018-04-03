@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ interface QrcodeInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $qrText   text to encode in QR Code
      */
-    public function getImgUrl(Response $response, $qrText);
+    public function getImgUrl(Response $response, string $qrText): void;
 
     /**
      * getImgTag - get a full HTML img tag to display a QR Code image of supplied text.
@@ -43,5 +44,5 @@ interface QrcodeInterface
      * @param string   $qrText     text to encode in QR Code
      * @param array    $attributes array of attribute name => value pairs for img tag
      */
-    public function getImgTag(Response $response, $qrText, $attributes = []);
+    public function getImgTag(Response $response, string $qrText, array $attributes = []): void;
 }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -87,7 +88,7 @@ class XoopsInstallWizard
     /**
      * @return bool
      */
-    public function checkAccess()
+    public function checkAccess(): bool
     {
         global $xoopsOption;
         if (INSTALL_USER !== '' && INSTALL_PASSWORD !== '') {
@@ -134,7 +135,7 @@ class XoopsInstallWizard
     /**
      * @param string $file
      */
-    public function loadLangFile($file)
+    public function loadLangFile(string $file): void
     {
         if (file_exists($file = XOOPS_INSTALL_PATH."/locale/{$this->language}/{$file}.php")) {
             include_once $file;
@@ -147,7 +148,7 @@ class XoopsInstallWizard
     /**
      * @param string $language
      */
-    public function initLanguage($language)
+    public function initLanguage(string $language): void
     {
         $language = preg_replace("/[^a-z0-9_\-]/i", '', $language);
         if (!file_exists(XOOPS_INSTALL_PATH."/locale/{$language}/install.php")) {
@@ -162,7 +163,7 @@ class XoopsInstallWizard
      *
      * @return bool|int
      */
-    public function setPage($page)
+    public function setPage(string $page)
     {
         $pages = array_keys($this->pages);
         if ((int) $page && $page >= 0 && $page < count($pages)) {
@@ -187,7 +188,7 @@ class XoopsInstallWizard
     /**
      * @return string
      */
-    public function baseLocation()
+    public function baseLocation(): string
     {
         $proto = (isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'];
@@ -199,7 +200,7 @@ class XoopsInstallWizard
     /**
      * @return string
      */
-    public function pageURI($page)
+    public function pageURI($page): string
     {
         $pages = array_keys($this->pages);
         $pageIndex = $this->pageIndex;
@@ -231,7 +232,7 @@ class XoopsInstallWizard
      * @param int    $status
      * @param string $message
      */
-    public function redirectToPage($page, $status = 303, $message = 'See other')
+    public function redirectToPage(string $page, int $status = 303, string $message = 'See other'): void
     {
         $location = $this->pageURI($page);
         $proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
@@ -243,7 +244,7 @@ class XoopsInstallWizard
     /**
      * @return string
      */
-    public function CreateForm()
+    public function CreateForm(): string
     {
         $hidden = '';
         $ret = '';

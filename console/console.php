@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole;
 
@@ -8,7 +8,7 @@ if (PHP_SAPI !== 'cli') {
     die('CLI use only');
 }
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ($class): void {
     $prefix = 'XoopsConsole\\';
     $base_dir = __DIR__.'/';
     $len = strlen($prefix);

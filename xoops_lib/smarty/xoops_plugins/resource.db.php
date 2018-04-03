@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
      * @param string $source template source
      * @param int    $mtime  template modification timestamp (epoch)
      */
-    protected function fetch($name, &$source, &$mtime)
+    protected function fetch(string $name, string &$source, int &$mtime): void
     {
         $tpl = $this->dbTplInfo($name);
         if (is_object($tpl)) {
@@ -57,7 +58,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
      *
      * @return XoopsTplFile|string tpl object from database or absolute file name path
      */
-    private function dbTplInfo($tpl_name)
+    private function dbTplInfo(string $tpl_name)
     {
         static $cache = [];
         global $xoopsConfig;
@@ -67,7 +68,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
             return $cache[$tpl_name];
         }
         $tplset = $xoopsConfig['template_set'];
-        $theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+        $theme = $xoopsConfig['theme_set'] ?? 'default';
         $tplfile_handler = $xoops->getHandlerTplFile();
         // If we're not using the "default" template set, then get the templates from the DB
         if ('default' !== $tplset) {
@@ -94,7 +95,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 
                 break;
             case 'admin':
-                $theme = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+                $theme = $xoopsConfig['cpanel'] ?? 'default';
                 $directory = \XoopsBaseConfig::get('adminthemes-path');
                 $path = 'admin/';
 

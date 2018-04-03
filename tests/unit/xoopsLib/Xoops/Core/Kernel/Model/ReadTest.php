@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -10,19 +10,19 @@ class ReadTest extends \PHPUnit\Framework\TestCase
 
     protected $myAbstractClass = 'Xoops\Core\Kernel\XoopsModelAbstract';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = \Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf($this->myAbstractClass, $instance);
     }
 
-    public function test_getAll()
+    public function test_getAll(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -39,7 +39,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getObjects()
+    public function test_getObjects(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -56,7 +56,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getList()
+    public function test_getList(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -73,7 +73,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getIds()
+    public function test_getIds(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -91,7 +91,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getRandomObject()
+    public function test_getRandomObject(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);

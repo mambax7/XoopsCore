@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -50,7 +51,7 @@ class XoopsGroup extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('groupid', $format);
     }
@@ -62,7 +63,7 @@ class XoopsGroup extends XoopsObject
      *
      * @return mixed
      */
-    public function groupid($format = '')
+    public function groupid(string $format = '')
     {
         return $this->getVar('groupid', $format);
     }
@@ -74,7 +75,7 @@ class XoopsGroup extends XoopsObject
      *
      * @return mixed
      */
-    public function name($format = '')
+    public function name(string $format = '')
     {
         return $this->getVar('name', $format);
     }
@@ -86,7 +87,7 @@ class XoopsGroup extends XoopsObject
      *
      * @return mixed
      */
-    public function description($format = '')
+    public function description(string $format = '')
     {
         return $this->getVar('description', $format);
     }
@@ -98,7 +99,7 @@ class XoopsGroup extends XoopsObject
      *
      * @return mixed
      */
-    public function group_type($format = '')
+    public function group_type(string $format = '')
     {
         return $this->getVar('group_type', $format);
     }

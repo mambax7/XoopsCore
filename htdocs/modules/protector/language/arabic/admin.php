@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // mymenu
 define('_MD_A_MYMENU_MYTPLSADMIN', '');

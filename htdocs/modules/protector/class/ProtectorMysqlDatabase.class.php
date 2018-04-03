@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,14 +44,14 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      '#',
  ];
 
-    public function ProtectorMySQLDatabase()
+    public function ProtectorMySQLDatabase(): void
     {
         $protector = Protector::getInstance();
         $this->doubtful_requests = $protector->getDblayertrapDoubtfuls();
         $this->doubtful_needles = array_merge($this->doubtful_needles, $this->doubtful_requests);
     }
 
-    public function injectionFound($sql)
+    public function injectionFound($sql): void
     {
         $protector = Protector::getInstance();
 
@@ -119,9 +120,9 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
     /**
      * @param string $sql
      */
-    public function checkSql($sql)
+    public function checkSql(string $sql): void
     {
-        list($sql_wo_strings, $strings) = $this->separateStringsInSQL($sql);
+        [$sql_wo_strings, $strings] = $this->separateStringsInSQL($sql);
 
         // stage1: addslashes() processed or not
         foreach ($this->doubtful_requests as $request) {

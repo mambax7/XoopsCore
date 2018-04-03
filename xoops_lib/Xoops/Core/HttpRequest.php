@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -177,7 +178,7 @@ class HttpRequest
      *
      * @return HttpRequest
      */
-    public static function getInstance()
+    public static function getInstance(): HttpRequest
     {
         if (null === static::$instance) {
             static::$instance = new static();
@@ -193,7 +194,7 @@ class HttpRequest
      *
      * @return null|string
      */
-    public function getHeader($name = null)
+    public function getHeader(?string $name = null): ?string
     {
         if (null === $name) {
             return $name;
@@ -221,7 +222,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getScheme()
+    public function getScheme(): string
     {
         return $this->getEnv('HTTPS') ? 'https' : 'http';
     }
@@ -231,7 +232,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getHost()
+    public function getHost(): string
     {
         return $this->getEnv('HTTP_HOST') ? (string) $this->getEnv('HTTP_HOST') : 'localhost';
     }
@@ -241,7 +242,7 @@ class HttpRequest
      *
      * @return null|string
      */
-    public static function getUri()
+    public static function getUri(): ?string
     {
         if (empty($_SERVER['PHP_SELF']) || empty($_SERVER['REQUEST_URI'])) {
             // IIS
@@ -253,7 +254,7 @@ class HttpRequest
             return $_SERVER['REQUEST_URI'];
         }
 
-        return isset($_SERVER['ORIG_REQUEST_URI']) ? $_SERVER['ORIG_REQUEST_URI'] : $_SERVER['REQUEST_URI'];
+        return $_SERVER['ORIG_REQUEST_URI'] ?? $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -261,7 +262,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getReferer()
+    public function getReferer(): string
     {
         return $this->getEnv('HTTP_REFERER') ? $this->getEnv('HTTP_REFERER') : '';
     }
@@ -271,7 +272,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getScriptName()
+    public function getScriptName(): string
     {
         return $this->getEnv('SCRIPT_NAME')
             ? $this->getEnv('SCRIPT_NAME')
@@ -283,7 +284,7 @@ class HttpRequest
      *
      * @return string Domain name without subdomains
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         $host = $this->getHost();
         $domain = \Xoops::getInstance()->getBaseDomain($host);
@@ -296,7 +297,7 @@ class HttpRequest
      *
      * @return string subdomain portion of host name
      */
-    public function getSubdomains()
+    public function getSubdomains(): string
     {
         $host = $this->getHost();
         $regDom = \Xoops::getInstance()->getBaseDomain($host);
@@ -319,7 +320,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getClientIp($considerProxy = false)
+    public function getClientIp(bool $considerProxy = false): string
     {
         $default = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
 
@@ -358,7 +359,7 @@ class HttpRequest
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         $url = $this->getScheme().'://'.$this->getHost();
         $port = $this->getEnv('SERVER_PORT');
@@ -384,7 +385,7 @@ class HttpRequest
      *
      * @todo this methods and Xoops::getEnv() need to be unified
      */
-    public function getEnv($name, $default = null)
+    public function getEnv(string $name, $default = null)
     {
         if ('HTTPS' === $name) {
             if (isset($_SERVER['HTTPS'])) {
@@ -466,7 +467,7 @@ class HttpRequest
      *
      * @return array
      */
-    public static function getFiles($name)
+    public static function getFiles(string $name): array
     {
         if (empty($_FILES)) {
             return [];
@@ -501,7 +502,7 @@ class HttpRequest
      *
      * @return bool Whether or not the request is the type you are checking.
      */
-    public function is($type)
+    public function is(string $type): bool
     {
         $type = strtolower($type);
         if (!isset($this->detectors[$type])) {
@@ -544,7 +545,7 @@ class HttpRequest
      * @param string $name    The name of the detector.
      * @param array  $options The options for the detector definition.  See above.
      */
-    public function addDetector($name, $options)
+    public function addDetector(string $name, array $options): void
     {
         $name = strtolower($name);
         if (isset($this->detectors[$name]) && isset($options['options'])) {
@@ -560,7 +561,7 @@ class HttpRequest
      *
      * @return bool true if client accepts the media type, otherwise false
      */
-    public function clientAcceptsType($mediaType)
+    public function clientAcceptsType(string $mediaType): bool
     {
         $accepts = $this->getAcceptMediaTypes();
 
@@ -568,7 +569,7 @@ class HttpRequest
         if (isset($accepts[$mediaType])) {
             return true;
         }
-        list($type) = explode('/', $mediaType);
+        [$type] = explode('/', $mediaType);
         if (isset($accepts[$type.'/*'])) {
             return true;
         }
@@ -583,7 +584,7 @@ class HttpRequest
      * @return array associative array of preference (numeric weight >0 <=1.0 )
      *               keyed by media types, and sorted by preference
      */
-    public function getAcceptMediaTypes()
+    public function getAcceptMediaTypes(): array
     {
         $types = [];
         $accept = $this->getHeader('ACCEPT');
@@ -612,7 +613,7 @@ class HttpRequest
      * @return array associative array of preference (numeric weight >0 <=1.0 )
      *               keyed by language code, and sorted by preference
      */
-    public function getAcceptedLanguages()
+    public function getAcceptedLanguages(): array
     {
         $languages = [];
         $accept = $this->getHeader('ACCEPT_LANGUAGE');
@@ -641,7 +642,7 @@ class HttpRequest
      *
      * @return bool true if detect is matched, false if not
      */
-    protected function detectByEnv($detect)
+    protected function detectByEnv(array $detect): bool
     {
         if (isset($detect['value'])) {
             return (bool) $this->getEnv($detect['env']) === $detect['value'];
@@ -667,7 +668,7 @@ class HttpRequest
      *
      * @return bool true if detect is matched, false if not
      */
-    protected function detectByParam($detect)
+    protected function detectByParam(array $detect): bool
     {
         $name = $detect['param'];
         $value = $detect['value'];

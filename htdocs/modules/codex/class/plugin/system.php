@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
      *
      * @return int Number of posts
      */
-    public function userPosts($uid)
+    public function userPosts(int $uid): int
     {
         //$xoops = Xoops::getInstance();
         //$count = count(XoopsLists::getFileListAsArray($xoops->path('modules/codex/')))-2;
@@ -43,7 +44,7 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
      *
      * @return array
      */
-    public function waiting()
+    public function waiting(): array
     {
         $xoops = Xoops::getInstance();
         $ret['count'] = count(\Xoops\Core\Lists\File::getList($xoops->path('modules/codex/'))) - 2;
@@ -66,7 +67,7 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
      *
      * @return array
      */
-    public function backend($limit)
+    public function backend(int $limit): array
     {
         $xoops = Xoops::getInstance();
         $i = 0;

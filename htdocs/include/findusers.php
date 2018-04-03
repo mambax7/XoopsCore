@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -43,7 +44,7 @@ if ($denied) {
     exit();
 }
 
-$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : '';
+$token = $_REQUEST['token'] ?? '';
 $name_form = 'memberslist';
 $name_userid = 'uid'.(!empty($_REQUEST['multiple']) ? '[]' : '');
 $name_username = 'uname'.(!empty($_REQUEST['multiple']) ? '[]' : '');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -62,7 +63,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'system';
     }
@@ -72,7 +73,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Built in CountryFlag provider';
     }
@@ -87,10 +88,10 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
      */
     public function getImgTag(
         Response $response,
-        $countryCode,
-        $attributes = [],
-        $size = 'large'
-    ) {
+        string $countryCode,
+        array $attributes = [],
+        string $size = 'large'
+    ): void {
         $url = $this->getFlagUrl($countryCode, $size);
         if (!is_array($attributes)) {
             $attributes = [];
@@ -109,7 +110,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
      *
      * @return string URL to obtain Flag image for country code
      */
-    private function getFlagUrl($countryCode, $size)
+    private function getFlagUrl(string $countryCode, string $size): string
     {
         $countryCode = $this->getCountryCodeOverride($countryCode);
         $size = strtolower(substr($size, 0, 1));
@@ -146,7 +147,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
      *
      * @return string possibly overridden country code
      */
-    private function getCountryCodeOverride($countryCode)
+    private function getCountryCodeOverride(string $countryCode): string
     {
         $countryCode = (isset($this->overrideMap[$countryCode]))
             ? $this->overrideMap[$countryCode]

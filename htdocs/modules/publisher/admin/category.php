@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -107,9 +108,9 @@ switch ($op) {
         $categoryObj->setVar('weight', isset($_POST['weight']) ? (int) ($_POST['weight']) : 1);
 
         // Groups and permissions
-        $grpread = isset($_POST['groups_read']) ? $_POST['groups_read'] : [];
-        $grpsubmit = isset($_POST['groups_submit']) ? $_POST['groups_submit'] : [];
-        $grpmoderation = isset($_POST['groups_moderation']) ? $_POST['groups_moderation'] : [];
+        $grpread = $_POST['groups_read'] ?? [];
+        $grpsubmit = $_POST['groups_submit'] ?? [];
+        $grpmoderation = $_POST['groups_moderation'] ?? [];
 
         $categoryObj->setVar('name', $_POST['name']);
 
@@ -243,7 +244,7 @@ switch ($op) {
 
 $xoops->footer();
 
-function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0)
+function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0): void
 {
     $publisher = Publisher::getInstance();
 
@@ -276,7 +277,7 @@ function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0)
     unset($categoryObj);
 }
 
-function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryObj = null)
+function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryObj = null): void
 {
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();

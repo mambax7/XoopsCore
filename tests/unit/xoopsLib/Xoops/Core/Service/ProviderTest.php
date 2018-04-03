@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 require_once XOOPS_TU_ROOT_PATH.'/modules/avatars/class/AvatarsProvider.php';
@@ -20,7 +20,7 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $manager = Manager::getInstance();
         $this->object = new Provider($manager, $this->service);
@@ -30,11 +30,11 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetProviderMode()
+    public function testGetProviderMode(): void
     {
         $instance = $this->object;
 
@@ -42,7 +42,7 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(Manager::MODE_EXCLUSIVE, $result);
     }
 
-    public function testSortProviders()
+    public function testSortProviders(): void
     {
         $instance = $this->object;
 
@@ -63,7 +63,7 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(10, $result[1]->getPriority());
     }
 
-    public function testIsAvailable()
+    public function testIsAvailable(): void
     {
         $instance = $this->object;
 
@@ -71,7 +71,7 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function test__call()
+    public function test__call(): void
     {
         $instance = $this->object;
 
@@ -88,7 +88,7 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result->isSuccess());
     }
 
-    public function test__callStatic()
+    public function test__callStatic(): void
     {
         $result = Provider::staticDummyMethod();
         $this->assertTrue(null === $result);

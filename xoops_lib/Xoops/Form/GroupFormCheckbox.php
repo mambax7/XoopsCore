@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -63,7 +64,7 @@ class GroupFormCheckbox extends Element
      *
      * @param array $optionTree options
      */
-    public function setOptionTree(&$optionTree)
+    public function setOptionTree(array &$optionTree): void
     {
         $this->optionTree = $optionTree;
     }
@@ -73,7 +74,7 @@ class GroupFormCheckbox extends Element
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ele_name = $this->getName();
         $ret = '<table class="outer"><tr><td class="odd"><table><tr>';
@@ -115,7 +116,7 @@ class GroupFormCheckbox extends Element
      * @param string $prefix    prefix
      * @param array  $parentIds parent ids
      */
-    private function renderOptionTree(&$tree, $option, $prefix, $parentIds = [])
+    private function renderOptionTree(string &$tree, array $option, string $prefix, array $parentIds = []): void
     {
         $elementName = $this->getName();
         $tree .= $prefix.'<input type="checkbox" name="'.$elementName.'[groups]['

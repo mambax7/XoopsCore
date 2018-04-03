@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -15,7 +15,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new XoopsFolderHandler();
     }
@@ -24,23 +24,23 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test___construct100()
+    public function test___construct100(): void
     {
         $this->expectException('\InvalidArgumentException');
         $instance = new $this->myClass('dir_not_exists', false);
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['path', 'sort', 'mode'];
         foreach ($items as $item) {
@@ -49,7 +49,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testPwd()
+    public function testPwd(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -64,7 +64,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($dir, $pwd);
     }
 
-    public function testCd()
+    public function testCd(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -79,12 +79,12 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         try {
             $cd = $instance->cd($dir);
             $this->assertFalse($cd);
-        } catch (Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->assertTrue(true);
         }
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -114,7 +114,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
     }
 
-    public function testFind()
+    public function testFind(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -129,7 +129,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame([], $value);
     }
 
-    public function testFindRecursive()
+    public function testFindRecursive(): void
     {
         $dir = __DIR__.'/../';
         $instance = new $this->myClass($dir, false, false);
@@ -138,7 +138,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function testIsWindowsPath()
+    public function testIsWindowsPath(): void
     {
         $class = $this->myClass;
         $result = $class::isWindowsPath('C:\\Windows\\Temp');
@@ -149,7 +149,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testIsAbsolute()
+    public function testIsAbsolute(): void
     {
         $class = $this->myClass;
         $dir = __DIR__;
@@ -163,7 +163,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testNormalizePath()
+    public function testNormalizePath(): void
     {
         $class = $this->myClass;
         $dir = 'C:\\Windows\\Temp';
@@ -179,7 +179,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('/', $result);
     }
 
-    public function testCorrectSlashFor()
+    public function testCorrectSlashFor(): void
     {
         $class = $this->myClass;
         $dir = 'C:\\Windows\\Temp';
@@ -195,7 +195,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('/', $result);
     }
 
-    public function testSlashTerm()
+    public function testSlashTerm(): void
     {
         $class = $this->myClass;
         $dir = __DIR__;
@@ -215,7 +215,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($dir, $result);
     }
 
-    public function testAddPathElement()
+    public function testAddPathElement(): void
     {
         $class = $this->myClass;
         $element = 'element';
@@ -236,7 +236,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($dir.$element, $result);
     }
 
-    public function testInXoopsPath()
+    public function testInXoopsPath(): void
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         $dir = rtrim($xoops_root_path, '/\\').'/class';
@@ -247,7 +247,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function testInPath()
+    public function testInPath(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -261,7 +261,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function testChmod()
+    public function testChmod(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -269,7 +269,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testTree()
+    public function testTree(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -283,7 +283,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value[1]) > 0);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -304,7 +304,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($instance->errors());
     }
 
-    public function testDirsize()
+    public function testDirsize(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -315,7 +315,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value > 0);
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -323,7 +323,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testMove()
+    public function testMove(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -331,7 +331,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testMessages()
+    public function testMessages(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -341,7 +341,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $result);
     }
 
-    public function testErrors()
+    public function testErrors(): void
     {
         $dir = __DIR__;
         $instance = new $this->myClass($dir, false, false);
@@ -351,7 +351,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testRealpath()
+    public function testRealpath(): void
     {
         $dir = __DIR__;
         $base = basename(dirname($dir));
@@ -362,7 +362,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($base, basename(dirname($result)));
     }
 
-    public function testIsSlashTerm()
+    public function testIsSlashTerm(): void
     {
         $class = $this->myClass;
         $dir = 'dir\\';

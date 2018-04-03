@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -94,7 +95,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function startPdf($response)
+    public function startPdf(Response $response): void
     {
         $this->resetPdf();
     }
@@ -105,7 +106,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'pdf';
     }
@@ -115,7 +116,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Simple HTML to PDF using TCPDF.';
     }
@@ -126,7 +127,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response        \Xoops\Core\Service\Response object
      * @param string   $pageOrientation page orientation, 'P' for portrait, 'L' for landscape
      */
-    public function setPageOrientation($response, $pageOrientation)
+    public function setPageOrientation(Response $response, string $pageOrientation): void
     {
         $this->pageOrientation = $pageOrientation;
         if (isset($this->pdfEngine)) {
@@ -140,7 +141,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pageSize standard named page size, i.e. 'LETTER', 'A4', etc.
      */
-    public function setPageSize($response, $pageSize)
+    public function setPageSize(Response $response, string $pageSize): void
     {
         $this->pageSize = $pageSize;
         if (isset($this->pdfEngine)) {
@@ -155,7 +156,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param string   $unit     unit used in page size, margins. Possible values include
      *                           'mm' = millimeter, "in" = inches, 'pt' = typographic points
      */
-    public function setBaseUnit($response, $unit)
+    public function setBaseUnit(Response $response, string $unit): void
     {
         $this->unit = $unit;
         if (isset($this->pdfEngine)) {
@@ -172,7 +173,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param float    $rightMargin  right margin in base units
      * @param float    $bottomMargin bottom margin in base units
      */
-    public function setMargins($response, $leftMargin, $topMargin, $rightMargin, $bottomMargin)
+    public function setMargins(Response $response, float $leftMargin, float $topMargin, float $rightMargin, float $bottomMargin): void
     {
         $this->{$leftMargin} = $leftMargin;
         $this->{$topMargin} = $topMargin;
@@ -195,7 +196,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param string   $fontStyle  font style ('bold', 'italic', etc.)
      * @param float    $fontSize   font size in points
      */
-    public function setBaseFont($response, $fontFamily, $fontStyle = '', $fontSize = null)
+    public function setBaseFont(Response $response, string $fontFamily, string $fontStyle = '', float $fontSize = null): void
     {
         $this->fontFamily = $fontFamily;
         $this->fontStyle = $fontStyle;
@@ -211,7 +212,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response       \Xoops\Core\Service\Response object
      * @param string   $monoFontFamily font family
      */
-    public function setDefaultMonospacedFont($response, $monoFontFamily)
+    public function setDefaultMonospacedFont(Response $response, string $monoFontFamily): void
     {
         $this->monoFontFamily = $monoFontFamily;
         if (isset($this->pdfEngine)) {
@@ -225,7 +226,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response  \Xoops\Core\Service\Response object
      * @param string   $pdfAuthor author name
      */
-    public function setAuthor($response, $pdfAuthor)
+    public function setAuthor(Response $response, string $pdfAuthor): void
     {
         $this->pdfAuthor = $this->decodeEntities($pdfAuthor);
         if (isset($this->pdfEngine)) {
@@ -239,7 +240,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pdfTitle document title
      */
-    public function setTitle($response, $pdfTitle)
+    public function setTitle(Response $response, string $pdfTitle): void
     {
         $this->pdfTitle = $this->decodeEntities($pdfTitle);
         if (isset($this->pdfEngine)) {
@@ -253,7 +254,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $pdfSubject document subject
      */
-    public function setSubject($response, $pdfSubject)
+    public function setSubject(Response $response, string $pdfSubject): void
     {
         $this->pdfSubject = $this->decodeEntities($pdfSubject);
         if (isset($this->pdfEngine)) {
@@ -267,7 +268,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string[] $pdfKeywords array of keywords pertaining to document
      */
-    public function setKeywords($response, $pdfKeywords)
+    public function setKeywords(Response $response, $pdfKeywords): void
     {
         $this->pdfKeywords = $pdfKeywords;
         if (isset($this->pdfEngine)) {
@@ -284,7 +285,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param string   $html     HTML formated text to include in document
      *                           array     user info, 'uid', 'uname' and 'email' required
      */
-    public function addHtml($response, $html)
+    public function addHtml(Response $response, string $html): void
     {
         $this->initPdf();
         $this->pdfEngine->AddPage();
@@ -297,7 +298,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
      */
-    public function outputPdfInline($response, $name)
+    public function outputPdfInline(Response $response, string $name): void
     {
         $this->initPdf();
         if (empty($name)) {
@@ -313,7 +314,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
      */
-    public function outputPdfDownload($response, $name)
+    public function outputPdfDownload(Response $response, string $name): void
     {
         $this->initPdf();
         if (empty($name)) {
@@ -328,7 +329,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function fetchPdf($response)
+    public function fetchPdf(Response $response): void
     {
         $this->initPdf();
         $this->pdfEngine->lastPage();
@@ -338,7 +339,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     /**
      * resetPdf - resets to default state.
      */
-    protected function resetPdf()
+    protected function resetPdf(): void
     {
         unset($this->pdfEngine);
 
@@ -372,7 +373,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      * @param string $property property name
      * @param mixed  $default  default value
      */
-    private function setFromConfigs($name, $property, $default)
+    private function setFromConfigs(string $name, string $property, $default): void
     {
         $this->{$property} = $default;
         if (isset($this->moduleConfigs[$name])) {
@@ -384,7 +385,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     /**
      * initPdf - initialize TCPDF with current setting.
      */
-    private function initPdf()
+    private function initPdf(): void
     {
         if (empty($this->pdfEngine)) {
             $this->pdfEngine = new TCPDF($this->pageOrientation, $this->unit, $this->pageSize, true, 'UTF-8', false);
@@ -428,7 +429,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
      *
      * @return string decoded string
      */
-    private function decodeEntities($text)
+    private function decodeEntities(string $text): string
     {
         $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
         $text = preg_replace_callback(

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class UserconfigsOption extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('confop_id', $format);
     }
@@ -53,7 +54,7 @@ class UserconfigsOption extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function confop_id($format = '')
+    public function confop_id(string $format = '')
     {
         return $this->getVar('confop_id', $format);
     }
@@ -62,7 +63,7 @@ class UserconfigsOption extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function confop_name($format = '')
+    public function confop_name(string $format = '')
     {
         return $this->getVar('confop_name', $format);
     }
@@ -71,7 +72,7 @@ class UserconfigsOption extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function confop_value($format = '')
+    public function confop_value(string $format = '')
     {
         return $this->getVar('confop_value', $format);
     }
@@ -80,7 +81,7 @@ class UserconfigsOption extends XoopsObject
      * @param  string $format
      * @return mixed
      */
-    public function conf_id($format = '')
+    public function conf_id(string $format = '')
     {
         return $this->getVar('conf_id', $format);
     }
@@ -93,7 +94,7 @@ class UserconfigsOptionHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'userconfigs_option', 'UserconfigsOption', 'confop_id', 'confop_name');
     }

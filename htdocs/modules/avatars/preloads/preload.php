@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class AvatarsPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -40,7 +41,7 @@ class AvatarsPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateAvatar(Provider $provider)
+    public static function eventCoreServiceLocateAvatar(Provider $provider): void
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
             $path = dirname(__DIR__).'/class/AvatarsProvider.php';

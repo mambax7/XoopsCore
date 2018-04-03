@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 class upgrade_2016 extends xoopsUpgrade
 {
@@ -35,7 +35,7 @@ class upgrade_2016 extends xoopsUpgrade
         return (bool) ($value);
     }
 
-    public function query($sql)
+    public function query($sql): void
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();

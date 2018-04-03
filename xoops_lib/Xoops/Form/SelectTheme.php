@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class SelectTheme extends Select
      * @param mixed  $value   Pre-selected value (or array of them).
      * @param int    $size    Number or rows. "1" makes a drop-down-list
      */
-    public function __construct($caption, $name, $value = null, $size = 1)
+    public function __construct(string $caption, string $name, $value = null, $size = 1)
     {
         parent::__construct($caption, $name, $value, $size);
         $this->addOptionArray(\XoopsLists::getThemesList());

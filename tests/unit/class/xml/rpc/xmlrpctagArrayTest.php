@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -9,14 +9,14 @@ class XoopsXmlRpcArrayTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsXmlRpcArray';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceof($this->myclass, $instance);
         $this->assertInstanceof('XoopsXmlRpcTag', $instance);
     }
 
-    public function test_render()
+    public function test_render(): void
     {
         $instance = new $this->myclass();
 

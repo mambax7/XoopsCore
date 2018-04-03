@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class Permission extends AbstractHelper
     /**
      * Initialize parent::__construct calls this after verifying module object.
      */
-    public function init()
+    public function init(): void
     {
         $this->mid = $this->module->getVar('mid');
         $this->dirname = $this->module->getVar('dirname');
@@ -61,7 +62,7 @@ class Permission extends AbstractHelper
      *
      * @return bool true if user has access, false if not
      **/
-    public function checkPermission($gperm_name, $gperm_itemid, $trueifadmin = true)
+    public function checkPermission(string $gperm_name, int $gperm_itemid, bool $trueifadmin = true): bool
     {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = \Xoops::getInstance()->getUserGroups();
@@ -87,13 +88,13 @@ class Permission extends AbstractHelper
      *
      **/
     public function checkPermissionRedirect(
-        $gperm_name,
-        $gperm_itemid,
-        $url,
-        $time = 3,
-        $message = '',
-        $trueifadmin = true
-    ) {
+        string $gperm_name,
+        int $gperm_itemid,
+        string $url,
+        int $time = 3,
+        string $message = '',
+        bool $trueifadmin = true
+    ): void {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = \Xoops::getInstance()->getUserGroups();
         $permission = $this->permissionHandler->checkRight(
@@ -117,7 +118,7 @@ class Permission extends AbstractHelper
      *
      * @return array groups with permission for item
      **/
-    public function getGroupsForItem($gperm_name, $gperm_itemid)
+    public function getGroupsForItem(string $gperm_name, int $gperm_itemid): array
     {
         $gperm_itemid = (int) $gperm_itemid;
 
@@ -133,7 +134,7 @@ class Permission extends AbstractHelper
      *
      * @return bool true if no errors
      **/
-    public function savePermissionForItem($gperm_name, $gperm_itemid, $groups)
+    public function savePermissionForItem(string $gperm_name, int $gperm_itemid, array $groups): bool
     {
         $gperm_itemid = (int) $gperm_itemid;
         foreach ($groups as $index => $group) {
@@ -168,7 +169,7 @@ class Permission extends AbstractHelper
      *
      * @return bool true if no errors
      */
-    public function deletePermissionForItem($gperm_name, $gperm_itemid)
+    public function deletePermissionForItem($gperm_name, $gperm_itemid): bool
     {
         $gperm_itemid = (int) $gperm_itemid;
         if (!is_array($gperm_name)) {
@@ -198,14 +199,14 @@ class Permission extends AbstractHelper
      * @return SelectGroup
      */
     public function getGroupSelectFormForItem(
-        $gperm_name,
-        $gperm_itemid,
-        $caption,
-        $name = null,
-        $include_anon = false,
-        $size = 5,
-        $multiple = true
-    ) {
+        string $gperm_name,
+        int $gperm_itemid,
+        string $caption,
+        string $name = null,
+        bool $include_anon = false,
+        int $size = 5,
+        bool $multiple = true
+    ): SelectGroup {
         if (empty($name)) {
             $name = $this->defaultFieldName($gperm_name, $gperm_itemid);
         }
@@ -232,7 +233,7 @@ class Permission extends AbstractHelper
      *
      * @return string
      */
-    public function defaultFieldName($gperm_name, $gperm_itemid)
+    public function defaultFieldName(string $gperm_name, int $gperm_itemid): string
     {
         $gperm_itemid = (int) $gperm_itemid;
         $name = $this->module->getVar('dirname').'_'.

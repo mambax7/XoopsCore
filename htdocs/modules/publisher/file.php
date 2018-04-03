@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -98,7 +99,7 @@ switch ($op) {
         break;
 
     case 'del':
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
+        $confirm = $_POST['confirm'] ?? 0;
 
         if ($confirm) {
             if (!$publisher->getFileHandler()->delete($fileObj)) {

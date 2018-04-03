@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xcaptcha extension module
  * You may not change or alter any portion of this comment or credits
@@ -39,7 +40,7 @@ switch ($op) {
 
     case 'default':
     default:
-        $type = isset($type) ? $type : 'config';
+        $type = $type ?? 'config';
 
         $xoops->header();
         $xoops->theme()->addStylesheet('modules/xcaptcha/css/moduladmin.css');

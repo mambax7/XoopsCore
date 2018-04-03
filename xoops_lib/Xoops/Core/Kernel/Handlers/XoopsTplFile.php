@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS kernel class.
  *
@@ -56,7 +57,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('tpl_id', $format);
     }
@@ -68,7 +69,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_id($format = '')
+    public function tpl_id(string $format = '')
     {
         return $this->getVar('tpl_id', $format);
     }
@@ -80,7 +81,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_refid($format = '')
+    public function tpl_refid(string $format = '')
     {
         return $this->getVar('tpl_refid', $format);
     }
@@ -92,7 +93,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_tplset($format = '')
+    public function tpl_tplset(string $format = '')
     {
         return $this->getVar('tpl_tplset', $format);
     }
@@ -104,7 +105,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_file($format = '')
+    public function tpl_file(string $format = '')
     {
         return $this->getVar('tpl_file', $format);
     }
@@ -116,7 +117,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_desc($format = '')
+    public function tpl_desc(string $format = '')
     {
         return $this->getVar('tpl_desc', $format);
     }
@@ -128,7 +129,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_lastmodified($format = '')
+    public function tpl_lastmodified(string $format = '')
     {
         return $this->getVar('tpl_lastmodified', $format);
     }
@@ -140,7 +141,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_lastimported($format = '')
+    public function tpl_lastimported(string $format = '')
     {
         return $this->getVar('tpl_lastimported', $format);
     }
@@ -152,7 +153,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_module($format = '')
+    public function tpl_module(string $format = '')
     {
         return $this->getVar('tpl_module', $format);
     }
@@ -164,7 +165,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_type($format = '')
+    public function tpl_type(string $format = '')
     {
         return $this->getVar('tpl_type', $format);
     }
@@ -176,7 +177,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return mixed
      */
-    public function tpl_source($format = '')
+    public function tpl_source(string $format = '')
     {
         return $this->getVar('tpl_source', $format);
     }
@@ -186,7 +187,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return string
      */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->getVar('tpl_source');
     }
@@ -196,7 +197,7 @@ class XoopsTplFile extends XoopsObject
      *
      * @return int
      */
-    public function getLastModified()
+    public function getLastModified(): int
     {
         return $this->getVar('tpl_lastmodified');
     }

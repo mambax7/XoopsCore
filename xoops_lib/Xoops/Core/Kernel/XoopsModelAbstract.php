@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ abstract class XoopsModelAbstract
      *
      * @return boolean
      */
-    public function setHandler(XoopsPersistableObjectHandler $handler)
+    public function setHandler(XoopsPersistableObjectHandler $handler): bool
     {
         $this->handler = $handler;
 
@@ -51,7 +52,7 @@ abstract class XoopsModelAbstract
      *
      * @return boolean
      */
-    public function setVars($args)
+    public function setVars($args): bool
     {
         if (!empty($args) && is_array($args)) {
             foreach ($args as $key => $value) {

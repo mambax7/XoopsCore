@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // Traducción al español por Colossus (19/1/2008), www.zonadepruebas.com
 

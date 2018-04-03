@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -40,7 +41,7 @@ class SelectUser extends ElementTray
      * @param int  $size     Number or rows. "1" makes a drop-down-list.
      * @param bool $multiple Allow multiple selections?
      */
-    public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    public function __construct(string $caption, string $name, bool $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
         $xoops = \Xoops::getInstance();
         $limit = 200;

@@ -41,7 +41,7 @@ class Clickable extends FilterAbstract
      *
      * @return mixed
      */
-    public function applyFilter($text)
+    public function applyFilter(string $text)
     {
         if (! $this->config['enabled']) {
             return $text;
@@ -102,7 +102,7 @@ class Clickable extends FilterAbstract
      *
      * @return string
      */
-    protected function truncate($text)
+    protected function truncate(string $text): string
     {
         $config = $this->config;
         if (empty($text) || empty($config['truncate_length']) || mb_strlen($text) < $config['truncate_length']) {

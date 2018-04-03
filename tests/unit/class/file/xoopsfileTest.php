@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -8,7 +8,7 @@ class xoopsfileTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsFile';
 
-    public function test_getHandler()
+    public function test_getHandler(): void
     {
         $class = $this->myClass;
         $instance = $class::getHandler();

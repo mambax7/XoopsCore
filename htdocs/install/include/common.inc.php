@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,9 +46,9 @@ if (file_exists($mainfile)) {
 }
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace('\\', '/', realpath('../')));
-    define('XOOPS_PATH', isset($_SESSION['settings']['PATH']) ? $_SESSION['settings']['PATH'] : '');
-    define('XOOPS_VAR_PATH', isset($_SESSION['settings']['VAR_PATH']) ? $_SESSION['settings']['VAR_PATH'] : '');
-    define('XOOPS_URL', isset($_SESSION['settings']['URL']) ? $_SESSION['settings']['URL'] : '');
+    define('XOOPS_PATH', $_SESSION['settings']['PATH'] ?? '');
+    define('XOOPS_VAR_PATH', $_SESSION['settings']['VAR_PATH'] ?? '');
+    define('XOOPS_URL', $_SESSION['settings']['URL'] ?? '');
 }
 
 include XOOPS_INSTALL_PATH.'/class/installwizard.php';

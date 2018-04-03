@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -66,7 +67,7 @@ class PublisherMetagen
      * @param string $description
      * @param bool   $categoryPath
      */
-    public function __construct($title, $keywords = '', $description = '', $categoryPath = false)
+    public function __construct(string $title, string $keywords = '', string $description = '', bool $categoryPath = false)
     {
         $this->publisher = Publisher::getInstance();
         $this->_myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -82,7 +83,7 @@ class PublisherMetagen
     /**
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->_title = $this->html2text($title);
         $this->_original_title = $this->_title;
@@ -94,7 +95,7 @@ class PublisherMetagen
         if (isset($this->_categoryPath) && ('' !== $this->_categoryPath)) {
             $titleTag['category'] = $this->_categoryPath;
         }
-        $ret = isset($titleTag['title']) ? $titleTag['title'] : '';
+        $ret = $titleTag['title'] ?? '';
         if (isset($titleTag['category']) && '' !== $titleTag['category']) {
             if ('' !== $ret) {
                 $ret .= ' - ';
@@ -113,7 +114,7 @@ class PublisherMetagen
     /**
      * @param string $keywords
      */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): void
     {
         $this->_keywords = $keywords;
     }
@@ -121,7 +122,7 @@ class PublisherMetagen
     /**
      * @param string $categoryPath
      */
-    public function setCategoryPath($categoryPath)
+    public function setCategoryPath(string $categoryPath): void
     {
         $categoryPath = $this->html2text($categoryPath);
         $this->_categoryPath = $categoryPath;
@@ -130,7 +131,7 @@ class PublisherMetagen
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $description = $this->html2text($description);
         $description = $this->purifyText($description);
@@ -140,7 +141,7 @@ class PublisherMetagen
     /**
      * Does nothing.
      */
-    public function createTitleTag()
+    public function createTitleTag(): void
     {
     }
 
@@ -149,7 +150,7 @@ class PublisherMetagen
      *
      * @return string
      */
-    public function createMetaDescription($maxWords = 30)
+    public function createMetaDescription(int $maxWords = 30): string
     {
         $description = $this->purifyText($this->_description);
         $description = $this->html2text($description);
@@ -174,7 +175,7 @@ class PublisherMetagen
      *
      * @return array
      */
-    public function findMetaKeywords($text, $minChar)
+    public function findMetaKeywords(string $text, int $minChar): array
     {
         $keywords = [];
         $text = $this->purifyText($text);
@@ -197,7 +198,7 @@ class PublisherMetagen
     /**
      * @return string
      */
-    public function createMetaKeywords()
+    public function createMetaKeywords(): string
     {
         $keywords = $this->findMetaKeywords($this->_original_title.' '.$this->_description, $this->_minChar);
         $moduleKeywords = $this->publisher->getConfig('seo_meta_keywords');
@@ -213,14 +214,14 @@ class PublisherMetagen
     /**
      * Does nothing.
      */
-    public function autoBuildMeta_keywords()
+    public function autoBuildMeta_keywords(): void
     {
     }
 
     /**
      * Build Metatags.
      */
-    public function buildAutoMetaTags()
+    public function buildAutoMetaTags(): void
     {
         $this->_keywords = $this->createMetaKeywords();
         $this->_description = $this->createMetaDescription();
@@ -230,7 +231,7 @@ class PublisherMetagen
     /**
      * Creates meta tags.
      */
-    public function createMetaTags()
+    public function createMetaTags(): void
     {
         global $xoopsTpl, $xoTheme;
         if ('' !== $this->_keywords) {
@@ -251,7 +252,7 @@ class PublisherMetagen
      * @var    string  Chaine de caractère
      * @return boolean
      */
-    public static function emptyString($var)
+    public static function emptyString($var): bool
     {
         return strlen($var) > 0;
     }
@@ -266,7 +267,7 @@ class PublisherMetagen
      *
      * @return string short url for article
      */
-    public static function generateSeoTitle($title = '', $withExt = true)
+    public static function generateSeoTitle(string $title = '', bool $withExt = true): string
     {
         // Transformation de la chaine en minuscule
         // Codage de la chaine afin d'éviter les erreurs 500 en cas de caractères imprévus
@@ -301,7 +302,7 @@ class PublisherMetagen
      *
      * @return string
      */
-    public function purifyText($text, $keyword = false)
+    public function purifyText(string $text, bool $keyword = false): string
     {
         $text = str_replace('&nbsp;', ' ', $text);
         $text = str_replace('<br />', ' ', $text);
@@ -334,7 +335,7 @@ class PublisherMetagen
      *
      * @return mixed
      */
-    public function html2text($document)
+    public function html2text(string $document)
     {
         // PHP Manual:: function preg_replace
         // $document should contain an HTML document.

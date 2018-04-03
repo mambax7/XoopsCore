@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ require_once __DIR__.'/include/common.inc.php';
 
 set_time_limit(0); // don't want this to timeout
 
-function exception_handler($exception)
+function exception_handler($exception): void
 {
     echo 'Uncaught exception: ' , $exception->getMessage(), "\n";
     var_dump($exception->getTrace());
@@ -114,7 +115,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     }
 
     $res = $dbm->query('SELECT COUNT(*) FROM '.$dbm->db->prefix('system_user'));
-    list($isadmin) = $dbm->db->fetchRow($res);
+    [$isadmin] = $dbm->db->fetchRow($res);
 
 ob_start();
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class ItemList extends Item
      *   'id'       - element id for container association (i.e. aria-labelledby)
      *   'dropdown' - override "dropdown" class, i.e. "dropup"
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->set('type', Item::TYPE_LIST);

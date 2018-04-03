@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ interface UserconfigsPluginInterface
      * options,     Options available for the config
      * category,    Category for this config, use the unique identifier set on categories()
      */
-    public function configs();
+    public function configs(): void;
 
     /**
      * Expects an array of arrays containing:.
@@ -38,5 +39,5 @@ interface UserconfigsPluginInterface
      *
      * The keys must be unique identifiers
      */
-    public function categories();
+    public function categories(): void;
 }

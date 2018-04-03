@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the Stash package.
@@ -26,7 +26,7 @@ class DriverList extends \Stash\DriverList
      * @param  string       $name
      * @return string|false class name or false if no matching class
      */
-    public static function getDriverClass($name)
+    public static function getDriverClass(string $name)
     {
         if (isset(self::$drivers[$name])) {
             return self::$drivers[$name];

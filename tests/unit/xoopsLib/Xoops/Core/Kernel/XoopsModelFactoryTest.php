@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -8,11 +8,11 @@ class XoopsModelFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Kernel\XoopsModelFactory';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $class = $this->myClass;
         $instance = $class::getInstance();
@@ -22,7 +22,7 @@ class XoopsModelFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $instance2);
     }
 
-    public function test_loadHandler()
+    public function test_loadHandler(): void
     {
         $handler = new XoopsBlockHandler();
         $vars = ['one' => 1, 'two' => 2];

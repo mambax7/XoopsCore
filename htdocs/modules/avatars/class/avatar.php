@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->getVar('avatar_id', $format);
     }
@@ -70,7 +71,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_id($format = '')
+    public function avatar_id(string $format = '')
     {
         return $this->getVar('avatar_id', $format);
     }
@@ -82,7 +83,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_file($format = '')
+    public function avatar_file(string $format = '')
     {
         return $this->getVar('avatar_file', $format);
     }
@@ -94,7 +95,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_name($format = '')
+    public function avatar_name(string $format = '')
     {
         return $this->getVar('avatar_name', $format);
     }
@@ -106,7 +107,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_mimetype($format = '')
+    public function avatar_mimetype(string $format = '')
     {
         return $this->getVar('avatar_mimetype', $format);
     }
@@ -118,7 +119,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_created($format = '')
+    public function avatar_created(string $format = '')
     {
         return $this->getVar('avatar_created', $format);
     }
@@ -130,7 +131,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_display($format = '')
+    public function avatar_display(string $format = '')
     {
         return $this->getVar('avatar_display', $format);
     }
@@ -142,7 +143,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_weight($format = '')
+    public function avatar_weight(string $format = '')
     {
         return $this->getVar('avatar_weight', $format);
     }
@@ -154,7 +155,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return mixed
      */
-    public function avatar_type($format = '')
+    public function avatar_type(string $format = '')
     {
         return $this->getVar('avatar_type', $format);
     }
@@ -164,7 +165,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @param int $value user count
      */
-    public function setUserCount($value)
+    public function setUserCount(int $value): void
     {
         $this->userCount = (int) ($value);
     }
@@ -174,7 +175,7 @@ class AvatarsAvatar extends XoopsObject
      *
      * @return int
      */
-    public function getUserCount()
+    public function getUserCount(): int
     {
         return $this->userCount;
     }
@@ -191,7 +192,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'avatars_avatar', 'AvatarsAvatar', 'avatar_id', 'avatar_name');
     }
@@ -204,7 +205,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getObjectsWithCount(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjectsWithCount(?CriteriaElement $criteria = null, bool $id_as_key = false): array
     {
         $ret = [];
         if (null === $criteria) {
@@ -244,7 +245,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function addUser($avatar_id, $user_id)
+    public function addUser(int $avatar_id, int $user_id): bool
     {
         $avatar_id = (int) ($avatar_id);
         $user_id = (int) ($user_id);
@@ -286,7 +287,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getUser(AvatarsAvatar $avatar)
+    public function getUser(AvatarsAvatar $avatar): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -313,7 +314,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getListByType($avatar_type = null, $avatar_display = null)
+    public function getListByType(string $avatar_type = null, bool $avatar_display = null): array
     {
         $criteria = new CriteriaCompo();
         if (isset($avatar_type)) {

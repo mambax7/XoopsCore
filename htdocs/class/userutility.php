@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class XoopsUserUtility
      *
      * @return bool
      */
-    public static function sendWelcome($user)
+    public static function sendWelcome($user): bool
     {
         $xoops = Xoops::getInstance();
 
@@ -86,15 +87,15 @@ class XoopsUserUtility
 
                 break;
             case 2:
-                list($uname, $email) = $args;
+                [$uname, $email] = $args;
 
                 break;
             case 3:
-                list($user, $pass, $vpass) = $args;
+                [$user, $pass, $vpass] = $args;
 
                 break;
             case 4:
-                list($uname, $email, $pass, $vpass) = $args;
+                [$uname, $email, $pass, $vpass] = $args;
 
                 break;
             default:
@@ -212,7 +213,7 @@ class XoopsUserUtility
      *
      * @return mixed string or integer value for the IP
      */
-    public static function getIP($asString = false)
+    public static function getIP(bool $asString = false)
     {
         // Gets the proxy ip sent by the user
         $proxy_ip = '';
@@ -263,7 +264,7 @@ class XoopsUserUtility
      *
      * @return array of strings, names or links
      */
-    public static function getUnameFromIds($uids, $usereal = false, $linked = false)
+    public static function getUnameFromIds(array $uids, bool $usereal = false, bool $linked = false): array
     {
         $xoops = Xoops::getInstance();
         if (!is_array($uids)) {
@@ -309,7 +310,7 @@ class XoopsUserUtility
      *
      * @return string name or link
      */
-    public static function getUnameFromId($userid, $usereal = false, $linked = false)
+    public static function getUnameFromId(int $userid, bool $usereal = false, bool $linked = false): string
     {
         $xoops = Xoops::getInstance();
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Upgrader from to 2.4.x to 2.5.0
  * You may not change or alter any portion of this comment or credits
@@ -31,7 +32,7 @@ class upgrade_250 extends xoopsUpgrade
         if (!$result = $db->queryF($sql)) {
             return false;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return (0 === $count) ? false : true;
     }
@@ -44,7 +45,7 @@ class upgrade_250 extends xoopsUpgrade
         if (!$result = $db->queryF($sql)) {
             return false;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return (0 === $count) ? false : true;
     }
@@ -151,7 +152,7 @@ class upgrade_250 extends xoopsUpgrade
         return true;
     }
 
-    public function upgrade_250()
+    public function upgrade_250(): void
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }

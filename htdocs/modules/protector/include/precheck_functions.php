@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,7 +22,7 @@
 /**
  * @return null|boolean
  */
-function protector_precheck()
+function protector_precheck(): ?bool
 {
     // check the access is from install/index.php
     if (defined('_INSTALL_CHARSET') && !is_writable(\XoopsBaseConfig::get('root-path').'/mainfile.php')) {

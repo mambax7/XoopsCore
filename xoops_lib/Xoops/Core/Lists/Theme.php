@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class Theme extends ListAbstract
      *
      * @return array
      */
-    public static function getList()
+    public static function getList(): array
     {
         $fileList = Directory::getList(\XoopsBaseConfig::get('themes-path').'/');
 

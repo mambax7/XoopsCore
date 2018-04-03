@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 
 // Get Action type
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'edit';
+$op = $_REQUEST['op'] ?? 'edit';
 // Call header
 $xoops->header();
 

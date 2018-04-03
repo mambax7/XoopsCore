@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -46,7 +47,7 @@ class XoopsLocal extends Xoops\Locale\AbstractLocale
      * @param  unknown_type $number
      * @return string
      */
-    public static function number_format($number)
+    public static function number_format(unknown_type $number): string
     {
         return number_format($number, 2, '.', ',');
     }
@@ -58,7 +59,7 @@ class XoopsLocal extends Xoops\Locale\AbstractLocale
      * @param  string $number
      * @return string format
      */
-    public static function money_format($format, $number)
+    public static function money_format(string $format, string $number): string
     {
         setlocale(LC_MONETARY, 'en_US');
 

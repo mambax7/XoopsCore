@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class NullTheme extends XoopsTheme
      *
      * @return bool
      */
-    public function xoInit()
+    public function xoInit(): bool
     {
         return true;
     }
@@ -37,7 +38,7 @@ class NullTheme extends XoopsTheme
      *
      * @return bool
      */
-    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = [])
+    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = []): bool
     {
         return true;
     }
@@ -45,21 +46,21 @@ class NullTheme extends XoopsTheme
     /**
      * Add StyleSheet or CSS code to the document head.
      */
-    public function addStylesheet($src = '', $attributes = [], $content = '')
+    public function addStylesheet($src = '', $attributes = [], $content = ''): void
     {
     }
 
     /**
      * addScriptAssets - add a list of scripts to the page.
      */
-    public function addScriptAssets($assets, $filters = 'default', $target = null)
+    public function addScriptAssets($assets, $filters = 'default', $target = null): void
     {
     }
 
     /**
      * addStylesheetAssets - add a list of stylesheets to the page.
      */
-    public function addStylesheetAssets($assets, $filters = 'default', $target = null)
+    public function addStylesheetAssets($assets, $filters = 'default', $target = null): void
     {
     }
 
@@ -67,21 +68,21 @@ class NullTheme extends XoopsTheme
      * addBaseAssets - add a list of assets to the page, these will all
      * be combined into a single asset file at render time.
      */
-    public function addBaseAssets($type, $assets)
+    public function addBaseAssets($type, $assets): void
     {
     }
 
     /**
      * addBaseScriptAssets - add a list of scripts to the page.
      */
-    public function addBaseScriptAssets($assets)
+    public function addBaseScriptAssets($assets): void
     {
     }
 
     /**
      * addBaseStylesheetAssets - add a list of stylesheets to the page.
      */
-    public function addBaseStylesheetAssets($assets)
+    public function addBaseStylesheetAssets($assets): void
     {
     }
 

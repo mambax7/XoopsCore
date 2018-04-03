@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS control panel functions.
  *
@@ -19,7 +20,7 @@ define('XOOPS_CPFUNC_LOADED', 1);
 /**
  * CP Header.
  */
-function xoops_cp_header()
+function xoops_cp_header(): void
 {
     $xoops = Xoops::getInstance();
     $xoops->deprecated('xoops_cp_header() is deprecated. See how to replace it in file '.__FILE__.' line '.__LINE__);
@@ -29,7 +30,7 @@ function xoops_cp_header()
 /**
  * CP Footer.
  */
-function xoops_cp_footer()
+function xoops_cp_footer(): void
 {
     $xoops = Xoops::getInstance();
     $xoops->deprecated('xoops_cp_footer() is deprecated. See how to replace it in file '.__FILE__.' line '.__LINE__);

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class metaweblogapi extends XoopsXmlRpcApi
         //$this->_setXoopsTagMap('hometext', 'description');
     }
 
-    public function newPost()
+    public function newPost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -83,7 +84,7 @@ class metaweblogapi extends XoopsXmlRpcApi
         }
     }
 
-    public function editPost()
+    public function editPost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -137,7 +138,7 @@ class metaweblogapi extends XoopsXmlRpcApi
         }
     }
 
-    public function getPost()
+    public function getPost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -184,7 +185,7 @@ class metaweblogapi extends XoopsXmlRpcApi
         }
     }
 
-    public function getRecentPosts()
+    public function getRecentPosts(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -241,7 +242,7 @@ class metaweblogapi extends XoopsXmlRpcApi
         }
     }
 
-    public function getCategories()
+    public function getCategories(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));

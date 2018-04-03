@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
 define("_DB_TABLE_NOT_CREATED", "Unable to create table %s"); // L118
 define("_DB_TABLE_CREATED", "Table %s created."); // L45

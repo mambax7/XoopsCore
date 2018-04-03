@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Button('button_caption', 'button_name', 'button_value');
     }
@@ -24,11 +24,11 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertTrue(false !== strpos($value, '<input'));
@@ -39,7 +39,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, 'value="button_value"'));
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new Button('mycaption', 'myname', 'myvalue', 'button');
         $newWay = new Button(

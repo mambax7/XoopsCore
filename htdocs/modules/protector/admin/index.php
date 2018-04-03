@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ global $xoopsDB;
 $db = $xoopsDB;
 $db->prefix('protector_log');
 $rs = $db->query('SELECT count(lid) FROM '.$db->prefix('protector_log'));
-list($numrows) = $db->fetchRow($rs);
+[$numrows] = $db->fetchRow($rs);
 
 $indexAdmin = new \Xoops\Module\Admin();
 $indexAdmin->displayNavigation('index.php');

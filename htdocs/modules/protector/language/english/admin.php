@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // index.php
 define('_AM_TH_DATETIME', 'Time');

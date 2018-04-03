@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,14 +8,14 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Database\Schema\RemovePrefixes';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf('Doctrine\DBAL\Schema\Visitor\Visitor', $instance);
     }
 
-    public function test_getNewSchema()
+    public function test_getNewSchema(): void
     {
         $instance = new $this->myClass();
 
@@ -23,14 +23,14 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Xoops\Core\Database\Schema\PrefixStripper', $value);
     }
 
-    public function test_setTableFilter()
+    public function test_setTableFilter(): void
     {
         $instance = new $this->myClass();
         $instance->setTableFilter([]);
         $this->assertTrue(true);
     }
 
-    public function test_acceptSchema()
+    public function test_acceptSchema(): void
     {
         $instance = new $this->myClass();
 
@@ -39,7 +39,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_acceptTable()
+    public function test_acceptTable(): void
     {
         $instance = new $this->myClass();
 
@@ -50,7 +50,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         // var_dump($value);
     }
 
-    public function test_acceptColumn()
+    public function test_acceptColumn(): void
     {
         $instance = new $this->myClass();
 
@@ -62,7 +62,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_acceptForeignKey()
+    public function test_acceptForeignKey(): void
     {
         $instance = new $this->myClass();
 
@@ -85,7 +85,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_acceptIndex()
+    public function test_acceptIndex(): void
     {
         $instance = new $this->myClass();
 
@@ -106,7 +106,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_acceptSequence()
+    public function test_acceptSequence(): void
     {
         $instance = new $this->myClass();
 

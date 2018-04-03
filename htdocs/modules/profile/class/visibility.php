@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     /**
      * @param null|Connection $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'profile_visibility', 'profilevisibility', 'field_id');
     }
@@ -55,7 +56,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getVisibleFields($profile_groups, $user_groups = null)
+    public function getVisibleFields(array $profile_groups, array $user_groups = null): array
     {
         $profile_groups[] = 0;
         array_walk($profile_groups, 'intval');
@@ -71,7 +72,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
 
         $result = $sql->execute();
         $field_ids = [];
-        while (list($field_id) = $result->fetch(PDO::FETCH_NUM)) {
+        while ([$field_id] = $result->fetch(PDO::FETCH_NUM)) {
             $field_ids[] = $field_ids;
         }
 
@@ -85,7 +86,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
      *
      * @return array of row arrays, indexed by field_id
      */
-    public function getAllByFieldId(CriteriaElement $criteria = null)
+    public function getAllByFieldId(?CriteriaElement $criteria = null): array
     {
         $rawRows = $this->getAll($criteria, null, false, false);
 
@@ -111,7 +112,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
      *              integer zero if $a and $b are equal
      *              integer greater than zero if $a is greater than $b
      */
-    protected function visibilitySort($a, $b)
+    protected function visibilitySort(array $a, array $b): int
     {
         $fieldDiff = $a['field_id'] - $b['field_id'];
         $userDiff = $a['user_group'] - $b['user_group'];

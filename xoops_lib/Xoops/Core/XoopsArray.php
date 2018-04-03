@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
      *
      * @return mixed The value of the attribute, or null if not set.
      */
-    public function get($name, $default = null)
+    public function get(string $name, $default = null)
     {
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
@@ -47,7 +48,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
      *
      * @return $this
      */
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $this->offsetSet($name, $value);
 
@@ -61,7 +62,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
      *
      * @return bool true if named attribute is set
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return $this->offsetExists($name);
     }
@@ -74,7 +75,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
      * @return mixed An attribute value, if the named attribute existed and
      *               has been removed, otherwise NULL.
      */
-    public function remove($name)
+    public function remove(string $name)
     {
         $value = null;
         if ($this->offsetExists($name)) {
@@ -90,7 +91,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
      *
      * @return array old values
      */
-    public function clear()
+    public function clear(): array
     {
         return $this->exchangeArray([]);
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,10 +59,10 @@ class SelectEditor extends ElementTray
      */
     public function __construct(
         Form $form,
-        $name = 'editor',
-        $value = null,
-        $nohtml = false,
-        $allowed_editors = []
+        string $name = 'editor',
+        string $value = null,
+        bool $nohtml = false,
+        array $allowed_editors = []
     ) {
         parent::__construct(\XoopsLocale::A_SELECT);
         $this->allowed_editors = $allowed_editors;
@@ -76,7 +77,7 @@ class SelectEditor extends ElementTray
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $editor_handler = \XoopsEditorHandler::getInstance();
         $editor_handler->allowed_editors = $this->allowed_editors;

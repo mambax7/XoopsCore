@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -54,11 +55,11 @@ class Joint extends XoopsModelAbstract
      * @return false|array array as requested by $asObject
      */
     public function getByLink(
-        CriteriaElement $criteria = null,
-        $fields = null,
-        $asObject = true,
-        $field_link = null,
-        $field_object = null
+        ?CriteriaElement $criteria = null,
+        array $fields = null,
+        bool $asObject = true,
+        string $field_link = null,
+        string $field_object = null
     ) {
         if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
@@ -126,7 +127,7 @@ class Joint extends XoopsModelAbstract
      *
      * @return false|int count of objects
      */
-    public function getCountByLink(CriteriaElement $criteria = null)
+    public function getCountByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return false;
@@ -159,7 +160,7 @@ class Joint extends XoopsModelAbstract
      *
      * @return false|int count of objects
      */
-    public function getCountsByLink(CriteriaElement $criteria = null)
+    public function getCountsByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return false;
@@ -186,7 +187,7 @@ class Joint extends XoopsModelAbstract
         $result = $qb->execute();
 
         $ret = [];
-        while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
+        while ([$id, $count] = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
 
@@ -204,7 +205,7 @@ class Joint extends XoopsModelAbstract
      * @todo UPDATE ... LEFT JOIN is not portable
      * Note Alain91 : multi tables update is not allowed in Doctrine
      */
-    public function updateByLink(array $data, CriteriaElement $criteria = null)
+    public function updateByLink(array $data, ?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return false;
@@ -237,7 +238,7 @@ class Joint extends XoopsModelAbstract
      * @todo DELETE ... LEFT JOIN is not portable
      * Note Alain91 : multi tables delete is not allowed in Doctrine
      */
-    public function deleteByLink(CriteriaElement $criteria = null)
+    public function deleteByLink(?CriteriaElement $criteria = null)
     {
         if (!$this->validateLinks()) {
             return false;
@@ -261,7 +262,7 @@ class Joint extends XoopsModelAbstract
      *
      * @return bool
      */
-    private function validateLinks()
+    private function validateLinks(): bool
     {
         if (empty($this->handler->table_link) || empty($this->handler->field_link)) {
             trigger_error('The linked table is not set yet.', E_USER_WARNING);

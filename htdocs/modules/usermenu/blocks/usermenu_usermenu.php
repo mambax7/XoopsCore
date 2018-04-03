@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -49,7 +50,7 @@ function b_usermenu_usermenu_show()
                     if ($helper->isCurrentModule() && isset($res['subMenu']) && is_array($res['subMenu'])) {
                         foreach ($res['subMenu'] as  $key => $subMenu) {
                             if (isset($subMenu['name']) && isset($subMenu['link'])) {
-                                $subMenu['icon'] = isset($subMenu['icon']) ? $subMenu['icon'] : 'glyphicon-menu-right';
+                                $subMenu['icon'] = $subMenu['icon'] ?? 'glyphicon-menu-right';
                                 $res['subMenu'][$key] = $subMenu;
                             }
                         }

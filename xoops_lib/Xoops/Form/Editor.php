@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class Editor extends TextArea
      * @param bool   $nohtml    use non-WYSIWYG editor onfailure
      * @param string $OnFailure editor to be used if current one failed
      */
-    public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
+    public function __construct(string $caption, string $name, ?array $configs = null, bool $nohtml = false, string $OnFailure = '')
     {
         // Backward compatibility: $name -> editor name; $configs['name'] -> textarea field name
         if (!isset($configs['editor'])) {
@@ -87,7 +88,7 @@ class Editor extends TextArea
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         if ($this->editor instanceof \XoopsEditor) {
             return $this->editor->render();

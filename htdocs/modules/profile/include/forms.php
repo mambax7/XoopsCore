@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
  * @param  null                 $step
  * @return Xoops\Form\ThemeForm
  */
-function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
+function profile_getRegisterForm(XoopsUser $user, $profile, $step = null): Xoops\Form\ThemeForm
 {
     $xoops = Xoops::getInstance();
     $action = $_SERVER['REQUEST_URI'];
@@ -122,7 +123,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
  * @param  bool                 $action
  * @return Xoops\Form\ThemeForm
  */
-function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $action = false)
+function profile_getUserForm(XoopsUser $user, ?ProfileProfile $profile = null, bool $action = false): Xoops\Form\ThemeForm
 {
     $xoops = Xoops::getInstance();
 

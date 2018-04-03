@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class SubjectIcon extends ListAbstract
      *
      * @return array
      */
-    public static function getList($subDirectory = '')
+    public static function getList(string $subDirectory = ''): array
     {
         $xoops = \Xoops::getInstance();
         $subDirectory = trim($subDirectory, '/');
@@ -47,7 +48,7 @@ class SubjectIcon extends ListAbstract
      * @param OptionElement $element      Form element to add options to
      * @param string        $subDirectory subdirectory (deprecated)
      */
-    public static function setOptionsArray(OptionElement $element, $subDirectory = '')
+    public static function setOptionsArray(OptionElement $element, string $subDirectory = ''): void
     {
         $xoops = \Xoops::getInstance();
         $subjects = static::getList($subDirectory);

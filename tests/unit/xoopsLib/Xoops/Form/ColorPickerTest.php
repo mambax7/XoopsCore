@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ColorPicker('Caption', 'name');
         \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme());
@@ -26,11 +26,11 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $level = ob_get_level();
         $value = $this->object->render();
@@ -40,13 +40,13 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $value);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertInternalType('string', $value);
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new ColorPicker('mycaption', 'myname');
         $newWay = new ColorPicker(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname']);

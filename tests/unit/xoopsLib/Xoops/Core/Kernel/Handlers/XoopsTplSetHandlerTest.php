@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,12 +8,12 @@ class TplSetHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertRegExp('/^.*system_tplset$/', $instance->table);
@@ -22,21 +22,21 @@ class TplSetHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('tplset_name', $instance->identifierName);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsTplSetHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
 
-    public function test_getByname()
+    public function test_getByname(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getByname(1);
         $this->assertFalse($value);
     }
 
-    public function test_getNameList()
+    public function test_getNameList(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getNameList();

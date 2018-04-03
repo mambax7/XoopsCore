@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ class Thumbs extends HelperAbstract
     /**
      * init.
      */
-    public function init()
+    public function init(): void
     {
         $this->dirname = 'thumbs';
     }
@@ -39,7 +40,7 @@ class Thumbs extends HelperAbstract
      *
      * @return string xoops virtual path for the thumbnail
      */
-    public function buildThumbPath($imgPath, $width, $height)
+    public function buildThumbPath(string $imgPath, int $width, int $height): string
     {
         //$xoops = \Xoops::getInstance();
         if (0 === $width && 0 === $height) {

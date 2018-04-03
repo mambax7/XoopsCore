@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // Dutch Translation by Cath22: Cathelijne22@gmail.com
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ abstract class AbstractHelper
      *
      * @param string|null $dirname dirname
      */
-    public function __construct($dirname = null)
+    public function __construct(?string $dirname = null)
     {
         $this->module = null;
 
@@ -76,14 +77,14 @@ abstract class AbstractHelper
      * $this->module will have a module object that any further
      * initialization can use.
      */
-    abstract public function init();
+    abstract public function init(): void;
 
     /**
      * Set debug option on or off.
      *
      * @param bool $bool true to turn on debug logging, false for off
      */
-    public function setDebug($bool = true)
+    public function setDebug(bool $bool = true): void
     {
         $this->debug = (bool) $bool;
     }
@@ -93,7 +94,7 @@ abstract class AbstractHelper
      *
      * @param mixed $log log item, can be message or variable
      */
-    public function addLog($log)
+    public function addLog($log): void
     {
         if ($this->debug) {
             $message = $this->serializeForHelperLog($log);
@@ -112,7 +113,7 @@ abstract class AbstractHelper
      *
      * @return string
      */
-    protected function serializeForHelperLog($value)
+    protected function serializeForHelperLog($value): string
     {
         if (is_resource($value) || null !== @get_resource_type($value)) {
             $value = '(resource)';

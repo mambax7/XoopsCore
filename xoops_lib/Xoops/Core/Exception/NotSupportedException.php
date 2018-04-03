@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Exception;
 
@@ -16,7 +16,7 @@ class NotSupportedException extends \UnexpectedValueException
     /**
      * @return string the user-friendly name of this exception
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Not Supported';
     }

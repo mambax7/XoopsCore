@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // needed for phpunit => initializing $_SERVER values
 if (empty($_SERVER['HTTP_HOST'])) {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if (empty($_SERVER['argc'])) {
     echo 'Error: This script must be run from the command line';

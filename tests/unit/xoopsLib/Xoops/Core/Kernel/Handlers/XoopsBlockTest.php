@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,11 +8,11 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Kernel\Handlers\XoopsBlock';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -39,160 +39,160 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['last_modified']));
     }
 
-    public function test___construct100()
+    public function test___construct100(): void
     {
         $instance = new $this->myClass(1);
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myClass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_bid()
+    public function test_bid(): void
     {
         $instance = new $this->myClass();
         $value = $instance->bid();
         $this->assertNull($value);
     }
 
-    public function test_mid()
+    public function test_mid(): void
     {
         $instance = new $this->myClass();
         $value = $instance->mid();
         $this->assertSame(0, $value);
     }
 
-    public function test_func_num()
+    public function test_func_num(): void
     {
         $instance = new $this->myClass();
         $value = $instance->func_num();
         $this->assertSame(0, $value);
     }
 
-    public function test_options()
+    public function test_options(): void
     {
         $instance = new $this->myClass();
         $value = $instance->options();
         $this->assertNull($value);
     }
 
-    public function test_name()
+    public function test_name(): void
     {
         $instance = new $this->myClass();
         $value = $instance->name();
         $this->assertNull($value);
     }
 
-    public function test_title()
+    public function test_title(): void
     {
         $instance = new $this->myClass();
         $value = $instance->title();
         $this->assertNull($value);
     }
 
-    public function test_content()
+    public function test_content(): void
     {
         $instance = new $this->myClass();
         $value = $instance->content();
         $this->assertNull($value);
     }
 
-    public function test_side()
+    public function test_side(): void
     {
         $instance = new $this->myClass();
         $value = $instance->side();
         $this->assertSame(0, $value);
     }
 
-    public function test_weight()
+    public function test_weight(): void
     {
         $instance = new $this->myClass();
         $value = $instance->weight();
         $this->assertSame(0, $value);
     }
 
-    public function test_visible()
+    public function test_visible(): void
     {
         $instance = new $this->myClass();
         $value = $instance->visible();
         $this->assertSame(0, $value);
     }
 
-    public function test_block_type()
+    public function test_block_type(): void
     {
         $instance = new $this->myClass();
         $value = $instance->block_type();
         $this->assertNull($value);
     }
 
-    public function test_c_type()
+    public function test_c_type(): void
     {
         $instance = new $this->myClass();
         $value = $instance->c_type();
         $this->assertNull($value);
     }
 
-    public function test_isactive()
+    public function test_isactive(): void
     {
         $instance = new $this->myClass();
         $value = $instance->isactive();
         $this->assertNull($value);
     }
 
-    public function test_dirname()
+    public function test_dirname(): void
     {
         $instance = new $this->myClass();
         $value = $instance->dirname();
         $this->assertNull($value);
     }
 
-    public function test_func_file()
+    public function test_func_file(): void
     {
         $instance = new $this->myClass();
         $value = $instance->func_file();
         $this->assertNull($value);
     }
 
-    public function test_show_func()
+    public function test_show_func(): void
     {
         $instance = new $this->myClass();
         $value = $instance->show_func();
         $this->assertNull($value);
     }
 
-    public function test_edit_func()
+    public function test_edit_func(): void
     {
         $instance = new $this->myClass();
         $value = $instance->edit_func();
         $this->assertNull($value);
     }
 
-    public function test_template()
+    public function test_template(): void
     {
         $instance = new $this->myClass();
         $value = $instance->template();
         $this->assertSame($value, null);
     }
 
-    public function test_bcachetime()
+    public function test_bcachetime(): void
     {
         $instance = new $this->myClass();
         $value = $instance->bcachetime();
         $this->assertSame(0, $value);
     }
 
-    public function test_last_modified()
+    public function test_last_modified(): void
     {
         $instance = new $this->myClass();
         $value = $instance->last_modified();
         $this->assertSame(0, $value);
     }
 
-    public function test_getContent()
+    public function test_getContent(): void
     {
         $this->markTestSkipped('side effects');
         $instance = new $this->myClass();
@@ -216,7 +216,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_getOptions()
+    public function test_getOptions(): void
     {
         $instance = new $this->myClass();
         $value = $instance->getOptions();
@@ -248,7 +248,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_isCustom()
+    public function test_isCustom(): void
     {
         $instance = new $this->myClass();
         $value = $instance->isCustom();
@@ -259,7 +259,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_buildBlock()
+    public function test_buildBlock(): void
     {
         $this->markTestSkipped('side effects');
         $instance = new $this->myClass();

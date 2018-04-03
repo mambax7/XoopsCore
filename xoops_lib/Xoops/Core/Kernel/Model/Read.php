@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class Read extends XoopsModelAbstract
      *
      * @return array of objects/array as specified in $asObject
      */
-    public function getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
+    public function getAll(?CriteriaElement $criteria = null, array $fields = null, bool $asObject = true, bool $id_as_key = true): array
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
@@ -104,7 +105,7 @@ class Read extends XoopsModelAbstract
      *
      * @return array
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function getObjects(?CriteriaElement $criteria = null, bool $id_as_key = false, bool $as_object = true): array
     {
         $objects = $this->getAll($criteria, null, $as_object, $id_as_key);
 
@@ -120,7 +121,7 @@ class Read extends XoopsModelAbstract
      *
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(?CriteriaElement $criteria = null, int $limit = 0, int $start = 0): array
     {
         //$qb = Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $qb = $this->handler->db2->createXoopsQueryBuilder();
@@ -162,7 +163,7 @@ class Read extends XoopsModelAbstract
      *
      * @return array of object IDs
      */
-    public function getIds(CriteriaElement $criteria = null)
+    public function getIds(?CriteriaElement $criteria = null): array
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
@@ -192,7 +193,7 @@ class Read extends XoopsModelAbstract
      *
      * @return \Xoops\Core\Kernel\XoopsObject|null object or null if no matching object found
      */
-    public function getRandomObject(CriteriaElement $criteria = null)
+    public function getRandomObject(?CriteriaElement $criteria = null): ?\Xoops\Core\Kernel\XoopsObject
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         $qb->select('COUNT(*)')
@@ -203,7 +204,7 @@ class Read extends XoopsModelAbstract
         $result = $qb->execute();
         $count = $result->fetchColumn();
 
-        $offset = mt_rand(0, $count - 1);
+        $offset = random_int(0, $count - 1);
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         $qb->select($this->handler->keyName)

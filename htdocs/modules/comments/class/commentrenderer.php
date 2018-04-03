@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ class CommentsCommentRenderer
      * @param bool $use_icons
      * @param bool $do_iconcheck
      */
-    public function __construct(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
+    public function __construct(XoopsTpl $tpl, bool $use_icons = true, bool $do_iconcheck = false)
     {
         $this->tpl = $tpl;
         $this->useIcons = $use_icons;
@@ -82,7 +83,7 @@ class CommentsCommentRenderer
      *
      * @return CommentsCommentRenderer
      */
-    public static function getInstance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
+    public static function getInstance(XoopsTpl $tpl, bool $use_icons = true, bool $do_iconcheck = false): CommentsCommentRenderer
     {
         static $instance;
         if (!isset($instance)) {
@@ -98,7 +99,7 @@ class CommentsCommentRenderer
      *
      * @param array $comments_arr array of CommentsComment objects
      */
-    public function setComments(&$comments_arr)
+    public function setComments(array &$comments_arr): void
     {
         if (isset($this->comments)) {
             unset($this->comments);
@@ -111,7 +112,7 @@ class CommentsCommentRenderer
      *
      * @param bool $admin_view
      */
-    public function renderFlatView($admin_view = false)
+    public function renderFlatView(bool $admin_view = false): void
     {
         foreach ($this->comments as $i => $comment) {
             /* @var $comment CommentsComment */
@@ -152,7 +153,7 @@ class CommentsCommentRenderer
      * @param bool $admin_view
      * @param bool $show_nav
      */
-    public function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true)
+    public function renderThreadView(int $comment_id = 0, bool $admin_view = false, bool $show_nav = true): void
     {
         // construct comment tree
         $xot = new XoopsObjectTree($this->comments, 'id', 'pid', 'rootid');
@@ -214,7 +215,7 @@ class CommentsCommentRenderer
      * @param int  $comment_id Always "0" when called by client.
      * @param bool $admin_view
      */
-    public function renderNestView($comment_id = 0, $admin_view = false)
+    public function renderNestView(int $comment_id = 0, bool $admin_view = false): void
     {
         $xot = new XoopsObjectTree($this->comments, 'id', 'pid', 'rootid');
         $tree = $xot->getTree();
@@ -269,14 +270,14 @@ class CommentsCommentRenderer
      * @param string $current_prefix
      */
     private function renderThreadReplies(
-        &$thread,
-        $key,
-        &$replies,
-        $prefix,
-        $admin_view,
-        $depth = 0,
-        $current_prefix = ''
-    ) {
+        array &$thread,
+        int $key,
+        array &$replies,
+        string $prefix,
+        bool $admin_view,
+        int $depth = 0,
+        string $current_prefix = ''
+    ): void {
         if ($depth > 0) {
             $image = (false !== $this->useIcons) ? $this->getTitleIcon($thread[$key]['obj']->getVar('icon')) : '';
             $title = $thread[$key]['obj']->getVar('title');
@@ -321,7 +322,7 @@ class CommentsCommentRenderer
      * @param bool  $admin_view
      * @param int   $depth
      */
-    private function renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
+    private function renderNestReplies(array &$thread, int $key, array &$replies, int $prefix, bool $admin_view, int $depth = 0): void
     {
         if ($depth > 0) {
             $image = (false !== $this->useIcons) ? $this->getTitleIcon($thread[$key]['obj']->getVar('icon')) : '';
@@ -372,7 +373,7 @@ class CommentsCommentRenderer
      *
      * @return array
      */
-    private function getPosterName($poster_id)
+    private function getPosterName(int $poster_id): array
     {
         $poster['id'] = (int) ($poster_id);
         if ($poster['id'] > 0) {
@@ -393,7 +394,7 @@ class CommentsCommentRenderer
      *
      * @return array
      */
-    private function getPosterArray($poster_id)
+    private function getPosterArray(int $poster_id): array
     {
         $xoops = Xoops::getInstance();
         $poster['id'] = (int) ($poster_id);
@@ -437,7 +438,7 @@ class CommentsCommentRenderer
      *
      * @return string HTML IMG tag
      */
-    private function getTitleIcon($icon_image)
+    private function getTitleIcon(string $icon_image): string
     {
         $icon_image = htmlspecialchars(trim($icon_image));
         if ('' !== $icon_image) {

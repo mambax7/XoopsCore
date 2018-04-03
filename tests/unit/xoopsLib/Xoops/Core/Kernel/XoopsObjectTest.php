@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -12,13 +12,13 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsObjectTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test___constants()
+    public function test___constants(): void
     {
         $this->assertTrue(defined('XOBJ_DTYPE_TXTBOX'));
         $this->assertTrue(defined('XOBJ_DTYPE_TXTAREA'));
@@ -36,7 +36,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(defined('XOBJ_DTYPE_ENUM'));
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['vars', 'cleanVars', 'plugin_path'];
         foreach ($items as $item) {
@@ -45,7 +45,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_setNew()
+    public function test_setNew(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -57,7 +57,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($instance->isNew());
     }
 
-    public function test_setDirty()
+    public function test_setDirty(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -69,7 +69,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($instance->isDirty());
     }
 
-    public function test_initVar()
+    public function test_initVar(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -103,7 +103,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($vars[$key]['changed'] === false);
     }
 
-    public function test_assignVar()
+    public function test_assignVar(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -122,7 +122,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($vars[$key]['value'] === $value);
     }
 
-    public function test_assignVars()
+    public function test_assignVars(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -150,7 +150,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_setVar()
+    public function test_setVar(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar', XOBJ_DTYPE_INT, 0);
@@ -168,7 +168,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, $value['value']);
     }
 
-    public function test_setVars()
+    public function test_setVars(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -186,14 +186,14 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3, $instance->vars['dummyVar3']['value']);
     }
 
-    public function test_destroyVars()
+    public function test_destroyVars(): void
     {
         $instance = new $this->myClass();
         $x = $instance->destroyVars(null);
         $this->assertTrue($x);
     }
 
-    public function test_setFormVars()
+    public function test_setFormVars(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -211,7 +211,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('3', $x);
     }
 
-    public function test_getVars()
+    public function test_getVars(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -221,7 +221,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['dummyVar2']));
     }
 
-    public function test_getValues()
+    public function test_getValues(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -235,7 +235,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['dummyVar2']));
     }
 
-    public function test_getVar()
+    public function test_getVar(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -246,7 +246,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('0', $x);
     }
 
-    public function test_cleanVars()
+    public function test_cleanVars(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -261,17 +261,17 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(2, $cleanVars['dummyVar2']);
     }
 
-    public function test_registerFilter()
+    public function test_registerFilter(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_loadFilters()
+    public function test_loadFilters(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_xoopsClone()
+    public function test_xoopsClone(): void
     {
         $instance = new XoopsGroup();
 
@@ -283,7 +283,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($y, $x);
     }
 
-    public function test_setErrors()
+    public function test_setErrors(): void
     {
         $instance = new $this->myClass();
         $msg = 'error message';
@@ -299,7 +299,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($msg, $x[2]);
     }
 
-    public function test_getHtmlErrors()
+    public function test_getHtmlErrors(): void
     {
         $instance = new $this->myClass();
         $msg = 'error message';
@@ -309,7 +309,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('<h4>Errors</h4>'.$msg.'<br />'.$msg.'<br />', $x);
     }
 
-    public function test_toArray()
+    public function test_toArray(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);
@@ -319,7 +319,7 @@ class XoopsObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($x['dummyVar2']));
     }
 
-    public function test_ArrayAccess()
+    public function test_ArrayAccess(): void
     {
         $instance = new $this->myClass();
         $instance->initVar('dummyVar1', XOBJ_DTYPE_INT, 0);

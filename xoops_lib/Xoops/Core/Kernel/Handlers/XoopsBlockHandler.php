@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'system_block', '\Xoops\Core\Kernel\Handlers\XoopsBlock', 'bid', 'name');
     }
@@ -46,7 +47,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return int|false id of insert, or false on error
      */
-    public function insertBlock(XoopsBlock $obj, $force = false)
+    public function insertBlock(XoopsBlock $obj, bool $force = false)
     {
         $obj->setVar('last_modified', time());
 
@@ -60,7 +61,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteBlock(XoopsBlock $obj)
+    public function deleteBlock(XoopsBlock $obj): bool
     {
         if (!parent::delete($obj)) {
             return false;
@@ -88,7 +89,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return XoopsBlock[]
      **/
-    public function getDistinctObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getDistinctObjects(?CriteriaElement $criteria = null, bool $id_as_key = false)
     {
         $ret = [];
 
@@ -128,7 +129,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of blocks matching the conditions
      **/
-    public function getNameList(CriteriaElement $criteria = null)
+    public function getNameList(?CriteriaElement $criteria = null): array
     {
         $blocks = $this->getObjects($criteria, true);
         $ret = [];
@@ -166,7 +167,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $visible = null,
         $orderby = 'b.weight,b.bid',
         $isactive = 1
-    ) {
+    ): array {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -234,12 +235,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      * @return array
      */
     public function getAllBlocks(
-        $rettype = 'object',
-        $side = null,
-        $visible = null,
-        $orderby = 'side,weight,bid',
-        $isactive = 1
-    ) {
+        string $rettype = 'object',
+        int $side = null,
+        ?int $visible = null,
+        string $orderby = 'side,weight,bid',
+        int $isactive = 1
+    ): array {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -301,7 +302,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return array of block information
      */
-    public function getByModule($moduleid, $asobject = true)
+    public function getByModule(int $moduleid, bool $asobject = true): array
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -346,7 +347,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $visible = null,
         $orderby = 'b.weight, m.block_id',
         $isactive = 1
-    ) {
+    ): array {
         $ret = [];
 
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -427,12 +428,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      * @return array
      */
     public function getNonGroupedBlocks(
-        $module_id = 0,
-        $toponlyblock = false,
+        int $module_id = 0,
+        bool $toponlyblock = false,
         $visible = null,
         $orderby = 'b.weight, m.block_id',
         $isactive = 1
-    ) {
+    ): array {
         $ret = [];
 
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -510,7 +511,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return int count
      */
-    public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
+    public function countSimilarBlocks(int $moduleId, string $funcNum, string $showFunc = null): int
     {
         $funcNum = (int) ($funcNum);
         $moduleId = (int) ($moduleId);
@@ -534,7 +535,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         if (!$result = $qb->execute()) {
             return 0;
         }
-        list($count) = $result->fetch(\PDO::FETCH_NUM);
+        [$count] = $result->fetch(\PDO::FETCH_NUM);
 
         return $count;
     }
@@ -550,7 +551,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return string
      */
-    public function buildContent($position, $content = '', $contentdb = '')
+    public function buildContent(int $position, string $content = '', string $contentdb = ''): string
     {
         $ret = '';
         if (0 === $position) {
@@ -572,7 +573,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return string title winner of the title war?
      */
-    public function buildTitle($originaltitle, $newtitle = '')
+    public function buildTitle(string $originaltitle, string $newtitle = ''): string
     {
         if ('' !== $newtitle) {
             $ret = $newtitle;
@@ -592,7 +593,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return int[]
      */
-    public function getBlockByPerm($groupid)
+    public function getBlockByPerm(?int $groupid)
     {
         $ret = [];
         if (isset($groupid)) {

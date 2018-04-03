@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Theme;
 
@@ -15,7 +15,7 @@ class NullThemeTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new NullTheme();
     }
@@ -24,56 +24,56 @@ class NullThemeTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Theme\XoopsTheme', $this->object);
     }
 
-    public function testXoInit()
+    public function testXoInit(): void
     {
         $this->assertTrue($this->object->xoInit());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $this->assertTrue($this->object->render());
     }
 
-    public function testAddStylesheet()
+    public function testAddStylesheet(): void
     {
         $this->assertNull($this->object->addStylesheet());
     }
 
-    public function testAddScriptAssets()
+    public function testAddScriptAssets(): void
     {
         $this->assertNull($this->object->addScriptAssets(''));
     }
 
-    public function testAddStylesheetAssets()
+    public function testAddStylesheetAssets(): void
     {
         $this->assertNull($this->object->addStylesheetAssets(''));
     }
 
-    public function testAddBaseAssets()
+    public function testAddBaseAssets(): void
     {
         $this->assertNull($this->object->addBaseAssets('', ''));
     }
 
-    public function testAddBaseScriptAssets()
+    public function testAddBaseScriptAssets(): void
     {
         $this->assertNull($this->object->addBaseScriptAssets(''));
     }
 
-    public function testAddBaseStylesheetAssets()
+    public function testAddBaseStylesheetAssets(): void
     {
         $this->assertNull($this->object->addBaseStylesheetAssets(''));
     }
 
-    public function testSetNamedAsset()
+    public function testSetNamedAsset(): void
     {
         $this->assertNull($this->object->setNamedAsset('', ''));
     }

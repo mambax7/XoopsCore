@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@
  * @param  string           $type
  * @return int|mixed|string
  */
-function system_cleanVars(&$global, $key, $default = '', $type = 'int')
+function system_cleanVars(&$global, $key, string $default = '', string $type = 'int')
 {
     switch ($type) {
         case 'array':
@@ -65,7 +66,7 @@ function system_cleanVars(&$global, $key, $default = '', $type = 'int')
  * @return boolean
  * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
  */
-function system_loadLanguage($name, $domain = '', $language = null)
+function system_loadLanguage(string $name, string $domain = '', string $language = null): bool
 {
     $xoops = Xoops::getInstance();
     /*
@@ -95,7 +96,7 @@ function system_loadLanguage($name, $domain = '', $language = null)
  * @param  string $value
  * @return string
  */
-function system_adminVersion($version, $value = '')
+function system_adminVersion(string $version, string $value = ''): string
 {
     static $tblVersion = [];
     if (is_array($tblVersion) && array_key_exists($version.'.'.$value, $tblVersion)) {
@@ -119,7 +120,7 @@ function system_adminVersion($version, $value = '')
  * @param  string $img
  * @return string
  */
-function system_AdminIcons($img)
+function system_AdminIcons(string $img): string
 {
     $xoops = Xoops::getInstance();
     $style = 'default';
@@ -132,7 +133,7 @@ function system_AdminIcons($img)
 /**
  * @param string $name
  */
-function system_loadTemplate($name)
+function system_loadTemplate(string $name): void
 {
     $xoops = Xoops::getInstance();
 
@@ -150,7 +151,7 @@ function system_loadTemplate($name)
  * @param  string $id
  * @return string
  */
-function modify_chmod($value_chmod, $path_file, $id)
+function modify_chmod(int $value_chmod, string $path_file, string $id): string
 {
     $chmod = '<div id="loading_'.$id.'" align="center" style="display:none;">'.'<img src="./images/mimetypes/spinner.gif" title="Loading" alt="Loading" width="12px"/></div>'.'<div id="chmod'.$id.'">'.'<select size="1" onChange="filemanager_modify_chmod(\''.$path_file.'\', \''.$id.'\')" name="chmod" id="chmod">';
     if (777 === $value_chmod) {

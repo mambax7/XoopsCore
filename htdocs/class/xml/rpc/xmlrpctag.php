@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,12 +24,12 @@ abstract class XoopsXmlRpcDocument
      */
     protected $_tags = [];
 
-    public function add(XoopsXmlRpcTag $tagobj)
+    public function add(XoopsXmlRpcTag $tagobj): void
     {
         $this->_tags[] = $tagobj;
     }
 
-    abstract public function render();
+    abstract public function render(): void;
 }
 
 /**
@@ -39,7 +40,7 @@ class XoopsXmlRpcResponse extends XoopsXmlRpcDocument
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $payload = '';
         foreach ($this->_tags as $tag) {
@@ -68,7 +69,7 @@ class XoopsXmlRpcRequest extends XoopsXmlRpcDocument
     /**
      * @param string $methodName
      */
-    public function __construct($methodName)
+    public function __construct(string $methodName)
     {
         $this->methodName = trim($methodName);
     }
@@ -76,7 +77,7 @@ class XoopsXmlRpcRequest extends XoopsXmlRpcDocument
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $payload = '';
         foreach ($this->_tags as $tag) {
@@ -105,7 +106,7 @@ abstract class XoopsXmlRpcTag
      *
      * @return string
      */
-    public function encode($text)
+    public function encode(string $text): string
     {
         return htmlspecialchars($text, ENT_XML1, 'UTF-8');
     }
@@ -113,7 +114,7 @@ abstract class XoopsXmlRpcTag
     /**
      * @param bool $fault
      */
-    public function setFault($fault = true)
+    public function setFault(bool $fault = true): void
     {
         $this->_fault = (bool) $fault;
     }
@@ -121,7 +122,7 @@ abstract class XoopsXmlRpcTag
     /**
      * @return bool
      */
-    public function isFault()
+    public function isFault(): bool
     {
         return $this->_fault;
     }
@@ -129,7 +130,7 @@ abstract class XoopsXmlRpcTag
     /**
      * @abstract
      */
-    abstract public function render();
+    abstract public function render(): void;
 }
 
 /**
@@ -151,7 +152,7 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
      * @param int    $code
      * @param string $extra
      */
-    public function __construct($code, $extra = null)
+    public function __construct(int $code, ?string $extra = null)
     {
         $this->setFault(true);
         $this->_code = (int) ($code);
@@ -161,7 +162,7 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         switch ($this->_code) {
             case 101:
@@ -237,7 +238,7 @@ class XoopsXmlRpcInt extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><int>'.$this->_value.'</int></value>';
     }
@@ -256,7 +257,7 @@ class XoopsXmlRpcDouble extends XoopsXmlRpcTag
     /**
      * @param float $value
      */
-    public function __construct($value)
+    public function __construct(float $value)
     {
         $this->_value = (float) $value;
     }
@@ -264,7 +265,7 @@ class XoopsXmlRpcDouble extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><double>'.$this->_value.'</double></value>';
     }
@@ -283,7 +284,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
     /**
      * @param bool $value
      */
-    public function __construct($value)
+    public function __construct(bool $value)
     {
         $this->_value = (!empty($value) && false !== $value) ? 1 : 0;
     }
@@ -291,7 +292,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><boolean>'.$this->_value.'</boolean></value>';
     }
@@ -310,7 +311,7 @@ class XoopsXmlRpcString extends XoopsXmlRpcTag
     /**
      * @param string $value
      */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         $this->_value = (string) ($value);
     }
@@ -318,7 +319,7 @@ class XoopsXmlRpcString extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><string>'.$this->encode($this->_value).'</string></value>';
     }
@@ -349,7 +350,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><dateTime.iso8601>'.gmstrftime('%Y%m%dT%H:%M:%S', $this->_value).'</dateTime.iso8601></value>';
     }
@@ -368,7 +369,7 @@ class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
     /**
      * @param string $value
      */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         $this->_value = base64_encode($value);
     }
@@ -376,7 +377,7 @@ class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return '<value><base64>'.$this->_value.'</base64></value>';
     }
@@ -392,7 +393,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
      */
     protected $_tags = [];
 
-    public function add(XoopsXmlRpcTag $tagobj)
+    public function add(XoopsXmlRpcTag $tagobj): void
     {
         $this->_tags[] = $tagobj;
     }
@@ -400,7 +401,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = '<value><array><data>';
         foreach ($this->_tags as $tag) {
@@ -423,7 +424,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
      */
     protected $_tags = [];
 
-    public function add($name, XoopsXmlRpcTag $tagobj)
+    public function add($name, XoopsXmlRpcTag $tagobj): void
     {
         $this->_tags[] = ['name' => $name, 'value' => $tagobj];
     }
@@ -431,7 +432,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = '<value><struct>';
         foreach ($this->_tags as $tag) {

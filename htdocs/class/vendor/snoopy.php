@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*************************************************
  *
@@ -246,7 +246,7 @@ class snoopy
                         $frameurls = $this->_frameurls;
                         $this->_frameurls = [];
 
-                        while (list(, $frameurl) = each($frameurls)) {
+                        while ([, $frameurl] = each($frameurls)) {
                             if ($this->_framedepth < $this->maxframes) {
                                 $this->fetch($frameurl);
                                 $this->_framedepth++;
@@ -356,7 +356,7 @@ class snoopy
                         $frameurls = $this->_frameurls;
                         $this->_frameurls = [];
 
-                        while (list(, $frameurl) = each($frameurls)) {
+                        while ([, $frameurl] = each($frameurls)) {
                             if ($this->_framedepth < $this->maxframes) {
                                 $this->fetch($frameurl);
                                 $this->_framedepth++;
@@ -574,13 +574,13 @@ class snoopy
 
         // catenate the non-empty matches from the conditional subpattern
 
-        while (list($key, $val) = each($links[2])) {
+        while ([$key, $val] = each($links[2])) {
             if (!empty($val)) {
                 $match[] = $val;
             }
         }
 
-        while (list($key, $val) = each($links[3])) {
+        while ([$key, $val] = each($links[3])) {
             if (!empty($val)) {
                 $match[] = $val;
             }
@@ -781,7 +781,7 @@ class snoopy
             if (!is_array($this->rawheaders)) {
                 $this->rawheaders = (array) $this->rawheaders;
             }
-            while (list($headerKey, $headerVal) = each($this->rawheaders)) {
+            while ([$headerKey, $headerVal] = each($this->rawheaders)) {
                 $headers .= $headerKey.': '.$headerVal."\r\n";
             }
         }
@@ -1061,7 +1061,7 @@ class snoopy
         Output:     post body
     \*======================================================================*/
 
-    public function _prepare_post_body($formvars, $formfiles)
+    public function _prepare_post_body($formvars, $formfiles): void
     {
         settype($formvars, 'array');
         settype($formfiles, 'array');
@@ -1074,9 +1074,9 @@ class snoopy
         switch ($this->_submit_type) {
             case 'application/x-www-form-urlencoded':
                 reset($formvars);
-                while (list($key, $val) = each($formvars)) {
+                while ([$key, $val] = each($formvars)) {
                     if (is_array($val) || is_object($val)) {
-                        while (list($cur_key, $cur_val) = each($val)) {
+                        while ([$cur_key, $cur_val] = each($val)) {
                             $postdata .= urlencode($key).'[]='.urlencode($cur_val).'&';
                         }
                     } else {
@@ -1090,9 +1090,9 @@ class snoopy
                 $this->_mime_boundary = 'Snoopy'.md5(uniqid(microtime()));
 
                 reset($formvars);
-                while (list($key, $val) = each($formvars)) {
+                while ([$key, $val] = each($formvars)) {
                     if (is_array($val) || is_object($val)) {
-                        while (list($cur_key, $cur_val) = each($val)) {
+                        while ([$cur_key, $cur_val] = each($val)) {
                             $postdata .= '--'.$this->_mime_boundary."\r\n";
                             $postdata .= "Content-Disposition: form-data; name=\"${key}\[\]\"\r\n\r\n";
                             $postdata .= "${cur_val}\r\n";
@@ -1105,9 +1105,9 @@ class snoopy
                 }
 
                 reset($formfiles);
-                while (list($field_name, $file_names) = each($formfiles)) {
+                while ([$field_name, $file_names] = each($formfiles)) {
                     settype($file_names, 'array');
-                    while (list(, $file_name) = each($file_names)) {
+                    while ([, $file_name] = each($file_names)) {
                         if (!is_readable($file_name)) {
                             continue;
                         }

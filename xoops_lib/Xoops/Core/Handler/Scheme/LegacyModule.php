@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class LegacyModule implements SchemeInterface
      *
      * @return XoopsObjectHandler|null
      */
-    public function build(FactorySpec $spec)
+    public function build(FactorySpec $spec): ?XoopsObjectHandler
     {
         $handler = null;
         $name = strtolower($spec->getName());

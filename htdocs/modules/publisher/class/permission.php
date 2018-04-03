@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -49,7 +50,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      *
      * @return array
      */
-    public function getGrantedGroupsById($gperm_name, $id)
+    public function getGrantedGroupsById(string $gperm_name, int $id): array
     {
         static $items;
         if (isset($items[$gperm_name][$id])) {
@@ -82,7 +83,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      *
      * @return array
      */
-    public function getGrantedItems($gperm_name)
+    public function getGrantedItems(string $gperm_name): array
     {
         static $items;
         if (isset($items[$gperm_name])) {
@@ -123,7 +124,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      *
      * @return bool
      */
-    public function isGranted($gperm_name, $id)
+    public function isGranted(string $gperm_name, int $id): bool
     {
         if (!$id) {
             return false;
@@ -148,7 +149,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      *
      * @todo is this used anywhere?
      */
-    public function saveItemPermissions($groups, $itemid, $perm_name)
+    public function saveItemPermissions(array $groups, int $itemid, string $perm_name): bool
     {
         $xoops = Xoops::getInstance();
         $result = true;
@@ -176,7 +177,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      *
      * @return bool : TRUE if the no errors occured
      */
-    public function deletePermissions($itemid, $gperm_name)
+    public function deletePermissions(int $itemid, string $gperm_name): bool
     {
         $xoops = Xoops::getInstance();
         $result = true;

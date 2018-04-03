@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,14 +8,14 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Xoops\Core\Database\Schema\ExportVisitor';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
         $this->assertInstanceOf('Doctrine\DBAL\Schema\Visitor\Visitor', $instance);
     }
 
-    public function test_getSchemaArray()
+    public function test_getSchemaArray(): void
     {
         $instance = new $this->myclass();
 
@@ -25,7 +25,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($value);
     }
 
-    public function test_acceptSchema()
+    public function test_acceptSchema(): void
     {
         $instance = new $this->myclass();
 
@@ -38,7 +38,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($value);
     }
 
-    public function test_acceptTable()
+    public function test_acceptTable(): void
     {
         $instance = new $this->myclass();
 
@@ -51,7 +51,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(!empty($value['tables']));
     }
 
-    public function test_acceptColumn()
+    public function test_acceptColumn(): void
     {
         $instance = new $this->myclass();
 
@@ -69,7 +69,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('integer', $value['tables']['system_group']['columns'][$col_name]['type']);
     }
 
-    public function test_acceptForeignKey()
+    public function test_acceptForeignKey(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -103,7 +103,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($fk_options, $tmp['options']);
     }
 
-    public function test_acceptIndex()
+    public function test_acceptIndex(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -134,7 +134,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($primary, $tmp['primary']);
     }
 
-    public function test_acceptSequence()
+    public function test_acceptSequence(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -90,7 +91,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigBoxLine($value = '', $type = 'default')
+    public function addConfigBoxLine(string $value = '', string $type = 'default')
     {
         if ('module' === $type) {
             $mod = (is_array($value)) ? $value[0] : $value;
@@ -118,7 +119,7 @@ class Admin
      *
      * @return bool
      */
-    public function addInfoBox($title, $type = 'default', $extra = '')
+    public function addInfoBox(string $title, string $type = 'default', string $extra = ''): bool
     {
         $this->lastInfoBoxTitle = $title;
 
@@ -134,7 +135,7 @@ class Admin
      *
      * @return bool
      */
-    public function addInfoBoxLine($text = '', $type = 'default', $color = 'inherit')
+    public function addInfoBoxLine(string $text = '', string $type = 'default', string $color = 'inherit'): bool
     {
         return static::$ModuleAdmin->addInfoBoxLine(
             $this->lastInfoBoxTitle,
@@ -155,7 +156,7 @@ class Admin
      *
      * @return bool
      */
-    public function addItemButton($title, $link, $icon = 'add', $extra = '')
+    public function addItemButton(string $title, string $link, string $icon = 'add', string $extra = ''): bool
     {
         return static::$ModuleAdmin->addItemButton($title, $link, $icon, $extra);
     }
@@ -168,7 +169,7 @@ class Admin
      *
      * @return string
      */
-    public function renderButton($position = null, $delimiter = '&nbsp;')
+    public function renderButton(string $position = null, string $delimiter = '&nbsp;'): string
     {
         if (null === $position) {
             $position = 'right';
@@ -183,7 +184,7 @@ class Admin
      * @param string $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
      */
-    public function displayButton($position = null, $delimiter = '&nbsp;')
+    public function displayButton(string $position = null, string $delimiter = '&nbsp;'): void
     {
         echo $this->renderButton($position, $delimiter);
     }
@@ -193,7 +194,7 @@ class Admin
      *
      * @return string HTML rendered info box
      */
-    public function renderInfoBox()
+    public function renderInfoBox(): string
     {
         return static::$ModuleAdmin->renderInfoBox();
     }
@@ -201,7 +202,7 @@ class Admin
     /**
      * Display InfoBox.
      */
-    public function displayInfoBox()
+    public function displayInfoBox(): void
     {
         echo $this->renderInfoBox();
     }
@@ -211,7 +212,7 @@ class Admin
      *
      * @return string HTML rendered info box
      */
-    public function renderIndex()
+    public function renderIndex(): string
     {
         return static::$ModuleAdmin->renderIndex();
     }
@@ -219,7 +220,7 @@ class Admin
     /**
      * Display index page for admin.
      */
-    public function displayIndex()
+    public function displayIndex(): void
     {
         echo $this->renderIndex();
     }
@@ -229,7 +230,7 @@ class Admin
      *
      * @param string $menu menu key (script name, i.e. index.php)
      */
-    public function displayNavigation($menu = '')
+    public function displayNavigation(string $menu = ''): void
     {
         echo static::$ModuleAdmin->addNavigation($menu);
     }
@@ -241,7 +242,7 @@ class Admin
      *
      * @return bool|mixed|string
      */
-    public function renderAbout($logo_xoops = true)
+    public function renderAbout(bool $logo_xoops = true)
     {
         return static::$ModuleAdmin->renderAbout(static::$paypal, $logo_xoops);
     }
@@ -251,7 +252,7 @@ class Admin
      *
      * @param bool $logo_xoops display XOOPS logo
      */
-    public function displayAbout($logo_xoops = true)
+    public function displayAbout(bool $logo_xoops = true): void
     {
         echo $this->renderAbout($logo_xoops);
     }
@@ -263,7 +264,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigError($value = '')
+    public function addConfigError(string $value = ''): bool
     {
         $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
@@ -284,7 +285,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigAccept($value = '')
+    public function addConfigAccept(string $value = ''): bool
     {
         $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
@@ -305,7 +306,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigWarning($value = '')
+    public function addConfigWarning(string $value = ''): bool
     {
         $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
@@ -327,7 +328,7 @@ class Admin
      *
      * @return bool true if requested version of the module is available
      */
-    public function addConfigModuleVersion($moddir, $minversion)
+    public function addConfigModuleVersion(string $moddir, int $minversion): bool
     {
         $return = false;
         $helper = Helper::getHelper($moddir);
@@ -370,7 +371,7 @@ class Admin
      *
      * @return string the icon path
      */
-    public static function menuIconPath($image)
+    public static function menuIconPath(string $image): string
     {
         if (static::isXng()) {
             return $image;
@@ -396,7 +397,7 @@ class Admin
      *
      * @return string path to icons
      */
-    public static function iconUrl($name = '', $size = '32')
+    public static function iconUrl(string $name = '', string $size = '32'): string
     {
         switch ($size) {
             case '16':
@@ -430,7 +431,7 @@ class Admin
      *
      * @param string $paypal PayPal identifier for donate button
      */
-    public static function setPaypal($paypal = '')
+    public static function setPaypal(string $paypal = ''): void
     {
         static::$paypal = $paypal;
     }
@@ -444,7 +445,7 @@ class Admin
      *
      * @return bool true if we are in a post XOOPS 2.5.x environment
      */
-    protected static function isXng()
+    protected static function isXng(): bool
     {
         return class_exists('\Xoops', false);
     }

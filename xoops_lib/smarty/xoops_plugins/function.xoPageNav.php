@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
     itemsCount:     Total number of items in the current list
     pageSize:       Number of items in each page

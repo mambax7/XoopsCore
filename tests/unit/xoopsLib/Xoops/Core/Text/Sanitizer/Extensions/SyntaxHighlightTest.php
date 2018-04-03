@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
@@ -22,7 +22,7 @@ class SyntaxHighlightTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sanitizer = Sanitizer::getInstance();
         $this->object = new SyntaxHighlight($this->sanitizer);
@@ -32,18 +32,18 @@ class SyntaxHighlightTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\FilterAbstract', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\SanitizerComponent', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\SanitizerConfigurable', $this->object);
     }
 
-    public function testApplyFilter()
+    public function testApplyFilter(): void
     {
         $this->sanitizer->enableComponentForTesting('syntaxhighlight');
 
@@ -52,7 +52,7 @@ class SyntaxHighlightTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $actual);
     }
 
-    public function testPhp()
+    public function testPhp(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -60,7 +60,7 @@ class SyntaxHighlightTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGeshi()
+    public function testGeshi(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

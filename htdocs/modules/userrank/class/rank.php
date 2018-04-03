@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = 'n')
+    public function id(string $format = 'n')
     {
         return $this->rank_id($format);
     }
@@ -57,7 +58,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_id($format = '')
+    public function rank_id(string $format = '')
     {
         return $this->getVar('rank_id', $format);
     }
@@ -69,7 +70,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_title($format = '')
+    public function rank_title(string $format = '')
     {
         return $this->getVar('rank_title', $format);
     }
@@ -81,7 +82,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_min($format = '')
+    public function rank_min(string $format = '')
     {
         return $this->getVar('rank_min', $format);
     }
@@ -93,7 +94,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_max($format = '')
+    public function rank_max(string $format = '')
     {
         return $this->getVar('rank_max', $format);
     }
@@ -105,7 +106,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_special($format = '')
+    public function rank_special(string $format = '')
     {
         return $this->getVar('rank_special', $format);
     }
@@ -117,7 +118,7 @@ class UserrankRank extends XoopsObject
      *
      * @return mixed
      */
-    public function rank_image($format = '')
+    public function rank_image(string $format = '')
     {
         return $this->getVar('rank_image', $format);
     }

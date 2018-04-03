@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class Wiki extends ExtensionAbstract
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         $buttonCode = $this->getEditorButtonHtml(
             $textAreaId,
@@ -77,7 +78,7 @@ EOH;
     /**
      * Register extension with the supplied sanitizer instance.
      */
-    public function registerExtensionProcessing()
+    public function registerExtensionProcessing(): void
     {
         $this->ts->addPatternCallback(
             "/\[\[([^\]]*)\]\]/sU",
@@ -92,7 +93,7 @@ EOH;
      *
      * @return string
      */
-    public function decode($match)
+    public function decode(array $match): string
     {
         $wikiWord = $match[1];
         if (empty($wikiWord) || empty($this->config['link'])) {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 $configs = [
     'autoloader' => dirname(__DIR__).'/xoops_lib/vendor/autoload.php',

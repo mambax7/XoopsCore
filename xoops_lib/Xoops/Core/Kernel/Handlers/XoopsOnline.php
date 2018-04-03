@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -51,7 +52,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->online_uid($format);
     }
@@ -63,7 +64,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function online_uid($format = Dtype::FORMAT_NONE)
+    public function online_uid(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('online_uid', $format);
     }
@@ -75,7 +76,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function online_uname($format = '')
+    public function online_uname(string $format = '')
     {
         return $this->getVar('online_uname', $format);
     }
@@ -87,7 +88,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function online_updated($format = '')
+    public function online_updated(string $format = '')
     {
         return $this->getVar('online_updated', $format);
     }
@@ -99,7 +100,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function online_module($format = '')
+    public function online_module(string $format = '')
     {
         return $this->getVar('online_module', $format);
     }
@@ -111,7 +112,7 @@ class XoopsOnline extends XoopsObject
      *
      * @return mixed
      */
-    public function online_ip($format = '')
+    public function online_ip(string $format = '')
     {
         return $this->getVar('online_ip', $format);
     }

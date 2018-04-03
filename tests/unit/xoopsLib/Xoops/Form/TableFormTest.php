@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class TableFormTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new TableForm('Caption', 'name', 'action');
     }
@@ -24,18 +24,18 @@ class TableFormTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testInsertBreak()
+    public function testInsertBreak(): void
     {
         $this->object->insertBreak();
         $value = $this->object->render();
         $this->assertTrue(false !== strpos($value, '<tr valign="top" align="left"><td></td></tr>'));
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);

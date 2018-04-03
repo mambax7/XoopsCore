@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -13,19 +13,19 @@ class JointTest extends \PHPUnit\Framework\TestCase
 
     protected $myAbstractClass = 'Xoops\Core\Kernel\XoopsModelAbstract';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = \Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf($this->myAbstractClass, $instance);
     }
 
-    public function test_setHandler()
+    public function test_setHandler(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
@@ -34,7 +34,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function test_getByLink()
+    public function test_getByLink(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -52,7 +52,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($result) > 0);
     }
 
-    public function test_getCountByLink()
+    public function test_getCountByLink(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -70,7 +70,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue((int) $result >= 0);
     }
 
-    public function test_getCountsByLink()
+    public function test_getCountsByLink(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -88,7 +88,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($result) >= 0);
     }
 
-    public function test_updateByLink()
+    public function test_updateByLink(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);
@@ -108,7 +108,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result >= 0);
     }
 
-    public function test_deleteByLink()
+    public function test_deleteByLink(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);

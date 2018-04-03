@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('\Xoops\Form\Form', ['title', 'name', 'action']);
     }
@@ -24,23 +24,23 @@ class FormTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetDisplay()
+    public function testGetDisplay(): void
     {
         $value = $this->object->getDisplay();
         $this->assertSame('', $value);
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $value = $this->object->getTitle();
         $this->assertSame('title', $value);
     }
 
-    public function testSetTitle()
+    public function testSetTitle(): void
     {
         $name = 'form_name';
         $this->object->setTitle($name);
@@ -48,13 +48,13 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $value = $this->object->getName();
         $this->assertSame('name', $value);
     }
 
-    public function testGetAction()
+    public function testGetAction(): void
     {
         $name = 'form_name';
         $this->object->setAction($name);
@@ -62,13 +62,13 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $value);
     }
 
-    public function testGetMethod()
+    public function testGetMethod(): void
     {
         $value = $this->object->getMethod();
         $this->assertSame('post', $value);
     }
 
-    public function testGetElements()
+    public function testGetElements(): void
     {
         $instance = $this->object;
 
@@ -89,7 +89,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function testGetElementValue()
+    public function testGetElementValue(): void
     {
         $instance = $this->object;
 
@@ -107,7 +107,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $result);
     }
 
-    public function testGetElementValues()
+    public function testGetElementValues(): void
     {
         $instance = $this->object;
 
@@ -125,7 +125,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('value1', $result[$name]);
     }
 
-    public function testGetExtra()
+    public function testGetExtra(): void
     {
         $name = 'form_name';
         $this->object->setExtra($name);
@@ -133,7 +133,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(' '.$name, $value);
     }
 
-    public function testGetRequired()
+    public function testGetRequired(): void
     {
         $button = new Button(['caption' => 'button_caption', 'name' => 'button_name', 'required' => true]);
         $this->object->addElement($button);
@@ -143,7 +143,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($button, $value[0]);
     }
 
-    public function testGetRequired2()
+    public function testGetRequired2(): void
     {
         $button = new Button(['caption' => 'button_caption', 'name' => 'button_name']);
         $this->object->addElement($button, true);
@@ -154,7 +154,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($button->has('required'));
     }
 
-    public function testDisplay()
+    public function testDisplay(): void
     {
         $instance = $this->object;
         ob_start();
@@ -163,14 +163,14 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $result);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, 'Start Form Validation JavaScript'));
     }
 
-    public function testAssign()
+    public function testAssign(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestSkipped(

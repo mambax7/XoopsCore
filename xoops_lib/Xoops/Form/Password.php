@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -68,7 +69,7 @@ class Password extends Element
      *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
         return (int) $this->get('size', 32);
     }
@@ -78,7 +79,7 @@ class Password extends Element
      *
      * @return int
      */
-    public function getMaxlength()
+    public function getMaxlength(): int
     {
         return (int) $this->get('maxlength', 64);
     }
@@ -88,7 +89,7 @@ class Password extends Element
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $this->themeDecorateElement();
 

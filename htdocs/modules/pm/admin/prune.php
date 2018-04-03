@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ $xoops->header();
 $indexAdmin = new \Xoops\Module\Admin();
 $indexAdmin->displayNavigation('prune.php');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'form';
+$op = $_REQUEST['op'] ?? 'form';
 /* @var $pmHandler PmMessageHandler */
 $pmHandler = $xoops->getModuleHandler('message');
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ class Helper extends GenericHelper
      *
      * @return \Xmf\Module\Helper|\Xoops\Module\Helper|false a Helper object of false on error
      */
-    public static function getHelper($dirname = 'system')
+    public static function getHelper(string $dirname = 'system')
     {
         static $instance = [];
 

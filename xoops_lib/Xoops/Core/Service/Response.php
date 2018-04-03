@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -68,7 +69,7 @@ class Response
      *
      * @return boolean
      */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->success;
     }
@@ -90,7 +91,7 @@ class Response
      *
      * @return Response object
      */
-    public function setValue($value)
+    public function setValue($value): Response
     {
         $this->value = $value;
 
@@ -104,7 +105,7 @@ class Response
      *
      * @return Response object
      */
-    public function setSuccess($success)
+    public function setSuccess(bool $success): Response
     {
         $this->success = $success;
 
@@ -118,7 +119,7 @@ class Response
      *
      * @return Response object
      */
-    public function addErrorMessage($errorMessage)
+    public function addErrorMessage($errorMessage): Response
     {
         $ret = [];
         if (is_array($this->errorMessage)) {

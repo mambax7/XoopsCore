@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -13,7 +13,7 @@ use Xoops;
 
 class Utf8mb4ModuleCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('utf8mb4-module')
             ->setDescription("Update a module's tables to utf8mb4")
@@ -29,7 +29,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $dirname = $input->getArgument('module');
         $dryRun = false;
@@ -48,7 +48,7 @@ EOT
         }
         $module->loadInfo($dirname, false);
         $modVersion = $module->modinfo;
-        $tableList = isset($modVersion['tables']) ? $modVersion['tables'] : [];
+        $tableList = $modVersion['tables'] ?? [];
         //\Kint::dump($modVersion, $tableList);
         $sql = [];
         $manager = $xoops->db()->getSchemaManager();

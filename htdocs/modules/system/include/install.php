@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  *
  * @param XoopsModule $module module object
  */
-function xoops_module_install_system(XoopsModule $module)
+function xoops_module_install_system(XoopsModule $module): void
 {
     $xoops = Xoops::getInstance();
 

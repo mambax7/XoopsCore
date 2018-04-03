@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Location: xml/SaxParser.class.
@@ -63,7 +63,7 @@ class saxparser
     /**
      * @return int
      */
-    public function getCurrentLevel()
+    public function getCurrentLevel(): int
     {
         return $this->level;
     }
@@ -71,7 +71,7 @@ class saxparser
     /**
      * @param bool $isCaseFolding
      */
-    public function setCaseFolding($isCaseFolding)
+    public function setCaseFolding(bool $isCaseFolding): void
     {
         assert(is_bool($isCaseFolding));
 
@@ -79,19 +79,19 @@ class saxparser
         xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, $this->isCaseFolding);
     }
 
-    public function useIsoEncoding()
+    public function useIsoEncoding(): void
     {
         $this->targetEncoding = 'ISO-8859-1';
         xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
     }
 
-    public function useAsciiEncoding()
+    public function useAsciiEncoding(): void
     {
         $this->targetEncoding = 'US-ASCII';
         xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
     }
 
-    public function useUtfEncoding()
+    public function useUtfEncoding(): void
     {
         $this->targetEncoding = 'UTF-8';
         xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, $this->targetEncoding);
@@ -101,7 +101,7 @@ class saxparser
      * Returns the name of the xml tag being parsed.
      * @return string
      */
-    public function getCurrentTag()
+    public function getCurrentTag(): string
     {
         return $this->tags[count($this->tags) - 1];
     }
@@ -122,7 +122,7 @@ class saxparser
     /**
      * @return bool
      */
-    public function parse()
+    public function parse(): bool
     {
         if (!is_resource($this->input)) {
             if (!xml_parse($this->parser, $this->input)) {
@@ -149,7 +149,7 @@ class saxparser
         return true;
     }
 
-    public function free()
+    public function free(): void
     {
         xml_parser_free($this->parser);
     }
@@ -158,7 +158,7 @@ class saxparser
      * @private
      * @return string
      */
-    public function getXmlError()
+    public function getXmlError(): string
     {
         return sprintf('XmlParse error: %s at line %d', xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
     }
@@ -170,7 +170,7 @@ class saxparser
     /**
      * Adds a callback function to be called when a tag is encountered.<br>.
      */
-    public function addTagHandler(XmlTagHandler $tagHandler)
+    public function addTagHandler(XmlTagHandler $tagHandler): void
     {
         $name = $tagHandler->getName();
         if (is_array($name)) {
@@ -194,7 +194,7 @@ class saxparser
      * @param array  $attributesArray The list of attributes associated with the tag.
      * @private
      */
-    public function handleBeginElement($parser, $tagName, $attributesArray)
+    public function handleBeginElement(int $parser, string $tagName, array $attributesArray): void
     {
         array_push($this->tags, $tagName);
         $this->level++;
@@ -212,7 +212,7 @@ class saxparser
      * @param string $tagName The name of the tag currently being parsed.
      * @private
      */
-    public function handleEndElement($parser, $tagName)
+    public function handleEndElement(int $parser, string $tagName): void
     {
         array_pop($this->tags);
         if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
@@ -229,7 +229,7 @@ class saxparser
      * @param int    $parser The handle to the parser.
      * @param string $data   Character data inside the tag
      */
-    public function handleCharacterData($parser, $data)
+    public function handleCharacterData(int $parser, string $data): void
     {
         $tagHandler = isset($this->tagHandlers[$this->getCurrentTag()]) ? $this->tagHandlers[$this->getCurrentTag()] : null;
         if (null !== $tagHandler && is_subclass_of($tagHandler, 'xmltaghandler')) {
@@ -242,40 +242,40 @@ class saxparser
     /**
      * @param int $parser The handle to the parser.
      */
-    public function handleProcessingInstruction($parser, &$target, &$data)
+    public function handleProcessingInstruction(int $parser, &$target, &$data): void
     {
         //        if($target == 'php') {
         //            eval($data);
         //        }
     }
 
-    public function handleDefault($parser, $data)
+    public function handleDefault($parser, $data): void
     {
     }
 
-    public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName)
+    public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName): void
     {
     }
 
-    public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
+    public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId): void
     {
     }
 
-    public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
-    {
-    }
-
-    /**
-     * The default tag handler method for a tag with no handler.
-     */
-    public function handleBeginElementDefault($parser, $tagName, $attributesArray)
+    public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId): void
     {
     }
 
     /**
      * The default tag handler method for a tag with no handler.
      */
-    public function handleEndElementDefault($parser, $tagName)
+    public function handleBeginElementDefault($parser, $tagName, $attributesArray): void
+    {
+    }
+
+    /**
+     * The default tag handler method for a tag with no handler.
+     */
+    public function handleEndElementDefault($parser, $tagName): void
     {
     }
 
@@ -285,7 +285,7 @@ class saxparser
      *
      * @abstract
      */
-    public function handleCharacterDataDefault($parser, $data)
+    public function handleCharacterDataDefault($parser, $data): void
     {
     }
 
@@ -294,7 +294,7 @@ class saxparser
      *
      * @param string $error string    an error message
      */
-    public function setErrors($error)
+    public function setErrors(string $error): void
     {
         $this->errors[] = trim($error);
     }
@@ -305,7 +305,7 @@ class saxparser
      * @param  bool  $ashtml return as html?
      * @return mixed
      */
-    public function getErrors($ashtml = true)
+    public function getErrors(bool $ashtml = true)
     {
         if (!$ashtml) {
             return $this->errors;

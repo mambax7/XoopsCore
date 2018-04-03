@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ abstract class OptionElement extends Element
      * @param string $value value attribute
      * @param string $name  name attribute
      */
-    public function addOption($value, $name = null)
+    public function addOption(string $value, string $name = null): void
     {
         if (null === $name || '' === $name) {
             $this->setArrayItem('option', $value, $value);
@@ -45,7 +46,7 @@ abstract class OptionElement extends Element
      *
      * @param array $options Associative array of value->name pairs
      */
-    public function addOptionArray($options)
+    public function addOptionArray(array $options): void
     {
         if (is_array($options)) {
             foreach ($options as $k => $v) {
@@ -64,7 +65,7 @@ abstract class OptionElement extends Element
      *
      * @return array Associative array of value->name pairs
      */
-    public function getOptions($encode = 0)
+    public function getOptions(int $encode = 0): array
     {
         $options = $this->get('option', []);
         if (!$encode) {

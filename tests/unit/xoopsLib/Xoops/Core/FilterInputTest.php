@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core;
 
@@ -17,7 +17,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = FilterInput::getInstance();
     }
@@ -26,11 +26,11 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $class = $this->myclass;
         $this->assertInstanceOf($class, $this->object);
@@ -39,7 +39,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $this->object);
     }
 
-    public function testProcess()
+    public function testProcess(): void
     {
         $input = 'Lorem ipsum </i><script>alert();</script>';
         $expected = 'Lorem ipsum alert();';
@@ -49,7 +49,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($input, $this->object->process($input));
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         $input = 'Lorem ipsum </i><script>alert();</script>';
         $expected = 'Lorem ipsum alert();';
@@ -64,7 +64,7 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, FilterInput::clean($input, 'string'));
     }
 
-    public function testGather()
+    public function testGather(): void
     {
         $specs = [
             ['op', 'string'],

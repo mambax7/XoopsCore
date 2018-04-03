@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -50,7 +51,7 @@ class XoopsConfigOption extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('confop_id', $format);
     }
@@ -62,7 +63,7 @@ class XoopsConfigOption extends XoopsObject
      *
      * @return mixed
      */
-    public function confop_id($format = '')
+    public function confop_id(string $format = '')
     {
         return $this->getVar('confop_id', $format);
     }
@@ -74,7 +75,7 @@ class XoopsConfigOption extends XoopsObject
      *
      * @return mixed
      */
-    public function confop_name($format = '')
+    public function confop_name(string $format = '')
     {
         return $this->getVar('confop_name', $format);
     }
@@ -86,7 +87,7 @@ class XoopsConfigOption extends XoopsObject
      *
      * @return mixed
      */
-    public function confop_value($format = '')
+    public function confop_value(string $format = '')
     {
         return $this->getVar('confop_value', $format);
     }
@@ -98,7 +99,7 @@ class XoopsConfigOption extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_id($format = '')
+    public function conf_id(string $format = '')
     {
         return $this->getVar('conf_id', $format);
     }

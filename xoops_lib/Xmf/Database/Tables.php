@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -86,7 +87,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function addColumn($table, $column, $attributes)
+    public function addColumn(string $table, string $column, string $attributes): bool
     {
         $columnDef = [
             'name' => $column,
@@ -125,7 +126,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function addPrimaryKey($table, $column)
+    public function addPrimaryKey(string $table, string $column): bool
     {
         $columns = str_getcsv(str_replace(' ', '', $column));
         $columnList = '';
@@ -158,7 +159,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function addIndex($name, $table, $column, $unique = false)
+    public function addIndex(string $name, string $table, string $column, bool $unique = false): bool
     {
         $columns = str_getcsv(str_replace(' ', '', $column));
         $columnList = '';
@@ -190,7 +191,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function addTable($table)
+    public function addTable(string $table): bool
     {
         if (isset($this->tables[$table])) {
             return true;
@@ -226,7 +227,7 @@ class Tables
      *
      * @return bool true if table exists, false otherwise
      */
-    public function useTable($table)
+    public function useTable(string $table): bool
     {
         if (isset($this->tables[$table])) {
             return true;
@@ -249,7 +250,7 @@ class Tables
      *
      * @return string|bool attribute string, or false if error encountered
      */
-    public function getColumnAttributes($table, $column)
+    public function getColumnAttributes(string $table, string $column)
     {
         // Find table def.
         if (isset($this->tables[$table])) {
@@ -272,7 +273,7 @@ class Tables
      *
      * @return array|bool array of indexes, or false if error encountered
      */
-    public function getTableIndexes($table)
+    public function getTableIndexes(string $table)
     {
         // Find table def.
         if (isset($this->tables[$table]) && isset($this->tables[$table]['keys'])) {
@@ -292,7 +293,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function alterColumn($table, $column, $attributes, $newName = '')
+    public function alterColumn(string $table, string $column, string $attributes, string $newName = ''): bool
     {
         if (empty($newName)) {
             $newName = $column;
@@ -342,7 +343,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function copyTable($table, $newTable, $withData = false)
+    public function copyTable(string $table, string $newTable, bool $withData = false): bool
     {
         if (isset($this->tables[$newTable])) {
             return true;
@@ -376,7 +377,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function dropColumn($table, $column)
+    public function dropColumn(string $table, string $column): bool
     {
         // Find table def.
         if (isset($this->tables[$table])) {
@@ -397,7 +398,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function dropIndex($name, $table)
+    public function dropIndex(string $name, string $table): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -417,7 +418,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function dropIndexes($table)
+    public function dropIndexes(string $table): bool
     {
         // Find table def.
         if (isset($this->tables[$table])) {
@@ -452,7 +453,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function dropPrimaryKey($table)
+    public function dropPrimaryKey(string $table): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -471,7 +472,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function dropTable($table)
+    public function dropTable(string $table): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -490,7 +491,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function renameTable($table, $newName)
+    public function renameTable(string $table, string $newName): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -515,7 +516,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function setTableOptions($table, $options)
+    public function setTableOptions(string $table, string $options): bool
     {
         // ENGINE=MEMORY DEFAULT CHARSET=utf8;
         if (isset($this->tables[$table])) {
@@ -538,7 +539,7 @@ class Tables
     /**
      * Clear the work queue.
      */
-    public function resetQueue()
+    public function resetQueue(): void
     {
         $this->tables = [];
         $this->queue = [];
@@ -551,7 +552,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function executeQueue($force = false)
+    public function executeQueue(bool $force = false): bool
     {
         $this->expandQueue();
         foreach ($this->queue as &$ddl) {
@@ -580,7 +581,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function delete($table, $criteria)
+    public function delete(string $table, $criteria): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -607,7 +608,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function insert($table, $columns, $quoteValue = true)
+    public function insert(string $table, array $columns, bool $quoteValue = true): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -640,7 +641,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function update($table, $columns, $criteria, $quoteValue = true)
+    public function update(string $table, array $columns, $criteria, $quoteValue = true): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -674,7 +675,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function truncate($table)
+    public function truncate(string $table): bool
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -691,7 +692,7 @@ class Tables
      *
      * @return string last error message
      */
-    public function getLastError()
+    public function getLastError(): string
     {
         return $this->lastError;
     }
@@ -701,7 +702,7 @@ class Tables
      *
      * @return int last error number
      */
-    public function getLastErrNo()
+    public function getLastErrNo(): int
     {
         return $this->lastErrNo;
     }
@@ -711,7 +712,7 @@ class Tables
      *
      * @return array tables
      */
-    public function dumpTables()
+    public function dumpTables(): array
     {
         return $this->tables;
     }
@@ -721,7 +722,7 @@ class Tables
      *
      * @return array work queue
      */
-    public function dumpQueue()
+    public function dumpQueue(): array
     {
         $this->expandQueue();
 
@@ -733,7 +734,7 @@ class Tables
      *
      * @param string $sql an SQL/DDL statement to add
      */
-    public function addToQueue($sql)
+    public function addToQueue(string $sql): void
     {
         $this->queue[] = $sql;
     }
@@ -745,7 +746,7 @@ class Tables
      *
      * @return string table name with prefix
      */
-    protected function name($table)
+    protected function name(string $table): string
     {
         return $this->db->prefix($table);
     }
@@ -760,7 +761,7 @@ class Tables
      *
      * @return string|false string SQL to create table, or false if errors encountered
      */
-    protected function renderTableCreate($table, $prefixed = false)
+    protected function renderTableCreate(string $table, bool $prefixed = false)
     {
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
@@ -798,7 +799,7 @@ class Tables
      * @return mixed result Statement, or false on error
      *               Any error message is in $this->lastError;
      */
-    protected function execSql($sql, $force = false)
+    protected function execSql(string $sql, bool $force = false)
     {
         if ($force) {
             $this->db->setForce(true);
@@ -820,7 +821,7 @@ class Tables
      *
      * @return mixed false on error
      */
-    protected function fetch($result)
+    protected function fetch(Statement $result)
     {
         return $result->fetch(\PDO::FETCH_ASSOC);
     }
@@ -833,7 +834,7 @@ class Tables
      * @return array|bool table definition array if table exists, true if table not defined, or
      *                    false on error. Error message in $this->lastError;
      */
-    protected function getTable($table)
+    protected function getTable(string $table)
     {
         $tableDef = [];
 
@@ -923,7 +924,7 @@ class Tables
      * complete. This method will expand those references to the full
      * ddl to create the table.
      */
-    protected function expandQueue()
+    protected function expandQueue(): void
     {
         foreach ($this->queue as &$ddl) {
             if (is_array($ddl)) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,7 +40,7 @@ use Xoops\Core\XoopsTpl;
  * @param  Smarty            $smarty
  * @return bool|mixed|string
  */
-function smarty_function_xoblock($params, &$smarty)
+function smarty_function_xoblock(array $params, Smarty &$smarty)
 {
     if (!isset($params['id'])) {
         return false;

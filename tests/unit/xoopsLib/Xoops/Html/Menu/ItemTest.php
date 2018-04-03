@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Html\Menu;
 
@@ -20,7 +20,7 @@ class ItemTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('\Xoops\Html\Menu\Item');
         $this->reflectedObject = new \ReflectionClass('\Xoops\Html\Menu\Item');
@@ -30,11 +30,11 @@ class ItemTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Html\Menu\Item', $this->object);
         $this->assertInstanceOf('\Xoops\Core\XoopsArray', $this->object);

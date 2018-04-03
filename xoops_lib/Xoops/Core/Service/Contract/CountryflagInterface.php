@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,5 +34,5 @@ interface CountryflagInterface
      * @param string   $countryCode ISO 3166-1 alpha-2 code to select flag
      * @param array    $attributes  array of attribute name => value pairs for img tag
      */
-    public function getImgTag(Response $response, $countryCode, $attributes = []);
+    public function getImgTag(Response $response, string $countryCode, array $attributes = []): void;
 }

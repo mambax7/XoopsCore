@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -52,7 +53,7 @@ class PmMessage extends XoopsObject
  */
 class PmMessageHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'system_privatemessage', 'PmMessage', 'msg_id', 'subject');
     }
@@ -64,7 +65,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  int  $val
      * @return bool
      */
-    public function setRead(PmMessage $pm, $val = 1)
+    public function setRead(PmMessage $pm, int $val = 1): bool
     {
         return $this->updateAll('read_msg', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')), true);
     }
@@ -76,7 +77,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  int  $val
      * @return bool
      */
-    public function setFromDelete(PmMessage $pm, $val = 1)
+    public function setFromDelete(PmMessage $pm, int $val = 1): bool
     {
         if (0 === $pm->getVar('to_delete')) {
             return $this->updateAll('from_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
@@ -92,7 +93,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  int  $val
      * @return bool
      */
-    public function setTodelete(PmMessage $pm, $val = 1)
+    public function setTodelete(PmMessage $pm, int $val = 1): bool
     {
         if (0 === $pm->getVar('from_delete') && 0 === $pm->getVar('from_userid')) {
             return $this->updateAll('to_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
@@ -108,7 +109,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  int  $val
      * @return bool
      */
-    public function setFromsave(PmMessage $pm, $val = 1)
+    public function setFromsave(PmMessage $pm, int $val = 1): bool
     {
         return $this->updateAll('from_save', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
     }
@@ -120,7 +121,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  int  $val
      * @return bool
      */
-    public function setTosave(PmMessage $pm, $val = 1)
+    public function setTosave(PmMessage $pm, int $val = 1): bool
     {
         return $this->updateAll('to_save', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
     }
@@ -131,7 +132,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  XoopsUser|null $user
      * @return int
      */
-    public function getSavecount(XoopsUser $user = null)
+    public function getSavecount(?XoopsUser $user = null): int
     {
         $xoops = Xoops::getInstance();
         if (!is_object($user)) {
@@ -154,7 +155,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function sendEmail(PmMessage $pm, XoopsUser $user = null)
+    public function sendEmail(PmMessage $pm, ?XoopsUser $user = null): bool
     {
         $xoops = Xoops::getInstance();
         if (!is_object($user)) {
@@ -196,7 +197,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      *
      * @return Xoops\Form\ThemeForm
      **/
-    public function getPruneForm()
+    public function getPruneForm(): Xoops\Form\ThemeForm
     {
         $form = new Xoops\Form\ThemeForm(_PM_AM_PRUNE, 'form', 'prune.php', 'post', true);
 

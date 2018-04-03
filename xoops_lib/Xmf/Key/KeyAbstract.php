@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ abstract class KeyAbstract
      * @param StorageInterface $storage key store
      * @param string           $name    case insensitive key name, allow only A-Z, 0-9, _ and -
      */
-    public function __construct(StorageInterface $storage, $name)
+    public function __construct(StorageInterface $storage, string $name)
     {
         $this->storage = $storage;
         $this->name = strtolower(preg_replace('/[^A-Z0-9_-]/i', '', $name));
@@ -46,26 +47,26 @@ abstract class KeyAbstract
      *
      * @return string signing key
      */
-    abstract public function getSigning();
+    abstract public function getSigning(): string;
 
     /**
      * get key for use in verifying.
      *
      * @return string verifying key
      */
-    abstract public function getVerifying();
+    abstract public function getVerifying(): string;
 
     /**
      * create the key and store it for use.
      *
      * @return bool true if key was created and stored, otherwise false
      */
-    abstract public function create();
+    abstract public function create(): bool;
 
     /**
      * delete the key.
      *
      * @return bool true if key was deleted, otherwise false
      */
-    abstract public function kill();
+    abstract public function kill(): bool;
 }

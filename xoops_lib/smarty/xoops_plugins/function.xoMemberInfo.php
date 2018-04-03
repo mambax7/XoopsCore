@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // $Id: function.xoMemberInfo.php
 //  ------------------------------------------------------------------------ //
@@ -48,7 +48,7 @@
  * -------------------------------------------------------------
  */
 
-function smarty_function_xoMemberInfo($params, &$smarty)
+function smarty_function_xoMemberInfo($params, &$smarty): void
 {
     $xoops = Xoops::getInstance();
 

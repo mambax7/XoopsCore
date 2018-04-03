@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Lists;
 
@@ -20,7 +20,7 @@ class ListAbstractTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('\Xoops\Core\Lists\ListAbstract');
     }
@@ -29,11 +29,11 @@ class ListAbstractTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetList()
+    public function testGetList(): void
     {
         $reflection = new \ReflectionClass($this->className);
         $this->assertTrue($reflection->hasMethod('getList'));
@@ -43,7 +43,7 @@ class ListAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->object->getList(), []);
     }
 
-    public function testSetOptionsArray()
+    public function testSetOptionsArray(): void
     {
         $reflection = new \ReflectionClass($this->className);
         $this->assertTrue($reflection->hasMethod('setOptionsArray'));

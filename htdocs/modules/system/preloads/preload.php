@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * System Preloads
  * You may not change or alter any portion of this comment or credits
@@ -18,7 +19,7 @@ use Xoops\Core\Service\Provider;
 
 class SystemPreload extends PreloadItem
 {
-    public static function eventCoreIncludeFunctionsRedirectheader($args)
+    public static function eventCoreIncludeFunctionsRedirectheader($args): void
     {
         $xoops = Xoops::getInstance();
         $url = $args[0];
@@ -36,7 +37,7 @@ class SystemPreload extends PreloadItem
         }
     }
 
-    public static function eventCoreHeaderCheckcache($args)
+    public static function eventCoreHeaderCheckcache($args): void
     {
         if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
@@ -45,7 +46,7 @@ class SystemPreload extends PreloadItem
         }
     }
 
-    public static function eventCoreHeaderAddmeta($args)
+    public static function eventCoreHeaderAddmeta($args): void
     {
         if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
@@ -63,7 +64,7 @@ class SystemPreload extends PreloadItem
         }
     }
 
-    public static function eventSystemClassGuiHeader($args)
+    public static function eventSystemClassGuiHeader($args): void
     {
         if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
@@ -87,7 +88,7 @@ class SystemPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateCountryflag(Provider $provider)
+    public static function eventCoreServiceLocateCountryflag(Provider $provider): void
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
             $path = dirname(__DIR__).'/class/CountryFlagProvider.php';

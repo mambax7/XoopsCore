@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ class bannerrender
      *
      * @return string
      */
-    public function displayBanner($nb_banner = 1, $align = 'H', $client = [], $ids = '')
+    public function displayBanner(int $nb_banner = 1, string $align = 'H', array $client = [], string $ids = ''): string
     {
         $xoops = Xoops::getInstance();
         XoopsLoad::addMap(['banners' => __DIR__.'/helper.php']);

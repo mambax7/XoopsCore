@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class Xss extends FilterAbstract
      *
      * @return mixed
      */
-    public function applyFilter($text)
+    public function applyFilter(string $text)
     {
         if (!$this->config['enabled']) {
             return $text;
@@ -72,7 +73,7 @@ class Xss extends FilterAbstract
      *
      * @return string
      */
-    protected function truncate($text)
+    protected function truncate(string $text): string
     {
         $config = $this->config;
         if (empty($text) || empty($config['truncate_length']) || mb_strlen($text) < $config['truncate_length']) {

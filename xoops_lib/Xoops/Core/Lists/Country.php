@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Country extends ListAbstract
      *
      * @return array
      */
-    public static function getList()
+    public static function getList(): array
     {
         $countryList = Territory::getCountries();
         \XoopsLocale::asort($countryList);
@@ -41,7 +42,7 @@ class Country extends ListAbstract
     /**
      * add list to a Xoops\Form\OptionElement.
      */
-    public static function setOptionsArray(OptionElement $element)
+    public static function setOptionsArray(OptionElement $element): void
     {
         $element->addOptionArray(['' => '-']);
         parent::setOptionsArray($element);

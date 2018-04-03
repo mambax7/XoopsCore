@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -51,7 +52,7 @@ class FactorySpec
      *
      * @return FactorySpec
      */
-    public static function getInstance(Factory $factory)
+    public static function getInstance(Factory $factory): FactorySpec
     {
         $specClass = get_called_class();
         $instance = new $specClass($factory);
@@ -66,7 +67,7 @@ class FactorySpec
      *
      * @return FactorySpec $this for fluent use
      */
-    public function scheme($value)
+    public function scheme(string $value): FactorySpec
     {
         $this->specScheme = $value;
 
@@ -80,7 +81,7 @@ class FactorySpec
      *
      * @return FactorySpec $this for fluent use
      */
-    public function name($value)
+    public function name(string $value): FactorySpec
     {
         $this->specName = $value;
 
@@ -94,7 +95,7 @@ class FactorySpec
      *
      * @return FactorySpec $this for fluent use
      */
-    public function dirname($value)
+    public function dirname(string $value): FactorySpec
     {
         $this->specDirname = $value;
 
@@ -108,7 +109,7 @@ class FactorySpec
      *
      * @return FactorySpec $this for fluent use
      */
-    public function optional($value)
+    public function optional(bool $value): FactorySpec
     {
         $this->specOptional = (bool) $value;
 
@@ -122,7 +123,7 @@ class FactorySpec
      *
      * @return FactorySpec $this for fluent use
      */
-    public function fqn($value)
+    public function fqn(string $value): FactorySpec
     {
         $this->specFQN = $value;
 
@@ -134,7 +135,7 @@ class FactorySpec
      *
      * @return XoopsObjectHandler|null
      */
-    public function build()
+    public function build(): ?XoopsObjectHandler
     {
         return $this->factory->build($this);
     }
@@ -142,7 +143,7 @@ class FactorySpec
     /**
      * @return string
      */
-    public function getScheme()
+    public function getScheme(): string
     {
         return $this->specScheme;
     }
@@ -150,7 +151,7 @@ class FactorySpec
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->specName;
     }
@@ -158,7 +159,7 @@ class FactorySpec
     /**
      * @return string
      */
-    public function getDirname()
+    public function getDirname(): string
     {
         return $this->specDirname;
     }
@@ -166,7 +167,7 @@ class FactorySpec
     /**
      * @return bool
      */
-    public function getOptional()
+    public function getOptional(): bool
     {
         return $this->specOptional;
     }
@@ -174,7 +175,7 @@ class FactorySpec
     /**
      * @return string
      */
-    public function getFQN()
+    public function getFQN(): string
     {
         return $this->specFQN;
     }
@@ -182,7 +183,7 @@ class FactorySpec
     /**
      * @return Factory
      */
-    public function getFactory()
+    public function getFactory(): Factory
     {
         return $this->factory;
     }

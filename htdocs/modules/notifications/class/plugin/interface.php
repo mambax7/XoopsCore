@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ interface NotificationsPluginInterface
      *
      * @return array
      */
-    public function item($category, $itemId);
+    public function item(string $category, int $itemId): array;
 
     /**
      * Expects array of arrays containing:.
@@ -49,7 +50,7 @@ interface NotificationsPluginInterface
      *
      * @return array
      */
-    public function categories();
+    public function categories(): array;
 
     /**
      * Expects array of arrays containing:.
@@ -78,7 +79,7 @@ interface NotificationsPluginInterface
      *
      * @return array
      */
-    public function events();
+    public function events(): array;
 
     /**
      * Expects array containing tags to use in mail template.
@@ -92,5 +93,5 @@ interface NotificationsPluginInterface
      *
      * @return mixed
      */
-    public function tags($category, $item_id, $event);
+    public function tags(string $category, int $item_id, string $event);
 }

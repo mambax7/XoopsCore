@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test;
 
@@ -10,7 +10,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
@@ -18,11 +18,11 @@ class YamlTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testDumpAndLoad()
+    public function testDumpAndLoad(): void
     {
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
@@ -35,7 +35,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($inputArray, $outputArray);
     }
 
-    public function testSaveAndRead()
+    public function testSaveAndRead(): void
     {
         $tmpfname = tempnam(sys_get_temp_dir(), 'TEST');
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
@@ -51,7 +51,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         unlink($tmpfname);
     }
 
-    public function testDumpAndLoadWrapped()
+    public function testDumpAndLoadWrapped(): void
     {
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
@@ -64,7 +64,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($inputArray, $outputArray);
     }
 
-    public function testDumpAndLoadWrappedStress()
+    public function testDumpAndLoadWrappedStress(): void
     {
         $inputArray = ['start' => '---', 'end' => '...', 'misc' => 'stuff'];
 
@@ -77,7 +77,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($inputArray, $outputArray);
     }
 
-    public function testDumpAndLoadWrappedStress2()
+    public function testDumpAndLoadWrappedStress2(): void
     {
         $inputArray = ['start' => '---', 'end' => '...', 'misc' => 'stuff'];
 
@@ -90,7 +90,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($inputArray, $outputArray);
     }
 
-    public function testSaveAndReadWrapped()
+    public function testSaveAndReadWrapped(): void
     {
         $tmpfname = tempnam(sys_get_temp_dir(), 'TEST');
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];

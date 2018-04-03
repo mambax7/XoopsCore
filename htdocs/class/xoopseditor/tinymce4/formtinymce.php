@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -37,7 +37,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      *
      * @param array $configs Editor Options
      */
-    public function __construct($configs)
+    public function __construct(array $configs)
     {
         $current_path = __FILE__;
         if (DIRECTORY_SEPARATOR !== '/') {
@@ -65,7 +65,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      *
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         if ($this->isRequired() && $eltname = $this->getName()) {
             //$eltname = $this->getName();
@@ -87,7 +87,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         if ($this->language) {
             return $this->language;
@@ -118,7 +118,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $ret = $this->editor->render();
         $ret .= parent::render();
@@ -131,7 +131,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      *
      * @return boolean
      */
-    public function isActive()
+    public function isActive(): bool
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
 

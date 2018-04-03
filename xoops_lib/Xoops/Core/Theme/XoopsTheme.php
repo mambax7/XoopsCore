@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -190,7 +191,7 @@ class XoopsTheme
      *
      * @return bool
      */
-    public function xoInit()
+    public function xoInit(): bool
     {
         $xoops = \Xoops::getInstance();
         $this->assets = $xoops->assets();
@@ -260,7 +261,7 @@ class XoopsTheme
         // Load global javascript
         //$this->addScript('include/xoops.js');
         //$this->loadLocalization();
-        list($cssAssets, $jsAssets) = $this->getLocalizationAssets();
+        [$cssAssets, $jsAssets] = $this->getLocalizationAssets();
         if (!empty($cssAssets)) {
             $this->addBaseStylesheetAssets($cssAssets);
         }
@@ -314,7 +315,7 @@ class XoopsTheme
      *
      * @return string complete cache id
      */
-    public function generateCacheId($cache_id, $extraString = '')
+    public function generateCacheId(string $cache_id, string $extraString = ''): string
     {
         $xoops = \Xoops::getInstance();
         static $extra_string;
@@ -353,7 +354,7 @@ class XoopsTheme
      *
      * @return bool
      */
-    public function checkCache()
+    public function checkCache(): bool
     {
         if ('POST' !== $_SERVER['REQUEST_METHOD'] && $this->contentCacheLifetime) {
             $template = $this->contentTemplate ? $this->contentTemplate : 'module:system/system_dummy.tpl';
@@ -390,7 +391,7 @@ class XoopsTheme
      *
      * @return bool
      */
-    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = [])
+    public function render(string $canvasTpl = null, string $pageTpl = null, string $contentTpl = null, array $vars = []): bool
     {
         if ($this->renderCount) {
             return false;
@@ -482,7 +483,7 @@ class XoopsTheme
      *
      * @return array list of 2 arrays, one
      */
-    public function getLocalizationAssets($type = 'main')
+    public function getLocalizationAssets(string $type = 'main'): array
     {
         $cssAssets = [];
         $jsAssets = [];
@@ -557,7 +558,7 @@ class XoopsTheme
      * @param array  $attributes hash of attributes to add to the <script> tag
      * @param string $content    Code snippet to output within the <script> tag
      */
-    public function addScript($src = '', $attributes = [], $content = '')
+    public function addScript(string $src = '', array $attributes = [], string $content = ''): void
     {
         $xoops = \Xoops::getInstance();
         if (empty($attributes)) {
@@ -583,7 +584,7 @@ class XoopsTheme
      * @param array|null  $attributes name => value paired array of attributes such as title
      * @param string      $content    CSS code to output between the <style> tags (in case $src is empty)
      */
-    public function addStylesheet($src = '', $attributes = [], $content = '')
+    public function addStylesheet(?string $src = '', ?array $attributes = [], string $content = ''): void
     {
         $xoops = \Xoops::getInstance();
         if (empty($attributes)) {
@@ -609,7 +610,7 @@ class XoopsTheme
      * @param string $filters comma separated list of filters
      * @param string $target  target path, will default to assets directory
      */
-    public function addScriptAssets($assets, $filters = 'default', $target = null)
+    public function addScriptAssets(array $assets, string $filters = 'default', string $target = null): void
     {
         $url = $this->assets->getUrlToAssets('js', $assets, $filters, $target);
         $this->addScript($url);
@@ -622,7 +623,7 @@ class XoopsTheme
      * @param string   $filters comma separated list of filters
      * @param string   $target  target path, will default to assets directory
      */
-    public function addStylesheetAssets($assets, $filters = 'default', $target = null)
+    public function addStylesheetAssets($assets, $filters = 'default', $target = null): void
     {
         $url = $this->assets->getUrlToAssets('css', $assets, $filters, $target);
         $this->addStylesheet($url);
@@ -635,7 +636,7 @@ class XoopsTheme
      * @param string $type   type of asset, i.e. 'css' or 'js'
      * @param array  $assets list of source files to process
      */
-    public function addBaseAssets($type, $assets)
+    public function addBaseAssets(string $type, array $assets): void
     {
         if (is_scalar($assets)) {
             $this->baseAssets[$type][] = $assets;
@@ -649,7 +650,7 @@ class XoopsTheme
      *
      * @param array $assets list of source files to process
      */
-    public function addBaseScriptAssets($assets)
+    public function addBaseScriptAssets(array $assets): void
     {
         $this->addBaseAssets('js', $assets);
     }
@@ -659,7 +660,7 @@ class XoopsTheme
      *
      * @param array $assets list of source files to process
      */
-    public function addBaseStylesheetAssets($assets)
+    public function addBaseStylesheetAssets(array $assets): void
     {
         $this->addBaseAssets('css', $assets);
     }
@@ -684,7 +685,7 @@ class XoopsTheme
      *
      * @return bool true if asset registers, false on error
      */
-    public function setNamedAsset($name, $assets, $filters = null)
+    public function setNamedAsset(string $name, $assets, $filters = null): bool
     {
         return $this->assets->registerAssetReference($name, $assets, $filters);
     }
@@ -696,7 +697,7 @@ class XoopsTheme
      * @param string $href       URI of the anchored document
      * @param array  $attributes Additional attributes to add to the <link> element
      */
-    public function addLink($rel, $href = '', $attributes = [])
+    public function addLink(string $rel, string $href = '', array $attributes = []): void
     {
         if (empty($attributes)) {
             $attributes = [];
@@ -716,7 +717,7 @@ class XoopsTheme
      *
      * @return string|false
      */
-    public function addHttpMeta($name, $value = null)
+    public function addHttpMeta(string $name, $value = null)
     {
         if (isset($value)) {
             return $this->addMeta('http', $name, $value);
@@ -735,7 +736,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function addMeta($type = 'meta', $name = '', $value = '')
+    public function addMeta(string $type = 'meta', string $name = '', string $value = ''): string
     {
         if (!isset($this->metas[$type])) {
             $this->metas[$type] = [];
@@ -757,7 +758,7 @@ class XoopsTheme
      * @param mixed  $smarty  unused
      * @param bool   $repeat  repeat
      */
-    public function headContent($params, $content, &$smarty, &$repeat)
+    public function headContent($params, $content, &$smarty, &$repeat): void
     {
         if (!$repeat) {
             $this->htmlHeadStrings[] = $content;
@@ -771,7 +772,7 @@ class XoopsTheme
      *
      * @return bool|string
      */
-    public function renderMetas($return = false)
+    public function renderMetas(bool $return = false)
     {
         $str = $this->renderBaseAssets();
 
@@ -793,7 +794,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function renderBaseAssets()
+    public function renderBaseAssets(): string
     {
         $str = '';
 
@@ -821,7 +822,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function renderMetasByType($type)
+    public function renderMetasByType(string $type): string
     {
         if (!isset($type)) {
             return '';
@@ -884,7 +885,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function genElementId($tagName = 'xos')
+    public function genElementId(string $tagName = 'xos'): string
     {
         static $cache = [];
         if (!isset($cache[$tagName])) {
@@ -901,7 +902,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function renderAttributes($coll)
+    public function renderAttributes(array $coll): string
     {
         $str = '';
         foreach ($coll as $name => $val) {
@@ -920,7 +921,7 @@ class XoopsTheme
      *
      * @return string
      */
-    public function resourcePath($path)
+    public function resourcePath(string $path): string
     {
         if ('/' === substr($path, 0, 1)) {
             $path = substr($path, 1);

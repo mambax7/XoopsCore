@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -100,7 +101,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 if ('POST' === $_SERVER['REQUEST_METHOD'] && 'db' === @$_POST['task']) {
     $params = ['DB_COLLATION'];
     foreach ($params as $name) {
-        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
+        $vars[$name] = $_POST[$name] ?? '';
     }
 
     return $vars;

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ interface SystemPluginInterface
      *
      * @return int Number of posts
      */
-    public function userPosts($uid);
+    public function userPosts(int $uid): int;
 
     /**
      * Used to populate the Waiting Block.
@@ -37,7 +38,7 @@ interface SystemPluginInterface
      *
      * @return array
      */
-    public function waiting();
+    public function waiting(): array;
 
     /**
      * Used to populate backend.
@@ -52,7 +53,7 @@ interface SystemPluginInterface
      *
      * @return array
      */
-    public function backend($limit);
+    public function backend(int $limit): array;
 
     /**
      * Used to populate the User Block.
@@ -64,5 +65,5 @@ interface SystemPluginInterface
      *
      * @return array
      */
-    public function userMenus();
+    public function userMenus(): array;
 }

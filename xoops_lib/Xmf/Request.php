@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class Request
      *
      * @return string
      */
-    public static function getMethod()
+    public static function getMethod(): string
     {
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
 
@@ -80,7 +81,7 @@ class Request
      *
      * @return mixed Requested variable
      */
-    public static function getVar($name, $default = null, $hash = 'default', $type = 'none', $mask = 0)
+    public static function getVar(string $name, $default = null, $hash = 'default', $type = 'none', $mask = 0)
     {
         // Ensure hash and type are uppercase
         $hash = strtoupper($hash);
@@ -149,7 +150,7 @@ class Request
      *
      * @return int Requested variable
      */
-    public static function getInt($name, $default = 0, $hash = 'default')
+    public static function getInt(string $name, int $default = 0, string $hash = 'default'): int
     {
         return static::getVar($name, $default, $hash, 'int');
     }
@@ -167,7 +168,7 @@ class Request
      *
      * @return float Requested variable
      */
-    public static function getFloat($name, $default = 0.0, $hash = 'default')
+    public static function getFloat(string $name, float $default = 0.0, string $hash = 'default'): float
     {
         return static::getVar($name, $default, $hash, 'float');
     }
@@ -185,7 +186,7 @@ class Request
      *
      * @return bool Requested variable
      */
-    public static function getBool($name, $default = false, $hash = 'default')
+    public static function getBool(string $name, bool $default = false, string $hash = 'default'): bool
     {
         return static::getVar($name, $default, $hash, 'bool');
     }
@@ -203,7 +204,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getWord($name, $default = '', $hash = 'default')
+    public static function getWord(string $name, string $default = '', string $hash = 'default'): string
     {
         return static::getVar($name, $default, $hash, 'word');
     }
@@ -220,7 +221,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getCmd($name, $default = '', $hash = 'default')
+    public static function getCmd(string $name, string $default = '', string $hash = 'default'): string
     {
         return static::getVar($name, $default, $hash, 'cmd');
     }
@@ -239,7 +240,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getString($name, $default = '', $hash = 'default', $mask = 0)
+    public static function getString(string $name, string $default = '', string $hash = 'default', int $mask = 0): string
     {
         // Cast to string, in case static::MASK_ALLOW_RAW was specified for mask
         return (string) static::getVar($name, $default, $hash, 'string', $mask);
@@ -254,7 +255,7 @@ class Request
      *
      * @return array
      */
-    public static function getArray($name, $default = [], $hash = 'default')
+    public static function getArray(string $name, $default = [], $hash = 'default'): array
     {
         return static::getVar($name, $default, $hash, 'array');
     }
@@ -268,7 +269,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getText($name, $default = '', $hash = 'default')
+    public static function getText(string $name, string $default = '', string $hash = 'default'): string
     {
         return (string) static::getVar($name, $default, $hash, 'string', static::MASK_ALLOW_RAW);
     }
@@ -282,7 +283,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getUrl($name, $default = '', $hash = 'default')
+    public static function getUrl(string $name, string $default = '', string $hash = 'default'): string
     {
         return (string) static::getVar($name, $default, $hash, 'weburl');
     }
@@ -296,7 +297,7 @@ class Request
      *
      * @return string Requested variable
      */
-    public static function getPath($name, $default = '', $hash = 'default')
+    public static function getPath(string $name, string $default = '', string $hash = 'default'): string
     {
         return (string) static::getVar($name, $default, $hash, 'path');
     }
@@ -310,7 +311,7 @@ class Request
      *
      * @return string email address or default if invalid
      */
-    public static function getEmail($name, $default = '', $hash = 'default')
+    public static function getEmail(string $name, string $default = '', string $hash = 'default'): string
     {
         $ret = (string) static::getVar($name, $default, $hash, 'email');
 
@@ -326,7 +327,7 @@ class Request
      *
      * @return string IP address or default if invalid
      */
-    public static function getIP($name, $default = '', $hash = 'default')
+    public static function getIP(string $name, string $default = '', string $hash = 'default'): string
     {
         $ret = (string) static::getVar($name, $default, $hash, 'ip');
 
@@ -342,7 +343,7 @@ class Request
      *
      * @return \DateTime object
      */
-    public static function getDateTime($name, $default = null, $hash = 'default')
+    public static function getDateTime(string $name, $default = null, $hash = 'default'): \DateTime
     {
         $values = self::getVar($name, [], $hash, 'array');
         $count = count($values);
@@ -366,7 +367,7 @@ class Request
      *
      * @return string header value or default if header was not found
      */
-    public static function getHeader($headerName, $default = '')
+    public static function getHeader(string $headerName, ?string $default = ''): string
     {
         static $headers = null;
 
@@ -404,7 +405,7 @@ class Request
      *
      * @return bool True if hash has an element 'name', otherwise false
      */
-    public static function hasVar($name, $hash = 'method')
+    public static function hasVar(string $name, string $hash = 'method'): bool
     {
         $hash = strtoupper($hash);
         if ('METHOD' === $hash) {
@@ -430,7 +431,7 @@ class Request
      *
      * @return string Previous value
      */
-    public static function setVar($name, $value = null, $hash = 'method', $overwrite = true)
+    public static function setVar(string $name, string $value = null, string $hash = 'method', bool $overwrite = true): string
     {
         $hash = strtoupper($hash);
         if ('METHOD' === $hash) {
@@ -510,7 +511,7 @@ class Request
      *
      * @return mixed Request hash
      */
-    public static function get($hash = 'default', $mask = 0)
+    public static function get(string $hash = 'default', int $mask = 0)
     {
         $hash = strtoupper($hash);
 
@@ -562,7 +563,7 @@ class Request
      * @param bool   $overwrite If true and an existing key is found, the value is overwritten,
      *                            otherwise it is ignored
      */
-    public static function set($array, $hash = 'method', $overwrite = true)
+    public static function set(array $array, string $hash = 'method', bool $overwrite = true): void
     {
         foreach ($array as $key => $value) {
             static::setVar($key, $value, $hash, $overwrite);
@@ -584,7 +585,7 @@ class Request
      *
      * @return string
      */
-    protected static function cleanVar($var, $mask = 0, $type = null)
+    protected static function cleanVar($var, $mask = 0, $type = null): string
     {
         // Static input filters for specific settings
         static $noHtmlFilter = null;
@@ -630,7 +631,7 @@ class Request
      *
      * @return string
      */
-    protected static function cleanVars($var, $mask = 0, $type = null)
+    protected static function cleanVars($var, $mask = 0, $type = null): string
     {
         if (is_array($var)) {
             foreach ($var as $key => &$value) {

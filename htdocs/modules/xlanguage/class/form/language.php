@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Xlanguage module
@@ -19,7 +19,7 @@ class XlanguageLanguageForm extends Xoops\Form\ThemeForm
     /**
      * @param XlanguageLanguage|null $obj
      */
-    public function __construct(XlanguageLanguage $obj = null)
+    public function __construct(?XlanguageLanguage $obj = null)
     {
         $xoops = Xoops::getInstance();
 

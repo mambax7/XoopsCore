@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -10,7 +10,7 @@ class Xoops_Module_Plugin_AbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Xoops_Module_Plugin_AbstractTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         $dir = $xoops_root_path.'/modules/avatar';

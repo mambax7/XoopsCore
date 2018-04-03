@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Plugin
      *
      * @return bool|object plugin, or false if plugin does not exist
      */
-    public static function getPlugin($dirname, $pluginName = 'system', $force = false)
+    public static function getPlugin(string $dirname, string $pluginName = 'system', bool $force = false)
     {
         $inactiveModules = false;
         if ($force) {
@@ -50,7 +51,7 @@ class Plugin
      *
      * @return mixed
      */
-    public static function getPlugins($pluginName = 'system', $inactiveModules = false)
+    public static function getPlugins(string $pluginName = 'system', $inactiveModules = false)
     {
         if (!isset(static::$plugins[$pluginName])) {
             static::$plugins[$pluginName] = [];
@@ -87,7 +88,7 @@ class Plugin
      * Clear cache of plugins
      * return void.
      */
-    public static function resetPluginsCache()
+    public static function resetPluginsCache(): void
     {
         static::$plugins = [];
     }

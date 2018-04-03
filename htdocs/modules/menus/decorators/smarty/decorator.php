@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,23 +19,23 @@
  */
 class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
-    public function hasAccess($menu, &$hasAccess)
+    public function hasAccess($menu, &$hasAccess): void
     {
     }
 
-    public function accessFilter(&$accessFilter)
+    public function accessFilter(&$accessFilter): void
     {
     }
 
-    public function start()
+    public function start(): void
     {
     }
 
-    public function end(&$menus)
+    public function end(&$menus): void
     {
     }
 
-    public function decorateMenu(&$menu)
+    public function decorateMenu(&$menu): void
     {
         $decorations = ['link', 'image', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
@@ -50,7 +51,7 @@ class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecora
         }
 
         $expression = $reg[0];
-        list($validator, $value) = array_map('strtolower', explode('|', $reg[1]));
+        [$validator, $value] = array_map('strtolower', explode('|', $reg[1]));
 
         if ('smarty' === $validator) {
             if (isset($xoops->tpl()->_tpl_vars[$value])) {

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -72,7 +73,7 @@ class XoopsBaseConfig
      * @return XoopsBaseConfig instance
      * @throws Exception
      */
-    final public static function getInstance($config = '')
+    final public static function getInstance($config = ''): XoopsBaseConfig
     {
         static $instance = false;
         if (!$instance && !empty($config)) {
@@ -93,7 +94,7 @@ class XoopsBaseConfig
      *
      * @return mixed value of the attribute, or null if not set.
      */
-    final public static function get($name)
+    final public static function get(string $name)
     {
         if (isset(self::$configs[$name])) {
             return self::$configs[$name];
@@ -109,7 +110,7 @@ class XoopsBaseConfig
      *
      * @return bool true if attribute is defined, otherwise false.
      */
-    final public static function has($name)
+    final public static function has(string $name): bool
     {
         return isset(self::$configs[$name]);
     }
@@ -119,7 +120,7 @@ class XoopsBaseConfig
      *
      * @return array of of all attributes
      */
-    final public function getAll()
+    final public function getAll(): array
     {
         return self::$configs;
     }
@@ -127,7 +128,7 @@ class XoopsBaseConfig
     /**
      * Establish backward compatibility defines.
      */
-    final public static function establishBCDefines()
+    final public static function establishBCDefines(): void
     {
         if (defined('XOOPS_ROOT_PATH')) {
             return;
@@ -186,7 +187,7 @@ class XoopsBaseConfig
      * For the early phases in the installer, these may not be defined. Until it
      * is converted we try and do the best we can without errors
      */
-    final public static function bootstrapTransition()
+    final public static function bootstrapTransition(): void
     {
         $path = self::defineDefault('XOOPS_ROOT_PATH', basename(__DIR__));
         $url = (defined('XOOPS_URL')) ?
@@ -195,9 +196,9 @@ class XoopsBaseConfig
             .$_SERVER['SERVER_NAME']
             .(('80' !== $_SERVER['SERVER_PORT']) ? ':'.$_SERVER['SERVER_PORT'] : '');
         $parts = parse_url($url.'/');
-        $host = isset($parts['host']) ? $parts['host'] : $_SERVER['SERVER_NAME'];
+        $host = $parts['host'] ?? $_SERVER['SERVER_NAME'];
         $host = ('localhost' === $host) ? '' : $host;
-        $urlpath = isset($parts['path']) ? $parts['path'] : '/';
+        $urlpath = $parts['path'] ?? '/';
         $libpath = self::defineDefault('XOOPS_PATH');
         $varpath = self::defineDefault('XOOPS_VAR_PATH');
         $configs = [
@@ -249,7 +250,7 @@ class XoopsBaseConfig
      *
      * @return string the extracted lib-path value
      */
-    private function extractLibPath($filecontents)
+    private function extractLibPath(string $filecontents): string
     {
         $match = [];
         $matched = preg_match('/[.\v]*^lib-path\h*\:\h*[\']?([^\'\v]*)[\']?\h*$[.\v]*/m', $filecontents, $match);
@@ -266,7 +267,7 @@ class XoopsBaseConfig
      *
      * @return string value of define or default
      */
-    private static function defineDefault($define, $default = null)
+    private static function defineDefault(string $define, ?string $default = null): string
     {
         $default = (null === $default) ? $define : $default;
         $return = defined($define) ? constant($define) : $default;

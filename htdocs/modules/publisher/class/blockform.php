@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class PublisherBlockForm extends Xoops\Form\Form
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = '<table border="0" width="100%">'.NWLINE;
         /* @var $ele Xoops\Form\Element */

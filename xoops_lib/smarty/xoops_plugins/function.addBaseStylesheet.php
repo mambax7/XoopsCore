@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS addBaseStylesheetAssets() via Smarty template.
  *
@@ -15,7 +16,7 @@
  *
  * @return string
  */
-function smarty_function_addBaseStylesheet($params, Smarty_Internal_Template $smarty)
+function smarty_function_addBaseStylesheet(string $params, Smarty_Internal_Template $smarty): string
 {
     $xoops = Xoops::getInstance();
     $assets = [];

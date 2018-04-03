@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,12 +40,12 @@ interface UserRankInterface
      *                               'posts' => (int) contribution count associated with the user
      *                               'rank'  => (int) id of manually assigned rank, 0 if none assigned
      */
-    public function getUserRank(Response $response, $userinfo);
+    public function getUserRank(Response $response, $userinfo): void;
 
     /**
      * getAssignableUserRankList - return a list of ranks that can be assigned.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function getAssignableUserRankList(Response $response);
+    public function getAssignableUserRankList(Response $response): void;
 }

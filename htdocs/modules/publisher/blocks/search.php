@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,13 +30,13 @@ function publisher_search_show($options)
         return $block;
     }
 
-    $andor = isset($_POST['andor']) ? $_POST['andor'] : (isset($_GET['andor']) ? $_GET['andor'] : '');
+    $andor = $_POST['andor'] ?? ($_GET['andor'] ?? '');
 
-    $category = isset($_POST['category']) ? $_POST['category'] : (isset($_GET['category']) ? $_GET['category'] : null);
-    $username = isset($_POST['uname']) ? $_POST['uname'] : (isset($_GET['uname']) ? $_GET['uname'] : null);
-    $searchin = isset($_POST['searchin']) ? $_POST['searchin'] : (isset($_GET['searchin']) ? explode('|', $_GET['searchin']) : []);
-    $sortby = isset($_POST['sortby']) ? $_POST['sortby'] : (isset($_GET['sortby']) ? $_GET['sortby'] : null);
-    $term = isset($_POST['term']) ? $_POST['term'] : (isset($_GET['term']) ? $_GET['term'] : '');
+    $category = $_POST['category'] ?? ($_GET['category'] ?? null);
+    $username = $_POST['uname'] ?? ($_GET['uname'] ?? null);
+    $searchin = $_POST['searchin'] ?? (isset($_GET['searchin']) ? explode('|', $_GET['searchin']) : []);
+    $sortby = $_POST['sortby'] ?? ($_GET['sortby'] ?? null);
+    $term = $_POST['term'] ?? ($_GET['term'] ?? '');
 
     if (empty($category) || (is_array($category) && in_array('all', $category, true))) {
         $category = [];

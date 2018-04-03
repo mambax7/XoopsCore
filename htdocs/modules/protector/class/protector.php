@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -127,7 +128,7 @@ class protector
     /**
      * @param string $key
      */
-    public function _initial_recursive($val, $key)
+    public function _initial_recursive($val, string $key): void
     {
         if (is_array($val)) {
             foreach ($val as $subkey => $subval) {
@@ -177,7 +178,7 @@ class protector
             return false;
         }
         $db_conf = [];
-        while (list($key, $val) = mysql_fetch_row($result)) {
+        while ([$key, $val] = mysql_fetch_row($result)) {
             $db_conf[$key] = $val;
         }
         $db_conf_serialized = serialize($db_conf);
@@ -193,7 +194,7 @@ class protector
         return true;
     }
 
-    public function setConn($conn)
+    public function setConn($conn): void
     {
         $this->_conn = $conn;
     }
@@ -203,7 +204,7 @@ class protector
         return $this->_conf;
     }
 
-    public function purge($redirect_to_top = false)
+    public function purge($redirect_to_top = false): void
     {
         // clear all session values
         if (isset($_SESSION)) {
@@ -266,7 +267,7 @@ class protector
 
         if ($unique_check) {
             $result = mysqli_query('SELECT ip,type FROM '.\XoopsBaseConfig::get('db-prefix').'_'.$this->mydirname.'_log ORDER BY timestamp DESC LIMIT 1', $this->_conn);
-            list($last_ip, $last_type) = mysql_fetch_row($result);
+            [$last_ip, $last_type] = mysql_fetch_row($result);
             if ($last_ip === $ip && $last_type === $type) {
                 $this->_logged = true;
 
@@ -283,7 +284,7 @@ class protector
     /**
      * @param int $expire
      */
-    public function write_file_bwlimit($expire)
+    public function write_file_bwlimit(int $expire)
     {
         $expire = min((int) ($expire), time() + 300);
 
@@ -302,7 +303,7 @@ class protector
 
     public function get_bwlimit()
     {
-        list($expire) = @file(self::get_filepath4bwlimit());
+        [$expire] = @file(self::get_filepath4bwlimit());
         $expire = min((int) ($expire), time() + 300);
 
         return $expire;
@@ -347,7 +348,7 @@ class protector
 
     public function get_bad_ips($with_jailed_time = false)
     {
-        list($bad_ips_serialized) = @file(self::get_filepath4badips());
+        [$bad_ips_serialized] = @file(self::get_filepath4badips());
         $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize($bad_ips_serialized);
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = [];
@@ -377,7 +378,7 @@ class protector
 
     public function get_group1_ips($with_info = false)
     {
-        list($group1_ips_serialized) = @file(self::get_filepath4group1ips());
+        [$group1_ips_serialized] = @file(self::get_filepath4group1ips());
         $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize($group1_ips_serialized);
         if (!is_array($group1_ips)) {
             $group1_ips = [];
@@ -508,7 +509,7 @@ class protector
         return $this->_dblayertrap_doubtfuls;
     }
 
-    public function _dblayertrap_check_recursive($val)
+    public function _dblayertrap_check_recursive($val): void
     {
         if (is_array($val)) {
             foreach ($val as $subval) {
@@ -527,7 +528,7 @@ class protector
         }
     }
 
-    public function dblayertrap_init($force_override = false)
+    public function dblayertrap_init($force_override = false): void
     {
         if (!empty($GLOBALS['xoopsOption']['nocommon']) || defined('_LEGACY_PREVENT_EXEC_COMMON_') || defined('_LEGACY_PREVENT_LOAD_CORE_')) {
             return;
@@ -547,7 +548,7 @@ class protector
         }
     }
 
-    public function _bigumbrella_check_recursive($val)
+    public function _bigumbrella_check_recursive($val): void
     {
         if (is_array($val)) {
             foreach ($val as $subval) {
@@ -560,7 +561,7 @@ class protector
         }
     }
 
-    public function bigumbrella_init()
+    public function bigumbrella_init(): void
     {
         $this->_bigumbrella_doubtfuls = [];
         $this->_bigumbrella_check_recursive($_GET);
@@ -710,7 +711,7 @@ class protector
         return $current;
     }
 
-    public function replace_doubtful($key, $val)
+    public function replace_doubtful($key, $val): void
     {
         global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
 
@@ -981,7 +982,7 @@ class protector
         // bandwidth limitation
         if (@$this->_conf['bwlimit_count'] >= 10) {
             $result = $db->query('SELECT COUNT(*) FROM '.$db->prefix($this->mydirname.'_access'));
-            list($bw_count) = $db->fetchRow($result);
+            [$bw_count] = $db->fetchRow($result);
             if ($bw_count > $this->_conf['bwlimit_count']) {
                 $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
             }
@@ -989,7 +990,7 @@ class protector
 
         // F5 attack check (High load & same URI)
         $result = $db->query('SELECT COUNT(*) FROM '.$db->prefix($this->mydirname.'_access')." WHERE ip='${ip4sql}' AND request_uri='${uri4sql}'");
-        list($f5_count) = $db->fetchRow($result);
+        [$f5_count] = $db->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
             // delayed insert
             $db->queryF($sql4insertlog);
@@ -1049,7 +1050,7 @@ class protector
 
         // Crawler check (High load & different URI)
         $result = $db->query('SELECT COUNT(*) FROM '.$db->prefix($this->mydirname.'_access')." WHERE ip='${ip4sql}'");
-        list($crawler_count) = $db->fetchRow($result);
+        [$crawler_count] = $db->fetchRow($result);
 
         // delayed insert
         $db->queryF($sql4insertlog);
@@ -1128,7 +1129,7 @@ class protector
 
         // count check
         $result = $xoopsDB->query('SELECT COUNT(*) FROM '.$xoopsDB->prefix($this->mydirname.'_access')." WHERE ip='${ip4sql}' AND malicious_actions like 'BRUTE FORCE:%'");
-        list($bf_count) = $xoopsDB->fetchRow($result);
+        [$bf_count] = $xoopsDB->fetchRow($result);
         if ($bf_count > $this->_conf['bf_count']) {
             $this->register_bad_ips(time() + $this->_conf['banip_time0']);
             $this->last_error_type = 'BruteForce';
@@ -1143,7 +1144,7 @@ class protector
         $xoopsDB->queryF($sql4insertlog);
     }
 
-    public function _spam_check_point_recursive($val)
+    public function _spam_check_point_recursive($val): void
     {
         if (is_array($val)) {
             foreach ($val as $subval) {
@@ -1173,7 +1174,7 @@ class protector
     /**
      * @param int $points4deny
      */
-    public function spam_check($points4deny, $uid)
+    public function spam_check(int $points4deny, $uid): void
     {
         $this->_spamcount_uri = 0;
         $this->_spam_check_point_recursive($_POST);
@@ -1188,7 +1189,7 @@ class protector
         }
     }
 
-    public function disable_features()
+    public function disable_features(): void
     {
         global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
 
@@ -1281,7 +1282,7 @@ class protector
     /**
      * @param string $type
      */
-    public function call_filter($type, $dying_message = '')
+    public function call_filter(string $type, $dying_message = '')
     {
         require_once __DIR__.'/ProtectorFilter.php';
         $filter_handler = ProtectorFilterHandler::getInstance();

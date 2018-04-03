@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -66,7 +67,7 @@ class Provider
      *
      * @param string $service service name (case sensitive)
      */
-    public function __construct(Manager $manager, $service)
+    public function __construct(Manager $manager, string $service)
     {
         $this->manager = $manager;
         $this->service = $service;
@@ -80,7 +81,7 @@ class Provider
      *
      * @return Response Response
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, $arguments): Response
     {
         $mode = $this->getProviderMode();
 
@@ -110,7 +111,7 @@ class Provider
      * @param string $name      not used
      * @param mixed  $arguments not used
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, $arguments)
     {
         return null;
     }
@@ -120,7 +121,7 @@ class Provider
      *
      * @return Manager MODE constant
      */
-    public function getProviderMode()
+    public function getProviderMode(): Manager
     {
         static $ret = null;
 
@@ -140,7 +141,7 @@ class Provider
      *
      * @param AbstractContract $object instantiated object that provides the service
      */
-    public function register(AbstractContract $object)
+    public function register(AbstractContract $object): void
     {
         // verify this is the proper type of object
         $contract = '\Xoops\Core\Service\Contract\\'.$this->service.'Interface';
@@ -157,7 +158,7 @@ class Provider
      *
      * @return array of registered providers managed by this instance
      */
-    public function &getRegistered()
+    public function &getRegistered(): array
     {
         return $this->providers;
     }
@@ -165,7 +166,7 @@ class Provider
     /**
      * sortProviders - sort providers into priority order.
      */
-    public function sortProviders()
+    public function sortProviders(): void
     {
         $sortable = $this->providers;
         usort($sortable, function (AbstractContract $a, AbstractContract $b) {
@@ -187,7 +188,7 @@ class Provider
      *
      * @return bool true if actual provider is available, otherwise false
      */
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return true;
     }

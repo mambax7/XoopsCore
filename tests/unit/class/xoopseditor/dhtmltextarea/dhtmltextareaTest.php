@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -6,7 +6,7 @@ class FormDhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'FormDhtmlTextArea';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -19,7 +19,7 @@ class FormDhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_render()
+    public function test_render(): void
     {
         $this->markTestIncomplete();
     }

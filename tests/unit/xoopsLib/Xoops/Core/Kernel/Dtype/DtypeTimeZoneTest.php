@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Kernel\Dtype;
 
@@ -34,7 +34,7 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DtypeTimeZone();
         $this->xObject = new DtypeTimeZoneObject();
@@ -44,17 +44,17 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeTimeZone', $this->object);
     }
 
-    public function testGetVarCleanVar()
+    public function testGetVarCleanVar(): void
     {
         $testValue = 'America/New_York';
         $key = 'timezone_test';
@@ -83,7 +83,7 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($testValue, $value);
     }
 
-    public function testGetVarCleanVar_error()
+    public function testGetVarCleanVar_error(): void
     {
         $testValue = 'GarbageTimeZone';
         $key = 'timezone_test';

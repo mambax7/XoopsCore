@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return true;
     }
@@ -39,7 +40,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         include_once __DIR__.'/recaptcha/recaptchalib.php';
         $form = "<script type=\"text/javascript\">
@@ -60,7 +61,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      * @param $sessionName name of session
      * @return bool
      */
-    public function verify($sessionName = null)
+    public function verify($sessionName = null): bool
     {
         $is_valid = false;
         include_once __DIR__.'/recaptcha/recaptchalib.php';

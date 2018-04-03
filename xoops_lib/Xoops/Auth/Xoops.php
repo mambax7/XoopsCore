@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Xoops extends AuthAbstract
      *
      * @param Connection|null $dao database object
      */
-    public function __construct(Connection $dao = null)
+    public function __construct(?Connection $dao = null)
     {
         $this->dao = $dao;
         $this->auth_method = 'xoops';
@@ -44,7 +45,7 @@ class Xoops extends AuthAbstract
      *
      * @return bool
      */
-    public function authenticate($uname, $pwd = null)
+    public function authenticate(string $uname, string $pwd = null): bool
     {
         $xoops = \Xoops::getInstance();
         $member_handler = $xoops->getHandlerMember();

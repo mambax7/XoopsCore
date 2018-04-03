@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class Factory
      *
      * @todo change driver to support other databases and support for port, unix_socket and driver options.
      */
-    public static function getConnection($options = null)
+    public static function getConnection(array $options = null): ?Connection
     {
         static $instance;
         if (!isset($instance)) {

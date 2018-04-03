@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +24,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     /**
      * @return string
      */
-    public function itemName()
+    public function itemName(): string
     {
         return 'itemid';
     }
@@ -31,7 +32,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     /**
      * @return string
      */
-    public function pageName()
+    public function pageName(): string
     {
         return 'item.php';
     }
@@ -39,7 +40,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     /**
      * @return array
      */
-    public function extraParams()
+    public function extraParams(): array
     {
         return [];
     }
@@ -51,7 +52,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
      */
-    public function approve(CommentsComment $comment)
+    public function approve(CommentsComment $comment): void
     {
         //Where are you looking at?
     }
@@ -62,7 +63,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      * @param int $item_id   The unique ID of an item
      * @param int $total_num The total number of active comments
      */
-    public function update($item_id, $total_num)
+    public function update(int $item_id, int $total_num): void
     {
         $db = Xoops::getInstance()->db();
         $sql = 'UPDATE '.$db->prefix('publisher_items').' SET comments = '.(int) ($total_num).' WHERE itemid = '.(int) ($item_id);
@@ -82,7 +83,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      *
      * @return array
      */
-    public function itemInfo($item_id)
+    public function itemInfo(int $item_id): array
     {
         $ret = [];
         include_once dirname(dirname(__DIR__)).'/include/common.php';

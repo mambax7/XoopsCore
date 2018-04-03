@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -21,14 +21,14 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Kernel_CriteriaCompoTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $criteria = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $criteria);
         $this->assertInstanceOf('Xoops\Core\Kernel\CriteriaElement', $criteria);
     }
 
-    public function test_add()
+    public function test_add(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';
@@ -41,7 +41,7 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(2 === count($criteria->getCriteriaElements()));
     }
 
-    public function test_render()
+    public function test_render(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';
@@ -51,7 +51,7 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('(1)', $x);
     }
 
-    public function test_renderWhere()
+    public function test_renderWhere(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';
@@ -61,7 +61,7 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('WHERE (1)', $x);
     }
 
-    public function test_renderLdap()
+    public function test_renderLdap(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';
@@ -71,7 +71,7 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('(dummy_field = )', $x);
     }
 
-    public function test_renderQb()
+    public function test_renderQb(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';
@@ -84,7 +84,7 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Xoops\Core\Database\QueryBuilder', $x);
     }
 
-    public function test_buildExpressionQb()
+    public function test_buildExpressionQb(): void
     {
         $criteria_element = new Criteria('dummy_field');
         $condition = 'AND';

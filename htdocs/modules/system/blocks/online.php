@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ function b_system_online_show()
     $online_handler = $xoops->getHandlerOnline();
     mt_srand((float) microtime() * 1000000);
     // set gc probabillity to 10% for now..
-    if (mt_rand(1, 100) < 11) {
+    if (random_int(1, 100) < 11) {
         $online_handler->gc(300);
     }
     if ($xoops->isUser()) {

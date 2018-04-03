@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text\Sanitizer;
 
@@ -20,7 +20,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('\Xoops\Core\Text\Sanitizer\ConfigurationAbstract');
         $this->reflectedObject = new \ReflectionClass('\Xoops\Core\Text\Sanitizer\ConfigurationAbstract');
@@ -30,11 +30,11 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertTrue($this->reflectedObject->isAbstract());
         $this->assertTrue($this->reflectedObject->hasMethod('get'));
@@ -50,19 +50,19 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->reflectedObject->hasMethod('getAllLike'));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertNull($this->object->get('--NoNameLikeThisAtAll--'));
         $this->assertSame('OK', $this->object->get('testvalue', 'OK'));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $this->object->set('testvalue', 'OK');
         $this->assertSame('OK', $this->object->get('testvalue', 'NotOK'));
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -73,7 +73,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK2', $all['test2']);
     }
 
-    public function testGetNames()
+    public function testGetNames(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -81,7 +81,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(['test1', 'test2'], $all);
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -90,7 +90,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test3'));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -100,7 +100,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test1'));
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -111,7 +111,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test2'));
     }
 
-    public function testSetAll()
+    public function testSetAll(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -135,7 +135,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK4', $this->object->get('test4'));
     }
 
-    public function testSetMerge()
+    public function testSetMerge(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -158,7 +158,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK3', $this->object->get('test3'));
     }
 
-    public function testSetArrayItem()
+    public function testSetArrayItem(): void
     {
         $this->object->setArrayItem('test', 'a', 'OK1');
         $this->object->setArrayItem('test', 'b', 'OK2');
@@ -181,7 +181,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testGetAllLike()
+    public function testGetAllLike(): void
     {
         $this->object->set('oddball', 'odd');
         $this->object->set('test1', 'OK1');
@@ -213,7 +213,7 @@ class ConfigurationAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(5, $subset);
     }
 
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $this->object['test1'] = 'OK1';
         $this->object->set('test2', 'OK2');

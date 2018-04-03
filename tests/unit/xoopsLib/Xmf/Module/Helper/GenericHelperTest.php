@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Module\Helper;
 
@@ -34,7 +34,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = GenericHelperTestHelper::getHelper();
     }
@@ -43,19 +43,11 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetModule()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    public function testGetConfig()
+    public function testGetModule(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -63,7 +55,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetHandler()
+    public function testGetConfig(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -71,7 +63,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testLoadLanguage()
+    public function testGetHandler(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -79,7 +71,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetDebug()
+    public function testLoadLanguage(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -87,7 +79,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddLog()
+    public function testSetDebug(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -95,7 +87,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testIsCurrentModule()
+    public function testAddLog(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -103,7 +95,15 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testIsUserAdmin()
+    public function testIsCurrentModule(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
+    public function testIsUserAdmin(): void
     {
         include_once XOOPS_ROOT_PATH.'/kernel/user.php';
         $GLOBALS['xoopsUser'] = '';
@@ -113,7 +113,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->isUserAdmin());
     }
 
-    public function testUrl()
+    public function testUrl(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -121,7 +121,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testPath()
+    public function testPath(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -129,7 +129,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRedirect()
+    public function testRedirect(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

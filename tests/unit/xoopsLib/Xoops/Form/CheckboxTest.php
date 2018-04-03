@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Checkbox('Caption', 'name');
     }
@@ -24,11 +24,11 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
         $this->object->addOption('AO_value', 'AO_name');
         $this->object->addOption('AO_noname');
@@ -44,19 +44,19 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('AOA_noname', $options['AOA_noname']);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);
     }
 
-    public function testRenderValidationJS()
+    public function testRenderValidationJS(): void
     {
         $value = $this->object->renderValidationJS();
         $this->assertInternalType('string', $value);
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new Checkbox('mycaption', 'myname', 'opt1');
         $oldWay->addOption('opt1', 'optname1');

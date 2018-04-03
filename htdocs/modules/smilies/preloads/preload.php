@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -29,7 +30,7 @@ class SmiliesPreload extends PreloadItem
      *
      * @param Provider $provider - provider object for requested service
      */
-    public static function eventCoreServiceLocateEmoji(Provider $provider)
+    public static function eventCoreServiceLocateEmoji(Provider $provider): void
     {
         require dirname(__DIR__).'/class/SmiliesProvider.php';
         $provider->register(new SmiliesProvider());
@@ -41,7 +42,7 @@ class SmiliesPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -105,7 +106,7 @@ class Dtype
      *
      * @return mixed
      */
-    public static function getVar(XoopsObject $obj, $key, $format)
+    public static function getVar(XoopsObject $obj, string $key, string $format)
     {
         return self::loadDtype(self::getDtypeName($obj, $key))
             ->getVar($obj, $key, $format);
@@ -118,7 +119,7 @@ class Dtype
      *
      * @return null|DtypeAbstract
      */
-    private static function loadDtype($name)
+    private static function loadDtype(string $name): ?DtypeAbstract
     {
         static $dtypes;
 
@@ -145,7 +146,7 @@ class Dtype
      *
      * @return string
      */
-    private static function getDtypeName(XoopsObject $obj, $key)
+    private static function getDtypeName(XoopsObject $obj, $key): string
     {
         static $legacyNames = [
             1 => 'DtypeTextBox',

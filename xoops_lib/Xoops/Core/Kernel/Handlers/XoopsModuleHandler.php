@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -56,7 +57,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'system_module', '\Xoops\Core\Kernel\Handlers\XoopsModule', 'mid', 'dirname');
     }
@@ -68,7 +69,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return XoopsModule|bool on fail
      */
-    public function getById($id = null)
+    public function getById(int $id = null)
     {
         $id = (int) ($id);
         if ($id > 0) {
@@ -95,7 +96,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return XoopsModule|bool FALSE on fail
      */
-    public function getByDirname($dirname)
+    public function getByDirname(string $dirname)
     {
         $dirname = basename(trim($dirname));
 
@@ -123,7 +124,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function insertModule(XoopsModule $module)
+    public function insertModule(XoopsModule $module): bool
     {
         if (!parent::insert($module)) {
             return false;
@@ -149,7 +150,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteModule(XoopsModule $module)
+    public function deleteModule(XoopsModule $module): bool
     {
         if (!parent::delete($module)) {
             return false;
@@ -246,7 +247,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getObjectsArray(CriteriaElement $criteria = null, $id_as_key = false)
+    public function getObjectsArray(?CriteriaElement $criteria = null, bool $id_as_key = false): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -292,7 +293,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getNameList(CriteriaElement $criteria = null, $dirname_as_key = false)
+    public function getNameList(?CriteriaElement $criteria = null, bool $dirname_as_key = false): array
     {
         $ret = [];
         $modules = $this->getObjectsArray($criteria, true);

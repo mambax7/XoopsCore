@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -15,7 +15,7 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailAddress();
     }
@@ -24,16 +24,16 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(EmailAddress::class, $this->object);
     }
 
-    public function testNewEmailAddressWithArguments()
+    public function testNewEmailAddressWithArguments(): void
     {
         $address = new EmailAddress('user@example.com', 'name');
         $this->assertInstanceOf('\Xoops\Core\Service\Data\EmailAddress', $address);
@@ -41,7 +41,7 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('name', $address->getDisplayName());
     }
 
-    public function testNewEmailAddressWithFluent()
+    public function testNewEmailAddressWithFluent(): void
     {
         $actual = $this->object->withEmail('user@example.com')->withDisplayName('name');
         $this->assertNotSame($this->object, $actual);
@@ -51,13 +51,13 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
         $this->object->getEmail();
     }
 
-    public function testNewEmailAddressBadArguments()
+    public function testNewEmailAddressBadArguments(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $address = new EmailAddress('fred');
     }
 
-    public function testGetEmailNotSet()
+    public function testGetEmailNotSet(): void
     {
         try {
             $this->object->getEmail();
@@ -67,13 +67,13 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\LogicException::class, $e);
     }
 
-    public function testGetDisplayNameNotSet()
+    public function testGetDisplayNameNotSet(): void
     {
         $actual = $this->object->getDisplayName();
         $this->assertNull($actual);
     }
 
-    public function testGetDisplayNameInvalid()
+    public function testGetDisplayNameInvalid(): void
     {
         $address = new class() extends EmailAddress {
             public function __construct()

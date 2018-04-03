@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Lists;
 
@@ -20,7 +20,7 @@ class MonthTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Month();
     }
@@ -29,11 +29,11 @@ class MonthTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Lists\Month', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Lists\ListAbstract', $this->object);
@@ -42,7 +42,7 @@ class MonthTest extends \PHPUnit\Framework\TestCase
     /**
      * @todo   Implement testGetList().
      */
-    public function testGetList()
+    public function testGetList(): void
     {
         $reflection = new \ReflectionClass($this->className);
         $method = $reflection->getMethod('getList');

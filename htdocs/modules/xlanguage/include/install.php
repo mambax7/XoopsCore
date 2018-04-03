@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xlanguage module.
  *
@@ -20,7 +21,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 /**
  * @return bool
  */
-function xoops_module_install_xlanguage(XoopsModule $module)
+function xoops_module_install_xlanguage(XoopsModule $module): bool
 {
     $xoops = Xoops::getInstance();
     xlanguage_mkdirs($xoops->path(\XoopsBaseConfig::get('var-path')).'/configs/xlanguage');
@@ -31,7 +32,7 @@ function xoops_module_install_xlanguage(XoopsModule $module)
 /**
  * @return bool
  */
-function xoops_module_update_xlanguage(XoopsModule $module, $version)
+function xoops_module_update_xlanguage(XoopsModule $module, $version): bool
 {
     return xoops_module_install_xlanguage($module);
 }
@@ -41,7 +42,7 @@ function xoops_module_update_xlanguage(XoopsModule $module, $version)
  *
  * @return bool
  */
-function xlanguage_mkdirs($pathname, $pathout = null)
+function xlanguage_mkdirs($pathname, $pathout = null): bool
 {
     $xoops = Xoops::getInstance();
     $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
@@ -68,7 +69,7 @@ function xlanguage_mkdirs($pathname, $pathout = null)
 /**
  * @return bool
  */
-function xlanguage_copyfile($folder_in, $source_file, $folder_out)
+function xlanguage_copyfile($folder_in, $source_file, $folder_out): bool
 {
     if (!is_dir($folder_out)) {
         if (!xlanguage_mkdirs($folder_out)) {

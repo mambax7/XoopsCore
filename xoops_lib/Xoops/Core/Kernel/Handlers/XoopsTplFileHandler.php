@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS kernel class.
  *
@@ -42,7 +43,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'system_tplfile', '\Xoops\Core\Kernel\Handlers\XoopsTplFile', 'tpl_id', 'tpl_refid');
     }
@@ -55,7 +56,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return XoopsTplFile|bool
      */
-    public function getById($id, $getsource = false)
+    public function getById(int $id, bool $getsource = false)
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -96,7 +97,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function loadSource(XoopsTplFile $tplfile)
+    public function loadSource(XoopsTplFile $tplfile): bool
     {
         if (!$tplfile->getVar('tpl_source')) {
             $qb = $this->db2->createXoopsQueryBuilder();
@@ -122,7 +123,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function insertTpl(XoopsTplFile $tplfile)
+    public function insertTpl(XoopsTplFile $tplfile): bool
     {
         $tpl_id = 0;
         if (!$tplfile->isDirty()) {
@@ -216,7 +217,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function forceUpdate(XoopsTplFile $tplfile)
+    public function forceUpdate(XoopsTplFile $tplfile): bool
     {
         if (!$tplfile->isDirty()) {
             return true;
@@ -280,7 +281,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteTpl(XoopsTplFile $tplfile)
+    public function deleteTpl(XoopsTplFile $tplfile): bool
     {
         $tpl_id = $tplfile->getVar('tpl_id');
         if (!$this->db2->deletePrefix('system_tplfile', ['tpl_id' => $tpl_id])) {
@@ -300,7 +301,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getTplObjects(CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
+    public function getTplObjects(?CriteriaElement $criteria = null, bool $getsource = false, bool $id_as_key = false): array
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -344,7 +345,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getModuleTplCount($tplset)
+    public function getModuleTplCount(string $tplset): array
     {
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -382,7 +383,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
+    public function find(?string $tplset = null, ?string $type = null, ?string $refid = null, ?string $module = null, ?string $file = null, bool $getsource = false): array
     {
         $criteria = new CriteriaCompo();
         if (isset($tplset)) {
@@ -420,7 +421,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function templateExists($tplname, $tplset_name)
+    public function templateExists(string $tplname, string $tplset_name): bool
     {
         $criteria = new CriteriaCompo(new Criteria('tpl_file', trim($tplname)));
         $criteria->add(new Criteria('tpl_tplset', trim($tplset_name)));

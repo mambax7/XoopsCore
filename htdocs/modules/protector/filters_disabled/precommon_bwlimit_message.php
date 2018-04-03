@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,7 +20,7 @@
  */
 class protector_precommon_bwlimit_message extends ProtectorFilterAbstract
 {
-    public function execute()
+    public function execute(): void
     {
         header('HTTP/1.0 503 Service unavailable');
         header('Retry-After: 600');

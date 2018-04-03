@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)

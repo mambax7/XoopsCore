@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class SoundCloud extends ExtensionAbstract
      *
      * @return string[] editor button as HTML, supporting javascript
      */
-    public function getDhtmlEditorSupport($textAreaId)
+    public function getDhtmlEditorSupport(string $textAreaId)
     {
         $buttonCode = $this->getEditorButtonHtml(
             $textAreaId,
@@ -85,7 +86,7 @@ EOH;
      * [soundcloud]https://api.soundcloud.com/tracks/46363550[/soundcloud]
      * But, the old URL form seems to no longer work correctly :(
      */
-    public function registerExtensionProcessing()
+    public function registerExtensionProcessing(): void
     {
         $shortcodes = $this->shortcodes;
         $shortcodes->addShortcode(

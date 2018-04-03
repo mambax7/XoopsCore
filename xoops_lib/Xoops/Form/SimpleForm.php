@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class SimpleForm extends Form
      * @param string $extra not in use.
      * @param string $class not in use
      */
-    public function insertBreak($extra = '', $class = '')
+    public function insertBreak(string $extra = '', string $class = ''): void
     {
         $class = empty($class) ? '' : ' class="'.$class.'"';
         $value = '<br'.$class.' />'.$extra;
@@ -41,7 +42,7 @@ class SimpleForm extends Form
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $ret = $this->getTitle()."\n<form name=\"".$this->getName().'" id="'
             .$this->getName().'" action="'.$this->getAction().'" method="'

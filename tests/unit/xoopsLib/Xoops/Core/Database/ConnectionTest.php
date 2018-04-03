@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -12,7 +12,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
     /** @var Xoops\Core\Database\Connection */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $params = [];
         $config = new Configuration();
@@ -22,7 +22,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $this->object = new $this->myclass($params, $driver, $config, $eventManager);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $params = [];
         $config = new Configuration();
@@ -33,7 +33,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Database\Connection', $instance);
     }
 
-    public function test_setSafe()
+    public function test_setSafe(): void
     {
         $class = $this->myclass;
         $this->object->setSafe(true);
@@ -45,7 +45,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($x);
     }
 
-    public function test_setForce()
+    public function test_setForce(): void
     {
         $this->object->setForce(true);
         $x = $this->object->getForce();
@@ -56,7 +56,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($x);
     }
 
-    public function test_prefix()
+    public function test_prefix(): void
     {
         $x = $this->object->prefix('');
         $db_prefix = \XoopsBaseConfig::get('db-prefix');
@@ -67,25 +67,25 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($db_prefix.'_'.$table, $x);
     }
 
-    public function test_insertPrefix()
+    public function test_insertPrefix(): void
     {
         $this->markTestIncomplete('No test yet');
         //  insertPrefix($tableName, array $data, array $types = array())
     }
 
-    public function test_updatePrefix()
+    public function test_updatePrefix(): void
     {
         $this->markTestIncomplete('No test yet');
         //  updatePrefix($tableName, array $data, array $identifier, array $types = array())
     }
 
-    public function test_deletePrefix()
+    public function test_deletePrefix(): void
     {
         $this->markTestIncomplete('No test yet');
         //  deletePrefix($tableName, array $identifier)
     }
 
-    public function test_executeQuery()
+    public function test_executeQuery(): void
     {
         $this->markTestIncomplete('No test yet');
         /*
@@ -97,49 +97,49 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         */
     }
 
-    public function test_executeUpdate()
+    public function test_executeUpdate(): void
     {
         $this->markTestIncomplete('No test yet');
         //  executeUpdate($query, array $params = array(), array $types = array())
     }
 
-    public function test_beginTransaction()
+    public function test_beginTransaction(): void
     {
         $this->markTestIncomplete('No test yet');
         //  beginTransaction()
     }
 
-    public function test_commit()
+    public function test_commit(): void
     {
         $this->markTestIncomplete('No test yet');
         //  commit()
     }
 
-    public function test_rollBack()
+    public function test_rollBack(): void
     {
         $this->markTestIncomplete('No test yet');
         //  rollBack()
     }
 
-    public function test_query()
+    public function test_query(): void
     {
         $this->markTestIncomplete('No test yet');
         //  query()
     }
 
-    public function test_queryFromFile()
+    public function test_queryFromFile(): void
     {
         $this->markTestIncomplete('No test yet');
         //  queryFromFile($file)
     }
 
-    public function test_quoteSlash()
+    public function test_quoteSlash(): void
     {
         $this->markTestIncomplete('No test yet');
         //  quoteSlash($input)
     }
 
-    public function test_createXoopsQueryBuilder()
+    public function test_createXoopsQueryBuilder(): void
     {
         $this->markTestIncomplete('No test yet');
         //  createXoopsQueryBuilder()

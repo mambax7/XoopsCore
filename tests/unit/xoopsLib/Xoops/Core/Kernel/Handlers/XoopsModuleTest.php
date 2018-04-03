@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Xoops\Core\Kernel\Handlers\XoopsModule';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test_100()
+    public function test_100(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -30,19 +30,19 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['hasnotification']));
     }
 
-    public function test_loadInfoAsVar()
+    public function test_loadInfoAsVar(): void
     {
         $instance = new $this->myclass();
         $value = $instance->loadInfoAsVar('');
         $this->assertNull($value);
     }
 
-    public function test_getMessages()
+    public function test_getMessages(): void
     {
         $this->assertTrue(true); // see next test
     }
 
-    public function test_setMessage()
+    public function test_setMessage(): void
     {
         $instance = new $this->myclass();
         $msgs = [' toto ', 'titi'];
@@ -53,7 +53,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_setInfo()
+    public function test_setInfo(): void
     {
         $instance = new $this->myclass();
         $name = 'name';
@@ -63,7 +63,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($val, $value);
     }
 
-    public function test_setInfo100()
+    public function test_setInfo100(): void
     {
         $instance = new $this->myclass();
         $name = 'name';
@@ -73,14 +73,14 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $value);
     }
 
-    public function test_getInfo()
+    public function test_getInfo(): void
     {
         $instance = new $this->myclass();
         $value = $instance->getInfo();
         $this->assertNull($value);
     }
 
-    public function test_getInfo100()
+    public function test_getInfo100(): void
     {
         $instance = new $this->myclass();
         $name = 'name';
@@ -88,14 +88,14 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_mainLink()
+    public function test_mainLink(): void
     {
         $instance = new $this->myclass();
         $value = $instance->mainLink();
         $this->assertFalse($value);
     }
 
-    public function test_mainLink100()
+    public function test_mainLink100(): void
     {
         $instance = new $this->myclass();
         $instance->setVar('hasmain', 1);
@@ -103,14 +103,14 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $value);
     }
 
-    public function test_subLink()
+    public function test_subLink(): void
     {
         $instance = new $this->myclass();
         $value = $instance->subLink();
         $this->assertInternalType('array', $value);
     }
 
-    public function test_loadAdminMenu()
+    public function test_loadAdminMenu(): void
     {
         $instance = new $this->myclass();
         $instance->loadAdminMenu();
@@ -118,110 +118,110 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_getAdminMenu()
+    public function test_getAdminMenu(): void
     {
         $this->assertTrue(true); // see previous test
     }
 
-    public function test_loadInfo()
+    public function test_loadInfo(): void
     {
         $instance = new $this->myclass();
         $value = $instance->loadInfo('avatars');
         $this->assertTrue($value);
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_mid()
+    public function test_mid(): void
     {
         $instance = new $this->myclass();
         $value = $instance->mid();
         $this->assertNull($value);
     }
 
-    public function test_name()
+    public function test_name(): void
     {
         $instance = new $this->myclass();
         $value = $instance->name();
         $this->assertNull($value);
     }
 
-    public function test_version()
+    public function test_version(): void
     {
         $instance = new $this->myclass();
         $value = $instance->version();
         $this->assertSame(100, $value);
     }
 
-    public function test_last_update()
+    public function test_last_update(): void
     {
         $instance = new $this->myclass();
         $value = $instance->last_update();
         $this->assertNull($value);
     }
 
-    public function test_weight()
+    public function test_weight(): void
     {
         $instance = new $this->myclass();
         $value = $instance->weight();
         $this->assertSame(0, $value);
     }
 
-    public function test_isactive()
+    public function test_isactive(): void
     {
         $instance = new $this->myclass();
         $value = $instance->isactive();
         $this->assertSame(1, $value);
     }
 
-    public function test_dirname()
+    public function test_dirname(): void
     {
         $instance = new $this->myclass();
         $value = $instance->dirname();
         $this->assertNull($value);
     }
 
-    public function test_hasmain()
+    public function test_hasmain(): void
     {
         $instance = new $this->myclass();
         $value = $instance->hasmain();
         $this->assertSame(0, $value);
     }
 
-    public function test_hassearch()
+    public function test_hassearch(): void
     {
         $instance = new $this->myclass();
         $value = $instance->hassearch();
         $this->assertSame(0, $value);
     }
 
-    public function test_hasconfig()
+    public function test_hasconfig(): void
     {
         $instance = new $this->myclass();
         $value = $instance->hasconfig();
         $this->assertSame(0, $value);
     }
 
-    public function test_hascomments()
+    public function test_hascomments(): void
     {
         $instance = new $this->myclass();
         $value = $instance->hascomments();
         $this->assertSame(0, $value);
     }
 
-    public function test_hasnotification()
+    public function test_hasnotification(): void
     {
         $instance = new $this->myclass();
         $value = $instance->hasnotification();
         $this->assertSame(0, $value);
     }
 
-    public function test_getByDirName()
+    public function test_getByDirName(): void
     {
         $instance = new $this->myclass();
         $value = $instance->getByDirName('.');

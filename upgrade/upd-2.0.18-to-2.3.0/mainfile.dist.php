@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS main configuration file.
  *
@@ -52,7 +53,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
             }
             $xoopsScriptPath = $xoopsScriptPath[0]['file'];
         } else {
-            $xoopsScriptPath = isset($_SERVER['PATH_TRANSLATED']) ? $_SERVER['PATH_TRANSLATED'] : $_SERVER['SCRIPT_FILENAME'];
+            $xoopsScriptPath = $_SERVER['PATH_TRANSLATED'] ?? $_SERVER['SCRIPT_FILENAME'];
         }
         if (DIRECTORY_SEPARATOR !== '/') {
             // IIS6 may double the \ chars

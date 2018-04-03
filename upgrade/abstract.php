@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class xoopsUpgrade
 
     public $logs = [];
 
-    public function xoopsUpgrade($dirname = null)
+    public function xoopsUpgrade($dirname = null): void
     {
         if ($dirname) {
             $this->loadLanguage($dirname);
@@ -70,7 +71,7 @@ class xoopsUpgrade
         return true;
     }
 
-    public function loadLanguage($dirname)
+    public function loadLanguage($dirname): void
     {
         global $upgrade_language;
 

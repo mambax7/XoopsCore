@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class ThemeForm extends Form
      * @param string $extra HTML to be displayed in the empty row.
      * @param string $class CSS class name for <td> tag
      */
-    public function insertBreak($extra = '', $class = '')
+    public function insertBreak(string $extra = '', string $class = ''): void
     {
         $class = ('' !== $class ? ' class="'.$class.'"' : ' class="break"');
         // Fix for $extra tag not showing
@@ -50,7 +51,7 @@ class ThemeForm extends Form
      *
      * @return string rendered form
      */
-    public function render()
+    public function render(): string
     {
         $xoops = \Xoops::getInstance();
         $xoops->theme()->addStylesheet('media/xoops/css/form.css');

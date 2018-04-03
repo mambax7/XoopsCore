@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Many tests adapted from Badcow/Shortcodes.
@@ -25,7 +25,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ShortCodes();
     }
@@ -34,17 +34,17 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testAddShortcode_exception()
+    public function testAddShortcode_exception(): void
     {
         $this->expectException('\ErrorException');
         $this->object->addShortcode('error', 'thisIsNotCallable');
     }
 
-    public function testRemoveShortcode()
+    public function testRemoveShortcode(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -53,14 +53,14 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->hasShortcode('test'));
     }
 
-    public function testGetShortcodes()
+    public function testGetShortcodes(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
         $this->assertArrayHasKey('test', $this->object->getShortcodes());
     }
 
-    public function testHasShortcode()
+    public function testHasShortcode(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -68,7 +68,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->hasShortcode('foobar'));
     }
 
-    public function testContentHasShortcode()
+    public function testContentHasShortcode(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
         $this->object->addShortcode('yasct', [$this, 'dummyFunction_test']);
@@ -83,7 +83,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->contentHasShortcode($content2, 'foobar'));
     }
 
-    public function testStripAllShortcodes()
+    public function testStripAllShortcodes(): void
     {
         $content = 'Hello [enclosed]my name is sam[/enclosed] [[test]]';
         $expected = 'Hello  [test]';
@@ -101,7 +101,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testShortcodeAttributes()
+    public function testShortcodeAttributes(): void
     {
         $defaults = ['a' => 'alpha', 'b' => 'bravo', 'c' => 'charley'];
         $input = ['a' => 'alpha', 'b' => 'beta', 'e' => 'echo'];
@@ -111,7 +111,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testKeyValuePairAttributes()
+    public function testKeyValuePairAttributes(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -121,7 +121,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testMultipleShortcodes()
+    public function testMultipleShortcodes(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
         $this->object->addShortcode('qbf', [$this, 'dummyFunction_qbf']);
@@ -132,7 +132,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testEnclosedShortcodes()
+    public function testEnclosedShortcodes(): void
     {
         $this->object->addShortcode('enclosed', [$this, 'dummyFunction_enclosed']);
 
@@ -142,14 +142,14 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testNoShortcodesDefined()
+    public function testNoShortcodesDefined(): void
     {
         $content = 'Hello [enclosed]my name is sam[/enclosed]';
 
         $this->assertSame($content, $this->object->process($content));
     }
 
-    public function testSelfClosedTags()
+    public function testSelfClosedTags(): void
     {
         $this->object->addShortcode('enclosed', [$this, 'dummyFunction_enclosed']);
 
@@ -159,7 +159,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testKeyValuePairAttributes2()
+    public function testKeyValuePairAttributes2(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -169,7 +169,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testKeyValuePairAttributes3()
+    public function testKeyValuePairAttributes3(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -179,7 +179,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testKeyValuePairAttributes4()
+    public function testKeyValuePairAttributes4(): void
     {
         $this->object->addShortcode('test', [$this, 'dummyFunction_test']);
 
@@ -189,7 +189,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $this->object->process($content));
     }
 
-    public function testEscaping()
+    public function testEscaping(): void
     {
         $shortcodes = new Shortcodes();
         $shortcodes->addShortcode('test', [$this, 'dummyFunction_test']);

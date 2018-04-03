@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Test;
 
@@ -44,7 +44,7 @@ EOT;
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Metagen();
     }
@@ -53,19 +53,11 @@ EOT;
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testAssignTitle()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    public function testAssignKeywords()
+    public function testAssignTitle(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -73,7 +65,7 @@ EOT;
         );
     }
 
-    public function testAssignDescription()
+    public function testAssignKeywords(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -81,7 +73,15 @@ EOT;
         );
     }
 
-    public function testGenerateKeywords()
+    public function testAssignDescription(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
+    public function testGenerateKeywords(): void
     {
         $body = self::DOI_TEXT;
         $numKeys = 20;
@@ -112,7 +112,7 @@ EOT;
         $this->assertFalse(in_array('wombat', $keys, true));
     }
 
-    public function testGenerateDescription()
+    public function testGenerateDescription(): void
     {
         $body = self::DOI_TEXT;
         $numWords = 110;
@@ -128,7 +128,7 @@ EOT;
         $this->assertSame($expected, $actual, $actual);
     }
 
-    public function testGenerateMetaTags()
+    public function testGenerateMetaTags(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -136,7 +136,7 @@ EOT;
         );
     }
 
-    public function testGenerateSeoTitle()
+    public function testGenerateSeoTitle(): void
     {
         $title = 'XOOPS generates your SEO titles for you.';
         $expected = 'XOOPS-generates-SEO-titles';
@@ -151,7 +151,7 @@ EOT;
         $this->assertSame($expected, $actual, $actual);
     }
 
-    public function testGetSearchSummary()
+    public function testGetSearchSummary(): void
     {
         $ellipsis = Metagen::ELLIPSIS;
         $haystack = <<<'EOT'
@@ -202,7 +202,7 @@ EOT;
         $this->assertSame($expected, $actual, $actual);
     }
 
-    public function testAsPlainText()
+    public function testAsPlainText(): void
     {
         $method = new \ReflectionMethod('Xmf\Metagen', 'asPlainText');
         $method->setAccessible(true);

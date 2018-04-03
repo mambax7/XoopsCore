@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class ProfileMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements M
      *
      * @return array
      */
-    public function subMenus()
+    public function subMenus(): array
     {
         $ret = [];
         if (\Xoops::getInstance()->isUser()) {

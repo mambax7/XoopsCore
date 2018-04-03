@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -54,7 +55,7 @@ class ImportSchema
      *
      * @return Schema object built from input array
      */
-    public function importSchemaArray(array $schemaArray)
+    public function importSchemaArray(array $schemaArray): Schema
     {
         $tables = [];
         $sequences = [];
@@ -82,7 +83,7 @@ class ImportSchema
      *
      * @return array of Table objects
      */
-    public function importTables(array $tableArray)
+    public function importTables(array $tableArray): array
     {
         $tables = [];
         foreach ($tableArray as $name => $tabledef) {
@@ -146,7 +147,7 @@ class ImportSchema
      *
      * @return array of Sequence objects
      */
-    public function importSequences(array $sequenceArray)
+    public function importSequences(array $sequenceArray): array
     {
         $sequences = [];
 

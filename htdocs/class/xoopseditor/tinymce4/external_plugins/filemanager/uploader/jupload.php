@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This class manage upload, with use of the JUpload applet. It's both a sample to show how to use the applet, and
@@ -58,7 +58,7 @@ class jupload
 
     public $files;
 
-    public function JUpload($appletparams = [], $classparams = [])
+    public function JUpload($appletparams = [], $classparams = []): void
     {
         if ('array' !== gettype($classparams)) {
             $this->abort('Invalid type of parameter classparams: Expecting an array');
@@ -317,7 +317,7 @@ class jupload
     /**
      * Log a message on the current output, as a HTML comment.
      */
-    protected function logDebug($function, $msg, $htmlComment = true)
+    protected function logDebug($function, $msg, $htmlComment = true): void
     {
         $output = "[DEBUG] [${function}] ${msg}";
         if ($htmlComment) {
@@ -331,7 +331,7 @@ class jupload
      * Log a message to the PHP log.
      * Declared "protected" so it may be Extended if you require customised logging (e.g. particular log file location).
      */
-    protected function logPHPDebug($function, $msg)
+    protected function logPHPDebug($function, $msg): void
     {
         if (true === $this->classparams['debug_php']) {
             $output = "[DEBUG] [${function}] ".$this->arrayexpand($msg);
@@ -385,7 +385,7 @@ class jupload
      *
      * @return A string, containing the necessary wrapper function (named JUploadSetProperty)
      */
-    private function str_jsinit()
+    private function str_jsinit(): A
     {
         $N = "\n";
         $name = $this->appletparams['name'];
@@ -406,7 +406,7 @@ class jupload
      *
      * @return A string, containing the applet tag
      */
-    private function str_applet()
+    private function str_applet(): A
     {
         $N = "\n";
         $params = $this->appletparams;
@@ -438,7 +438,7 @@ class jupload
         return $ret;
     }
 
-    private function abort($msg = '')
+    private function abort($msg = ''): void
     {
         $this->cleanup();
         if ('' !== $msg) {
@@ -447,7 +447,7 @@ class jupload
         exit;
     }
 
-    private function warning($msg = '')
+    private function warning($msg = ''): void
     {
         $this->cleanup();
         if ('' !== $msg) {
@@ -457,7 +457,7 @@ class jupload
         exit;
     }
 
-    private function cleanup()
+    private function cleanup(): void
     {
         // remove all uploaded files of *this* request
         if (isset($_FILES)) {
@@ -474,7 +474,7 @@ class jupload
         return;
     }
 
-    private function mkdirp($path)
+    private function mkdirp($path): void
     {
         // create subdir (hierary) below destdir;
         $dirs = explode('/', $path);
@@ -571,7 +571,7 @@ class jupload
     /**
      * This method manages the receiving of the debug log, when an error occurs.
      */
-    private function receive_debug_log()
+    private function receive_debug_log(): void
     {
         // handle error report
         if (isset($_POST['description']) && isset($_POST['log'])) {
@@ -598,7 +598,7 @@ class jupload
      * class parameter, or within the page whose URL is given in the afterUploadURL applet parameter.
      * Or you can Extend the class and redeclare defaultAfterUploadManagement() to your needs.
      */
-    private function receive_uploaded_files()
+    private function receive_uploaded_files(): void
     {
         $this->logDebug('receive_uploaded_files', 'Entering POST management');
 
@@ -792,7 +792,7 @@ class jupload
         exit;
     }
 
-    private function page_start()
+    private function page_start(): void
     {
         $this->logDebug('page_start', 'Entering function');
 

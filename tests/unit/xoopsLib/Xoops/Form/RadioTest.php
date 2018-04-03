@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class RadioTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Radio('Caption', 'name');
     }
@@ -24,18 +24,18 @@ class RadioTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $object = new Radio('Caption', 'name', 'value');
         $value = $object->getValue();
         $this->assertSame('value', $value);
     }
 
-    public function testAddOption()
+    public function testAddOption(): void
     {
         $this->object->addOption('key', 'value');
         $this->object->addOption('just_key');
@@ -45,7 +45,7 @@ class RadioTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('just_key', $value['just_key']);
     }
 
-    public function testAddOptionArray()
+    public function testAddOptionArray(): void
     {
         $this->object->addOptionArray(['key' => 'value', 'just_key' => null]);
         $value = $this->object->getOptions();
@@ -54,7 +54,7 @@ class RadioTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('just_key', $value['just_key']);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $this->object->addOption('key', 'value');
         $value = $this->object->render();
@@ -63,7 +63,7 @@ class RadioTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, ' type="radio"'));
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new Radio('mycaption', 'myname', 'myvalue');
         $newWay = new Radio(['caption' => 'mycaption', 'type' => 'button', 'name' => 'myname', ':inline' => null]);

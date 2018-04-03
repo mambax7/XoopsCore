@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'userrank';
     }
@@ -41,7 +42,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Traditional XOOPS User Ranks.';
     }
@@ -56,7 +57,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      *                               'posts' => (int) contribution count associated with the user
      *                               'rank'  => (int) id of manually assigned rank, 0 if none assigned
      */
-    public function getUserRank(Response $response, $userinfo)
+    public function getUserRank(Response $response, $userinfo): void
     {
         $uid = isset($userinfo['uid']) ? (int) $userinfo['uid'] : null;
         $posts = isset($userinfo['posts']) ? (int) $userinfo['posts'] : null;
@@ -98,7 +99,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function getAssignableUserRankList(Response $response)
+    public function getAssignableUserRankList(Response $response): void
     {
         $db = \Xoops::getInstance()->db();
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();

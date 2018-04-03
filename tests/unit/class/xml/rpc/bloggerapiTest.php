@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -57,7 +57,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'MockBloggerApi';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $params = [null, null, 'admin', 'goodpassword'];
         $response = new XoopsXmlRpcResponse();
@@ -66,7 +66,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('XoopsXmlRpcApi', $instance);
     }
 
-    public function test_newPost()
+    public function test_newPost(): void
     {
         $title = '<title>Title</title>';
         $hometext = '<hometext>Hometext</hometext>';
@@ -86,7 +86,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_editPost()
+    public function test_editPost(): void
     {
         $title = '<title>Title</title>';
         $hometext = '<hometext>Hometext</hometext>';
@@ -106,7 +106,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_deletePost()
+    public function test_deletePost(): void
     {
         $title = '<title>Title</title>';
         $hometext = '<hometext>Hometext</hometext>';
@@ -126,7 +126,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_getPost()
+    public function test_getPost(): void
     {
         $title = '<title>Title</title>';
         $hometext = '<hometext>Hometext</hometext>';
@@ -146,7 +146,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_getRecentPosts()
+    public function test_getRecentPosts(): void
     {
         $title = '<title>Title</title>';
         $hometext = '<hometext>Hometext</hometext>';
@@ -166,7 +166,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->markTestIncomplete();
     }
 
-    public function test_getUsersBlogs()
+    public function test_getUsersBlogs(): void
     {
         $params = [null, 'admin', 'WRONG_password'];
         $response = new XoopsXmlRpcResponse();
@@ -199,7 +199,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $msg);
     }
 
-    public function test_getUserInfo()
+    public function test_getUserInfo(): void
     {
         $params = [null, 'admin', 'WRONG_password'];
         $response = new XoopsXmlRpcResponse();
@@ -238,7 +238,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $msg);
     }
 
-    public function test_getTemplate()
+    public function test_getTemplate(): void
     {
         $params = [null, null, 'admin', 'goodpassword', null, null];
         $response = new XoopsXmlRpcResponse();
@@ -255,7 +255,7 @@ class BloggerApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $msg);
     }
 
-    public function test_setTemplate()
+    public function test_setTemplate(): void
     {
         $params = [null, null, 'admin', 'goodpassword', null, null];
         $response = new XoopsXmlRpcResponse();

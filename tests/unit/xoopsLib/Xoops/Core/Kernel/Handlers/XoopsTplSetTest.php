@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -6,11 +6,11 @@ class XoopsTplSetTest extends \PHPUnit\Framework\TestCase
 {
     public $myclass = 'Xoops\Core\Kernel\Handlers\XoopsTplSet';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -22,42 +22,42 @@ class XoopsTplSetTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($value['tplset_created']));
     }
 
-    public function test_id()
+    public function test_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->id();
         $this->assertNull($value);
     }
 
-    public function test_tplset_id()
+    public function test_tplset_id(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_id();
         $this->assertNull($value);
     }
 
-    public function test_tplset_name()
+    public function test_tplset_name(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_name();
         $this->assertNull($value);
     }
 
-    public function test_tplset_desc()
+    public function test_tplset_desc(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_desc();
         $this->assertNull($value);
     }
 
-    public function test_tplset_credits()
+    public function test_tplset_credits(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_credits();
         $this->assertNull($value);
     }
 
-    public function test_tplset_created()
+    public function test_tplset_created(): void
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_created();

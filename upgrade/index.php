@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Upgrader index file.
  *
@@ -112,7 +113,7 @@ if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
             if (empty($_SESSION['xoops_upgrade']['steps'])) {
                 $text = _FINISH;
             } else {
-                list($key, $val) = each($_SESSION['xoops_upgrade']['steps']);
+                [$key, $val] = each($_SESSION['xoops_upgrade']['steps']);
                 $text = sprintf(_APPLY_NEXT, $val);
             }
             echo '<a id="link-next" href="index.php?action=next">'.$text.'</a>';

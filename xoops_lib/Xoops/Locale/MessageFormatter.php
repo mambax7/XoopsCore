@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * @see http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -52,7 +53,7 @@ class MessageFormatter
      * @see http://php.net/manual/en/messageformatter.geterrorcode.php
      * @return string Code of the last error.
      */
-    public function getErrorCode()
+    public function getErrorCode(): string
     {
         return $this->_errorCode;
     }
@@ -62,7 +63,7 @@ class MessageFormatter
      * @see http://php.net/manual/en/messageformatter.geterrormessage.php
      * @return string Description of the last error.
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return $this->_errorMessage;
     }
@@ -79,7 +80,7 @@ class MessageFormatter
      * @param  string       $language The locale to use for formatting locale-dependent parts
      * @return string|false The formatted pattern string or `false` if an error occurred
      */
-    public function format($pattern, $params, $language)
+    public function format(string $pattern, array $params, string $language)
     {
         $this->_errorCode = 0;
         $this->_errorMessage = '';
@@ -113,7 +114,7 @@ class MessageFormatter
             $this->_errorMessage = 'Message pattern is invalid: '.$e->getMessage();
 
             return false;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Exception is thrown by HHVM
             $this->_errorCode = $e->getCode();
             $this->_errorMessage = 'Message pattern is invalid: '.$e->getMessage();
@@ -146,7 +147,7 @@ class MessageFormatter
      * @return array|bool                                  An array containing items extracted, or `FALSE` on error.
      * @throws \Xoops\Core\Exception\NotSupportedException when PHP intl extension is not installed.
      */
-    public function parse($pattern, $message, $language)
+    public function parse(string $pattern, string $message, string $language)
     {
         $this->_errorCode = 0;
         $this->_errorMessage = '';
@@ -205,7 +206,7 @@ class MessageFormatter
      * @param  string       $locale  The locale to use for formatting locale-dependent parts
      * @return false|string The formatted pattern string or `false` if an error occurred
      */
-    protected function fallbackFormat($pattern, $args, $locale)
+    protected function fallbackFormat(string $pattern, array $args, string $locale)
     {
         if (false === ($tokens = self::tokenizePattern($pattern))) {
             $this->_errorCode = -1;
@@ -236,7 +237,7 @@ class MessageFormatter
      * @param  array  $map
      * @return string The pattern string with placeholders replaced.
      */
-    private function replaceNamedArguments($pattern, $givenParams, &$resultingParams = [], &$map = [])
+    private function replaceNamedArguments(string $pattern, array $givenParams, array &$resultingParams = [], array &$map = []): string
     {
         if (false === ($tokens = self::tokenizePattern($pattern))) {
             return false;
@@ -289,7 +290,7 @@ class MessageFormatter
      * @param  string     $pattern patter to tokenize
      * @return array|bool array of tokens or false on failure
      */
-    private static function tokenizePattern($pattern)
+    private static function tokenizePattern(string $pattern)
     {
         $charset = \XoopsLocale::getCharset();
         $depth = 1;
@@ -335,7 +336,7 @@ class MessageFormatter
      * @return bool|string                                 parsed token or false on failure
      * @throws \Xoops\Core\Exception\NotSupportedException when unsupported formatting is used.
      */
-    private function parseToken($token, $args, $locale)
+    private function parseToken(array $token, array $args, string $locale)
     {
         // parsing pattern based on ICU grammar:
         // http://icu-project.org/apiref/icu4c/classMessageFormat.html#details

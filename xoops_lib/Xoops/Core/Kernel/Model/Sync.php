@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -51,7 +52,7 @@ class Sync extends XoopsModelAbstract
      *
      * @return bool true on success
      */
-    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
+    public function cleanOrphan(string $table_link = '', string $field_link = '', string $field_object = ''): bool
     {
         if (!empty($table_link)) {
             $this->handler->table_link = $table_link;

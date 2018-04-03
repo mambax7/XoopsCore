@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'gravatars';
     }
@@ -41,7 +42,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Use gravatar.com for system avatars.';
     }
@@ -54,7 +55,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      *                           array     user info, 'uid', 'uname' and 'email' required
      *                           int       user uid
      */
-    public function getAvatarUrl($response, $userinfo)
+    public function getAvatarUrl(Response $response, $userinfo): void
     {
         $noInfo = true;
         if (is_object($userinfo)) {
@@ -87,7 +88,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      * @param Response  $response \Xoops\Core\Service\Response object
      * @param XoopsUser $userinfo XoopsUser object for user
      */
-    public function getAvatarEditUrl($response, XoopsUser $userinfo)
+    public function getAvatarEditUrl(Response $response, XoopsUser $userinfo): void
     {
         $noInfo = true;
 
@@ -113,7 +114,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @source http://gravatar.com/site/implement/images/php/
      */
-    private static function getGravatar($email)
+    private static function getGravatar(string $email): string
     {
         $s = 80;   // Size in pixels, defaults to 80px [ 1 - 2048 ]
         $d = 'mm'; // Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
@@ -147,7 +148,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
      *
      * @return object|null
      */
-    private function getUserById($uid)
+    private function getUserById(int $uid)
     {
         $user = \Xoops::getInstance()->getHandlerMember()->getUser((int) $uid);
 

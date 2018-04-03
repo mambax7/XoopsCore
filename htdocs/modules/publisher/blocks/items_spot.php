@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -117,7 +118,7 @@ function publisher_items_spot_edit($options)
     $keys = array_keys($itemsObj);
     unset($criteria);
     if (empty($options[3]) || (0 === $options[3])) {
-        $sel_items = isset($keys[0]) ? $keys[0] : 0;
+        $sel_items = $keys[0] ?? 0;
     } else {
         $sel_items = explode(',', $options[3]);
     }

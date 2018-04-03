@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,7 +44,7 @@ function b_waiting_waiting_show()
                         $res['icon'] = "${dirName}-icon";
                     } else {
                         //Icon support
-                        $res['icon'] = isset($res['icon']) ? $res['icon'] : 'glyphicon-time';
+                        $res['icon'] = $res['icon'] ?? 'glyphicon-time';
                     }
 
                     $res['dirName'] = $dirName;

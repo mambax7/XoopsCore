@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getTimeZoneList()
+    public static function getTimeZoneList(): array
     {
         return \Xoops\Core\Lists\TimeZone::getList();
     }
@@ -41,7 +42,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getThemesList()
+    public static function getThemesList(): array
     {
         return \Xoops\Core\Lists\Theme::getList();
     }
@@ -51,7 +52,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getModulesList()
+    public static function getModulesList(): array
     {
         return \Xoops\Core\Lists\Module::getList();
     }
@@ -61,7 +62,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getEditorList()
+    public static function getEditorList(): array
     {
         return \Xoops\Core\Lists\Editor::getList();
     }
@@ -73,7 +74,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getDirListAsArray($path)
+    public static function getDirListAsArray(string $path): array
     {
         $ignored = ['cvs', '_darcs'];
 
@@ -88,7 +89,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getFileListAsArray($path, $prefix = '')
+    public static function getFileListAsArray(string $path, string $prefix = ''): array
     {
         return \Xoops\Core\Lists\File::getList($path, $prefix);
     }
@@ -101,7 +102,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getImgListAsArray($path, $prefix = '')
+    public static function getImgListAsArray(string $path, string $prefix = ''): array
     {
         return \Xoops\Core\Lists\ImageFile::getList($path, $prefix);
     }
@@ -114,7 +115,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getHtmlListAsArray($path, $prefix = '')
+    public static function getHtmlListAsArray(string $path, string $prefix = ''): array
     {
         return \Xoops\Core\Lists\HtmlFile::getList($path, $prefix);
     }
@@ -127,7 +128,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getSubjectsList($subDirectory = '')
+    public static function getSubjectsList(string $subDirectory = ''): array
     {
         return \Xoops\Core\Lists\SubjectIcon::getList($subDirectory);
     }
@@ -137,7 +138,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getLangList()
+    public static function getLangList(): array
     {
         $lang_list = self::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/language/');
 
@@ -151,7 +152,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getLocaleList($showInCodeLanguage = false)
+    public static function getLocaleList(bool $showInCodeLanguage = false): array
     {
         return \Xoops\Core\Lists\Locale::getList($showInCodeLanguage);
     }
@@ -161,7 +162,7 @@ class xoopslists
      *
      * @return array
      */
-    public static function getCountryList()
+    public static function getCountryList(): array
     {
         return \Xoops\Core\Lists\Country::getList();
     }
@@ -174,7 +175,7 @@ class xoopslists
      *
      * @return string Returns an empty string if $value is empty, the name of the month otherwise.
      */
-    public static function getMonthList($width = 'wide')
+    public static function getMonthList(string $width = 'wide'): string
     {
         return \Xoops\Core\Lists\Month::getList($width);
     }

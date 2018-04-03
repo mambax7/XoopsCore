@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class Stats extends XoopsModelAbstract
      *
      * @return int count of objects
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(?CriteriaElement $criteria = null): int
     {
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
 
@@ -61,19 +62,19 @@ class Stats extends XoopsModelAbstract
             if (!$result) {
                 return 0;
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
 
             return 0;
         }
 
         if (false === $groupBy) {
-            list($count) = $result->fetch(\PDO::FETCH_NUM);
+            [$count] = $result->fetch(\PDO::FETCH_NUM);
 
             return $count;
         }
         $ret = [];
-        while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
+        while ([$id, $count] = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
 
@@ -87,7 +88,7 @@ class Stats extends XoopsModelAbstract
      *
      * @return array of counts
      */
-    public function getCounts(CriteriaElement $criteria = null)
+    public function getCounts(?CriteriaElement $criteria = null): array
     {
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
 
@@ -112,7 +113,7 @@ class Stats extends XoopsModelAbstract
         if (!$result) {
             return $ret;
         }
-        while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
+        while ([$id, $count] = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
 

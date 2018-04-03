@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Key;
 
@@ -18,7 +18,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         //$this->markTestIncomplete('FileStorage testing incomplete');
         $this->object = new FileStorage('/tmp', 'fubar');
@@ -28,12 +28,12 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         @$this->object->delete($this->testKey);
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $name = $this->testKey;
         $data = 'data';
@@ -41,7 +41,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($data, $this->object->fetch($name));
     }
 
-    public function testFetch()
+    public function testFetch(): void
     {
         $name = $this->testKey;
         $data = 'data';
@@ -50,7 +50,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->object->fetch($name), $data);
     }
 
-    public function testExists()
+    public function testExists(): void
     {
         $name = $this->testKey;
         $data = 'data';
@@ -59,7 +59,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->object->exists($name));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $name = $this->testKey;
         $data = 'data';

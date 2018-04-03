@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
      *
      * @param string $mode mode for form, edit or clone
      */
-    public function getForm($mode = 'edit')
+    public function getForm(string $mode = 'edit'): void
     {
         $xoops = Xoops::getInstance();
         $xoops->loadLanguage('blocks', 'system');

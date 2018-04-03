@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class PathStuffController
      'data' => null,
  ];
 
-    public function PathStuffController()
+    public function PathStuffController(): void
     {
         if (isset($_SESSION['settings']['VAR_PATH'])) {
             foreach ($this->path_lookup as $req => $sess) {
@@ -87,7 +88,7 @@ class PathStuffController
         }
     }
 
-    public function readRequest()
+    public function readRequest(): void
     {
         if ('POST' === $_SERVER['REQUEST_METHOD'] && 'path' === @$_POST['task']) {
             $request = $_POST;
@@ -149,7 +150,7 @@ class PathStuffController
         return $ret;
     }
 
-    public function setPermission($parent, $path, &$error)
+    public function setPermission($parent, $path, &$error): void
     {
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
@@ -210,7 +211,7 @@ class PathStuffController
      * @param  string $group
      * @return bool   on failure, method (u-ser,g-roup,w-orld) on success
      */
-    public function makeWritable($path, $group = false, $create = true)
+    public function makeWritable(string $path, string $group = false, $create = true): bool
     {
         if (!file_exists($path)) {
             if (!$create) {

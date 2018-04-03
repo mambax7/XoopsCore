@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -86,7 +87,7 @@ class Captcha extends Element
      *
      * @return boolean
      */
-    public function setConfig($name, $val)
+    public function setConfig(string $name, $val): bool
     {
         return $this->captchaHandler->setConfig($name, $val);
     }
@@ -96,7 +97,7 @@ class Captcha extends Element
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->captchaHandler->render();
     }
@@ -106,7 +107,7 @@ class Captcha extends Element
      *
      * @return string
      */
-    public function renderValidationJS()
+    public function renderValidationJS(): string
     {
         return $this->captchaHandler->renderValidationJS();
     }

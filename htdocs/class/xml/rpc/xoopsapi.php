@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@ class xoopsapi extends XoopsXmlRpcApi
         parent::__construct($params, $response, $module);
     }
 
-    public function newPost()
+    public function newPost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -117,7 +118,7 @@ class xoopsapi extends XoopsXmlRpcApi
         }
     }
 
-    public function editPost()
+    public function editPost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -184,7 +185,7 @@ class xoopsapi extends XoopsXmlRpcApi
         }
     }
 
-    public function deletePost()
+    public function deletePost(): void
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -215,7 +216,7 @@ class xoopsapi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &getPost($respond = true)
+    public function &getPost(bool $respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -282,7 +283,7 @@ class xoopsapi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &getRecentPosts($respond = true)
+    public function &getRecentPosts(bool $respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -357,7 +358,7 @@ class xoopsapi extends XoopsXmlRpcApi
         return null;
     }
 
-    public function getCategories($respond = true)
+    public function getCategories($respond = true): void
     {
         global $xoopsDB;
         if (!$this->_checkUser($this->params[1], $this->params[2])) {

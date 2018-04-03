@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class Time extends ListAbstract
      *
      * @return array
      */
-    public static function getList($interval = 15, $start = 0, $end = 86400)
+    public static function getList(int $interval = 15, int $start = 0, int $end = 86400): array
     {
         $timeList = [];
         $tz = new \DateTimeZone('UTC');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * @param null|Connection $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'plugins_plugin', 'PluginsPlugin', 'plugin_id', 'plugin_caller');
     }
@@ -55,7 +56,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      * @param  string             $caller
      * @return bool|PluginsPlugin
      */
-    public function getLC($listener, $caller)
+    public function getLC(string $listener, string $caller)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('plugin_listener', $listener));
@@ -73,7 +74,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      * @param  string $listener
      * @return array  Array of PluginsPlugin
      */
-    public function getByListener($listener)
+    public function getByListener(string $listener): array
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('plugin_listener', (string) $listener));
@@ -87,7 +88,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      * @param  string $caller
      * @return array  Array of PluginsPlugin
      */
-    public function getByCaller($caller)
+    public function getByCaller(string $caller): array
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('plugin_caller', (string) $caller));
@@ -100,7 +101,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * @return array Array of PluginsPlugin
      */
-    public function getThemAll()
+    public function getThemAll(): array
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort('plugin_status DESC, plugin_order');
@@ -112,7 +113,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * @return array Array of Listeners
      */
-    public function getListeners()
+    public function getListeners(): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -130,7 +131,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * @return array Array of Callers
      */
-    public function getCallers()
+    public function getCallers(): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -167,7 +168,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      * @param  int    $order
      * @return bool
      */
-    public function addNew($listener, $caller, $status = 1, $order = 0)
+    public function addNew(string $listener, string $caller, int $status = 1, int $order = 0): bool
     {
         $object = new PluginsPlugin();
         $object->setNew();
@@ -182,7 +183,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * Updates the order value after a post request.
      */
-    public function updateOrder(int $id, int $order)
+    public function updateOrder(int $id, int $order): void
     {
         $this->updateAll('plugin_order', $order, new Criteria('plugin_id', $id));
     }
@@ -190,7 +191,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
     /**
      * Updates the status value after a post request.
      */
-    public function updateStatus(int $id, int $status)
+    public function updateStatus(int $id, int $status): void
     {
         $this->updateAll('plugin_status', $status, new Criteria('plugin_id', $id));
     }
@@ -201,7 +202,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getActiveListenersByCaller(string $caller)
+    public function getActiveListenersByCaller(string $caller): array
     {
         $xoops = \Xoops::getInstance();
         $ret = [];
@@ -226,7 +227,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function deleteLC(string $name)
+    public function deleteLC(string $name): bool
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('plugin_caller', (string) $name));

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,7 +32,7 @@ class Banners extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Banners
      */
-    public static function getInstance()
+    public static function getInstance(): Banners
     {
         return parent::getInstance();
     }
@@ -39,7 +40,7 @@ class Banners extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return BannersBannerHandler
      */
-    public function getHandlerBanner()
+    public function getHandlerBanner(): BannersBannerHandler
     {
         return $this->getHandler('banner');
     }
@@ -47,7 +48,7 @@ class Banners extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return BannersBannerclientHandler
      */
-    public function getHandlerBannerclient()
+    public function getHandlerBannerclient(): BannersBannerclientHandler
     {
         return $this->getHandler('bannerclient');
     }

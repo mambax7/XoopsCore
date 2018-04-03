@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@
  * @param  array  $args
  * @return string
  */
-function smarty_compiler_shortcode($args, Smarty $smarty)
+function smarty_compiler_shortcode(array $args, Smarty $smarty): string
 {
     if ($string = reset($args)) {
         $string = trim($string, " '\"\t\n\r\0\x0B");

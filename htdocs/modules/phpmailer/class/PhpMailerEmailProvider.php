@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits of supporting
  developers from this source code or any supporting source code which is considered
@@ -33,7 +34,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'phpmaileremail';
     }
@@ -43,7 +44,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Use PHPMailer for email.';
     }
@@ -51,7 +52,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
     /**
      * @param \Xoops\Core\Service\Data\Message $email
      */
-    public function sendEmail(Response $response, Email $email)
+    public function sendEmail(Response $response, Email $email): void
     {
         try {
             $mailer = $this->setupMailer();

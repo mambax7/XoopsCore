@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ abstract class AbstractXoopsDatabase
      * @return $this does not return a value
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function setPrefix($value)
+    public function setPrefix(string $value)
     {
         $this->prefix = $value;
     }
@@ -71,7 +72,7 @@ abstract class AbstractXoopsDatabase
      * @return string prefixed tablename, just prefix if tablename is empty
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
-    public function prefix($tablename = '')
+    public function prefix(string $tablename = ''): string
     {
         if ('' !== $tablename) {
             return $this->prefix.'_'.$tablename;
@@ -89,7 +90,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function connect($selectdb = true);
+    abstract public function connect(bool $selectdb = true): bool;
 
     /**
      * generate an ID for a new row.
@@ -103,7 +104,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function genId($sequence);
+    abstract public function genId(string $sequence): int;
 
     /**
      * Get a result row as an enumerated array.
@@ -114,7 +115,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function fetchRow($result);
+    abstract public function fetchRow($result): array;
 
     /**
      * Fetch a result row as an associative array.
@@ -125,7 +126,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function fetchArray($result);
+    abstract public function fetchArray($result): array;
 
     /**
      * Fetch a result row as an associative array.
@@ -136,7 +137,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function fetchBoth($result);
+    abstract public function fetchBoth($result): array;
 
     /**
      * Fetch a result row as an object.
@@ -156,7 +157,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getInsertId();
+    abstract public function getInsertId(): int;
 
     /**
      * Get number of rows in result.
@@ -167,7 +168,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getRowsNum($result);
+    abstract public function getRowsNum($result): int;
 
     /**
      * Get number of affected rows.
@@ -176,7 +177,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getAffectedRows();
+    abstract public function getAffectedRows(): int;
 
     /**
      * Close MySQL connection.
@@ -184,7 +185,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function close();
+    abstract public function close(): void;
 
     /**
      * Free all memory associated with the result identifier result.
@@ -195,7 +196,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function freeRecordSet($result);
+    abstract public function freeRecordSet($result): bool;
 
     /**
      * Returns the text of the error message from previous MySQL operation.
@@ -205,7 +206,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function error();
+    abstract public function error(): bool;
 
     /**
      * Returns the numerical value of the error message from previous
@@ -216,7 +217,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function errno();
+    abstract public function errno(): int;
 
     /**
      * Returns escaped string text with single
@@ -228,7 +229,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function quoteString($str);
+    abstract public function quoteString(string $str): string;
 
     /**
      * Quotes a string for use in a query.
@@ -239,7 +240,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function quote($string);
+    abstract public function quote(string $string): string;
 
     /**
      * Returns escaped string text without quotes around it.
@@ -250,7 +251,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function escape($string);
+    abstract public function escape(string $string): string;
 
     /**
      * perform a query on the database.
@@ -264,7 +265,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function queryF($sql, $limit = 0, $start = 0);
+    abstract public function queryF(string $sql, int $limit = 0, int $start = 0);
 
     /**
      * perform a query.
@@ -280,7 +281,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function query($sql, $limit = 0, $start = 0);
+    abstract public function query(string $sql, int $limit = 0, int $start = 0);
 
     /**
      * perform queries from SQL dump file in a batch.
@@ -292,7 +293,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3
      * @abstract
      */
-    abstract public function queryFromFile($file);
+    abstract public function queryFromFile(string $file): bool;
 
     /**
      * Get field name.
@@ -304,7 +305,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getFieldName($result, $offset);
+    abstract public function getFieldName($result, $offset): string;
 
     /**
      * Get field type.
@@ -316,7 +317,7 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getFieldType($result, $offset);
+    abstract public function getFieldType($result, $offset): string;
 
     /**
      * Get number of fields in result.
@@ -327,5 +328,5 @@ abstract class AbstractXoopsDatabase
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
      */
-    abstract public function getFieldsNum($result);
+    abstract public function getFieldsNum($result): int;
 }

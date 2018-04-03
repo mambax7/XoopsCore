@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -15,7 +15,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Response();
     }
@@ -24,17 +24,17 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('\Xoops\Core\Service\Response', $instance);
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $value = 'value';
         $instance = new Response($value);
@@ -42,7 +42,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $result);
     }
 
-    public function testIsSuccess()
+    public function testIsSuccess(): void
     {
         $value = 'value';
         $instance = new Response($value, false);
@@ -54,7 +54,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function testGetErrorMessage()
+    public function testGetErrorMessage(): void
     {
         $value = 'value';
         $error = 'error';
@@ -64,7 +64,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(in_array($error, $result, true));
     }
 
-    public function testSetValue()
+    public function testSetValue(): void
     {
         $instance = $this->object;
 
@@ -79,7 +79,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $result);
     }
 
-    public function testSetSuccess()
+    public function testSetSuccess(): void
     {
         $value = 'value';
         $instance = new Response($value, false);
@@ -97,7 +97,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testAddErrorMessage()
+    public function testAddErrorMessage(): void
     {
         $value = 'value';
         $error = 'error';

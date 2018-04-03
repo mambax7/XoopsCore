@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
      *
      * @return array
      */
-    public function item($category, $item_id)
+    public function item(string $category, int $item_id): array
     {
         $xoops = Xoops::getInstance();
         $item = [];
@@ -69,7 +70,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
     /**
      * @return array
      */
-    public function categories()
+    public function categories(): array
     {
         $ret = [];
         $ret[1]['name'] = 'global';
@@ -97,7 +98,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
     /**
      * @return array
      */
-    public function events()
+    public function events(): array
     {
         $ret = [];
         $ret[1]['name'] = 'category_created';
@@ -170,7 +171,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
      *
      * @return array
      */
-    public function tags($category, $item_id, $event)
+    public function tags(string $category, int $item_id, string $event): array
     {
         return [];
     }

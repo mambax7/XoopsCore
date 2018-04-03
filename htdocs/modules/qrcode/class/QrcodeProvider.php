@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
      *
      * @return string - a unique name for the service provider
      */
-    public function getName()
+    public function getName(): string
     {
         return 'qrcode';
     }
@@ -45,7 +46,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'QR Code generation using endroid/qrcode';
     }
@@ -56,7 +57,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $qrText   text to encode in QR Code
      */
-    public function getImgUrl(Response $response, $qrText)
+    public function getImgUrl(Response $response, string $qrText): void
     {
         $response->setValue($this->getQRUrl($qrText));
     }
@@ -68,7 +69,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
      * @param string   $qrText     text to encode in QR Code
      * @param array    $attributes array of attribute name => value pairs for img tag
      */
-    public function getImgTag(Response $response, $qrText, $attributes = [])
+    public function getImgTag(Response $response, string $qrText, array $attributes = []): void
     {
         $url = $this->getQRUrl($qrText);
         if (!is_array($attributes)) {
@@ -87,7 +88,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
      *
      * @return string URL to obtain QR Code image of $qrText
      */
-    private function getQRUrl($qrText)
+    private function getQRUrl(string $qrText): string
     {
         $xoops = \Xoops::getInstance();
         $params = [

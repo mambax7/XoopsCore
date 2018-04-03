@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -39,7 +40,7 @@ class Cache extends AbstractHelper
     /**
      * Initialize parent::__construct calls this after verifying module object.
      */
-    public function init()
+    public function init(): void
     {
         $this->prefix = 'module/'.$this->module->getVar('dirname');
         $this->cache = \Xoops::getInstance()->cache();
@@ -56,7 +57,7 @@ class Cache extends AbstractHelper
      *
      * @return bool True if the data was successfully cached, false on failure
      */
-    public function write($key, $value, $ttl = null)
+    public function write(string $key, $value, $ttl = null): bool
     {
         return $this->cache->write($this->prefix($key), $value, $ttl);
     }
@@ -69,7 +70,7 @@ class Cache extends AbstractHelper
      *
      * @return mixed value if key was set, false not set or expired
      */
-    public function read($key, $default = false)
+    public function read(string $key, $default = false)
     {
         $value = $this->cache->read($this->prefix($key));
 
@@ -81,7 +82,7 @@ class Cache extends AbstractHelper
      *
      * @param string $key Identifier for the data
      */
-    public function delete($key)
+    public function delete(string $key): void
     {
         $this->cache->delete($this->prefix($key));
     }
@@ -113,7 +114,7 @@ class Cache extends AbstractHelper
      *
      * @return bool True if the cache was successfully cleared, false otherwise
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->cache->delete($this->prefix);
     }
@@ -125,7 +126,7 @@ class Cache extends AbstractHelper
      *
      * @return string module prefixed name
      */
-    protected function prefix($name)
+    protected function prefix(string $name): string
     {
         return $this->prefix.'/'.$name;
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -46,7 +47,7 @@ class PublisherMimetypeHandler extends XoopsPersistableObjectHandler
      *
      * @param null|Connection $db database connection
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'publisher_mimetypes', 'PublisherMimetype', 'mime_id', 'mime_ext');
     }

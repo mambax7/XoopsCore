@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class DropDownButton extends RenderAbstract
      *
      * @return string rendered HTML for menu
      */
-    public function render(ItemList $menu)
+    public function render(ItemList $menu): string
     {
         $dropdown = $menu->get('dropdown', 'dropdown');
         $renderedMenu = "<div class=\"{$dropdown}\">\n";
@@ -64,7 +65,7 @@ EOT;
      *
      * @return string
      */
-    protected function renderItem(Item $item)
+    protected function renderItem(Item $item): string
     {
         $renderedItems = '';
         $type = $item->get('type', 'error');

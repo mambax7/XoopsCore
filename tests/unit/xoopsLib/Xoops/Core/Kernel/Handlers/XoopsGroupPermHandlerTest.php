@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -18,12 +18,12 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $itemid = 9997;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertRegExp('/^.*system_permission$/', $instance->table);
@@ -32,14 +32,14 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('gperm_name', $instance->identifierName);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
 
-    public function test_addRight()
+    public function test_addRight(): void
     {
         $instance = new $this->myclass($this->conn);
         $name = $this->name;
@@ -50,7 +50,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('numeric', $value);
     }
 
-    public function test_checkRight()
+    public function test_checkRight(): void
     {
         $instance = new $this->myclass($this->conn);
         $name = $this->name;
@@ -79,7 +79,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_getItemIds()
+    public function test_getItemIds(): void
     {
         $instance = new $this->myclass($this->conn);
         $name = $this->name;
@@ -92,7 +92,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getGroupIds()
+    public function test_getGroupIds(): void
     {
         $instance = new $this->myclass($this->conn);
         $name = $this->name;
@@ -102,7 +102,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_deleteByGroup()
+    public function test_deleteByGroup(): void
     {
         $instance = new $this->myclass($this->conn);
         $groupid = $this->groupid;
@@ -123,7 +123,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $value);
     }
 
-    public function test_deleteByModule()
+    public function test_deleteByModule(): void
     {
         $this->markTestSkipped('Deletes ALL group permissions manged by system module!');
         $instance = new $this->myclass($this->conn);

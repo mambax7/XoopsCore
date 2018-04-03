@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,7 +36,7 @@ class xoopslogger
      *
      * @depreciated
      */
-    public function __set($var, $val)
+    public function __set(string $var, $val): void
     {
         $this->deprecatedWarning();
     }
@@ -47,7 +48,7 @@ class xoopslogger
      *
      * @depreciated
      */
-    public function __get($var)
+    public function __get($var): void
     {
         $this->deprecatedWarning();
     }
@@ -60,7 +61,7 @@ class xoopslogger
      *
      * @depreciated
      */
-    public function __call($method, $args)
+    public function __call(string $method, $args): void
     {
         $this->deprecatedWarning();
     }
@@ -85,7 +86,7 @@ class xoopslogger
     /**
      * deprecatedWarning - centralized warning for all methods.
      */
-    private function deprecatedWarning()
+    private function deprecatedWarning(): void
     {
         Xoops::getInstance()->deprecated('XoopsLogger is deprecated since 2.6.0, see Xoops\Core\Logger');
     }

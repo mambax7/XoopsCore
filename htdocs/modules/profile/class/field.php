@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -60,7 +61,7 @@ class ProfileField extends XoopsObject
      *
      * @todo evaluate removing this. New considerations: full UTF-8 system, new Dtype::TYPE_JSON
      */
-    public function setVar($key, $value)
+    public function setVar(string $key, $value): void
     {
         if ('field_options' === $key && is_array($value)) {
             foreach (array_keys($value) as $idx) {
@@ -75,7 +76,7 @@ class ProfileField extends XoopsObject
      * @param  string      $format
      * @return array|mixed
      */
-    public function getVar($key, $format = 's')
+    public function getVar(string $key, string $format = 's')
     {
         $value = parent::getVar($key, $format);
         if ('field_options' === $key && !empty($value)) {
@@ -95,7 +96,7 @@ class ProfileField extends XoopsObject
      *
      * @return Xoops\Form\Element
      **/
-    public function getEditElement(XoopsUser $user, ProfileProfile $profile)
+    public function getEditElement(XoopsUser $user, ProfileProfile $profile): Xoops\Form\Element
     {
         $xoops = Xoops::getInstance();
         $value = in_array($this->getVar('field_name'), $this->getUserVars(), true)
@@ -257,7 +258,7 @@ class ProfileField extends XoopsObject
      *
      * @return string
      **/
-    public function getOutputValue(XoopsUser $user, ProfileProfile $profile)
+    public function getOutputValue(XoopsUser $user, ProfileProfile $profile): string
     {
         $xoops = Xoops::getInstance();
         $xoops->loadLanguage('modinfo', 'profile');
@@ -320,7 +321,7 @@ class ProfileField extends XoopsObject
             case 'group':
                 $member_handler = $xoops->getHandlerMember();
                 $options = $member_handler->getGroupList();
-                $ret = isset($options[$value]) ? $options[$value] : '';
+                $ret = $options[$value] ?? '';
 
                 return $ret;
 
@@ -449,7 +450,7 @@ class ProfileField extends XoopsObject
      *
      * @return array
      */
-    public function getUserVars()
+    public function getUserVars(): array
     {
         /* @var $profile_handler ProfileProfileHandler */
         $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
@@ -463,7 +464,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
     /**
      * @param null|Connection $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'profile_field', 'ProfileField', 'field_id', 'field_title');
     }
@@ -475,7 +476,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function loadFields($force_update = false)
+    public function loadFields(bool $force_update = false): array
     {
         static $fields = [];
         if (!empty($force_update) || 0 === count($fields)) {
@@ -499,7 +500,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      * @param  bool                     $force whether to force the query execution despite security settings
      * @return bool                     FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insertFields(XoopsObject $obj, $force = false)
+    public function insertFields(XoopsObject $obj, bool $force = false): bool
     {
         $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
@@ -643,7 +644,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      * @param  bool                     $force
      * @return bool                     FALSE if failed.
      **/
-    public function deleteFields(XoopsObject $obj, $force = false)
+    public function deleteFields(XoopsObject $obj, bool $force = false): bool
     {
         $xoops = Xoops::getInstance();
         $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');

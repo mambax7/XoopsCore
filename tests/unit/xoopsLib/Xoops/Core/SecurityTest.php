@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -21,7 +21,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Security();
         $this->SERVER_save = $_SERVER;
@@ -33,20 +33,20 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $_SERVER = $this->SERVER_save;
         $_SESSION = $this->SESSION_save;
         \Xoops::getInstance()->moduleConfig = $this->moduleConfig_save;
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('\Xoops\Core\Security', $instance);
     }
 
-    public function test_check()
+    public function test_check(): void
     {
         $instance = $this->object;
 
@@ -81,7 +81,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
-    public function test_createToken()
+    public function test_createToken(): void
     {
         $instance = $this->object;
 
@@ -105,7 +105,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         unset($_SESSION['MY_TOKEN_SESSION']);
     }
 
-    public function test_validateToken()
+    public function test_validateToken(): void
     {
         $instance = $this->object;
 
@@ -138,7 +138,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
-    public function test_clearTokens()
+    public function test_clearTokens(): void
     {
         $instance = $this->object;
 
@@ -150,7 +150,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
-    public function test_garbageCollection()
+    public function test_garbageCollection(): void
     {
         $instance = $this->object;
 
@@ -169,7 +169,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(1 === count($_SESSION['XOOPS_TOKEN_SESSION']));
     }
 
-    public function test_checkReferer()
+    public function test_checkReferer(): void
     {
         $instance = $this->object;
 
@@ -189,7 +189,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_checkBadips()
+    public function test_checkBadips(): void
     {
         $instance = $this->object;
 
@@ -206,7 +206,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($result);
     }
 
-    public function test_getTokenHTML()
+    public function test_getTokenHTML(): void
     {
         $instance = $this->object;
 
@@ -226,7 +226,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertNotFalse(strpos($value, 'value="'));
     }
 
-    public function test_getErrors()
+    public function test_getErrors(): void
     {
         $instance = $this->object;
 

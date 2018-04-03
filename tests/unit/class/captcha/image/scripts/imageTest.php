@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
 class scripts_imageTest extends \PHPUnit\Framework\TestCase
 {
-    public function test_100()
+    public function test_100(): void
     {
         global $image_handler;
 

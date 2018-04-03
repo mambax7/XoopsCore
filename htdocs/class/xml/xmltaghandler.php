@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Location: xml/XmlTagHandler.
  *
@@ -23,14 +24,14 @@ class xmltaghandler
      * @abstract
      * @param array $attributes
      */
-    public function handleBeginElement(SaxParser $parser, &$attributes)
+    public function handleBeginElement(SaxParser $parser, array &$attributes): void
     {
     }
 
     /**
      * @abstract
      */
-    public function handleEndElement(SaxParser $parser)
+    public function handleEndElement(SaxParser $parser): void
     {
     }
 
@@ -38,7 +39,7 @@ class xmltaghandler
      * @abstract
      * @param string $data
      */
-    public function handleCharacterData(SaxParser $parser, &$data)
+    public function handleCharacterData(SaxParser $parser, string &$data): void
     {
     }
 }

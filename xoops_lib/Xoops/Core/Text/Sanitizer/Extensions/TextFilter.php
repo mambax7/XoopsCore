@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -45,7 +46,7 @@ class TextFilter extends FilterAbstract
      *
      * @return mixed
      */
-    public function applyFilter($text, $force = true)
+    public function applyFilter(string $text, bool $force = true)
     {
         $xoops = \Xoops::getInstance();
         if (!$force && $xoops->userIsAdmin) {

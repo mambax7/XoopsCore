@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string $ext      file extension
      * @param string $mimyType Mimetype
      */
-    public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip')
+    public function __construct(string $ext = '.tar.gz', string $mimyType = 'application/x-gzip')
     {
         $this->archiver = new tar();
         $this->ext = trim($ext);
@@ -41,7 +42,7 @@ class XoopsTarDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addFile($filepath, $newfilename = null)
+    public function addFile(string $filepath, ?string $newfilename = null)
     {
         $result = $this->archiver->addFile($filepath);
         if (false === $result) {
@@ -67,7 +68,7 @@ class XoopsTarDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addBinaryFile($filepath, $newfilename = null)
+    public function addBinaryFile(string $filepath, ?string $newfilename = null)
     {
         $result = $this->archiver->addFile($filepath, true);
         if (false === $result) {
@@ -94,7 +95,7 @@ class XoopsTarDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addFileData(&$data, $filename, $time = 0)
+    public function addFileData(string &$data, string $filename, int $time = 0)
     {
         $dummyfile = \XoopsBaseConfig::get('caches-path').'/dummy_'.time().'.html';
         $fp = @fopen($dummyfile, 'w');
@@ -130,7 +131,7 @@ class XoopsTarDownloader extends XoopsDownloader
      *
      * @return false|null
      */
-    public function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData(string &$data, string $filename, int $time = 0)
     {
         $dummyfile = \XoopsBaseConfig::get('caches-path').'/dummy_'.time().'.html';
         $fp = @fopen($dummyfile, 'wb');
@@ -163,7 +164,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string $name Filename
      * @param bool   $gzip Use GZ compression
      */
-    public function download($name, $gzip = true)
+    public function download(string $name, bool $gzip = true): void
     {
         $this->_header($name.$this->ext);
         $str = $this->archiver->toTarOutput($name.$this->ext, $gzip);

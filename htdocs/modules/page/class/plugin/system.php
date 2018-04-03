@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +23,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
      *
      * @return int
      */
-    public function userPosts($uid)
+    public function userPosts(int $uid): int
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('content_status', 0, '!='));
@@ -34,7 +35,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
     /**
      * @return array
      */
-    public function waiting()
+    public function waiting(): array
     {
         $criteria = new CriteriaCompo(new Criteria('content_status', 0));
         $page = \Xoops::getModuleHelper('page');
@@ -61,7 +62,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
      *
      * @return array
      */
-    public function backend($limit)
+    public function backend(int $limit): array
     {
         $ret = [];
         $page = \Xoops::getModuleHelper('page');

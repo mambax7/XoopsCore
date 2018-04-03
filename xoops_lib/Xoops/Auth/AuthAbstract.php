@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,7 +44,7 @@ abstract class AuthAbstract
      *
      * @param \Xoops\Core\Database\Connection|null $dao database
      */
-    public function __construct($dao)
+    public function __construct(?\Xoops\Core\Database\Connection $dao)
     {
         $this->dao = $dao;
     }
@@ -56,7 +57,7 @@ abstract class AuthAbstract
      *
      * @return bool true if authenticated, otherwise fales
      */
-    abstract public function authenticate($uname, $pwd = null);
+    abstract public function authenticate(string $uname, ?string $pwd = null): bool;
 
     /**
      * setErrors.
@@ -64,7 +65,7 @@ abstract class AuthAbstract
      * @param int    $err_no  error number
      * @param string $err_str error message
      */
-    public function setErrors($err_no, $err_str)
+    public function setErrors(int $err_no, string $err_str): void
     {
         $this->errors[$err_no] = trim($err_str);
     }
@@ -74,7 +75,7 @@ abstract class AuthAbstract
      *
      * @return array an array of errors
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -84,7 +85,7 @@ abstract class AuthAbstract
      *
      * @return string html listing the errors
      */
-    public function getHtmlErrors()
+    public function getHtmlErrors(): string
     {
         $xoops = \Xoops::getInstance();
         $ret = '<br />';

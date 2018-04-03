@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class DtypeSimpleTime extends DtypeAbstract
      *
      * @return int
      */
-    public function cleanVar(XoopsObject $obj, $key)
+    public function cleanVar(XoopsObject $obj, string $key): int
     {
         $value = $obj->vars[$key]['value'];
         $value = !is_string($value) ? (int) ($value) : strtotime($value);

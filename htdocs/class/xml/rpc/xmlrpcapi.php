@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class XoopsXmlRpcApi
     /**
      * @param bool $isadmin
      */
-    public function _setUser(&$user, $isadmin = false)
+    public function _setUser(&$user, bool $isadmin = false): void
     {
         if (is_object($user)) {
             $this->user = $user;
@@ -66,7 +67,7 @@ class XoopsXmlRpcApi
     /**
      * @return bool
      */
-    public function _checkUser($username, $password)
+    public function _checkUser($username, $password): bool
     {
         $xoops = Xoops::getInstance();
 
@@ -90,7 +91,7 @@ class XoopsXmlRpcApi
     /**
      * @return bool
      */
-    public function _checkAdmin()
+    public function _checkAdmin(): bool
     {
         if ($this->isadmin) {
             return true;
@@ -112,7 +113,7 @@ class XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &_getPostFields($post_id = null, $blog_id = null)
+    public function &_getPostFields($post_id = null, $blog_id = null): array
     {
         $ret = [];
         $ret['title'] = ['required' => true, 'form_type' => 'textbox', 'value_type' => 'text'];
@@ -141,7 +142,7 @@ class XoopsXmlRpcApi
      * @param string $xoopstag
      * @param string $blogtag
      */
-    public function _setXoopsTagMap($xoopstag, $blogtag)
+    public function _setXoopsTagMap(string $xoopstag, string $blogtag): void
     {
         if ('' !== trim($blogtag)) {
             $this->xoopsTagMap[$xoopstag] = $blogtag;
@@ -165,7 +166,7 @@ class XoopsXmlRpcApi
      *
      * @return string
      */
-    public function _getTagCdata(&$text, $tag, $remove = true)
+    public function _getTagCdata(&$text, $tag, bool $remove = true): string
     {
         $ret = '';
         $match = [];
@@ -185,7 +186,7 @@ class XoopsXmlRpcApi
     /**
      * @return XoopsApi
      */
-    public function _getXoopsApi(&$params)
+    public function _getXoopsApi(&$params): XoopsApi
     {
         if ('xoopsapi' !== strtolower(get_class($this))) {
             $xoops_root_path = \XoopsBaseConfig::get('root-path');

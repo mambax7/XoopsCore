@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /* this script is include before blocks and modules loading
  * so you can add all script and css needed
  */

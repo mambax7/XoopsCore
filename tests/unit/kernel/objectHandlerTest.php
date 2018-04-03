@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -12,7 +12,7 @@ class Legacy_ObjecthandlerTest extends \PHPUnit\Framework\TestCase
 {
     public $myClass = 'Legacy_ObjecthandlerTestInstance';
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['db'];
         foreach ($items as $item) {
@@ -21,7 +21,7 @@ class Legacy_ObjecthandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $conn = \Xoops\Core\Database\Factory::getConnection();
         $instance = new $this->myClass($conn);

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -79,11 +80,11 @@ class LegacyCodes
      * @param  string   $localeCode locale code
      * @return string[] array of possible language directory names, empty if no mapping exists
      */
-    public static function getLegacyName($localeCode)
+    public static function getLegacyName(string $localeCode)
     {
         if (empty(self::$namesByCode)) {
             foreach (self::$rawCodes as $codeDef) {
-                list($locale, $shortLocale, $fullLocale, $languages) = $codeDef;
+                [$locale, $shortLocale, $fullLocale, $languages] = $codeDef;
                 self::$namesByCode[$locale] = $languages;
                 self::$namesByCode[$shortLocale] = $languages;
                 self::$namesByCode[$fullLocale] = $languages;
@@ -107,11 +108,11 @@ class LegacyCodes
      * @param  string      $languageDir legacy language directory name
      * @return string|null locale code or null if no mapping exists
      */
-    public static function getLocaleCode($languageDir)
+    public static function getLocaleCode(string $languageDir): ?string
     {
         if (empty(self::$codesByName)) {
             foreach (self::$rawCodes as $codeDef) {
-                list($locale, $shortLocale, $fullLocale, $languages) = $codeDef;
+                [$locale, $shortLocale, $fullLocale, $languages] = $codeDef;
                 foreach ($languages as $language) {
                     self::$codesByName[$language] = $fullLocale;
                 }

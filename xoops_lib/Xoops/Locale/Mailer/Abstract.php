@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -47,7 +48,7 @@ class Xoops_Locale_Mailer_Abstract extends XoopsMailer
      * @param  string $text
      * @return string
      */
-    public function encodeFromName($text)
+    public function encodeFromName(string $text): string
     {
         // Activate the following line if needed
         // $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";
@@ -60,7 +61,7 @@ class Xoops_Locale_Mailer_Abstract extends XoopsMailer
      * @param  string $text
      * @return string
      */
-    public function encodeSubject($text)
+    public function encodeSubject(string $text): string
     {
         // Activate the following line if needed
         // $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";

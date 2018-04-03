@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -104,7 +105,7 @@ class Admin
      * @param string $link  url
      * @param bool   $home  is home
      */
-    public function addBreadcrumbLink($title = '', $link = '', $home = false)
+    public function addBreadcrumbLink(string $title = '', string $link = '', bool $home = false): void
     {
         if ('' !== $title) {
             $this->bread[] = [
@@ -122,7 +123,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigBoxLine($value = '', $type = 'default')
+    public function addConfigBoxLine(string $value = '', string $type = 'default'): bool
     {
         switch ($type) {
             default:
@@ -247,7 +248,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigError($value = '')
+    public function addConfigError(string $value = ''): bool
     {
         return $this->addConfigBoxLine($value, 'error');
     }
@@ -259,7 +260,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigAccept($value = '')
+    public function addConfigAccept(string $value = ''): bool
     {
         return $this->addConfigBoxLine($value, 'accept');
     }
@@ -271,7 +272,7 @@ class Admin
      *
      * @return bool
      */
-    public function addConfigWarning($value = '')
+    public function addConfigWarning(string $value = ''): bool
     {
         return $this->addConfigBoxLine($value, 'warning');
     }
@@ -284,7 +285,7 @@ class Admin
      *
      * @return bool true if requested version of the module is available
      */
-    public function addConfigModuleVersion($moddir, $minversion)
+    public function addConfigModuleVersion(string $moddir, int $minversion): bool
     {
         $return = false;
         $helper = \Xoops::getInstance()->getModuleHelper($moddir);
@@ -326,7 +327,7 @@ class Admin
      *
      * @return bool
      */
-    public function addInfoBox($title, $type = 'default', $extra = '')
+    public function addInfoBox(string $title, string $type = 'default', string $extra = ''): bool
     {
         $ret['title'] = $title;
         $ret['type'] = $type;
@@ -345,7 +346,7 @@ class Admin
      *
      * @return bool
      */
-    public function addInfoBoxLine($text = '', $type = 'default', $color = 'inherit')
+    public function addInfoBoxLine(string $text = '', string $type = 'default', string $color = 'inherit'): bool
     {
         $ret = [];
         $ret['text'] = $text;
@@ -370,7 +371,7 @@ class Admin
      *
      * @return bool
      */
-    public function addItemButton($title, $link, $icon = 'add', $extra = '')
+    public function addItemButton(string $title, string $link, string $icon = 'add', string $extra = ''): bool
     {
         $ret['title'] = $title;
         $ret['link'] = $link;
@@ -386,7 +387,7 @@ class Admin
      *
      * @param string $text text
      */
-    public function addTips($text = '')
+    public function addTips(string $text = ''): void
     {
         $this->tips = $text;
     }
@@ -396,7 +397,7 @@ class Admin
      *
      * @return string
      */
-    public function renderBreadcrumb()
+    public function renderBreadcrumb(): string
     {
         $xoops = \Xoops::getInstance();
         $xoops->tpl()->assign('xo_admin_breadcrumb', $this->bread);
@@ -407,7 +408,7 @@ class Admin
     /**
      * displayBreadcrumb.
      */
-    public function displayBreadcrumb()
+    public function displayBreadcrumb(): void
     {
         echo $this->renderBreadcrumb();
     }
@@ -420,7 +421,7 @@ class Admin
      *
      * @return string
      */
-    public function renderButton($position = 'floatright', $delimiter = '&nbsp;')
+    public function renderButton(string $position = 'floatright', string $delimiter = '&nbsp;'): string
     {
         $xoops = \Xoops::getInstance();
 
@@ -437,7 +438,7 @@ class Admin
      * @param string $position  position
      * @param string $delimiter delimiter
      */
-    public function displayButton($position = 'floatright', $delimiter = '&nbsp;')
+    public function displayButton(string $position = 'floatright', string $delimiter = '&nbsp;'): void
     {
         echo $this->renderButton($position, $delimiter);
     }
@@ -447,7 +448,7 @@ class Admin
      *
      * @return string
      */
-    public function renderInfoBox()
+    public function renderInfoBox(): string
     {
         $xoops = \Xoops::getInstance();
         $xoops->tpl()->assign('xo_admin_box', $this->itemInfoBox);
@@ -458,7 +459,7 @@ class Admin
     /**
      * displayInfoBox.
      */
-    public function displayInfoBox()
+    public function displayInfoBox(): void
     {
         echo $this->renderInfoBox();
     }
@@ -468,7 +469,7 @@ class Admin
      *
      * @return string
      */
-    public function renderIndex()
+    public function renderIndex(): string
     {
         $xoops = \Xoops::getInstance();
         $this->module->loadAdminMenu();
@@ -604,7 +605,7 @@ class Admin
     /**
      * displayIndex.
      */
-    public function displayIndex()
+    public function displayIndex(): void
     {
         echo $this->renderIndex();
     }
@@ -616,7 +617,7 @@ class Admin
      *
      * @return array
      */
-    public function renderNavigation($menu = '')
+    public function renderNavigation(string $menu = ''): array
     {
         $xoops = \Xoops::getInstance();
         $ret = [];
@@ -644,7 +645,7 @@ class Admin
      *
      * @param string $menu current menu
      */
-    public function displayNavigation($menu = '')
+    public function displayNavigation(string $menu = ''): void
     {
         $items = $this->renderNavigation($menu);
         foreach ($items as $item) {
@@ -657,7 +658,7 @@ class Admin
      *
      * @return string
      */
-    public function renderTips()
+    public function renderTips(): string
     {
         $xoops = \Xoops::getInstance();
         $xoops->tpl()->assign('xo_admin_tips', $this->tips);
@@ -668,7 +669,7 @@ class Admin
     /**
      * displayTips.
      */
-    public function displayTips()
+    public function displayTips(): void
     {
         echo $this->renderTips();
     }
@@ -680,7 +681,7 @@ class Admin
      *
      * @return bool|mixed|string
      */
-    public function renderAbout($logo_xoops = true)
+    public function renderAbout(bool $logo_xoops = true)
     {
         $xoops = \Xoops::getInstance();
 
@@ -758,7 +759,7 @@ class Admin
      *
      * @param bool $logo_xoops display logo
      */
-    public function displayAbout($logo_xoops = true)
+    public function displayAbout(bool $logo_xoops = true): void
     {
         echo $this->renderAbout($logo_xoops);
     }
@@ -770,7 +771,7 @@ class Admin
      *
      * @return string
      */
-    private function getTplPath($type = '')
+    private function getTplPath(string $type = ''): string
     {
         return 'admin:'.$this->tplModule.'/'.$this->tplFile[$type];
     }

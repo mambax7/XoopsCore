@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,7 +37,7 @@ class xoopsfile
      *
      * @return XoopsFileHandler|XoopsFolderHandler|bool
      */
-    public static function getHandler($name = 'file', $path = false, $create = false, $mode = null)
+    public static function getHandler(string $name = 'file', string $path = false, bool $create = false, ?int $mode = null)
     {
         $handler = null;
         $name = strtolower(trim($name));

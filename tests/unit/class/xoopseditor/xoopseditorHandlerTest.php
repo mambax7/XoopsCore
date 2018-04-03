@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,7 +6,7 @@ class xoopseditorHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsEditorHandler';
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $class = $this->myclass;
         $instance = $class::getInstance();
@@ -22,17 +22,17 @@ class xoopseditorHandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_get()
+    public function test_get(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_getList()
+    public function test_getList(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_setConfig()
+    public function test_setConfig(): void
     {
         $this->markTestIncomplete();
     }

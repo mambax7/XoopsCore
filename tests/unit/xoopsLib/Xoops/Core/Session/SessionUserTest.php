@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -16,7 +16,7 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $session = new Manager();
         $this->object = new SessionUser($session);
@@ -26,19 +26,11 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testEstablish()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testRecordUserLogin()
+    public function testEstablish(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -46,7 +38,7 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRecordUserLogout()
+    public function testRecordUserLogin(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -54,7 +46,7 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddUserToSession()
+    public function testRecordUserLogout(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -62,7 +54,7 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetNeedsConfirmed()
+    public function testAddUserToSession(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -70,7 +62,7 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetConfirmed()
+    public function testSetNeedsConfirmed(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -78,7 +70,15 @@ class SessionUserTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCheckConfirmed()
+    public function testSetConfirmed(): void
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    public function testCheckConfirmed(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

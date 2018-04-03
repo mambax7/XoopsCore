@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -24,7 +25,7 @@ define('PROTECTOR_BADIP_REDIRECTION_URI', 'http://yahoo.com/');
 
 class protector_precommon_badip_redirection extends ProtectorFilterAbstract
 {
-    public function execute()
+    public function execute(): void
     {
         header('Location: '.PROTECTOR_BADIP_REDIRECTION_URI);
         exit;

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS user handler.
  *
@@ -109,7 +110,7 @@ class XoopsUser extends XoopsObject
      *
      * @return bool returns false
      */
-    public function isGuest()
+    public function isGuest(): bool
     {
         return false;
     }
@@ -123,7 +124,7 @@ class XoopsUser extends XoopsObject
      *
      * @return string name of the user. name for 'anonymous' if not found.
      */
-    public static function getUnameFromId($userid, $usereal = 0)
+    public static function getUnameFromId(int $userid, int $usereal = 0): string
     {
         $xoops = \Xoops::getInstance();
         $userid = (int) ($userid);
@@ -155,7 +156,7 @@ class XoopsUser extends XoopsObject
      * @deprecated
      * @return bool
      */
-    public function incrementPost()
+    public function incrementPost(): bool
     {
         return \Xoops::getInstance()->getHandlerMember()->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
     }
@@ -165,7 +166,7 @@ class XoopsUser extends XoopsObject
      *
      * @param array $groupsArr Array of groups that user belongs to
      */
-    public function setGroups($groupsArr)
+    public function setGroups(array $groupsArr): void
     {
         if (is_array($groupsArr)) {
             $this->groups = $groupsArr;
@@ -177,7 +178,7 @@ class XoopsUser extends XoopsObject
      *
      * @return array array of groups
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         if (empty($this->groups)) {
             $this->groups = \Xoops::getInstance()->getHandlerMember()->getGroupsByUser($this->getVar('uid'));
@@ -193,7 +194,7 @@ class XoopsUser extends XoopsObject
      * @return array array of groups
      * @deprecated
      */
-    public function groups()
+    public function groups(): array
     {
         $groups = $this->getGroups();
 
@@ -211,7 +212,7 @@ class XoopsUser extends XoopsObject
      *
      * @return bool is the user admin of that module?
      */
-    public function isAdmin($module_id = null)
+    public function isAdmin(int $module_id = null): bool
     {
         $xoops = \Xoops::getInstance();
         if (null === $module_id) {
@@ -229,7 +230,7 @@ class XoopsUser extends XoopsObject
      *
      * @return array array of rank ID and title
      */
-    public function rank()
+    public function rank(): array
     {
         $xoops = \Xoops::getInstance();
         if (!isset($this->rank)) {
@@ -244,7 +245,7 @@ class XoopsUser extends XoopsObject
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         if (0 === $this->getVar('level')) {
             return false;
@@ -258,7 +259,7 @@ class XoopsUser extends XoopsObject
      *
      * @return bool
      */
-    public function isOnline()
+    public function isOnline(): bool
     {
         if (!isset($this->isOnline)) {
             $online_handler = \Xoops::getInstance()->getHandlerOnline();
@@ -276,7 +277,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function uid($format = '')
+    public function uid(string $format = '')
     {
         return $this->getVar('uid', $format);
     }
@@ -288,7 +289,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('uid', $format);
     }
@@ -300,7 +301,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function name($format = '')
+    public function name(string $format = '')
     {
         return $this->getVar('name', $format);
     }
@@ -312,7 +313,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function uname($format = '')
+    public function uname(string $format = '')
     {
         return $this->getVar('uname', $format);
     }
@@ -324,7 +325,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function email($format = '')
+    public function email(string $format = '')
     {
         return $this->getVar('email', $format);
     }
@@ -336,7 +337,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function url($format = '')
+    public function url(string $format = '')
     {
         return $this->getVar('url', $format);
     }
@@ -348,7 +349,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_avatar($format = '')
+    public function user_avatar(string $format = '')
     {
         return $this->getVar('user_avatar', $format);
     }
@@ -360,7 +361,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_regdate($format = '')
+    public function user_regdate(string $format = '')
     {
         return $this->getVar('user_regdate', $format);
     }
@@ -372,7 +373,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_icq($format = 'S')
+    public function user_icq(string $format = 'S')
     {
         return $this->getVar('user_icq', $format);
     }
@@ -384,7 +385,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_from($format = '')
+    public function user_from(string $format = '')
     {
         return $this->getVar('user_from', $format);
     }
@@ -396,7 +397,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_sig($format = '')
+    public function user_sig(string $format = '')
     {
         return $this->getVar('user_sig', $format);
     }
@@ -408,7 +409,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_viewemail($format = '')
+    public function user_viewemail(string $format = '')
     {
         return $this->getVar('user_viewemail', $format);
     }
@@ -420,7 +421,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function actkey($format = '')
+    public function actkey(string $format = '')
     {
         return $this->getVar('actkey', $format);
     }
@@ -432,7 +433,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_aim($format = '')
+    public function user_aim(string $format = '')
     {
         return $this->getVar('user_aim', $format);
     }
@@ -444,7 +445,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_yim($format = '')
+    public function user_yim(string $format = '')
     {
         return $this->getVar('user_yim', $format);
     }
@@ -456,7 +457,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_msnm($format = '')
+    public function user_msnm(string $format = '')
     {
         return $this->getVar('user_msnm', $format);
     }
@@ -468,7 +469,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function pass($format = '')
+    public function pass(string $format = '')
     {
         return $this->getVar('pass', $format);
     }
@@ -480,7 +481,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function posts($format = '')
+    public function posts(string $format = '')
     {
         return $this->getVar('posts', $format);
     }
@@ -492,7 +493,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function attachsig($format = '')
+    public function attachsig(string $format = '')
     {
         return $this->getVar('attachsig', $format);
     }
@@ -504,7 +505,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function level($format = '')
+    public function level(string $format = '')
     {
         return $this->getVar('level', $format);
     }
@@ -516,7 +517,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function theme($format = '')
+    public function theme(string $format = '')
     {
         return $this->getVar('theme', $format);
     }
@@ -528,7 +529,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function timezone($format = '')
+    public function timezone(string $format = '')
     {
         return $this->getVar('timezone', $format);
     }
@@ -540,7 +541,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function umode($format = '')
+    public function umode(string $format = '')
     {
         return $this->getVar('umode', $format);
     }
@@ -552,7 +553,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function uorder($format = '')
+    public function uorder(string $format = '')
     {
         return $this->getVar('uorder', $format);
     }
@@ -564,7 +565,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function notify_method($format = '')
+    public function notify_method(string $format = '')
     {
         return $this->getVar('notify_method', $format);
     }
@@ -576,7 +577,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function notify_mode($format = '')
+    public function notify_mode(string $format = '')
     {
         return $this->getVar('notify_mode', $format);
     }
@@ -588,7 +589,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_occ($format = '')
+    public function user_occ(string $format = '')
     {
         return $this->getVar('user_occ', $format);
     }
@@ -600,7 +601,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function bio($format = '')
+    public function bio(string $format = '')
     {
         return $this->getVar('bio', $format);
     }
@@ -612,7 +613,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    public function user_intrest($format = '')
+    public function user_intrest(string $format = '')
     {
         return $this->getVar('user_intrest', $format);
     }

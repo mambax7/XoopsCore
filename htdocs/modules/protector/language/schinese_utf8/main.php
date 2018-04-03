@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 define('_MD_PROTECTOR_YOUAREBADIP', '你的IP地址被列为恶意IP地址名单中.');
 define('_MD_PROTECTOR_TURNJAVASCRIPTON', '允许JavaScript');

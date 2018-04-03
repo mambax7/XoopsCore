@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -41,7 +42,7 @@ class system
      *
      * @return System
      */
-    public static function getInstance()
+    public static function getInstance(): System
     {
         static $instance;
         if (!isset($instance)) {
@@ -55,7 +56,7 @@ class system
     /**
      * @return bool
      */
-    public function checkRight()
+    public function checkRight(): bool
     {
         if ($this->xoops->isUser()) {
             $this->xoops->module = $this->xoops->getModuleByDirname('system');
@@ -74,7 +75,7 @@ class system
      * @param  string           $type
      * @return int|mixed|string
      */
-    public function cleanVars(&$global, $key, $default = '', $type = 'int')
+    public function cleanVars(&$global, $key, string $default = '', string $type = 'int')
     {
         switch ($type) {
             case 'array':
@@ -113,7 +114,7 @@ class system
      * @return boolean
      * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
      */
-    public function loadLanguage($name, $domain = '', $language = null)
+    public function loadLanguage(string $name, string $domain = '', string $language = null): bool
     {
         $xoops = Xoops::getInstance();
         /*
@@ -138,7 +139,7 @@ class system
      * @param  string $value
      * @return string
      */
-    public function adminVersion($version, $value = '')
+    public function adminVersion(string $version, string $value = ''): string
     {
         static $tblVersion = [];
         if (is_array($tblVersion) && array_key_exists($version.'.'.$value, $tblVersion)) {

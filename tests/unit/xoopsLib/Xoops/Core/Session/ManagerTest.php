@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -15,7 +15,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Manager();
     }
@@ -24,17 +24,17 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('Xoops\Core\Session\Manager', $this->object);
         $this->assertInstanceOf('Xoops\Core\AttributeInterface', $this->object);
     }
 
-    public function testSessionStart()
+    public function testSessionStart(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -42,7 +42,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testClearSession()
+    public function testClearSession(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -50,7 +50,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testExpireSession()
+    public function testExpireSession(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -58,7 +58,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRegenerateSession()
+    public function testRegenerateSession(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -66,7 +66,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testUser()
+    public function testUser(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -74,7 +74,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -82,7 +82,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -90,7 +90,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -98,7 +98,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -106,7 +106,7 @@ class Session_ManagerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

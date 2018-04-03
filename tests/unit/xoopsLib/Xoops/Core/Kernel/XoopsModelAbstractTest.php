@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -17,7 +17,7 @@ class XoopsModelAbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsModelAbstractTestInstance';
 
-    public function test_setHandler()
+    public function test_setHandler(): void
     {
         $handler = new XoopsBlockHandler();
 
@@ -28,7 +28,7 @@ class XoopsModelAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($handler, $x);
     }
 
-    public function test_setVars()
+    public function test_setVars(): void
     {
         $vars = ['one' => 1, 'two' => 2];
         $instance = new $this->myClass();

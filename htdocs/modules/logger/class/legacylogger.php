@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -113,7 +114,7 @@ class legacylogger implements LoggerInterface
      *
      * @param array $configs array of module/user config options
      */
-    public function setConfigs($configs)
+    public function setConfigs(array $configs): void
     {
         $this->configs = $configs;
     }
@@ -121,7 +122,7 @@ class legacylogger implements LoggerInterface
     /**
      * disable logging.
      */
-    public function disable()
+    public function disable(): void
     {
         //error_reporting(0);
         $this->activated = false;
@@ -133,7 +134,7 @@ class legacylogger implements LoggerInterface
      * If the string <!--<xo-logger-output>--> is found in the page content, the logger output will
      * replace it, otherwise it will be inserted after all the page output.
      */
-    public function enable()
+    public function enable(): void
     {
         error_reporting(E_ALL | E_STRICT);
         $xoops = Xoops::getInstance();
@@ -151,7 +152,7 @@ class legacylogger implements LoggerInterface
      *
      * @return bool
      */
-    public function isEnable()
+    public function isEnable(): bool
     {
         return $this->activated;
     }
@@ -159,7 +160,7 @@ class legacylogger implements LoggerInterface
     /**
      * disable output for the benefit of ajax scripts.
      */
-    public function quiet()
+    public function quiet(): void
     {
         $this->activated = false;
     }
@@ -169,7 +170,7 @@ class legacylogger implements LoggerInterface
      *
      * @param string $name name of the timer
      */
-    public function startTime($name = 'XOOPS')
+    public function startTime(string $name = 'XOOPS'): void
     {
         if ($this->activated) {
             $this->logstart[$name] = microtime(true);
@@ -181,7 +182,7 @@ class legacylogger implements LoggerInterface
      *
      * @param string $name name of the timer
      */
-    public function stopTime($name = 'XOOPS')
+    public function stopTime(string $name = 'XOOPS'): void
     {
         if ($this->activated) {
             $this->logend[$name] = microtime(true);
@@ -196,7 +197,7 @@ class legacylogger implements LoggerInterface
      * @param int    $errno      error number
      * @param float  $query_time execution time
      */
-    public function addQuery($sql, $error = null, $errno = null, $query_time = null)
+    public function addQuery(string $sql, string $error = null, int $errno = null, float $query_time = null): void
     {
         if ($this->activated) {
             $this->queries[] = [
@@ -212,7 +213,7 @@ class legacylogger implements LoggerInterface
      * @param bool   $cached    was the block cached?
      * @param int    $cachetime cachetime of the block
      */
-    public function addBlock($name, $cached = false, $cachetime = 0)
+    public function addBlock(string $name, bool $cached = false, int $cachetime = 0): void
     {
         if ($this->activated) {
             $this->blocks[] = ['name' => $name, 'cached' => $cached, 'cachetime' => $cachetime];
@@ -225,7 +226,7 @@ class legacylogger implements LoggerInterface
      * @param string $name name for the entry
      * @param string $msg  text message for the entry
      */
-    public function addExtra($name, $msg)
+    public function addExtra(string $name, string $msg): void
     {
         if ($this->activated) {
             $this->extra[] = ['name' => $name, 'msg' => $msg];
@@ -237,7 +238,7 @@ class legacylogger implements LoggerInterface
      *
      * @param string $msg name for the entry
      */
-    public function addDeprecated($msg)
+    public function addDeprecated(string $msg): void
     {
         if ($this->activated) {
             $this->deprecated[] = $msg;
@@ -249,7 +250,7 @@ class legacylogger implements LoggerInterface
      *
      * @param Exception $e name for the entry
      */
-    public function addException($e)
+    public function addException(Exception $e): void
     {
         if ($this->activated) {
             $this->log(
@@ -267,7 +268,7 @@ class legacylogger implements LoggerInterface
      *
      * @return string path with top levels removed
      */
-    public function sanitizePath($path)
+    public function sanitizePath(string $path): string
     {
         $path = str_replace(
             [
@@ -288,7 +289,7 @@ class legacylogger implements LoggerInterface
      * If the string <!--<xo-logger-output>--> is found in the page content, the logger output will
      * replace it, otherwise it will be inserted after all the page output.
      */
-    public function enableRendering()
+    public function enableRendering(): void
     {
         if (!$this->renderingEnabled) {
             ob_start([&$this, 'render']);
@@ -303,7 +304,7 @@ class legacylogger implements LoggerInterface
      *
      * @return string output
      */
-    public function render($output)
+    public function render(string $output): string
     {
         if (!$this->activated) {
             return $output;
@@ -328,7 +329,7 @@ class legacylogger implements LoggerInterface
      *
      * @return string output
      */
-    public function dump($mode = '')
+    public function dump(string $mode = ''): string
     {
         $ret = '';
         // -------------------------------------------------------------
@@ -549,7 +550,7 @@ EOT;
      *
      * @return float current execution time of the counter
      */
-    public function dumpTime($name = 'XOOPS', $unset = false)
+    public function dumpTime(string $name = 'XOOPS', bool $unset = false): float
     {
         if (!$this->activated) {
             return null;
@@ -575,7 +576,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::EMERGENCY, $message, $context);
@@ -591,7 +592,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function alert($message, array $context = [])
+    public function alert(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ALERT, $message, $context);
@@ -606,7 +607,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function critical($message, array $context = [])
+    public function critical(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::CRITICAL, $message, $context);
@@ -620,7 +621,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function error($message, array $context = [])
+    public function error(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::ERROR, $message, $context);
@@ -636,7 +637,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function warning($message, array $context = [])
+    public function warning(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::WARNING, $message, $context);
@@ -649,7 +650,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function notice($message, array $context = [])
+    public function notice(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::NOTICE, $message, $context);
@@ -664,7 +665,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::INFO, $message, $context);
@@ -677,7 +678,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         if ($this->activated) {
             $this->log(LogLevel::DEBUG, $message, $context);
@@ -691,7 +692,7 @@ EOT;
      * @param string $message message
      * @param array  $context array of additional context
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         if (!$this->activated) {
             return;
@@ -703,7 +704,7 @@ EOT;
     /**
      * Add our resources to the theme as soon as it is available, otherwise return.
      */
-    private function addToTheme()
+    private function addToTheme(): void
     {
         static $addedResource = false;
 

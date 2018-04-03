@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Kernel\Dtype;
 
@@ -15,7 +15,7 @@ class DtypeTextAreaTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DtypeTextArea();
     }
@@ -24,17 +24,17 @@ class DtypeTextAreaTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeTextArea', $this->object);
     }
 
-    public function testGetVar()
+    public function testGetVar(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -42,7 +42,7 @@ class DtypeTextAreaTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCleanVar()
+    public function testCleanVar(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

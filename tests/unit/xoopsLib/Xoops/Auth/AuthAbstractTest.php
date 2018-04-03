@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -14,7 +14,7 @@ class AuthAbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'AuthAbstractTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $conn = \Xoops\Core\Database\Factory::getConnection();
 
@@ -22,7 +22,7 @@ class AuthAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test_setErrors()
+    public function test_setErrors(): void
     {
         $dao = 'dao';
         $instance = new $this->myclass($dao);
@@ -34,7 +34,7 @@ class AuthAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x[$errno] === $error);
     }
 
-    public function test_getHtmlErrors()
+    public function test_getHtmlErrors(): void
     {
         $dao = 'dao';
         $instance = new $this->myclass($dao);

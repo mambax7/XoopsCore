@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -54,7 +55,7 @@ abstract class XoopsPersistableObjectHandler extends Xoops\Core\Kernel\XoopsPers
      * @param Connection $db reference to the {@link Connection} object
      */
     protected function __construct(
-        Connection $db = null,
+        ?Connection $db = null,
         $table = '',
         $className = '',
         $keyName = '',

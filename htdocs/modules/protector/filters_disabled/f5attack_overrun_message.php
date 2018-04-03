@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,7 +20,7 @@
  */
 class protector_f5attack_overrun_message extends ProtectorFilterAbstract
 {
-    public function execute()
+    public function execute(): void
     {
         // header( 'Location: http://google.com/' ) ; // redirect somewhere
         echo 'You have reloaded a page too many times'; // write any message as you like

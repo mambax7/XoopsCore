@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class TextAreaTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new TextArea('Caption', 'name', 'value', 5, 10, 'placeholder');
     }
@@ -24,29 +24,29 @@ class TextAreaTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetRows()
+    public function testGetRows(): void
     {
         $value = $this->object->getRows();
         $this->assertSame(5, $value);
     }
 
-    public function testGetCols()
+    public function testGetCols(): void
     {
         $value = $this->object->getCols();
         $this->assertSame(10, $value);
     }
 
-    public function testGetPlaceholder()
+    public function testGetPlaceholder(): void
     {
         $value = $this->object->getPlaceholder();
         $this->assertSame('placeholder', $value);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $value = $this->object->render();
         $this->assertInternalType('string', $value);
@@ -60,7 +60,7 @@ class TextAreaTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($value, '>value<'));
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $oldWay = new TextArea('mycaption', 'myname', 'myvalue');
         $newWay = new TextArea(['caption' => 'mycaption', 'name' => 'myname', 'value' => 'myvalue']);

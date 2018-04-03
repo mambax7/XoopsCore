@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -59,8 +60,8 @@ class Connection extends \Doctrine\DBAL\Connection
     public function __construct(
         array $params,
         Driver $driver,
-        Configuration $config = null,
-        EventManager $eventManager = null
+        ?Configuration $config = null,
+        ?EventManager $eventManager = null
     ) {
         $this->safe = false;
         $this->force = false;
@@ -68,7 +69,7 @@ class Connection extends \Doctrine\DBAL\Connection
 
         try {
             parent::__construct($params, $driver, $config, $eventManager);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // We are dead in the water. This exception may contain very sensitive
             // information and cannot be allowed to be displayed as is.
             //\Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
@@ -81,7 +82,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @param bool $safe set safe to true if safe to write data to database
      */
-    public function setSafe($safe = true)
+    public function setSafe(bool $safe = true): void
     {
         $this->safe = (bool) $safe;
     }
@@ -91,7 +92,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return boolean
      */
-    public function getSafe()
+    public function getSafe(): bool
     {
         return $this->safe;
     }
@@ -101,7 +102,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @param bool $force when true will force a write to database when safe is false.
      */
-    public function setForce($force = false)
+    public function setForce(bool $force = false): void
     {
         $this->force = (bool) $force;
     }
@@ -111,7 +112,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return boolean
      */
-    public function getForce()
+    public function getForce(): bool
     {
         return $this->force;
     }
@@ -124,7 +125,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return string prefixed tablename, or prefix if tablename is empty
      */
-    public function prefix($tablename = '')
+    public function prefix(string $tablename = ''): string
     {
         $prefix = \XoopsBaseConfig::get('db-prefix');
         if ('' !== $tablename) {
@@ -145,7 +146,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return int The number of affected rows.
      */
-    public function insertPrefix($tableName, array $data, array $types = [])
+    public function insertPrefix(string $tableName, array $data, array $types = []): int
     {
         $tableName = $this->prefix($tableName);
 
@@ -166,7 +167,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return int The number of affected rows.
      */
-    public function updatePrefix($tableName, array $data, array $identifier, array $types = [])
+    public function updatePrefix(string $tableName, array $data, array $identifier, array $types = []): int
     {
         $tableName = $this->prefix($tableName);
 
@@ -184,7 +185,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return int The number of affected rows.
      */
-    public function deletePrefix($tableName, array $identifier)
+    public function deletePrefix(string $tableName, array $identifier): int
     {
         $tableName = $this->prefix($tableName);
 
@@ -207,11 +208,11 @@ class Connection extends \Doctrine\DBAL\Connection
      * @internal PERF: Directly prepares a driver statement, not a wrapper.
      */
     public function executeQuery(
-        $query,
+        string $query,
         array $params = [],
-        $types = [],
-        QueryCacheProfile $qcp = null
-    ) {
+        array $types = [],
+        ?QueryCacheProfile $qcp = null
+    ): \Doctrine\DBAL\Driver\Statement {
         return parent::executeQuery($query, $params, $types, $qcp);
     }
 
@@ -234,7 +235,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @todo build a better exception catching system.
      */
-    public function executeUpdate($query, array $params = [], array $types = [])
+    public function executeUpdate(string $query, array $params = [], array $types = []): int
     {
         $events = \Xoops::getInstance()->events();
         if ($this->safe || $this->force) {
@@ -245,7 +246,7 @@ class Connection extends \Doctrine\DBAL\Connection
 
             try {
                 $result = parent::executeUpdate($query, $params, $types);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $events->triggerEvent('core.exception', $e);
                 $result = 0;
             }
@@ -265,7 +266,7 @@ class Connection extends \Doctrine\DBAL\Connection
     /**
      * Starts a transaction by suspending auto-commit mode.
      */
-    public function beginTransaction()
+    public function beginTransaction(): void
     {
         $this->transactionActive = true;
         parent::beginTransaction();
@@ -274,7 +275,7 @@ class Connection extends \Doctrine\DBAL\Connection
     /**
      * Commits the current transaction.
      */
-    public function commit()
+    public function commit(): void
     {
         $this->transactionActive = false;
         $this->force = false;
@@ -284,7 +285,7 @@ class Connection extends \Doctrine\DBAL\Connection
     /**
      * rolls back the current transaction.
      */
-    public function rollBack()
+    public function rollBack(): void
     {
         $this->transactionActive = false;
         $this->force = false;
@@ -317,7 +318,7 @@ class Connection extends \Doctrine\DBAL\Connection
 
         try {
             $result = call_user_func_array(['parent', 'query'], func_get_args());
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $events->triggerEvent('core.exception', $e);
             $result = null;
         }
@@ -338,7 +339,7 @@ class Connection extends \Doctrine\DBAL\Connection
      * @return bool FALSE if failed reading SQL file or
      * TRUE if the file has been read and queries executed
      */
-    public function queryFromFile($file)
+    public function queryFromFile(string $file): bool
     {
         if (false !== ($fp = fopen($file, 'r'))) {
             $sql_queries = trim(fread($fp, filesize($file)));
@@ -361,7 +362,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *
      * @return QueryBuilder
      */
-    public function createXoopsQueryBuilder()
+    public function createXoopsQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this);
     }

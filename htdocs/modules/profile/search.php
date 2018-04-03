@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,7 +29,7 @@ $xoops = Xoops::getInstance();
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
 $limit_default = 20;
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'search';
+$op = $_REQUEST['op'] ?? 'search';
 $groups = $xoops->getUserGroups();
 $searchable_types = [
     'textbox', 'select', 'radio', 'yesno', 'date', 'datetime', 'timezone', 'language',
@@ -425,7 +426,7 @@ switch ($op) {
         $start = isset($_REQUEST['start']) ? (int) ($_REQUEST['start']) : 0;
         $criteria->setStart($start);
 
-        list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars, $searchgroups);
+        [$users, $profiles, $total_users] = $profile_handler->search($criteria, $searchvars, $searchgroups);
 
         $total = sprintf(_PROFILE_MA_FOUNDUSER, "<span class='red'>{$total_users}</span>").' ';
         $xoops->tpl()->assign('total_users', $total);

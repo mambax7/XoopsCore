@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Utils
      *
      * @return string
      */
-    public static function dumpVar($var, $echo = true)
+    public static function dumpVar($var, $echo = true): string
     {
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();
         $msg = $myts->displayTarea(var_export($var, true));
@@ -50,7 +51,7 @@ class Utils
      *
      * @return string
      */
-    public static function dumpFile($file, $echo = true)
+    public static function dumpFile($file, $echo = true): string
     {
         $msg = highlight_file($file, true);
         $msg = "<div style='padding: 5px; font-weight: bold'>{$msg}</div>";
@@ -72,7 +73,7 @@ class Utils
      *
      * @return array
      */
-    public static function arrayRecursiveDiff(array $aArray1, array $aArray2)
+    public static function arrayRecursiveDiff(array $aArray1, array $aArray2): array
     {
         $aReturn = [];
 
@@ -111,7 +112,7 @@ class Utils
      * @return array Merged array
      * @see http://book.cakephp.org/2.0/en/core-utility-libraries/hash.html#Hash::merge
      */
-    public static function arrayRecursiveMerge(array $data, $merge)
+    public static function arrayRecursiveMerge(array $data, $merge): array
     {
         $args = func_get_args();
         $return = current($args);

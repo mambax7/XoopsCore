@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,9 +18,9 @@
  */
 function smarty_function_translate($params, &$smarty)
 {
-    $key = isset($params['key']) ? $params['key'] : '';
-    $dirname = isset($params['dirname']) ? $params['dirname'] : 'xoops';
-    $values = isset($params['values']) ? $params['values'] : '';
+    $key = $params['key'] ?? '';
+    $dirname = $params['dirname'] ?? 'xoops';
+    $values = $params['values'] ?? '';
 
     return \Xoops\Locale::translate($key, $dirname, $values);
     //return \Xoops\Core\Text\Sanitizer::getInstance()->escapeForJavascript(\Xoops\Locale::translate($key, $dirname));

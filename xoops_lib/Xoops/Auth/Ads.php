@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Ads extends Ldap
      *
      * @param Connection|null $dao database
      */
-    public function __construct(Connection $dao = null)
+    public function __construct(?Connection $dao = null)
     {
         parent::__construct($dao);
     }
@@ -46,7 +47,7 @@ class Ads extends Ldap
      *
      * @return bool
      */
-    public function authenticate($uname, $pwd = null)
+    public function authenticate(string $uname, string $pwd = null): bool
     {
         $authenticated = false;
         if (!extension_loaded('ldap')) {
@@ -102,7 +103,7 @@ class Ads extends Ldap
      *
      * @return string userDN
      */
-    public function getUPN($uname)
+    public function getUPN(string $uname): string
     {
         $userDN = $uname.'@'.$this->ldap_domain_name;
 

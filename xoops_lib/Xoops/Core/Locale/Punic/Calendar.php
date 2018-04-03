@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Locale\Punic;
 
@@ -18,7 +18,7 @@ class Calendar extends \Punic\Calendar
      *
      * @return string
      */
-    protected static function decodeYear($value, $count, $locale)
+    protected static function decodeYear($value, $count, $locale): string
     {
         switch ($count) {
             case 1:

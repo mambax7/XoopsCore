@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class Censor extends FilterAbstract
      *
      * @return string
      */
-    public function applyFilter($text)
+    public function applyFilter(string $text): string
     {
         $xoops = \Xoops::getInstance();
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xmf\Database;
 
@@ -15,7 +15,7 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Migrate('page');
     }
@@ -24,16 +24,16 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xmf\Database\Migrate', $this->object);
     }
 
-    public function testSaveCurrentSchema()
+    public function testSaveCurrentSchema(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -41,7 +41,7 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetCurrentSchema()
+    public function testGetCurrentSchema(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -49,7 +49,7 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetTargetDefinitions()
+    public function testGetTargetDefinitions(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -57,7 +57,7 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSynchronizeSchema()
+    public function testSynchronizeSchema(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -65,7 +65,7 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetSynchronizeDDL()
+    public function testGetSynchronizeDDL(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -73,13 +73,13 @@ class MigrateTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetLastError()
+    public function testGetLastError(): void
     {
         $actual = $this->object->getLastError();
         $this->assertNull($actual);
     }
 
-    public function testGetLastErrNo()
+    public function testGetLastErrNo(): void
     {
         $actual = $this->object->getLastErrNo();
         $this->assertNull($actual);

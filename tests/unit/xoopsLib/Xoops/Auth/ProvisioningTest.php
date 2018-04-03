@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -8,7 +8,7 @@ use Xoops\Core\Database\Factory;
 
 class Xoops_Auth_ProvisioningTest_AuthAbstractInstance extends AuthAbstract
 {
-    public function authenticate($uname, $pwd = null)
+    public function authenticate($uname, $pwd = null): void
     {
     }
 }
@@ -17,20 +17,20 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
 {
     protected $object = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $conn = Factory::getConnection();
         $auth = new Xoops_Auth_ProvisioningTest_AuthAbstractInstance($conn);
         $this->object = new Provisioning($auth);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = $this->object;
         $this->assertInstanceOf('\Xoops\Auth\Provisioning', $instance);
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['ldap_provisioning', 'ldap_provisioning_upd', 'ldap_field_mapping',
             'ldap_provisioning_group', ];
@@ -40,7 +40,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $conn = Factory::getConnection();
         $auth = new Xoops_Auth_ProvisioningTest_AuthAbstractInstance($conn);
@@ -49,7 +49,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $instance2);
     }
 
-    public function test_getXoopsUser()
+    public function test_getXoopsUser(): void
     {
         $instance = $this->object;
 
@@ -64,7 +64,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsUser', $value);
     }
 
-    public function test_sync()
+    public function test_sync(): void
     {
         $instance = $this->object;
 
@@ -79,22 +79,22 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsUser', $value);
     }
 
-    public function test_setVarsMapping()
+    public function test_setVarsMapping(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_add()
+    public function test_add(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_change()
+    public function test_change(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_delete()
+    public function test_delete(): void
     {
         $instance = $this->object;
 
@@ -102,7 +102,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true); // always OK
     }
 
-    public function test_suspend()
+    public function test_suspend(): void
     {
         $instance = $this->object;
 
@@ -110,7 +110,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true); // always OK
     }
 
-    public function test_restore()
+    public function test_restore(): void
     {
         $instance = $this->object;
 
@@ -118,7 +118,7 @@ class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(true); // always OK
     }
 
-    public function test_resetpwd()
+    public function test_resetpwd(): void
     {
         $instance = $this->object;
 

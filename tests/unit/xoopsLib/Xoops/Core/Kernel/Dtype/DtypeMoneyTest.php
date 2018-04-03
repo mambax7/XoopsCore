@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Kernel\Dtype;
 
@@ -36,7 +36,7 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DtypeMoney();
         $this->xObject = new DtypeMoneyObject();
@@ -46,17 +46,17 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeMoney', $this->object);
     }
 
-    public function testGetVarCleanVar()
+    public function testGetVarCleanVar(): void
     {
         $testValue = new Money(10000, new Currency('USD'));
         $key = 'money_test';
@@ -76,7 +76,7 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($value, $value2);
     }
 
-    public function testStoredRepresentation()
+    public function testStoredRepresentation(): void
     {
         $testValue = new Money(30000, new Currency('EUR'));
         $key = 'money_test';

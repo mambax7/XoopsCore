@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -61,7 +62,7 @@ $user_id = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
 //  subscribed)... deal with this more gracefully?
 $notification_handler = $helper->getHandlerNotification();
 foreach ($update_list as $update_item) {
-    list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
+    [$category, $item_id, $event] = preg_split('/,/', $update_item['params']);
     $status = !empty($update_item['status']) ? 1 : 0;
     if (!$status) {
         $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
@@ -79,7 +80,7 @@ foreach ($update_list as $update_item) {
 // comment submit occurs and where comment approval occurs)...
 $redirect_args = [];
 foreach ($update_list as $update_item) {
-    list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
+    [$category, $item_id, $event] = preg_split('/,/', $update_item['params']);
     $category_info = $helper->getCategory($category, $module->getVar('dirname'));
     if (!empty($category_info['item_name'])) {
         $redirect_args[$category_info['item_name']] = $item_id;

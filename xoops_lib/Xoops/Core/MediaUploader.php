@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -189,7 +190,7 @@ class MediaUploader
      * @param int    $maxWidth         max width
      * @param int    $maxHeight        max height
      */
-    public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null)
+    public function __construct(string $uploadDir, array $allowedMimeTypes, int $maxFileSize = 0, int $maxWidth = null, int $maxHeight = null)
     {
         if (is_array($allowedMimeTypes)) {
             $this->allowedMimeTypes = $allowedMimeTypes;
@@ -212,7 +213,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function fetchMedia($media_name, $index = null)
+    public function fetchMedia(string $media_name, int $index = null): bool
     {
         if (!isset($_FILES[$media_name])) {
             $this->setErrors(\XoopsLocale::E_FILE_NOT_FOUND);
@@ -271,7 +272,7 @@ class MediaUploader
      *
      * @param string $value file name
      */
-    public function setTargetFileName($value)
+    public function setTargetFileName(string $value): void
     {
         $this->targetFileName = (string) (trim($value));
     }
@@ -281,7 +282,7 @@ class MediaUploader
      *
      * @param string $value prefix
      */
-    public function setPrefix($value)
+    public function setPrefix(string $value): void
     {
         $this->prefix = (string) (trim($value));
     }
@@ -291,7 +292,7 @@ class MediaUploader
      *
      * @return string
      */
-    public function getMediaName()
+    public function getMediaName(): string
     {
         return $this->mediaName;
     }
@@ -301,7 +302,7 @@ class MediaUploader
      *
      * @return string
      */
-    public function getMediaType()
+    public function getMediaType(): string
     {
         return $this->mediaType;
     }
@@ -311,7 +312,7 @@ class MediaUploader
      *
      * @return int
      */
-    public function getMediaSize()
+    public function getMediaSize(): int
     {
         return $this->mediaSize;
     }
@@ -321,7 +322,7 @@ class MediaUploader
      *
      * @return string
      */
-    public function getMediaTmpName()
+    public function getMediaTmpName(): string
     {
         return $this->mediaTmpName;
     }
@@ -331,7 +332,7 @@ class MediaUploader
      *
      * @return string
      */
-    public function getSavedFileName()
+    public function getSavedFileName(): string
     {
         return $this->savedFileName;
     }
@@ -341,7 +342,7 @@ class MediaUploader
      *
      * @return string
      */
-    public function getSavedDestination()
+    public function getSavedDestination(): string
     {
         return $this->savedDestination;
     }
@@ -353,7 +354,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function upload($chmod = 0644)
+    public function upload(int $chmod = 0644): bool
     {
         if ('' === $this->uploadDir) {
             $this->setErrors(\XoopsLocale::E_UPLOAD_DIRECTORY_NOT_SET);
@@ -399,7 +400,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function checkMaxFileSize()
+    public function checkMaxFileSize(): bool
     {
         if (!isset($this->maxFileSize)) {
             return true;
@@ -418,7 +419,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function checkMaxWidth()
+    public function checkMaxWidth(): bool
     {
         if (!isset($this->maxWidth)) {
             return true;
@@ -441,7 +442,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function checkMaxHeight()
+    public function checkMaxHeight(): bool
     {
         if (!isset($this->maxHeight)) {
             return true;
@@ -464,7 +465,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function checkMimeType()
+    public function checkMimeType(): bool
     {
         if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
             $this->setErrors(\XoopsLocale::E_FILE_TYPE_REJECTED);
@@ -490,7 +491,7 @@ class MediaUploader
      *
      * @return bool
      */
-    public function checkImageType()
+    public function checkImageType(): bool
     {
         if (empty($this->checkImageType)) {
             return true;
@@ -513,7 +514,7 @@ class MediaUploader
     /**
      * Sanitize executable filename with multiple extensions.
      */
-    public function sanitizeMultipleExtensions()
+    public function sanitizeMultipleExtensions(): void
     {
         if (empty($this->extensionsToBeSanitized)) {
             return;
@@ -533,7 +534,7 @@ class MediaUploader
      *
      * @param string $error message
      */
-    public function setErrors($error)
+    public function setErrors(string $error): void
     {
         $this->errors[] = trim($error);
     }
@@ -545,7 +546,7 @@ class MediaUploader
      *
      * @return array |string    Array of array messages OR HTML string
      */
-    public function getErrors($ashtml = true)
+    public function getErrors(bool $ashtml = true): array
     {
         if (!$ashtml) {
             return $this->errors;
@@ -569,7 +570,7 @@ class MediaUploader
      *
      * @return bool
      */
-    protected function copyFile($chmod)
+    protected function copyFile(int $chmod): bool
     {
         $matched = [];
         if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {

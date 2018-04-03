@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Adapted from the following under GPL 1 or greater license
  * http://search.cpan.org/~creamyg/Lingua-StopWords-0.09/.

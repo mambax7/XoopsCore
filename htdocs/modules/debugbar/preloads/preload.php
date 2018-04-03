@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param Exception $e an exception
      */
-    public static function eventCoreException($e)
+    public static function eventCoreException(Exception $e): void
     {
         DebugbarLogger::getInstance()->addException($e);
     }
@@ -43,7 +44,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args not used
      */
-    public static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args): void
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
@@ -56,7 +57,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeCommonStart($args)
+    public static function eventCoreIncludeCommonStart($args): void
     {
         $logger = DebugbarLogger::getInstance();
 
@@ -73,7 +74,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param array $args arguments
      */
-    public static function eventCoreDatabaseNoconn($args)
+    public static function eventCoreDatabaseNoconn(array $args): void
     {
         if (class_exists('DebugbarLogger')) {
             /* @var $db Xoops\Core\Database\Connection */
@@ -87,7 +88,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDatabaseNodb($args)
+    public static function eventCoreDatabaseNodb($args): void
     {
         if (class_exists('DebugbarLogger')) {
             /* @var $db Xoops\Core\Database\Connection */
@@ -99,7 +100,7 @@ class DebugbarPreload extends PreloadItem
     /**
      * eventCoreIncludeCommonAuthSuccess.
      */
-    public static function eventCoreIncludeCommonAuthSuccess()
+    public static function eventCoreIncludeCommonAuthSuccess(): void
     {
         $xoops = Xoops::getInstance();
         $logger = DebugbarLogger::getInstance();
@@ -118,7 +119,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreIncludeCommonEnd($args)
+    public static function eventCoreIncludeCommonEnd($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logger->stopTime('XOOPS Boot');
@@ -130,7 +131,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreTemplateConstructStart($args)
+    public static function eventCoreTemplateConstructStart($args): void
     {
         $tpl = $args[0];
         $configs = self::getConfigs();
@@ -147,7 +148,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeRenderStart($args)
+    public static function eventCoreThemeRenderStart($args): void
     {
         DebugbarLogger::getInstance()->startTime('Page rendering');
     }
@@ -157,7 +158,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeRenderEnd($args)
+    public static function eventCoreThemeRenderEnd($args): void
     {
         DebugbarLogger::getInstance()->stopTime('Page rendering');
         DebugbarLogger::getInstance()->addSmarty();
@@ -168,7 +169,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeCheckcacheSuccess($args)
+    public static function eventCoreThemeCheckcacheSuccess($args): void
     {
         $template = $args[0];
         $theme = $args[1];
@@ -183,7 +184,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreThemeblocksBuildblockStart($args)
+    public static function eventCoreThemeblocksBuildblockStart($args): void
     {
         /* @var $block XoopsBlock */
         $block = $args[0];
@@ -198,7 +199,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDeprecated($args)
+    public static function eventCoreDeprecated($args): void
     {
         $message = $args[0];
         DebugbarLogger::getInstance()->log(LogLevel::WARNING, $message, ['channel' => 'Deprecated']);
@@ -209,7 +210,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreDisableerrorreporting($args)
+    public static function eventCoreDisableerrorreporting($args): void
     {
         DebugbarLogger::getInstance()->disable();
     }
@@ -219,7 +220,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreHeaderStart($args)
+    public static function eventCoreHeaderStart($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logger->stopTime('Module init');
@@ -231,7 +232,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreHeaderEnd($args)
+    public static function eventCoreHeaderEnd($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logger->stopTime('XOOPS output init');
@@ -243,7 +244,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreFooterStart($args)
+    public static function eventCoreFooterStart($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logger->stopTime('Module display');
@@ -254,7 +255,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreFooterEnd($args)
+    public static function eventCoreFooterEnd($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logger->stopTime();
@@ -265,7 +266,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreRedirectStart($args)
+    public static function eventCoreRedirectStart($args): void
     {
         DebugbarLogger::getInstance()->stackData();
     }
@@ -275,7 +276,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreSecurityValidatetokenEnd($args)
+    public static function eventCoreSecurityValidatetokenEnd($args): void
     {
         $logger = DebugbarLogger::getInstance();
         $logs = $args[0];
@@ -290,7 +291,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreModuleAddlog($args)
+    public static function eventCoreModuleAddlog($args): void
     {
         $context = ['channel' => 'Extra', 'name' => $args[0]];
         DebugbarLogger::getInstance()->log(LogLevel::DEBUG, $args[1], $context);
@@ -301,7 +302,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args argument supplied to triggerEvent
      */
-    public static function eventDebugLog($args)
+    public static function eventDebugLog($args): void
     {
         DebugbarLogger::getInstance()->dump($args);
     }
@@ -311,10 +312,10 @@ class DebugbarPreload extends PreloadItem
      *
      * @param array $args array of name and label for timer
      */
-    public static function eventDebugTimerStart($args)
+    public static function eventDebugTimerStart(array $args): void
     {
         $args = (array) $args;
-        DebugbarLogger::getInstance()->startTime($args[0], isset($args[1]) ? $args[1] : null);
+        DebugbarLogger::getInstance()->startTime($args[0], $args[1] ?? null);
     }
 
     /**
@@ -322,7 +323,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param string $args name of timer
      */
-    public static function eventDebugTimerStop($args)
+    public static function eventDebugTimerStop(string $args): void
     {
         DebugbarLogger::getInstance()->stopTime($args);
     }
@@ -332,7 +333,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
-    public static function eventCoreSessionShutdown($args)
+    public static function eventCoreSessionShutdown($args): void
     {
         DebugbarLogger::getInstance()->renderDebugBar();
     }
@@ -342,7 +343,7 @@ class DebugbarPreload extends PreloadItem
      *
      * @return array of config options
      */
-    private static function getConfigs()
+    private static function getConfigs(): array
     {
         static $configs = null;
 

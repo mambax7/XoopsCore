@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -43,38 +44,38 @@ abstract class XoopsDownloader
      * @abstract
      * @param bool|string $newfilename
      */
-    abstract public function addFile($filepath, $newfilename = null);
+    abstract public function addFile($filepath, $newfilename = null): void;
 
     /**
      * @abstract
      * @param null $newfilename
      */
-    abstract public function addBinaryFile($filepath, $newfilename = null);
+    abstract public function addBinaryFile($filepath, $newfilename = null): void;
 
     /**
      * @abstract
      * @param int $time
      */
-    abstract public function addFileData(&$data, $filename, $time = 0);
+    abstract public function addFileData(&$data, $filename, int $time = 0): void;
 
     /**
      * @abstract
      * @param int $time
      */
-    abstract public function addBinaryFileData(&$data, $filename, $time = 0);
+    abstract public function addBinaryFileData(&$data, $filename, int $time = 0): void;
 
     /**
      * @abstract
      * @param bool $gzip
      */
-    abstract public function download($name, $gzip = true);
+    abstract public function download($name, bool $gzip = true): void;
 
     /**
      * Send the HTTP header.
      *
      * @param string $filename
      */
-    protected function _header($filename)
+    protected function _header(string $filename): void
     {
         if (function_exists('mb_http_output')) {
             mb_http_output('pass');

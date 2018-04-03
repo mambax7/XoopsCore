@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -80,7 +81,7 @@ class XoopsDatabaseManager
      *
      * @return bool is it connectable?
      */
-    public function isConnectable()
+    public function isConnectable(): bool
     {
         return (false !== $this->xoopsDatabase->connect(false)) ? true : false;
     }
@@ -90,7 +91,7 @@ class XoopsDatabaseManager
      *
      * @return bool returns if exists
      */
-    public function dbExists()
+    public function dbExists(): bool
     {
         return (false !== $this->xoopsDatabase->connect()) ? true : false;
     }
@@ -100,7 +101,7 @@ class XoopsDatabaseManager
      *
      * @return bool return if successful
      */
-    public function createDB()
+    public function createDB(): bool
     {
         $this->xoopsDatabase->connect(false);
 
@@ -117,7 +118,7 @@ class XoopsDatabaseManager
      *
      * @return bool
      */
-    public function queryFromFile($sql_file_path, $force = false)
+    public function queryFromFile(string $sql_file_path, bool $force = false): bool
     {
         if (!XoopsLoad::fileExists($sql_file_path)) {
             return false;
@@ -195,7 +196,7 @@ class XoopsDatabaseManager
      *
      * @return string
      */
-    public function report()
+    public function report(): string
     {
         $commands = ['create', 'insert', 'alter', 'drop'];
         $content = '<ul class="log">';
@@ -233,7 +234,7 @@ class XoopsDatabaseManager
      *
      * @return resource
      */
-    public function query($sql)
+    public function query(string $sql)
     {
         $this->xoopsDatabase->connect();
 
@@ -247,7 +248,7 @@ class XoopsDatabaseManager
      *
      * @return string prefixed table
      */
-    public function prefix($table)
+    public function prefix(string $table): string
     {
         $this->xoopsDatabase->connect();
 
@@ -261,7 +262,7 @@ class XoopsDatabaseManager
      *
      * @return array returns the array
      */
-    public function fetchArray($ret)
+    public function fetchArray(string $ret): array
     {
         $this->xoopsDatabase->connect();
 
@@ -276,7 +277,7 @@ class XoopsDatabaseManager
      *
      * @return bool|void
      */
-    public function insert($table, $query)
+    public function insert(string $table, string $query)
     {
         $this->xoopsDatabase->connect();
         $table = $this->xoopsDatabase->prefix($table);
@@ -304,7 +305,7 @@ class XoopsDatabaseManager
      *
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return (isset($this->f_tables)) ? true : false;
     }
@@ -319,7 +320,7 @@ class XoopsDatabaseManager
      *
      * @return array list of dropped tables
      */
-    public function deleteTables($tables)
+    public function deleteTables(array $tables): array
     {
         $deleted = [];
         $this->xoopsDatabase->connect();
@@ -340,7 +341,7 @@ class XoopsDatabaseManager
      *
      * @return bool true if exists or false if doesnt
      */
-    public function tableExists($table)
+    public function tableExists(string $table): bool
     {
         $table = trim($table);
         $ret = false;
@@ -364,7 +365,7 @@ class XoopsDatabaseManager
      *
      * @return $this does not return anything
      */
-    public function copyFields($fieldsMap, $oTableName, $nTableName, $dropTable = false)
+    public function copyFields(array $fieldsMap, string $oTableName, string $nTableName, bool $dropTable = false)
     {
         $sql = 'SHOW COLUMNS FROM '.$this->xoopsDatabase->prefix($oTableName);
         $result = $this->xoopsDatabase->queryF($sql);

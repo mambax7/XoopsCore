@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -48,7 +49,7 @@ class ExportVisitor implements Visitor
      *
      * @return Schema the generated schema object
      */
-    public function getSchemaArray()
+    public function getSchemaArray(): Schema
     {
         return $this->schemaArray;
     }
@@ -58,7 +59,7 @@ class ExportVisitor implements Visitor
      *
      * @param Schema $schema schema object
      */
-    public function acceptSchema(Schema $schema)
+    public function acceptSchema(Schema $schema): void
     {
     }
 
@@ -67,7 +68,7 @@ class ExportVisitor implements Visitor
      *
      * @param Table $table a table object
      */
-    public function acceptTable(Table $table)
+    public function acceptTable(Table $table): void
     {
         $this->schemaArray['tables'][$table->getName()]['options'] = $table->getOptions();
     }
@@ -78,7 +79,7 @@ class ExportVisitor implements Visitor
      * @param Table  $table  a table object
      * @param Column $column a column object
      */
-    public function acceptColumn(Table $table, Column $column)
+    public function acceptColumn(Table $table, Column $column): void
     {
         $this->schemaArray['tables'][$table->getName()]['columns'][$column->getName()] = $column->toArray();
         $this->schemaArray['tables'][$table->getName()]['columns'][$column->getName()]['type'] =
@@ -91,7 +92,7 @@ class ExportVisitor implements Visitor
      * @param Table                $localTable   a table object
      * @param ForeignKeyConstraint $fkConstraint a constraint object
      */
-    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint): void
     {
         if (!isset($this->schemaArray['tables'][$localTable->getName()]['constraint'])) {
             $this->schemaArray['tables'][$localTable->getName()]['constraint'] = [];
@@ -111,7 +112,7 @@ class ExportVisitor implements Visitor
      * @param Table $table a table object
      * @param Index $index a column object
      */
-    public function acceptIndex(Table $table, Index $index)
+    public function acceptIndex(Table $table, Index $index): void
     {
         $this->schemaArray['tables'][$table->getName()]['indexes'][$index->getName()] = [
             'name' => $index->getName(),
@@ -126,7 +127,7 @@ class ExportVisitor implements Visitor
      *
      * @param Sequence $sequence a sequence object
      */
-    public function acceptSequence(Sequence $sequence)
+    public function acceptSequence(Sequence $sequence): void
     {
         $this->schemaArray['sequence'][$sequence->getName()] = [
             'name' => $sequence->getName(),

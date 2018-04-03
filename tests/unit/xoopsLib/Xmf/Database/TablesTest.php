@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -29,7 +29,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Tables();
         $this->prefix = Factory::getConnection()->prefix();
@@ -39,11 +39,11 @@ class TablesTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testName()
+    public function testName(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -54,7 +54,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->prefix($tableName), $tables[$tableName]['name']);
     }
 
-    public function testAddColumn()
+    public function testAddColumn(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -69,7 +69,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testAddPrimaryKey()
+    public function testAddPrimaryKey(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -84,7 +84,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testAddTable()
+    public function testAddTable(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -92,7 +92,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testUseTable()
+    public function testUseTable(): void
     {
         $actual = $this->object->useTable('system_user');
         $this->assertTrue($actual);
@@ -101,7 +101,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($actual);
     }
 
-    public function testGetColumnAttributes()
+    public function testGetColumnAttributes(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -117,7 +117,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertNotFalse(stristr($actual, 'auto_increment'));
     }
 
-    public function testGetTableIndexes()
+    public function testGetTableIndexes(): void
     {
         $tableName = 'system_user';
         $this->object->useTable($tableName);
@@ -129,7 +129,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($actual);
     }
 
-    public function testAlterColumn()
+    public function testAlterColumn(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -146,7 +146,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testCopyTable()
+    public function testCopyTable(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -164,7 +164,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($tables[$tableName]['keys'], $tables[$copyName]['keys']);
     }
 
-    public function testCreateIndex()
+    public function testCreateIndex(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -180,7 +180,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testDropColumn()
+    public function testDropColumn(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -195,7 +195,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testDropIndex()
+    public function testDropIndex(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -210,7 +210,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testDropIndexes()
+    public function testDropIndexes(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -218,7 +218,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDropPrimaryKey()
+    public function testDropPrimaryKey(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -231,7 +231,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testDropTable()
+    public function testDropTable(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -244,7 +244,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testRenameTable()
+    public function testRenameTable(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -258,7 +258,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testSetTableOptions()
+    public function testSetTableOptions(): void
     {
         $tableName = 'system_user';
         $actual = $this->object->useTable($tableName);
@@ -272,7 +272,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $queue[0]);
     }
 
-    public function testExecuteQueue()
+    public function testExecuteQueue(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -280,7 +280,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -288,7 +288,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testInsert()
+    public function testInsert(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -296,7 +296,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -304,7 +304,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -312,7 +312,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRenderTableCreate()
+    public function testRenderTableCreate(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -320,7 +320,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetLastError()
+    public function testGetLastError(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -328,7 +328,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetLastErrNo()
+    public function testGetLastErrNo(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -336,7 +336,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testDumpTables()
+    public function testDumpTables(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -344,7 +344,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAddToQueue()
+    public function testAddToQueue(): void
     {
         $this->object->resetQueue();
         $queue = $this->object->dumpQueue();

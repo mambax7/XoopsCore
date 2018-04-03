@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsConsole\Commands;
 
@@ -15,7 +15,7 @@ class SetConfigCommand extends Command
     /**
      * establish the command configuration.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('set-config')
             ->setDescription('Set a system configuration value')
@@ -35,7 +35,7 @@ EOT
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $xoops = Xoops::getInstance();
         $name = $input->getArgument('name');

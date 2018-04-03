@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -15,7 +15,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Message();
     }
@@ -24,16 +24,16 @@ class MessageTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(Message::class, $this->object);
     }
 
-    public function testNewMessageWithArguments()
+    public function testNewMessageWithArguments(): void
     {
         $message = new Message('subject', 'body', 2, 1);
         $this->assertInstanceOf(Message::class, $message);
@@ -43,7 +43,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('body', $message->getBody());
     }
 
-    public function testWithToId()
+    public function testWithToId(): void
     {
         $actual = $this->object->withToId(1);
         $this->assertInstanceOf(Message::class, $actual);
@@ -51,7 +51,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, $actual->getToId());
     }
 
-    public function testWithFromId()
+    public function testWithFromId(): void
     {
         $actual = $this->object->withFromId(2);
         $this->assertInstanceOf(Message::class, $actual);
@@ -59,7 +59,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(2, $actual->getFromId());
     }
 
-    public function testWithSubject()
+    public function testWithSubject(): void
     {
         $actual = $this->object->withSubject('subject');
         $this->assertInstanceOf(Message::class, $actual);
@@ -67,7 +67,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('subject', $actual->getSubject());
     }
 
-    public function testWithBody()
+    public function testWithBody(): void
     {
         $actual = $this->object->withBody('body');
         $this->assertInstanceOf(Message::class, $actual);
@@ -75,7 +75,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('body', $actual->getBody());
     }
 
-    public function testNewMessageWithFluent()
+    public function testNewMessageWithFluent(): void
     {
         $actual = $this->object->withToId(1)->withFromId(2)->withSubject('subject')->withBody('body');
         $this->assertNotSame($this->object, $actual);
@@ -87,7 +87,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->object->getToId();
     }
 
-    public function testNewMessageMissingArguments()
+    public function testNewMessageMissingArguments(): void
     {
         $message = new Message(null, null, 2);
         $this->assertSame(2, $message->getFromId());
@@ -95,13 +95,13 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $message->getToId();
     }
 
-    public function testNewMessageBadArguments()
+    public function testNewMessageBadArguments(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $message = new Message(null, null, -1);
     }
 
-    public function testWithToIdException()
+    public function testWithToIdException(): void
     {
         try {
             $this->object->withToId('0');
@@ -111,7 +111,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\InvalidArgumentException::class, $e);
     }
 
-    public function testWithFromIdException()
+    public function testWithFromIdException(): void
     {
         try {
             $this->object->withFromId(-88);
@@ -121,7 +121,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\InvalidArgumentException::class, $e);
     }
 
-    public function testWithSubjectException()
+    public function testWithSubjectException(): void
     {
         try {
             $this->object->withSubject(' ');
@@ -131,7 +131,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\InvalidArgumentException::class, $e);
     }
 
-    public function testWithBodyException()
+    public function testWithBodyException(): void
     {
         try {
             $this->object->withBody("\n");
@@ -141,7 +141,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\InvalidArgumentException::class, $e);
     }
 
-    public function testGetToIdException()
+    public function testGetToIdException(): void
     {
         try {
             $this->object->getToId();
@@ -151,7 +151,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\LogicException::class, $e);
     }
 
-    public function testGetFromIdException()
+    public function testGetFromIdException(): void
     {
         try {
             $this->object->getFromId();
@@ -161,7 +161,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\LogicException::class, $e);
     }
 
-    public function testGetSubjectException()
+    public function testGetSubjectException(): void
     {
         try {
             $this->object->getSubject();
@@ -171,7 +171,7 @@ class MessageTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\LogicException::class, $e);
     }
 
-    public function testGetBodyException()
+    public function testGetBodyException(): void
     {
         try {
             $this->object->getBody();

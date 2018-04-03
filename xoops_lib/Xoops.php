@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -159,7 +160,7 @@ class Xoops
      *
      * @return Xoops
      */
-    public static function getInstance()
+    public static function getInstance(): Xoops
     {
         static $instance;
         if (!isset($instance)) {
@@ -175,7 +176,7 @@ class Xoops
      *
      * @return Xoops\Core\Database\Connection
      */
-    public function db()
+    public function db(): Xoops\Core\Database\Connection
     {
         return \Xoops\Core\Database\Factory::getConnection();
     }
@@ -187,7 +188,7 @@ class Xoops
      *
      * @return \Xoops\Core\Cache\Access
      */
-    public function cache($cacheName = 'default')
+    public function cache(string $cacheName = 'default'): \Xoops\Core\Cache\Access
     {
         static $cacheManager;
 
@@ -203,7 +204,7 @@ class Xoops
      *
      * @return \Xoops\Core\Logger
      */
-    public function logger()
+    public function logger(): \Xoops\Core\Logger
     {
         return \Xoops\Core\Logger::getInstance();
     }
@@ -213,7 +214,7 @@ class Xoops
      *
      * @return \Xoops\Core\Events instance
      */
-    public function events()
+    public function events(): \Xoops\Core\Events
     {
         return \Xoops\Core\Events::getInstance();
     }
@@ -223,7 +224,7 @@ class Xoops
      *
      * @return Xoops\Core\Assets instance
      */
-    public function assets()
+    public function assets(): Xoops\Core\Assets
     {
         static $instance;
         if (!isset($instance)) {
@@ -240,7 +241,7 @@ class Xoops
      *
      * @return Xoops\Core\Service\Provider instance
      */
-    public function service($service)
+    public function service(string $service): Xoops\Core\Service\Provider
     {
         static $instance;
         if (!isset($instance)) {
@@ -255,7 +256,7 @@ class Xoops
      *
      * @return Xoops\Core\Registry
      */
-    public function registry()
+    public function registry(): Xoops\Core\Registry
     {
         static $instance;
         if (!isset($instance)) {
@@ -270,7 +271,7 @@ class Xoops
      *
      * @return XoopsSecurity
      */
-    public function security()
+    public function security(): XoopsSecurity
     {
         static $instance;
         if (!isset($instance)) {
@@ -285,7 +286,7 @@ class Xoops
      *
      * @return null|XoopsTpl
      */
-    public function tpl()
+    public function tpl(): ?XoopsTpl
     {
         return $this->tpl;
     }
@@ -297,7 +298,7 @@ class Xoops
      *
      * @return XoopsTpl
      */
-    public function setTpl(XoopsTpl $tpl)
+    public function setTpl(XoopsTpl $tpl): XoopsTpl
     {
         return $this->tpl = $tpl;
     }
@@ -309,7 +310,7 @@ class Xoops
      *
      * @return null|XoopsTheme
      */
-    public function theme($tpl_name = null)
+    public function theme(?string $tpl_name = null): ?XoopsTheme
     {
         if (!isset($this->theme)) {
             if ($tpl_name) {
@@ -332,7 +333,7 @@ class Xoops
                     'contentTemplate' => $this->tpl_name,
                 ]));
                 //$this->theme()->loadLocalization('admin');
-                list($cssAssets, $jsAssets) = $this->theme()->getLocalizationAssets('admin');
+                [$cssAssets, $jsAssets] = $this->theme()->getLocalizationAssets('admin');
                 if (!empty($cssAssets)) {
                     $this->theme()->addBaseStylesheetAssets($cssAssets);
                 }
@@ -358,7 +359,7 @@ class Xoops
      *
      * @return XoopsTheme
      */
-    public function setTheme(XoopsTheme $theme)
+    public function setTheme(XoopsTheme $theme): XoopsTheme
     {
         return $this->theme = $theme;
     }
@@ -371,7 +372,7 @@ class Xoops
      *
      * @return string
      */
-    public function path($url, $virtual = false)
+    public function path(string $url, bool $virtual = false): string
     {
         $url = $this->normalizePath($url);
         $rootPath = $this->normalizePath(\XoopsBaseConfig::get('root-path').'/');
@@ -380,10 +381,10 @@ class Xoops
         }
         //$url = ltrim($url, '/');
         $parts = explode('/', $url, 2);
-        $root = isset($parts[0]) ? $parts[0] : '';
-        $path = isset($parts[1]) ? $parts[1] : '';
+        $root = $parts[0] ?? '';
+        $path = $parts[1] ?? '';
         if (!isset($this->paths[$root])) {
-            list($root, $path) = ['www', $url];
+            [$root, $path] = ['www', $url];
         }
         if (!$virtual) { // Returns a physical path
             $path = $this->paths[$root][0].'/'.$path;
@@ -401,7 +402,7 @@ class Xoops
      *
      * @return string normalized path
      */
-    public function normalizePath($path)
+    public function normalizePath(string $path): string
     {
         return str_replace('\\', '/', $path);
     }
@@ -413,7 +414,7 @@ class Xoops
      *
      * @return string
      */
-    public function url($url)
+    public function url(string $url): string
     {
         return false !== strpos($url, '://') ? $url : $this->path($url, true);
     }
@@ -426,14 +427,14 @@ class Xoops
      *
      * @return string
      */
-    public function buildUrl($url, $params = [])
+    public function buildUrl(string $url, array $params = []): string
     {
         if ('.' === $url) {
             $url = $_SERVER['REQUEST_URI'];
         }
         $split = explode('?', $url);
         if (count($split) > 1) {
-            list($url, $query) = $split;
+            [$url, $query] = $split;
             parse_str($query, $query);
             $params = array_merge($query, $params);
         }
@@ -455,7 +456,7 @@ class Xoops
      *
      * @return string|false
      */
-    public function pathExists($path, $error_type)
+    public function pathExists(string $path, string $error_type)
     {
         if (XoopsLoad::fileExists($path)) {
             return $path;
@@ -473,7 +474,7 @@ class Xoops
     /**
      * Start gzipCompression output buffer.
      */
-    public function gzipCompression()
+    public function gzipCompression(): void
     {
         /*
          * Disable gzip compression if PHP is run under CLI mode and needs refactored to work correctly
@@ -496,7 +497,7 @@ class Xoops
     /**
      * Translate a path.
      */
-    public function pathTranslation()
+    public function pathTranslation(): void
     {
         /*
          * *#@+
@@ -526,7 +527,7 @@ class Xoops
     /**
      * Select Theme.
      */
-    public function themeSelect()
+    public function themeSelect(): void
     {
         $xoopsThemeSelect = Request::getString('xoops_theme_select', '', 'POST');
         if (!empty($xoopsThemeSelect) && in_array($xoopsThemeSelect, $this->getConfig('theme_set_allowed'), true)) {
@@ -549,7 +550,7 @@ class Xoops
      * @return array|false associative array of 'tpl_name', 'type', 'module', 'file'
      *                     or false on error
      */
-    public function getTplInfo($tpl_name)
+    public function getTplInfo(string $tpl_name)
     {
         $parts = [];
         $matched = preg_match('#(\w+):(\w+)/(.*)$#', $tpl_name, $parts);
@@ -599,7 +600,7 @@ class Xoops
      *
      * @return null|boolean
      */
-    public function header($tpl_name = null)
+    public function header(?string $tpl_name = null): ?bool
     {
         static $included = false;
         if ($included) {
@@ -702,7 +703,7 @@ class Xoops
      *
      * @return bool
      */
-    public function isModule()
+    public function isModule(): bool
     {
         return $this->module instanceof XoopsModule ? true : false;
     }
@@ -712,7 +713,7 @@ class Xoops
      *
      * @return bool
      */
-    public function isUser()
+    public function isUser(): bool
     {
         return $this->user instanceof XoopsUser ? true : false;
     }
@@ -722,7 +723,7 @@ class Xoops
      *
      * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->userIsAdmin;
     }
@@ -734,7 +735,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsBlockHandler
      */
-    public function getHandlerBlock($optional = false)
+    public function getHandlerBlock(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsBlockHandler
     {
         return $this->getHandler('Block', $optional);
     }
@@ -746,7 +747,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsBlockModuleLinkHandler
      */
-    public function getHandlerBlockModuleLink($optional = false)
+    public function getHandlerBlockModuleLink(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsBlockModuleLinkHandler
     {
         return $this->getHandler('BlockModuleLink', $optional);
     }
@@ -758,7 +759,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsConfigHandler
      */
-    public function getHandlerConfig($optional = false)
+    public function getHandlerConfig(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsConfigHandler
     {
         return $this->getHandler('Config', $optional);
     }
@@ -770,7 +771,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsConfigItemHandler
      */
-    public function getHandlerConfigItem($optional = false)
+    public function getHandlerConfigItem(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsConfigItemHandler
     {
         return $this->getHandler('ConfigItem', $optional);
     }
@@ -782,7 +783,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsConfigOptionHandler
      */
-    public function getHandlerConfigOption($optional = false)
+    public function getHandlerConfigOption(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsConfigOptionHandler
     {
         return $this->getHandler('ConfigOption', $optional);
     }
@@ -794,7 +795,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsGroupHandler
      */
-    public function getHandlerGroup($optional = false)
+    public function getHandlerGroup(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsGroupHandler
     {
         return $this->getHandler('Group', $optional);
     }
@@ -806,7 +807,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler
      */
-    public function getHandlerGroupPermission($optional = false)
+    public function getHandlerGroupPermission(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler
     {
         return $this->getHandler('GroupPerm', $optional);
     }
@@ -818,7 +819,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsMemberHandler
      */
-    public function getHandlerMember($optional = false)
+    public function getHandlerMember(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsMemberHandler
     {
         return $this->getHandler('Member', $optional);
     }
@@ -830,7 +831,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsMembershipHandler
      */
-    public function getHandlerMembership($optional = false)
+    public function getHandlerMembership(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsMembershipHandler
     {
         return $this->getHandler('Membership', $optional);
     }
@@ -842,7 +843,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsModuleHandler
      */
-    public function getHandlerModule($optional = false)
+    public function getHandlerModule(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsModuleHandler
     {
         return $this->getHandler('Module', $optional);
     }
@@ -854,7 +855,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsOnlineHandler
      */
-    public function getHandlerOnline($optional = false)
+    public function getHandlerOnline(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsOnlineHandler
     {
         return $this->getHandler('Online', $optional);
     }
@@ -866,7 +867,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsPrivateMessageHandler
      */
-    public function getHandlerPrivateMessage($optional = false)
+    public function getHandlerPrivateMessage(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsPrivateMessageHandler
     {
         return $this->getHandler('Privmessage', $optional);
     }
@@ -876,7 +877,7 @@ class Xoops
      *
      * @return Xoops\Core\Session\Manager
      */
-    public function session()
+    public function session(): Xoops\Core\Session\Manager
     {
         if (null === $this->sessionManager) {
             $this->sessionManager = new \Xoops\Core\Session\Manager();
@@ -892,7 +893,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsTplFileHandler
      */
-    public function getHandlerTplFile($optional = false)
+    public function getHandlerTplFile(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsTplFileHandler
     {
         return $this->getHandler('tplfile', $optional);
     }
@@ -904,7 +905,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsTplSetHandler
      */
-    public function getHandlerTplSet($optional = false)
+    public function getHandlerTplSet(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsTplSetHandler
     {
         return $this->getHandler('Tplset', $optional);
     }
@@ -916,7 +917,7 @@ class Xoops
      *
      * @return \Xoops\Core\Kernel\Handlers\XoopsUserHandler
      */
-    public function getHandlerUser($optional = false)
+    public function getHandlerUser(bool $optional = false): \Xoops\Core\Kernel\Handlers\XoopsUserHandler
     {
         return $this->getHandler('user', $optional);
     }
@@ -930,7 +931,7 @@ class Xoops
      *
      * @return XoopsObjectHandler|XoopsPersistableObjectHandler|bool
      */
-    public function getModuleHandler($name = null, $module_dir = null, $optional = false)
+    public function getModuleHandler(?string $name = null, ?string $module_dir = null, bool $optional = false)
     {
         // if $module_dir is not specified
         if (!isset($module_dir)) {
@@ -970,7 +971,7 @@ class Xoops
      *
      * @return Xoops\Form\Form|bool
      */
-    public function getModuleForm($obj, $name, $module_dir = null)
+    public function getModuleForm(XoopsObject $obj, string $name, string $module_dir = null)
     {
         if (empty($name)) {
             return false;
@@ -1005,7 +1006,7 @@ class Xoops
      *
      * @return bool|Xoops\Module\Helper\HelperAbstract
      */
-    public static function getModuleHelper($dirname)
+    public static function getModuleHelper(string $dirname)
     {
         return \Xoops\Module\Helper::getHelper($dirname);
     }
@@ -1022,7 +1023,7 @@ class Xoops
      *
      * @return boolean
      */
-    public function loadLanguage($name, $domain = '', $language = null)
+    public function loadLanguage(string $name, $domain = '', $language = null): bool
     {
         if (empty($name)) {
             return false;
@@ -1055,7 +1056,7 @@ class Xoops
      *
      * @return boolean
      */
-    public static function loadLocale($domain = null, $locale = null)
+    public static function loadLocale(string $domain = null, string $locale = null): bool
     {
         return \Xoops\Locale::loadLocale($domain, $locale);
     }
@@ -1069,7 +1070,7 @@ class Xoops
      * @param  array  $params array of params used by this key
      * @return string
      */
-    public function translate($key, $dirname = 'xoops', $params = [])
+    public function translate(string $key, string $dirname = 'xoops', array $params = []): string
     {
         return \Xoops\Locale::translate($key, $dirname, $params);
     }
@@ -1079,7 +1080,7 @@ class Xoops
      *
      * @return array
      */
-    public function getActiveModules()
+    public function getActiveModules(): array
     {
         if (is_array($this->activeModules)) {
             return $this->activeModules;
@@ -1089,7 +1090,7 @@ class Xoops
             if (!$this->activeModules = $this->cache()->read('system/modules/active')) {
                 $this->setActiveModules();
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->activeModules = [];
         }
 
@@ -1101,7 +1102,7 @@ class Xoops
      *
      * @return array
      */
-    public function setActiveModules()
+    public function setActiveModules(): array
     {
         $module_handler = $this->getHandlerModule();
         $modules_array = $module_handler->getAll(new Criteria('isactive', 1), ['dirname'], false, false);
@@ -1122,7 +1123,7 @@ class Xoops
      *
      * @return bool
      */
-    public function isActiveModule($dirname)
+    public function isActiveModule(string $dirname): bool
     {
         if (isset($dirname) && in_array($dirname, $this->getActiveModules(), true)) {
             return true;
@@ -1138,7 +1139,7 @@ class Xoops
      *
      * @return bool|XoopsModule
      */
-    public function getModuleByDirname($dirname)
+    public function getModuleByDirname(string $dirname)
     {
         $key = "system/module/dirname/{$dirname}";
         if (!$module = $this->cache()->read($key)) {
@@ -1156,7 +1157,7 @@ class Xoops
      *
      * @return bool|XoopsModule
      */
-    public function getModuleById($id)
+    public function getModuleById(int $id)
     {
         $key = "system/module/id/{$id}";
         if (!$module = $this->cache()->read($key)) {
@@ -1172,7 +1173,7 @@ class Xoops
      *
      * @param bool $closehead true to close the HTML head element
      */
-    public function simpleHeader($closehead = true)
+    public function simpleHeader(bool $closehead = true): void
     {
         $this->events()->triggerEvent('core.header.start');
         $this->theme();
@@ -1221,7 +1222,7 @@ class Xoops
     /**
      * Render simpleFooter.
      */
-    public function simpleFooter()
+    public function simpleFooter(): void
     {
         $this->events()->triggerEvent('core.header.footer');
         echo '</body></html>';
@@ -1237,7 +1238,7 @@ class Xoops
      *
      * @return string
      */
-    public function alert($type, $msg, $title = '/')
+    public function alert(string $type, $msg, $title = '/'): string
     {
         $tpl = new XoopsTpl();
         switch ($type) {
@@ -1303,7 +1304,7 @@ class Xoops
      *
      * @return string rendered confirm message
      */
-    public function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
+    public function confirm(array $hiddens, string $action, string $msg, string $submit = '', bool $addtoken = true): string
     {
         $tpl = new XoopsTpl();
         $submit = ('' !== $submit) ? trim($submit) : XoopsLocale::A_SUBMIT;
@@ -1338,7 +1339,7 @@ class Xoops
      *
      * @return int unix timestamp
      */
-    public function getUserTimestamp($time)
+    public function getUserTimestamp($time): int
     {
         $dt = \Xoops\Core\Locale\Time::cleanTime($time);
 
@@ -1353,7 +1354,7 @@ class Xoops
      *
      * @return int
      */
-    public function userTimeToServerTime($timestamp, $userTZ = null)
+    public function userTimeToServerTime(int $timestamp, $userTZ = null): int
     {
         if (!isset($userTZ)) {
             $userTZ = $this->getConfig('default_TZ');
@@ -1382,7 +1383,7 @@ class Xoops
      *
      * @todo make better passwords
      */
-    public function makePass()
+    public function makePass(): string
     {
         $makepass = '';
         $syllables = [
@@ -1395,9 +1396,9 @@ class Xoops
         ];
         for ($count = 1; $count <= 4; ++$count) {
             if (1 === mt_rand() % 10) {
-                $makepass .= sprintf('%0.0f', (rand() % 50) + 1);
+                $makepass .= sprintf('%0.0f', (random_int(0, getrandmax()) % 50) + 1);
             } else {
-                $makepass .= sprintf('%s', $syllables[rand() % 62]);
+                $makepass .= sprintf('%s', $syllables[random_int(0, getrandmax()) % 62]);
             }
         }
 
@@ -1412,7 +1413,7 @@ class Xoops
      *
      * @return false|string email address if valid, otherwise false
      */
-    public function checkEmail($email, $antispam = false)
+    public function checkEmail(string $email, bool $antispam = false)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
@@ -1432,7 +1433,7 @@ class Xoops
      *
      * @return string
      */
-    public function formatURL($url)
+    public function formatURL(string $url): string
     {
         $url = trim($url);
         if ('' !== $url) {
@@ -1449,7 +1450,7 @@ class Xoops
      *
      * @return string
      */
-    public function getBanner()
+    public function getBanner(): string
     {
         $options = '';
         $this->events()->triggerEvent('core.banner.display', [&$options]);
@@ -1467,7 +1468,7 @@ class Xoops
      *                                   URL -  used for return from login redirect
      * @param bool $allowExternalLink allow redirect to external URL
      */
-    public function redirect($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
+    public function redirect(string $url, int $time = 3, string $message = '', bool $addredirect = true, bool $allowExternalLink = false): void
     {
         $this->events()->triggerEvent('core.redirect.start', [
             $url, $time, $message, $addredirect, $allowExternalLink,
@@ -1539,7 +1540,7 @@ class Xoops
      *
      * @param string $url URL to redirect to
      */
-    public static function simpleRedirect($url)
+    public static function simpleRedirect(string $url): void
     {
         header("location: {$url}");
         $xoops = \Xoops::getInstance();
@@ -1554,7 +1555,7 @@ class Xoops
      *
      * @return string
      */
-    public function getEnv($key)
+    public function getEnv(string $key): string
     {
         return HttpRequest::getInstance()->getEnv($key, '');
     }
@@ -1566,7 +1567,7 @@ class Xoops
      *
      * @return string
      */
-    public function getCss($theme = '')
+    public function getCss(string $theme = ''): string
     {
         if ('' === $theme) {
             $theme = $this->getConfig('theme_set');
@@ -1634,7 +1635,7 @@ class Xoops
      *
      * @return string
      */
-    public function getOption($key)
+    public function getOption(string $key): string
     {
         $ret = '';
         if (isset($this->option[$key])) {
@@ -1650,7 +1651,7 @@ class Xoops
      * @param string $key   key (name) of option
      * @param null   $value value for option
      */
-    public function setOption($key, $value = null)
+    public function setOption(string $key, $value = null): void
     {
         if (null !== $value) {
             $this->option[$key] = $value;
@@ -1664,7 +1665,7 @@ class Xoops
      *
      * @return mixed
      */
-    public function getConfig($key)
+    public function getConfig(string $key)
     {
         return $this->getModuleConfig($key, 'system');
     }
@@ -1674,7 +1675,7 @@ class Xoops
      *
      * @return array
      */
-    public function getConfigs()
+    public function getConfigs(): array
     {
         return $this->getModuleConfigs('system');
     }
@@ -1685,7 +1686,7 @@ class Xoops
      * @param array  $configs array of configs
      * @param string $dirname module name
      */
-    public function addConfigs($configs, $dirname = 'system')
+    public function addConfigs(array $configs, string $dirname = 'system'): void
     {
         $dirname = trim(strtolower($dirname));
         if (empty($dirname)) {
@@ -1703,7 +1704,7 @@ class Xoops
      * @param mixed  $value   configuration value
      * @param string $dirname dirname of module
      */
-    public function setConfig($key, $value = null, $dirname = 'system')
+    public function setConfig(string $key, $value = null, $dirname = 'system'): void
     {
         if (null !== $value) {
             $dirname = trim(strtolower($dirname));
@@ -1720,7 +1721,7 @@ class Xoops
      * @param string $key     key (name) of the configuration item
      * @param string $dirname dirname of module
      */
-    public function unsetConfig($key, $dirname = 'system')
+    public function unsetConfig(string $key, string $dirname = 'system'): void
     {
         $dirname = trim(strtolower($dirname));
         if (empty($dirname)) {
@@ -1735,7 +1736,7 @@ class Xoops
     /**
      * Unset all module configs.
      */
-    public function clearModuleConfigsCache()
+    public function clearModuleConfigsCache(): void
     {
         $this->moduleConfigs = [];
     }
@@ -1748,7 +1749,7 @@ class Xoops
      *
      * @return mixed the value for the named config
      */
-    public function getModuleConfig($key, $dirname = '')
+    public function getModuleConfig(string $key, string $dirname = '')
     {
         $dirname = trim(strtolower($dirname));
         if (empty($dirname)) {
@@ -1775,7 +1776,7 @@ class Xoops
      *
      * @return array
      */
-    public function getModuleConfigs($dirname = '')
+    public function getModuleConfigs(string $dirname = ''): array
     {
         $dirname = trim($dirname);
         if (empty($dirname)) {
@@ -1817,7 +1818,7 @@ class Xoops
      *                               false to add $values as a single index element
      * @param string $dirname dirname of module
      */
-    public function appendConfig($key, array $values, $appendWithKey = false, $dirname = 'system')
+    public function appendConfig(string $key, array $values, bool $appendWithKey = false, string $dirname = 'system'): void
     {
         $dirname = trim(strtolower($dirname));
         if (empty($dirname)) {
@@ -1838,7 +1839,7 @@ class Xoops
     /**
      * Disables page cache by overriding module cache settings.
      */
-    public function disableModuleCache()
+    public function disableModuleCache(): void
     {
         if ($this->isModule()) {
             $this->appendConfig('module_cache', [$this->module->getVar('mid') => 0], true);
@@ -1857,7 +1858,7 @@ class Xoops
      *
      * @return string|null domain, or null if domain is invalid
      */
-    public function getBaseDomain($url, $includeSubdomain = false)
+    public function getBaseDomain(string $url, bool $includeSubdomain = false): ?string
     {
         $url = mb_strtolower($url, 'UTF-8');
 
@@ -1898,7 +1899,7 @@ class Xoops
      *
      * @return boolean
      */
-    public function templateTouch($tpl_id)
+    public function templateTouch(string $tpl_id): bool
     {
         $tplfile = $this->getHandlerTplFile()->get($tpl_id);
 
@@ -1919,7 +1920,7 @@ class Xoops
      *
      * @param int $mid Module ID
      */
-    public function templateClearModuleCache($mid)
+    public function templateClearModuleCache(int $mid): void
     {
         $module = $this->getModuleById($mid);
         $xoopsTpl = new XoopsTpl();
@@ -1931,7 +1932,7 @@ class Xoops
      *
      * @param string $message message
      */
-    public function deprecated($message)
+    public function deprecated(string $message): void
     {
         $message = $this->logger()->sanitizePath($message);
         $this->events()->triggerEvent('core.deprecated', [$message]);
@@ -1940,7 +1941,7 @@ class Xoops
     /**
      * Support for disabling error reporting.
      */
-    public function disableErrorReporting()
+    public function disableErrorReporting(): void
     {
         //error_reporting(0);
         $this->events()->triggerEvent('core.disableerrorreporting');
@@ -1954,7 +1955,7 @@ class Xoops
      *
      * @return XoopsObjectHandler|XoopsPersistableObjectHandler|null
      */
-    protected function getHandler($name, $optional = false)
+    protected function getHandler(string $name, bool $optional = false)
     {
         if (!isset($this->kernelHandlers[$name])) {
             if (!isset($this->handlerFactory)) {

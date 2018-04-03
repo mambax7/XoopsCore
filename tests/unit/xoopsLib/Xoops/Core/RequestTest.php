@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -15,7 +15,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
@@ -23,17 +23,17 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetMethod()
+    public function testGetMethod(): void
     {
         $method = Request::getMethod();
         $this->assertTrue(in_array($method, ['GET', 'HEAD', 'POST', 'PUT'], true));
     }
 
-    public function testGetVar()
+    public function testGetVar(): void
     {
         $varname = 'RequestTest';
         $value = 'testing';
@@ -43,7 +43,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertNull(Request::getVar($varname.'no-such-key'));
     }
 
-    public function testGetInt()
+    public function testGetInt(): void
     {
         $varname = 'RequestTest';
 
@@ -62,7 +62,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, Request::getInt($varname.'no-such-key'));
     }
 
-    public function testGetFloat()
+    public function testGetFloat(): void
     {
         $varname = 'RequestTest';
 
@@ -79,7 +79,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(1.0 === Request::getFloat($varname));
     }
 
-    public function testGetBool()
+    public function testGetBool(): void
     {
         $varname = 'RequestTest';
 
@@ -101,7 +101,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse(Request::getBool($varname.'no-such-key'));
     }
 
-    public function testGetWord()
+    public function testGetWord(): void
     {
         $varname = 'RequestTest';
 
@@ -117,7 +117,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         //echo Request::getWord($varname);
     }
 
-    public function testGetCmd()
+    public function testGetCmd(): void
     {
         $varname = 'RequestTest';
 
@@ -131,7 +131,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('.99lorem_ipsum', Request::getCmd($varname), Request::getCmd($varname));
     }
 
-    public function testGetString()
+    public function testGetString(): void
     {
         $varname = 'RequestTest';
 
@@ -139,7 +139,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('Lorem ipsum alert();', Request::getString($varname));
     }
 
-    public function testGetArray()
+    public function testGetArray(): void
     {
         $varname = 'RequestTest';
 
@@ -158,7 +158,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($get, $testArray);
     }
 
-    public function testGetText()
+    public function testGetText(): void
     {
         $varname = 'RequestTest';
 
@@ -166,7 +166,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_REQUEST[$varname], Request::getText($varname));
     }
 
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $varname = 'RequestTest';
 
@@ -180,7 +180,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('modules/test/index.php', Request::getUrl($varname));
     }
 
-    public function testGetPath()
+    public function testGetPath(): void
     {
         $varname = 'RequestTest';
 
@@ -194,7 +194,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('/var/tmp', Request::getPath($varname), Request::getPath($varname));
     }
 
-    public function testGetEmail()
+    public function testGetEmail(): void
     {
         $varname = 'RequestTest';
 
@@ -209,7 +209,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($default, Request::getEmail($varname, $default));
     }
 
-    public function testGetIPv4()
+    public function testGetIPv4(): void
     {
         $varname = 'RequestTest';
 
@@ -224,7 +224,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($default, Request::getIP($varname, $default));
     }
 
-    public function testGetIPv6()
+    public function testGetIPv6(): void
     {
         $varname = 'RequestTest';
 
@@ -241,7 +241,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_REQUEST[$varname], Request::getIP($varname));
     }
 
-    public function testGetDateTime()
+    public function testGetDateTime(): void
     {
         $varname = 'datetimetest';
 
@@ -263,14 +263,14 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($exampleTime, $actual->format('h:i A'));
     }
 
-    public function testSetVar()
+    public function testSetVar(): void
     {
         $varname = 'RequestTest';
         Request::setVar($varname, 'Porshca', 'get');
         $this->assertSame($_REQUEST[$varname], 'Porshca');
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $varname = 'RequestTest';
 
@@ -286,7 +286,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('Lorem ipsum alert();', $get[$varname]);
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $varname = 'RequestTest';
         Request::set([$varname => 'Pourquoi'], 'get');

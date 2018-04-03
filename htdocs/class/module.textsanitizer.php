@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      *
      * @return Sanitizer The *Singleton* instance.
      */
-    public static function getInstance()
+    public static function getInstance(): Sanitizer
     {
         if (null === static::$instance) {
             static::$instance = new static();
@@ -50,7 +51,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      *
      * @throws LogicException
      */
-    public function addSlashes($text)
+    public function addSlashes(string $text): string
     {
         throw new LogicException('GPC is dead. Please stop.');
         return $text;
@@ -65,7 +66,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      *
      * @throws LogicException
      */
-    public function stripSlashesGPC($text)
+    public function stripSlashesGPC(string $text): string
     {
         throw new LogicException('GPC is dead. Please stop.');
         return $text;
@@ -83,7 +84,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      *
      * @return string
      */
-    public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+    public function displayTarea(string $text, int $html = 0, int $smiley = 1, int $xcode = 1, int $image = 1, int $br = 1): string
     {
         return $this->filterForDisplay($text, $html, $smiley, $xcode, $image, $br);
     }
@@ -100,7 +101,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      *
      * @return string
      */
-    public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+    public function previewTarea(string $text, int $html = 0, int $smiley = 1, int $xcode = 1, int $image = 1, int $br = 1): string
     {
         return $this->filterForDisplay($text, $html, $smiley, $xcode, $image, $br);
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -40,7 +41,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct(
             $db,
@@ -58,7 +59,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of groups the user belongs to
      */
-    public function getGroupsByUser($uid)
+    public function getGroupsByUser(int $uid): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -84,7 +85,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
      *
      * @return array array of users belonging to the group
      */
-    public function getUsersByGroup($groupid, $limit = 0, $start = 0)
+    public function getUsersByGroup(int $groupid, int $limit = 0, int $start = 0): array
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();

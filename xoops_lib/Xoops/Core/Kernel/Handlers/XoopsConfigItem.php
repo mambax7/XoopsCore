@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -75,7 +76,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('conf_id', $format);
     }
@@ -87,7 +88,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_id($format = '')
+    public function conf_id(string $format = '')
     {
         return $this->getVar('conf_id', $format);
     }
@@ -99,7 +100,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_modid($format = '')
+    public function conf_modid(string $format = '')
     {
         return $this->getVar('conf_modid', $format);
     }
@@ -111,7 +112,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_catid($format = '')
+    public function conf_catid(string $format = '')
     {
         return $this->getVar('conf_catid', $format);
     }
@@ -123,7 +124,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_name($format = '')
+    public function conf_name(string $format = '')
     {
         return $this->getVar('conf_name', $format);
     }
@@ -135,7 +136,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_title($format = '')
+    public function conf_title(string $format = '')
     {
         return $this->getVar('conf_title', $format);
     }
@@ -147,7 +148,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_value($format = '')
+    public function conf_value(string $format = '')
     {
         return $this->getVar('conf_value', $format);
     }
@@ -159,7 +160,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_desc($format = '')
+    public function conf_desc(string $format = '')
     {
         return $this->getVar('conf_desc', $format);
     }
@@ -171,7 +172,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_formtype($format = '')
+    public function conf_formtype(string $format = '')
     {
         return $this->getVar('conf_formtype', $format);
     }
@@ -183,7 +184,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_valuetype($format = '')
+    public function conf_valuetype(string $format = '')
     {
         return $this->getVar('conf_valuetype', $format);
     }
@@ -195,7 +196,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return mixed
      */
-    public function conf_order($format = '')
+    public function conf_order(string $format = '')
     {
         return $this->getVar('conf_order', $format);
     }
@@ -205,7 +206,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return string
      */
-    public function getConfValueForOutput()
+    public function getConfValueForOutput(): string
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
@@ -236,7 +237,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @param mixed $value Value by reference
      */
-    public function setConfValueForInput(&$value)
+    public function setConfValueForInput(&$value): void
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'array':
@@ -262,7 +263,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @param XoopsConfigOption|XoopsConfigOption[] $option configuration option(s)
      */
-    public function setConfOptions($option)
+    public function setConfOptions($option): void
     {
         if (is_array($option)) {
             $count = count($option);
@@ -290,7 +291,7 @@ class XoopsConfigItem extends XoopsObject
      * Clear options from this item.
      *
      **/
-    public function clearConfOptions()
+    public function clearConfOptions(): void
     {
         $this->configurationOptions = [];
     }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -34,7 +35,7 @@ class Random
      * @return string     hashed token
      * @throws \Exception on insufficient entropy
      */
-    public static function generateOneTimeToken($hash = 'sha512', $bytes = 64)
+    public static function generateOneTimeToken(string $hash = 'sha512', int $bytes = 64): string
     {
         $token = hash($hash, random_bytes($bytes));
 
@@ -53,7 +54,7 @@ class Random
      * @return string     hashed token
      * @throws \Exception on insufficient entropy
      */
-    public static function generateKey($hash = 'sha512', $bytes = 128)
+    public static function generateKey(string $hash = 'sha512', int $bytes = 128): string
     {
         $token = hash($hash, random_bytes($bytes));
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -6,23 +6,23 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class Kernel_CriteriaElementTestInstance extends Xoops\Core\Kernel\CriteriaElement
 {
-    public function render()
+    public function render(): void
     {
     }
 
-    public function renderWhere()
+    public function renderWhere(): void
     {
     }
 
-    public function renderLdap()
+    public function renderLdap(): void
     {
     }
 
-    public function renderQb(QueryBuilder $qb = null, $whereMode = '')
+    public function renderQb(?QueryBuilder $qb = null, $whereMode = ''): void
     {
     }
 
-    public function buildExpressionQb(QueryBuilder $qb)
+    public function buildExpressionQb(QueryBuilder $qb): void
     {
     }
 }
@@ -31,13 +31,13 @@ class Kernel_CriteriaElementTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Kernel_CriteriaElementTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
     }
 
-    public function test_setSort()
+    public function test_setSort(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -46,7 +46,7 @@ class Kernel_CriteriaElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($sort, $instance->getSort());
     }
 
-    public function test_setOrder()
+    public function test_setOrder(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -71,7 +71,7 @@ class Kernel_CriteriaElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($save, $instance->getOrder());
     }
 
-    public function test_setLimit()
+    public function test_setLimit(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -81,7 +81,7 @@ class Kernel_CriteriaElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($limit, $instance->getLimit());
     }
 
-    public function test_setStart()
+    public function test_setStart(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
@@ -91,7 +91,7 @@ class Kernel_CriteriaElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($start, $instance->getStart());
     }
 
-    public function test_setGroupby()
+    public function test_setGroupby(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);

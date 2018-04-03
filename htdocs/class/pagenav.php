@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ class XoopsPageNav
      * @param string $start_name    Name for "start" or "offset"
      * @param string $extra_arg     Additional arguments to pass in the URL
      */
-    public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '')
+    public function __construct(int $total_items, int $items_perpage, int $current_start, string $start_name = 'start', string $extra_arg = '')
     {
         $this->total = (int) ($total_items);
         $this->perpage = (int) ($items_perpage);
@@ -81,7 +82,7 @@ class XoopsPageNav
      *
      * @return string
      */
-    public function renderNav($offset = 4, $size = '', $align = 'right', $prev_text = '&laquo;', $next_text = '&raquo;')
+    public function renderNav(int $offset = 4, string $size = '', string $align = 'right', string $prev_text = '&laquo;', string $next_text = '&raquo;'): string
     {
         $xoops = Xoops::getInstance();
         $ret = '';
@@ -180,7 +181,7 @@ class XoopsPageNav
      *
      * @return string|false
      */
-    public function renderSelect($align = 'right', $showbutton = false)
+    public function renderSelect($align = 'right', bool $showbutton = false)
     {
         $xoops = Xoops::getInstance();
         $ret = '';
@@ -221,7 +222,7 @@ class XoopsPageNav
      *
      * @return string
      */
-    public function renderImageNav($offset = 4)
+    public function renderImageNav(int $offset = 4): string
     {
         $xoops = Xoops::getInstance();
         $xoops->deprecated('renderImageNav() is deprecated since 2.6.0. Please use renderNav()');

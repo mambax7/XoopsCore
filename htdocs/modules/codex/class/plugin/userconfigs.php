@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +27,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      *
      * @return array
      */
-    public function categories()
+    public function categories(): array
     {
         $categories['cat_1']['name'] = t::UCONF_CAT1;
         $categories['cat_1']['title'] = t::UCONF_CAT1_DESC;

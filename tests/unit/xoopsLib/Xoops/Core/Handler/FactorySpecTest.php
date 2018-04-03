@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Handler;
 
@@ -15,7 +15,7 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $factory = Factory::getInstance();
         $this->object = FactorySpec::getInstance($factory);
@@ -25,11 +25,11 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $factory = Factory::getInstance();
         $instance = FactorySpec::getInstance($factory);
@@ -37,49 +37,49 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($this->object, $instance);
     }
 
-    public function testScheme()
+    public function testScheme(): void
     {
         $instance = $this->object->scheme('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
         $this->assertSame('testing', $this->object->getScheme());
     }
 
-    public function testName()
+    public function testName(): void
     {
         $instance = $this->object->name('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
         $this->assertSame('testing', $this->object->getName());
     }
 
-    public function testDirname()
+    public function testDirname(): void
     {
         $instance = $this->object->dirname('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
         $this->assertSame('testing', $this->object->getDirname());
     }
 
-    public function testOptional()
+    public function testOptional(): void
     {
         $instance = $this->object->optional(true);
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
         $this->assertTrue($this->object->getOptional());
     }
 
-    public function testFqn()
+    public function testFqn(): void
     {
         $instance = $this->object->fqn('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
         $this->assertSame('testing', $this->object->getFQN());
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\XoopsUserHandler';
         $this->object->scheme('fqn')->name($name);
         $this->assertInstanceOf($name, $this->object->build($this->object));
     }
 
-    public function testBuild_exception()
+    public function testBuild_exception(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\NoSuchName';
         $this->object->scheme('fqn')->name($name);
@@ -87,7 +87,7 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
         $this->object->build($this->object);
     }
 
-    public function testBuild_optional()
+    public function testBuild_optional(): void
     {
         $name = '\Xoops\Core\Kernel\Handlers\NoSuchName';
         $this->object->scheme('fqn')->name($name)->optional(true);
@@ -100,7 +100,7 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsUserHandler', $handler);
     }
 
-    public function testGetFactory()
+    public function testGetFactory(): void
     {
         $factory = Factory::getInstance();
         $this->assertSame($factory, $this->object->getFactory());

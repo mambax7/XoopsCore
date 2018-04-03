@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -54,7 +55,7 @@ class Text extends Element
      *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
         return (int) $this->get('size');
     }
@@ -64,7 +65,7 @@ class Text extends Element
      *
      * @return int
      */
-    public function getMaxlength()
+    public function getMaxlength(): int
     {
         return (int) $this->get('maxlength');
     }
@@ -74,7 +75,7 @@ class Text extends Element
      *
      * @return string
      */
-    public function getPlaceholder()
+    public function getPlaceholder(): string
     {
         return (string) $this->get('placeholder');
     }
@@ -84,7 +85,7 @@ class Text extends Element
      *
      * @return string HTML
      */
-    public function render()
+    public function render(): string
     {
         $this->themeDecorateElement();
         $dataList = $this->isDatalist();

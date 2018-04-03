@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * You may not change or alter any portion of this comment or credits
@@ -37,7 +37,7 @@ class sqlutility
      *
      * @return bool always true
      */
-    public static function splitMySqlFile(&$ret, $sql)
+    public static function splitMySqlFile(array &$ret, string $sql): bool
     {
         $sql = trim($sql);
         $sql_len = strlen($sql);
@@ -120,7 +120,7 @@ class sqlutility
      *
      * @return mixed FALSE on failure
      */
-    public static function prefixQuery($query, $prefix)
+    public static function prefixQuery(string $query, string $prefix)
     {
         $pattern = "/^(INSERT[\s]+INTO|CREATE[\s]+TABLE|ALTER[\s]+TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
         $pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -56,7 +57,7 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db {@link Connection}
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct($db, 'smilies', 'SmiliesSmiley', 'smiley_id', 'smiley_emotion');
     }
@@ -70,7 +71,7 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getSmilies($start = 0, $limit = 0, $fetchAsObjects = true)
+    public function getSmilies(int $start = 0, int $limit = 0, bool $fetchAsObjects = true): array
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort('smiley_id');
@@ -88,7 +89,7 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function getActiveSmilies($fetchAsObjects = true)
+    public function getActiveSmilies(bool $fetchAsObjects = true): array
     {
         $criteria = new CriteriaCompo(new Criteria('smiley_display', 1));
         $criteria->setSort('smiley_id');

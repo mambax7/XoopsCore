@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -15,7 +15,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Attributes();
     }
@@ -24,18 +24,18 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Html\Attributes', $this->object);
         $this->assertInstanceOf('\Xoops\Core\AttributeInterface', $this->object);
         $this->assertInstanceOf('\ArrayObject', $this->object);
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $expected = ['a' => '1', 'key' => 'value', 'required' => null];
         $instance = new Attributes($expected);
@@ -43,7 +43,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testSetAttribute()
+    public function testSetAttribute(): void
     {
         $instance = $this->object;
 
@@ -54,7 +54,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $result);
     }
 
-    public function testUnsetAttribute()
+    public function testUnsetAttribute(): void
     {
         $instance = $this->object;
 
@@ -70,7 +70,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testHasAttribute()
+    public function testHasAttribute(): void
     {
         $instance = $this->object;
 
@@ -87,7 +87,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $instance = $this->object;
 
@@ -125,7 +125,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(in_array('value4', $result, true));
     }
 
-    public function testRenderAttributeString()
+    public function testRenderAttributeString(): void
     {
         $instance = $this->object;
 
@@ -137,7 +137,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testRenderAttributeString100()
+    public function testRenderAttributeString100(): void
     {
         $instance = $this->object;
 
@@ -159,7 +159,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testRenderAttributeString200()
+    public function testRenderAttributeString200(): void
     {
         $instance = $this->object;
 
@@ -171,20 +171,20 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertFalse($this->object->get('--NoNameLikeThisAtAll--'));
         $this->assertTrue($this->object->get('--NoNameLikeThisAtAll--', true));
         $this->assertSame('OK', $this->object->get('testvalue', 'OK'));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $this->object->set('testvalue', 'OK');
         $this->assertSame('OK', $this->object->get('testvalue', 'NotOK'));
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -195,7 +195,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK2', $all['test2']);
     }
 
-    public function testGetNames()
+    public function testGetNames(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -203,7 +203,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(['test1', 'test2'], $all);
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -212,7 +212,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test3'));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -222,7 +222,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test1'));
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -233,7 +233,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($this->object->has('test2'));
     }
 
-    public function testSetAll()
+    public function testSetAll(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -257,7 +257,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK4', $this->object->get('test4'));
     }
 
-    public function testSetMerge()
+    public function testSetMerge(): void
     {
         $this->object->set('test1', 'OK1');
         $this->object->set('test2', 'OK2');
@@ -280,7 +280,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('OK3', $this->object->get('test3'));
     }
 
-    public function testSetArrayItem()
+    public function testSetArrayItem(): void
     {
         $this->object->setArrayItem('test', 'a', 'OK1');
         $this->object->setArrayItem('test', 'b', 'OK2');
@@ -303,7 +303,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testGetAllLike()
+    public function testGetAllLike(): void
     {
         $this->object->set('oddball', 'odd');
         $this->object->set('test1', 'OK1');
@@ -335,7 +335,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(5, $subset);
     }
 
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $this->object['test1'] = 'OK1';
         $this->object->set('test2', 'OK2');

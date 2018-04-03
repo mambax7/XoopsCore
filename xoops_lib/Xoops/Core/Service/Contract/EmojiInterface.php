@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -35,14 +36,14 @@ interface EmojiInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $buffer   source text to be processed
      */
-    public function renderEmoji(Response $response, $buffer);
+    public function renderEmoji(Response $response, string $buffer): void;
 
     /**
      * getEmojiList - return a list of available emoji.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
-    public function getEmojiList(Response $response);
+    public function getEmojiList(Response $response): void;
 
     /**
      * renderEmojiSelector - provide emoji selector support for editing.
@@ -54,5 +55,5 @@ interface EmojiInterface
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $identifier element identifier to receive emoji from selector
      */
-    public function renderEmojiSelector(Response $response, $identifier);
+    public function renderEmojiSelector(Response $response, string $identifier): void;
 }

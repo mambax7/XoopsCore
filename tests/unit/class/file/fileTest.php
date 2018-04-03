@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,13 +6,13 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsFileHandler';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass(__FILE__);
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test_publicProperties()
+    public function test_publicProperties(): void
     {
         $items = ['folder', 'name', 'info', 'handle', 'lock'];
         foreach ($items as $item) {
@@ -21,7 +21,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test_create()
+    public function test_create(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -32,7 +32,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(@unlink($file));
     }
 
-    public function test_open()
+    public function test_open(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -66,7 +66,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(@unlink($file));
     }
 
-    public function test_read()
+    public function test_read(): void
     {
         $file = __FILE__;
         $instance = new $this->myClass($file, false);
@@ -97,7 +97,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($result1, $data);
     }
 
-    public function test_offset()
+    public function test_offset(): void
     {
         // see also test_read for test
 
@@ -118,7 +118,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($result);
     }
 
-    public function test_prepare()
+    public function test_prepare(): void
     {
         $file = __FILE__;
         $instance = new $this->myClass($file, false);
@@ -133,12 +133,12 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($target, $value);
     }
 
-    public function test_write()
+    public function test_write(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function test_append()
+    public function test_append(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -154,7 +154,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
     }
 
-    public function test_close()
+    public function test_close(): void
     {
         // see other test when unset $instance
 
@@ -165,7 +165,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public function test_delete()
+    public function test_delete(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -182,7 +182,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($instance->exists($file));
     }
 
-    public function test_info()
+    public function test_info(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -197,7 +197,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->delete();
     }
 
-    public function test_ext()
+    public function test_ext(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -208,7 +208,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->delete();
     }
 
-    public function test_name()
+    public function test_name(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -228,7 +228,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->delete();
     }
 
-    public function test_safe()
+    public function test_safe(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy#(001).txt';
         @unlink($file);
@@ -244,7 +244,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('dummy_001_.', $value);
     }
 
-    public function test_md5()
+    public function test_md5(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -268,7 +268,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_pwd()
+    public function test_pwd(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -279,7 +279,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->delete();
     }
 
-    public function test_perms()
+    public function test_perms(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -300,7 +300,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_size()
+    public function test_size(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -321,7 +321,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_writable()
+    public function test_writable(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -341,7 +341,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_executable()
+    public function test_executable(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -361,7 +361,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_readable()
+    public function test_readable(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -381,7 +381,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_owner()
+    public function test_owner(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -401,7 +401,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_group()
+    public function test_group(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -421,7 +421,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_lastAccess()
+    public function test_lastAccess(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -443,7 +443,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_lastChange()
+    public function test_lastChange(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
@@ -465,7 +465,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_folder()
+    public function test_folder(): void
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);

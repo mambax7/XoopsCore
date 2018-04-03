@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class Userconfigs extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Userconfigs
      */
-    public static function getInstance()
+    public static function getInstance(): Userconfigs
     {
         return parent::getInstance();
     }
@@ -40,7 +41,7 @@ class Userconfigs extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return UserconfigsConfigHandler
      */
-    public function getHandlerConfig()
+    public function getHandlerConfig(): UserconfigsConfigHandler
     {
         return $this->getHandler('config');
     }
@@ -48,7 +49,7 @@ class Userconfigs extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return UserconfigsItemHandler
      */
-    public function getHandlerItem()
+    public function getHandlerItem(): UserconfigsItemHandler
     {
         return $this->getHandler('item');
     }
@@ -56,7 +57,7 @@ class Userconfigs extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return UserconfigsOptionHandler
      */
-    public function getHandlerOption()
+    public function getHandlerOption(): UserconfigsOptionHandler
     {
         return $this->getHandler('option');
     }

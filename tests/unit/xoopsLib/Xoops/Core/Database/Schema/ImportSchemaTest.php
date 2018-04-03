@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -8,13 +8,13 @@ class ImportSchemaTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Database\Schema\ImportSchema';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test_importSchemaArray()
+    public function test_importSchemaArray(): void
     {
         $instance = new Xoops\Core\Database\Schema\ExportVisitor();
 

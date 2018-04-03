@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,7 +26,7 @@
  *
  * @return bool true on success
  */
-function xoops_module_install_smilies(&$module)
+function xoops_module_install_smilies(&$module): bool
 {
     $data = [
         [':-D',      'smilies/smil3dbd4d4e4c4f2.gif', 'Very Happy',           1],
@@ -49,7 +50,7 @@ function xoops_module_install_smilies(&$module)
     $types = [\PDO::PARAM_STR, \PDO::PARAM_STR, \PDO::PARAM_STR, \PDO::PARAM_INT];
     $db = \Xoops::getInstance()->db();
     foreach ($data as $sm) {
-        list($smiley_code, $smiley_url, $smiley_emotion, $smiley_display) = $sm;
+        [$smiley_code, $smiley_url, $smiley_emotion, $smiley_display] = $sm;
         $smiley = [
             'smiley_code' => $smiley_code,
             'smiley_url' => $smiley_url,

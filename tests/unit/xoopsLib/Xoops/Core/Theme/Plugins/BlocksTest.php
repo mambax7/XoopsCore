@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Theme\Plugins;
 
@@ -15,7 +15,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Blocks();
     }
@@ -24,16 +24,16 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Theme\PluginAbstract', $this->object);
     }
 
-    public function testXoInit()
+    public function testXoInit(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -41,7 +41,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testPreRender()
+    public function testPreRender(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -49,7 +49,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testPostRender()
+    public function testPostRender(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -57,7 +57,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRetrieveBlocks()
+    public function testRetrieveBlocks(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -65,7 +65,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGenerateCacheId()
+    public function testGenerateCacheId(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -73,7 +73,7 @@ class BlocksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testBuildBlock()
+    public function testBuildBlock(): void
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

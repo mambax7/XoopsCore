@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -14,14 +14,14 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
         $this->conn->setSafe();
         $this->object = new XoopsBlockHandler($this->conn);
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $this->assertRegExp('/^.*system_block$/', $this->object->table);
         $this->assertSame('\Xoops\Core\Kernel\Handlers\XoopsBlock', $this->object->className);
@@ -32,13 +32,13 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($this->object->field_object);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsBlockHandler', $this->object);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $this->object);
     }
 
-    public function test_insertBlock()
+    public function test_insertBlock(): void
     {
         $block = new XoopsBlock();
         $block->setNew();
@@ -53,26 +53,26 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($value);
     }
 
-    public function test_getDistinctObjects()
+    public function test_getDistinctObjects(): void
     {
         $value = $this->object->getDistinctObjects();
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getDistinctObjects100()
+    public function test_getDistinctObjects100(): void
     {
         $criteria = new Criteria('bid');
         $value = $this->object->getDistinctObjects($criteria);
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getNameList()
+    public function test_getNameList(): void
     {
         $value = $this->object->getNameList();
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getAllBlocksByGroup()
+    public function test_getAllBlocksByGroup(): void
     {
         $value = $this->object->getAllBlocksByGroup(1);
         $this->assertInternalType('array', $value);
@@ -96,7 +96,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getAllBlocks()
+    public function test_getAllBlocks(): void
     {
         $value = $this->object->getAllBlocks();
         $this->assertInternalType('array', $value);
@@ -120,7 +120,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getByModule()
+    public function test_getByModule(): void
     {
         $value = $this->object->getByModule('module');
         $this->assertInternalType('array', $value);
@@ -129,7 +129,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getAllByGroupModule()
+    public function test_getAllByGroupModule(): void
     {
         $value = $this->object->getAllByGroupModule(1);
         $this->assertInternalType('array', $value);
@@ -144,7 +144,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getNonGroupedBlocks()
+    public function test_getNonGroupedBlocks(): void
     {
         $value = $this->object->getNonGroupedBlocks();
         $this->assertInternalType('array', $value);
@@ -159,7 +159,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_countSimilarBlocks()
+    public function test_countSimilarBlocks(): void
     {
         $value = $this->object->countSimilarBlocks(1, 1);
         $this->assertSame(1, $value);
@@ -168,7 +168,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $value);
     }
 
-    public function test_buildContent()
+    public function test_buildContent(): void
     {
         $value = $this->object->buildContent(0, 'titi', 'toto');
         $this->assertSame('tototiti', $value);
@@ -180,7 +180,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $value);
     }
 
-    public function test_buildTitle()
+    public function test_buildTitle(): void
     {
         $title = 'original';
         $value = $this->object->buildTitle($title);
@@ -191,7 +191,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($new, $value);
     }
 
-    public function test_getBlockByPerm()
+    public function test_getBlockByPerm(): void
     {
         $value = $this->object->getBlockByPerm(null);
         $this->assertTrue(empty($value) and is_array($value));

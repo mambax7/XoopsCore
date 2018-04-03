@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @return bool true if key saved, otherwise false
      */
-    public function save($name, $data)
+    public function save(string $name, string $data): bool
     {
         $this->offsetSet($name, $data);
 
@@ -46,7 +47,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @return string|false key data (possibly serialized) or false on error
      */
-    public function fetch($name)
+    public function fetch(string $name)
     {
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
@@ -62,7 +63,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @return bool true if key exists, otherwise false
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return $this->offsetExists($name);
     }
@@ -74,7 +75,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @return bool true if key deleted, otherwise false
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         if ($this->offsetExists($name)) {
             $this->offsetUnset($name);

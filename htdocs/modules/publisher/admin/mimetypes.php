@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -88,7 +89,7 @@ switch ($op) {
         break;
 }
 
-function add()
+function add(): void
 {
     $publisher = Publisher::getInstance();
     $xoops = Xoops::getInstance();
@@ -231,7 +232,7 @@ function add()
     }
 }
 
-function delete()
+function delete(): void
 {
     $publisher = Publisher::getInstance();
     $xoops = Xoops::getInstance();
@@ -249,7 +250,7 @@ function delete()
     }
 }
 
-function edit()
+function edit(): void
 {
     $publisher = Publisher::getInstance();
     $xoops = Xoops::getInstance();
@@ -391,7 +392,7 @@ function edit()
     }
 }
 
-function manage()
+function manage(): void
 {
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();
@@ -538,7 +539,7 @@ function manage()
     $xoops->footer();
 }
 
-function search()
+function search(): void
 {
     $publisher = Publisher::getInstance();
     $xoops = Xoops::getInstance();
@@ -716,7 +717,7 @@ function search()
     $xoops->footer();
 }
 
-function updateMimeValue()
+function updateMimeValue(): void
 {
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();
@@ -764,20 +765,20 @@ function _changeMimeValue($mime_value)
     return $mime_value;
 }
 
-function _clearAddSessionVars()
+function _clearAddSessionVars(): void
 {
     $session = new Session();
     $session->del('publisher_addMime');
     $session->del('publisher_addMimeErr');
 }
 
-function clearAddSession()
+function clearAddSession(): void
 {
     _clearAddSessionVars();
     header('Location: '.PublisherUtils::makeURI(PUBLISHER_ADMIN_URL.'/mimetypes.php', ['op' => 'add'], false));
 }
 
-function _clearEditSessionVars($id)
+function _clearEditSessionVars($id): void
 {
     $id = (int) ($id);
     $session = new Session();
@@ -785,7 +786,7 @@ function _clearEditSessionVars($id)
     $session->del("publisher_editMimeErr_${id}");
 }
 
-function clearEditSession()
+function clearEditSession(): void
 {
     $mimeid = $_REQUEST['id'];
     _clearEditSessionVars($mimeid);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../init_new.php';
 
@@ -6,11 +6,11 @@ class xoopsloadTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsLoad';
 
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function test_getMap()
+    public function test_getMap(): void
     {
         $class = $this->myClass;
         $map = ['zzzclassname' => 'path/to/class'];
@@ -23,7 +23,7 @@ class xoopsloadTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($count + 1, count($value));
     }
 
-    public function test_loadCoreConfig()
+    public function test_loadCoreConfig(): void
     {
         $class = $this->myClass;
         $value = $class::loadCoreConfig();

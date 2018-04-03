@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -104,7 +105,7 @@ class XoopsEditor extends Xoops\Form\TextArea
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         $this->isEnabled = true;
 
@@ -114,7 +115,7 @@ class XoopsEditor extends Xoops\Form\TextArea
     /**
      * @param array $options
      */
-    public function setConfig($options)
+    public function setConfig(array $options): void
     {
         foreach ($options as $key => $val) {
             $this->{$key} = $val;
@@ -162,7 +163,7 @@ class XoopsEditorHandler
      * @static
      * @staticvar XoopsEditorHandler
      */
-    public static function getInstance()
+    public static function getInstance(): XoopsEditorHandler
     {
         static $instance;
         if (!isset($instance)) {
@@ -182,7 +183,7 @@ class XoopsEditorHandler
      *
      * @return \XoopsEditor
      */
-    public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+    public function get(string $name = '', array $options = null, bool $noHtml = false, string $OnFailure = ''): \XoopsEditor
     {
         if ($editor = $this->_loadEditor($name, $options)) {
             return $editor;
@@ -199,7 +200,7 @@ class XoopsEditorHandler
     /**
      * @return array
      */
-    public function buildEditorList()
+    public function buildEditorList(): array
     {
         $list = [];
         $order = [];
@@ -231,7 +232,7 @@ class XoopsEditorHandler
      * @param  bool  $noHtml
      * @return array
      */
-    public function getList($noHtml = false)
+    public function getList(bool $noHtml = false): array
     {
         $xoops = Xoops::getInstance();
         $list = $xoops->cache()->cacheRead(
@@ -256,7 +257,7 @@ class XoopsEditorHandler
     /**
      * @param array $options
      */
-    public function setConfig(XoopsEditor $editor, $options)
+    public function setConfig(XoopsEditor $editor, array $options): void
     {
         $editor->setConfig($options);
     }
@@ -268,7 +269,7 @@ class XoopsEditorHandler
      * @param  mixed            $options
      * @return XoopsEditor|null
      */
-    private function _loadEditor($name, $options = null)
+    private function _loadEditor(string $name, $options = null): ?XoopsEditor
     {
         $xoops = Xoops::getInstance();
         $editor = null;

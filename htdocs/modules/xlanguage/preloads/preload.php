@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Xlanguage extension module
  * You may not change or alter any portion of this comment or credits
@@ -28,7 +29,7 @@ class XlanguagePreload extends PreloadItem
     /**
      * @param array $args
      */
-    public static function eventCoreIncludeCommonEnd($args)
+    public static function eventCoreIncludeCommonEnd(array $args): void
     {
         if (XoopsLoad::fileExists($hnd_file = dirname(__DIR__).'/api.php')) {
             include_once $hnd_file;
@@ -38,7 +39,7 @@ class XlanguagePreload extends PreloadItem
     /**
      * @param array $args
      */
-    public static function eventCoreHeaderCheckcache($args)
+    public static function eventCoreHeaderCheckcache(array $args): void
     {
         $xoops = Xoops::getInstance();
         xlanguage_select_show(explode('|', $xoops->registry()->get('XLANGUAGE_THEME_OPTIONS')));

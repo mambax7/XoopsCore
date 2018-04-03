@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -41,7 +41,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Logger();
         $this->logger = new MY_Logger();
@@ -52,11 +52,11 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function test_getInstance()
+    public function test_getInstance(): void
     {
         $instance = Logger::getInstance();
         $this->assertInstanceOf('\Xoops\Core\Logger', $instance);
@@ -65,7 +65,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance1, $instance);
     }
 
-    public function test_handleError100()
+    public function test_handleError100(): void
     {
         $instance = $this->object;
 
@@ -84,7 +84,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
-    public function test_handleError120()
+    public function test_handleError120(): void
     {
         $instance = $this->object;
 
@@ -103,7 +103,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
-    public function test_handleError140()
+    public function test_handleError140(): void
     {
         $instance = $this->object;
 
@@ -122,7 +122,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
-    public function test_handleError160()
+    public function test_handleError160(): void
     {
         if (!(E_STRICT & error_reporting())) {
             $this->markTestSkipped('E_STRICT reporting is off');
@@ -144,7 +144,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
-    public function test_handleError200()
+    public function test_handleError200(): void
     {
         $instance = $this->object;
 
@@ -163,12 +163,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
-    public function test_handleException()
+    public function test_handleException(): void
     {
         $this->markTestIncomplete('to do');
     }
 
-    public function test_sanitizePath()
+    public function test_sanitizePath(): void
     {
         $instance = $this->object;
 
@@ -201,7 +201,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('ROOT', $result);
     }
 
-    public function test_emergency()
+    public function test_emergency(): void
     {
         $instance = $this->object;
 
@@ -215,7 +215,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_alert()
+    public function test_alert(): void
     {
         $instance = $this->object;
 
@@ -229,7 +229,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_critical()
+    public function test_critical(): void
     {
         $instance = $this->object;
 
@@ -243,7 +243,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_error()
+    public function test_error(): void
     {
         $instance = $this->object;
 
@@ -257,7 +257,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_warning()
+    public function test_warning(): void
     {
         $instance = $this->object;
 
@@ -271,7 +271,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_notice()
+    public function test_notice(): void
     {
         $instance = $this->object;
 
@@ -285,7 +285,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_info()
+    public function test_info(): void
     {
         $instance = $this->object;
 
@@ -299,7 +299,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_debug()
+    public function test_debug(): void
     {
         $instance = $this->object;
 
@@ -313,7 +313,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_quiet()
+    public function test_quiet(): void
     {
         $instance = $this->object;
 
@@ -325,7 +325,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test___set()
+    public function test___set(): void
     {
         if (!class_exists('', false)) {
             $path = \XoopsBaseConfig::get('root-path');

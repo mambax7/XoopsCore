@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -38,7 +39,7 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      *
      * @param Connection|null $db database
      */
-    public function __construct(Connection $db = null)
+    public function __construct(?Connection $db = null)
     {
         parent::__construct(
             $db,
@@ -60,7 +61,7 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function write($uid, $uname, $time, $module, $ip)
+    public function write(int $uid, string $uname, string $time, string $module, string $ip): bool
     {
         $criteria = [];
         $criteria['online_uid'] = $uid;
@@ -105,7 +106,7 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function destroy($uid)
+    public function destroy(int $uid): bool
     {
         $criteria = new Criteria('online_uid', (int) ($uid));
         if (false === $this->deleteAll($criteria)) {
@@ -124,7 +125,7 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function gc($expire)
+    public function gc(int $expire): bool
     {
         $criteria = new Criteria('online_updated', time() - (int) ($expire), '<');
         if (false === $this->deleteAll($criteria)) {

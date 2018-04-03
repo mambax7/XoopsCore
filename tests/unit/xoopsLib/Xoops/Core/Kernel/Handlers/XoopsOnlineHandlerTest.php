@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -10,12 +10,12 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertRegExp('/^.*system_online$/', $instance->table);
@@ -24,14 +24,14 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('online_uname', $instance->identifierName);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsOnlineHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
 
-    public function test_write()
+    public function test_write(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf($this->myclass, $instance);
@@ -41,7 +41,7 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_destroy()
+    public function test_destroy(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf($this->myclass, $instance);
@@ -50,7 +50,7 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_gc()
+    public function test_gc(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf($this->myclass, $instance);

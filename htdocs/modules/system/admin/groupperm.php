@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -84,7 +85,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 }
 $backlink = $xoops->getEnv('HTTP_REFERER');
 if ($module->getVar('hasadmin')) {
-    $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
+    $adminindex = $_POST['redirect_url'] ?? $module->getInfo('adminindex');
     if ($adminindex) {
         $backlink = $xoops->url('modules/'.$module->getVar('dirname').'/'.$adminindex);
     }

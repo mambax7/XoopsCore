@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -58,7 +59,7 @@ function publisher_items_recent_show($options)
             $newItems['categoryid'] = $itemsObj[$i]->getVar('categoryid');
             $newItems['date'] = $itemsObj[$i]->datesub();
             $newItems['poster'] = $itemsObj[$i]->linkedPosterName();
-            $newItems['itemlink'] = $itemsObj[$i]->getItemLink(false, isset($options[3]) ? $options[3] : 65);
+            $newItems['itemlink'] = $itemsObj[$i]->getItemLink(false, $options[3] ?? 65);
             $newItems['categorylink'] = $itemsObj[$i]->getCategoryLink();
 
             $block['items'][] = $newItems;

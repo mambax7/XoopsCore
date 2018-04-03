@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -33,7 +34,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         if (!extension_loaded('gd')) {
             trigger_error('GD library is not loaded', E_USER_WARNING);
@@ -63,7 +64,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $xoops_url = XoopsBaseConfig::get('url');
         $js = "<script type='text/javascript'>
@@ -89,7 +90,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
      *
      * @return string
      */
-    public function loadImage()
+    public function loadImage(): string
     {
         $xoops_url = XoopsBaseConfig::get('url');
 

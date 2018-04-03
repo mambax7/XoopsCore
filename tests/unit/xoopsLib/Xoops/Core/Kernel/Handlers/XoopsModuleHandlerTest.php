@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -12,12 +12,12 @@ class ModuleHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $mid = 0;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertRegExp('/^.*system_module$/', $instance->table);
@@ -26,28 +26,28 @@ class ModuleHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('dirname', $instance->identifierName);
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsModuleHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
 
-    public function test_getById()
+    public function test_getById(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getById();
         $this->assertFalse($value);
     }
 
-    public function test_getByDirname()
+    public function test_getByDirname(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getByDirname('.');
         $this->assertFalse($value);
     }
 
-    public function test_insertModule()
+    public function test_insertModule(): void
     {
         $instance = new $this->myclass($this->conn);
         $module = new XoopsModule();
@@ -61,14 +61,14 @@ class ModuleHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
     }
 
-    public function test_getObjectsArray()
+    public function test_getObjectsArray(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getObjectsArray();
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getNameList()
+    public function test_getNameList(): void
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getNameList();

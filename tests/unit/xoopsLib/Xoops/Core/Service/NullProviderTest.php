@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -8,7 +8,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = '\Xoops\Core\Service\NullProvider';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -16,7 +16,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
-    public function test___set()
+    public function test___set(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -25,7 +25,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($instance->property);
     }
 
-    public function test___get()
+    public function test___get(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -33,7 +33,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($instance->property);
     }
 
-    public function test___isset()
+    public function test___isset(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -42,7 +42,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse(isset($instance->property));
     }
 
-    public function test___unset()
+    public function test___unset(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -52,7 +52,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse(isset($instance->property));
     }
 
-    public function test___call()
+    public function test___call(): void
     {
         $manager = Manager::getInstance();
         $service = 'Avatars';
@@ -63,7 +63,7 @@ class NullProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Service\Response', $x);
     }
 
-    public function test___callStatic()
+    public function test___callStatic(): void
     {
         $class = $this->myClass;
 

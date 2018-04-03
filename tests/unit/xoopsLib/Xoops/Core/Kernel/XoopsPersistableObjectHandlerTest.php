@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -24,12 +24,12 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
 
     protected $conn = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = \Xoops\Core\Database\Factory::getConnection();
     }
 
-    public function test___publicProperties()
+    public function test___publicProperties(): void
     {
         $items = ['table', 'keyName', 'className', 'table_link', 'identifierName', 'field_link',
             'field_object', ];
@@ -39,7 +39,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $table = 'table';
         $className = 'className';
@@ -50,35 +50,35 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($this->conn, $instance->db2);
     }
 
-    public function test_setHandler()
+    public function test_setHandler(): void
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->setHandler();
         $this->assertNull($value);
     }
 
-    public function test_loadHandler()
+    public function test_loadHandler(): void
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->loadHandler('read');
         $this->assertInternalType('object', $value);
     }
 
-    public function test_create()
+    public function test_create(): void
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->create();
         $this->assertFalse($value);
     }
 
-    public function test_get()
+    public function test_get(): void
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->get();
         $this->assertFalse($value);
     }
 
-    public function test_insert()
+    public function test_insert(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $obj = new XoopsGroup();
@@ -87,7 +87,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $value);
     }
 
-    public function test_delete()
+    public function test_delete(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $obj = new XoopsGroup();
@@ -95,7 +95,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_deleteAll()
+    public function test_deleteAll(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $criteria = new Criteria('dummy_field');
@@ -103,7 +103,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $value);
     }
 
-    public function test_updateAll()
+    public function test_updateAll(): void
     {
         $instance = new $this->myClass($this->conn);
         $criteria = new Criteria('dummy_field');
@@ -111,7 +111,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $value);
     }
 
-    public function test_getObjects()
+    public function test_getObjects(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getObjects();
@@ -119,7 +119,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value > 0);
     }
 
-    public function test_getAll()
+    public function test_getAll(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getAll();
@@ -127,7 +127,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_getList()
+    public function test_getList(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getList();
@@ -135,7 +135,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_getIds()
+    public function test_getIds(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getIds();
@@ -143,21 +143,21 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_getCount()
+    public function test_getCount(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getCount();
         $this->assertTrue((int) $value > 0);
     }
 
-    public function test_getCounts()
+    public function test_getCounts(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getCounts();
         $this->assertInternalType('array', $value);
     }
 
-    public function test_getByLink()
+    public function test_getByLink(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $instance->field_object = 'groupid';
@@ -168,7 +168,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
     }
 
-    public function test_getCountByLink()
+    public function test_getCountByLink(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $instance->field_object = 'groupid';
@@ -178,7 +178,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue((int) $value > 0);
     }
 
-    public function test_getCountsByLink()
+    public function test_getCountsByLink(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $instance->field_object = 'groupid';
@@ -188,7 +188,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $value);
     }
 
-    public function test_updateByLink()
+    public function test_updateByLink(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $instance->field_object = 'groupid';
@@ -198,7 +198,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_deleteByLink()
+    public function test_deleteByLink(): void
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $instance->field_object = 'groupid';
@@ -208,7 +208,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($value);
     }
 
-    public function test_cleanOrphan()
+    public function test_cleanOrphan(): void
     {
         $this->markTestSkipped('side effects');
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
@@ -216,7 +216,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $value);
     }
 
-    public function test_synchronization()
+    public function test_synchronization(): void
     {
         $this->markTestSkipped('side effects');
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');

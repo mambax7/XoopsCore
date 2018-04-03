@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class AdminFactory extends Factory
      *
      * @return XoopsTheme
      */
-    public function createInstance($options = [])
+    public function createInstance(array $options = []): XoopsTheme
     {
         $options['plugins'] = [];
         $options['renderBanner'] = false;

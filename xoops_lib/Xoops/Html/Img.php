@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,7 +28,7 @@ class Img extends Attributes
      *
      * @param array $attributes array of attribute name => value pairs for img tag
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
     }
@@ -37,7 +38,7 @@ class Img extends Attributes
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $tag = '<img '.$this->renderAttributeString().' />';
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // $Id$
 //  ------------------------------------------------------------------------ //
@@ -49,7 +49,7 @@
  * -------------------------------------------------------------
  */
 
-function smarty_function_xoops_link($params, &$smarty)
+function smarty_function_xoops_link($params, &$smarty): void
 {
     $xoops = Xoops::getInstance();
     $urlstr = '';

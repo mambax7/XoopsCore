@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../init_new.php';
 
@@ -7,7 +7,7 @@ require_once $xoops_root_path.'/class/xml/rpc/xmlrpcparser.php';
 
 class XoopsXmlRpcTagTestInstance extends XoopsXmlRpcTag
 {
-    public function render()
+    public function render(): void
     {
     }
 }
@@ -16,13 +16,13 @@ class XoopsXmlRpcTagTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsXmlRpcTagTestInstance';
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myclass();
         $this->assertInstanceof($this->myclass, $instance);
     }
 
-    public function test_encode()
+    public function test_encode(): void
     {
         $this->markTestSkipped('needs updated');
         $instance = new $this->myclass();
@@ -43,7 +43,7 @@ class XoopsXmlRpcTagTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function test_setFault()
+    public function test_setFault(): void
     {
         $instance = new $this->myclass();
 

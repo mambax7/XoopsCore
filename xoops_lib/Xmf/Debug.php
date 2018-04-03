@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -56,7 +57,7 @@ class Debug extends \Kint
      *
      * @param mixed $data variable(s) to dump
      */
-    public static function dump($data = null)
+    public static function dump($data = null): void
     {
         $args = func_get_args();
 
@@ -78,7 +79,7 @@ class Debug extends \Kint
      *
      * @param mixed $data variable(s) to dump
      */
-    public static function log($data = null)
+    public static function log($data = null): void
     {
         $args = func_get_args();
 
@@ -95,7 +96,7 @@ class Debug extends \Kint
      *
      * @param bool $value true to use event
      */
-    public static function useEventDumper($value = true)
+    public static function useEventDumper(bool $value = true): void
     {
         self::$eventDumper = (bool) $value;
     }
@@ -103,7 +104,7 @@ class Debug extends \Kint
     /**
      * Display debug backtrace.
      */
-    public static function backtrace()
+    public static function backtrace(): void
     {
         static::dump(debug_backtrace());
     }
@@ -114,7 +115,7 @@ class Debug extends \Kint
      * @param string      $name  unique name for timer
      * @param string|null $label optional label for this timer
      */
-    public static function startTimer($name, $label = null)
+    public static function startTimer(string $name, ?string $label = null): void
     {
         $events = \Xoops::getInstance()->events();
         $var = [$name];
@@ -132,7 +133,7 @@ class Debug extends \Kint
      *
      * @param string $name unique name for timer
      */
-    public static function stopTimer($name)
+    public static function stopTimer(string $name): void
     {
         $events = \Xoops::getInstance()->events();
         $eventName = 'debug.timer.stop';
@@ -153,7 +154,7 @@ class Debug extends \Kint
      * @param string      $name  unique name for timer
      * @param string|null $label optional label for this timer
      */
-    public static function startQueuedTimer($name, $label = null)
+    public static function startQueuedTimer(string $name, ?string $label = null): void
     {
         self::$times[$name] = microtime(true);
         self::$timerLabels[$name] = empty($label) ? $name : $label;
@@ -164,7 +165,7 @@ class Debug extends \Kint
      *
      * @param string $name unique name for timer
      */
-    public static function stopQueuedTimer($name)
+    public static function stopQueuedTimer(string $name): void
     {
         if (isset(self::$timerLabels[$name]) && isset(self::$times[$name])) {
             $queueItem = [
@@ -186,7 +187,7 @@ class Debug extends \Kint
      *
      * @return array of time data see \Xmf\Debug::$timerQueue
      */
-    public static function dumpQueuedTimers($returnOnly = false)
+    public static function dumpQueuedTimers(bool $returnOnly = false): array
     {
         $queue = self::$timerQueue;
         self::$timerQueue = [];
@@ -208,7 +209,7 @@ class Debug extends \Kint
      * @param string $collect_return argument for ini_set('xdebug.collect_return',?)
      *                             Controls display of function return value in trace
      */
-    public static function startTrace($tracefile = '', $collect_params = '3', $collect_return = 'On')
+    public static function startTrace(string $tracefile = '', string $collect_params = '3', string $collect_return = 'On'): void
     {
         if (function_exists('xdebug_start_trace')) {
             ini_set('xdebug.collect_params', $collect_params);
@@ -225,7 +226,7 @@ class Debug extends \Kint
      *
      * Requires xdebug extension
      */
-    public static function stopTrace()
+    public static function stopTrace(): void
     {
         if (function_exists('xdebug_stop_trace')) {
             xdebug_stop_trace();
@@ -236,7 +237,7 @@ class Debug extends \Kint
      * doOnce - do some local housekeeping on first use. Any method needing this
      * assist just calls every time, the one time logic is all here.
      */
-    private static function doOnce()
+    private static function doOnce(): void
     {
         static $done;
         if (true !== $done) {

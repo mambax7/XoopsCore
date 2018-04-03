@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -17,7 +17,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailAttachment();
     }
@@ -26,16 +26,16 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(EmailAttachment::class, $this->object);
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $filename = static::TEST_FILE;
         $mimeType = 'image/png';
@@ -54,13 +54,13 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $attachment = new EmailAttachment($filename, 'bogus');
     }
 
-    public function testNewBadFilename()
+    public function testNewBadFilename(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $attachment = new EmailAttachment(__DIR__.'/bogus.file');
     }
 
-    public function testWithFilename()
+    public function testWithFilename(): void
     {
         $filename = static::TEST_FILE;
         $attachment = $this->object->withFilename($filename);
@@ -68,7 +68,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($filename, $attachment->getFilename());
     }
 
-    public function testFileOrBodySpecified()
+    public function testFileOrBodySpecified(): void
     {
         $filename = static::TEST_FILE;
         $attachment = new EmailAttachment($filename);
@@ -82,19 +82,19 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($body, $attachment->getStringBody());
     }
 
-    public function testNullFilename()
+    public function testNullFilename(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getFilename();
     }
 
-    public function testNullStringBody()
+    public function testNullStringBody(): void
     {
         $this->expectException(\LogicException::class);
         $this->object->getStringBody();
     }
 
-    public function testWithMimeType()
+    public function testWithMimeType(): void
     {
         $mimeType = 'text/json+juice-1.2';
         $this->assertNull($this->object->getMimeType());
@@ -105,7 +105,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $attachment = $this->object->withMimeType('notamimetype');
     }
 
-    public function testForcedBadMimeType()
+    public function testForcedBadMimeType(): void
     {
         $attachment = new class() extends EmailAttachment {
             public function __construct()
@@ -118,7 +118,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $attachment->getMimeType();
     }
 
-    public function testWithName()
+    public function testWithName(): void
     {
         $name = 'testname';
         $this->assertNull($this->object->getName());
@@ -126,7 +126,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($name, $attachment->getName());
     }
 
-    public function testForcedBadName()
+    public function testForcedBadName(): void
     {
         $attachment = new class() extends EmailAttachment {
             public function __construct()
@@ -139,7 +139,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
         $attachment->getName();
     }
 
-    public function testInlineAttribute()
+    public function testInlineAttribute(): void
     {
         $this->assertFalse($this->object->getInlineAttribute());
         $this->assertTrue($this->object->withInlineAttribute()->getInlineAttribute());

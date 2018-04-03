@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 // _LANGCODE: en
 // _CHARSET : UTF-8

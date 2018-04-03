@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Test\Core\Service\Data;
 
@@ -16,7 +16,7 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailAddressList();
     }
@@ -25,16 +25,16 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContract()
+    public function testContract(): void
     {
         $this->assertInstanceOf(EmailAddressList::class, $this->object);
     }
 
-    public function testNewEmailAddressListWithArguments()
+    public function testNewEmailAddressListWithArguments(): void
     {
         $addressArray[] = new EmailAddress('user@example.com', 'name');
 
@@ -43,14 +43,14 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($addressArray[0], $newAddressArray[0]);
     }
 
-    public function testNewEmailAddressListWithBadArguments()
+    public function testNewEmailAddressListWithBadArguments(): void
     {
         $addressArray[] = new EmailAddress();
         $this->expectException(\InvalidArgumentException::class);
         new EmailAddressList($addressArray);
     }
 
-    public function testNewEmailAddressListWithFluent()
+    public function testNewEmailAddressListWithFluent(): void
     {
         $addressArray[] = new EmailAddress('user@example.com', 'name');
         $addressArray[] = new EmailAddress('user2@example.com', 'name2');
@@ -66,14 +66,14 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
         $this->object->getAddresses();
     }
 
-    public function testWithBadAddedAddresses()
+    public function testWithBadAddedAddresses(): void
     {
         $addressArray[] = new EmailAddress();
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withAddedAddresses($addressArray);
     }
 
-    public function testGetEachAddress()
+    public function testGetEachAddress(): void
     {
         $addressArray[] = new EmailAddress('user1@example.com', 'name1');
         $addressArray[] = new EmailAddress('user2@example.com');
@@ -89,7 +89,7 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3, $count);
     }
 
-    public function testGetEachAddressException()
+    public function testGetEachAddressException(): void
     {
         $count = 0;
 

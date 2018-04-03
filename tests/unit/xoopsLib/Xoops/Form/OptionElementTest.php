@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Form;
 
@@ -15,7 +15,7 @@ class OptionElementTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('Xoops\Form\OptionElement');
     }
@@ -24,11 +24,11 @@ class OptionElementTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertTrue(is_subclass_of('Xoops\Form\OptionElement', 'Xoops\Html\Attributes'));
         $this->assertTrue(is_subclass_of('Xoops\Form\OptionElement', 'Xoops\Form\Element'));
@@ -37,7 +37,7 @@ class OptionElementTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(method_exists($this->object, 'getOptions'));
     }
 
-    public function testAddOption()
+    public function testAddOption(): void
     {
         $this->object->addOption('key1', 'value1');
         $this->object->addOption('key2');
@@ -46,7 +46,7 @@ class OptionElementTest extends \PHPUnit\Framework\TestCase
         $this->assertArrayHasKey('key2', $options);
     }
 
-    public function testAddOptionArray()
+    public function testAddOptionArray(): void
     {
         $this->object->addOptionArray([
             'key1' => 'value1',

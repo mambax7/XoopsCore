@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -36,13 +37,13 @@ class ConfigCollector
      * @param XoopsModule $module  consuming module being installed
      * @param array       $configs configuration array for the consuming module
      */
-    public function __construct(XoopsModule $module, &$configs)
+    public function __construct(XoopsModule $module, array &$configs)
     {
         $this->module = $module;
         $this->configs = &$configs;
     }
 
-    public function add($pluginConfigs)
+    public function add($pluginConfigs): void
     {
         if (is_array($pluginConfigs) && !empty($pluginConfigs)) {
             foreach ($pluginConfigs as $config) {

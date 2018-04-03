@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Handler\Scheme;
 
@@ -17,7 +17,7 @@ class LegacyModuleTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new LegacyModule();
     }
@@ -26,28 +26,28 @@ class LegacyModuleTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testContracts()
+    public function testContracts(): void
     {
         $this->assertInstanceOf('\Xoops\Core\Handler\Scheme\SchemeInterface', $this->object);
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $spec = Factory::getInstance()->newSpec()->scheme('legacy')->name('avatar')->dirname('avatars');
         $this->assertInstanceOf('\AvatarsAvatarHandler', $this->object->build($spec));
     }
 
-    public function testBuild_exception()
+    public function testBuild_exception(): void
     {
         $this->expectException('\Xoops\Core\Exception\NoHandlerException');
         $handler = Factory::getInstance()->newSpec()->scheme('legacy')->name('nosuchhandler')->dirname('avatars')->build();
     }
 
-    public function testBuild_optional()
+    public function testBuild_optional(): void
     {
         $handler = Factory::getInstance()->newSpec()
             ->scheme('legacy')

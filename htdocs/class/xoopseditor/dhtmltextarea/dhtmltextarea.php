@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class FormDhtmlTextArea extends XoopsEditor
      *
      * @param array $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         parent::__construct($options);
         $this->rootPath = '/class/xoopseditor/'.basename(__DIR__);
@@ -43,7 +44,7 @@ class FormDhtmlTextArea extends XoopsEditor
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->renderer->render();
     }

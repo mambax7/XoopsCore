@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class ProtectorCenterForm extends Xoops\Form\ThemeForm
     /**
      * Maintenance Form.
      */
-    public function getPrefIp($bad_ips4disp, $group1_ips4disp)
+    public function getPrefIp($bad_ips4disp, $group1_ips4disp): void
     {
         global $xoopsDB;
         $db = $xoopsDB;

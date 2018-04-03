@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if (defined('XOOPS_TU_ROOT_PATH')) {
     return;

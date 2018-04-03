@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -32,7 +33,7 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
     /**
      * @param array $obj
      */
-    public function getForm(&$obj, XoopsModule $mod)
+    public function getForm(array &$obj, XoopsModule $mod): void
     {
         $xoops = Xoops::getInstance();
         $helper = Userconfigs::getInstance();

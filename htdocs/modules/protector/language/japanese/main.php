@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 define('_MD_PROTECTOR_YOUAREBADIP', 'あなたのIPは不正なアクセスを行うIPとして登録されています。<br />もし必要であればサイト管理者まで連絡してください<br />');
 define('_MD_PROTECTOR_FMT_JAILINFO', '解除予定日時 %s');

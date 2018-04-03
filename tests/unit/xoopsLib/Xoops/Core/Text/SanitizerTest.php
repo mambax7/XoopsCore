@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core\Text;
 
@@ -15,7 +15,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = Sanitizer::getInstance();
     }
@@ -24,32 +24,32 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $actual = Sanitizer::getInstance();
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer', $actual);
         $this->assertSame($this->object, $actual);
     }
 
-    public function testGetShortCodesInstance()
+    public function testGetShortCodesInstance(): void
     {
         $actual = $this->object->getShortCodesInstance();
         $this->assertInstanceOf('\Xoops\Core\Text\ShortCodes', $actual);
         $this->assertSame($this->object->getShortCodesInstance(), $actual);
     }
 
-    public function testGetShortCodes()
+    public function testGetShortCodes(): void
     {
         $actual = $this->object->getShortCodesInstance();
         $this->assertInstanceOf('\Xoops\Core\Text\ShortCodes', $actual);
         $this->assertSame($this->object->getShortCodes(), $actual);
     }
 
-    public function testAddPatternCallback()
+    public function testAddPatternCallback(): void
     {
         $this->object->addPatternCallback(
             '~(\d{4})-(\d{2})-(\d{2})~',
@@ -64,7 +64,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testSmiley()
+    public function testSmiley(): void
     {
         if (\Xoops::getInstance()->isActiveModule('smilies')) {
             $message = $this->object->smiley('happy :-) happy');
@@ -74,7 +74,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testMakeClickable()
+    public function testMakeClickable(): void
     {
         $this->object->enableComponentForTesting('clickable');
 
@@ -84,7 +84,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testNl2Br()
+    public function testNl2Br(): void
     {
         $text = "\n";
         $message = $this->object->nl2br($text);
@@ -97,7 +97,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame("\n<br />\n", $message);
     }
 
-    public function testHtmlSpecialChars()
+    public function testHtmlSpecialChars(): void
     {
         $text = "\"'<>&";
         $message = $this->object->htmlSpecialChars($text);
@@ -112,7 +112,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('toto&nbsp;titi', $message);
     }
 
-    public function testEscapeForJavascript()
+    public function testEscapeForJavascript(): void
     {
         $text = 'enter an "T" for testing';
         $expected = 'enter an \x22T\x22 for testing';
@@ -120,7 +120,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($actual, $expected);
     }
 
-    public function testEscapeShortCodes()
+    public function testEscapeShortCodes(): void
     {
         $text = '[Random] [brackets]][';
         $expected = '&#91;Random&#93; &#91;brackets&#93;&#93;&#91;';
@@ -128,7 +128,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($actual, $expected);
     }
 
-    public function testUndoHtmlSpecialChars()
+    public function testUndoHtmlSpecialChars(): void
     {
         $text = '&gt;&lt;&quot;&#039;&amp;nbsp;';
         $message = $this->object->undohtmlSpecialChars($text);
@@ -140,7 +140,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
      *
      * This needs to be extended to do more than just touch the code :)
      */
-    public function testFilterForDisplay()
+    public function testFilterForDisplay(): void
     {
         $text = 'testing';
         $actual = $this->object->filterForDisplay($text);
@@ -151,21 +151,21 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($actual);
     }
 
-    public function testDisplayTarea()
+    public function testDisplayTarea(): void
     {
         $text = 'testing';
         $actual = $this->object->displayTarea($text);
         $this->assertSame($text, $actual);
     }
 
-    public function testPreviewTarea()
+    public function testPreviewTarea(): void
     {
         $text = 'testing';
         $actual = $this->object->previewTarea($text);
         $this->assertSame($text, $actual);
     }
 
-    public function testCensorString()
+    public function testCensorString(): void
     {
         $xoops = \Xoops::getInstance();
         $xoops->setConfig('censor_enable', true);
@@ -183,13 +183,13 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $text);
     }
 
-    public function testListExtensions()
+    public function testListExtensions(): void
     {
         $actual = $this->object->listExtensions();
         $this->assertInternalType('array', $actual);
     }
 
-    public function testGetDhtmlEditorSupport()
+    public function testGetDhtmlEditorSupport(): void
     {
         $this->object->enableComponentForTesting('soundcloud');
         $support = $this->object->getDhtmlEditorSupport('soundcloud', 'testeditorarea');
@@ -203,7 +203,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $support[1]);
     }
 
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
         $actual = $this->object->getConfig();
         $this->assertInternalType('array', $actual);
@@ -212,7 +212,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $actual);
     }
 
-    public function testExecuteFilter()
+    public function testExecuteFilter(): void
     {
         $text = 'testing';
         $expected = $text;
@@ -222,21 +222,21 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testTextFilter()
+    public function testTextFilter(): void
     {
         $text = 'toto titi tutu tata';
         $value = $this->object->textFilter($text);
         $this->assertSame($text, $value);
     }
 
-    public function testFilterXss()
+    public function testFilterXss(): void
     {
         $text = "\x00";
         $message = $this->object->filterxss($text);
         $this->assertSame('', $message);
     }
 
-    public function testCleanEnum()
+    public function testCleanEnum(): void
     {
         $text = 'alpha';
         $actual = $this->object->cleanEnum($text, ['alpha', 'baker', 'charlie'], '');

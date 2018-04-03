@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *
      * @return array An array of attributes
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getArrayCopy();
     }
@@ -40,7 +41,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *
      * @return array An array of attribute names/keys
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys((array) $this);
     }
@@ -52,7 +53,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *
      * @return array old values
      */
-    public function setAll($values)
+    public function setAll($values): array
     {
         $oldValues = $this->exchangeArray($values);
 
@@ -64,7 +65,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *
      * @param array $values array of new attributes
      */
-    public function setMerge($values)
+    public function setMerge(array $values): void
     {
         $oldValues = $this->getArrayCopy();
         $this->exchangeArray(array_merge($oldValues, $values));
@@ -82,7 +83,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *                      array rather than added with the key $name.
      * @param mixed $value An attribute array item value.
      */
-    public function setArrayItem($stem, $name, $value)
+    public function setArrayItem(string $stem, string $name, $value): void
     {
         $newValue = [];
         if ($this->offsetExists($stem)) {
@@ -107,7 +108,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      *
      * @return array an array of all attributes with names matching $nameLike
      */
-    public function getAllLike($nameLike = null)
+    public function getAllLike(?string $nameLike = null): array
     {
         if (null === $nameLike) {
             return $this->getArrayCopy();

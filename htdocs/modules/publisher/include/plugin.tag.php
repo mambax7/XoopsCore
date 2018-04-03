@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,7 +20,7 @@
  */
 
 /** Get item fields: title, content, time, link, uid, uname, tags **/
-function publisher_tag_iteminfo(&$items)
+function publisher_tag_iteminfo(&$items): void
 {
     $publisher = Publisher::getInstance();
 
@@ -54,7 +55,7 @@ function publisher_tag_iteminfo(&$items)
 }
 
 /** Remove orphan tag-item links **/
-function publisher_tag_synchronization($mid)
+function publisher_tag_synchronization($mid): void
 {
     // Optional
 }

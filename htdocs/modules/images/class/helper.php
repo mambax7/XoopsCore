@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Images extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Images
      */
-    public static function getInstance()
+    public static function getInstance(): Images
     {
         return parent::getInstance();
     }
@@ -38,7 +39,7 @@ class Images extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return ImagesimageHandler
      */
-    public function getHandlerImages()
+    public function getHandlerImages(): ImagesimageHandler
     {
         return $this->getHandler('image');
     }
@@ -46,7 +47,7 @@ class Images extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return ImagesCategoryHandler
      */
-    public function getHandlerCategories()
+    public function getHandlerCategories(): ImagesCategoryHandler
     {
         return $this->getHandler('category');
     }
@@ -54,7 +55,7 @@ class Images extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return ImagesImagebodyHandler
      */
-    public function getHandlerImagesBody()
+    public function getHandlerImagesBody(): ImagesImagebodyHandler
     {
         return $this->getHandler('imagebody');
     }

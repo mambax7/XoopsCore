@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -37,7 +38,7 @@ abstract class XoopsObjectHandler
      *
      * @param Connection $db database connection
      */
-    protected function __construct(Connection $db = null)
+    protected function __construct(?Connection $db = null)
     {
         if (!($db instanceof Connection)) {
             $db = \Xoops::getInstance()->db();
@@ -61,7 +62,7 @@ abstract class XoopsObjectHandler
      *
      * @return mixed
      */
-    public function get($int_id)
+    public function get(int $int_id)
     {
     }
 
@@ -73,7 +74,7 @@ abstract class XoopsObjectHandler
      *
      * @return mixed
      */
-    public function insert(XoopsObject $object, $force = true)
+    public function insert(XoopsObject $object, bool $force = true)
     {
     }
 
@@ -85,7 +86,7 @@ abstract class XoopsObjectHandler
      *
      * @return bool|null FALSE if failed.
      */
-    public function delete(XoopsObject $object, $force = true)
+    public function delete(XoopsObject $object, bool $force = true)
     {
     }
 }

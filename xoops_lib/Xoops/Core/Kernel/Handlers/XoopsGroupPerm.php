@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * XOOPS Kernel Class.
  *
@@ -53,7 +54,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function id($format = Dtype::FORMAT_NONE)
+    public function id(string $format = Dtype::FORMAT_NONE)
     {
         return $this->getVar('gperm_id', $format);
     }
@@ -65,7 +66,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function gperm_id($format = '')
+    public function gperm_id(string $format = '')
     {
         return $this->getVar('gperm_id', $format);
     }
@@ -77,7 +78,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function gperm_groupid($format = '')
+    public function gperm_groupid(string $format = '')
     {
         return $this->getVar('gperm_groupid', $format);
     }
@@ -89,7 +90,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function gperm_itemid($format = '')
+    public function gperm_itemid(string $format = '')
     {
         return $this->getVar('gperm_itemid', $format);
     }
@@ -101,7 +102,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function gperm_modid($format = '')
+    public function gperm_modid(string $format = '')
     {
         return $this->getVar('gperm_modid', $format);
     }
@@ -113,7 +114,7 @@ class XoopsGroupPerm extends XoopsObject
      *
      * @return mixed
      */
-    public function gperm_name($format = '')
+    public function gperm_name(string $format = '')
     {
         return $this->getVar('gperm_name', $format);
     }

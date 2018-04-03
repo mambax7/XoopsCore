@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../init_new.php';
 
@@ -15,7 +15,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Access(new \Stash\Pool());
     }
@@ -24,11 +24,11 @@ class AccessTest extends \PHPUnit\Framework\TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
     }
 
-    public function testReadWriteDelete()
+    public function testReadWriteDelete(): void
     {
         $key = 'offhand/name';
         $value = 'Fred';
@@ -57,7 +57,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($ret);
     }
 
-    public function testCacheRead()
+    public function testCacheRead(): void
     {
         $regenFunction = function ($args) {
             $vars = func_get_args();
@@ -78,7 +78,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($ret, $value);
     }
 
-    public function testGarbageCollect()
+    public function testGarbageCollect(): void
     {
         $key = 'another/name';
         $value = 'Fish';
@@ -97,7 +97,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($ret);
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $key = 'offhand/name';
         $value = 'Fred';

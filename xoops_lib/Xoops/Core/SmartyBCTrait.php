@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Xoops\Core;
 
@@ -58,7 +58,7 @@ trait SmartyBCTrait
      * @param string $tpl_var the template variable name
      * @param mixed  &$value  the referenced value to assign
      */
-    public function assign_by_ref($tpl_var, &$value)
+    public function assign_by_ref(string $tpl_var, &$value): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->assignByRef($tpl_var, $value);
@@ -71,7 +71,7 @@ trait SmartyBCTrait
      * @param mixed  &$value  the referenced value to append
      * @param bool   $merge   flag if array elements shall be merged
      */
-    public function append_by_ref($tpl_var, &$value, $merge = false)
+    public function append_by_ref(string $tpl_var, &$value, $merge = false): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->appendByRef($tpl_var, $value, $merge);
@@ -82,7 +82,7 @@ trait SmartyBCTrait
      *
      * @param string $tpl_var the template variable to clear
      */
-    public function clear_assign($tpl_var)
+    public function clear_assign(string $tpl_var): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->clearAssign($tpl_var);
@@ -96,7 +96,7 @@ trait SmartyBCTrait
      * @param bool   $cacheable
      * @param mixed  $cache_attrs
      */
-    public function register_function($function, $function_impl, $cacheable = true, $cache_attrs = null)
+    public function register_function(string $function, string $function_impl, bool $cacheable = true, $cache_attrs = null): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerPlugin('function', $function, $function_impl, $cacheable, $cache_attrs);
@@ -107,7 +107,7 @@ trait SmartyBCTrait
      *
      * @param string $function name of template function
      */
-    public function unregister_function($function)
+    public function unregister_function(string $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterPlugin('function', $function);
@@ -125,7 +125,7 @@ trait SmartyBCTrait
      * @throws \SmartyException
      * @internal param array $block_functs list of methods that are block format
      */
-    public function register_object($object, $object_impl, $allowed = [], $smarty_args = true, $block_methods = [])
+    public function register_object(string $object, $object_impl, $allowed = [], $smarty_args = true, $block_methods = []): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         settype($allowed, 'array');
@@ -138,7 +138,7 @@ trait SmartyBCTrait
      *
      * @param string $object name of template object
      */
-    public function unregister_object($object)
+    public function unregister_object(string $object): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterObject($object);
@@ -152,7 +152,7 @@ trait SmartyBCTrait
      * @param bool   $cacheable
      * @param mixed  $cache_attrs
      */
-    public function register_block($block, $block_impl, $cacheable = true, $cache_attrs = null)
+    public function register_block(string $block, string $block_impl, bool $cacheable = true, $cache_attrs = null): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerPlugin('block', $block, $block_impl, $cacheable, $cache_attrs);
@@ -163,7 +163,7 @@ trait SmartyBCTrait
      *
      * @param string $block name of template function
      */
-    public function unregister_block($block)
+    public function unregister_block(string $block): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterPlugin('block', $block);
@@ -176,7 +176,7 @@ trait SmartyBCTrait
      * @param string $function_impl name of PHP function to register
      * @param bool   $cacheable
      */
-    public function register_compiler_function($function, $function_impl, $cacheable = true)
+    public function register_compiler_function(string $function, string $function_impl, bool $cacheable = true): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerPlugin('compiler', $function, $function_impl, $cacheable);
@@ -187,7 +187,7 @@ trait SmartyBCTrait
      *
      * @param string $function name of template function
      */
-    public function unregister_compiler_function($function)
+    public function unregister_compiler_function(string $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterPlugin('compiler', $function);
@@ -199,7 +199,7 @@ trait SmartyBCTrait
      * @param string $modifier      name of template modifier
      * @param string $modifier_impl name of PHP function to register
      */
-    public function register_modifier($modifier, $modifier_impl)
+    public function register_modifier(string $modifier, string $modifier_impl): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerPlugin('modifier', $modifier, $modifier_impl);
@@ -210,7 +210,7 @@ trait SmartyBCTrait
      *
      * @param string $modifier name of template modifier
      */
-    public function unregister_modifier($modifier)
+    public function unregister_modifier(string $modifier): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterPlugin('modifier', $modifier);
@@ -222,7 +222,7 @@ trait SmartyBCTrait
      * @param string $type      name of resource
      * @param array  $functions array of functions to handle resource
      */
-    public function register_resource($type, $functions)
+    public function register_resource(string $type, array $functions): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerResource($type, $functions);
@@ -233,7 +233,7 @@ trait SmartyBCTrait
      *
      * @param string $type name of resource
      */
-    public function unregister_resource($type)
+    public function unregister_resource(string $type): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterResource($type);
@@ -245,7 +245,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function register_prefilter($function)
+    public function register_prefilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerFilter('pre', $function);
@@ -256,7 +256,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function unregister_prefilter($function)
+    public function unregister_prefilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterFilter('pre', $function);
@@ -268,7 +268,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function register_postfilter($function)
+    public function register_postfilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerFilter('post', $function);
@@ -279,7 +279,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function unregister_postfilter($function)
+    public function unregister_postfilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterFilter('post', $function);
@@ -291,7 +291,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function register_outputfilter($function)
+    public function register_outputfilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->registerFilter('output', $function);
@@ -302,7 +302,7 @@ trait SmartyBCTrait
      *
      * @param callable $function
      */
-    public function unregister_outputfilter($function)
+    public function unregister_outputfilter(callable $function): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->unregisterFilter('output', $function);
@@ -314,7 +314,7 @@ trait SmartyBCTrait
      * @param string $type filter type
      * @param string $name filter name
      */
-    public function load_filter($type, $name)
+    public function load_filter(string $type, string $name): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->loadFilter($type, $name);
@@ -330,7 +330,7 @@ trait SmartyBCTrait
      *
      * @return boolean
      */
-    public function clear_cache($tpl_file = null, $cache_id = null, $compile_id = null, $exp_time = null)
+    public function clear_cache(string $tpl_file = null, string $cache_id = null, string $compile_id = null, string $exp_time = null): bool
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -344,7 +344,7 @@ trait SmartyBCTrait
      *
      * @return boolean
      */
-    public function clear_all_cache($exp_time = null)
+    public function clear_all_cache(string $exp_time = null): bool
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -360,7 +360,7 @@ trait SmartyBCTrait
      *
      * @return boolean
      */
-    public function is_cached($tpl_file, $cache_id = null, $compile_id = null)
+    public function is_cached(string $tpl_file, string $cache_id = null, string $compile_id = null): bool
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -370,7 +370,7 @@ trait SmartyBCTrait
     /**
      * clear all the assigned template variables.
      */
-    public function clear_all_assign()
+    public function clear_all_assign(): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->clearAllAssign();
@@ -387,7 +387,7 @@ trait SmartyBCTrait
      *
      * @return bool results of {@link smarty_core_rm_auto()}
      */
-    public function clear_compiled_tpl($tpl_file = null, $compile_id = null, $exp_time = null)
+    public function clear_compiled_tpl(string $tpl_file = null, string $compile_id = null, string $exp_time = null): bool
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -401,7 +401,7 @@ trait SmartyBCTrait
      *
      * @return boolean
      */
-    public function template_exists($tpl_file)
+    public function template_exists(string $tpl_file): bool
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -415,7 +415,7 @@ trait SmartyBCTrait
      *
      * @return array
      */
-    public function get_template_vars($name = null)
+    public function get_template_vars(string $name = null): array
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -429,7 +429,7 @@ trait SmartyBCTrait
      *
      * @return array
      */
-    public function get_config_vars($name = null)
+    public function get_config_vars(string $name = null): array
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -443,7 +443,7 @@ trait SmartyBCTrait
      * @param string $section
      * @param string $scope
      */
-    public function config_load($file, $section = null, $scope = 'global')
+    public function config_load(string $file, string $section = null, string $scope = 'global'): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->configLoad($file, $section, $scope);
@@ -456,7 +456,7 @@ trait SmartyBCTrait
      *
      * @return object
      */
-    public function get_registered_object($name)
+    public function get_registered_object(string $name)
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
 
@@ -468,7 +468,7 @@ trait SmartyBCTrait
      *
      * @param string $var
      */
-    public function clear_config($var = null)
+    public function clear_config(string $var = null): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         $this->clearConfig($var);
@@ -480,7 +480,7 @@ trait SmartyBCTrait
      * @param string $error_msg
      * @param int    $error_type
      */
-    public function trigger_error($error_msg, $error_type = E_USER_WARNING)
+    public function trigger_error(string $error_msg, int $error_type = E_USER_WARNING): void
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         trigger_error("Smarty error: ${error_msg}", $error_type);

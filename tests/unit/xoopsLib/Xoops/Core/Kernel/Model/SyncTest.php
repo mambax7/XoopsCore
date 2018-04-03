@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../../../../init_new.php';
 
@@ -12,19 +12,19 @@ class SyncTest extends \PHPUnit\Framework\TestCase
 
     protected $myAbstractClass = 'Xoops\Core\Kernel\XoopsModelAbstract';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conn = \Xoops::getInstance()->db();
     }
 
-    public function test___construct()
+    public function test___construct(): void
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
         $this->assertInstanceOf($this->myAbstractClass, $instance);
     }
 
-    public function test_cleanOrphan()
+    public function test_cleanOrphan(): void
     {
         $instance = new $this->myClass();
         $this->assertinstanceOf($this->myClass, $instance);

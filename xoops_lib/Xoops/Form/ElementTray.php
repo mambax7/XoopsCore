@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -56,7 +57,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @return bool
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         foreach ($this->elements as $el) {
             if ($el->isRequired()) {
@@ -73,7 +74,7 @@ class ElementTray extends Element implements ContainerInterface
      * @param Element $formElement Element to add
      * @param bool    $required    true = entry required
      */
-    public function addElement(Element $formElement, $required = false)
+    public function addElement(Element $formElement, bool $required = false): void
     {
         $this->elements[] = $formElement;
         if ($required) {
@@ -88,7 +89,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @return array array of Element objects
      */
-    public function getRequired()
+    public function getRequired(): array
     {
         $required = [];
         foreach ($this->elements as $el) {
@@ -107,7 +108,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @return array Array of Element objects.
      */
-    public function getElements($recurse = false)
+    public function getElements(bool $recurse = false): array
     {
         if (!$recurse) {
             return $this->elements;
@@ -136,7 +137,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @return string HTML output
      */
-    public function render()
+    public function render(): string
     {
         $count = 0;
         $ret = '<div class="form-inline">';
@@ -167,7 +168,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @return string The delimiter
      */
-    protected function getJoiner($encode = false)
+    protected function getJoiner(bool $encode = false): string
     {
         $joiner = $this->get(':joiner');
 

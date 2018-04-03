@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class Migrate
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
-    public function __construct($dirname)
+    public function __construct(string $dirname)
     {
         $this->helper = Helper::getHelper($dirname);
         if (false === $this->helper) {
@@ -98,7 +99,7 @@ class Migrate
      *
      * @return array
      */
-    public function getCurrentSchema()
+    public function getCurrentSchema(): array
     {
         foreach ($this->moduleTables as $tableName) {
             $this->tableHandler->useTable($tableName);
@@ -133,7 +134,7 @@ class Migrate
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function synchronizeSchema($force = true)
+    public function synchronizeSchema(bool $force = true): bool
     {
         $this->tableHandler = new Tables(); // start fresh
         $this->getSynchronizeDDL();
@@ -166,7 +167,7 @@ class Migrate
      *
      * @return string last error message
      */
-    public function getLastError()
+    public function getLastError(): string
     {
         return $this->tableHandler->getLastError();
     }
@@ -176,7 +177,7 @@ class Migrate
      *
      * @return int last error number
      */
-    public function getLastErrNo()
+    public function getLastErrNo(): int
     {
         return $this->tableHandler->getLastErrNo();
     }
@@ -196,7 +197,7 @@ class Migrate
      *  - data conversions
      *  - move column data
      */
-    protected function preSyncActions()
+    protected function preSyncActions(): void
     {
     }
 
@@ -205,7 +206,7 @@ class Migrate
      *
      * @param string $tableName table to add
      */
-    protected function addMissingTable($tableName)
+    protected function addMissingTable(string $tableName): void
     {
         $this->tableHandler->addTable($tableName);
         $this->tableHandler->setTableOptions($tableName, $this->targetDefinitions[$tableName]['options']);
@@ -226,7 +227,7 @@ class Migrate
      *
      * @param string $tableName table to synchronize
      */
-    protected function synchronizeTable($tableName)
+    protected function synchronizeTable(string $tableName): void
     {
         foreach ($this->targetDefinitions[$tableName]['columns'] as $column) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, $column['name']);
@@ -285,7 +286,7 @@ class Migrate
      *
      * @return bool true if table and column combination is defined, otherwise false
      */
-    protected function targetHasColumn($tableName, $columnName)
+    protected function targetHasColumn(string $tableName, string $columnName): bool
     {
         if (isset($this->targetDefinitions[$tableName])) {
             foreach ($this->targetDefinitions[$tableName]['columns'] as $col) {
@@ -305,7 +306,7 @@ class Migrate
      *
      * @return bool true if table is defined, otherwise false
      */
-    protected function targetHasTable($tableName)
+    protected function targetHasTable(string $tableName): bool
     {
         if (isset($this->targetDefinitions[$tableName])) {
             return true;

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -30,7 +31,7 @@ class Smilies extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return Smilies
      */
-    public static function getInstance()
+    public static function getInstance(): Smilies
     {
         return parent::getInstance();
     }
@@ -38,7 +39,7 @@ class Smilies extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return SmiliesSmileyHandler
      */
-    public function getHandlerSmilies()
+    public function getHandlerSmilies(): SmiliesSmileyHandler
     {
         return $this->getHandler('smiley');
     }

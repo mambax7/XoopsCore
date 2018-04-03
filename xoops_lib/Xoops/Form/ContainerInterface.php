@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -28,14 +29,14 @@ interface ContainerInterface
      * @param Element $formElement Element to add
      * @param bool    $required    true = entry required
      */
-    public function addElement(Element $formElement, $required = false);
+    public function addElement(Element $formElement, bool $required = false): void;
 
     /**
      * getRequired - get an array of required form elements.
      *
      * @return array array of Xoops\Form\Element
      */
-    public function getRequired();
+    public function getRequired(): array;
 
     /**
      * getElements - get an array of forms elements.
@@ -44,5 +45,5 @@ interface ContainerInterface
      *
      * @return array of Xoops\Form\Element
      */
-    public function getElements($recurse = false);
+    public function getElements(bool $recurse = false): array;
 }

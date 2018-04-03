@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__.'/../../init_new.php';
 
@@ -6,7 +6,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = '\Xoops\Locale';
 
-    public function test_loadLanguage()
+    public function test_loadLanguage(): void
     {
         $class = $this->myClass;
         $x = $class::loadLanguage(null);
@@ -22,17 +22,17 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($x);
     }
 
-    public function test_loadLocale()
+    public function test_loadLocale(): void
     {
         $this->markTestIncomplete('to do');
     }
 
-    public function test_loadThemeLocale()
+    public function test_loadThemeLocale(): void
     {
         $this->markTestIncomplete('to do');
     }
 
-    public function test_loadMailerLocale()
+    public function test_loadMailerLocale(): void
     {
         $class = $this->myClass;
         $x = $class::loadMailerLocale();
@@ -42,7 +42,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(isset($map['xoopsmailerlocale']));
     }
 
-    public function test_translate()
+    public function test_translate(): void
     {
         $class = $this->myClass;
 
@@ -51,7 +51,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($key, $x);
     }
 
-    public function test_translateTheme()
+    public function test_translateTheme(): void
     {
         $path = \XoopsBaseConfig::get('root-path');
         if (!class_exists('Comments', false)) {
@@ -72,7 +72,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($key, $x);
     }
 
-    public function test_getClassFromDirname()
+    public function test_getClassFromDirname(): void
     {
         $this->markTestSkipped('now protected');
         $class = $this->myClass;
@@ -82,7 +82,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(ucfirst($dirname).'Locale', $x);
     }
 
-    public function test_getThemeClassFromDirname()
+    public function test_getThemeClassFromDirname(): void
     {
         $this->markTestSkipped('now protected');
         $class = $this->myClass;
@@ -92,7 +92,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(ucfirst($dirname).'ThemeLocale', $x);
     }
 
-    public function test_getUserLocales()
+    public function test_getUserLocales(): void
     {
         $class = $this->myClass;
 
@@ -101,7 +101,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(in_array('en_US', $locales, true));
     }
 
-    public function test_normalizeLocale()
+    public function test_normalizeLocale(): void
     {
         $class = $this->myClass;
 
@@ -114,7 +114,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('en_Latn_US', $actual);
     }
 
-    public function test_normalizeDomain()
+    public function test_normalizeDomain(): void
     {
         $class = $this->myClass;
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,7 +20,7 @@ class CodexMainmenuPlugin implements MainmenuPluginInterface
     /**
      * @return array
      */
-    public function mainmenu()
+    public function mainmenu(): array
     {
         $helper = \Xoops::getModuleHelper(basename(dirname(dirname(__DIR__))));
         $subMenu = [];

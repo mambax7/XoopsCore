@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -42,7 +43,7 @@ class NullProvider extends Provider
      *
      * @param string $service service name (case sensitive)
      */
-    public function __construct(Manager $manager, $service)
+    public function __construct(Manager $manager, string $service)
     {
         $this->response = new Response();
         $this->response->setSuccess(false)->addErrorMessage(sprintf('No provider installed for %s', $service));
@@ -55,7 +56,7 @@ class NullProvider extends Provider
      * @param string $name  not used
      * @param mixed  $value not used
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
     }
 
@@ -64,7 +65,7 @@ class NullProvider extends Provider
      *
      * @param string $name not used
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return null;
     }
@@ -76,7 +77,7 @@ class NullProvider extends Provider
      *
      * @return false
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return false;
     }
@@ -86,7 +87,7 @@ class NullProvider extends Provider
      *
      * @param string $name not used
      */
-    public function __unset($name)
+    public function __unset(string $name): void
     {
     }
 
@@ -98,7 +99,7 @@ class NullProvider extends Provider
      *
      * @return Response Response
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, $arguments): Response
     {
         return $this->response;
     }
@@ -111,7 +112,7 @@ class NullProvider extends Provider
      *
      * @return Response Response
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, $arguments): Response
     {
         $response = new Response();
         $response->setSuccess(false)->addErrorMessage(sprintf('No provider installed for %s', get_called_class()));
@@ -124,7 +125,7 @@ class NullProvider extends Provider
      *
      * @return bool false to indicate no provider is available
      */
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return false;
     }
