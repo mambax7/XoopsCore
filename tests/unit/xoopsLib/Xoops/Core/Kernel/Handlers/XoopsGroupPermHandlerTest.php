@@ -47,7 +47,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $itemid = $this->itemid;
         $modid = $this->modid;
         $value = $instance->addRight($name, $itemid, $groupid, $modid);
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
     }
 
     public function test_checkRight()
@@ -58,25 +58,25 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $itemid = $this->itemid;
         $modid = $this->modid;
         $value = $instance->checkRight($name, $itemid, $groupid, $modid, true);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->checkRight($name, $itemid, $groupid, $modid, false);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->checkRight($name, $itemid, [$groupid, $groupid, $groupid], $modid, true);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->checkRight($name, $itemid, [$groupid, $groupid, $groupid], $modid, false);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->checkRight('dummy', -1, null, -1);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $value = $instance->checkRight('dummy', -1, FixedGroups::ADMIN, -1);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->checkRight('dummy', [$groupid, $groupid, $groupid], FixedGroups::ADMIN, -1);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_getItemIds()
@@ -86,10 +86,10 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $groupid = $this->groupid;
         $modid = $this->modid;
         $value = $instance->getItemIds($name, $groupid, $modid);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->getItemIds($name, [$groupid, $groupid, $groupid], $modid);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getGroupIds()
@@ -99,7 +99,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $itemid = $this->itemid;
         $modid = $this->modid;
         $value = $instance->getGroupIds($name, $itemid, $modid);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_deleteByGroup()
@@ -115,7 +115,7 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $itemid = $this->itemid;
         $modid = $this->modid;
         $value = $instance->addRight($name, $itemid, $groupid, $modid);
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
         $value = $instance->deleteByGroup($groupid, $modid);
         $this->assertTrue((int) ($value) > 0);
 
@@ -132,18 +132,18 @@ class GroupPermHandlerTest extends \PHPUnit\Framework\TestCase
         $itemid = $this->itemid;
         $modid = $this->modid;
         $value = $instance->addRight($name, $itemid, $groupid, $modid);
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
 
         $value = $instance->deleteByModule($modid);
         $this->assertTrue((int) $value > 0);
 
         $value = $instance->addRight($name, $itemid, $groupid, $modid);
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
         $value = $instance->deleteByModule($modid, $name);
         $this->assertTrue((int) $value > 0);
 
         $value = $instance->addRight($name, $itemid, $groupid, $modid);
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
         $value = $instance->deleteByModule($modid, $name, $itemid);
         $this->assertTrue((int) $value > 0);
 

@@ -49,7 +49,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->object->addOption('opt_key', 'opt_name');
         $this->object->addOption('opt_just_key');
         $value = $this->object->getOptions();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertSame('opt_name', $value['opt_key']);
         $this->assertSame('opt_just_key', $value['opt_just_key']);
     }
@@ -58,7 +58,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->addOptionArray(['opt_key' => 'opt_name', 'opt_just_key' => null]);
         $value = $this->object->getOptions();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertSame('opt_name', $value['opt_key']);
         $this->assertSame('opt_just_key', $value['opt_just_key']);
     }
@@ -68,7 +68,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $groups = ['grp_key' => 'grp_name', 'grp_key1' => 'grp_name1'];
         $this->object->addOptionGroup('opt_grp_name', $groups);
         $value = $this->object->get('option');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertSame($groups, $value['opt_grp_name']);
     }
 
@@ -77,7 +77,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->object->addOptionArray(['opt_key' => 'opt_name', 'opt_just_key' => null]);
         $this->object->setValue('opt_key');
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<select'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));
         $this->assertTrue(false !== strpos($value, 'size="1"'));
@@ -93,7 +93,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $groups = ['grp_key' => 'grp_name', 'grp_key1' => 'grp_name1'];
         $this->object->addOptionGroup('opt_grp_name', $groups);
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<select'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));
         $this->assertTrue(false !== strpos($value, 'size="1"'));
@@ -115,7 +115,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $this->object->setRequired(true);
         $value = $this->object->renderValidationJS();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, 'window.alert'));
     }
 

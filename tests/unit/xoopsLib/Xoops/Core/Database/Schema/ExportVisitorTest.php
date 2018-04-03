@@ -21,8 +21,8 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
 
-        $this->assertTrue(is_array($value));
-        $this->assertTrue(empty($value));
+        $this->assertInternalType('array', $value);
+        $this->assertEmpty($value);
     }
 
     public function test_acceptSchema()
@@ -34,8 +34,8 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptSchema($schema);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
-        $this->assertTrue(empty($value));
+        $this->assertInternalType('array', $value);
+        $this->assertEmpty($value);
     }
 
     public function test_acceptTable()
@@ -47,7 +47,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptTable($table);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(!empty($value['tables']));
     }
 
@@ -63,7 +63,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptColumn($table, $column);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(!empty($value['tables']['system_group']['columns']['groupid']));
         $this->assertSame($col_name, $value['tables']['system_group']['columns'][$col_name]['name']);
         $this->assertSame('integer', $value['tables']['system_group']['columns'][$col_name]['type']);
@@ -93,7 +93,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptForeignKey($table, $fk_constraint);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(!empty($value['tables'][$tName]['constraint']));
         $tmp = $value['tables'][$tName]['constraint'][0];
         $this->assertSame($fk_name, $tmp['name']);
@@ -125,7 +125,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptIndex($table, $index);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(!empty($value['tables'][$tName]['indexes'][$name]));
         $tmp = $value['tables'][$tName]['indexes'][$name];
         $this->assertSame($name, $tmp['name']);
@@ -151,7 +151,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $instance->acceptSequence($sequence);
 
         $value = $instance->getSchemaArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(!empty($value['sequence'][$name]));
         $tmp = $value['sequence'][$name];
         $this->assertSame($name, $tmp['name']);

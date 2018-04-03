@@ -62,7 +62,7 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object->optional(true);
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertSame(true, $this->object->getOptional());
+        $this->assertTrue($this->object->getOptional());
     }
 
     public function testFqn()

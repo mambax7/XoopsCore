@@ -47,8 +47,8 @@ class YouTubeTest extends \PHPUnit\Framework\TestCase
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
         $this->assertTrue(2 === count($support));
-        $this->assertTrue(is_string($support[0]));
-        $this->assertTrue(is_string($support[1]));
+        $this->assertInternalType('string', $support[0]);
+        $this->assertInternalType('string', $support[1]);
     }
 
     public function testRegisterExtensionProcessing()

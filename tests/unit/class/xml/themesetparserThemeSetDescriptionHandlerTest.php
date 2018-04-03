@@ -37,7 +37,7 @@ class ThemeSetDescriptionHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['template', 'template'];
         $data = 'description';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getTempArr('description'));
 
         $input = 'input';
@@ -45,7 +45,7 @@ class ThemeSetDescriptionHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['image', 'image'];
         $data = 'description';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getTempArr('description'));
 
         $input = 'input';
@@ -53,7 +53,7 @@ class ThemeSetDescriptionHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'description';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
-        $this->assertSame(false, $parser->getTempArr('description'));
+        $this->assertNull($x);
+        $this->assertFalse($parser->getTempArr('description'));
     }
 }

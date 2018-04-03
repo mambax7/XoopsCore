@@ -147,14 +147,14 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = $testArray;
 
         $get = Request::getArray($varname, null, 'request');
-        $this->assertTrue(is_array($get));
+        $this->assertInternalType('array', $get);
         $this->assertSame($get, $testArray);
 
         $testArray2 = ['one', 'two', '<script>three</script>'];
         $_REQUEST[$varname] = $testArray2;
 
         $get = Request::getArray($varname, null, 'request');
-        $this->assertTrue(is_array($get));
+        $this->assertInternalType('array', $get);
         $this->assertSame($get, $testArray);
     }
 
@@ -277,7 +277,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = 'Lorem';
 
         $get = Request::get('request');
-        $this->assertTrue(is_array($get));
+        $this->assertInternalType('array', $get);
         $this->assertSame('Lorem', $get[$varname]);
 
         unset($get);

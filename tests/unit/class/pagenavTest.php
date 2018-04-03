@@ -36,7 +36,7 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($total_items, $items_perpage, $current_start);
         $this->assertInstanceOf($this->myclass, $instance);
         $ret = $instance->renderNav();
-        $this->assertTrue(is_string($ret));
+        $this->assertInternalType('string', $ret);
     }
 
     public function test_renderNav100()
@@ -47,6 +47,6 @@ class pagenavTest extends \PHPUnit\Framework\TestCase
         $start_name = 'start_name';
         $instance = new $this->myclass($total_items, $items_perpage, $current_start, $start_name);
         $ret = $instance->renderNav();
-        $this->assertTrue(is_string($ret));
+        $this->assertInternalType('string', $ret);
     }
 }

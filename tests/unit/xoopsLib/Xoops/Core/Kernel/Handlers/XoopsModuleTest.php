@@ -34,7 +34,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->loadInfoAsVar('');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getMessages()
@@ -50,7 +50,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
             $instance->setMessage($msg);
         }
         $value = $instance->getMessages();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_setInfo()
@@ -77,7 +77,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->getInfo();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getInfo100()
@@ -85,14 +85,14 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
         $name = 'name';
         $value = $instance->getInfo($name);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_mainLink()
     {
         $instance = new $this->myclass();
         $value = $instance->mainLink();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_mainLink100()
@@ -100,14 +100,14 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
         $instance->setVar('hasmain', 1);
         $value = $instance->mainLink();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_subLink()
     {
         $instance = new $this->myclass();
         $value = $instance->subLink();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_loadAdminMenu()
@@ -115,7 +115,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
         $instance->loadAdminMenu();
         $value = $instance->getAdminMenu();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getAdminMenu()
@@ -127,28 +127,28 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->loadInfo('avatars');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_id()
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_mid()
     {
         $instance = new $this->myclass();
         $value = $instance->mid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_name()
     {
         $instance = new $this->myclass();
         $value = $instance->name();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_version()
@@ -162,7 +162,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->last_update();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_weight()
@@ -183,7 +183,7 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->dirname();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_hasmain()
@@ -225,6 +225,6 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->getByDirName('.');
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 }

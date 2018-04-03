@@ -39,17 +39,17 @@ class ElementTrayTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($value);
 
         $value = $this->object->getRequired();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertInstanceOf('Xoops\Form\Button', $value[0]);
 
         $value = $this->object->getElements();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertInstanceOf('Xoops\Form\Button', $value[0]);
     }
 
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 }

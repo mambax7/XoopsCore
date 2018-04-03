@@ -37,14 +37,14 @@ class ModuleHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getById();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getByDirname()
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getByDirname('.');
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_insertModule()
@@ -65,13 +65,13 @@ class ModuleHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getObjectsArray();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getNameList()
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getNameList();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 }

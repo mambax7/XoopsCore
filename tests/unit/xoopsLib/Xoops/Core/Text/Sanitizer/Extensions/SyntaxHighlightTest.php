@@ -49,7 +49,7 @@ class SyntaxHighlightTest extends \PHPUnit\Framework\TestCase
 
         $text = 'some text';
         $actual = $this->sanitizer->executeFilter('syntaxhighlight', $text);
-        $this->assertTrue(is_string($actual));
+        $this->assertInternalType('string', $actual);
     }
 
     public function testPhp()

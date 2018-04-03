@@ -60,7 +60,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $error = 'error';
         $instance = new Response($value, true, $error);
         $result = $instance->getErrorMessage();
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(in_array($error, $result, true));
     }
 
@@ -111,7 +111,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $result = $instance->addErrorMessage($data);
 
         $result = $instance->getErrorMessage();
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(in_array($error, $result, true));
         $this->assertTrue(in_array($error1, $result, true));
         $this->assertTrue(in_array('error2', $result, true));

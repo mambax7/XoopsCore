@@ -31,7 +31,7 @@ class SelectUserTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<select'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));
         $this->assertTrue(false !== strpos($value, 'size="1"'));

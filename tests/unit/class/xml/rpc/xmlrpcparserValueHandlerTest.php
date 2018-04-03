@@ -57,7 +57,7 @@ class RpcValueHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $value = '71';
         $instance->handleCharacterData($parser, $value);
-        $this->assertSame(null, $parser->getTempValue());
+        $this->assertNull($parser->getTempValue());
     }
 
     public function test_handleBeginElement()
@@ -68,7 +68,7 @@ class RpcValueHandlerTest extends \PHPUnit\Framework\TestCase
         $parser = new XoopsXmlRpcParser($input);
         $value = '71';
         $x = $instance->handleBeginElement($parser, $value);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_handleEndElement()

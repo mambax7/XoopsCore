@@ -28,10 +28,10 @@ class YamlTest extends \PHPUnit\Framework\TestCase
 
         $string = Yaml::dump($inputArray);
         $this->assertTrue(!empty($string));
-        $this->assertTrue(is_string($string));
+        $this->assertInternalType('string', $string);
 
         $outputArray = Yaml::load((string) $string);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
     }
 
@@ -45,7 +45,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::read($tmpfname);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
 
         unlink($tmpfname);
@@ -57,10 +57,10 @@ class YamlTest extends \PHPUnit\Framework\TestCase
 
         $string = Yaml::dumpWrapped($inputArray);
         $this->assertTrue(!empty($string));
-        $this->assertTrue(is_string($string));
+        $this->assertInternalType('string', $string);
 
         $outputArray = Yaml::loadWrapped((string) $string);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
     }
 
@@ -70,10 +70,10 @@ class YamlTest extends \PHPUnit\Framework\TestCase
 
         $string = Yaml::dumpWrapped($inputArray);
         $this->assertTrue(!empty($string));
-        $this->assertTrue(is_string($string));
+        $this->assertInternalType('string', $string);
 
         $outputArray = Yaml::loadWrapped((string) $string);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
     }
 
@@ -83,10 +83,10 @@ class YamlTest extends \PHPUnit\Framework\TestCase
 
         $string = Yaml::dump($inputArray);
         $this->assertTrue(!empty($string));
-        $this->assertTrue(is_string($string));
+        $this->assertInternalType('string', $string);
 
         $outputArray = Yaml::loadWrapped((string) $string);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
     }
 
@@ -100,7 +100,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::readWrapped($tmpfname);
-        $this->assertTrue(is_array($outputArray));
+        $this->assertInternalType('array', $outputArray);
         $this->assertSame($inputArray, $outputArray);
 
         unlink($tmpfname);

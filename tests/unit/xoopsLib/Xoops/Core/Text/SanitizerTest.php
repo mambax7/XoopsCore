@@ -148,7 +148,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
 
         $text = '[code]testing[/code]';
         $actual = $this->object->filterForDisplay($text);
-        $this->assertFalse(empty($actual));
+        $this->assertNotEmpty($actual);
     }
 
     public function testDisplayTarea()
@@ -186,7 +186,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
     public function testListExtensions()
     {
         $actual = $this->object->listExtensions();
-        $this->assertTrue(is_array($actual));
+        $this->assertInternalType('array', $actual);
     }
 
     public function testGetDhtmlEditorSupport()
@@ -194,8 +194,8 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->object->enableComponentForTesting('soundcloud');
         $support = $this->object->getDhtmlEditorSupport('soundcloud', 'testeditorarea');
         $this->assertTrue(2 === count($support));
-        $this->assertTrue(is_string($support[0]));
-        $this->assertTrue(is_string($support[1]));
+        $this->assertInternalType('string', $support[0]);
+        $this->assertInternalType('string', $support[1]);
 
         $support = $this->object->getDhtmlEditorSupport('thisisnotarealextension', 'testeditorarea');
         $this->assertTrue(2 === count($support));
@@ -206,10 +206,10 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
     public function testGetConfig()
     {
         $actual = $this->object->getConfig();
-        $this->assertTrue(is_array($actual));
+        $this->assertInternalType('array', $actual);
 
         $actual = $this->object->getConfig('xoopscode');
-        $this->assertTrue(is_array($actual));
+        $this->assertInternalType('array', $actual);
     }
 
     public function testExecuteFilter()

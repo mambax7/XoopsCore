@@ -287,7 +287,7 @@ class ShortCodes
      */
     private function shortcodeRegex()
     {
-        $tagRegex = join('|', array_map('preg_quote', array_keys($this->shortcodes)));
+        $tagRegex = implode('|', array_map('preg_quote', array_keys($this->shortcodes)));
 
         return '/'
             .'\\['                              // Opening bracket

@@ -152,7 +152,7 @@ switch ($op) {
 
         //Added by fx2024
         $parentCat = $categoryObj->getVar('categoryid');
-        $sizeof = sizeof($_POST['scname']);
+        $sizeof = count($_POST['scname']);
         for ($i = 0; $i < $sizeof; ++$i) {
             if ($_POST['scname'][$i] !== '') {
                 $categoryObj = $publisher->getCategoryHandler()->create();

@@ -58,7 +58,7 @@ class ConfigHandlerTest extends \PHPUnit\Framework\TestCase
         $item->setNew();
         $item->setVar('conf_title', 'CONFTITLE_DUMMY_FOR_TESTS');
         $value = $instance->insertConfig($item);
-        $this->assertTrue(intval($value) > 0);
+        $this->assertTrue((int) $value > 0);
     }
 
     public function test_deleteConfig()
@@ -69,31 +69,31 @@ class ConfigHandlerTest extends \PHPUnit\Framework\TestCase
         $item->setNew();
         $item->setVar('conf_title', 'CONFTITLE_DUMMY_FOR_TESTS');
         $value = $instance->insertConfig($item);
-        $this->assertTrue(intval($value) > 0);
+        $this->assertTrue((int) $value > 0);
 
         $ret = $instance->deleteConfig($item);
-        $this->assertSame(true, $ret);
+        $this->assertTrue($ret);
     }
 
     public function test_getConfigs()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigs();
-        $this->assertTrue(is_array($ret));
+        $this->assertInternalType('array', $ret);
     }
 
     public function test_getConfigCount()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigCount();
-        $this->assertTrue(is_numeric($ret));
+        $this->assertInternalType('numeric', $ret);
     }
 
     public function test_getConfigsByCat()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigsByCat(1);
-        $this->assertTrue(is_array($ret));
+        $this->assertInternalType('array', $ret);
     }
 
     public function test_createConfigOption()
@@ -107,28 +107,28 @@ class ConfigHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigOption(1);
-        $this->assertTrue(is_object($ret));
+        $this->assertInternalType('object', $ret);
     }
 
     public function test_getConfigOptions()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigOptions();
-        $this->assertTrue(is_array($ret));
+        $this->assertInternalType('array', $ret);
     }
 
     public function test_getConfigOptionsCount()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigOptionsCount();
-        $this->assertTrue(is_numeric($ret));
+        $this->assertInternalType('numeric', $ret);
     }
 
     public function test_getConfigList()
     {
         $instance = new $this->myclass();
         $ret = $instance->getConfigList(1);
-        $this->assertTrue(is_array($ret));
+        $this->assertInternalType('array', $ret);
     }
 
     public function test_deleteAll()

@@ -33,16 +33,16 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         ob_start();
         $x = $class::dumpVar($var, false, false);
         $buf = ob_get_clean();
-        $this->assertTrue(is_string($x));
-        $this->assertTrue(empty($buf));
+        $this->assertInternalType('string', $x);
+        $this->assertEmpty($buf);
 
         ob_start();
         $x = $class::dumpVar($var, true, false);
         $buf = ob_get_clean();
         $this->assertTrue(!empty($x));
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
         $this->assertTrue(!empty($buf));
-        $this->assertTrue(is_string($buf));
+        $this->assertInternalType('string', $buf);
     }
 
     public function test_dumpFile()
@@ -52,16 +52,16 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         ob_start();
         $x = $class::dumpFile($file, false, false);
         $buf = ob_get_clean();
-        $this->assertTrue(is_string($x));
-        $this->assertTrue(empty($buf));
+        $this->assertInternalType('string', $x);
+        $this->assertEmpty($buf);
 
         ob_start();
         $x = $class::dumpFile($file, true, false);
         $buf = ob_get_clean();
         $this->assertTrue(!empty($x));
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
         $this->assertTrue(!empty($buf));
-        $this->assertTrue(is_string($buf));
+        $this->assertInternalType('string', $buf);
     }
 
     public function test_arrayRecursiveDiff()
@@ -72,11 +72,11 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = ['b' => 'green', 'yellow', 'red'];
 
         $x = $class::arrayRecursiveDiff($array1, $array1);
-        $this->assertTrue(empty($x));
-        $this->assertTrue(is_array($x));
+        $this->assertEmpty($x);
+        $this->assertInternalType('array', $x);
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue('green' === $x['a']);
         $this->assertTrue('red' === $x[0]);
         $this->assertTrue('blue' === $x[1]);
@@ -90,11 +90,11 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = ['b' => 'green', 'red', ['b' => 'green', 'blue', 'red']];
 
         $x = $class::arrayRecursiveDiff($array1, $array1);
-        $this->assertTrue(empty($x));
-        $this->assertTrue(is_array($x));
+        $this->assertEmpty($x);
+        $this->assertInternalType('array', $x);
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x[1]['a'] === 'green');
         $this->assertTrue($x[1][0] === 'red');
@@ -108,11 +108,11 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = ['b' => 'green', 'red', 'array' => 'blue'];
 
         $x = $class::arrayRecursiveDiff($array1, $array1);
-        $this->assertTrue(empty($x));
-        $this->assertTrue(is_array($x));
+        $this->assertEmpty($x);
+        $this->assertInternalType('array', $x);
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
@@ -126,11 +126,11 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = ['b' => 'green', 'red', 'array' => ['b' => 'green']];
 
         $x = $class::arrayRecursiveDiff($array1, $array1);
-        $this->assertTrue(empty($x));
-        $this->assertTrue(is_array($x));
+        $this->assertEmpty($x);
+        $this->assertInternalType('array', $x);
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
@@ -144,12 +144,12 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = [];
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue($x === $array1);
 
         $x = $class::arrayRecursiveDiff($array2, $array1);
-        $this->assertTrue(is_array($x));
-        $this->assertTrue(empty($x));
+        $this->assertInternalType('array', $x);
+        $this->assertEmpty($x);
     }
 
     public function test_arrayRecursiveMerge()
@@ -159,7 +159,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array2 = ['b' => 'green', 'red', 'array' => ['a' => 'green', 'yellow']];
 
         $x = $class::arrayRecursiveMerge($array1, $array2);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
@@ -174,7 +174,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $array1 = ['a' => 'green', 'red', 'array' => ['a' => 'green', 'red', 'blue']];
 
         $x = $class::arrayRecursiveMerge($array1, $array1);
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue($x === $array1);
     }
 }

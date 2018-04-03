@@ -26,10 +26,10 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertRegExp('/^.*system_block$/', $this->object->table);
         $this->assertSame('\Xoops\Core\Kernel\Handlers\XoopsBlock', $this->object->className);
         $this->assertSame('bid', $this->object->keyName);
-        $this->assertSame(null, $this->object->table_link);
+        $this->assertNull($this->object->table_link);
         $this->assertSame('name', $this->object->identifierName);
-        $this->assertSame(null, $this->object->field_link);
-        $this->assertSame(null, $this->object->field_object);
+        $this->assertNull($this->object->field_link);
+        $this->assertNull($this->object->field_object);
     }
 
     public function testContracts()
@@ -48,115 +48,115 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->get($bid);
         $this->assertSame($bid, $value->bid());
         $value = $this->object->deleteBlock($block);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
         $value = $this->object->get($bid);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getDistinctObjects()
     {
         $value = $this->object->getDistinctObjects();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getDistinctObjects100()
     {
         $criteria = new Criteria('bid');
         $value = $this->object->getDistinctObjects($criteria);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getNameList()
     {
         $value = $this->object->getNameList();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getAllBlocksByGroup()
     {
         $value = $this->object->getAllBlocksByGroup(1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup(1, false);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup([1, 1, 1], false);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup(1, true, XOOPS_SIDEBLOCK_BOTH);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup(1, true, XOOPS_CENTERBLOCK_ALL);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup(1, true, -1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocksByGroup(1, true, null, 1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getAllBlocks()
     {
         $value = $this->object->getAllBlocks();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('object', true, XOOPS_SIDEBLOCK_BOTH);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('object', true, XOOPS_CENTERBLOCK_ALL);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('object', true, -1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('object', true, null, 1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('list');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllBlocks('id');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getByModule()
     {
         $value = $this->object->getByModule('module');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getByModule('module', false);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getAllByGroupModule()
     {
         $value = $this->object->getAllByGroupModule(1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllByGroupModule([1, 1, 1]);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllByGroupModule(1, 1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getAllByGroupModule(1, 1, true);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getNonGroupedBlocks()
     {
         $value = $this->object->getNonGroupedBlocks();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getNonGroupedBlocks(1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getNonGroupedBlocks(1, true);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $this->object->getNonGroupedBlocks(0, false, true);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_countSimilarBlocks()

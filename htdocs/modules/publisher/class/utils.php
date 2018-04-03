@@ -835,7 +835,7 @@ class PublisherUtils
 
                 foreach ($start_tags as $val) {
                     $posb = array_search($val, $end_tags, true);
-                    if (is_integer($posb)) {
+                    if (is_int($posb)) {
                         unset($end_tags[$posb]);
                     } else {
                         $complete_tags[] = $val;
@@ -905,7 +905,7 @@ class PublisherUtils
             $static_rater[] .= '</div>';
             $static_rater[] .= '</div>'."\n\n";
 
-            return join("\n", $static_rater);
+            return implode("\n", $static_rater);
         }
         $rater = '';
         $rater .= '<div class="publisher_ratingblock">';
@@ -1039,7 +1039,7 @@ class PublisherUtils
         $rep_pat = ['-', 'e', 'e', 'e', 'e', 'c', 'a', 'a', 'a', 'i', 'i', 'u', 'u', 'u', 'o', 'o'];
         $title = preg_replace($pattern, $rep_pat, $title);
 
-        if (sizeof($title) > 0) {
+        if (count($title) > 0) {
             if ($withExt) {
                 $title .= '.html';
             }

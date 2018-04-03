@@ -43,6 +43,6 @@ class RpcNameHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $value = '71';
         $instance->handleCharacterData($parser, $value);
-        $this->assertSame(null, $parser->getTempName());
+        $this->assertNull($parser->getTempName());
     }
 }

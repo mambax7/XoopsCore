@@ -31,14 +31,14 @@ class XoopsTplFileTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_id()
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_refid()
@@ -52,21 +52,21 @@ class XoopsTplFileTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_tplset();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_file()
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_file();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_desc()
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_desc();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_lastmodified()
@@ -87,28 +87,28 @@ class XoopsTplFileTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_module();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_type()
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_type();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tpl_source()
     {
         $instance = new $this->myclass();
         $value = $instance->tpl_source();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getSource()
     {
         $instance = new $this->myclass();
         $value = $instance->getSource();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getLastModified()

@@ -10,16 +10,16 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $x = $class::loadLanguage(null);
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
 
         $path = '';
         $name = '_user';
         $language = 'english';
         $x = $class::loadLanguage($name, null, $language);
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
 
         $x = $class::loadLanguage($name, null, 'dummy');
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
     }
 
     public function test_loadLocale()
@@ -36,7 +36,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $x = $class::loadMailerLocale();
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
 
         $map = XoopsLoad::getMap();
         $this->assertTrue(isset($map['xoopsmailerlocale']));
@@ -97,7 +97,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $class = $this->myClass;
 
         $locales = $class::getUserLocales();
-        $this->assertTrue(is_array($locales));
+        $this->assertInternalType('array', $locales);
         $this->assertTrue(in_array('en_US', $locales, true));
     }
 

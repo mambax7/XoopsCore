@@ -54,28 +54,28 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->setHandler();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_loadHandler()
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->loadHandler('read');
-        $this->assertTrue(is_object($value));
+        $this->assertInternalType('object', $value);
     }
 
     public function test_create()
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->create();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_get()
     {
         $instance = new $this->myClass($this->conn);
         $value = $instance->get();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_insert()
@@ -92,7 +92,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $obj = new XoopsGroup();
         $value = $instance->delete($obj);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_deleteAll()
@@ -115,7 +115,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getObjects();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue($value > 0);
     }
 
@@ -123,7 +123,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getAll();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -131,7 +131,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getList();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -139,7 +139,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getIds();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -154,7 +154,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getCounts();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getByLink()
@@ -164,7 +164,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
         $value = $instance->getByLink();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -185,7 +185,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
         $value = $instance->getCountsByLink();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_updateByLink()
@@ -195,7 +195,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
         $value = $instance->updateByLink(['key' => 'value']);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_deleteByLink()
@@ -205,7 +205,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
         $value = $instance->deleteByLink();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_cleanOrphan()

@@ -44,7 +44,7 @@ class RpcMemberHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->handleEndElement($parser, $data);
         $workingLevel = $parser->getWorkingLevel();
         $tempMember = $parser->getTempMember();
-        $this->assertSame(null, $tempMember);
+        $this->assertNull($tempMember);
         $this->assertSame($workingLevelBefore, $workingLevel);
     }
 }

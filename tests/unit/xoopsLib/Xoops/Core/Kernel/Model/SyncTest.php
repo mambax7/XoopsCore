@@ -38,7 +38,7 @@ class SyncTest extends \PHPUnit\Framework\TestCase
         $handler->field_object = 'groupid';
 
         $values = $instance->cleanOrphan();
-        $this->assertTrue(is_int($values));
+        $this->assertInternalType('int', $values);
         $this->assertTrue(0 === $values);
     }
 }

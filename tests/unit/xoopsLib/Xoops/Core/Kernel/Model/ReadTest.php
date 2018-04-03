@@ -32,7 +32,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
 
         $values = $instance->getAll();
-        $this->assertTrue(is_array($values));
+        $this->assertInternalType('array', $values);
         $this->assertTrue(count($values) >= 0);
         if (!empty($values[1])) {
             $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsGroup', $values[1]);
@@ -49,7 +49,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
 
         $values = $instance->getObjects();
-        $this->assertTrue(is_array($values));
+        $this->assertInternalType('array', $values);
         $this->assertTrue(count($values) >= 0);
         if (!empty($values[1])) {
             $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsGroup', $values[1]);
@@ -66,10 +66,10 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
 
         $values = $instance->getList();
-        $this->assertTrue(is_array($values));
+        $this->assertInternalType('array', $values);
         $this->assertTrue(count($values) >= 0);
         if (!empty($values[1])) {
-            $this->assertTrue(is_string($values[1]));
+            $this->assertInternalType('string', $values[1]);
         }
     }
 
@@ -83,11 +83,11 @@ class ReadTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
 
         $values = $instance->getIds();
-        $this->assertTrue(is_array($values));
+        $this->assertInternalType('array', $values);
         $this->assertTrue(count($values) >= 0);
         if (!empty($values[1])) {
-            $this->assertTrue(is_string($values[1]));
-            $this->assertTrue(intval($values[1]) >= 0);
+            $this->assertInternalType('string', $values[1]);
+            $this->assertTrue((int) ($values[1]) >= 0);
         }
     }
 

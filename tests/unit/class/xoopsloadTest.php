@@ -15,11 +15,11 @@ class xoopsloadTest extends \PHPUnit\Framework\TestCase
         $class = $this->myClass;
         $map = ['zzzclassname' => 'path/to/class'];
         $value = $class::getMap();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $count = count($value);
 
         $value = $class::addMap($map);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertSame($count + 1, count($value));
     }
 
@@ -27,13 +27,13 @@ class xoopsloadTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $value = $class::loadCoreConfig();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
         foreach ($value as $k => $v) {
             if (file_exists($v)) {
                 $this->assertTrue(true);
             } else {
-                $this->assertSame(true, $k);
+                $this->assertTrue($k);
             }
         }
     }

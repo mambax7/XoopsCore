@@ -81,7 +81,7 @@ if (!function_exists('file_put_contents')) {
     function file_put_contents($filename, $data, $file_append = false)
     {
         if ($fp = fopen($filename, (!$file_append ? 'w+' : 'a+'))) {
-            fputs($fp, $data);
+            fwrite($fp, $data);
             fclose($fp);
         }
     }

@@ -37,13 +37,13 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
         while (ob_get_level() > $level) {
             ob_end_flush();
         }
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function testRenderValidationJS()
     {
         $value = $this->object->renderValidationJS();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test__construct()

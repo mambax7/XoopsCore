@@ -50,7 +50,7 @@ class ThemeSetTemplateHandlerTest extends \PHPUnit\Framework\TestCase
 
         $instance->handleEndElement($parser);
         $x = $parser->getTemplatesData();
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertSame('name', $x[0]['name']);
     }
 }

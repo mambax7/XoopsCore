@@ -44,6 +44,6 @@ class ThemeSetFileTypeHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'something';
         $instance->handleCharacterData($parser, $data);
-        $this->assertSame(false, $parser->getTempArr('type'));
+        $this->assertFalse($parser->getTempArr('type'));
     }
 }

@@ -16,7 +16,7 @@ class Textarea_Editor_registryTest extends \PHPUnit\Framework\TestCase
         require_once $xoops_root_path.'/class/xoopseditor/textarea/language/english.php';
         require_once $xoops_root_path.'/class/xoopseditor/textarea/editor_registry.php';
         $x = ob_get_clean();
-        $this->assertTrue(is_array($config));
+        $this->assertInternalType('array', $config);
         $this->assertTrue(isset($config['class']));
         $this->assertTrue(isset($config['file']));
         $this->assertTrue(isset($config['title']));

@@ -36,7 +36,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
 
         $schema = new Doctrine\DBAL\Schema\Schema();
         $value = $instance->acceptSchema($schema);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_acceptTable()
@@ -45,7 +45,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
 
         $table = new Doctrine\DBAL\Schema\Table('system_group');
         $value = $instance->acceptTable($table);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
         $value = $instance->getNewSchema();
         // var_dump($value);
     }
@@ -59,7 +59,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $col_name = 'groupid';
         $column = new Doctrine\DBAL\Schema\Column($col_name, $type);
         $value = $instance->acceptColumn($table, $column);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_acceptForeignKey()
@@ -82,7 +82,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         );
 
         $value = $instance->acceptForeignKey($table, $fk_constraint);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_acceptIndex()
@@ -103,7 +103,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         );
 
         $value = $instance->acceptIndex($table, $index);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_acceptSequence()
@@ -122,6 +122,6 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         );
 
         $value = $instance->acceptSequence($sequence);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

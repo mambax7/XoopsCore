@@ -10,7 +10,7 @@ class Xoops_Module_PluginTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->myClass;
         $x = $instance::getPlugin('dummy');
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
 
         $x = $instance::getPlugin('page');
         $this->assertInstanceOf('\Xoops\Module\Plugin\PluginAbstract', $x);
@@ -21,6 +21,6 @@ class Xoops_Module_PluginTest extends \PHPUnit\Framework\TestCase
         $instance = $this->myClass;
 
         $x = $instance::getPlugins();
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
     }
 }

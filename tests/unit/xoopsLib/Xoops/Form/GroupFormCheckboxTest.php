@@ -41,7 +41,7 @@ class GroupFormCheckboxTest extends \PHPUnit\Framework\TestCase
 
         $this->object->setOptionTree($this->optionTree);
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<input type="checkbox" name="name[groups][2][1]"'));
         $this->assertTrue(false !== strpos($value, '<input type="checkbox" name="name[groups][2][10]"'));
         $this->assertTrue(false !== strpos($value, 'value="item_name1"'));

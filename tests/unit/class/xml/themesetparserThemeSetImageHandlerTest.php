@@ -50,7 +50,7 @@ class ThemeSetImageHandlerTest extends \PHPUnit\Framework\TestCase
 
         $instance->handleEndElement($parser);
         $x = $parser->getImagesData();
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertSame('name', $x[0]['name']);
     }
 }

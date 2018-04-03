@@ -23,13 +23,13 @@ class BlockModuleLinkTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass();
         $value = $instance->getVar('block_id', '');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_getVar200()
     {
         $instance = new $this->myClass();
         $value = $instance->getVar('module_id', '');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

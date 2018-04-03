@@ -34,7 +34,7 @@ class RandomTest extends \PHPUnit\Framework\TestCase
     {
         $result = Random::generateOneTimeToken();
 
-        $this->assertTrue(is_string($result));
+        $this->assertInternalType('string', $result);
         $this->assertRegExp('/^[0-9a-f]{128}$/', $result);
     }
 
@@ -42,7 +42,7 @@ class RandomTest extends \PHPUnit\Framework\TestCase
     {
         $result = Random::generateKey();
 
-        $this->assertTrue(is_string($result));
+        $this->assertInternalType('string', $result);
         $this->assertRegExp('/^[0-9a-f]{128}$/', $result);
     }
 }

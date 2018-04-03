@@ -95,7 +95,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $instance->add('key', $strAttr);
 
         $result = $instance->get('key');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(in_array('value1', $result, true));
         $this->assertTrue(in_array('value2', $result, true));
         $this->assertTrue(in_array('value3', $result, true));
@@ -103,7 +103,7 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $instance->add('key', 'value4');
 
         $result = $instance->get('key');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(in_array('value1', $result, true));
         $this->assertTrue(in_array('value2', $result, true));
         $this->assertTrue(in_array('value3', $result, true));
@@ -112,13 +112,13 @@ class AttributesTest extends \PHPUnit\Framework\TestCase
         $instance->set('key2', 'value4');
 
         $result = $instance->get('key2');
-        $this->assertFalse(is_array($result));
+        $this->assertNotInternalType('array', $result);
         $this->assertSame('value4', $result);
 
         $arrayAttr = ['value1', 'value2', 'value3'];
         $instance->add('key2', $arrayAttr);
         $result = $instance->get('key2');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(in_array('value1', $result, true));
         $this->assertTrue(in_array('value2', $result, true));
         $this->assertTrue(in_array('value3', $result, true));

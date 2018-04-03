@@ -38,7 +38,7 @@ class DefaultConfigurationTest extends \PHPUnit\Framework\TestCase
     public function testBuildDefaultConfiguration()
     {
         $defaultConfig = $this->object->buildDefaultConfiguration();
-        $this->assertTrue(is_array($defaultConfig));
+        $this->assertInternalType('array', $defaultConfig);
         $this->assertArrayHasKey('sanitizer', $defaultConfig);
         $this->assertArrayHasKey('xoopscode', $defaultConfig);
     }

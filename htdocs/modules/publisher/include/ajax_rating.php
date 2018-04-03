@@ -123,7 +123,7 @@ $new_back[] .= '</div>';
 $new_back[] .= '<div class="publisher_voted">'._MD_PUBLISHER_VOTE_RATING.' <strong>'.@number_format($current_rating / $count, 2).'</strong>/'.$units.' ('.$count.' '.$tense.')</div>';
 $new_back[] .= '<div class="publisher_thanks">'._MD_PUBLISHER_VOTE_THANKS.'</div>';
 
-$allnewback = join("\n", $new_back);
+$allnewback = implode("\n", $new_back);
 
 //name of the div id to be updated | the html that needs to be changed
 $output = "unit_long${itemid}|${allnewback}";

@@ -44,6 +44,6 @@ class SanitizerConfigurableTest extends \PHPUnit\Framework\TestCase
     public function testGetDefaultConfig()
     {
         $defaults = $this->object->getDefaultConfig();
-        $this->assertTrue(is_array($defaults));
+        $this->assertInternalType('array', $defaults);
     }
 }

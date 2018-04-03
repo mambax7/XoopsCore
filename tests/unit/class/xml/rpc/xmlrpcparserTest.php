@@ -48,7 +48,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($data, $instance->getTempValue());
 
         $instance->resetTempValue();
-        $this->assertSame(null, $instance->getTempValue());
+        $this->assertNull($instance->getTempValue());
     }
 
     public function test_setTempMember()
@@ -73,7 +73,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $instance->getWorkingLevel());
 
         $instance->releaseWorkingLevel();
-        $this->assertSame(null, $instance->getWorkingLevel());
+        $this->assertNull($instance->getWorkingLevel());
     }
 
     public function test_setTempStruct()

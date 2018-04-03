@@ -312,7 +312,7 @@ class xoopsmailer
             }
             // $this->headers[] = "X-Mailer: PHP/".phpversion();
             // $this->headers[] = "Return-Path: ".$this->fromEmail;
-            $headers = join($this->LE, $this->headers);
+            $headers = implode($this->LE, $this->headers);
         }
         // TODO: we should have an option of no-reply for private messages and emails
         // to which we do not accept replies.  e.g. the site admin doesn't want a

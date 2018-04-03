@@ -365,7 +365,7 @@ class MediaUploader
 
             return false;
         }
-        if (!is_writeable($this->uploadDir)) {
+        if (!is_writable($this->uploadDir)) {
             $this->setErrors(sprintf(\XoopsLocale::EF_DIRECTORY_WITH_WRITE_PERMISSION_NOT_OPENED, $this->uploadDir));
 
             return false;

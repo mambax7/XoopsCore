@@ -33,19 +33,19 @@ class DhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function testCodeIcon()
     {
         $value = $this->object->codeIcon();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function testFontArray()
     {
         $value = $this->object->fontArray();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function testRenderValidationJS()

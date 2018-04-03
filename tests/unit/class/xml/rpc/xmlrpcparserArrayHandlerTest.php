@@ -44,7 +44,7 @@ class RpcArrayHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->handleEndElement($parser, $data);
         $workingLevel = $parser->getWorkingLevel();
         $tempArray = $parser->getTempArray();
-        $this->assertSame(null, $tempArray);
+        $this->assertNull($tempArray);
         $this->assertSame($workingLevelBefore, $workingLevel);
     }
 }

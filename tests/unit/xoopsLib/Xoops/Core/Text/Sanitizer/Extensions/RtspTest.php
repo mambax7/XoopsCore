@@ -47,8 +47,8 @@ class RtspTest extends \PHPUnit\Framework\TestCase
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
         $this->assertTrue(2 === count($support));
-        $this->assertTrue(is_string($support[0]));
-        $this->assertTrue(is_string($support[1]));
+        $this->assertInternalType('string', $support[0]);
+        $this->assertInternalType('string', $support[1]);
     }
 
     public function testRegisterExtensionProcessing()
@@ -59,7 +59,7 @@ class RtspTest extends \PHPUnit\Framework\TestCase
 
         $in = '[rtsp=300,200]rtsp://url[/rtsp]';
         $actual = trim($this->sanitizer->filterForDisplay($in));
-        $this->assertTrue(is_string($actual));
+        $this->assertInternalType('string', $actual);
         $this->assertSame($expected, substr($actual, 0, strlen($expected)));
     }
 }

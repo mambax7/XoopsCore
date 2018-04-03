@@ -26,7 +26,7 @@ class upgrade_231 extends xoopsUpgrade
 
     public function upgrade_231()
     {
-        $this->xoopsUpgrade(basename(dirname(__FILE__)));
+        $this->xoopsUpgrade(basename(__DIR__));
     }
 
     /**
@@ -67,7 +67,7 @@ class upgrade_231 extends xoopsUpgrade
         $db = $xoops->db();
         $allowWebChanges = $db->allowWebChanges;
         $db->allowWebChanges = true;
-        $result = $db->queryFromFile(dirname(__FILE__).'/mysql.structure.sql');
+        $result = $db->queryFromFile(__DIR__.'/mysql.structure.sql');
         $db->allowWebChanges = $allowWebChanges;
 
         return $result;

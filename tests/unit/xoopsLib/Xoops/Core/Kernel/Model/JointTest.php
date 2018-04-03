@@ -48,7 +48,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $handler->field_object = $handler->field_link;
 
         $result = $instance->getByLink(null, null, true, null, null);
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(count($result) > 0);
     }
 
@@ -66,8 +66,8 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $handler->field_object = $handler->field_link;
 
         $result = $instance->getCountByLink();
-        $this->assertTrue(is_string($result));
-        $this->assertTrue(intval($result) >= 0);
+        $this->assertInternalType('string', $result);
+        $this->assertTrue((int) $result >= 0);
     }
 
     public function test_getCountsByLink()
@@ -84,7 +84,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $handler->field_object = $handler->field_link;
 
         $result = $instance->getCountsByLink();
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertTrue(count($result) >= 0);
     }
 
@@ -104,7 +104,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $criteria = new Xoops\Core\Kernel\Criteria('l.uid', 0);
         $arrData = ['name' => 'name'];
         $result = $instance->updateByLink($arrData, $criteria);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $this->assertTrue($result >= 0);
     }
 
@@ -124,7 +124,7 @@ class JointTest extends \PHPUnit\Framework\TestCase
         $criteria = new Xoops\Core\Kernel\Criteria('l.uid', 0);
 
         $result = $instance->deleteByLink($criteria);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $this->assertTrue($result >= 0);
     }
 }

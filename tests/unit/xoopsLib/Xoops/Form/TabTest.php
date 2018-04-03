@@ -33,7 +33,7 @@ class TabTest extends \PHPUnit\Framework\TestCase
         $button = new Button('Caption', 'name');
         $this->object->addElement($button);
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<div class="form-group">'));
         $this->assertTrue(false !== strpos($value, '<label>Caption</label>'));
         $this->assertTrue(false !== strpos($value, 'class="btn btn-default"'));

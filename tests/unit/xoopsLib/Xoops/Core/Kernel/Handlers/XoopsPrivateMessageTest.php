@@ -29,56 +29,56 @@ class XoopsPrivateMessageTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_msg_id()
     {
         $instance = new $this->myclass();
         $value = $instance->msg_id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_msg_image()
     {
         $instance = new $this->myclass();
         $value = $instance->msg_image();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_subject()
     {
         $instance = new $this->myclass();
         $value = $instance->subject();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_from_userid()
     {
         $instance = new $this->myclass();
         $value = $instance->from_userid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_to_userid()
     {
         $instance = new $this->myclass();
         $value = $instance->to_userid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_msg_time()
     {
         $instance = new $this->myclass();
         $value = $instance->msg_time();
-        $this->assertTrue(is_numeric($value));
+        $this->assertInternalType('numeric', $value);
     }
 
     public function test_msg_text()
     {
         $instance = new $this->myclass();
         $value = $instance->msg_text();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_read_msg()

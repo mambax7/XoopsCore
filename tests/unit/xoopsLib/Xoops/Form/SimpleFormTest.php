@@ -42,7 +42,7 @@ class SimpleFormTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<form'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));
         $this->assertTrue(false !== strpos($value, 'id="name"'));

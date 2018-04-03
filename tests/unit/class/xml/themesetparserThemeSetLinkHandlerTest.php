@@ -37,7 +37,7 @@ class ThemeSetLinkHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['author', 'author'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getTempArr('link'));
 
         $input = 'input';
@@ -45,7 +45,7 @@ class ThemeSetLinkHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
-        $this->assertSame(false, $parser->getTempArr('link'));
+        $this->assertNull($x);
+        $this->assertFalse($parser->getTempArr('link'));
     }
 }

@@ -49,7 +49,7 @@ class TokenFactoryTest extends \PHPUnit\Framework\TestCase
         $claims = ['rat' => 'cute'];
         $token = TokenFactory::build($this->testKey, $claims);
 
-        $this->assertTrue(is_string($token));
+        $this->assertInternalType('string', $token);
 
         $jwt = new JsonWebToken($this->testKey);
 

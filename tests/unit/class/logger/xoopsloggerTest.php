@@ -25,7 +25,7 @@ class xoopsloggerTest extends \PHPUnit\Framework\TestCase
         $instance = XoopsLogger::getInstance();
         $this->assertInstanceOf($this->myclass, $instance);
         $value = $instance->toto;
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test___class()
@@ -33,6 +33,6 @@ class xoopsloggerTest extends \PHPUnit\Framework\TestCase
         $instance = XoopsLogger::getInstance();
         $this->assertInstanceOf($this->myclass, $instance);
         $value = $instance->tutu('tutu');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

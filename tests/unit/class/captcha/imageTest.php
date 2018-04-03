@@ -26,7 +26,7 @@ class imageTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $value = $instance->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_loadImage()
@@ -34,6 +34,6 @@ class imageTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $value = $instance->loadImage();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 }

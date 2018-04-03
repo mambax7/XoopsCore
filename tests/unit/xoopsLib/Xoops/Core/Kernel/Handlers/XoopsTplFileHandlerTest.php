@@ -51,11 +51,11 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($this->conn);
         $source = new XoopsTplFile();
         $value = $instance->loadSource($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $source->setVar('tpl_id', 1);
         $value = $instance->loadSource($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
         $tmp = $source->tpl_source();
         $this->assertTrue(!empty($tmp));
     }
@@ -65,7 +65,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($this->conn);
         $source = new XoopsTplFile();
         $value = $instance->insertTpl($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_forceUpdate()
@@ -73,7 +73,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($this->conn);
         $source = new XoopsTplFile();
         $value = $instance->forceUpdate($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_deleteTpl()
@@ -91,26 +91,26 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $source->setVar('tpl_desc', 'TPL_DESC_DUMMY_TEST');
         $source->setVar('tpl_type', 'TPL_DESC_DUMMY_TEST');
         $value = $instance->insertTpl($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
         $value = $instance->deleteTpl($source);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_getTplObjects()
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getTplObjects();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->getTplObjects(null, true);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->getTplObjects(null, false, true);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $criteria = new Criteria('tpl_type', 'block');
         $value = $instance->getTplObjects($criteria);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -118,10 +118,10 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getModuleTplCount('toto');
-        $this->assertTrue(empty($value));
+        $this->assertEmpty($value);
 
         $value = $instance->getModuleTplCount('default');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -129,22 +129,22 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->find();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find('tpl_set');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find(null, null, null, 'module');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find(null, null, 1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find(null, null, null, null, 'file');
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find(null, 1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
 
         $value = $instance->find(null, [1, 2, 3]);
     }
@@ -154,9 +154,9 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($this->conn);
 
         $value = $instance->templateExists('dummy.tpl', 'dummy');
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $value = $instance->templateExists('system_block_user.tpl', 'default');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 }

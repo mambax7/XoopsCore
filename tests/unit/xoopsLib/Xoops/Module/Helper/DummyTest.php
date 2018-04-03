@@ -18,7 +18,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass();
 
         $x = $instance->init();
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_getInstance()
@@ -34,7 +34,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass();
 
         $x = $instance->setDirname('myDir');
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_setDebug()
@@ -42,7 +42,7 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass();
 
         $x = $instance->setDebug(true);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_addLog()
@@ -51,6 +51,6 @@ class Xoops_Module_Helper_DummyTest extends \PHPUnit\Framework\TestCase
 
         $log = 'log log log log';
         $x = $instance->addLog($log);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 }

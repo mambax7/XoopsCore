@@ -83,9 +83,9 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
         $this->xObject[$key] = $testValue;
         $this->xObject->cleanVars();
         $value = $this->xObject->cleanVars[$key];
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $decode = json_decode($value, true, 2, JSON_BIGINT_AS_STRING);
-        $this->assertTrue(is_array($decode));
+        $this->assertInternalType('array', $decode);
         $this->assertSame((string) $decode['amount'], '30000');
         $this->assertSame($decode['currency'], 'EUR');
     }

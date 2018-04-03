@@ -49,7 +49,7 @@ class EmbedTest extends \PHPUnit\Framework\TestCase
         \Xoops::getInstance()->cache()->delete('embed');
         $in = 'https://xoops.org';
         $value = $this->sanitizer->executeFilter('embed', $in);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         if (false === strpos($value, '<div class="media">')) {
             echo 'embed return: ' , $value; // this has failed, but what is it doing?
         }
@@ -59,7 +59,7 @@ class EmbedTest extends \PHPUnit\Framework\TestCase
         $in = 'https://www.youtube.com/watch?v=-vBqazs3j3A';
 //        <iframe width="480" height="270" src="https://www.youtube.com/embed/-vBqazs3j3A?feature=oembed" frameborder="0" allowfullscreen></iframe>
         $value = $this->sanitizer->executeFilter('embed', $in);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertNotFalse(strpos($value, '<iframe '));
         $this->assertNotFalse(strpos($value, 'src="https://www.youtube.com/embed/'));
     }

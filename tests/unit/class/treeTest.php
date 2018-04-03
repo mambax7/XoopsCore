@@ -35,7 +35,7 @@ class treeTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('XoopsObjectTree', $instance);
 
         $tree = $instance->getTree();
-        $this->assertTrue(is_array($tree));
+        $this->assertInternalType('array', $tree);
 
         $ret = $instance->getByKey(72);
         $this->assertSame(72, $ret->getVar('Id'));

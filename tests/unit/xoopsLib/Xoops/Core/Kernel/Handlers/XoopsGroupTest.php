@@ -25,34 +25,34 @@ class GroupTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_groupid()
     {
         $instance = new $this->myclass();
         $value = $instance->groupid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_name()
     {
         $instance = new $this->myclass();
         $value = $instance->name('');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_description()
     {
         $instance = new $this->myclass();
         $value = $instance->description();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_group_type()
     {
         $instance = new $this->myclass();
         $value = $instance->group_type();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

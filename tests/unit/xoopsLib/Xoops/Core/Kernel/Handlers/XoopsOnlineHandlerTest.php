@@ -38,7 +38,7 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
 
         $this->myId = (int) (microtime(true) % 10000000);
         $value = $instance->write($this->myId, 'name', time(), 0, '127.0.0.1');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_destroy()
@@ -47,7 +47,7 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myclass, $instance);
 
         $value = $instance->destroy($this->myId);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_gc()
@@ -56,6 +56,6 @@ class OnlineHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($this->myclass, $instance);
 
         $value = $instance->gc(time() + 10);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 }

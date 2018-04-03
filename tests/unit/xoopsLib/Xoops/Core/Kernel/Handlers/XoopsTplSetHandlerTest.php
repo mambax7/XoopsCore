@@ -33,13 +33,13 @@ class TplSetHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getByname(1);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getNameList()
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getNameList();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 }

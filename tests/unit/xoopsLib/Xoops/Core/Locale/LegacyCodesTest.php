@@ -31,7 +31,7 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
     public function testGetLegacyNameSingle()
     {
         $languageArray = LegacyCodes::getLegacyName('fr_FR');
-        $this->assertTrue(is_array($languageArray));
+        $this->assertInternalType('array', $languageArray);
         $this->assertSame(1, count($languageArray));
         $this->assertTrue(in_array('french', $languageArray, true));
     }
@@ -39,14 +39,14 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
     public function testGetLegacyNameNone()
     {
         $languageArray = LegacyCodes::getLegacyName('xx_XX');
-        $this->assertTrue(is_array($languageArray));
+        $this->assertInternalType('array', $languageArray);
         $this->assertSame(0, count($languageArray));
     }
 
     public function testGetLegacyNameMultiple()
     {
         $languageArray = LegacyCodes::getLegacyName('pt_BR');
-        $this->assertTrue(is_array($languageArray));
+        $this->assertInternalType('array', $languageArray);
         $this->assertSame(2, count($languageArray));
         $this->assertTrue(in_array('portuguesebr', $languageArray, true));
         $this->assertTrue(in_array('brazilian', $languageArray, true));

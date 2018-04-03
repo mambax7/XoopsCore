@@ -30,7 +30,7 @@ class AuthAbstractTest extends \PHPUnit\Framework\TestCase
         $error = 'error';
         $instance->setErrors($errno, $error);
         $x = $instance->getErrors();
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertTrue($x[$errno] === $error);
     }
 
@@ -42,6 +42,6 @@ class AuthAbstractTest extends \PHPUnit\Framework\TestCase
         $error = 'error';
         $instance->setErrors($errno, $error);
         $x = $instance->getHtmlErrors();
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
     }
 }

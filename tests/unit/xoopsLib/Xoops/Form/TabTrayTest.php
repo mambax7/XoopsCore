@@ -35,7 +35,7 @@ class TabTrayTest extends \PHPUnit\Framework\TestCase
         $text = new Text('Caption', 'name', 10, 20, 'value', 'placeholder');
         $this->object->addElement($text);
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, 'id="tabs_name"'));
         $this->assertTrue(false !== strpos($value, 'type="text"'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));

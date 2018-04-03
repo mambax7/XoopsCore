@@ -25,21 +25,21 @@ class ConfigOptionTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_confop_id()
     {
         $instance = new $this->myclass();
         $value = $instance->confop_id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_confop_name()
     {
         $instance = new $this->myclass();
         $value = $instance->confop_name('');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_conf_id()
@@ -53,6 +53,6 @@ class ConfigOptionTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->confop_value();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

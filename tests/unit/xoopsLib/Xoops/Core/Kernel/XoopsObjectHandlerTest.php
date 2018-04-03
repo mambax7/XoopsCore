@@ -48,14 +48,14 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn);
         $x = $instance->create();
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_get()
     {
         $instance = new $this->myClass($this->conn);
         $x = $instance->get(1);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_insert()
@@ -63,7 +63,7 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($this->conn);
         $object = new $this->classObject();
         $x = $instance->insert($object);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_delete()
@@ -71,6 +71,6 @@ class XoopsObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($this->conn);
         $object = new $this->classObject();
         $x = $instance->delete($object);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 }

@@ -25,7 +25,7 @@ class XoopsXmlRpcResponseTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $x = $instance->render();
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
         $this->assertTrue(!empty($x));
     }
 }

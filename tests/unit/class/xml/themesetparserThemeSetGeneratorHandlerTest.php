@@ -37,7 +37,7 @@ class ThemeSetGeneratorHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['themeset', 'themeset'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getThemeSetData('generator'));
 
         $input = 'input';
@@ -45,7 +45,7 @@ class ThemeSetGeneratorHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
-        $this->assertSame(false, $parser->getThemeSetData('generator'));
+        $this->assertNull($x);
+        $this->assertFalse($parser->getThemeSetData('generator'));
     }
 }

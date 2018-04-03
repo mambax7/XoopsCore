@@ -26,7 +26,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
         $instance = new $this->myClass($file, true);
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $this->assertSame(basename($file), $instance->name);
         $this->assertSame(dirname($file), $instance->folder->path);
         $this->assertTrue(@unlink($file));
@@ -37,11 +37,11 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         @unlink($file);
         $instance = new $this->myClass($file, false);
-        $this->assertFalse(file_exists($file));
+        $this->assertFileNotExists($file);
 
         $result = $instance->open();
         $this->assertTrue($result);
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
 
         $result = $instance->open('r', true);
         $this->assertTrue($result);
@@ -57,7 +57,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(@unlink($file)); // ok to delete closed file
 
         $instance = new $this->myClass($file, false);
-        $this->assertFalse(file_exists($file));
+        $this->assertFileNotExists($file);
 
         $result = $instance->open('z');
         $this->assertFalse($result);
@@ -106,7 +106,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $bytes = 128;
         $result = $instance->read($bytes);
         $value = $instance->offset(false);
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
         $this->assertTrue($value > 0);
 
         $this->markTestSkipped('platform issues?');
@@ -189,7 +189,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($file, true);
         $this->assertTrue($instance->exists($file));
         $value = $instance->info();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertSame(dirname($file), $value['dirname']);
         $this->assertSame(basename($file), $value['basename']);
         $this->assertSame('txt', $value['extension']);
@@ -286,7 +286,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $perms = substr(sprintf('%o', fileperms($file)), -4);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->perms();
@@ -307,7 +307,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $str = 'a string for test';
         $length = strlen($str);
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->size();
@@ -327,7 +327,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->writable();
@@ -347,7 +347,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->executable();
@@ -367,7 +367,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->readable();
@@ -387,11 +387,11 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->owner();
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
         @unlink($file);
 
         unset($instance);
@@ -407,11 +407,11 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->group();
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
         @unlink($file);
 
         unset($instance);
@@ -427,9 +427,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $atime = fileatime($file);
-        $this->assertTrue(is_int($atime));
+        $this->assertInternalType('int', $atime);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->lastAccess();
@@ -449,9 +449,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $str = 'a string for test';
         $result = file_put_contents($file, $str);
-        $this->assertTrue(is_int($result));
+        $this->assertInternalType('int', $result);
         $atime = filemtime($file);
-        $this->assertTrue(is_int($atime));
+        $this->assertInternalType('int', $atime);
         $instance = new $this->myClass($file, false);
         $this->assertTrue($instance->exists($file));
         $value = $instance->lastChange();

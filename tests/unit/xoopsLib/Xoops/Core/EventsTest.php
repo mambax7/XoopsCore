@@ -46,7 +46,7 @@ class EventsTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $result = $instance->getEvents();
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
     }
 
     public function dummy_callback($arg)

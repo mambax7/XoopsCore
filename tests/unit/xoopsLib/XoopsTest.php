@@ -19,7 +19,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         // First initialization in first test
         if (!class_exists('\Xoops\Locale', false)) {
             $value = $instance->loadLocale();
-            $this->assertSame(true, $value);
+            $this->assertTrue($value);
         }
 
         $this->assertSame([\XoopsBaseConfig::get('lib-path'), \XoopsBaseConfig::get('url').'/browse.php'], $instance->paths['XOOPS']);
@@ -32,14 +32,14 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue(null === $instance->sessionManager);
         $this->assertTrue(null === $instance->module);
-        $this->assertTrue(is_array($instance->config));
-        $this->assertTrue(is_array($instance->moduleConfig));
-        $this->assertTrue(is_string($instance->moduleDirname));
+        $this->assertInternalType('array', $instance->config);
+        $this->assertInternalType('array', $instance->moduleConfig);
+        $this->assertInternalType('string', $instance->moduleDirname);
         $this->assertTrue(is_string($instance->user) || is_object($instance->user));
-        $this->assertTrue(is_bool($instance->userIsAdmin));
+        $this->assertInternalType('bool', $instance->userIsAdmin);
         $this->assertTrue(null === $instance->option || is_array($instance->option));
-        $this->assertTrue(is_string($instance->tpl_name));
-        $this->assertTrue(is_bool($instance->isAdminSide));
+        $this->assertInternalType('string', $instance->tpl_name);
+        $this->assertInternalType('bool', $instance->isAdminSide);
     }
 
     public function test_getInstance200()
@@ -137,10 +137,10 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('XoopsTheme', $value);
 
         $value = $instance->loadLocale('system');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->loadLocale('system/themes/default');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         require_once \XoopsBaseConfig::get('root-path').'/modules/system/themes/default/locale/en_US/en_US.php';
         require_once \XoopsBaseConfig::get('root-path').'/modules/system/themes/default/locale/en_US/locale.php';
@@ -213,7 +213,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->pathExists('', E_USER_NOTICE);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_pathExists100()
@@ -325,10 +325,10 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->header();
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->header();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_footer()
@@ -344,12 +344,12 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->isModule();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $module = new XoopsModule();
         $instance->module = $module;
         $value = $instance->isModule();
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_isUser()
@@ -357,7 +357,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->isUser();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_isAdmin()
@@ -365,7 +365,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->isAdmin();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getHandlerBlock()
@@ -530,7 +530,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $instance->module = new XoopsModule();
         $value = $instance->getModuleHandler('page_content', 'page');
-        $this->assertTrue(is_object($value));
+        $this->assertInternalType('object', $value);
     }
 
     public function test_getModuleForm()
@@ -538,7 +538,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getModuleForm(null, null);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getModuleHelper()
@@ -554,7 +554,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->loadLanguage(null);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $value = $instance->loadLanguage('_errors', null, 'english');
         $this->assertTrue(!empty($value));
@@ -565,7 +565,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->loadLocale();
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_translate()
@@ -581,7 +581,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getActiveModules();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -590,7 +590,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->setActiveModules();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(count($value) > 0);
     }
 
@@ -599,10 +599,10 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->isActiveModule('page');
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
 
         $value = $instance->isActiveModule(null);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getModuleByDirname()
@@ -614,7 +614,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('Page', $value->name());
 
         $value = $instance->getModuleByDirname('dummy');
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getModuleById()
@@ -625,7 +625,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsModule', $value);
 
         $value = $instance->getModuleById(-1);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_simpleHeader()
@@ -637,7 +637,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance->simpleHeader();
         $value = ob_get_contents();
         ob_end_clean();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_simpleFooter()
@@ -655,7 +655,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         ob_start($callback);
         $xoops->simpleFooter();
-        $this->assertTrue(is_string($output), $output);
+        $this->assertInternalType('string', $output, $output);
         $this->assertSame(substr($output, -7), '</html>', $output);
         //$this->markTestSkipped('');
     }
@@ -669,31 +669,31 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $msg = 'alert_info';
         $value = $instance->alert('info', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = 'alert_info';
         $value = $instance->alert('dummy', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = 'alert_error';
         $value = $instance->alert('error', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = 'alert_success';
         $value = $instance->alert('success', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = 'alert_warning';
         $value = $instance->alert('warning', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = new XoopsModule();
         $value = $instance->alert('warning', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $msg = ['text_1', 'text_2'];
         $value = $instance->alert('warning', $msg);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_confirm()
@@ -702,15 +702,15 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         defined('NWLINE') or define('NWLINE', "\n");
         $value = $instance->confirm([], '', 'msg');
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(strlen($value) > 0);
 
         $value = $instance->confirm(['toto' => 1, 'tutu' => 2], '', 'msg');
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(strlen($value) > 0);
 
         $value = $instance->confirm(['toto' => 1, 'tutu' => ['t1' => 11, 't2' => 22]], '', 'msg');
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(strlen($value) > 0);
     }
 
@@ -719,12 +719,12 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getUserTimestamp(time());
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
 
         $instance->user = new XoopsUser();
         $instance->user->setVar('timezone', 10);
         $value = $instance->getUserTimestamp(time());
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
     }
 
     public function test_userTimeToServerTime()
@@ -732,7 +732,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->userTimeToServerTime(time());
-        $this->assertTrue(is_int($value));
+        $this->assertInternalType('int', $value);
     }
 
     public function test_getUserGroups()
@@ -749,13 +749,13 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->makePass();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $value = $instance->makePass();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $value = $instance->makePass();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $value = $instance->makePass();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_checkEmail()
@@ -763,7 +763,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->checkEmail(null);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $email = 'test@test.com';
         $value = $instance->checkEmail($email);
@@ -775,15 +775,15 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $email = 'test\toto.tutu.titi@test.com';
         $value = $instance->checkEmail($email);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $email = 'test@test';
         $value = $instance->checkEmail($email);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         $email = 'test@test\titi.com';
         $value = $instance->checkEmail($email);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
 
         // some test cases taken from https://github.com/dominicsayers/isemail
         $this->assertFalse($instance->checkEmail('test@iana..com'));
@@ -835,7 +835,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getBanner();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_redirect()
@@ -872,7 +872,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $save = $_SERVER['HTTP_USER_AGENT'];
 
         $value = $instance->getCss();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
 
         $this->markTestSkipped('');
         $_SERVER['HTTP_USER_AGENT'] = 'mac';
@@ -953,7 +953,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getConfigs();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_addConfigs()
@@ -962,13 +962,13 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $instance->addConfigs(['dummy' => 1]);
         $value = $instance->getConfigs();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(isset($value['dummy']));
         $this->assertTrue(1 === $value['dummy']);
 
         $instance->addConfigs(['dummy' => 1], null);
         $value = $instance->getConfigs();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(isset($value['dummy']));
         $this->assertTrue(1 === $value['dummy']);
     }
@@ -1015,7 +1015,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $id = uniqid();
         $value = $instance->getModuleConfig($id);
-        $this->assertTrue(empty($value));
+        $this->assertEmpty($value);
 
         $instance->unsetConfig($id);
     }
@@ -1025,7 +1025,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $instance = Xoops::getInstance();
 
         $value = $instance->getModuleConfigs();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_disableModuleCache()

@@ -27,7 +27,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
         $message = $sanitizer->smiley('happy :-) happy');
-        $this->assertTrue(is_string($message));
+        $this->assertInternalType('string', $message);
     }
 
     public function test_makeClickable()
@@ -36,7 +36,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $sanitizer = $class::getInstance();
         $text = 'toto';
         $message = $sanitizer->makeClickable($text);
-        $this->assertTrue(is_string($text));
+        $this->assertInternalType('string', $text);
     }
 
     /**

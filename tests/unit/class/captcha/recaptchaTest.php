@@ -27,7 +27,7 @@ class recaptchaTest extends \PHPUnit\Framework\TestCase
 
         $instance->config['public_key'] = 'public_key';
         $value = $instance->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test_verify()

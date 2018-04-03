@@ -26,35 +26,35 @@ class XoopsTplSetTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tplset_id()
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tplset_name()
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_name();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tplset_desc()
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_desc();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tplset_credits()
     {
         $instance = new $this->myclass();
         $value = $instance->tplset_credits();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_tplset_created()

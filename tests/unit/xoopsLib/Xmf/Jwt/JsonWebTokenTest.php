@@ -61,7 +61,7 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
     public function testCreateDecode()
     {
         $token = $this->object->create(['test' => 'create'], 6);
-        $this->assertTrue(is_string($token));
+        $this->assertInternalType('string', $token);
 
         $this->assertFalse($this->object->decode($token, ['not-that-test' => 'create']));
         $this->assertFalse($this->object->decode($token, ['test' => 'notcreate']));
@@ -75,7 +75,7 @@ class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
 
         // create expired token
         $token = $this->object->create(['test' => 'create', 'exp' => (time() - 30)]);
-        $this->assertTrue(is_string($token));
+        $this->assertInternalType('string', $token);
 
         $actual = @$decoder->decode($token);
         $this->assertFalse($actual);

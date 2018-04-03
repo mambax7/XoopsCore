@@ -37,12 +37,12 @@ class ButtonTrayTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<input type="button"'));
 
         $object = new ButtonTray('name2', '', '', '', true);
         $value = $object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<input type="submit"'));
         $this->assertTrue(false !== strpos($value, '<input type="button"'));
     }

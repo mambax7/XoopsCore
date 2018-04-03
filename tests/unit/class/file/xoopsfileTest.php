@@ -26,7 +26,7 @@ class xoopsfileTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         $instance = $class::getHandler('file', $file);
         $this->assertInstanceOf('XoopsFileHandler', $instance);
-        $this->assertFalse(file_exists($file));
+        $this->assertFileNotExists($file);
         $this->assertSame(basename($file), $instance->name);
         $this->assertSame(dirname($file), $instance->folder->path);
 
@@ -34,7 +34,7 @@ class xoopsfileTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__.DIRECTORY_SEPARATOR.'dummy.txt';
         $instance = $class::getHandler('file', $file, true);
         $this->assertInstanceOf('XoopsFileHandler', $instance);
-        $this->assertTrue(file_exists($file));
+        $this->assertFileExists($file);
         $this->assertSame(basename($file), $instance->name);
         $this->assertSame(dirname($file), $instance->folder->path);
         $this->assertTrue(@unlink($file));
@@ -44,7 +44,7 @@ class xoopsfileTest extends \PHPUnit\Framework\TestCase
         $mode = '0731';
         $instance = $class::getHandler('file', $file, false, $mode);
         $this->assertInstanceOf('XoopsFileHandler', $instance);
-        $this->assertFalse(file_exists($file));
+        $this->assertFileNotExists($file);
         $this->assertSame(basename($file), $instance->name);
         $this->assertSame(dirname($file), $instance->folder->path);
         $this->assertSame(intval($mode, 8), $instance->folder->mode);

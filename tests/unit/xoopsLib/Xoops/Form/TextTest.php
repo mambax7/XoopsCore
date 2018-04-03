@@ -49,7 +49,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertTrue(false !== strpos($value, '<input'));
         $this->assertTrue(false !== strpos($value, 'type="text"'));
         $this->assertTrue(false !== strpos($value, 'name="name"'));

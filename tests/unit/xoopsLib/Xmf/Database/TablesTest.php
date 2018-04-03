@@ -111,10 +111,10 @@ class TablesTest extends \PHPUnit\Framework\TestCase
 
         $actual = $this->object->getColumnAttributes($tableName, $columnName);
 
-        $this->assertNotSame(false, stristr($actual, 'int(10)'));
-        $this->assertNotSame(false, stristr($actual, 'unsigned'));
-        $this->assertNotSame(false, stristr($actual, 'NOT NULL'));
-        $this->assertNotSame(false, stristr($actual, 'auto_increment'));
+        $this->assertNotFalse(stristr($actual, 'int(10)'));
+        $this->assertNotFalse(stristr($actual, 'unsigned'));
+        $this->assertNotFalse(stristr($actual, 'NOT NULL'));
+        $this->assertNotFalse(stristr($actual, 'auto_increment'));
     }
 
     public function testGetTableIndexes()
@@ -122,7 +122,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $tableName = 'system_user';
         $this->object->useTable($tableName);
         $actual = $this->object->getTableIndexes($tableName);
-        $this->assertTrue(is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertArrayHasKey('PRIMARY', $actual);
 
         $actual = $this->object->getTableIndexes('system_bogus_table_name');
@@ -348,21 +348,21 @@ class TablesTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->resetQueue();
         $queue = $this->object->dumpQueue();
-        $this->assertTrue(is_array($queue));
-        $this->assertTrue(empty($queue));
+        $this->assertInternalType('array', $queue);
+        $this->assertEmpty($queue);
 
         $expected = 'SELECT * FROM TEST.DUMMY';
         $this->object->addToQueue($expected);
 
         $queue = $this->object->dumpQueue();
-        $this->assertTrue(is_array($queue));
+        $this->assertInternalType('array', $queue);
         $this->assertTrue(1 === count($queue));
         $this->assertSame($expected, reset($queue));
 
         $this->object->resetQueue();
         $queue = $this->object->dumpQueue();
-        $this->assertTrue(is_array($queue));
-        $this->assertTrue(empty($queue));
+        $this->assertInternalType('array', $queue);
+        $this->assertEmpty($queue);
     }
 
     protected function prefix($table)

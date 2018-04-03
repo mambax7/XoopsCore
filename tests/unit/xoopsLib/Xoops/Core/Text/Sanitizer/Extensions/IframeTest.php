@@ -51,7 +51,7 @@ class IframeTest extends \PHPUnit\Framework\TestCase
 
         $in = '[iframe=300,200]url[/iframe]';
         $actual = trim($this->sanitizer->filterForDisplay($in));
-        $this->assertTrue(is_string($actual));
+        $this->assertInternalType('string', $actual);
         $this->assertSame($expected, substr($actual, 0, strlen($expected)));
     }
 }

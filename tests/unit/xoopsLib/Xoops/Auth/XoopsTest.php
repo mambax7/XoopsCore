@@ -24,6 +24,6 @@ class Xoops_Auth_XoopsTest extends \PHPUnit\Framework\TestCase
         $uname = 'admin';
         $pwd = 'pwd';
         $value = $instance->authenticate($uname, $pwd);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 }

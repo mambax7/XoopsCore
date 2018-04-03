@@ -44,7 +44,7 @@ class RpcStructHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->handleEndElement($parser, $data);
         $workingLevel = $parser->getWorkingLevel();
         $tempStruct = $parser->getTempStruct();
-        $this->assertSame(null, $tempStruct);
+        $this->assertNull($tempStruct);
         $this->assertSame($workingLevelBefore, $workingLevel);
     }
 }

@@ -32,28 +32,28 @@ class GroupPermTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_gperm_id()
     {
         $instance = new $this->myclass();
         $value = $instance->gperm_id();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_gperm_groupid()
     {
         $instance = new $this->myclass();
         $value = $instance->gperm_groupid('');
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_gperm_itemid()
     {
         $instance = new $this->myclass();
         $value = $instance->gperm_itemid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_gperm_modid()
@@ -67,6 +67,6 @@ class GroupPermTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass();
         $value = $instance->gperm_name();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

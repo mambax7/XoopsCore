@@ -38,7 +38,7 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $value = $instance->isActive();
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 
     public function test_loadConfig()
@@ -46,7 +46,7 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $instance->loadConfig();
-        $this->assertTrue(is_array($instance->config));
+        $this->assertInternalType('array', $instance->config);
     }
 
     public function test_getCode()
@@ -79,7 +79,7 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $value = $instance->verify();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_verify100()
@@ -90,7 +90,7 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $_SESSION["{$sessionName}_code"] = 'toto';
         $_POST[$sessionName] = ' ToTo ';
         $value = $instance->verify($sessionName);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
         unset($_SESSION["{$sessionName}_code"], $_POST[$sessionName]);
     }
 
@@ -103,10 +103,10 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $_POST[$sessionName] = ' ToTo ';
         $instance->config['casesensitive'] = true;
         $value = $instance->verify($sessionName);
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
         $_POST[$sessionName] = ' toto ';
         $value = $instance->verify($sessionName);
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
         unset($_SESSION["{$sessionName}_code"], $_POST[$sessionName],$instance->config['casesensitive']);
     }
 
@@ -115,6 +115,6 @@ class XoopsCaptchaMethodTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass();
 
         $value = $instance->destroyGarbage();
-        $this->assertSame(true, $value);
+        $this->assertTrue($value);
     }
 }

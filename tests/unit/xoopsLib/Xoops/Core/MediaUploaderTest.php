@@ -16,7 +16,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $allowed_mime_types = ['toto'];
         $theme = new $this->myclass($upload_dir, $allowed_mime_types);
         $this->assertInstanceOf($this->myclass, $theme);
-        $this->assertSame(false, $theme->allowUnknownTypes);
+        $this->assertFalse($theme->allowUnknownTypes);
         $this->assertTrue(property_exists($theme, 'mediaName'));
         $this->assertTrue(property_exists($theme, 'mediaType'));
         $this->assertTrue(property_exists($theme, 'mediaSize'));
@@ -35,7 +35,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(property_exists($theme, 'savedDestination'));
         $this->assertTrue(property_exists($theme, 'savedFileName'));
         //$this->assertTrue(is_array($theme->extensionToMime));
-        $this->assertSame(true, $theme->checkImageType);
+        $this->assertTrue($theme->checkImageType);
         $extensionsToBeSanitized = [
             'php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp', 'php5',
         ];

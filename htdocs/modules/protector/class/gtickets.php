@@ -100,7 +100,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // limit max stubs 10
-            if (sizeof($_SESSION['XOOPS_G_STUBS']) > 10) {
+            if (count($_SESSION['XOOPS_G_STUBS']) > 10) {
                 $_SESSION['XOOPS_G_STUBS'] = array_slice($_SESSION['XOOPS_G_STUBS'], -10);
             }
 

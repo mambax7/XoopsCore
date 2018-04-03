@@ -22,7 +22,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('XoopsMailer', $instance);
 
         $prop = $this->getPropertyValue('multimailer');
-        $this->assertTrue(is_object($prop));
+        $this->assertInternalType('object', $prop);
     }
 
     public function test_setHTML()
@@ -49,7 +49,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $x = $this->getPropertyValue('fromName');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('fromUser');
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $x = $this->getPropertyValue('priority');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('toUsers');
@@ -67,9 +67,9 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $x = $this->getPropertyValue('success');
         $this->assertSame([], $x);
         $x = $this->getPropertyValue('isMail');
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
         $x = $this->getPropertyValue('isPM');
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
         $x = $this->getPropertyValue('assignedTags');
         $this->assertSame([], $x);
         $x = $this->getPropertyValue('template');
@@ -169,7 +169,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
 
         $instance->useMail();
         $x = $this->getPropertyValue('isMail');
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
     }
 
     public function test_usePM()
@@ -178,7 +178,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
 
         $instance->usePM();
         $x = $this->getPropertyValue('isPM');
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
     }
 
     public function test_send()
@@ -199,7 +199,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($errors, $x);
 
         $x = $instance->getErrors(true);
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
         $this->assertTrue(preg_match('#<h4>.*</h4>.*<br />#', $x) > 0);
 
         $prop = new ReflectionProperty(get_class($this->object), 'errors');
@@ -210,7 +210,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $x);
 
         $x = $instance->getErrors(false);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_getSuccess()
@@ -226,7 +226,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($success, $x);
 
         $x = $instance->getSuccess(true);
-        $this->assertTrue(is_string($x));
+        $this->assertInternalType('string', $x);
         $this->assertTrue(preg_match('#.*<br />#', $x) > 0);
 
         $prop = new ReflectionProperty(get_class($this->object), 'success');
@@ -237,7 +237,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', $x);
 
         $x = $instance->getSuccess(false);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     public function test_assign()
@@ -297,7 +297,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $groups = [$group];
         $instance->setToGroups($groups);
         $x = $this->getPropertyValue('toUsers');
-        $this->assertTrue(is_array($x));
+        $this->assertInternalType('array', $x);
         $this->assertInstanceOf('\\Xoops\\Core\\Kernel\\Handlers\\XoopsUser', $x[0]);
     }
 
@@ -325,7 +325,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
 
         $value = 'value';
         $x = $instance->encodeBody($value);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
     }
 
     protected function getPropertyValue($name)

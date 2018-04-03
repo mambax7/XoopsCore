@@ -29,7 +29,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('SaxParser', $instance);
 
         $tagHandlers = $instance->tagHandlers;
-        $this->assertTrue(is_array($tagHandlers));
+        $this->assertInternalType('array', $tagHandlers);
         if (is_array($tagHandlers)) {
             $this->assertSame(12, count($tagHandlers));
         }
@@ -94,7 +94,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
 
         $x = $instance->getTempArr('bidon');
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
 
         $x = $instance->getTempArr();
         $this->assertTrue(is_array($x) and ($x[$name] === $value));
@@ -118,6 +118,6 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $instance->resetTempArr();
 
         $x = $instance->getTempArr($name);
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
     }
 }

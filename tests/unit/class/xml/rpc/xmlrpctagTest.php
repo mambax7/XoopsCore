@@ -49,10 +49,10 @@ class XoopsXmlRpcTagTest extends \PHPUnit\Framework\TestCase
 
         $instance->setFault(true);
         $x = $instance->isFault();
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
 
         $instance->setFault(false);
         $x = $instance->isFault();
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
     }
 }

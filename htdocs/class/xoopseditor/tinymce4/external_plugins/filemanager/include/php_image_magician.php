@@ -758,7 +758,7 @@ class imageLib
     //
     {
         if ($this->imageResized) {
-            if (is_integer($value)) {
+            if (is_int($value)) {
                 $degrees = $value;
             }
 

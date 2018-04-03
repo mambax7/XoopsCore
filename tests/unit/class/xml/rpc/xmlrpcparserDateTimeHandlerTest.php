@@ -35,12 +35,12 @@ class RpcDateTimeHandlerTest extends \PHPUnit\Framework\TestCase
         $parser = new XoopsXmlRpcParser($input);
         $data = 'not time';
         $instance->handleCharacterData($parser, $data);
-        $this->assertTrue(is_int($parser->getTempValue()));
+        $this->assertInternalType('int', $parser->getTempValue());
 
         $input = 'input';
         $parser = new XoopsXmlRpcParser($input);
         $data = '1900 01 30T01:30:01';
         $instance->handleCharacterData($parser, $data);
-        $this->assertTrue(is_int($parser->getTempValue()));
+        $this->assertInternalType('int', $parser->getTempValue());
     }
 }

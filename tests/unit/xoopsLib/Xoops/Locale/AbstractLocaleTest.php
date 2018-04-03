@@ -28,7 +28,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance = $this->myClass;
 
         $x = $instance::isRtl();
-        $this->assertSame(false, $x);
+        $this->assertFalse($x);
     }
 
     public function test_setLocale()

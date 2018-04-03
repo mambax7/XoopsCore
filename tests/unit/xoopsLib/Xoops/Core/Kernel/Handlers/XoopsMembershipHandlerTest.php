@@ -33,13 +33,13 @@ class MembershipHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getGroupsByUser(1);
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
     }
 
     public function test_getGroupsByGroup()
     {
         $instance = new $this->myclass($this->conn);
         $value = $instance->getGroupsByGroup(1);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

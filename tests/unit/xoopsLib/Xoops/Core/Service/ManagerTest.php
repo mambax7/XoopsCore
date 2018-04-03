@@ -28,15 +28,15 @@ class Service_ManagerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $this->assertTrue(is_int($instance::MODE_EXCLUSIVE));
-        $this->assertTrue(is_int($instance::MODE_CHOICE));
-        $this->assertTrue(is_int($instance::MODE_PREFERENCE));
-        $this->assertTrue(is_int($instance::MODE_MULTIPLE));
+        $this->assertInternalType('int', $instance::MODE_EXCLUSIVE);
+        $this->assertInternalType('int', $instance::MODE_CHOICE);
+        $this->assertInternalType('int', $instance::MODE_PREFERENCE);
+        $this->assertInternalType('int', $instance::MODE_MULTIPLE);
 
-        $this->assertTrue(is_int($instance::PRIORITY_SELECTED));
-        $this->assertTrue(is_int($instance::PRIORITY_HIGH));
-        $this->assertTrue(is_int($instance::PRIORITY_MEDIUM));
-        $this->assertTrue(is_int($instance::PRIORITY_LOW));
+        $this->assertInternalType('int', $instance::PRIORITY_SELECTED);
+        $this->assertInternalType('int', $instance::PRIORITY_HIGH);
+        $this->assertInternalType('int', $instance::PRIORITY_MEDIUM);
+        $this->assertInternalType('int', $instance::PRIORITY_LOW);
     }
 
     // function test_saveChoice()

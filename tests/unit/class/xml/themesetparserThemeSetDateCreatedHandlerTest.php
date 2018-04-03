@@ -44,6 +44,6 @@ class ThemeSetDateCreatedHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'data';
         $instance->handleCharacterData($parser, $data);
-        $this->assertSame(false, $parser->getThemeSetData('date'));
+        $this->assertFalse($parser->getThemeSetData('date'));
     }
 }

@@ -38,9 +38,9 @@ class WriteTest extends \PHPUnit\Framework\TestCase
         $object->setVar('dummyVar1', 1);
         $object->setVar('dummyVar2', 2);
         $x = $instance->cleanVars($object);
-        $this->assertSame(true, $x);
+        $this->assertTrue($x);
         $cleanVars = $object->cleanVars;
-        $this->assertTrue(is_array($cleanVars));
+        $this->assertInternalType('array', $cleanVars);
         $this->assertSame(1, $cleanVars['dummyVar1']);
         $this->assertSame(2, $cleanVars['dummyVar2']);
     }

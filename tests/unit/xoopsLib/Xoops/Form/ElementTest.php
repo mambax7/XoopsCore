@@ -442,15 +442,15 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $instance[$key]);
 
         $key = 'hidden';
-        $this->assertFalse(array_key_exists($key, $instance));
+        $this->assertArrayNotHasKey($key, $instance);
         $instance->setHidden();
-        $this->assertTrue(array_key_exists($key, $instance));
+        $this->assertArrayHasKey($key, $instance);
         $this->assertNull($instance[$key]);
 
         $key = 'required';
-        $this->assertFalse(array_key_exists($key, $instance));
+        $this->assertArrayNotHasKey($key, $instance);
         $instance->setRequired(true);
-        $this->assertTrue(array_key_exists($key, $instance));
+        $this->assertArrayHasKey($key, $instance);
         $this->assertNull($instance[$key]);
     }
 }

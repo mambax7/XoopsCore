@@ -80,7 +80,7 @@ class RegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($testvalue, $value);
 
         $result = $instance->remove('name_doesnt_exist');
-        $this->assertSame(null, $result);
+        $this->assertNull($result);
 
         $result = $instance->remove($testkey);
         $this->assertSame($testvalue, $result);
@@ -97,6 +97,6 @@ class RegistryTest extends \PHPUnit\Framework\TestCase
         $result = $instance->clear();
 
         $value = $instance->get($testkey);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

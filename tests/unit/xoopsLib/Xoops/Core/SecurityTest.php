@@ -58,17 +58,17 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->check(true, $token);
         $this->assertTrue($value);
-        $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
+        $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
 
         $value = $instance->check(true, false);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
+        $this->assertInternalType('array', $err);
 
         $value = $instance->check(true, $token);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
+        $this->assertInternalType('array', $err);
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
@@ -77,8 +77,8 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->check(true, $token);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
-        $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
+        $this->assertInternalType('array', $err);
+        $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
     public function test_createToken()
@@ -115,17 +115,17 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->validateToken($token);
         $this->assertTrue($value);
-        $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
+        $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
 
         $value = $instance->validateToken(false);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
+        $this->assertInternalType('array', $err);
 
         $value = $instance->validateToken($token);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
+        $this->assertInternalType('array', $err);
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
@@ -134,8 +134,8 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->validateToken($token);
         $this->assertFalse($value);
         $err = $instance->getErrors();
-        $this->assertTrue(is_array($err));
-        $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
+        $this->assertInternalType('array', $err);
+        $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
     public function test_clearTokens()
@@ -147,7 +147,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(!empty($token));
 
         $instance->clearTokens();
-        $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
+        $this->assertEmpty($_SESSION['XOOPS_TOKEN_SESSION']);
     }
 
     public function test_garbageCollection()
@@ -234,10 +234,10 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $instance->setErrors($str1);
         $instance->setErrors($str1);
         $value = $instance->getErrors();
-        $this->assertTrue(is_array($value));
+        $this->assertInternalType('array', $value);
         $this->assertTrue(2 === count($value));
         $value = $instance->getErrors(true);
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
         $this->assertSame($str1.'<br />'.$str1.'<br />', $value);
     }
 }

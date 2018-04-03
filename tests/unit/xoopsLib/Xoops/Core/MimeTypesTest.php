@@ -35,7 +35,7 @@ class MimeTypesTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(in_array('jpg', $matches, true), 'match .jpg extension');
         $this->assertTrue(in_array('jpeg', $matches, true), 'match .jpeg extension');
         $x = MimeTypes::findExtensions('failme-no-such-type/no-such-subtype');
-        $this->assertTrue(empty($x), 'match garbage mimetype');
+        $this->assertEmpty($x, 'match garbage mimetype');
     }
 
     public function testFindType()

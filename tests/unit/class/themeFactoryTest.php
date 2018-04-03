@@ -23,7 +23,7 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('XoopsThemeFactory', $themefactory->xoBundleIdentifier);
         $this->assertSame([], $themefactory->allowedThemes);
         $this->assertSame('default', $themefactory->defaultTheme);
-        $this->assertSame(true, $themefactory->allowUserSelection);
+        $this->assertTrue($themefactory->allowUserSelection);
     }
 
     public function createInstance_check_level($themefactory, $params = null)

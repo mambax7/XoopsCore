@@ -37,7 +37,7 @@ class ThemeSetModuleHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['template', 'template'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getTempArr('module'));
 
         $input = 'input';
@@ -52,6 +52,6 @@ class ThemeSetModuleHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'data';
         $instance->handleCharacterData($parser, $data);
-        $this->assertSame(false, $parser->getTempArr('module'));
+        $this->assertFalse($parser->getTempArr('module'));
     }
 }

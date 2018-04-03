@@ -242,7 +242,7 @@ class jupload
      */
     public function defaultAfterUploadManagement()
     {
-        $flist = '[defaultAfterUploadManagement] Nb uploaded files is: '.sizeof($this->files);
+        $flist = '[defaultAfterUploadManagement] Nb uploaded files is: '.count($this->files);
         $flist = $this->classparams['http_flist_start'];
         foreach ($this->files as $f) {
             //$f is an array, that contains all info about the uploaded file.

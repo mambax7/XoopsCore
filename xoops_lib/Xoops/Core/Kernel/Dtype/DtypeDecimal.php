@@ -35,7 +35,7 @@ class DtypeDecimal extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        $value = doubleval($value);
+        $value = (float) $value;
 
         return $value;
     }

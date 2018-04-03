@@ -55,7 +55,7 @@ class TableLoadTest extends \PHPUnit\Framework\TestCase
     public function testRowCount()
     {
         $actual = $this->object->countRows('system_user');
-        $this->assertTrue(is_integer($actual));
+        $this->assertInternalType('int', $actual);
         $this->assertTrue($actual >= 1);
     }
 }

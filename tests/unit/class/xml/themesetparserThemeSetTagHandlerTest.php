@@ -37,7 +37,7 @@ class ThemeSetTagHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['image', 'image'];
         $data = 'something';
         $x = $instance->handleCharacterData($parser, $data);
-        $this->assertSame(null, $x);
+        $this->assertNull($x);
         $this->assertSame($data, $parser->getTempArr('tag'));
 
         $input = 'input';
@@ -45,6 +45,6 @@ class ThemeSetTagHandlerTest extends \PHPUnit\Framework\TestCase
         $parser->tags = ['dummy', 'dummy'];
         $data = 'something';
         $instance->handleCharacterData($parser, $data);
-        $this->assertSame(false, $parser->getTempArr('tag'));
+        $this->assertFalse($parser->getTempArr('tag'));
     }
 }

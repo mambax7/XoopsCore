@@ -59,7 +59,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_isGuest()
     {
         $value = $this->object->isGuest();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_getUnameFromId()
@@ -81,7 +81,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     {
         $group = $this->object->getGroups();
         $value = $this->object->setGroups($group);
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_groups()
@@ -94,7 +94,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_isAdmin()
     {
         $value = $this->object->isAdmin();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_rank()
@@ -106,19 +106,19 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_isActive()
     {
         $value = $this->object->isActive();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_isOnline()
     {
         $value = $this->object->isOnline();
-        $this->assertSame(false, $value);
+        $this->assertFalse($value);
     }
 
     public function test_uid()
     {
         $value = $this->object->uid();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_id()
@@ -130,31 +130,31 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_name()
     {
         $value = $this->object->name();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_email()
     {
         $value = $this->object->email();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_url()
     {
         $value = $this->object->url();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_avatar()
     {
         $value = $this->object->user_avatar();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_regdate()
     {
         $value = $this->object->user_regdate();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_icq()
@@ -166,13 +166,13 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_user_from()
     {
         $value = $this->object->user_from();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_sig()
     {
         $value = $this->object->user_sig();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_viewemail()
@@ -184,37 +184,37 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_actkey()
     {
         $value = $this->object->actkey();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_aim()
     {
         $value = $this->object->user_aim();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_yim()
     {
         $value = $this->object->user_yim();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_msnm()
     {
         $value = $this->object->user_msnm();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_pass()
     {
         $value = $this->object->pass();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_posts()
     {
         $value = $this->object->posts();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_attachsig()
@@ -232,7 +232,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_theme()
     {
         $value = $this->object->theme();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_timezone()
@@ -245,7 +245,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_umode()
     {
         $value = $this->object->umode();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_uorder()
@@ -269,18 +269,18 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_user_occ()
     {
         $value = $this->object->user_occ();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_bio()
     {
         $value = $this->object->bio();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 
     public function test_user_intrest()
     {
         $value = $this->object->user_intrest();
-        $this->assertSame(null, $value);
+        $this->assertNull($value);
     }
 }

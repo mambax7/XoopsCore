@@ -203,11 +203,11 @@ function xoDiagIfWritable($path)
     if (!is_dir($path)) {
         if (file_exists($path)) {
             @chmod($path, 0666);
-            $error = !is_writeable($path);
+            $error = !is_writable($path);
         }
     } else {
         @chmod($path, 0777);
-        $error = !is_writeable($path);
+        $error = !is_writable($path);
     }
 
     return xoDiag($error ? -1 : 1, $error ? 'Not writable' : 'Writable');

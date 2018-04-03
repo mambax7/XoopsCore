@@ -52,7 +52,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
 
         $in = '[img]url[/img]';
         $expected = trim($this->sanitizer->filterForDisplay($in));
-        $this->assertTrue(is_string($expected));
+        $this->assertInternalType('string', $expected);
         $in = '[img url="url" /]';
         $actual = trim($this->sanitizer->filterForDisplay($in));
         $this->assertSame($expected, $actual);

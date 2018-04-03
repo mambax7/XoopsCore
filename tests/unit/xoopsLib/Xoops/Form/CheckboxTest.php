@@ -37,7 +37,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->object->addOptionArray($options);
 
         $options = $this->object->getOptions();
-        $this->assertTrue(is_array($options));
+        $this->assertInternalType('array', $options);
         $this->assertSame('AO_name', $options['AO_value']);
         $this->assertSame('AO_noname', $options['AO_noname']);
         $this->assertSame('AOA_name', $options['AOA_value']);
@@ -47,13 +47,13 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function testRenderValidationJS()
     {
         $value = $this->object->renderValidationJS();
-        $this->assertTrue(is_string($value));
+        $this->assertInternalType('string', $value);
     }
 
     public function test__construct()
