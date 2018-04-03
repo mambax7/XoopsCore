@@ -33,7 +33,7 @@ if (empty($seoOp) && @$_SERVER['PATH_INFO']) {
     Sample URL for path-info
     http://localhost/modules/publisher/seo.php/item.2/can-i-turn-the-ads-off.html
     */
-    $data = explode("/", $_SERVER['PATH_INFO']);
+    $data = explode('/', $_SERVER['PATH_INFO']);
 
     $seoParts = explode('.', $data[1]);
     $seoOp = $seoParts[0];
@@ -43,13 +43,13 @@ if (empty($seoOp) && @$_SERVER['PATH_INFO']) {
 
 }
 
-$seoMap = array(
+$seoMap = [
     'category' => 'category.php',
     'item' => 'item.php',
-    'print' => 'print.php'
-);
+    'print' => 'print.php',
+];
 
-if (!empty($seoOp) && isset($seoMap[$seoOp])) {
+if (! empty($seoOp) && isset($seoMap[$seoOp])) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
 

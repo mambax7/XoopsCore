@@ -60,8 +60,8 @@ class Radio extends OptionElement
         $ele_options = $this->getOptions();
         $ele_value = $this->getValue();
         $ele_name = $this->getName();
-        $extra = ($this->getExtra() != '' ? " " . $this->getExtra() : '');
-        $ret = "";
+        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
+        $ret = '';
         $inline = $this->has(':inline');
         if ($inline) {
             $ret .= '<div class="input-group">';
@@ -69,7 +69,7 @@ class Radio extends OptionElement
         static $id_ele = 0;
         foreach ($ele_options as $value => $buttonCaption) {
             $this->remove('checked');
-            if (isset($ele_value) && $value == $ele_value) {
+            if (isset($ele_value) && $value === $ele_value) {
                 $this->set('checked');
             }
             $this->set('value', $value);
@@ -77,7 +77,7 @@ class Radio extends OptionElement
             $this->set('id', $ele_name . $id_ele);
             if ($inline) {
                 $ret .= '<label class="radio-inline">';
-                $ret .= '<input ' . $this->renderAttributeString() . $extra . ">" . $buttonCaption . "\n";
+                $ret .= '<input ' . $this->renderAttributeString() . $extra . '>' . $buttonCaption . "\n";
                 $ret .= "</label>\n";
             } else {
                 $ret .= "<div class=\"radio\">\n<label>";

@@ -96,7 +96,7 @@ class Psr4ClassLoader
      *
      * @var array
      */
-    protected $prefixes = array();
+    protected $prefixes = [];
 
     /**
      * addLoader sets all basic options and registers the autoloader
@@ -125,12 +125,10 @@ class Psr4ClassLoader
 
     /**
      * Register loader with SPL autoloader stack.
-     *
-     * @return null
      */
     public function register()
     {
-        spl_autoload_register(array($this, 'loadClass'));
+        spl_autoload_register([$this, 'loadClass']);
     }
 
     /**
@@ -141,8 +139,6 @@ class Psr4ClassLoader
      * @param bool   $prepend  If true, prepend the base directory to the
      *                         stack instead of appending it; this causes
      *                         it to be searched first rather than last.
-     *
-     * @return null
      */
     public function addNamespace($prefix, $base_dir, $prepend = false)
     {
@@ -155,7 +151,7 @@ class Psr4ClassLoader
 
         // initialize the namespace prefix array
         if (isset($this->prefixes[$prefix]) === false) {
-            $this->prefixes[$prefix] = array();
+            $this->prefixes[$prefix] = [];
         }
 
         // retain the base directory for the namespace prefix

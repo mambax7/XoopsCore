@@ -76,8 +76,6 @@ abstract class AbstractHelper
      * init() is called once/if __construct has a module object.
      * $this->module will have a module object that any further
      * initialization can use.
-     *
-     * @return void
      */
     abstract public function init();
 
@@ -85,8 +83,6 @@ abstract class AbstractHelper
      * Set debug option on or off
      *
      * @param bool $bool true to turn on debug logging, false for off
-     *
-     * @return void
      */
     public function setDebug($bool = true)
     {
@@ -97,15 +93,13 @@ abstract class AbstractHelper
      * Add a message to the module log
      *
      * @param mixed $log log item, can be message or variable
-     *
-     * @return void
      */
     public function addLog($log)
     {
         if ($this->debug) {
             $message = $this->serializeForHelperLog($log);
             if (class_exists('Xoops', false)) {
-                \Xoops::getInstance()->logger()->debug($message, array('channel'=>'Extra'));
+                \Xoops::getInstance()->logger()->debug($message, ['channel' => 'Extra']);
             } elseif (is_object($GLOBALS['xoopsLogger'])) {
                 $GLOBALS['xoopsLogger']->addExtra(get_called_class(), $message);
             }
@@ -121,10 +115,10 @@ abstract class AbstractHelper
      */
     protected function serializeForHelperLog($value)
     {
-        if (is_resource($value) || !is_null(@get_resource_type($value))) {
+        if (is_resource($value) || @get_resource_type($value) !== null) {
             $value = '(resource)';
         }
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             $value = json_encode($value);
         }
         return (string) $value;

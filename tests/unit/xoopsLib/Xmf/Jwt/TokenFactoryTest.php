@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test\Jwt;
 
 use Xmf\Jwt\JsonWebToken;
@@ -45,7 +46,7 @@ class TokenFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testBuild()
     {
-        $claims = array('rat' => 'cute');
+        $claims = ['rat' => 'cute'];
         $token = TokenFactory::build($this->testKey, $claims);
 
         $this->assertTrue(is_string($token));
@@ -55,10 +56,10 @@ class TokenFactoryTest extends \PHPUnit\Framework\TestCase
         $actual = $jwt->decode($token, $claims);
 
         foreach ($claims as $name => $value) {
-            $this->assertEquals($value, $actual->$name);
+            $this->assertSame($value, $actual->{$name});
         }
 
-        $claims = array('rat' => 'cute', 'exp' => (time() - 30));
+        $claims = ['rat' => 'cute', 'exp' => (time() - 30)];
         $token = TokenFactory::build($this->testKey, $claims);
         //$this->expectException('\PHPUnit\Framework\Error\Notice');
         $actual = @$jwt->decode($token);

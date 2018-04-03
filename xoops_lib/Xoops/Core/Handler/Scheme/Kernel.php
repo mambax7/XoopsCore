@@ -28,22 +28,22 @@ use Xoops\Core\Kernel\XoopsObjectHandler;
 class Kernel implements SchemeInterface
 {
     private $lookupTable = [
-        'block'           => 'Block',
+        'block' => 'Block',
         'blockmodulelink' => 'BlockModuleLink',
-        'config'          => 'Config',
-        'configitem'      => 'ConfigItem',
-        'configoption'    => 'ConfigOption',
-        'group'           => 'Group',
-        'groupperm'       => 'GroupPerm',
-        'member'          => 'Member',
-        'membership'      => 'Membership',
-        'module'          => 'Module',
-        'online'          => 'Online',
-        'privmessage'     => 'PrivateMessage',
-        'ranks'           => 'Ranks',
-        'tplfile'         => 'TplFile',
-        'tplset'          => 'TplSet',
-        'user'            => 'User',
+        'config' => 'Config',
+        'configitem' => 'ConfigItem',
+        'configoption' => 'ConfigOption',
+        'group' => 'Group',
+        'groupperm' => 'GroupPerm',
+        'member' => 'Member',
+        'membership' => 'Membership',
+        'module' => 'Module',
+        'online' => 'Online',
+        'privmessage' => 'PrivateMessage',
+        'ranks' => 'Ranks',
+        'tplfile' => 'TplFile',
+        'tplset' => 'TplSet',
+        'user' => 'User',
     ];
 
     /**
@@ -57,8 +57,8 @@ class Kernel implements SchemeInterface
     {
         $handler = null;
         $specName = strtolower($spec->getName());
-        if (!isset($this->lookupTable[$specName])) {
-            if (false === $spec->getOptional()) {
+        if (! isset($this->lookupTable[$specName])) {
+            if ($spec->getOptional() === false) {
                 throw new NoHandlerException(sprintf('Unknown handler %s', $specName));
             }
             return $handler;
@@ -70,7 +70,7 @@ class Kernel implements SchemeInterface
             $handler = new $class($spec->getFactory()->db());
         }
         if ($handler === null) {
-            if (false === $spec->getOptional()) {
+            if ($spec->getOptional() === false) {
                 throw new NoHandlerException(sprintf('Class not found %s', $class));
             }
         }

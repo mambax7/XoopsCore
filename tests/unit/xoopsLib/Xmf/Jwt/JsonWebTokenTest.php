@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test\Jwt;
 
 use Xmf\Jwt\JsonWebToken;
@@ -9,10 +10,10 @@ use Xmf\Key\StorageInterface;
 
 class JsonWebTokenTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var StorageInterface  */
+    /** @var StorageInterface */
     protected $storage;
 
-    /** @var KeyAbstract  */
+    /** @var KeyAbstract */
     protected $key;
 
     /**

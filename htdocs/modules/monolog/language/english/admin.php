@@ -16,7 +16,7 @@
  * @version         $Id$
  */
 
-define('_MA_MONOLOG_PERMISSION_FORM','Monolog Usage Permissions');
-define('_MA_MONOLOG_PERMISSION_GROUPS','Select groups that may use Monolog');
-define('_MA_MONOLOG_FORM_SUBMIT','Save');
-define('_MA_MONOLOG_FORM_PROCESSED','Permissions updated.');
+define('_MA_MONOLOG_PERMISSION_FORM', 'Monolog Usage Permissions');
+define('_MA_MONOLOG_PERMISSION_GROUPS', 'Select groups that may use Monolog');
+define('_MA_MONOLOG_FORM_SUBMIT', 'Save');
+define('_MA_MONOLOG_FORM_PROCESSED', 'Permissions updated.');

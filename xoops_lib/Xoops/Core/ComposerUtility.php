@@ -11,9 +11,8 @@
 
 namespace Xoops\Core;
 
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\PhpProcess;
+use Symfony\Component\Process\Process;
 
 /**
  * ComposerUtility
@@ -29,10 +28,13 @@ use Symfony\Component\Process\PhpProcess;
  */
 class ComposerUtility
 {
-    private $output = array();
+    private $output = [];
+
     private $exe = null;
+
     private $exeOptions = ' --no-ansi --no-interaction ';
-    private $errors = array();
+
+    private $errors = [];
 
     /**
      * __construct
@@ -51,8 +53,8 @@ class ComposerUtility
      */
     public function composerExecute($command_line)
     {
-        $this->output = array();
-        $this->errors = array();
+        $this->output = [];
+        $this->errors = [];
 
         $options = ' ' . trim($this->exeOptions) . ' ';
 
@@ -67,21 +69,21 @@ class ComposerUtility
             }
         }
 
-        if (!chdir(\XoopsBaseConfig::get('lib-path'))) {
+        if (! chdir(\XoopsBaseConfig::get('lib-path'))) {
             $this->errors[] = 'Cannot change directory to lib-path';
             return false;
         }
 
         set_time_limit(300); // don't want this script to timeout;
         $command = $this->exe . $options . $command_line;
-        putenv('COMPOSER_HOME=' . \XoopsBaseConfig::get('var-path').'/composer');
+        putenv('COMPOSER_HOME=' . \XoopsBaseConfig::get('var-path') . '/composer');
         $process = new Process($command);
         //$process->setEnv(array('COMPOSER_HOME' => \XoopsBaseConfig::get('var-path').'/composer'));
         $process->setTimeout(120);
         try {
             $process->run(
                 function ($type, $buffer) use (&$errors, &$output) {
-                    if (Process::ERR === $type) {
+                    if ($type === Process::ERR) {
                         $errors[] = $buffer;
                     } else {
                         $this->output[] = $buffer;
@@ -95,14 +97,14 @@ class ComposerUtility
         if ($process->isSuccessful()) {
             array_unshift($this->output, $process->getErrorOutput());
             return true;
-        } else {
+        }
             $this->errors[] = 'Failed: ' . $command;
             $this->errors[] = sprintf(
                 "Process exit code: %s, '%s'",
                 $process->getExitCode(),
                 $process->getExitCodeText()
             );
-        }
+
         return false;
     }
 
@@ -134,8 +136,6 @@ class ComposerUtility
      * for these defaults to be specified. Invoke this method before composerExecute().
      *
      * @param string $overrideExe command line to invoke composer
-     *
-     * @return void
      */
     public function setComposerExe($overrideExe)
     {

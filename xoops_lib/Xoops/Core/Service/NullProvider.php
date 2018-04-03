@@ -40,24 +40,14 @@ class NullProvider extends Provider
     /**
      * __construct
      *
-     * @param Manager $manager Manager instance
-     * @param string  $service service name (case sensitive)
+     *
+     * @param string $service service name (case sensitive)
      */
     public function __construct(Manager $manager, $service)
     {
         $this->response = new Response();
-        $this->response->setSuccess(false)->addErrorMessage(sprintf("No provider installed for %s", $service));
+        $this->response->setSuccess(false)->addErrorMessage(sprintf('No provider installed for %s', $service));
         parent::__construct($manager, $service);
-    }
-
-    /**
-     * isAvailable - indicate the (lack of) availability of an actual provider
-     *
-     * @return boolean false to indicate no provider is available
-     */
-    public function isAvailable()
-    {
-        return false;
     }
 
     /**
@@ -65,8 +55,6 @@ class NullProvider extends Provider
      *
      * @param string $name  not used
      * @param mixed  $value not used
-     *
-     * @return void
      */
     public function __set($name, $value)
     {
@@ -76,8 +64,6 @@ class NullProvider extends Provider
      * Any property reads will go here and return null
      *
      * @param string $name not used
-     *
-     * @return null
      */
     public function __get($name)
     {
@@ -100,8 +86,6 @@ class NullProvider extends Provider
      * Any property unset() will go here
      *
      * @param string $name not used
-     *
-     * @return void
      */
     public function __unset($name)
     {
@@ -131,7 +115,17 @@ class NullProvider extends Provider
     public static function __callStatic($name, $arguments)
     {
         $response = new Response();
-        $response->setSuccess(false)->addErrorMessage(sprintf("No provider installed for %s", get_called_class()));
+        $response->setSuccess(false)->addErrorMessage(sprintf('No provider installed for %s', get_called_class()));
         return $response;
+    }
+
+    /**
+     * isAvailable - indicate the (lack of) availability of an actual provider
+     *
+     * @return boolean false to indicate no provider is available
+     */
+    public function isAvailable()
+    {
+        return false;
     }
 }

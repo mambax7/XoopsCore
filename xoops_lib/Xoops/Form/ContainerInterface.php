@@ -28,8 +28,6 @@ interface ContainerInterface
      *
      * @param Element $formElement Element to add
      * @param boolean $required    true = entry required
-     *
-     * @return void
      */
     public function addElement(Element $formElement, $required = false);
 

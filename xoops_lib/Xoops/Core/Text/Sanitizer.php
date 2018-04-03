@@ -51,7 +51,7 @@ class Sanitizer extends SanitizerConfigurable
     /**
      * @var array
      */
-    protected $patterns = array();
+    protected $patterns = [];
 
     /**
      * @var Configuration
@@ -64,20 +64,6 @@ class Sanitizer extends SanitizerConfigurable
     private static $instance;
 
     /**
-     * Returns the *Singleton* instance of this class.
-     *
-     * @return Sanitizer The *Singleton* instance.
-     */
-    public static function getInstance()
-    {
-        if (null === static::$instance) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }
-
-    /**
      * Construct - protected to enforce singleton. The singleton pattern minimizes the
      * impact of the expense of the setup logic.
      */
@@ -85,6 +71,20 @@ class Sanitizer extends SanitizerConfigurable
     {
         $this->shortcodes = new ShortCodes();
         $this->config = new Configuration();
+    }
+
+    /**
+     * Returns the *Singleton* instance of this class.
+     *
+     * @return Sanitizer The *Singleton* instance.
+     */
+    public static function getInstance()
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
     }
 
     /**
@@ -119,8 +119,6 @@ class Sanitizer extends SanitizerConfigurable
      *
      * @param string   $pattern  a pattern as used in preg_replace_callback
      * @param callable $callback callback to do processing as used in preg_replace_callback
-     *
-     * @return void
      */
     public function addPatternCallback($pattern, $callback)
     {
@@ -139,7 +137,6 @@ class Sanitizer extends SanitizerConfigurable
         $response = \Xoops::getInstance()->service('emoji')->renderEmoji($text);
         return $response->isSuccess() ? $response->getValue() : $text;
     }
-
 
     /**
      * Turn bare URLs and email addresses into links
@@ -227,37 +224,6 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Apply extension specified transformation, such as ShortCodes, to the supplied text
-     *
-     * @param string $text       text to filter
-     * @param bool   $allowImage Allow images in the text? On FALSE, uses links to images.
-     *
-     * @return string
-     */
-    protected function xoopsCodeDecode($text, $allowImage = false)
-    {
-        $holdAllowImage = $this->config['image']['allowimage'];
-        $this->config['image']['allowimage'] = $allowImage;
-
-        $this->registerExtensions();
-
-        /**
-         * this should really be eliminated, and standardize with shortcodes and filters
-         * Currently, only Wiki needs this. The syntax '[[xxx]]' interferes with escaped shortcodes
-         */
-        foreach ($this->patterns as $pattern) {
-            $text = preg_replace_callback($pattern['pattern'], $pattern['callback'], $text);
-        }
-
-        $text = $this->shortcodes->process($text);
-
-        $this->config['image']['allowimage'] = $holdAllowImage;
-
-        $text = $this->executeFilter('quote', $text);
-        return $text;
-    }
-
-    /**
      * Filters data for display
      *
      * @param string $text   text to filter for display
@@ -277,7 +243,7 @@ class Sanitizer extends SanitizerConfigurable
             $text = $this->executeFilter($filter, $text);
         }
 
-        if (!(bool) $html) {
+        if (! (bool) $html) {
             // html not allowed, so escape any special chars
             // don't mess with quotes or shortcodes will fail
             $text = htmlspecialchars($text, ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
@@ -356,53 +322,6 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Encode [code] elements as base64 to prevent processing of contents by other filters
-     *
-     * @param string $text text to filter
-     *
-     * @return string
-     */
-    protected function prefilterCodeBlocks($text)
-    {
-        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text = preg_replace_callback(
-            $patterns,
-            function ($matches) {
-                return '[code' . $matches[1] . ']' . base64_encode($matches[2]). '[/code]';
-            },
-            $text
-        );
-
-        return $text;
-    }
-
-    /**
-     * convert code blocks, previously processed by prefilterCodeBlocks(), for display
-     *
-     * @param string $text text to filter
-     *
-     * @return string
-     */
-    protected function postfilterCodeBlocks($text)
-    {
-        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text = preg_replace_callback(
-            $patterns,
-            function ($matches) {
-                return '<div class=\"xoopsCode\">' .
-                $this->executeFilter(
-                    'syntaxhighlight',
-                    str_replace('\\\"', '\"', base64_decode($matches[2])),
-                    $matches[1]
-                ) . '</div>';
-            },
-            $text
-        );
-
-        return $text;
-    }
-
-    /**
      * listExtensions() - get list of active extensions
      *
      * @return string[]
@@ -444,20 +363,183 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
+     * execute a filter
+     *
+     * @param string $name extension name
+     *
+     * @return mixed
+     */
+    public function executeFilter($name)
+    {
+        $filter = $this->loadFilter($name);
+        $args = array_slice(func_get_args(), 1);
+        return call_user_func_array([$filter, 'applyFilter'], $args);
+    }
+
+    /**
+     * Filter out possible malicious text with the textfilter filter
+     *
+     * @param string $text  text to filter
+     * @param bool   $force force filtering
+     *
+     * @return string filtered text
+     */
+    public function textFilter($text, $force = false)
+    {
+        return $this->executeFilter('textfilter', $text, $force);
+    }
+
+    /**
+     * Filter out possible malicious text with the xss filter
+     *
+     * @param string $text  text to filter
+     *
+     * @return string filtered text
+     */
+    public function filterXss($text)
+    {
+        return $this->executeFilter('xss', $text);
+    }
+
+    /**
+     * Test a string against an enumeration list.
+     *
+     * @param string   $text        string to check
+     * @param string[] $enumSet     strings to match (case insensitive)
+     * @param string   $default     default value is no match
+     * @param bool     $firstLetter match first letter only
+     *
+     * @return mixed matched string, or default if no match
+     */
+    public function cleanEnum($text, $enumSet, $default = '', $firstLetter = false)
+    {
+        if ($firstLetter) {
+            $test = strtolower(substr($text, 0, 1));
+            foreach ($enumSet as $enum) {
+                $match = strtolower(substr($enum, 0, 1));
+                if ($test === $match) {
+                    return $enum;
+                }
+            }
+        } else {
+            foreach ($enumSet as $enum) {
+                if (strcasecmp($text, $enum) === 0) {
+                    return $enum;
+                }
+            }
+        }
+        return $default;
+    }
+
+    /**
+     * Force a component to be enabled.
+     *
+     * Note: This is intended to support testing, and is not recommended for any regular use
+     *
+     * @param string $name component to enable
+     */
+    public function enableComponentForTesting($name)
+    {
+        if ($this->config->has($name)) {
+            $this->config[$name]['enabled'] = true;
+            if($this->extensionsLoaded) {
+                $this->extensionsLoaded = false;
+            }
+            $this->registerExtensions();
+        }
+    }
+
+    /**
+     * Apply extension specified transformation, such as ShortCodes, to the supplied text
+     *
+     * @param string $text       text to filter
+     * @param bool   $allowImage Allow images in the text? On FALSE, uses links to images.
+     *
+     * @return string
+     */
+    protected function xoopsCodeDecode($text, $allowImage = false)
+    {
+        $holdAllowImage = $this->config['image']['allowimage'];
+        $this->config['image']['allowimage'] = $allowImage;
+
+        $this->registerExtensions();
+
+        /**
+         * this should really be eliminated, and standardize with shortcodes and filters
+         * Currently, only Wiki needs this. The syntax '[[xxx]]' interferes with escaped shortcodes
+         */
+        foreach ($this->patterns as $pattern) {
+            $text = preg_replace_callback($pattern['pattern'], $pattern['callback'], $text);
+        }
+
+        $text = $this->shortcodes->process($text);
+
+        $this->config['image']['allowimage'] = $holdAllowImage;
+
+        $text = $this->executeFilter('quote', $text);
+        return $text;
+    }
+
+    /**
+     * Encode [code] elements as base64 to prevent processing of contents by other filters
+     *
+     * @param string $text text to filter
+     *
+     * @return string
+     */
+    protected function prefilterCodeBlocks($text)
+    {
+        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
+        $text = preg_replace_callback(
+            $patterns,
+            function ($matches) {
+                return '[code' . $matches[1] . ']' . base64_encode($matches[2]) . '[/code]';
+            },
+            $text
+        );
+
+        return $text;
+    }
+
+    /**
+     * convert code blocks, previously processed by prefilterCodeBlocks(), for display
+     *
+     * @param string $text text to filter
+     *
+     * @return string
+     */
+    protected function postfilterCodeBlocks($text)
+    {
+        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
+        $text = preg_replace_callback(
+            $patterns,
+            function ($matches) {
+                return '<div class=\"xoopsCode\">' .
+                $this->executeFilter(
+                    'syntaxhighlight',
+                    str_replace('\\\"', '\"', base64_decode($matches[2], true)),
+                    $matches[1]
+                ) . '</div>';
+            },
+            $text
+        );
+
+        return $text;
+    }
+
+    /**
      * registerExtensions()
      *
      * This sets up the shortcode processing that will be applied to text to be displayed
-     *
-     * @return void
      */
     protected function registerExtensions()
     {
-        if (!$this->extensionsLoaded) {
+        if (! $this->extensionsLoaded) {
             $this->extensionsLoaded = true;
             $extensions = $this->listExtensions();
 
             // we need xoopscode to be called first
-            $key = array_search('xoopscode', $extensions);
+            $key = array_search('xoopscode', $extensions, true);
             if ($key !== false) {
                 unset($extensions[$key]);
             }
@@ -508,7 +590,7 @@ class Sanitizer extends SanitizerConfigurable
     protected function loadExtension($name)
     {
         $extension = $this->loadComponent($name);
-        if (!($extension instanceof Sanitizer\ExtensionAbstract)) {
+        if (! ($extension instanceof Sanitizer\ExtensionAbstract)) {
             $extension = new Sanitizer\NullExtension($this);
         }
         return $extension;
@@ -524,7 +606,7 @@ class Sanitizer extends SanitizerConfigurable
     protected function loadFilter($name)
     {
         $filter = $this->loadComponent($name);
-        if (!($filter instanceof Sanitizer\FilterAbstract)) {
+        if (! ($filter instanceof Sanitizer\FilterAbstract)) {
             $filter = new Sanitizer\NullFilter($this);
         }
         return $filter;
@@ -541,93 +623,6 @@ class Sanitizer extends SanitizerConfigurable
     {
         $extension = $this->loadExtension($name);
         $args = array_slice(func_get_args(), 1);
-        return call_user_func_array(array($extension, 'registerExtensionProcessing'), $args);
-    }
-
-    /**
-     * execute a filter
-     *
-     * @param string $name extension name
-     *
-     * @return mixed
-     */
-    public function executeFilter($name)
-    {
-        $filter = $this->loadFilter($name);
-        $args = array_slice(func_get_args(), 1);
-        return call_user_func_array(array($filter, 'applyFilter'), $args);
-    }
-
-    /**
-     * Filter out possible malicious text with the textfilter filter
-     *
-     * @param string $text  text to filter
-     * @param bool   $force force filtering
-     *
-     * @return string filtered text
-     */
-    public function textFilter($text, $force = false)
-    {
-        return $this->executeFilter('textfilter', $text, $force);
-    }
-
-    /**
-     * Filter out possible malicious text with the xss filter
-     *
-     * @param string $text  text to filter
-     *
-     * @return string filtered text
-     */
-    public function filterXss($text)
-    {
-        return $this->executeFilter('xss', $text);
-    }
-
-    /**
-     * Test a string against an enumeration list.
-     *
-     * @param string   $text        string to check
-     * @param string[] $enumSet     strings to match (case insensitive)
-     * @param string   $default     default value is no match
-     * @param bool     $firstLetter match first letter only
-     *
-     * @return mixed matched string, or default if no match
-     */
-    public function cleanEnum($text, $enumSet, $default = '', $firstLetter = false)
-    {
-        if ($firstLetter) {
-            $test = strtolower(substr($text, 0, 1));
-            foreach ($enumSet as $enum) {
-                $match = strtolower(substr($enum, 0, 1));
-                if ($test === $match) {
-                    return $enum;
-                }
-            }
-        } else {
-            foreach ($enumSet as $enum) {
-                if (0 === strcasecmp($text, $enum)) {
-                    return $enum;
-                }
-            }
-        }
-        return $default;
-    }
-
-    /**
-     * Force a component to be enabled.
-     *
-     * Note: This is intended to support testing, and is not recommended for any regular use
-     *
-     * @param string $name component to enable
-     */
-    public function enableComponentForTesting($name)
-    {
-        if ($this->config->has($name)) {
-            $this->config[$name]['enabled'] = true;
-            if($this->extensionsLoaded) {
-                $this->extensionsLoaded = false;
-            }
-            $this->registerExtensions();
-        }
+        return call_user_func_array([$extension, 'registerExtensionProcessing'], $args);
     }
 }

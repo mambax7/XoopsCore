@@ -36,7 +36,7 @@ class Locale extends ListAbstract
     public static function getList($showInCodeLanguage = true)
     {
         $locales = Data::getAvailableLocales();
-        $languages = array();
+        $languages = [];
         foreach ($locales as $locale) {
             $key = \Xoops\Locale::normalizeLocale($locale);
             $languages[$key] = Language::getName($locale, ($showInCodeLanguage ? $locale : null));

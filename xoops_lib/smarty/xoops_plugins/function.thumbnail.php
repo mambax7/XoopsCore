@@ -29,8 +29,8 @@
 function smarty_function_thumbnail($params, &$smarty)
 {
     $image = isset($params['image']) ? $params['image'] : '';
-    $w     = isset($params['w']) ? $params['w'] : 0;
-    $h     = isset($params['h']) ? $params['h'] : 0;
+    $w = isset($params['w']) ? $params['w'] : 0;
+    $h = isset($params['h']) ? $params['h'] : 0;
 
     return \Xoops::getInstance()->service('thumbnail')->getImgUrl($image, $w, $h)->getValue();
 }

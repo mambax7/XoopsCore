@@ -22,18 +22,22 @@
 // Abstract of each filter classes
 class ProtectorFilterAbstract
 {
-    var $protector = null;
+    var
 
-    var $errors = array();
+ $protector = null;
+
+    var
+
+ $errors = [];
 
     function ProtectorFilterAbstract()
     {
         $xoops = Xoops::getInstance();
         $language = $xoops->getConfig('language');
         $this->protector = Protector::getInstance();
-        $lang = !$language  ? @$this->protector->_conf['default_lang'] : $language;
+        $lang = ! $language ? @$this->protector->_conf['default_lang'] : $language;
         @include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
-        if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
+        if (! defined('_MD_PROTECTOR_YOUAREBADIP')) {
             include_once dirname(__DIR__) . '/language/english/main.php';
         }
     }
@@ -44,23 +48,26 @@ class ProtectorFilterAbstract
             // WizMobile (gusagi)
             $user = Wizin_User::getSingleton();
             return $user->bIsMobile;
-        } else {
+        }
             if (defined('HYP_K_TAI_RENDER') && HYP_K_TAI_RENDER) {
                 // hyp_common ktai-renderer (nao-pon)
                 return true;
-            } else {
-                return false;
             }
-        }
+                return false;
+
     }
 }
 
 // Filter Handler class (singleton)
 class ProtectorFilterHandler
 {
-    var $protector = null;
+    var
 
-    var $filters_base = '';
+ $protector = null;
+
+    var
+
+ $filters_base = '';
 
     function ProtectorFilterHandler()
     {
@@ -71,8 +78,8 @@ class ProtectorFilterHandler
     static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new ProtectorFilterHandler();
+        if (! isset($instance)) {
+            $instance = new self();
         }
         return $instance;
     }

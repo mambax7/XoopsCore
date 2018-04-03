@@ -32,7 +32,7 @@ class UserconfigsMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      */
     public function subMenus()
     {
-        $ret = array();
+        $ret = [];
         $xoops = \Xoops::getInstance();
         if ($plugins = \Xoops\Module\Plugin::getPlugins('userconfigs')) {
             foreach (array_keys($plugins) as $dirname) {

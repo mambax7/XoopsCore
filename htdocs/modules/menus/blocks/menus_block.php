@@ -21,7 +21,7 @@ use Xoops\Core\XoopsTpl;
 
 function menus_block_show($options)
 {
-    $block = array();
+    $block = [];
     $xoops = Xoops::getInstance();
     $helper = Xoops::getModuleHelper('menus');
 
@@ -45,13 +45,13 @@ function menus_block_show($options)
         foreach ($decorators as $decorator) {
             $decorator->hasAccess($menu, $hasAccess);
         }
-        if (!$hasAccess) {
+        if (! $hasAccess) {
             unset($menus[$key]);
         }
     }
 
     $count = count($menus);
-    if ($count == 0) {
+    if ($count === 0) {
         return $block;
     }
 
@@ -71,8 +71,8 @@ function menus_block_show($options)
 
     /*--------------------------------------------------------------*/
     //default files to load
-    $css = array();
-    $js = array();
+    $css = [];
+    $js = [];
 
     //get extra files from skins
     $skin = $options[1];
@@ -100,7 +100,7 @@ function menus_block_show($options)
             $tpl_vars .= "\n" . $skin_info['header'];
         }
 
-        $xoops->tpl()->assign('xoops_module_header', $tpl_vars . @$xoops->tpl()->getTemplateVars("xoops_module_header"));
+        $xoops->tpl()->assign('xoops_module_header', $tpl_vars . @$xoops->tpl()->getTemplateVars('xoops_module_header'));
     } else {
         foreach ($css as $file) {
             $xoops->theme()->addStylesheet($file);
@@ -111,7 +111,7 @@ function menus_block_show($options)
         }
 
         if (isset($skin_info['header'])) {
-            $xoops->tpl()->assign('xoops_footer', @$xoops->tpl()->getTemplateVars("xoops_footer") . "\n" . $skin_info['header']);
+            $xoops->tpl()->assign('xoops_footer', @$xoops->tpl()->getTemplateVars('xoops_footer') . "\n" . $skin_info['header']);
         }
     }
 
@@ -125,7 +125,7 @@ function menus_block_show($options)
 
     if ($options[3] === 'template') {
         $xoops->tpl()->assign('xoops_menu_' . $options[4], $block['content']);
-        $block = array();
+        $block = [];
     }
 
     return $block;
@@ -134,7 +134,7 @@ function menus_block_show($options)
 function menus_block_edit($options)
 {
     //Unique ID
-    if (!$options[4] || (isset($_GET['op']) && $_GET['op'] === 'clone')) {
+    if (! $options[4] || (isset($_GET['op']) && $_GET['op'] === 'clone')) {
         $options[4] = uniqid();
     }
 
@@ -147,8 +147,8 @@ function menus_block_edit($options)
     $menus = $helper->getHandlerMenus()->getList($criteria);
     unset($criteria);
 
-    if (count($menus) == 0) {
-        $form = "<a href='" . $helper->url('admin/admin_menus.php') . "'>" . _AM_MENUS_MSG_NOMENUS . "</a>";
+    if (count($menus) === 0) {
+        $form = "<a href='" . $helper->url('admin/admin_menus.php') . "'>" . _AM_MENUS_MSG_NOMENUS . '</a>';
         return $form;
     }
 
@@ -160,8 +160,8 @@ function menus_block_edit($options)
     $form->addElement($element);
 
     //Skin
-    $temp_skins = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . "/modules/menus/skins/", "");
-    $skins_options = array();
+    $temp_skins = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/modules/menus/skins/', '');
+    $skins_options = [];
     foreach ($temp_skins as $skin) {
         if (XoopsLoad::fileExists($helper->path('skins/' . $skin . '/skin_version.php'))) {
             $skins_options[$skin] = $skin;
@@ -178,10 +178,10 @@ function menus_block_edit($options)
     $form->addElement($element);
 
     //Display method
-    $display_options = array(
-        'block'    => _MB_MENUS_DISPLAY_METHOD_BLOCK,
-        'template' => _MB_MENUS_DISPLAY_METHOD_TEMPLATE
-    );
+    $display_options = [
+        'block' => _MB_MENUS_DISPLAY_METHOD_BLOCK,
+        'template' => _MB_MENUS_DISPLAY_METHOD_TEMPLATE,
+    ];
     $element = new Xoops\Form\Select(_MB_MENUS_DISPLAY_METHOD, 'options[3]', $options[3], 1);
     $element->addOptionArray($display_options);
     $element->setDescription(sprintf(_MB_MENUS_DISPLAY_METHOD_DSC, $options[4]));
@@ -197,7 +197,7 @@ function menus_block_edit($options)
 
 function menus_mainmenu_show()
 {
-    $block = array();
+    $block = [];
     $xoops = Xoops::getInstance();
     $helper = Xoops::getModuleHelper('menus');
 
@@ -209,7 +209,7 @@ function menus_mainmenu_show()
     $moduleperm_handler = $xoops->getHandlerGroupPermission();
     $groups = $xoops->getUserGroups();
     $read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
-    $menus = array();
+    $menus = [];
     $menu = $helper->getHandlerMenu()->create();
     $menu->setVar('id', 1);
     $menu->setVar('pid', 0);
@@ -219,7 +219,7 @@ function menus_mainmenu_show()
     $menu->setVar('image', 'icon-home');
     $menus[] = $menu->getValues();
     foreach (array_keys($modules) as $i) {
-        if (in_array($i, $read_allowed)) {
+        if (in_array($i, $read_allowed, true)) {
             /* @var $plugin MenusPluginInterface */
             $menu = $helper->getHandlerMenu()->create();
             $menu->setVar('id', $i);
@@ -229,7 +229,7 @@ function menus_mainmenu_show()
             $menu->setVar('link', \XoopsBaseConfig::get('url') . '/modules/' . $modules[$i]->getVar('dirname'));
             $menu->setVar('image', 'icon-tags');
             $menus[] = $menu->getValues();
-            if ($xoops->isModule() && $xoops->module->getVar('dirname') == $modules[$i]->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($modules[$i]->getVar('dirname'), 'menus')) {
+            if ($xoops->isModule() && $xoops->module->getVar('dirname') === $modules[$i]->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($modules[$i]->getVar('dirname'), 'menus')) {
                 $sublinks = $plugin->subMenus();
                 $j = -1;
                 foreach ($sublinks as $sublink) {
@@ -238,7 +238,7 @@ function menus_mainmenu_show()
                     $menu->setVar('pid', $i);
                     $menu->setVar('title', $sublink['name']);
                     $menu->setVar('alt_title', $sublink['name']);
-                    $menu->setVar('link', \XoopsBaseConfig::get('url') . '/modules/' . $modules[$i]->getVar('dirname') . '/'. $sublink['url']);
+                    $menu->setVar('link', \XoopsBaseConfig::get('url') . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
                     $menus[] = $menu->getValues();
                     $j--;
                 }

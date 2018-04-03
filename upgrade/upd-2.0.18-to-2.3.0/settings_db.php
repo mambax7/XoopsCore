@@ -24,7 +24,7 @@
  * @version     $Id$
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if ( ! defined( 'XOOPS_ROOT_PATH' ) ) {
     die( 'Bad installation: please add this folder to the XOOPS install you want to upgrade');
 }
 
@@ -34,20 +34,20 @@ function getDbCharsets()
 {
     $xoops = Xoops::getInstance();
     $db = $xoops->db();
-    $charsets = array();
+    $charsets = [];
 
-    $charsets["utf8"] = array();
+    $charsets['utf8'] = [];
     $ut8_available = false;
-    if ( $result = $db->queryF("SHOW CHARSET") ) {
+    if ( $result = $db->queryF('SHOW CHARSET') ) {
         while ( $row = $db->fetchArray($result) ) {
-            $charsets[$row["Charset"]]["desc"] = $row["Description"];
-            if ($row["Charset"] == "utf8") {
+            $charsets[$row['Charset']]['desc'] = $row['Description'];
+            if ($row['Charset'] === 'utf8') {
                 $ut8_available = true;
             }
         }
     }
-    if (!$ut8_available) {
-        unset($charsets["utf8"]);
+    if (! $ut8_available) {
+        unset($charsets['utf8']);
     }
 
     return $charsets;
@@ -57,12 +57,12 @@ function getDbCollations()
 {
     $xoops = Xoops::getInstance();
     $db = $xoops->db();
-    $collations = array();
+    $collations = [];
     $charsets = getDbCharsets();
 
-    if ( $result = $db->queryF("SHOW COLLATION") ) {
+    if ( $result = $db->queryF('SHOW COLLATION') ) {
         while ( $row = $db->fetchArray($result) ) {
-            $charsets[$row["Charset"]]["collation"][] = $row["Collation"];
+            $charsets[$row['Charset']]['collation'][] = $row['Collation'];
         }
     }
 
@@ -78,47 +78,47 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
     $name = $myts->htmlspecialchars( $name, ENT_QUOTES, _UPGRADE_CHARSET, false );
     $value = $myts->htmlspecialchars( $value, ENT_QUOTES );
 
-    $field = "<label for='$name'>$label</label>\n";
+    $field = "<label for='${name}'>${label}</label>\n";
     if ( $help ) {
         $field .= '<div class="xoform-help">' . $help . "</div>\n";
     }
-    $field .= "<select name='$name' id='$name'\">";
-    $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . "</option>";
+    $field .= "<select name='${name}' id='${name}'\">";
+    $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . '</option>';
 
-    $collation_default = "";
-    $options = "";
+    $collation_default = '';
+    $options = '';
     foreach ($collations as $key => $charset) {
         $field .= "<optgroup label='{$key} - ({$charset['desc']})'>";
         foreach ($charset['collation'] as $collation) {
-            $field .= "<option value='{$collation}'" . ( ($value == $collation) ? " selected='selected'" : "" ) . ">{$collation}</option>";
+            $field .= "<option value='{$collation}'" . ( ($value === $collation) ? " selected='selected'" : '' ) . ">{$collation}</option>";
         }
-        $field .= "</optgroup>";
+        $field .= '</optgroup>';
     }
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db' ) {
-    $params = array( 'DB_COLLATION' );
+if ( $_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db' ) {
+    $params = ['DB_COLLATION'];
     foreach ( $params as $name ) {
-        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
+        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }
     return $vars;
 }
 
-if ( !isset( $vars['DB_COLLATION'] ) ) {
+if ( ! isset( $vars['DB_COLLATION'] ) ) {
     $vars['DB_COLLATION'] = '';
 }
 
 
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if ( ! empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>
     <legend><?php echo LEGEND_DATABASE; ?></legend>
-    <?php echo xoFormFieldCollation( 'DB_COLLATION',    $vars['DB_COLLATION'],    DB_COLLATION_LABEL, DB_COLLATION_HELP ); ?>
+    <?php echo xoFormFieldCollation( 'DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP ); ?>
 
 </fieldset>
 <input type="hidden" name="action" value="next" />

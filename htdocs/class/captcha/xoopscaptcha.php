@@ -25,7 +25,7 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
-class XoopsCaptcha
+class xoopscaptcha
 {
     /**
      * @var bool
@@ -60,12 +60,12 @@ class XoopsCaptcha
     /**
      * @var array
      */
-    public $config = array();
+    public $config = [];
 
     /**
      * @var array
      */
-    public $message = array();
+    public $message = [];
 
     /**
      * construct
@@ -90,7 +90,7 @@ class XoopsCaptcha
     static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -110,7 +110,7 @@ class XoopsCaptcha
         } else {
             $filename = 'captcha.config.' . $name;
         }
-        if ( !$config = $this->readConfig($filename) ) {
+        if ( ! $config = $this->readConfig($filename) ) {
             $config = $this->loadBasicConfig( $name );
             $this->writeConfig($filename, $config );
         }
@@ -127,8 +127,8 @@ class XoopsCaptcha
      */
     function loadBasicConfig($filename = 'config')
     {
-        $basic_config = array();
-        $plugin_config = array();
+        $basic_config = [];
+        $plugin_config = [];
         $filename = ($filename === 'config') ? 'config.php' : 'config.' . $filename . '.php';
         if (XoopsLoad::fileExists($file = $this->path_basic . '/' . $filename)) {
             $basic_config = include $file;
@@ -182,15 +182,15 @@ class XoopsCaptcha
         if (isset($this->active)) {
             return $this->active;
         }
-        if (!empty($this->config['disabled'])) {
+        if (! empty($this->config['disabled'])) {
             $this->active = false;
             return $this->active;
         }
-        if (!empty($this->config['skipmember']) && $xoops->isUser()) {
+        if (! empty($this->config['skipmember']) && $xoops->isUser()) {
             $this->active = false;
             return $this->active;
         }
-        if (!isset($this->handler)) {
+        if (! isset($this->handler)) {
             $this->loadHandler();
         }
         $this->active = isset($this->handler);
@@ -206,9 +206,9 @@ class XoopsCaptcha
      */
     public function loadHandler($name = null)
     {
-        $name = !empty($name) ? $name : (empty($this->config['mode']) ? 'text' : $this->config['mode']);
+        $name = ! empty($name) ? $name : (empty($this->config['mode']) ? 'text' : $this->config['mode']);
         $class = 'XoopsCaptcha' . ucfirst($name);
-        if (!empty($this->handler) && get_class($this->handler) == $class) {
+        if (! empty($this->handler) && get_class($this->handler) === $class) {
             return $this->handler;
         }
         $this->handler = null;
@@ -220,7 +220,7 @@ class XoopsCaptcha
             }
         }
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             $class = 'XoopsCaptchaText';
             require_once $this->path_basic . '/text.php';
         }
@@ -258,8 +258,8 @@ class XoopsCaptcha
      */
     public function setConfig($name, $val)
     {
-        if (isset($this->$name)) {
-            $this->$name = $val;
+        if (isset($this->{$name})) {
+            $this->{$name} = $val;
         } else {
             $this->config[$name] = $val;
         }
@@ -285,15 +285,15 @@ class XoopsCaptcha
         $attempt = $_SESSION["{$sessionName}_attempt"];
         $is_valid = false;
         // Skip CAPTCHA verification if disabled
-        if (!$this->isActive()) {
+        if (! $this->isActive()) {
             $is_valid = true;
             // Skip CAPTCHA for member if set
         } else {
-            if ($xoops->isUser() && !empty($skipMember)) {
+            if ($xoops->isUser() && ! empty($skipMember)) {
                 $is_valid = true;
                 // Kill too many attempts
             } else {
-                if (!empty($maxAttempts) && $attempt > $maxAttempts) {
+                if (! empty($maxAttempts) && $attempt > $maxAttempts) {
                     $this->message[] = XoopsLocale::E_TO_MANY_ATTEMPTS;
                     // Verify the code
                 } else {
@@ -302,7 +302,7 @@ class XoopsCaptcha
             }
         }
 
-        if (!$is_valid) {
+        if (! $is_valid) {
             // Increase the attempt records on failure
             $_SESSION["{$sessionName}_attempt"]++;
             // Log the error message
@@ -368,7 +368,7 @@ class XoopsCaptcha
             $_SESSION[$sessionName . '_' . $k] = $config;
         }
         $form = '';
-        if (!$this->active || empty($this->config['name'])) {
+        if (! $this->active || empty($this->config['name'])) {
             return $form;
         }
 
@@ -377,7 +377,7 @@ class XoopsCaptcha
         $_SESSION[$sessionName . '_attempt'] = $attempt;
 
         // Failure on too many attempts
-        if (!empty($maxAttempts) && $attempt > $maxAttempts) {
+        if (! empty($maxAttempts) && $attempt > $maxAttempts) {
             $form = XoopsLocale::E_TO_MANY_ATTEMPTS;
             // Load the form element
         } else {
@@ -393,7 +393,7 @@ class XoopsCaptcha
      */
     public function renderValidationJS()
     {
-        if (!$this->active || empty($this->config['name'])) {
+        if (! $this->active || empty($this->config['name'])) {
             return '';
         }
         return $this->handler->renderValidationJS();
@@ -409,7 +409,7 @@ class XoopsCaptcha
     public function setCode($code = null)
     {
         $code = ($code === null) ? $this->handler->getCode() : $code;
-        if (!empty($code)) {
+        if (! empty($code)) {
             $_SESSION[$this->name . '_code'] = $code;
             return true;
         }

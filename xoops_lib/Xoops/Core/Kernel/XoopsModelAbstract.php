@@ -27,7 +27,7 @@ abstract class XoopsModelAbstract
     /**
      * holds referenced to handler object
      *
-     * @var XoopsPersistableObjectHandler $handler
+     * @var XoopsPersistableObjectHandler
      */
     protected $handler;
 
@@ -53,9 +53,9 @@ abstract class XoopsModelAbstract
      */
     public function setVars($args)
     {
-        if (!empty($args) && is_array($args)) {
+        if (! empty($args) && is_array($args)) {
             foreach ($args as $key => $value) {
-                $this->$key = $value;
+                $this->{$key} = $value;
             }
         }
         return true;

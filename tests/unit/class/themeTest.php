@@ -1,11 +1,11 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
-class ThemeTest extends \PHPUnit\Framework\TestCase
+class themeTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsTheme';
 
-    public function setUp()
+    protected function setUp()
     {
     }
 
@@ -33,11 +33,11 @@ class ThemeTest extends \PHPUnit\Framework\TestCase
         // may change $this->assertSame(array('XoopsThemeBlocksPlugin'), $theme->plugins);
         $this->assertSame(0, $theme->renderCount);
         $this->assertSame(false, $theme->template);
-        $this->assertSame(array(), $theme->metas['meta']);
-        $this->assertSame(array(), $theme->metas['link']);
-        $this->assertSame(array(), $theme->metas['script']);
-        $this->assertSame(array(), $theme->htmlHeadStrings);
-        $this->assertSame(array(), $theme->templateVars);
+        $this->assertSame([], $theme->metas['meta']);
+        $this->assertSame([], $theme->metas['link']);
+        $this->assertSame([], $theme->metas['script']);
+        $this->assertSame([], $theme->htmlHeadStrings);
+        $this->assertSame([], $theme->templateVars);
         $this->assertSame(true, $theme->use_extra_cache_id);
         $this->assertSame('default', $theme->headersCacheEngine);
     }

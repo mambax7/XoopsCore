@@ -28,8 +28,6 @@ class PdfPreload extends PreloadItem
      * listen for core.service.locate.htmltopdf event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateHtmlToPdf(Provider $provider)
     {

@@ -26,10 +26,21 @@
 
 class xoopsUpgrade
 {
-    var $usedFiles = array( );
-    var $tasks = array( );
-    var $languageFolder = null;
-    var $logs = array();
+    var
+
+ $usedFiles = [];
+
+    var
+
+ $tasks = [];
+
+    var
+
+ $languageFolder = null;
+
+    var
+
+ $logs = [];
 
     function xoopsUpgrade($dirname = null)
     {
@@ -41,12 +52,12 @@ class xoopsUpgrade
     function isApplied()
     {
         $step = get_class($this);
-        if (!isset($_SESSION['xoops_upgrade'][$step]) || !is_array($_SESSION['xoops_upgrade'][$step])) {
-            $_SESSION['xoops_upgrade'][$step] = array();
+        if (! isset($_SESSION['xoops_upgrade'][$step]) || ! is_array($_SESSION['xoops_upgrade'][$step])) {
+            $_SESSION['xoops_upgrade'][$step] = [];
         }
         foreach ($this->tasks as $task) {
-            if (!in_array($task, $_SESSION['xoops_upgrade'][$step])) {
-                if (!$res = $this->{"check_{$task}"}()) {
+            if (! in_array($task, $_SESSION['xoops_upgrade'][$step], true)) {
+                if (! $res = $this->{"check_{$task}"}()) {
                     $_SESSION['xoops_upgrade'][$step][] = $task;
                 }
             }
@@ -60,7 +71,7 @@ class xoopsUpgrade
         $tasks = $_SESSION['xoops_upgrade'][$step];
         foreach ($tasks as $task) {
             $res = $this->{"apply_{$task}"}();
-            if (!$res) return false;
+            if (! $res) return false;
             array_shift($_SESSION['xoops_upgrade'][$step]);
         }
         return true;
@@ -79,7 +90,7 @@ class xoopsUpgrade
 
     function message()
     {
-        return empty($this->logs) ? "" : implode("<br />", $this->logs);
+        return empty($this->logs) ? '' : implode('<br />', $this->logs);
     }
 }
 

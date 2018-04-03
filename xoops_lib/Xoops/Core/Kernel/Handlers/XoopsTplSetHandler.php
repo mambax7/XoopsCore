@@ -37,7 +37,6 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  */
 class XoopsTplSetHandler extends XoopsPersistableObjectHandler
 {
-
     /**
      * Constructor
      *
@@ -68,17 +67,17 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
 
         $tplset = false;
         $tplset_name = trim($tplset_name);
-        if ($tplset_name != '') {
+        if ($tplset_name !== '') {
             $qb->select('*')
                 ->fromPrefix('system_tplset', null)
                 ->where($eb->eq('tplset_name', ':tplsetname'))
                 ->setParameter(':tplsetname', $tplset_name, \PDO::PARAM_STR);
             $result = $qb->execute();
-            if (!$result) {
+            if (! $result) {
                 return false;
             }
             $allrows = $result->fetchAll();
-            if (count($allrows) == 1) {
+            if (count($allrows) === 1) {
                 $tplset = new XoopsTplSet();
                 $tplset->assignVars(reset($allrows));
             }
@@ -95,7 +94,7 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
      **/
     public function getNameList(CriteriaElement $criteria = null)
     {
-        $ret = array();
+        $ret = [];
         $tplsets = $this->getObjects($criteria, true);
         foreach (array_keys($tplsets) as $i) {
             $ret[$tplsets[$i]->getVar('tplset_name')] = $tplsets[$i]->getVar('tplset_name');

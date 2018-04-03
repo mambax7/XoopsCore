@@ -22,7 +22,7 @@ function xoops_module_install_userrank($module)
 {
     $xoops = Xoops::getInstance();
     $xoops->header();
-    $lang_rank_titles = array(
+    $lang_rank_titles = [
         'dummy',
         _MI_RANK_TITLE_1,
         _MI_RANK_TITLE_2,
@@ -31,7 +31,7 @@ function xoops_module_install_userrank($module)
         _MI_RANK_TITLE_5,
         _MI_RANK_TITLE_6,
         _MI_RANK_TITLE_7,
-    );
+    ];
 
     $filedata = <<<EOT
 -
@@ -89,7 +89,7 @@ EOT;
     $tableData = Yaml::load($filedata);
 
     $count = TableLoad::countRows($table);
-    if ($count<1) {
+    if ($count < 1) {
         TableLoad::loadTableFromArray($table, $tableData);
     }
     return true;

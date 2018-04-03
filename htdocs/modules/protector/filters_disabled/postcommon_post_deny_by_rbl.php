@@ -25,7 +25,7 @@ class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
     {
         $xoops = Xoops::getInstance();
         // RBL servers (don't enable too many servers)
-        $rbls = array(
+        $rbls = [
             'sbl-xbl.spamhaus.org',
             #           'niku.2ch.net' ,
             #           'list.dsbl.org' ,
@@ -34,14 +34,14 @@ class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
             #           'opm.blitzed.org' ,
             #           'bsb.empty.us' ,
             #           'bsb.spamlookup.net' ,
-        );
+        ];
 
         $rev_ip = implode('.', array_reverse(explode('.', @$_SERVER['REMOTE_ADDR'])));
 
         foreach ($rbls as $rbl) {
             $host = $rev_ip . '.' . $rbl;
-            if (gethostbyname($host) != $host) {
-                $this->protector->message .= "DENY by $rbl\n";
+            if (gethostbyname($host) !== $host) {
+                $this->protector->message .= "DENY by ${rbl}\n";
                 $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
                 $this->protector->output_log('RBL SPAM', $uid, false, 128);
                 die(_MD_PROTECTOR_DENYBYRBL);

@@ -42,9 +42,6 @@ class PagePage_rating extends XoopsObject
 
 class PagePage_ratingHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param null|Connection $db
-     */
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'page_rating', 'pagepage_rating', 'rating_id', 'rating_contentid');
@@ -54,8 +51,7 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
     {
         $helper = Page::getInstance();
         $uid = $helper->getUserId();
-        $ip  = $helper->xoops()->getEnv('REMOTE_ADDR');
-
+        $ip = $helper->xoops()->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('rating_content_id', $content_id));
@@ -76,7 +72,7 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
     {
         $helper = Page::getInstance();
         $uid = $helper->getUserId();
-        $ip  = $helper->xoops()->getEnv('REMOTE_ADDR');
+        $ip = $helper->xoops()->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('rating_content_id', $content_id));
@@ -100,6 +96,6 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
             ++$i;
             $total += $v->getVar('rating_rating');
         }
-        return array('voters' => $i, 'average' => $total/$i);
+        return ['voters' => $i, 'average' => $total / $i];
     }
 }

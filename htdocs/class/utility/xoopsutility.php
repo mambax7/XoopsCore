@@ -21,9 +21,8 @@
  * @version         $Id$
  */
 
-class XoopsUtility
+class xoopsutility
 {
-
     /**
      * @static
      * @param mixed $handler
@@ -33,7 +32,7 @@ class XoopsUtility
     static function recursive($handler, $data)
     {
         if (is_array($data)) {
-            $return = array_map(array('XoopsUtility', 'recursive'),
+            $return = array_map(['XoopsUtility', 'recursive'],
 				array_fill(0, count($data), $handler), $data);
             return $return;
         }

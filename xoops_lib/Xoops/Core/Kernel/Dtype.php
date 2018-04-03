@@ -30,11 +30,15 @@ class Dtype
     /**
      * format constants used for getVar()
      */
-    const FORMAT_SHOW          = 'show';        // shorthand 's'
-    const FORMAT_EDIT          = 'edit';        // shorthand 'e'
-    const FORMAT_PREVIEW       = 'preview';     // shorthand 'p'
+    const FORMAT_SHOW = 'show';        // shorthand 's'
+
+    const FORMAT_EDIT = 'edit';        // shorthand 'e'
+
+    const FORMAT_PREVIEW = 'preview';     // shorthand 'p'
+
     const FORMAT_FORM_PREVIEW = 'formpreview'; // shorthand 'f'
-    const FORMAT_NONE          = 'none';        // shorthand 'n'
+
+    const FORMAT_NONE = 'none';        // shorthand 'n'
 
     /**
      * Xoops object datatype
@@ -44,24 +48,41 @@ class Dtype
      * never notice. Some modules may use the numbers, such a profile custom fields. Those
      * will need to be identified and updated.
      */
-    const TYPE_TEXT_BOX    = 1;
-    const TYPE_TEXT_AREA   = 2;
-    const TYPE_INTEGER     = 3;
-    const TYPE_URL         = 4;
-    const TYPE_EMAIL       = 5;
-    const TYPE_ARRAY       = 6;
-    const TYPE_OTHER       = 7;
-    const TYPE_SOURCE      = 8;
-    const TYPE_SHORT_TIME  = 9;
+    const TYPE_TEXT_BOX = 1;
+
+    const TYPE_TEXT_AREA = 2;
+
+    const TYPE_INTEGER = 3;
+
+    const TYPE_URL = 4;
+
+    const TYPE_EMAIL = 5;
+
+    const TYPE_ARRAY = 6;
+
+    const TYPE_OTHER = 7;
+
+    const TYPE_SOURCE = 8;
+
+    const TYPE_SHORT_TIME = 9;
+
     const TYPE_MEDIUM_TIME = 10;
-    const TYPE_LONG_TIME   = 11;
-    const TYPE_FLOAT       = 13;
-    const TYPE_DECIMAL     = 14;
-    const TYPE_ENUM        = 15;
-    const TYPE_JSON        = 30;
-    const TYPE_DATETIME    = 31;
-    const TYPE_TIMEZONE    = 32;
-    const TYPE_MONEY       = 33;
+
+    const TYPE_LONG_TIME = 11;
+
+    const TYPE_FLOAT = 13;
+
+    const TYPE_DECIMAL = 14;
+
+    const TYPE_ENUM = 15;
+
+    const TYPE_JSON = 30;
+
+    const TYPE_DATETIME = 31;
+
+    const TYPE_TIMEZONE = 32;
+
+    const TYPE_MONEY = 33;
 
     /**
      * cleanVar
@@ -73,7 +94,7 @@ class Dtype
      */
     public static function cleanVar(XoopsObject $obj, $key)
     {
-        return Dtype::loadDtype(Dtype::getDtypeName($obj, $key))->cleanVar($obj, $key);
+        return self::loadDtype(self::getDtypeName($obj, $key))->cleanVar($obj, $key);
     }
 
     /**
@@ -87,8 +108,8 @@ class Dtype
      */
     public static function getVar(XoopsObject $obj, $key, $format)
     {
-        return Dtype::loadDtype(Dtype::getDtypeName($obj, $key))
-                ->getVar($obj, $key, $format);
+        return self::loadDtype(self::getDtypeName($obj, $key))
+            ->getVar($obj, $key, $format);
     }
 
     /**
@@ -103,10 +124,10 @@ class Dtype
         static $dtypes;
 
         $dtype = null;
-        if (!isset($dtypes[$name])) {
+        if (! isset($dtypes[$name])) {
             $className = 'Xoops\Core\Kernel\Dtype\\' . $name;
             $dtype = new $className();
-            if (!$dtype instanceof DtypeAbstract) {
+            if (! $dtype instanceof DtypeAbstract) {
                 trigger_error("Dtype '{$name}' not found", E_USER_WARNING);
                 $name = 'other';
                 $dtype = new DtypeOther();
@@ -127,7 +148,7 @@ class Dtype
      */
     private static function getDtypeName(XoopsObject $obj, $key)
     {
-        static $legacyNames = array(
+        static $legacyNames = [
             1 => 'DtypeTextBox',
             2 => 'DtypeTextArea',
             3 => 'DtypeInt',
@@ -146,7 +167,7 @@ class Dtype
             31 => 'DtypeDateTime',
             32 => 'DtypeTimeZone',
             33 => 'DtypeMoney',
-        );
+        ];
 
         $nameIndex = $obj->vars[$key]['data_type'];
         if (isset($legacyNames[$nameIndex])) {

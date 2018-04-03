@@ -36,7 +36,6 @@ use Symfony\Component\Yaml\Yaml as VendorYaml;
  */
 class Yaml
 {
-
     /**
      * Dump an PHP array as a YAML string
      *
@@ -160,14 +159,14 @@ class Yaml
             $lines = preg_split('/\R/', $yamlString);
             $count = count($lines);
             for ($index = $count; --$index > 0;) {
-                if ('...' === $lines[$index]) {
+                if ($lines[$index] === '...') {
                     array_splice($lines, $index);
                     break;
                 }
             }
             $count = count($lines);
             for ($index = 0; ++$index < $count;) {
-                if ('---' === $lines[$index]) {
+                if ($lines[$index] === '---') {
                     array_splice($lines, 0, $index);
                     break;
                 }

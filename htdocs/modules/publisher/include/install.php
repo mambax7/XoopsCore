@@ -29,7 +29,7 @@ function xoops_module_install_publisher($module)
     $xoops = Xoops::getInstance();
 
     $count = TableLoad::countRows('publisher_mimetypes');
-    if ($count==0) {
+    if ($count === 0) {
         $filename = $xoops->path('modules/publisher/sql/publisher_mimetypes.yml');
         TableLoad::loadTableFromYamlFile('publisher_mimetypes', $filename);
     }

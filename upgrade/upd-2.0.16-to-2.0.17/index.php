@@ -31,14 +31,14 @@ class upgrade_2017 extends xoopsUpgrade
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
         $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = " . XOOPS_CONF_AUTH);
-        return (bool)($value);
+        return (bool) ($value);
     }
 
     function query($sql)
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        if (!($ret = $db->queryF($sql))) {
+        if (! ($ret = $db->queryF($sql))) {
             echo $db->error();
         }
     }
@@ -50,12 +50,12 @@ class upgrade_2017 extends xoopsUpgrade
 
         // Insert config values
         $table = $db->prefix('config');
-        $data = array(
+        $data = [
             'ldap_use_TLS' => "'_MD_AM_LDAP_USETLS', '0', '_MD_AM_LDAP_USETLS_DESC', 'yesno', 'int', 21",
-        );
+        ];
         foreach ($data as $name => $values) {
-            if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
-                $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
+            if (! getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='${name}'")) {
+                $this->query("INSERT INTO `${table}` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'${name}',${values})");
             }
         }
         return true;

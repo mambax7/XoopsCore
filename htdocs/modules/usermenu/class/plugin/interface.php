@@ -22,7 +22,6 @@
 
 interface UsermenuPluginInterface
 {
-
     /**
      * Used to populate the Usermenu Block
      *

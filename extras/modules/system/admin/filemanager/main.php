@@ -27,11 +27,11 @@ $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 //  Check is active
-if (!$xoops->getModuleConfig('active_filemanager', 'system')) {
+if (! $xoops->getModuleConfig('active_filemanager', 'system')) {
     $xoops->redirect('admin.php', 2, XoopsLocale::E_SECTION_NOT_ACTIVE);
 }
 
@@ -77,12 +77,12 @@ switch ($op) {
             natcasesort($files);
             if (count($files) > 2) {
                 $count_file = 1;
-                $file_arr = array();
+                $file_arr = [];
                 $edit = false;
                 // All files
                 foreach ($files as $file) {
-                    if (!preg_match('#.back#', $file)) {
-                        if (file_exists($root . $file) && $file != '.' && $file != '..' && !is_dir($root . $file)) {
+                    if (! preg_match('#.back#', $file)) {
+                        if (file_exists($root . $file) && $file !== '.' && $file !== '..' && ! is_dir($root . $file)) {
                             /* @var $folder XoopsFileHandler */
                             $folder = XoopsFile::getHandler('file', $root . $file);
                             $extension_verif = $folder->ext();
@@ -150,7 +150,7 @@ switch ($op) {
 
                             $file_arr['chmod'] = modify_chmod($file_arr['chmod'], $file_arr['path_file'], $count_file);
 
-                            if ($extension_verif == 'picture') {
+                            if ($extension_verif === 'picture') {
                                 list($width, $height) = getimagesize($root . $file);
                                 if ($height > 60) {
                                     $file_arr['img'] = '<img src="' . $url_file . $file . '" height="47" title="" alt="" />';
@@ -163,7 +163,7 @@ switch ($op) {
                             $file_arr['extension'] = $extension_verif;
                             $file_arr['file'] = htmlentities($file);
                             $count_file++;
-                            $file_arr['newline'] = ($count_file % $nbcolonnes_file == 1) ? true : false;
+                            $file_arr['newline'] = ($count_file % $nbcolonnes_file === 1) ? true : false;
                             $xoops->tpl()->assign('newline', $file_arr['newline']);
                             $xoops->tpl()->append('files', $file_arr);
                         }
@@ -183,13 +183,13 @@ switch ($op) {
             copy($copy_file, $_REQUEST['path'] . $_REQUEST['file'] . '.back');
             //Save modif
             if (isset($_REQUEST['filemanager'])) {
-                $open = fopen("" . $_REQUEST['path_file'] . "", "w+");
-                if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['filemanager'])))) {
-                    $xoops->redirect("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_ERROR);
+                $open = fopen('' . $_REQUEST['path_file'] . '', 'w+');
+                if (! fwrite($open, utf8_encode(stripslashes($_REQUEST['filemanager'])))) {
+                    $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_ERROR);
                 }
                 fclose($open);
             }
-            $xoops->redirect("admin.php?fct=filemanager", 2, XoopsLocale::S_DATABASE_UPDATED);
+            $xoops->redirect('admin.php?fct=filemanager', 2, XoopsLocale::S_DATABASE_UPDATED);
         } else {
             //restore
             $old_file = $_REQUEST['path_file'] . '.back';
@@ -199,21 +199,21 @@ switch ($op) {
             if (file_exists($old_file)) {
                 if (unlink($new_file)) {
                     if (rename($old_file, $new_file)) {
-                        $xoops->redirect("admin.php?fct=filemanager", 2, XoopsLocale::S_DATABASE_UPDATED);
+                        $xoops->redirect('admin.php?fct=filemanager', 2, XoopsLocale::S_DATABASE_UPDATED);
                     } else {
-                        $xoops->redirect("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME);
+                        $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME);
                     }
                 } else {
-                    $xoops->redirect("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_DELETE);
+                    $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_DELETE);
                 }
             } else {
-                $xoops->redirect("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_EXISTS);
+                $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_EXISTS);
             }
         }
         break;
 
     case 'filemanager_upload_save':
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
@@ -222,7 +222,7 @@ switch ($op) {
         $uploader = new XoopsMediaUploader($path, $mimetypes, 500000);
         if ($uploader->fetchMedia('upload_file')) {
 
-            if (!$uploader->upload()) {
+            if (! $uploader->upload()) {
                 $err[] = $uploader->getErrors();
             }
         }
@@ -231,7 +231,7 @@ switch ($op) {
                 echo $line;
             }
         }
-        $xoops->redirect("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_UPLOAD_FILE);
+        $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_UPLOAD_FILE);
         break;
 
     case 'filemanager_add_dir_save':
@@ -239,8 +239,8 @@ switch ($op) {
 
         $folder = XoopsFile::getHandler('folder');
         if ($folder->create($path . $_REQUEST['dir_name'], 0777)) {
-            $indexFile = XOOPS_ROOT_PATH . "/modules/system/index.html";
-            copy($indexFile, $path . $_REQUEST['dir_name'] . "/index.html");
+            $indexFile = XOOPS_ROOT_PATH . '/modules/system/index.html';
+            copy($indexFile, $path . $_REQUEST['dir_name'] . '/index.html');
             $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_DIR_SUCCESS);
         } else {
             $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_DIR_ERROR);
@@ -249,10 +249,10 @@ switch ($op) {
 
     case 'filemanager_add_file_save':
         $path = $system->cleanVars($_REQUEST, 'path', XOOPS_ROOT_PATH . '/', 'string');
-        if ($path == '') {
+        if ($path === '') {
             $path = XOOPS_ROOT_PATH . '/';
         }
-        $open = fopen($path . $_REQUEST['file_name'], "w+");
+        $open = fopen($path . $_REQUEST['file_name'], 'w+');
         fclose($open);
         $xoops->redirect('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_FILE_SUCCESS);
         //if ($file->create ($path . $_REQUEST['file_name'])) {

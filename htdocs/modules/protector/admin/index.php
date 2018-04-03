@@ -27,7 +27,7 @@ $xoops->db();
 global $xoopsDB;
 $db = $xoopsDB;
 $db->prefix('protector_log');
-$rs = $db->query("SELECT count(lid) FROM " . $db->prefix('protector_log'));
+$rs = $db->query('SELECT count(lid) FROM ' . $db->prefix('protector_log'));
 list($numrows) = $db->fetchRow($rs);
 
 $indexAdmin = new \Xoops\Module\Admin();

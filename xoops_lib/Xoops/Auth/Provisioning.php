@@ -30,11 +30,6 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
 class Provisioning
 {
     /**
-     * @var AuthAbstract instance
-     */
-    protected $auth_instance;
-
-    /**
      * @var bool
      */
     public $ldap_provisioning;
@@ -55,21 +50,9 @@ class Provisioning
     public $ldap_provisioning_group;
 
     /**
-     * getInstance()
-     *
-     * @param AuthAbstract $auth_instance auth instance
-     *
-     * @return Provisioning Xoops\Auth\Provisioning
+     * @var AuthAbstract instance
      */
-    public static function getInstance(AuthAbstract $auth_instance)
-    {
-        static $provis_instance;
-        if (!isset($provis_instance)) {
-            $provis_instance = new self($auth_instance);
-        }
-
-        return $provis_instance;
-    }
+    protected $auth_instance;
 
     /**
      * Authentication Service constructor
@@ -82,8 +65,25 @@ class Provisioning
         $this->auth_instance = $auth_instance;
         $configs = $xoops->getConfigs();
         foreach ($configs as $key => $val) {
-            $this->$key = $val;
+            $this->{$key} = $val;
         }
+    }
+
+    /**
+     * getInstance()
+     *
+     * @param AuthAbstract $auth_instance auth instance
+     *
+     * @return Provisioning Xoops\Auth\Provisioning
+     */
+    public static function getInstance(AuthAbstract $auth_instance)
+    {
+        static $provis_instance;
+        if (! isset($provis_instance)) {
+            $provis_instance = new self($auth_instance);
+        }
+
+        return $provis_instance;
     }
 
     /**
@@ -99,11 +99,11 @@ class Provisioning
         $member_handler = $xoops->getHandlerMember();
         $criteria = new Criteria('uname', $uname);
         $getuser = $member_handler->getUsers($criteria);
-        if (count($getuser) == 1) {
+        if (count($getuser) === 1) {
             return $getuser[0];
-        } else {
-            return false;
         }
+            return false;
+
     }
 
     /**
@@ -118,7 +118,7 @@ class Provisioning
     public function sync($data, $uname, $pwd = null)
     {
         $xoopsUser = $this->getXoopsUser($uname);
-        if (!$xoopsUser) { // Xoops User Database not exists
+        if (! $xoopsUser) { // Xoops User Database not exists
             if ($this->ldap_provisioning) {
                 $xoopsUser = $this->add($data, $uname, $pwd);
             } else {
@@ -134,31 +134,6 @@ class Provisioning
         }
 
         return $xoopsUser;
-    }
-
-    /**
-     * setVarsMapping
-     *
-     * @param object $object user object
-     * @param array  $data   data
-     *
-     * @return void
-     */
-    protected function setVarsMapping($object, $data)
-    {
-        $tab_mapping = explode('|', $this->ldap_field_mapping);
-        foreach ($tab_mapping as $mapping) {
-            $fields = explode('=', trim($mapping));
-            if (isset($fields[0]) && ($field0 = trim($fields[0]))) {
-                $str = '';
-                if (isset($fields[1]) && ($field1 = trim($fields[1]))) {
-                    if (!empty($data[$field1][0])) {
-                        $str = $data[$field1][0];
-                    }
-                }
-                $object->setVar($field0, $str);
-            }
-        }
     }
 
     /**
@@ -196,9 +171,8 @@ class Provisioning
             $newuser->unsetNew();
 
             return $newuser;
-        } else {
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $newuser->getHtmlErrors());
         }
+            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $newuser->getHtmlErrors());
 
         return $ret;
     }
@@ -224,9 +198,8 @@ class Provisioning
 
         if ($member_handler->insertUser($xoopsUser)) {
             return $xoopsUser;
-        } else {
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $xoopsUser->getHtmlErrors());
         }
+            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $xoopsUser->getHtmlErrors());
 
         return $ret;
     }
@@ -265,5 +238,28 @@ class Provisioning
      */
     public function resetpwd()
     {
+    }
+
+    /**
+     * setVarsMapping
+     *
+     * @param object $object user object
+     * @param array  $data   data
+     */
+    protected function setVarsMapping($object, $data)
+    {
+        $tab_mapping = explode('|', $this->ldap_field_mapping);
+        foreach ($tab_mapping as $mapping) {
+            $fields = explode('=', trim($mapping));
+            if (isset($fields[0]) && ($field0 = trim($fields[0]))) {
+                $str = '';
+                if (isset($fields[1]) && ($field1 = trim($fields[1]))) {
+                    if (! empty($data[$field1][0])) {
+                        $str = $data[$field1][0];
+                    }
+                }
+                $object->setVar($field0, $str);
+            }
+        }
     }
 }

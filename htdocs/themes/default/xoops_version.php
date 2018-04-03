@@ -20,22 +20,22 @@
  */
 
 // Main
-$theme_version['name']          = 'Default';
-$theme_version['description']   = 'Default Xoops template';
-$theme_version['version']       = 0.1;
-$theme_version['author']        = 'Andricq Nicolas';
-$theme_version['nickname']      = 'MusS';
-$theme_version['credits']       = 'The XOOPS Project';
-$theme_version['license']       = 'GNU GPL 2.0';
-$theme_version['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
-$theme_version['official']      = 1;
-$theme_version['image']         = 'assets/img/logo.png';
-$theme_version['dirname']       = 'default';
+$theme_version['name'] = 'Default';
+$theme_version['description'] = 'Default Xoops template';
+$theme_version['version'] = 0.1;
+$theme_version['author'] = 'Andricq Nicolas';
+$theme_version['nickname'] = 'MusS';
+$theme_version['credits'] = 'The XOOPS Project';
+$theme_version['license'] = 'GNU GPL 2.0';
+$theme_version['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
+$theme_version['official'] = 1;
+$theme_version['image'] = 'assets/img/logo.png';
+$theme_version['dirname'] = 'default';
 // About
-$theme_version['release_date']       = '2012/05/13';
-$theme_version['theme_website_url']  = 'http://www.xoops.org/';
+$theme_version['release_date'] = '2012/05/13';
+$theme_version['theme_website_url'] = 'http://www.xoops.org/';
 $theme_version['theme_website_name'] = 'XOOPS';
-$theme_version['theme_status']       = 'ALPHA';
+$theme_version['theme_status'] = 'ALPHA';
 
 
 

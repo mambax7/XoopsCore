@@ -36,7 +36,7 @@ class ColorPicker extends Text
     {
         if (is_array($caption)) {
             parent::__construct($caption);
-            $value = $this->get('value','');
+            $value = $this->get('value', '');
             if (empty($value)) {
                 $this->set('value', '#FFFFFF');
             }
@@ -67,13 +67,13 @@ class ColorPicker extends Text
             echo '<script type="text/javascript" src="' . $xoops->url('/include/color-picker.js') . '"></script>';
         }
         $temp = $this->get('value', '');
-        if (!empty($temp)) {
+        if (! empty($temp)) {
             $this->set('style', 'background-color:' . $temp . ';');
         }
         $this->set('class', 'form-control');
         $ret = '<div class="input-group">';
         $attributes = $this->renderAttributeString();
-        $ret .= '<input ' . $attributes . ' ' . $this->getExtra() .' >';
+        $ret .= '<input ' . $attributes . ' ' . $this->getExtra() . ' >';
         $ret .= '<span class="input-group-btn">';
         $ret .= '<button class="btn btn-default" type="button" ';
         $ret .= 'data-toggle="tooltip" data-placement="left" title="' . \XoopsLocale::A_SELECT . '" ';

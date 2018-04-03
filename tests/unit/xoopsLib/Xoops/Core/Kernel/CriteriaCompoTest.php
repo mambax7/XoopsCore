@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Xoops\Core\Kernel\Criteria;
 
 class Kernel_CriteriaCompoTestInstance extends Xoops\Core\Kernel\CriteriaCompo
@@ -34,11 +33,11 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
 		$condition = 'AND';
         $criteria = new $this->myclass($criteria_element, $condition);
         $this->assertInstanceOf($this->myclass, $criteria);
-		$this->assertTrue(count($criteria->getConditions()) == 1);
-		$this->assertTrue(count($criteria->getCriteriaElements()) == 1);
+		$this->assertTrue(count($criteria->getConditions()) === 1);
+		$this->assertTrue(count($criteria->getCriteriaElements()) === 1);
         $criteria->add($criteria_element, $condition);
-		$this->assertTrue(count($criteria->getConditions()) == 2);
-		$this->assertTrue(count($criteria->getCriteriaElements()) == 2);
+		$this->assertTrue(count($criteria->getConditions()) === 2);
+		$this->assertTrue(count($criteria->getCriteriaElements()) === 2);
     }
 
     public function test_render()
@@ -94,5 +93,4 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
 		$x = $criteria->buildExpressionQb($qb);
 		$this->assertSame('(dummy_field = :dcValue1)', $x);
     }
-
 }

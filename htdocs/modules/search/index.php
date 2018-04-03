@@ -28,7 +28,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $search = $xoops->getModuleHelper('search');
-if (!$search->getConfig('enable_search')) {
+if (! $search->getConfig('enable_search')) {
     header('Location: ' . XOOPS_URL . '/index.php');
     exit();
 }
@@ -40,23 +40,23 @@ $andor = Request::getWord('andor', 'AND');
 $mid = Request::getInt('mid', 0);
 $uid = Request::getInt('uid', 0);
 $start = Request::getInt('start', 0);
-$mids = Request::getArray('mids', array());
+$mids = Request::getArray('mids', []);
 
-$queries = array();
+$queries = [];
 
-if ($action === "results") {
-    if ($query === "") {
-        $action = "search";
+if ($action === 'results') {
+    if ($query === '') {
+        $action = 'search';
     }
 } else {
-    if ($action === "showall") {
-        if ($query == "" || empty($mid)) {
-            $xoops->redirect("index.php", 1, _MD_SEARCH_PLZENTER);
+    if ($action === 'showall') {
+        if ($query === '' || empty($mid)) {
+            $xoops->redirect('index.php', 1, _MD_SEARCH_PLZENTER);
         }
     } else {
-        if ($action === "showallbyuser") {
+        if ($action === 'showallbyuser') {
             if (empty($mid) || empty($uid)) {
-                $xoops->redirect("index.php", 1, _MD_SEARCH_PLZENTER);
+                $xoops->redirect('index.php', 1, _MD_SEARCH_PLZENTER);
             }
         }
     }
@@ -76,15 +76,15 @@ if ($action === 'search') {
 
     $xoops->footer();
 }
-if ($andor !== "OR" && $andor !== "exact" && $andor !== "AND") {
-    $andor = "AND";
+if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
+    $andor = 'AND';
 }
 
-$ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
-$queries_pattern = array();
+$ignored_queries = []; // holds kewords that are shorter than allowed minmum length
+$queries_pattern = [];
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 if ($action !== 'showallbyuser') {
-    if ($andor !== "exact") {
+    if ($andor !== 'exact') {
         //$temp_queries = preg_split('/[\s,]+/', $query);
         $temp_queries = str_getcsv($query, ' ', '"');
         foreach ($temp_queries as $q) {
@@ -96,7 +96,7 @@ if ($action !== 'showallbyuser') {
                 $ignored_queries[] = $q;
             }
         }
-        if (count($queries) == 0) {
+        if (count($queries) === 0) {
             $xoops->redirect('index.php', 2, sprintf(_MD_SEARCH_KEYTOOSHORT, $search->getConfig('keyword_min')));
         }
     } else {
@@ -104,18 +104,18 @@ if ($action !== 'showallbyuser') {
         if (mb_strlen($query) < $search->getConfig('keyword_min')) {
             $xoops->redirect('index.php', 2, sprintf(_MD_SEARCH_KEYTOOSHORT, $search->getConfig('keyword_min')));
         }
-        $queries = array($query);
+        $queries = [$query];
         $queries_pattern[] = '~(' . $query . ')~sUi';
     }
 }
 
 switch ($action) {
-    case "results":
+    case 'results':
         $module_handler = $xoops->getHandlerModule();
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
         $modules = $module_handler->getObjectsArray($criteria, true);
-        if (empty($mids) || !is_array($mids)) {
+        if (empty($mids) || ! is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
         }
@@ -126,9 +126,9 @@ switch ($action) {
         $xoops->tpl()->assign('ignored_words', sprintf(_MD_SEARCH_IGNOREDWORDS, $search->getConfig('keyword_min')));
         $xoops->tpl()->assign('ignored_queries', $ignored_queries);
 
-        $modules_result = array();
+        $modules_result = [];
         foreach ($mids as $mid) {
-            $mid = (int)($mid);
+            $mid = (int) ($mid);
             /* @var $module XoopsModule */
             $module = $modules[$mid];
             /* @var $plugin SearchPluginInterface */
@@ -137,7 +137,7 @@ switch ($action) {
             $count = count($results);
             $mid = $module->getVar('mid');
 
-            $res = array();
+            $res = [];
             if (is_array($results) && $count > 0) {
                 $nomatch = false;
                 $modules_result[$mid]['name'] = $module->getVar('name');
@@ -146,21 +146,21 @@ switch ($action) {
                 } else {
                     $modules_result[$mid]['image'] = $xoops->url('images/icons/posticon2.gif');
                 }
-                $res = array();
+                $res = [];
                 for ($i = 0; $i < $count; ++$i) {
-                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                    if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $res[$i]['link'] = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']);
                     } else {
                         $res[$i]['link'] = $results[$i]['link'];
                     }
                     $res[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
                     $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlSpecialChars($results[$i]['title']));
-                    if (!empty($results[$i]['uid'])) {
-                        $res[$i]['uid'] = (int)($results[$i]['uid']);
+                    if (! empty($results[$i]['uid'])) {
+                        $res[$i]['uid'] = (int) ($results[$i]['uid']);
                         $res[$i]['uname'] = XoopsUser::getUnameFromId($results[$i]['uid'], true);
                     }
-                    $res[$i]['time'] = !empty($results[$i]['time']) ? XoopsLocale::formatTimestamp((int)($results[$i]['time'])) : "";
-                    $res[$i]['content'] = empty($results[$i]['content']) ? "" : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
+                    $res[$i]['time'] = ! empty($results[$i]['time']) ? XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) : '';
+                    $res[$i]['content'] = empty($results[$i]['content']) ? '' : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
                 }
                 if ($count >= 5) {
                     $search_url = $search->url('index.php?query=' . urlencode(stripslashes(implode(' ', $queries))));
@@ -183,7 +183,7 @@ switch ($action) {
         $form->display();
         break;
 
-    case "showall":
+    case 'showall':
     case 'showallbyuser':
         $xoops->header('module:search/search.tpl');
         $xoops->tpl()->assign('search', true);
@@ -205,18 +205,18 @@ switch ($action) {
             $next_results = $plugin->search($queries, $andor, 1, $start + 20, $uid);
             $next_count = count($next_results);
             $has_next = false;
-            if (is_array($next_results) && $next_count == 1) {
+            if (is_array($next_results) && $next_count === 1) {
                 $has_next = true;
             }
             $xoops->tpl()->assign('sr_showing', sprintf(_MD_SEARCH_SHOWING, $start + 1, $start + $count));
-            $res = array();
+            $res = [];
             for ($i = 0; $i < $count; ++$i) {
-                if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
+                if (isset($results[$i]['image']) && $results[$i]['image'] !== '') {
                     $res[$i]['image'] = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $results[$i]['image']);
                 } else {
                     $res[$i]['image'] = $xoops->url('images/icons/posticon2.gif');
                 }
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $res[$i]['link'] = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']);
                 } else {
                     $res[$i]['link'] = $results[$i]['link'];
@@ -227,12 +227,12 @@ switch ($action) {
                 } else {
                     $res[$i]['title_highligh'] = $myts->htmlSpecialChars($results[$i]['title']);
                 }
-                if (!empty($results[$i]['uid'])) {
-                    $res[$i]['uid'] = @(int)($results[$i]['uid']);
+                if (! empty($results[$i]['uid'])) {
+                    $res[$i]['uid'] = @(int) ($results[$i]['uid']);
                     $res[$i]['uname'] = XoopsUser::getUnameFromId($results[$i]['uid'], true);
                 }
-                $res[$i]['time'] = !empty($results[$i]['time']) ? " (" . XoopsLocale::formatTimestamp((int)($results[$i]['time'])) . ")" : "";
-                $res[$i]['content'] = empty($results[$i]['content']) ? "" : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
+                $res[$i]['time'] = ! empty($results[$i]['time']) ? ' (' . XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) . ')' : '';
+                $res[$i]['content'] = empty($results[$i]['content']) ? '' : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
             }
             if (count($res) > 0) {
                 $modules_result[$mid]['result'] = $res;
@@ -248,7 +248,7 @@ switch ($action) {
                 $search_url_prev = $search_url . "&start={$prev}";
                 $modules_result[$mid]['prev'] = htmlspecialchars($search_url_prev);
             }
-            if (false != $has_next) {
+            if ($has_next !== false) {
                 $next = $start + 20;
                 $search_url_next = $search_url . "&start={$next}";
                 $modules_result[$mid]['next'] = htmlspecialchars($search_url_next);

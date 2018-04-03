@@ -8,7 +8,7 @@ function smarty_outputfilter_shortcodes($output, Smarty_Internal_Template $templ
     $shortcodes->addShortcode(
         'nosc42',
         function ($attributes, $content, $tagName) {
-            return base64_decode($content);
+            return base64_decode($content, true);
         }
     );
 
@@ -22,7 +22,7 @@ function smarty_outputfilter_shortcodes($output, Smarty_Internal_Template $templ
         },
         $output
     );
-    if ($text===null) {
+    if ($text === null) {
         trigger_error('preg_last_error=' . preg_last_error(), E_USER_WARNING);
         return $output;
     }

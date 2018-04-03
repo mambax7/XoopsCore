@@ -26,10 +26,10 @@ class Helper
      */
     public static function getHelper($dirname = 'system')
     {
-        static $modules = array();
+        static $modules = [];
 
         $dirname = strtolower($dirname);
-        if (!isset($modules[$dirname])) {
+        if (! isset($modules[$dirname])) {
             $modules[$dirname] = false;
             $xoops = \Xoops::getInstance();
             if ($xoops->isActiveModule($dirname)) {

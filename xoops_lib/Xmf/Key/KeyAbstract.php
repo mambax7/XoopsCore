@@ -25,7 +25,7 @@ namespace Xmf\Key;
  */
 abstract class KeyAbstract
 {
-    /** @var StorageInterface  */
+    /** @var StorageInterface */
     protected $storage;
 
     /** @var string */

@@ -20,7 +20,7 @@
  * @version         $Id$
  */
 
-$adminmenu = array();
+$adminmenu = [];
 $i = 1;
 $adminmenu[$i]['title'] = XoopsLocale::HOME;
 $adminmenu[$i]['link'] = 'admin/index.php';
@@ -34,7 +34,7 @@ $adminmenu[$i]['title'] = PageLocale::SYSTEM_RELATED;
 $adminmenu[$i]['link'] = 'admin/related.php';
 $adminmenu[$i]['icon'] = 'groupmod.png';
 ++$i;
-$adminmenu[$i]['title'] =PageLocale::SYSTEM_PERMISSIONS;
+$adminmenu[$i]['title'] = PageLocale::SYSTEM_PERMISSIONS;
 $adminmenu[$i]['link'] = 'admin/permissions.php';
 $adminmenu[$i]['icon'] = 'permissions.png';
 ++$i;

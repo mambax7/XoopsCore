@@ -26,7 +26,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $helper = Userconfigs::getInstance();
 
-if (!$xoops->isUser()) {
+if (! $xoops->isUser()) {
     $xoops->redirect($xoops->url('index.php'), 3, _MD_USERCONFIGS_NOACCESS);
 }
 
@@ -40,14 +40,14 @@ $xoops->tpl()->assign('welcome', sprintf(_MD_USERCONFIGS_WELCOME, XoopsUserUtili
 //Display part
 switch ($op) {
     case 'showmod':
-        if (!$mid) {
+        if (! $mid) {
             $xoops->redirect($xoops->url('index.php'), 3, _MD_USERCONFIGS_NOMOD);
         }
 
         $module = $xoops->getModuleById($mid);
 
         /* @var $plugin UserconfigsPluginInterface */
-        if (!$plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'userconfigs')) {
+        if (! $plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'userconfigs')) {
             $xoops->redirect($xoops->url('index.php'), 3, _MD_USERCONFIGS_NOPLUGIN);
         }
         $config_handler = $helper->getHandlerConfig();
@@ -56,7 +56,7 @@ switch ($op) {
         $criteria->add(new Criteria('conf_uid', $uid));
         $configs = $config_handler->getConfigs($criteria);
 
-        if (empty($configs) || (count($configs) != count($plugin->configs()))) {
+        if (empty($configs) || (count($configs) !== count($plugin->configs()))) {
             foreach (array_keys($configs) as $i) {
                 $config_handler->deleteConfig($configs[$i]);
             }
@@ -74,7 +74,7 @@ switch ($op) {
         $xoops->tpl()->assign('modules_form', $form->render());
         break;
     case 'show':
-        if (!$mid) {
+        if (! $mid) {
             $module = null;
         } else {
             $module = $xoops->getModuleById($mid);
@@ -86,11 +86,11 @@ switch ($op) {
         $xoops->tpl()->assign('modules_form', $form->render());
         break;
     case 'save':
-        if (!$xoops->security()->check()) {
-            $helper->redirect("index.php", 3, implode('<br />', $xoops->security()->getErrors()));
+        if (! $xoops->security()->check()) {
+            $helper->redirect('index.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
-        $conf_ids = array();
+        $conf_ids = [];
         if (isset($_REQUEST)) {
             foreach ($_REQUEST as $k => $v) {
                 ${$k} = $v;
@@ -104,7 +104,7 @@ switch ($op) {
             for ($i = 0; $i < $count; ++$i) {
                 $config = $config_handler->getConfig($conf_ids[$i]);
                 $new_value = isset(${$config->getVar('conf_name')}) ? ${$config->getVar('conf_name')} : null;
-                if (!is_null($new_value) && (is_array($new_value) || $new_value != $config->getVar('conf_value'))) {
+                if ($new_value !== null && (is_array($new_value) || $new_value !== $config->getVar('conf_value'))) {
                     $config->setConfValueForInput($new_value);
                     $config_handler->insertConfig($config);
                 }

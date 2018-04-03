@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Kernel\Dtype;
 
 require_once __DIR__ . '/../../../../../init_new.php';
@@ -35,14 +36,8 @@ class DtypeJsonTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new DtypeJson;
+        $this->object = new DtypeJson();
         $this->xObject = new DtypeJsonObject();
-    }
-
-    public function testContracts()
-    {
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeJson', $this->object);
     }
 
     /**
@@ -51,6 +46,12 @@ class DtypeJsonTest extends \PHPUnit\Framework\TestCase
      */
     protected function tearDown()
     {
+    }
+
+    public function testContracts()
+    {
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeJson', $this->object);
     }
 
     public function testGetVarCleanVar()
@@ -63,8 +64,8 @@ class DtypeJsonTest extends \PHPUnit\Framework\TestCase
         //var_dump($this->xObject->vars[$key]['value']);
         $value = $this->xObject[$key];
         $this->assertTrue(is_array($value));
-        $this->assertEquals('Spot', $value['dog']);
-        $this->assertEquals('run', $value['see']);
+        $this->assertSame('Spot', $value['dog']);
+        $this->assertSame('run', $value['see']);
 
         $value = $this->xObject->getVar($key, Dtype::FORMAT_SHOW);
         $this->assertTrue(is_array($value));
@@ -73,8 +74,8 @@ class DtypeJsonTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_string($value));
         $value = json_decode($value);
         $this->assertInstanceOf('\stdClass', $value);
-        $this->assertEquals('Spot', $value->dog);
-        $this->assertEquals('run', $value->see);
+        $this->assertSame('Spot', $value->dog);
+        $this->assertSame('run', $value->see);
 
         unset($this->xObject[$key]);
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
@@ -84,14 +85,14 @@ class DtypeJsonTest extends \PHPUnit\Framework\TestCase
         $this->xObject[$key] = 'string';
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject[$key];
-        $this->assertEquals('string', $value);
+        $this->assertSame('string', $value);
 
         $this->xObject[$key] = json_decode(json_encode($testArray));
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject[$key];
         $this->assertTrue(is_array($value));
-        $this->assertEquals('Spot', $value['dog']);
-        $this->assertEquals('run', $value['see']);
+        $this->assertSame('Spot', $value['dog']);
+        $this->assertSame('run', $value['see']);
 
         $value = json_encode($testArray);
         $this->xObject[$key] = $value;

@@ -39,25 +39,11 @@ class Cache extends AbstractHelper
 
     /**
      * Initialize parent::__construct calls this after verifying module object.
-     *
-     * @return void
      */
     public function init()
     {
         $this->prefix = 'module/' . $this->module->getVar('dirname');
         $this->cache = \Xoops::getInstance()->cache();
-    }
-
-    /**
-     * Add our module prefix to a name
-     *
-     * @param string $name name to prefix
-     *
-     * @return string module prefixed name
-     */
-    protected function prefix($name)
-    {
-        return $this->prefix . '/'. $name;
     }
 
     /**
@@ -87,15 +73,13 @@ class Cache extends AbstractHelper
     public function read($key, $default = false)
     {
         $value = $this->cache->read($this->prefix($key));
-        return (false !== $value) ? $value : $default;
+        return ($value !== false) ? $value : $default;
     }
 
     /**
      * Delete a key from the cache
      *
      * @param string $key Identifier for the data
-     *
-     * @return void
      */
     public function delete($key)
     {
@@ -132,5 +116,17 @@ class Cache extends AbstractHelper
     public function clear()
     {
         return $this->cache->delete($this->prefix);
+    }
+
+    /**
+     * Add our module prefix to a name
+     *
+     * @param string $name name to prefix
+     *
+     * @return string module prefixed name
+     */
+    protected function prefix($name)
+    {
+        return $this->prefix . '/' . $name;
     }
 }

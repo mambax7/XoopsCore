@@ -10,9 +10,9 @@
 */
 
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
-use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
  * page module
@@ -26,8 +26,7 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 class PagePage_content extends XoopsObject
 {
-
-    public $options = array(
+    public $options = [
         'title',
         'author',
         'date',
@@ -39,8 +38,8 @@ class PagePage_content extends XoopsObject
         'ncoms',
         'notifications',
         'pdf',
-        'social'
-    );
+        'social',
+    ];
 
     /**
      * Constructor
@@ -101,48 +100,48 @@ class PagePage_content extends XoopsObject
     public function getOptions()
     {
         $xoops = Xoops::getInstance();
-        $ret = array();
-        if ($this->getVar('content_dotitle') == 1) {
+        $ret = [];
+        if ($this->getVar('content_dotitle') === 1) {
             array_push($ret, 'title');
         }
-        if ($this->getVar('content_doauthor') == 1) {
+        if ($this->getVar('content_doauthor') === 1) {
             array_push($ret, 'author');
         }
-        if ($this->getVar('content_dodate') == 1) {
+        if ($this->getVar('content_dodate') === 1) {
             array_push($ret, 'date');
         }
-        if ($this->getVar('content_dohits') == 1) {
+        if ($this->getVar('content_dohits') === 1) {
             array_push($ret, 'hits');
         }
-        if ($this->getVar('content_dorating') == 1) {
+        if ($this->getVar('content_dorating') === 1) {
             array_push($ret, 'rating');
         }
-        if ($this->getVar('content_doprint') == 1) {
+        if ($this->getVar('content_doprint') === 1) {
             array_push($ret, 'print');
         }
-        if ($this->getVar('content_domail') == 1) {
+        if ($this->getVar('content_domail') === 1) {
             array_push($ret, 'mail');
         }
         if ($xoops->isActiveModule('comments')) {
-            if ($this->getVar('content_docoms') == 1) {
+            if ($this->getVar('content_docoms') === 1) {
                 array_push($ret, 'coms');
             }
-            if ($this->getVar('content_doncoms') == 1) {
+            if ($this->getVar('content_doncoms') === 1) {
                 array_push($ret, 'ncoms');
             }
         }
         if ($xoops->isActiveModule('notifications')) {
-            if ($this->getVar('content_donotifications') == 1) {
+            if ($this->getVar('content_donotifications') === 1) {
                 array_push($ret, 'notifications');
             }
         }
         if ($xoops->isActiveModule('pdf')) {
-            if ($this->getVar('content_dopdf') == 1) {
+            if ($this->getVar('content_dopdf') === 1) {
                 array_push($ret, 'pdf');
             }
         }
         if ($xoops->isActiveModule('xoosocialnetwork')) {
-            if ($this->getVar('content_dosocial') == 1) {
+            if ($this->getVar('content_dosocial') === 1) {
                 array_push($ret, 'social');
             }
         }
@@ -157,9 +156,6 @@ class PagePage_content extends XoopsObject
 
 class PagePage_contentHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param null|Connection $db
-     */
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'page_content', 'pagepage_content', 'content_id', 'content_title');
@@ -170,7 +166,6 @@ class PagePage_contentHandler extends XoopsPersistableObjectHandler
         $helper = Page::getInstance();
         $xoops = $helper->xoops();
         $module_id = $helper->getModule()->getVar('mid');
-
 
         // get permitted id
         $groups = $xoops->getUserGroups();
@@ -238,7 +233,7 @@ class PagePage_contentHandler extends XoopsPersistableObjectHandler
         }
         $criteria->setSort($sort);
         $criteria->setOrder($order);
-        return parent::getAll($criteria, array('content_id', 'content_title'), false);
+        return parent::getAll($criteria, ['content_id', 'content_title'], false);
     }
 
     public function getClone($content_id)

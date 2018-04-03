@@ -25,8 +25,6 @@ class Smarty_Resource_Admin extends Smarty_Resource_Custom
      * @param  string  $name   template name
      * @param  string  $source template source
      * @param  integer $mtime  template modification timestamp (epoch)
-     *
-     * @return void
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -56,15 +54,15 @@ class Smarty_Resource_Admin extends Smarty_Resource_Custom
      */
     private function adminTplInfo($tpl_name)
     {
-        static $cache = array();
+        static $cache = [];
         $xoops = Xoops::getInstance();
-        $tpl_info = $xoops->getTplInfo('admin:'.$tpl_name);
+        $tpl_info = $xoops->getTplInfo('admin:' . $tpl_name);
         $tpl_name = $tpl_info['tpl_name'];
         $dirname = $tpl_info['module'];
         $file = $tpl_info['file'];
 
         $theme_set = $xoops->getConfig('theme_set') ? $xoops->getConfig('theme_set') : 'default';
-        if (!file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/admin/{$file}"))) {
+        if (! file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/admin/{$file}"))) {
             $file_path = $xoops->path("modules/{$dirname}/templates/admin/{$file}");
         }
         return $cache[$tpl_name] = $file_path;

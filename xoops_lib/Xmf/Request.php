@@ -34,8 +34,10 @@ class Request
     /**
      * Available masks for cleaning variables
      */
-    const MASK_NO_TRIM    = 1;
-    const MASK_ALLOW_RAW  = 2;
+    const MASK_NO_TRIM = 1;
+
+    const MASK_ALLOW_RAW = 2;
+
     const MASK_ALLOW_HTML = 4;
 
     /**
@@ -246,7 +248,7 @@ class Request
      *
      * @return array
      */
-    public static function getArray($name, $default = array(), $hash = 'default')
+    public static function getArray($name, $default = [], $hash = 'default')
     {
         return static::getVar($name, $default, $hash, 'array');
     }
@@ -359,8 +361,8 @@ class Request
     {
         static $headers = null;
 
-        if (null === $headers) {
-            $headers = array();
+        if ($headers === null) {
+            $headers = [];
             if (function_exists('apache_request_headers')) {
                 $rawHeaders = apache_request_headers();
                 foreach ($rawHeaders as $name => $value) {
@@ -429,7 +431,7 @@ class Request
         if (isset($original[$name])) {
             $previous = $original[$name];
             // don't overwrite value unless asked
-            if (!$overwrite) {
+            if (! $overwrite) {
                 return $previous;
             }
         } else {
@@ -534,8 +536,6 @@ class Request
      * @param string  $hash      The request variable to set (POST, GET, FILES, METHOD)
      * @param boolean $overwrite If true and an existing key is found, the value is overwritten,
      *                            otherwise it is ignored
-     *
-     * @return void
      */
     public static function set($array, $hash = 'method', $overwrite = true)
     {
@@ -566,27 +566,27 @@ class Request
         static $safeHtmlFilter = null;
 
         // convert $var in array if $type is ARRAY
-        if (strtolower($type) === 'array' && !is_array($var)) {
-            $var = array($var);
+        if (strtolower($type) === 'array' && ! is_array($var)) {
+            $var = [$var];
         }
 
         // If the no trim flag is not set, trim the variable
-        if (!($mask & static::MASK_NO_TRIM) && is_string($var)) {
+        if (! ($mask & static::MASK_NO_TRIM) && is_string($var)) {
             $var = trim($var);
         }
 
         // Now we handle input filtering
         // If the allow raw flag is set, do not modify the variable
-        if (!($mask & static::MASK_ALLOW_RAW)) {
+        if (! ($mask & static::MASK_ALLOW_RAW)) {
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable
-                if (null === $safeHtmlFilter) {
-                    $safeHtmlFilter = FilterInput::getInstance(array(), array(), 1, 1);
+                if ($safeHtmlFilter === null) {
+                    $safeHtmlFilter = FilterInput::getInstance([], [], 1, 1);
                 }
                 $var = $safeHtmlFilter->cleanVar($var, $type);
             } else {
                 // Since no allow flags were set, we will apply the most strict filter to the variable
-                if (null === $noHtmlFilter) {
+                if ($noHtmlFilter === null) {
                     $noHtmlFilter = FilterInput::getInstance();
                 }
                 $var = $noHtmlFilter->clean($var, $type);

@@ -50,7 +50,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         //title
         $tab1->addElement(new Xoops\Form\Text(XoopsLocale::TITLE, 'content_title', 12, 255, $obj->getVar('content_title'), ''), true);
         // editor
-        $editor_configs=array();
+        $editor_configs = [];
         $editor_configs['editor'] = $helper->getConfig('page_editor');
         $editor_configs['rows'] = 12;
         $editor_configs['cols'] = 12;
@@ -112,7 +112,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
             //permissions
             $group_list = $xoops->getHandlerMember()->getGroupList();
             $full_list = array_keys($group_list);
-            if (!$obj->isNew()) {
+            if (! $obj->isNew()) {
                 $module_id = $helper->getModule()->getVar('mid', 'n');
                 $groups_ids_view = $helper->getGrouppermHandler()->getGroupIds('page_view_item', $obj->getVar('content_id'), $module_id);
                 $groups_ids_view = array_values($groups_ids_view);

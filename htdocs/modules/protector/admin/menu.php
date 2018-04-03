@@ -19,26 +19,26 @@
  * @version         $Id$
  */
 
-$adminmenu = array(
-    array(
+$adminmenu = [
+    [
         'title' => _MI_PROTECTOR_ADMINHOME,
-        'link'  => 'admin/index.php',
-        'icon'  => 'home.png',
-    ), array(
+        'link' => 'admin/index.php',
+        'icon' => 'home.png',
+    ], [
         'title' => _MI_PROTECTOR_ADMININDEX,
-        'link'  => 'admin/center.php',
-        'icon'  => 'firewall.png',
-    ), array(
+        'link' => 'admin/center.php',
+        'icon' => 'firewall.png',
+    ], [
         'title' => _MI_PROTECTOR_ADVISORY,
-        'link'  => 'admin/advisory.php',
-        'icon'  => 'security.png',
-//    ), array(
-//        'title' => _MI_PROTECTOR_PREFIXMANAGER,
-//        'link'  => 'admin/prefix_manager.php',
-//        'icon'  => 'manage.png',
-    ), array(
+        'link' => 'admin/advisory.php',
+        'icon' => 'security.png',
+        //    ), array(
+        //        'title' => _MI_PROTECTOR_PREFIXMANAGER,
+        //        'link'  => 'admin/prefix_manager.php',
+        //        'icon'  => 'manage.png',
+    ], [
         'title' => _MI_PROTECTOR_ADMINABOUT,
-        'link'  => 'admin/about.php',
-        'icon'  => 'about.png',
-    ),
-);
+        'link' => 'admin/about.php',
+        'icon' => 'about.png',
+    ],
+];

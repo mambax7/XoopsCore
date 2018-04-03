@@ -35,7 +35,7 @@ class Month extends ListAbstract
      */
     public static function getList($width = 'wide')
     {
-        $months = array();
+        $months = [];
         for ($month = 1; $month <= 12; ++$month) {
             $months[$month] = Calendar::getMonthName($month, $width);
         }

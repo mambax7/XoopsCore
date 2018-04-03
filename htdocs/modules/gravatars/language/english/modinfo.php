@@ -15,7 +15,7 @@
  * @author          Richard Griffith <richard@geekwright.com>
  */
 
-define('_MI_GRAVATARS_NAME','Gravatars');
-define('_MI_GRAVATARS_DESC','Use gravatar.com for system avatars');
+define('_MI_GRAVATARS_NAME', 'Gravatars');
+define('_MI_GRAVATARS_DESC', 'Use gravatar.com for system avatars');
 
 //define('_MI_GRAVATARS_CONF_X','Option');

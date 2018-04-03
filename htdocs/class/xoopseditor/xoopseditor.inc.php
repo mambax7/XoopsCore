@@ -21,7 +21,7 @@
  * @version         $Id$
  */
 
-if (!function_exists('xoopseditor_get_rootpath')) {
+if (! function_exists('xoopseditor_get_rootpath')) {
     /**
      * @return string
      */

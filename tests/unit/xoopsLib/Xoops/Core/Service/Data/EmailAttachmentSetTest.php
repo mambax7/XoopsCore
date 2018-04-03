@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Test\Core\Service\Data;
 
 use Xoops\Core\Service\Data\EmailAttachment;
@@ -6,12 +7,12 @@ use Xoops\Core\Service\Data\EmailAttachmentSet;
 
 class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
 {
+    protected const TEST_FILE = __DIR__ . '/test.png';
+
     /**
      * @var EmailAttachmentSet
      */
     protected $object;
-
-    protected const TEST_FILE = __DIR__ . '/test.png';
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -60,7 +61,7 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
 
         $actualAttachments = $actual->getAttachments();
         $this->assertCount(2, $actualAttachments);
-        $this->assertEquals(static::TEST_FILE, $actualAttachments[0]->getFilename());
+        $this->assertSame(static::TEST_FILE, $actualAttachments[0]->getFilename());
         $this->assertNull($actualAttachments[1]->getFilename());
 
         $this->expectException(\LogicException::class);
@@ -86,7 +87,7 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
             ++$count;
             $this->assertContains((string) $count, $attachment->getStringBody());
         }
-        $this->assertEquals(3, $count);
+        $this->assertSame(3, $count);
     }
 
     public function testGetEachAttachmentException()
@@ -98,6 +99,6 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
             }
         } catch (\LogicException $e) {
         }
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 }

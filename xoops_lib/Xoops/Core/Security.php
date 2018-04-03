@@ -30,7 +30,7 @@ use Xmf\Random;
  */
 class Security
 {
-    private $errors = array();
+    private $errors = [];
 
     /**
      * Check if there is a valid token in $_REQUEST[$name . '_REQUEST']
@@ -60,12 +60,12 @@ class Security
         $timeout = ($timeout <= 0) ? 300 : $timeout;
         $token_id = Random::generateOneTimeToken();
         // save token data on the server
-        if (!isset($_SESSION[$name . '_SESSION'])) {
-            $_SESSION[$name . '_SESSION'] = array();
+        if (! isset($_SESSION[$name . '_SESSION'])) {
+            $_SESSION[$name . '_SESSION'] = [];
         }
-        $token_data = array(
-            'id' => $token_id, 'expire' => time() + (int)($timeout)
-        );
+        $token_data = [
+            'id' => $token_id, 'expire' => time() + (int) ($timeout),
+        ];
         array_push($_SESSION[$name . '_SESSION'], $token_data);
         return $token_id;
     }
@@ -82,16 +82,16 @@ class Security
     public function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
     {
         $ret = false;
-        $log = array();
+        $log = [];
         $token = ($token !== false)
             ? $token
             : (isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '');
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
             $str = 'No valid token found in request/session';
             $this->setErrors($str);
-            $log[] = array('Token Validation', $str);
+            $log[] = ['Token Validation', $str];
         } else {
-            $token_data =& $_SESSION[$name . '_SESSION'];
+            $token_data = & $_SESSION[$name . '_SESSION'];
             if (is_array($token_data)) {
                 foreach (array_keys($token_data) as $i) {
                     if ($token === $token_data[$i]['id']) {
@@ -100,22 +100,22 @@ class Security
                                 // token should be valid once, so clear it once validated
                                 unset($token_data[$i]);
                             }
-                            $log[] = array('Token Validation', 'Valid token found');
+                            $log[] = ['Token Validation', 'Valid token found'];
                             $ret = true;
                         } else {
                             $str = 'Valid token expired';
                             $this->setErrors($str);
-                            $log[] = array('Token Validation', $str);
+                            $log[] = ['Token Validation', $str];
                         }
                     }
                 }
             }
-            if (!$ret) {
-                $log[] = array('Token Validation', 'No valid token found');
+            if (! $ret) {
+                $log[] = ['Token Validation', 'No valid token found'];
             }
             $this->garbageCollection($name);
         }
-        \Xoops::getInstance()->events()->triggerEvent('core.security.validatetoken.end', array($log));
+        \Xoops::getInstance()->events()->triggerEvent('core.security.validatetoken.end', [$log]);
         return $ret;
     }
 
@@ -123,12 +123,10 @@ class Security
      * Clear all token values from user's session
      *
      * @param string $name session name
-     *
-     * @return void
      */
     public function clearTokens($name = 'XOOPS_TOKEN')
     {
-        $_SESSION[$name . '_SESSION'] = array();
+        $_SESSION[$name . '_SESSION'] = [];
     }
 
     /**
@@ -140,21 +138,19 @@ class Security
      */
     public function filterToken($token)
     {
-        return (!empty($token['expire']) && $token['expire'] >= time());
+        return (! empty($token['expire']) && $token['expire'] >= time());
     }
 
     /**
      * Perform garbage collection, clearing expired tokens
      *
      * @param string $name session name
-     *
-     * @return void
      */
     public function garbageCollection($name = 'XOOPS_TOKEN')
     {
         $sessionName = $name . '_SESSION';
-        if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
-            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array($this, 'filterToken'));
+        if (! empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
+            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], [$this, 'filterToken']);
         }
     }
 
@@ -168,10 +164,10 @@ class Security
     public function checkReferer($docheck = 1)
     {
         $ref = \Xoops::getInstance()->getEnv('HTTP_REFERER');
-        if ($docheck == 0) {
+        if ($docheck === 0) {
             return true;
         }
-        if ($ref == '') {
+        if ($ref === '') {
             return false;
         }
         if (strpos($ref, \XoopsBaseConfig::get('url')) !== 0) {
@@ -183,18 +179,16 @@ class Security
     /**
      * Check if visitor's IP address is banned
      * Should be changed to return bool and let the action be up to the calling script
-     *
-     * @return void
      */
     public function checkBadips()
     {
         $xoops = \Xoops::getInstance();
-        if ($xoops->getConfig('enable_badips') == 1
+        if ($xoops->getConfig('enable_badips') === 1
             && isset($_SERVER['REMOTE_ADDR'])
-            && $_SERVER['REMOTE_ADDR'] != ''
+            && $_SERVER['REMOTE_ADDR'] !== ''
         ) {
             foreach ($xoops->getConfig('bad_ips') as $bi) {
-                if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
+                if (! empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
                     exit();
                 }
             }
@@ -219,8 +213,6 @@ class Security
      * Add an error
      *
      * @param string $error message
-     *
-     * @return void
      */
     public function setErrors($error)
     {
@@ -236,14 +228,14 @@ class Security
      */
     public function getErrors($ashtml = false)
     {
-        if (!$ashtml) {
+        if (! $ashtml) {
             return $this->errors;
-        } else {
+        }
             $ret = '';
             if (is_array($this->errors)) {
                 $ret = implode('<br />', $this->errors) . '<br />';
             }
             return $ret;
-        }
+
     }
 }

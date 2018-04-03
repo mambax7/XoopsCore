@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
-class XoopsCaptchaTest extends \PHPUnit\Framework\TestCase
+class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCaptcha';
 
@@ -30,7 +30,7 @@ class XoopsCaptchaTest extends \PHPUnit\Framework\TestCase
 
     public function test___publicProperties()
     {
-        $items = array('handler','active','path_basic','path_plugin','configPath','name','config','message');
+        $items = ['handler', 'active', 'path_basic', 'path_plugin', 'configPath', 'name', 'config', 'message'];
         foreach ($items as $item) {
             $prop = new ReflectionProperty($this->myclass, $item);
             $this->assertTrue($prop->isPublic());
@@ -127,7 +127,7 @@ class XoopsCaptchaTest extends \PHPUnit\Framework\TestCase
     public function testSetConfigs()
     {
         $instance = $this->object;
-        $config = array('dummy1' => 1, 'dummy2' => 2, 'message' => 'message');
+        $config = ['dummy1' => 1, 'dummy2' => 2, 'message' => 'message'];
         $x = $instance->setConfigs($config);
         $this->assertTrue($x);
         $this->assertSame(1, $instance->config['dummy1']);
@@ -140,7 +140,7 @@ class XoopsCaptchaTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
         $instance->active = false;
         $sessionName = $instance->name;
-        $_SESSION = array();
+        $_SESSION = [];
         $_SESSION["{$sessionName}_skipmember"] = 'user1';
         $_SESSION["{$sessionName}_maxattempts"] = 11;
         $_SESSION["{$sessionName}_attempt"] = 1;
@@ -158,7 +158,7 @@ class XoopsCaptchaTest extends \PHPUnit\Framework\TestCase
     public function testGetMessage()
     {
         $instance = $this->object;
-        $instance->message = array('message1', 'message2');
+        $instance->message = ['message1', 'message2'];
         $x = $instance->getMessage();
         $this->assertSame(implode('<br />', $instance->message), $x);
     }

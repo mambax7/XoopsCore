@@ -23,6 +23,6 @@
  * @since      2.6.0
  * @deprecated
  */
-class XoopsCache extends Xoops\Core\Cache\Legacy
+class xoopscache extends Xoops\Core\Cache\Legacy
 {
 }

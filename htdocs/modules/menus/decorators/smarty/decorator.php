@@ -38,7 +38,7 @@ class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecora
 
     function decorateMenu(&$menu)
     {
-        $decorations = array('link', 'image', 'title', 'alt_title');
+        $decorations = ['link', 'image', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
             $menu[$decoration] = self::_doDecoration($menu[$decoration]);
         }
@@ -47,7 +47,7 @@ class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecora
     function _doDecoration($string)
     {
         $xoops = Xoops::getInstance();
-        if (!preg_match('/{(.*\|.*)}/i', $string, $reg)) {
+        if (! preg_match('/{(.*\|.*)}/i', $string, $reg)) {
             return $string;
         }
 
@@ -62,5 +62,4 @@ class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecora
 
         return $string;
     }
-
 }

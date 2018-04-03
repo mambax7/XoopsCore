@@ -42,13 +42,13 @@ class Read extends XoopsModelAbstract
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
         if (is_array($fields) && count($fields) > 0) {
-            if (!in_array($this->handler->keyName, $fields)) {
+            if (! in_array($this->handler->keyName, $fields, true)) {
                 $fields[] = $this->handler->keyName;
             }
-            $first=true;
+            $first = true;
             foreach ($fields as $field) {
                 if ($first) {
-                    $first=false;
+                    $first = false;
                     $qb->select($field);
                 } else {
                     $qb->addSelect($field);
@@ -62,9 +62,9 @@ class Read extends XoopsModelAbstract
             $qb = $criteria->renderQb($qb);
         }
 
-        $ret = array();
+        $ret = [];
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
         if ($asObject) {
@@ -124,23 +124,23 @@ class Read extends XoopsModelAbstract
         //$qb = Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
-        $ret = array();
+        $ret = [];
 
         $qb->select($this->handler->keyName);
-        if (!empty($this->handler->identifierName)) {
+        if (! empty($this->handler->identifierName)) {
             $qb->addSelect($this->handler->identifierName);
         }
         $qb->from($this->handler->table, null);
-        if ($limit!=0 || $start!=0) {
+        if ($limit !== 0 || $start !== 0) {
             $qb->setFirstResult($start)
                 ->setMaxResults($limit);
         }
         $qb->orderBy($this->handler->keyName); // any criteria order will override
-        if (!empty($criteria)) {
+        if (! empty($criteria)) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
 
@@ -164,15 +164,15 @@ class Read extends XoopsModelAbstract
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
-        $ret = array();
+        $ret = [];
 
         $qb->select($this->handler->keyName);
         $qb->from($this->handler->table, null);
-        if (!empty($criteria)) {
+        if (! empty($criteria)) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
 
@@ -194,7 +194,7 @@ class Read extends XoopsModelAbstract
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         $qb ->select('COUNT(*)')
             ->from($this->handler->table, null);
-        if (null !== $criteria) {
+        if ($criteria !== null) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
@@ -205,7 +205,7 @@ class Read extends XoopsModelAbstract
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         $qb ->select($this->handler->keyName)
             ->from($this->handler->table, null);
-        if (null !== $criteria) {
+        if ($criteria !== null) {
             $qb = $criteria->renderQb($qb);
         }
         $qb ->setFirstResult($offset)

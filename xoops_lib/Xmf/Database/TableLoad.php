@@ -28,7 +28,6 @@ use Xoops\Core\Kernel\CriteriaElement;
  */
 class TableLoad
 {
-
     /**
      * loadTableFromArray
      *
@@ -64,7 +63,7 @@ class TableLoad
         $count = 0;
 
         $data = Yaml::loadWrapped($yamlFile); // work with phpmyadmin YAML dumps
-        if (false !== $data) {
+        if ($data !== false) {
             $count = static::loadTableFromArray($table, $data);
         }
 
@@ -106,7 +105,7 @@ class TableLoad
         }
         $result = $qb->execute();
         $count = $result->fetchColumn();
-        return (int)$count;
+        return (int) $count;
     }
 
     /**
@@ -118,7 +117,7 @@ class TableLoad
      *
      * @return array of table rows
      */
-    public static function extractRows($table, CriteriaElement $criteria = null, $skipColumns = array())
+    public static function extractRows($table, CriteriaElement $criteria = null, $skipColumns = [])
     {
         $db = \Xoops::getInstance()->db();
         $qb = $db->createXoopsQueryBuilder();
@@ -129,7 +128,7 @@ class TableLoad
         $result = $qb->execute();
         $rows = $result->fetchAll();
 
-        if (!empty($skipColumns)) {
+        if (! empty($skipColumns)) {
             foreach ($rows as $index => $row) {
                 foreach ($skipColumns as $column) {
                     unset($rows[$index][$column]);
@@ -150,12 +149,12 @@ class TableLoad
      *
      * @return bool true on success, false on error
      */
-    public static function saveTableToYamlFile($table, $yamlFile, $criteria = null, $skipColumns = array())
+    public static function saveTableToYamlFile($table, $yamlFile, $criteria = null, $skipColumns = [])
     {
         $rows = static::extractRows($table, $criteria, $skipColumns);
 
         $count = Yaml::save($rows, $yamlFile);
 
-        return (false !== $count);
+        return ($count !== false);
     }
 }

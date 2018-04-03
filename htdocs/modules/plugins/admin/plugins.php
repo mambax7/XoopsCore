@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xmf\Request;
 use PluginsLocale as t;
+use Xmf\Request;
 
 /**
  * plugins module
@@ -72,12 +72,12 @@ switch ($op) {
         }
 
         //In the impossible case no plugins were found, we alert the user
-        if (!$objects) {
+        if (! $objects) {
             $xoops->tpl()->assign('errorMsg', $xoops->alert('info', t::NO_PLUGINS_FOUND));
             break;
         }
 
-        $plugins = array();
+        $plugins = [];
         foreach ($objects as $object) {
             /* @var $object XoopsObject */
             $plugin = $object->toArray();
@@ -101,7 +101,7 @@ switch ($op) {
         $form = new \Xoops\Form\ThemeForm('', 'listenersForm', 'plugins.php', 'post');
         $form->addElement(new \Xoops\Form\Hidden('op', 'list'));
         $select = new \Xoops\Form\Select('', 'listener', $listener);
-        $select->set("onchange", 'submit()');
+        $select->set('onchange', 'submit()');
         $select->addOption('', XoopsLocale::ALL_TYPES);
         foreach ($objects as $l => $name) {
             $select->addOption($l, $name);
@@ -114,7 +114,7 @@ switch ($op) {
         $form = new \Xoops\Form\ThemeForm('', 'callersForm', 'plugins.php', 'post');
         $form->addElement(new \Xoops\Form\Hidden('op', 'list'));
         $select = new \Xoops\Form\Select('', 'caller', $caller);
-        $select->set("onchange", 'submit()');
+        $select->set('onchange', 'submit()');
         $select->addOption('', XoopsLocale::ALL_TYPES);
         foreach ($objects as $c => $name) {
             $select->addOption($c, $name);

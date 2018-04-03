@@ -44,7 +44,7 @@ class Xss extends FilterAbstract
      */
     public function applyFilter($text)
     {
-        if (!$this->config['enabled']) {
+        if (! $this->config['enabled']) {
             return $text;
         }
 

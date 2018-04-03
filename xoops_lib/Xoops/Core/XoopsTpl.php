@@ -39,7 +39,7 @@ class XoopsTpl extends \Smarty
     {
         parent::__construct(); // SMARTY_PLUGINS_DIR is initialized into parent
         $xoops = \Xoops::getInstance();
-        $xoops->events()->triggerEvent('core.template.construct.start', array($this));
+        $xoops->events()->triggerEvent('core.template.construct.start', [$this]);
 
         $this->registerFilter(
             'pre',
@@ -52,17 +52,17 @@ class XoopsTpl extends \Smarty
         $this->setTemplateDir(\XoopsBaseConfig::get('themes-path'));
         $this->setCacheDir(\XoopsBaseConfig::get('smarty-cache'));
         $this->setCompileDir(\XoopsBaseConfig::get('smarty-compile'));
-        $this->compile_check = ($xoops->getConfig('theme_fromfile') == 1);
+        $this->compile_check = ($xoops->getConfig('theme_fromfile') === 1);
         $this->setPluginsDir(\XoopsBaseConfig::get('smarty-xoops-plugins'));
         $this->addPluginsDir(SMARTY_PLUGINS_DIR);
         $this->setCompileId();
         $this->assign(
-            array('xoops_url' => \XoopsBaseConfig::get('url'),
+            ['xoops_url' => \XoopsBaseConfig::get('url'),
                 'xoops_rootpath' => \XoopsBaseConfig::get('root-path'),
                 'xoops_langcode' => \XoopsLocale::getLangCode(),
                 'xoops_charset' => \XoopsLocale::getCharset(),
                 'xoops_version' => \Xoops::VERSION,
-                'xoops_upload_url' => \XoopsBaseConfig::get('uploads-url'))
+                'xoops_upload_url' => \XoopsBaseConfig::get('uploads-url'), ]
         );
     }
 
@@ -82,7 +82,7 @@ class XoopsTpl extends \Smarty
         $countLeft = 0;
         $countRight = -1;
         $temp = str_replace('<{', '{', $tpl_source, $countLeft);
-        if ($countLeft>0) {
+        if ($countLeft > 0) {
             $temp = str_replace('}>', '}', $temp, $countRight);
         }
         return ($countLeft === $countRight) ? $temp : $tpl_source;
@@ -111,8 +111,6 @@ class XoopsTpl extends \Smarty
      * @param mixed $module_dirname module directory
      * @param mixed $theme_set      theme set
      * @param mixed $template_set   template set
-     *
-     * @return void
      */
     public function setCompileId($module_dirname = null, $theme_set = null, $template_set = null)
     {
@@ -149,7 +147,7 @@ class XoopsTpl extends \Smarty
         $this->compile_id = $hold_compile_id;
         $compile_id = preg_replace('![^\w\|]+!', '_', $compile_id);
         $glob = $compile_id . '*.php';
-        $count=0;
+        $count = 0;
         $files = glob($this->getCompileDir() . '/' . $glob);
         foreach ($files as $filename) {
             $count += unlink($filename) ? 1 : 0;

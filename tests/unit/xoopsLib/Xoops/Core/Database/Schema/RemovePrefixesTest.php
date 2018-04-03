@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Doctrine\DBAL\Types\Type;
 
@@ -25,7 +25,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
     public function test_setTableFilter()
     {
         $instance = new $this->myClass();
-        $instance->setTableFilter(array());
+        $instance->setTableFilter([]);
         $this->assertTrue(true);
     }
 
@@ -67,11 +67,11 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
 
         $table = new Doctrine\DBAL\Schema\Table('system_group');
 
-        $columns = array('groupid');
+        $columns = ['groupid'];
         $fk_table = 'system_permission';
         $fk_name = 'fk_name';
-        $fk_options = array('o'=>'o1');
-        $fk_columns = array('system_permission');
+        $fk_options = ['o' => 'o1'];
+        $fk_columns = ['system_permission'];
         $fk_constraint = new Doctrine\DBAL\Schema\ForeignKeyConstraint(
             $columns, $fk_table, $fk_columns, $fk_name, $fk_options);
 
@@ -86,7 +86,7 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $table = new Doctrine\DBAL\Schema\Table('system_group');
 
         $name = 'index_name';
-        $columns = array('name','description');
+        $columns = ['name', 'description'];
         $unique = true;
         $primary = true;
         $index = new Doctrine\DBAL\Schema\Index(

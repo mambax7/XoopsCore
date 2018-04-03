@@ -21,7 +21,7 @@
  */
 
 // Require mainfile
-require dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/mainfile.php' ;
+require dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
@@ -48,23 +48,23 @@ switch ($op) {
             natcasesort($files);
 
             if (count($files) > 2) { /* The 2 accounts for . and .. */
-                echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
-                if ('/' == $_REQUEST['dir']) {
+                echo '<ul class="jqueryFileTree" style="display: none;">';
+                if ($_REQUEST['dir'] === '/') {
                     $url = $xoops->url('modules/system/admin.php?fct=filemanager');
-                    echo "<a href=\"" . $url . "\"><strong>/</strong></a>";
+                    echo '<a href="' . $url . '"><strong>/</strong></a>';
                 }
                 // All dirs
                 foreach ($files as $file) {
-                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file != '.' && $file != '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
+                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
                         //retirer .svn
-                        $file_no_valid = array('.svn', 'conf', 'db', 'locks', 'hooks', 'cache', 'templates_c');
+                        $file_no_valid = ['.svn', 'conf', 'db', 'locks', 'hooks', 'cache', 'templates_c'];
 
-                        if (!in_array($file, $file_no_valid)) {
-                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities($_REQUEST['dir'] . $file) . "/\">" . htmlentities($file) . "</a></li>";
+                        if (! in_array($file, $file_no_valid, true)) {
+                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities($_REQUEST['dir'] . $file) . '/">' . htmlentities($file) . '</a></li>';
                         }
                     }
                 }
-                echo "</ul>";
+                echo '</ul>';
             }
         }
         break;
@@ -75,10 +75,10 @@ switch ($op) {
         $width = 100 / $nbcolonnes_file;
         $_REQUEST['file'] = urldecode($_REQUEST['file']);
         //For come back and display files
-        if ($_REQUEST['status'] == 1) {
+        if ($_REQUEST['status'] === 1) {
             $path_file = $_REQUEST['file'];
         } else {
-            $file_arr = explode("/", $_REQUEST['file']);
+            $file_arr = explode('/', $_REQUEST['file']);
             $path_file = XOOPS_ROOT_PATH . '/';
             $url_file = XOOPS_URL . '/';
 
@@ -103,18 +103,18 @@ switch ($op) {
                             <img src="' . system_AdminIcons('folder_add.png') . '" alt="' . _AM_SYSTEM_FILEMANAGER_ADDDIR . '" />
                         </button>';
                 $verif = true;
-                $protected = array(
+                $protected = [
                     '', 'class', 'Frameworks', 'images', 'include', 'kernel', 'language', 'locale', 'modules', 'themes',
-                    'uploads', 'xoops_lib', 'xoops_data'
-                );
+                    'uploads', 'xoops_lib', 'xoops_data',
+                ];
                 foreach ($protected as $folder) {
                     $root_path = XOOPS_ROOT_PATH . '/' . $folder . '/';
                     if (eregi($root_path, $path_file)) {
-                        if (($root_path == $path_file)) {
+                        if (($root_path === $path_file)) {
                             $verif = false;
                         }
                     }
-                    if (XOOPS_ROOT_PATH . '/' == $path_file) {
+                    if (XOOPS_ROOT_PATH . '/' === $path_file) {
                         $verif = false;
                     }
                 }
@@ -138,8 +138,8 @@ switch ($op) {
                         <tr>
                             <td align="center" width="' . $width . '%" style="padding-bottom:12px">';
                 foreach ($files as $file) {
-                    if (!preg_match('#.back#', $file)) {
-                        if (file_exists($path_file . $file) && $file != '.' && $file != '..' && !is_dir($path_file . $file)) {
+                    if (! preg_match('#.back#', $file)) {
+                        if (file_exists($path_file . $file) && $file !== '.' && $file !== '..' && ! is_dir($path_file . $file)) {
                             //echo $path_file . $file.'<br />';
                             $unzip = '';
                             $edit = false;
@@ -199,7 +199,7 @@ switch ($op) {
                                     $edit = true;
                                     break;
                             }
-                            if ($edit == true) {
+                            if ($edit === true) {
                                 $edit = '<img class="cursorpointer" src="' . system_AdminIcons('edit.png') . '" onclick=\'filemanager_edit_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '", "' . $extension_verif . '");\' width="16" alt="edit" />';
                             } else {
                                 $edit = '';
@@ -210,7 +210,7 @@ switch ($op) {
                             $chmod = modify_chmod($chmod, $path_file . $file, $count_file);
 
                             //Img
-                            if ($extension_verif == 'picture') {
+                            if ($extension_verif === 'picture') {
                                 list($width, $height) = getimagesize($path_file . $file);
                                 if ($height > 60) {
                                     $img = '<img src="' . $url_file . $file . '" height="47" title="" alt="" />';
@@ -237,7 +237,7 @@ switch ($op) {
                                   </td>';
 
                             $count_file++;
-                            $newline = ($count_file % $nbcolonnes_file == 1) ? true : false;
+                            $newline = ($count_file % $nbcolonnes_file === 1) ? true : false;
 
                             if ($newline) {
                                 echo '</tr><tr><td align="center" style="padding-bottom:12px">';
@@ -256,7 +256,7 @@ switch ($op) {
     case 'filemanager_edit_file':
         $path_file = trim($_REQUEST['path_file']);
 
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
@@ -307,7 +307,7 @@ switch ($op) {
     case 'filemanager_unzip_file':
         $path_file = trim($_REQUEST['path_file']);
 
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
@@ -321,7 +321,7 @@ switch ($op) {
         switch ($extension) {
             case 'zip':
                 $archive = new PclZip($path_file);
-                if ($archive->extract(PCLZIP_OPT_PATH, $path) == 0) {
+                if ($archive->extract(PCLZIP_OPT_PATH, $path) === 0) {
                     echo $xoops->alert('error', _AM_SYSTEM_FILEMANAGER_EXTRACT_ERROR);
                 } else {
                     echo $xoops->alert('info', _AM_SYSTEM_FILEMANAGER_EXTRACT_FILE);
@@ -343,8 +343,8 @@ switch ($op) {
     //Delete one file
     case 'filemanager_delete_file':
         $file = XoopsFile::getHandler('file', $_REQUEST['path_file']);
-        if (!$file->delete()) {
-            echo $xoops->alert('error',_AM_SYSTEM_FILEMANAGER_ERROR);
+        if (! $file->delete()) {
+            echo $xoops->alert('error', _AM_SYSTEM_FILEMANAGER_ERROR);
         } else {
             echo $xoops->alert('info', _AM_SYSTEM_FILEMANAGER_DELETE_FILE);
         }
@@ -352,13 +352,13 @@ switch ($op) {
 
     case 'filemanager_upload':
 
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
         }
 
-        $form = new Xoops\Form\ThemeForm('', 'upload_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new Xoops\Form\ThemeForm('', 'upload_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new Xoops\Form\File(_AM_SYSTEM_FILEMANAGER_UPLOAD_CHOOSE, 'upload_file'), false);
         $form->addElement(new Xoops\Form\Hidden('op', 'filemanager_upload_save'));
@@ -368,13 +368,13 @@ switch ($op) {
         break;
 
     case 'filemanager_add_dir':
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
         }
 
-        $form = new Xoops\Form\Theme\Form('', 'newdir_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new Xoops\Form\Theme\Form('', 'newdir_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new Xoops\Form\Text(_AM_SYSTEM_FILEMANAGER_ADDDIR_NAME, 'dir_name', 50, 255), true);
         $form->addElement(new Xoops\Form\Hidden('op', 'filemanager_add_dir_save'));
@@ -417,20 +417,20 @@ switch ($op) {
         }
 
         if (deltree($_REQUEST['path'])) {
-            echo $xoops->alert('info',_AM_SYSTEM_FILEMANAGER_DELDIR_OK);
+            echo $xoops->alert('info', _AM_SYSTEM_FILEMANAGER_DELDIR_OK);
         } else {
-            echo $xoops->alert('error',_AM_SYSTEM_FILEMANAGER_DELDIR_NOTOK);
+            echo $xoops->alert('error', _AM_SYSTEM_FILEMANAGER_DELDIR_NOTOK);
         }
         break;
 
     case 'filemanager_add_file':
-        if ($_REQUEST['path'] != '') {
+        if ($_REQUEST['path'] !== '') {
             $path = trim($_REQUEST['path']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
         }
 
-        $form = new Xoops\Form\ThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new Xoops\Form\ThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new Xoops\Form\Text(_AM_SYSTEM_FILEMANAGER_ADDFILE, 'file_name', 50, 255), true);
         $form->addElement(new Xoops\Form\Hidden('op', 'filemanager_add_file_save'));
@@ -442,7 +442,7 @@ switch ($op) {
 
     case 'filemanager_modify_chmod':
 
-        if ($_REQUEST['path_file'] != '') {
+        if ($_REQUEST['path_file'] !== '') {
             $path = trim($_REQUEST['path_file']);
         } else {
             $path = XOOPS_ROOT_PATH . '/';
@@ -463,14 +463,14 @@ switch ($op) {
             if (unlink($new_file)) {
                 if (rename($old_file, $new_file)) {
                     //$xoops->redirect("admin.php?fct=tplsets", 2, XoopsLocale::S_DATABASE_UPDATED);
-                } else {
-                    //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_RENAME);
                 }
-            } else {
-                //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_DELETE);
+                    //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_RENAME);
+
             }
-        } else {
-            //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_EXISTS);
+                //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_DELETE);
+
         }
+            //$xoops->redirect("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_RESTORE_ERROR_FILE_EXISTS);
+
         break;
 }

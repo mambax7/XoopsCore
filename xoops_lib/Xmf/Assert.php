@@ -25,5 +25,4 @@ use Webmozart\Assert\Assert as BaseAssertion;
  */
 class Assert extends BaseAssertion
 {
-
 }

@@ -11,7 +11,6 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
@@ -37,8 +36,8 @@ class DtypeEnumeration extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        if (!in_array($value, $obj->vars[$key]['enumeration'])) {
-            $obj->setErrors("Invalid Enumeration");
+        if (! in_array($value, $obj->vars[$key]['enumeration'], true)) {
+            $obj->setErrors('Invalid Enumeration');
             return $value;
         }
         return $value;

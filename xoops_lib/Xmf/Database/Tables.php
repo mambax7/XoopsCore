@@ -68,7 +68,6 @@ class Tables
 
     /**
      * Constructor
-     *
      */
     public function __construct()
     {
@@ -77,18 +76,6 @@ class Tables
         $this->db = Factory::getConnection();
         $this->databaseName = \XoopsBaseConfig::get('db-name');
         $this->resetQueue();
-    }
-
-    /**
-     * Return a table name, prefixed with site table prefix
-     *
-     * @param string $table table name to contain prefix
-     *
-     * @return string table name with prefix
-     */
-    protected function name($table)
-    {
-        return $this->db->prefix($table);
     }
 
     /**
@@ -102,10 +89,10 @@ class Tables
      */
     public function addColumn($table, $column, $attributes)
     {
-        $columnDef = array(
+        $columnDef = [
             'name' => $column,
-            'attributes' => $attributes
-        );
+            'attributes' => $attributes,
+        ];
 
         // Find table def.
         if (isset($this->tables[$table])) {
@@ -115,7 +102,7 @@ class Tables
                 array_push($tableDef['columns'], $columnDef);
             } else {
                 foreach ($tableDef['columns'] as $col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         return true;
                     }
                 }
@@ -214,24 +201,23 @@ class Tables
             $this->tables[$table] = $tableDef;
 
             return true;
-        } else {
+        }
             if ($tableDef === true) {
-                $tableDef = array(
+                $tableDef = [
                     'name' => $this->name($table),
                     'options' => 'ENGINE=InnoDB',
-                    'columns' => array(),
-                    'keys' => array(),
+                    'columns' => [],
+                    'keys' => [],
                     'create' => true,
-                );
+                ];
                 $this->tables[$table] = $tableDef;
 
-                $this->queue[] = array('createtable' => $table);
+                $this->queue[] = ['createtable' => $table];
 
                 return true;
-            } else {
-                return false;
             }
-        }
+                return false;
+
     }
 
     /**
@@ -317,7 +303,7 @@ class Tables
             if (isset($tableDef['create']) && $tableDef['create']) {
                 // loop thru and find the column
                 foreach ($tableDef['columns'] as &$col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         $col['name'] = $newName;
                         $col['attributes'] = $attributes;
                         break;
@@ -325,18 +311,18 @@ class Tables
                 }
 
                 return true;
-            } else {
+            }
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
                     "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
                 // loop thru and find the column
                 foreach ($tableDef['columns'] as &$col) {
-                    if (strcasecmp($col['name'], $column) == 0) {
+                    if (strcasecmp($col['name'], $column) === 0) {
                         $col['name'] = $newName;
                         $col['attributes'] = $attributes;
                         break;
                     }
                 }
-            }
+
         } else {
             return $this->tableNotEstablished();
         }
@@ -370,14 +356,14 @@ class Tables
                 $this->queue[] = "INSERT INTO `{$copy}` SELECT * FROM `{$original}` ;";
             } else {
                 $tableDef['create'] = true;
-                $this->queue[] = array('createtable' => $newTable);
+                $this->queue[] = ['createtable' => $newTable];
             }
             $this->tables[$newTable] = $tableDef;
 
             return true;
-        } else {
-            return false;
         }
+            return false;
+
     }
 
     /**
@@ -494,7 +480,6 @@ class Tables
         return true;
     }
 
-
     /**
      * Add rename table operation to the work queue
      *
@@ -537,26 +522,23 @@ class Tables
             if (isset($tableDef['create']) && $tableDef['create']) {
                 $tableDef['options'] = $options;
                 return true;
-            } else {
+            }
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}` {$options} ";
                 $tableDef['options'] = $options;
                 return true;
-            }
-        } else {
-            return $this->tableNotEstablished();
-        }
-    }
 
+        }
+            return $this->tableNotEstablished();
+
+    }
 
     /**
      * Clear the work queue
-     *
-     * @return void
      */
     public function resetQueue()
     {
-        $this->tables = array();
-        $this->queue  = array();
+        $this->tables = [];
+        $this->queue = [];
     }
 
     /**
@@ -576,7 +558,7 @@ class Tables
                 }
             }
             $result = $this->execSql($ddl, $force);
-            if (!$result) {
+            if (! $result) {
                 $this->lastError = $this->db->errorInfo();
                 $this->lastErrNo = $this->db->errorCode();
 
@@ -586,7 +568,6 @@ class Tables
 
         return true;
     }
-
 
     /**
      * Create a DELETE statement and add it to the work queue
@@ -641,9 +622,9 @@ class Tables
             $this->queue[] = $sql;
 
             return true;
-        } else {
-            return $this->tableNotEstablished();
         }
+            return $this->tableNotEstablished();
+
     }
 
     /**
@@ -678,9 +659,9 @@ class Tables
             $this->queue[] = $sql;
 
             return true;
-        } else {
-            return $this->tableNotEstablished();
         }
+            return $this->tableNotEstablished();
+
     }
 
     /**
@@ -700,194 +681,6 @@ class Tables
         }
 
         return true;
-    }
-
-
-
-    /**
-     * return SQL to create the table
-     *
-     * This method does NOT modify the work queue
-     *
-     * @param string $table    table
-     * @param bool   $prefixed true to return with table name prefixed
-     *
-     * @return string|false string SQL to create table, or false if errors encountered
-     */
-    protected function renderTableCreate($table, $prefixed = false)
-    {
-        if (isset($this->tables[$table])) {
-            $tableDef = $this->tables[$table];
-            $tableName = ($prefixed ? $tableDef['name'] : $table);
-            $sql = "CREATE TABLE `{$tableName}` (";
-            $firstComma = '';
-            foreach ($tableDef['columns'] as $col) {
-                $sql .= "{$firstComma}\n    `{$col['name']}`  {$col['attributes']}";
-                $firstComma = ',';
-            }
-            $keySql = '';
-            foreach ($tableDef['keys'] as $keyName => $key) {
-                if ($keyName === 'PRIMARY') {
-                    $keySql .= ",\n  PRIMARY KEY ({$key['columns']})";
-                } else {
-                    $unique = $key['unique'] ? 'UNIQUE ' : '';
-                    $keySql .= ",\n  {$unique}KEY {$keyName} ({$key['columns']})";
-                }
-            }
-            $sql .= $keySql;
-            $sql .= "\n) {$tableDef['options']}";
-
-            return $sql;
-        } else {
-            return $this->tableNotEstablished();
-        }
-    }
-
-    /**
-     * execute an SQL statement
-     *
-     * @param string $sql   SQL statement to execute
-     * @param bool   $force true to use force updates even in safe requests
-     *
-     * @return mixed result Statement, or false on error
-     *               Any error message is in $this->lastError;
-     */
-    protected function execSql($sql, $force = false)
-    {
-        if ($force) {
-            $this->db->setForce(true);
-        }
-        $result = $this->db->query($sql);
-
-        if (!$result) {
-            $this->lastError = $this->db->errorInfo();
-            $this->lastErrNo = $this->db->errorCode();
-        }
-
-        return $result;
-    }
-
-    /**
-     * fetch the next row of a result set
-     *
-     * @param Statement $result as returned by query
-     *
-     * @return mixed false on error
-     */
-    protected function fetch($result)
-    {
-        return $result->fetch(\PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * get table definition from INFORMATION_SCHEMA
-     *
-     * @param string $table table
-     *
-     * @return array|bool table definition array if table exists, true if table not defined, or
-     *                    false on error. Error message in $this->lastError;
-     */
-    protected function getTable($table)
-    {
-        $tableDef = array();
-
-        $sql  = 'SELECT TABLE_NAME, ENGINE, CHARACTER_SET_NAME ';
-        $sql .= ' FROM `INFORMATION_SCHEMA`.`TABLES` t, ';
-        $sql .= ' `INFORMATION_SCHEMA`.`COLLATIONS` c ';
-        $sql .= ' WHERE t.TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
-        $sql .= ' AND t.TABLE_NAME = \'' . $this->name($table) . '\' ';
-        $sql .= ' AND t.TABLE_COLLATION  = c.COLLATION_NAME ';
-
-        $result = $this->execSql($sql);
-        if (!$result) {
-            return false;
-        }
-        $tableSchema = $this->fetch($result);
-        if (empty($tableSchema)) {
-            return true;
-        }
-        $tableDef['name'] = $tableSchema['TABLE_NAME'];
-        $tableDef['options'] = 'ENGINE=' . $tableSchema['ENGINE'] . ' '
-            . 'DEFAULT CHARSET=' . $tableSchema['CHARACTER_SET_NAME'];
-
-        $sql  = 'SELECT * ';
-        $sql .= ' FROM `INFORMATION_SCHEMA`.`COLUMNS` ';
-        $sql .= ' WHERE TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
-        $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
-        $sql .= ' ORDER BY `ORDINAL_POSITION` ';
-
-        $result = $this->execSql($sql);
-
-        while ($column = $this->fetch($result)) {
-            $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
-                . (($column['IS_NULLABLE'] === 'NO') ? ' NOT NULL ' : '')
-                . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
-                . $column['EXTRA'];
-
-            $columnDef = array(
-                'name' => $column['COLUMN_NAME'],
-                'attributes' => $attributes
-            );
-
-            $tableDef['columns'][] = $columnDef;
-        };
-
-        $sql  = 'SELECT `INDEX_NAME`, `SEQ_IN_INDEX`, `NON_UNIQUE`, ';
-        $sql .= ' `COLUMN_NAME`, `SUB_PART` ';
-        $sql .= ' FROM `INFORMATION_SCHEMA`.`STATISTICS` ';
-        $sql .= ' WHERE TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
-        $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
-        $sql .= ' ORDER BY `INDEX_NAME`, `SEQ_IN_INDEX` ';
-
-        $result = $this->execSql($sql);
-
-        $lastKey = '';
-        $keyCols = '';
-        $keyUnique = false;
-        while ($key = $this->fetch($result)) {
-            if ($lastKey != $key['INDEX_NAME']) {
-                if (!empty($lastKey)) {
-                    $tableDef['keys'][$lastKey]['columns'] = $keyCols;
-                    $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
-                }
-                $lastKey = $key['INDEX_NAME'];
-                $keyCols = $key['COLUMN_NAME'];
-                if (!empty($key['SUB_PART'])) {
-                    $keyCols .= ' (' . $key['SUB_PART'] . ')';
-                }
-                $keyUnique = !$key['NON_UNIQUE'];
-            } else {
-                $keyCols .= ', ' . $key['COLUMN_NAME'];
-                if (!empty($key['SUB_PART'])) {
-                    $keyCols .= ' (' . $key['SUB_PART'] . ')';
-                }
-            }
-        };
-        if (!empty($lastKey)) {
-            $tableDef['keys'][$lastKey]['columns'] = $keyCols;
-            $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
-        }
-
-        return $tableDef;
-    }
-
-    /**
-     * During processing, tables to be created are put in the queue as
-     * an array('createtable' => tablename) since the definition is not
-     * complete. This method will expand those references to the full
-     * ddl to create the table.
-     *
-     * @return void
-     */
-    protected function expandQueue()
-    {
-        foreach ($this->queue as &$ddl) {
-            if (is_array($ddl)) {
-                if (isset($ddl['createtable'])) {
-                    $ddl = $this->renderTableCreate($ddl['createtable'], true);
-                }
-            }
-        }
     }
 
     /**
@@ -936,12 +729,206 @@ class Tables
      * addToQueue - utility function to add a statement to the work queue
      *
      * @param string $sql an SQL/DDL statement to add
-     *
-     * @return void
      */
     public function addToQueue($sql)
     {
         $this->queue[] = $sql;
+    }
+
+    /**
+     * Return a table name, prefixed with site table prefix
+     *
+     * @param string $table table name to contain prefix
+     *
+     * @return string table name with prefix
+     */
+    protected function name($table)
+    {
+        return $this->db->prefix($table);
+    }
+
+    /**
+     * return SQL to create the table
+     *
+     * This method does NOT modify the work queue
+     *
+     * @param string $table    table
+     * @param bool   $prefixed true to return with table name prefixed
+     *
+     * @return string|false string SQL to create table, or false if errors encountered
+     */
+    protected function renderTableCreate($table, $prefixed = false)
+    {
+        if (isset($this->tables[$table])) {
+            $tableDef = $this->tables[$table];
+            $tableName = ($prefixed ? $tableDef['name'] : $table);
+            $sql = "CREATE TABLE `{$tableName}` (";
+            $firstComma = '';
+            foreach ($tableDef['columns'] as $col) {
+                $sql .= "{$firstComma}\n    `{$col['name']}`  {$col['attributes']}";
+                $firstComma = ',';
+            }
+            $keySql = '';
+            foreach ($tableDef['keys'] as $keyName => $key) {
+                if ($keyName === 'PRIMARY') {
+                    $keySql .= ",\n  PRIMARY KEY ({$key['columns']})";
+                } else {
+                    $unique = $key['unique'] ? 'UNIQUE ' : '';
+                    $keySql .= ",\n  {$unique}KEY {$keyName} ({$key['columns']})";
+                }
+            }
+            $sql .= $keySql;
+            $sql .= "\n) {$tableDef['options']}";
+
+            return $sql;
+        }
+            return $this->tableNotEstablished();
+
+    }
+
+    /**
+     * execute an SQL statement
+     *
+     * @param string $sql   SQL statement to execute
+     * @param bool   $force true to use force updates even in safe requests
+     *
+     * @return mixed result Statement, or false on error
+     *               Any error message is in $this->lastError;
+     */
+    protected function execSql($sql, $force = false)
+    {
+        if ($force) {
+            $this->db->setForce(true);
+        }
+        $result = $this->db->query($sql);
+
+        if (! $result) {
+            $this->lastError = $this->db->errorInfo();
+            $this->lastErrNo = $this->db->errorCode();
+        }
+
+        return $result;
+    }
+
+    /**
+     * fetch the next row of a result set
+     *
+     * @param Statement $result as returned by query
+     *
+     * @return mixed false on error
+     */
+    protected function fetch($result)
+    {
+        return $result->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * get table definition from INFORMATION_SCHEMA
+     *
+     * @param string $table table
+     *
+     * @return array|bool table definition array if table exists, true if table not defined, or
+     *                    false on error. Error message in $this->lastError;
+     */
+    protected function getTable($table)
+    {
+        $tableDef = [];
+
+        $sql = 'SELECT TABLE_NAME, ENGINE, CHARACTER_SET_NAME ';
+        $sql .= ' FROM `INFORMATION_SCHEMA`.`TABLES` t, ';
+        $sql .= ' `INFORMATION_SCHEMA`.`COLLATIONS` c ';
+        $sql .= ' WHERE t.TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
+        $sql .= ' AND t.TABLE_NAME = \'' . $this->name($table) . '\' ';
+        $sql .= ' AND t.TABLE_COLLATION  = c.COLLATION_NAME ';
+
+        $result = $this->execSql($sql);
+        if (! $result) {
+            return false;
+        }
+        $tableSchema = $this->fetch($result);
+        if (empty($tableSchema)) {
+            return true;
+        }
+        $tableDef['name'] = $tableSchema['TABLE_NAME'];
+        $tableDef['options'] = 'ENGINE=' . $tableSchema['ENGINE'] . ' '
+            . 'DEFAULT CHARSET=' . $tableSchema['CHARACTER_SET_NAME'];
+
+        $sql = 'SELECT * ';
+        $sql .= ' FROM `INFORMATION_SCHEMA`.`COLUMNS` ';
+        $sql .= ' WHERE TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
+        $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
+        $sql .= ' ORDER BY `ORDINAL_POSITION` ';
+
+        $result = $this->execSql($sql);
+
+        while ($column = $this->fetch($result)) {
+            $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
+                . (($column['IS_NULLABLE'] === 'NO') ? ' NOT NULL ' : '')
+                . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
+                . $column['EXTRA'];
+
+            $columnDef = [
+                'name' => $column['COLUMN_NAME'],
+                'attributes' => $attributes,
+            ];
+
+            $tableDef['columns'][] = $columnDef;
+        };
+
+        $sql = 'SELECT `INDEX_NAME`, `SEQ_IN_INDEX`, `NON_UNIQUE`, ';
+        $sql .= ' `COLUMN_NAME`, `SUB_PART` ';
+        $sql .= ' FROM `INFORMATION_SCHEMA`.`STATISTICS` ';
+        $sql .= ' WHERE TABLE_SCHEMA = \'' . $this->databaseName . '\' ';
+        $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
+        $sql .= ' ORDER BY `INDEX_NAME`, `SEQ_IN_INDEX` ';
+
+        $result = $this->execSql($sql);
+
+        $lastKey = '';
+        $keyCols = '';
+        $keyUnique = false;
+        while ($key = $this->fetch($result)) {
+            if ($lastKey !== $key['INDEX_NAME']) {
+                if (! empty($lastKey)) {
+                    $tableDef['keys'][$lastKey]['columns'] = $keyCols;
+                    $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
+                }
+                $lastKey = $key['INDEX_NAME'];
+                $keyCols = $key['COLUMN_NAME'];
+                if (! empty($key['SUB_PART'])) {
+                    $keyCols .= ' (' . $key['SUB_PART'] . ')';
+                }
+                $keyUnique = ! $key['NON_UNIQUE'];
+            } else {
+                $keyCols .= ', ' . $key['COLUMN_NAME'];
+                if (! empty($key['SUB_PART'])) {
+                    $keyCols .= ' (' . $key['SUB_PART'] . ')';
+                }
+            }
+        };
+        if (! empty($lastKey)) {
+            $tableDef['keys'][$lastKey]['columns'] = $keyCols;
+            $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
+        }
+
+        return $tableDef;
+    }
+
+    /**
+     * During processing, tables to be created are put in the queue as
+     * an array('createtable' => tablename) since the definition is not
+     * complete. This method will expand those references to the full
+     * ddl to create the table.
+     */
+    protected function expandQueue()
+    {
+        foreach ($this->queue as &$ddl) {
+            if (is_array($ddl)) {
+                if (isset($ddl['createtable'])) {
+                    $ddl = $this->renderTableCreate($ddl['createtable'], true);
+                }
+            }
+        }
     }
 
     /**

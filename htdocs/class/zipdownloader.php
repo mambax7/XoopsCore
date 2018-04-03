@@ -38,7 +38,6 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @return XoopsZipDownloader
      */
-
     public function __construct($ext = '.zip', $mimyType = 'application/x-zip')
     {
         $this->archiver = new zipfile();
@@ -57,13 +56,13 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addFile($filepath, $newfilename = null)
     {
         // Read in the file's contents
-        $fp = @fopen($filepath, "r");
+        $fp = @fopen($filepath, 'r');
         if ($fp === false) {
             return false;
         }
         $data = fread($fp, filesize($filepath));
         fclose($fp);
-        $filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
+        $filename = (isset($newfilename) && trim($newfilename) !== '') ? trim($newfilename) : $filepath;
         $result = $this->archiver->addFile($data, $filename, filemtime($filename));
         return $result;
     }
@@ -79,13 +78,13 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addBinaryFile($filepath, $newfilename = null)
     {
         // Read in the file's contents
-        $fp = @fopen($filepath, "rb");
+        $fp = @fopen($filepath, 'rb');
         if ($fp === false) {
             return false;
         }
         $data = fread($fp, filesize($filepath));
         fclose($fp);
-        $filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
+        $filename = (isset($newfilename) && trim($newfilename) !== '') ? trim($newfilename) : $filepath;
         $result = $this->archiver->addFile($data, $filename, filemtime($filename));
         return $result;
     }
@@ -125,8 +124,6 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param string $name zip name
      * @param bool   $gzip unused
-     *
-     * @return void
      */
     public function download($name, $gzip = true)
     {

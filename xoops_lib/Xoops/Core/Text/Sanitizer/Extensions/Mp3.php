@@ -75,8 +75,6 @@ EOF;
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -84,7 +82,7 @@ EOF;
             'mp3',
             function ($attributes, $content, $tagName) {
                 $defaults = [
-                    'url'    => trim($content),
+                    'url' => trim($content),
                 ];
                 $cleanAttributes = $this->shortcodes->shortcodeAttributes($defaults, $attributes);
                 $newContent = sprintf($this->config['template'], $cleanAttributes['url']);

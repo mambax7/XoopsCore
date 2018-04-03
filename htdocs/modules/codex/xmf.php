@@ -19,9 +19,9 @@
 use Xmf\Debug;
 use Xmf\Highlighter;
 use Xmf\Metagen;
-use Xmf\Request;
 use Xmf\Module\Helper\Permission;
 use Xmf\Module\Helper\Session;
+use Xmf\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 
@@ -47,21 +47,21 @@ echo '<h2>Permission demo</h2>';
 $permissionHelper = new Permission();
 if ($permissionHelper) {
     // this is the name and item we are going to work with
-    $permissionName='fred';
-    $permissionItemId=1;
+    $permissionName = 'fred';
+    $permissionItemId = 1;
 
     // if this is a post operation get the input and save it
-    if ('POST'===Request::getMethod()) {
+    if (Request::getMethod() === 'POST') {
         echo $xoops->alert('success', 'Permission updated');
         // save the data
-        $name=$permissionHelper->defaultFieldName($permissionName, $permissionItemId);
-        $groups=Request::getVar($name, array(), 'POST');
+        $name = $permissionHelper->defaultFieldName($permissionName, $permissionItemId);
+        $groups = Request::getVar($name, [], 'POST');
         $permissionHelper->savePermissionForItem($permissionName, $permissionItemId, $groups);
     }
 
     // build a form for our permission
     $form = new Xoops\Form\ThemeForm(
-        "Permission Form (for the permission named '$permissionName')",
+        "Permission Form (for the permission named '${permissionName}')",
         'form',
         '',
         'POST'
@@ -69,7 +69,7 @@ if ($permissionHelper) {
     $groupElement = $permissionHelper->getGroupSelectFormForItem(
         $permissionName,
         $permissionItemId,
-        "Groups with '$permissionName' permission",
+        "Groups with '${permissionName}' permission",
         null,
         true
     );
@@ -80,9 +80,9 @@ if ($permissionHelper) {
 
     // check it the current user has the permission
     if ($permissionHelper->checkPermission($permissionName, $permissionItemId)) {
-        echo "<p>You have the <strong>'$permissionName'</strong> permission for the 'codex' module.</p>";
+        echo "<p>You have the <strong>'${permissionName}'</strong> permission for the 'codex' module.</p>";
     } else {
-        echo "<p>You <em>DO NOT</em> have the <strong>'$permissionName'</strong> " .
+        echo "<p>You <em>DO NOT</em> have the <strong>'${permissionName}'</strong> " .
             "permission for the 'codex' module.</p>";
     }
 }
@@ -90,9 +90,9 @@ if ($permissionHelper) {
 echo '<h2>Metagen</h2>';
 
 //define a title and article to work with
-$keywords='';
-$title="xmf - the XOOPS Module Framework";
-$article =<<<EOT
+$keywords = '';
+$title = 'xmf - the XOOPS Module Framework';
+$article = <<<EOT
 xmf - XOOPS Module Framework
 
 XMF is Copyright © 2011-2018 The XOOPS Project

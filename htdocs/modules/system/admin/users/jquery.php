@@ -24,17 +24,17 @@ include dirname(dirname(__DIR__)) . '/header.php';
 $xoops = Xoops::getInstance();
 $system = System::getInstance();
 
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $xoops->logger()->quiet();
 //$xoops->disableErrorReporting();
 
-if (isset($_REQUEST["op"])) {
-    $op = $_REQUEST["op"];
+if (isset($_REQUEST['op'])) {
+    $op = $_REQUEST['op'];
 } else {
-    @$op = "default";
+    @$op = 'default';
 }
 
 switch ($op) {

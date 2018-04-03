@@ -24,7 +24,9 @@
 
 class upgrade_231 extends xoopsUpgrade
 {
-    var $tasks = array('field');
+    var
+
+ $tasks = ['field'];
 
     function upgrade_231()
     {
@@ -33,29 +35,28 @@ class upgrade_231 extends xoopsUpgrade
 
     /**
      * Check if field type already fixed for mysql strict mode
-
      */
     function check_field()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $fields = array(
-            "cache_data"     => "cache_model", "htmlcode" => "banner", "extrainfo" => "bannerclient",
-            "com_text"       => "xoopscomments", "conf_value" => "config", "description" => "groups",
-            "imgsetimg_body" => "imgsetimg", "content" => "newblocks", "msg_text" => "priv_msgs",
-            "sess_data"      => "session", "tplset_credits" => "tplset", "tpl_source" => "tplsource",
-            "user_sig"       => "users", "bio" => "users",
-        );
+        $fields = [
+            'cache_data' => 'cache_model', 'htmlcode' => 'banner', 'extrainfo' => 'bannerclient',
+            'com_text' => 'xoopscomments', 'conf_value' => 'config', 'description' => 'groups',
+            'imgsetimg_body' => 'imgsetimg', 'content' => 'newblocks', 'msg_text' => 'priv_msgs',
+            'sess_data' => 'session', 'tplset_credits' => 'tplset', 'tpl_source' => 'tplsource',
+            'user_sig' => 'users', 'bio' => 'users',
+        ];
         foreach ($fields as $field => $table) {
-            $sql = "SHOW COLUMNS FROM `" . $db->prefix($table) . "` LIKE '{$field}'";
-            if (!$result = $db->queryF($sql)) {
+            $sql = 'SHOW COLUMNS FROM `' . $db->prefix($table) . "` LIKE '{$field}'";
+            if (! $result = $db->queryF($sql)) {
                 return false;
             }
-            while (false !== ($row = $db->fetchArray($result))) {
-                if ($row['Field'] != $field) {
+            while (($row = $db->fetchArray($result)) !== false) {
+                if ($row['Field'] !== $field) {
                     continue;
                 }
-                if (strtoupper($row['Null']) != "YES") {
+                if (strtoupper($row['Null']) !== 'YES') {
                     return false;
                 }
             }
@@ -69,7 +70,7 @@ class upgrade_231 extends xoopsUpgrade
         $db = $xoops->db();
         $allowWebChanges = $db->allowWebChanges;
         $db->allowWebChanges = true;
-        $result = $db->queryFromFile(dirname(__FILE__) . "/mysql.structure.sql");
+        $result = $db->queryFromFile(dirname(__FILE__) . '/mysql.structure.sql');
         $db->allowWebChanges = $allowWebChanges;
         return $result;
     }

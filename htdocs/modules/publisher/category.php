@@ -33,13 +33,13 @@ $categoryid = Request::getInt('categoryid');
 $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
 
 // if the selected category was not found, exit
-if (!is_object($categoryObj) || $categoryObj->notLoaded()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOCATEGORYSELECTED);
+if (! is_object($categoryObj) || $categoryObj->notLoaded()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOCATEGORYSELECTED);
 }
 
 // Check user permissions to access this category
-if (!$categoryObj->checkPermission()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $categoryObj->checkPermission()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 // At which record shall we start
@@ -51,13 +51,13 @@ $totalItems = $publisher->getCategoryHandler()->publishedItemsCount();
 
 // if there is no Item under this categories or the sub-categories, exit
 // why?
-if (!isset($totalItems[$categoryid]) || $totalItems[$categoryid] == 0) {
+if (! isset($totalItems[$categoryid]) || $totalItems[$categoryid] === 0) {
     //$xoops->redirect("index.php", 1, _MD_PUBLISHER_MAINNOFAQS);
     //exit;
 }
 
 // Added by skalpa: custom template support
-if (!$template = $categoryObj->template()) {
+if (! $template = $categoryObj->template()) {
     $template = 'module:publisher/publisher_display_' . $publisher->getConfig('idxcat_items_display_type') . '.tpl';
 }
 
@@ -94,8 +94,8 @@ if ($itemsObj) {
 }
 
 // Arrays that will hold the informations passed on to smarty variables
-$category = array();
-$items = array();
+$category = [];
+$items = [];
 
 // Populating the smarty variables with informations related to the selected category
 $category = $categoryObj->toArray(null, true);
@@ -103,11 +103,11 @@ $category['categoryPath'] = $categoryObj->getCategoryPath($publisher->getConfig(
 
 //$totalItems = $publisher_category_handler->publishedItemsCount($publisher->getConfig('idxcat_display_last_item'));
 
-if ($publisher->getConfig('idxcat_display_last_item') == 1) {
+if ($publisher->getConfig('idxcat_display_last_item') === 1) {
     // Get the last smartitem
-    $last_itemObj = $publisher->getItemHandler()->getLastPublishedByCat(array(array($categoryObj)));
+    $last_itemObj = $publisher->getItemHandler()->getLastPublishedByCat([[$categoryObj]]);
 }
-$lastitemsize = (int)($publisher->getConfig('idxcat_last_item_size'));
+$lastitemsize = (int) ($publisher->getConfig('idxcat_last_item_size'));
 
 // Creating the sub-categories objects that belong to the selected category
 $subcatsObj = $publisher->getCategoryHandler()->getCategories(0, 0, $categoryid);
@@ -115,7 +115,7 @@ $total_subcats = count($subcatsObj);
 
 $total_items = 0;
 
-$subcategories = array();
+$subcategories = [];
 
 if ($publisher->getConfig('idxcat_show_subcats') !== 'no') {
     // if this category has subcats
@@ -181,7 +181,7 @@ if (count($itemsObj) > 0) {
     for ($i = 0; $i < $totalItemOnPage; ++$i) {
         $item = $itemsObj[$i]->toArray('default', $publisher->getConfig('item_title_size'));
         $item['categoryname'] = $categoryObj->getVar('name');
-        $item['categorylink'] = "<a href='" . PublisherUtils::seoGenUrl('category', $itemsObj[$i]->getVar('categoryid'), $categoryObj->getVar('short_url')) . "'>" . $categoryObj->getVar('name') . "</a>";
+        $item['categorylink'] = "<a href='" . PublisherUtils::seoGenUrl('category', $itemsObj[$i]->getVar('categoryid'), $categoryObj->getVar('short_url')) . "'>" . $categoryObj->getVar('name') . '</a>';
         $item['who_when'] = $itemsObj[$i]->getWhoAndWhen();
         $xoopsTpl->append('items', $item);
     }
@@ -194,7 +194,7 @@ if (count($itemsObj) > 0) {
     $xoopsTpl->assign('show_subtitle', $publisher->getConfig('cat_disp_subtitle'));
 }
 
-$categories = array();
+$categories = [];
 $categories[] = $category;
 $xoopsTpl->assign('category', $category);
 $xoopsTpl->assign('categories', $categories);
@@ -212,7 +212,7 @@ $xoopsTpl->assign('selected_category', $categoryid);
 
 // The Navigation Bar
 $pagenav = new XoopsPageNav($thiscategory_itemcount, $publisher->getConfig('idxcat_index_perpage'), $start, 'start', 'categoryid=' . $categoryObj->getVar('categoryid'));
-if ($publisher->getConfig('format_image_nav') == 1) {
+if ($publisher->getConfig('format_image_nav') === 1) {
     $navbar = '<div style="text-align:right;">' . $pagenav->renderImageNav() . '</div>';
 } else {
     $navbar = '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
@@ -226,8 +226,8 @@ $publisher_metagen = new PublisherMetagen($categoryObj->getVar('name'), $categor
 $publisher_metagen->createMetaTags();
 
 // RSS Link
-if ($publisher->getConfig('idxcat_show_rss_link') == 1) {
-    $link = sprintf("<a href='%s' title='%s'><img src='%s' border=0 alt='%s'></a>", PUBLISHER_URL . "/backend.php?categoryid=" . $categoryid, _MD_PUBLISHER_RSSFEED, PUBLISHER_URL . "/images/rss.gif", _MD_PUBLISHER_RSSFEED);
+if ($publisher->getConfig('idxcat_show_rss_link') === 1) {
+    $link = sprintf("<a href='%s' title='%s'><img src='%s' border=0 alt='%s'></a>", PUBLISHER_URL . '/backend.php?categoryid=' . $categoryid, _MD_PUBLISHER_RSSFEED, PUBLISHER_URL . '/images/rss.gif', _MD_PUBLISHER_RSSFEED);
     $xoopsTpl->assign('rssfeed_link', $link);
 }
 

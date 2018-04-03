@@ -63,8 +63,6 @@ abstract class ConfigurationAbstract extends XoopsArray
      * Set multiple attributes by using an associative array
      *
      * @param array $values array of new attributes
-     *
-     * @return void
      */
     public function setMerge($values)
     {
@@ -83,16 +81,14 @@ abstract class ConfigurationAbstract extends XoopsArray
      *                      value will be appended to the end of the
      *                      array rather than added with the key $name.
      * @param mixed  $value An attribute array item value.
-     *
-     * @return void
      */
     public function setArrayItem($stem, $name, $value)
     {
-        $newValue = array();
+        $newValue = [];
         if ($this->offsetExists($stem)) {
             $newValue = $this->offsetGet($stem);
-            if (!is_array($newValue)) {
-                $newValue = array();
+            if (! is_array($newValue)) {
+                $newValue = [];
             }
         }
         if (empty($name)) {
@@ -117,10 +113,10 @@ abstract class ConfigurationAbstract extends XoopsArray
             return $this->getArrayCopy();
         }
 
-        $likeSet = array();
+        $likeSet = [];
         foreach ($this as $k => $v) {
-            if (mb_substr($k, 0, mb_strlen($nameLike))==$nameLike) {
-                $likeSet[$k]=$v;
+            if (mb_substr($k, 0, mb_strlen($nameLike)) === $nameLike) {
+                $likeSet[$k] = $v;
             }
         }
         return $likeSet;

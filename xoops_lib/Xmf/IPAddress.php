@@ -23,7 +23,6 @@ namespace Xmf;
  */
 class IPAddress
 {
-
     /** @var false|string presentation form of ip address, or false if invalid */
     protected $ip;
 
@@ -33,7 +32,7 @@ class IPAddress
      */
     public function __construct($ip)
     {
-        if (!filter_var((string) $ip, FILTER_VALIDATE_IP)) {
+        if (! filter_var((string) $ip, FILTER_VALIDATE_IP)) {
             $this->ip = false;
         } else {
             $this->ip = $this->normalize($ip);
@@ -54,19 +53,6 @@ class IPAddress
     }
 
     /**
-     * convert IP address into a normalized condensed notation
-     *
-     * @param string $ip ip address to normalize
-     *
-     * @return string|false normalized address or false on failure
-     */
-    protected function normalize($ip)
-    {
-        $normal = inet_ntop(inet_pton($ip));
-        return $normal;
-    }
-
-    /**
      * return presentation form of address
      *
      * @return string|false
@@ -83,7 +69,7 @@ class IPAddress
      */
     public function asBinary()
     {
-        if (false === $this->ip) {
+        if ($this->ip === false) {
             return false;
         }
         $binary = inet_pton($this->ip);
@@ -97,11 +83,11 @@ class IPAddress
      */
     public function ipVersion()
     {
-        if (false === $this->ip) {
+        if ($this->ip === false) {
             return false;
-        } elseif (false !== filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+        } elseif (filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
             return 4;
-        } elseif (false !== filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        } elseif (filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
             return 6;
         }
         return false;
@@ -121,8 +107,8 @@ class IPAddress
      */
     public function sameSubnet($matchIp, $netMask4, $netMask6)
     {
-        $match = new IPAddress($matchIp);
-        if (false === $this->ipVersion() || ($this->ipVersion() !== $match->ipVersion())) {
+        $match = new self($matchIp);
+        if ($this->ipVersion() === false || ($this->ipVersion() !== $match->ipVersion())) {
             return false;
         }
         switch ($this->ipVersion()) {
@@ -133,11 +119,24 @@ class IPAddress
             case 6:
                 $ipBits = $this->asBinaryString($this);
                 $matchBits = $this->asBinaryString($match);
-                $match = (0 === strncmp($ipBits, $matchBits, $netMask6));
+                $match = (strncmp($ipBits, $matchBits, $netMask6) === 0);
                 return $match;
                 break;
         }
         return false;
+    }
+
+    /**
+     * convert IP address into a normalized condensed notation
+     *
+     * @param string $ip ip address to normalize
+     *
+     * @return string|false normalized address or false on failure
+     */
+    protected function normalize($ip)
+    {
+        $normal = inet_ntop(inet_pton($ip));
+        return $normal;
     }
 
     /**
@@ -147,14 +146,14 @@ class IPAddress
      *
      * @return string
      */
-    protected function asBinaryString(IPAddress $ip)
+    protected function asBinaryString(self $ip)
     {
-        $length = (4 === $ip->ipVersion()) ? 4 : 16;
+        $length = ($ip->ipVersion() === 4) ? 4 : 16;
         $binaryIp = $ip->asBinary();
         $bits = '';
         for ($i = 0; $i < $length; $i++) {
             $byte = decbin(ord($binaryIp[$i]));
-            $bits .= substr("00000000" . $byte, -8);
+            $bits .= substr('00000000' . $byte, -8);
         }
         return $bits;
     }

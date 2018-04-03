@@ -25,7 +25,7 @@ use Xoops\Core\Kernel\CriteriaCompo;
 function b_system_main_show()
 {
     $xoops = Xoops::getInstance();
-    $block = array();
+    $block = [];
     $block['lang_home'] = XoopsLocale::HOME;
     $block['lang_close'] = XoopsLocale::A_CLOSE;
     $module_handler = $xoops->getHandlerModule();
@@ -38,28 +38,28 @@ function b_system_main_show()
     $read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
     /* @var $module XoopsModule */
     foreach ($modules as $i => $module) {
-        if (in_array($i, $read_allowed)) {
+        if (in_array($i, $read_allowed, true)) {
             $block['modules'][$i]['name'] = $module->getVar('name');
             $block['modules'][$i]['dirname'] = $module->getVar('dirname');
             if (XoopsLoad::fileExists($xoops->path('modules/' . $module->getVar('dirname') . '/icons/logo_small.png'))) {
                 $block['modules'][$i]['image'] = $xoops->url('modules/' . $module->getVar('dirname') . '/icons/logo_small.png');
             }
-            if ($xoops->isModule() && ($i == $xoops->module->getVar('mid'))) {
+            if ($xoops->isModule() && ($i === $xoops->module->getVar('mid'))) {
                 $block['modules'][$i]['highlight'] = true;
                 $block['nothome'] = true;
             }
-            if ($xoops->module && ($i == $xoops->module->getVar('mid'))) {
+            if ($xoops->module && ($i === $xoops->module->getVar('mid'))) {
                 $block['modules'][$i]['highlight'] = true;
                 $block['nothome'] = true;
             }
              /* @var $plugin MenusPluginInterface */
-            if ($xoops->isModule() && $module->getVar('dirname') == $xoops->module->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'menus')) {
+            if ($xoops->isModule() && $module->getVar('dirname') === $xoops->module->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'menus')) {
                 $sublinks = $plugin->subMenus();
                 foreach ($sublinks as $sublink) {
-                    $block['modules'][$i]['sublinks'][] = array(
+                    $block['modules'][$i]['sublinks'][] = [
                         'name' => $sublink['name'],
-                        'url'  => \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname') . '/' . $sublink['url']
-                    );
+                        'url' => \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname') . '/' . $sublink['url'],
+                    ];
                 }
             }
 

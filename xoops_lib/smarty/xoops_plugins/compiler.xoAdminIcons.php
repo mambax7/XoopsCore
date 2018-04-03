@@ -24,7 +24,7 @@ function smarty_compiler_xoAdminIcons($params, Smarty $smarty)
     $ico = trim($arg, " '\"\t\n\r\0\x0B");
 
     $icons = $xoops->getModuleConfig('typeicons', 'system');
-    if ($icons == '') {
+    if ($icons === '') {
         $icons = 'default';
     }
 

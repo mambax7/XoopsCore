@@ -23,7 +23,6 @@ namespace Xoops\Core;
  * (anticipating an official PSR-7 implementation.)
  *
  * For now, this is a reduced version of a Cake derivative.
- *
  */
 
 /**
@@ -46,31 +45,26 @@ class HttpRequest
     protected $params;
 
     /**
-     * @var HttpRequest The reference to *Singleton* instance of this class
-     */
-    private static $instance;
-
-    /**
      * The built in detectors used with `is()` can be modified with `addDetector()`.
      * There are several ways to specify a detector, see HttpRequest::addDetector() for the
      * various formats and ways to define detectors.
      *
      * @var array
      */
-    protected $detectors = array(
-        'get'       => array('env' => 'REQUEST_METHOD', 'value' => 'GET'),
-        'post'      => array('env' => 'REQUEST_METHOD', 'value' => 'POST'),
-        'put'       => array('env' => 'REQUEST_METHOD', 'value' => 'PUT'),
-        'delete'    => array('env' => 'REQUEST_METHOD', 'value' => 'DELETE'),
-        'head'      => array('env' => 'REQUEST_METHOD', 'value' => 'HEAD'),
-        'options'   => array('env' => 'REQUEST_METHOD', 'value' => 'OPTIONS'),
-        'safemethod'=> array('env' => 'REQUEST_METHOD', 'options' => array('GET', 'HEAD')),
-        'ssl'       => array('env' => 'HTTPS', 'value' => 1),
-        'ajax'      => array('env' => 'HTTP_X_REQUESTED_WITH', 'value' => 'XMLHttpRequest'),
-        'flash'     => array('env' => 'HTTP_USER_AGENT', 'pattern' => '/^(Shockwave|Adobe) Flash/'),
-        'mobile'    => array(
-            'env'     => 'HTTP_USER_AGENT',
-            'options' => array(
+    protected $detectors = [
+        'get' => ['env' => 'REQUEST_METHOD', 'value' => 'GET'],
+        'post' => ['env' => 'REQUEST_METHOD', 'value' => 'POST'],
+        'put' => ['env' => 'REQUEST_METHOD', 'value' => 'PUT'],
+        'delete' => ['env' => 'REQUEST_METHOD', 'value' => 'DELETE'],
+        'head' => ['env' => 'REQUEST_METHOD', 'value' => 'HEAD'],
+        'options' => ['env' => 'REQUEST_METHOD', 'value' => 'OPTIONS'],
+        'safemethod' => ['env' => 'REQUEST_METHOD', 'options' => ['GET', 'HEAD']],
+        'ssl' => ['env' => 'HTTPS', 'value' => 1],
+        'ajax' => ['env' => 'HTTP_X_REQUESTED_WITH', 'value' => 'XMLHttpRequest'],
+        'flash' => ['env' => 'HTTP_USER_AGENT', 'pattern' => '/^(Shockwave|Adobe) Flash/'],
+        'mobile' => [
+            'env' => 'HTTP_USER_AGENT',
+            'options' => [
                 'Android',
                 'AvantGo',
                 'BlackBerry',
@@ -96,12 +90,12 @@ class HttpRequest
                 'webOS',
                 'Windows CE',
                 'Windows Phone OS',
-                'Xiino'
-            )
-        ),
-        'robot'     => array(
-            'env'     => 'HTTP_USER_AGENT',
-            'options' => array(
+                'Xiino',
+            ],
+        ],
+        'robot' => [
+            'env' => 'HTTP_USER_AGENT',
+            'options' => [
                 /* The most common ones. */
                 'Googlebot',
                 'msnbot',
@@ -149,9 +143,14 @@ class HttpRequest
                 'webbandit',
                 'www\\.almaden\\.ibm\\.com\\/cs\\/crawler',
                 'ZyBorg',
-            )
-        ),
-    );
+            ],
+        ],
+    ];
+
+    /**
+     * @var HttpRequest The reference to *Singleton* instance of this class
+     */
+    private static $instance;
 
     /**
      * __construct
@@ -179,7 +178,7 @@ class HttpRequest
      */
     public static function getInstance()
     {
-        if (null === static::$instance) {
+        if (static::$instance === null) {
             static::$instance = new static();
         }
         return static::$instance;
@@ -207,7 +206,7 @@ class HttpRequest
         // Apache
         if (function_exists('apache_request_headers')) {
             $headers = apache_request_headers();
-            if (!empty($headers[$name])) {
+            if (! empty($headers[$name])) {
                 return $headers[$name];
             }
         }
@@ -244,7 +243,7 @@ class HttpRequest
         if (empty($_SERVER['PHP_SELF']) || empty($_SERVER['REQUEST_URI'])) {
             // IIS
             $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-            if (!empty($_SERVER['QUERY_STRING'])) {
+            if (! empty($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }
             return $_SERVER['REQUEST_URI'];
@@ -282,8 +281,8 @@ class HttpRequest
     public function getDomain()
     {
         $host = $this->getHost();
-        $domain =  \Xoops::getInstance()->getBaseDomain($host);
-        return is_null($domain) ? $host : $domain;
+        $domain = \Xoops::getInstance()->getBaseDomain($host);
+        return $domain === null ? $host : $domain;
     }
 
     /**
@@ -294,7 +293,7 @@ class HttpRequest
     public function getSubdomains()
     {
         $host = $this->getHost();
-        $regDom  = \Xoops::getInstance()->getBaseDomain($host);
+        $regDom = \Xoops::getInstance()->getBaseDomain($host);
         $fullDom = \Xoops::getInstance()->getBaseDomain($host, true);
         if (empty($regDom) || empty($fullDom)) {
             return '';
@@ -317,27 +316,27 @@ class HttpRequest
     {
         $default = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
 
-        if (!$considerProxy) {
+        if (! $considerProxy) {
             return $default;
         }
 
-        $keys = array(
+        $keys = [
             'HTTP_CLIENT_IP',
             'HTTP_X_FORWARDED_FOR',
             'HTTP_X_FORWARDED',
             'HTTP_X_CLUSTER_CLIENT_IP',
             'HTTP_FORWARDED_FOR',
             'HTTP_FORWARDED',
-        );
+        ];
         foreach ($keys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip);
-                    if (false !== filter_var(
+                    if (filter_var(
                         $ip,
                         FILTER_VALIDATE_IP,
                         FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
-                    )) {
+                    ) !== false) {
                         return $ip;
                     }
                 }
@@ -354,9 +353,9 @@ class HttpRequest
      */
     public function getUrl()
     {
-        $url = $this->getScheme() . "://" . $this->getHost();
+        $url = $this->getScheme() . '://' . $this->getHost();
         $port = $this->getEnv('SERVER_PORT');
-        if (80 != $port) {
+        if ($port !== 80) {
             $url .= ":{$port}";
         }
         return $url . $this->getUri();
@@ -381,18 +380,18 @@ class HttpRequest
     {
         if ($name === 'HTTPS') {
             if (isset($_SERVER['HTTPS'])) {
-                return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+                return (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
             }
             return (strpos($this->getEnv('SCRIPT_URI'), 'https://') === 0);
         }
 
-        if ($name === 'SCRIPT_NAME' && !isset($_SERVER[$name])) {
+        if ($name === 'SCRIPT_NAME' && ! isset($_SERVER[$name])) {
             if ($this->getEnv('CGI_MODE') && isset($_ENV['SCRIPT_URL'])) {
                 return $_ENV['SCRIPT_URL'];
             }
         }
 
-        if ($name === 'REMOTE_ADDR' && !isset($_SERVER[$name])) {
+        if ($name === 'REMOTE_ADDR' && ! isset($_SERVER[$name])) {
             $address = $this->getEnv('HTTP_PC_REMOTE_ADDR');
             if ($address !== null) {
                 return $address;
@@ -419,7 +418,7 @@ class HttpRequest
                 $name = $this->getEnv('SCRIPT_NAME');
                 $filename = $this->getEnv('SCRIPT_FILENAME');
                 $offset = 0;
-                if (!strpos($name, '.php')) {
+                if (! strpos($name, '.php')) {
                     $offset = 4;
                 }
                 return substr($filename, 0, -(strlen($name) + $offset));
@@ -433,11 +432,11 @@ class HttpRequest
             case 'HTTP_BASE':
                 $host = $this->getEnv('HTTP_HOST');
                 $val = \Xoops::getInstance()->getBaseDomain($host);
-                if (is_null($val)) {
+                if ($val === null) {
                     return $default;
-                } else {
-                    return '.' . $val;
                 }
+                    return '.' . $val;
+
                 break;
         }
         return $default;
@@ -453,7 +452,7 @@ class HttpRequest
     public static function getFiles($name)
     {
         if (empty($_FILES)) {
-            return array();
+            return [];
         }
 
         if (isset($_FILES[$name])) {
@@ -461,14 +460,14 @@ class HttpRequest
         }
 
         if (false === $pos = strpos($name, '[')) {
-            return array();
+            return [];
         }
 
         $base = substr($name, 0, $pos);
-        $key = str_replace(array(']', '['), array('', '"]["'), substr($name, $pos + 1, -1));
-        $code = array(sprintf('if (!isset($_FILES["%s"]["name"]["%s"])) return array();', $base, $key));
+        $key = str_replace([']', '['], ['', '"]["'], substr($name, $pos + 1, -1));
+        $code = [sprintf('if (!isset($_FILES["%s"]["name"]["%s"])) return array();', $base, $key)];
         $code[] = '$file = array();';
-        foreach (array('name', 'type', 'size', 'tmp_name', 'error') as $property) {
+        foreach (['name', 'type', 'size', 'tmp_name', 'error'] as $property) {
             $code[] = sprintf('$file["%1$s"] = $_FILES["%2$s"]["%1$s"]["%3$s"];', $property, $base, $key);
         }
         $code[] = 'return $file;';
@@ -488,7 +487,7 @@ class HttpRequest
     public function is($type)
     {
         $type = strtolower($type);
-        if (!isset($this->detectors[$type])) {
+        if (! isset($this->detectors[$type])) {
             return false;
         }
         $detect = $this->detectors[$type];
@@ -500,44 +499,6 @@ class HttpRequest
             return call_user_func($detect['callback'], $this);
         }
         return false;
-    }
-
-    /**
-     * detectByEnv - perform detection on detectors with an 'env' component
-     *
-     * @param array $detect a detectors array entry to test against
-     *
-     * @return boolean true if detect is matched, false if not
-     */
-    protected function detectByEnv($detect)
-    {
-        if (isset($detect['value'])) {
-            return (bool) $this->getEnv($detect['env']) == $detect['value'];
-        } elseif (isset($detect['pattern'])) {
-            return (bool) preg_match($detect['pattern'], $this->getEnv($detect['env']));
-        } elseif (isset($detect['options'])) {
-            $pattern = '/' . implode('|', $detect['options']) . '/i';
-            return (bool) preg_match($pattern, $this->getEnv($detect['env']));
-        }
-        return false; // can't match a broken rule
-    }
-
-    /**
-     * detectByParam - perform detection on detectors with an 'param' component.
-     * To match an entry with the name in the 'param' key of the $detect rule must
-     * exist in the $params property and be equal to the 'value' entry specified
-     * in the $detect array.
-     *
-     * @param array $detect a detectors array entry to test against. Param entries are
-     *                      of the form array('param' => name, 'value' => value)
-     *
-     * @return boolean true if detect is matched, false if not
-     */
-    protected function detectByParam($detect)
-    {
-        $name = $detect['param'];
-        $value = $detect['value'];
-        return isset($this->params[$name]) ? $this->params[$name] == $value : false;
     }
 
     /**
@@ -564,8 +525,6 @@ class HttpRequest
      *
      * @param string $name    The name of the detector.
      * @param array  $options The options for the detector definition.  See above.
-     *
-     * @return void
      */
     public function addDetector($name, $options)
     {
@@ -592,7 +551,7 @@ class HttpRequest
             return true;
         }
         list($type) = explode('/', $mediaType);
-        if (isset($accepts[$type.'/*'])) {
+        if (isset($accepts[$type . '/*'])) {
             return true;
         }
 
@@ -608,14 +567,14 @@ class HttpRequest
      */
     public function getAcceptMediaTypes()
     {
-        $types = array();
+        $types = [];
         $accept = $this->getHeader('ACCEPT');
 
-        if (!empty($accept)) {
+        if (! empty($accept)) {
             $entries = explode(',', $accept);
             foreach ($entries as $e) {
                 $mt = explode(';q=', $e);
-                if (!isset($mt[1])) {
+                if (! isset($mt[1])) {
                     $mt[1] = 1.0;
                 }
                 $types[trim($mt[0])] = (float) $mt[1];
@@ -637,14 +596,14 @@ class HttpRequest
      */
     public function getAcceptedLanguages()
     {
-        $languages = array();
+        $languages = [];
         $accept = $this->getHeader('ACCEPT_LANGUAGE');
 
-        if (!empty($accept)) {
+        if (! empty($accept)) {
             $entries = explode(',', $accept);
             foreach ($entries as $e) {
                 $l = explode(';q=', $e);
-                if (!isset($l[1])) {
+                if (! isset($l[1])) {
                     $l[1] = 1.0;
                 }
                 $languages[trim($l[0])] = (float) $l[1];
@@ -655,5 +614,43 @@ class HttpRequest
         }
 
         return($languages);
+    }
+
+    /**
+     * detectByEnv - perform detection on detectors with an 'env' component
+     *
+     * @param array $detect a detectors array entry to test against
+     *
+     * @return boolean true if detect is matched, false if not
+     */
+    protected function detectByEnv($detect)
+    {
+        if (isset($detect['value'])) {
+            return (bool) $this->getEnv($detect['env']) === $detect['value'];
+        } elseif (isset($detect['pattern'])) {
+            return (bool) preg_match($detect['pattern'], $this->getEnv($detect['env']));
+        } elseif (isset($detect['options'])) {
+            $pattern = '/' . implode('|', $detect['options']) . '/i';
+            return (bool) preg_match($pattern, $this->getEnv($detect['env']));
+        }
+        return false; // can't match a broken rule
+    }
+
+    /**
+     * detectByParam - perform detection on detectors with an 'param' component.
+     * To match an entry with the name in the 'param' key of the $detect rule must
+     * exist in the $params property and be equal to the 'value' entry specified
+     * in the $detect array.
+     *
+     * @param array $detect a detectors array entry to test against. Param entries are
+     *                      of the form array('param' => name, 'value' => value)
+     *
+     * @return boolean true if detect is matched, false if not
+     */
+    protected function detectByParam($detect)
+    {
+        $name = $detect['param'];
+        $value = $detect['value'];
+        return isset($this->params[$name]) ? $this->params[$name] === $value : false;
     }
 }

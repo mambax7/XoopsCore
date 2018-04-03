@@ -11,9 +11,9 @@
 
 namespace Xoops\Core\Locale;
 
-use Xoops\Core\Locale\Punic\Calendar;
 use Punic\Data;
 use Punic\Plural;
+use Xoops\Core\Locale\Punic\Calendar;
 use Xoops\Locale;
 
 /**
@@ -63,12 +63,12 @@ class Time
      */
     public static function describeRelativeInterval($dateEnd, $dateStart = null, $width = '', $locale = '')
     {
-        if (!is_a($dateEnd, '\DateTime')) {
+        if (! is_a($dateEnd, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
         }
         if (empty($dateStart) && ($dateStart !== 0) && ($dateStart !== '0')) {
             $dateStart = new \DateTime('now');
-        } elseif (!is_a($dateStart, '\DateTime')) {
+        } elseif (! is_a($dateStart, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
         } else {
             $dateStart = clone $dateStart;
@@ -78,44 +78,44 @@ class Time
         //$utc = new \DateTimeZone('UTC');
         //$dateEndUTC = new \DateTime($dateEnd->format('Y-m-d H:i:s'), $utc);
         //$dateStartUTC = new \DateTime($dateStart->format('Y-m-d H:i:s'), $utc);
-        $parts = array();
+        $parts = [];
         $data = Data::get('dateFields', $locale);
 
         $diff = $dateStart->diff($dateEnd, false);
         $past = (boolean) $diff->invert;
         $value = 0;
         $key = '';
-        if ($diff->y != 0) {
+        if ($diff->y !== 0) {
             $key = 'year';
             $value = $diff->y + (($diff->m > 6) ? 1 : 0);
-        } elseif ($diff->m != 0) {
+        } elseif ($diff->m !== 0) {
             $key = 'month';
             $value = $diff->m + (($diff->d > 15) ? 1 : 0);
-        } elseif ($diff->d != 0) {
+        } elseif ($diff->d !== 0) {
             $key = 'day';
             $value = $diff->d + (($diff->h > 12) ? 1 : 0);
-        } elseif ($diff->h != 0) {
+        } elseif ($diff->h !== 0) {
             $key = 'hour';
             $value = $diff->h + (($diff->i > 30) ? 1 : 0);
-        } elseif ($diff->i != 0) {
+        } elseif ($diff->i !== 0) {
             $key = 'minute';
             $value = $diff->i + (($diff->s > 30) ? 1 : 0);
-        } elseif ($diff->s != 0) {
+        } elseif ($diff->s !== 0) {
             $key = 'second';
             $value = $diff->s;
         }
-        if ($value==0) {
+        if ($value === 0) {
             $key = 'second';
             $relKey = 'relative-type-0';
             $relPattern = null;
-        } elseif ($key === 'day' && $value >1 && $value <7) {
+        } elseif ($key === 'day' && $value > 1 && $value < 7) {
             $dow = $dateEnd->format('N') - 1;
-            $days = array('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun');
+            $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
             $key = $days[$dow];
-            $relKey = ($past) ? "relative-type--1" : "relative-type-1";
+            $relKey = ($past) ? 'relative-type--1' : 'relative-type-1';
             $relPattern = null;
         } else {
-            if ($value == 1 && isset($data[$key]['relative-type--1'])) {
+            if ($value === 1 && isset($data[$key]['relative-type--1'])) {
                 $relKey = ($past) ? 'relative-type--1' : 'relative-type-1';
                 $relPattern = null;
             } else {
@@ -124,7 +124,7 @@ class Time
                 $relPattern = 'relativeTimePattern-count-' . $rule;
             }
         }
-        if (!empty($width) && array_key_exists($key . '-' . $width, $data)) {
+        if (! empty($width) && array_key_exists($key . '-' . $width, $data)) {
             $key .= '-' . $width;
         }
         if (empty($relPattern)) {
@@ -216,14 +216,12 @@ class Time
 
     /**
      * Perform any localization required for date picker used in Form\DateSelect
-     *
-     * @return void
      */
     public static function localizeDatePicker()
     {
         $delimiter = '-';
         $locale = Locale::normalizeLocale(Locale::getCurrent(), $delimiter, false);
-        if ('zh_Hant' === Locale::getCurrent()) {
+        if (Locale::getCurrent() === 'zh_Hant') {
             $locale = 'zh-TW';
         }
         if ($locale === 'zh') {
@@ -232,7 +230,7 @@ class Time
         list($language) = explode($delimiter, $locale);
         $xoops = \Xoops::getInstance();
 
-        $locales = array($locale, $language);
+        $locales = [$locale, $language];
         foreach ($locales as $name) {
             $i18nScript = 'media/jquery/ui/i18n/datepicker-' . $name . '.js';
             if (file_exists($xoops->path($i18nScript))) {
@@ -240,6 +238,28 @@ class Time
                 return;
             }
         }
+    }
+
+    /**
+     * Convert a XOOPS DateSelect or DateTime form input into a DateTime object
+     *
+     * @param string|string[] $input  date string, or array of date and time strings
+     * @param string          $locale optional locale to use, leave blank to use current
+     *
+     * @return \DateTime
+     */
+    public static function inputToDateTime($input, $locale = '')
+    {
+        $dateTime = static::cleanTime();
+        $dateTime->setTime(0, 0, 0);
+
+        if (is_array($input)) {
+            static::parseInputDate($dateTime, $input['date'], $locale);
+            static::parseInputTime($dateTime, $input['time'], $locale);
+        } else { // single string should be just a date
+            static::parseInputDate($dateTime, $input, $locale);
+        }
+        return $dateTime;
     }
 
     /**
@@ -251,7 +271,7 @@ class Time
      */
     protected static function utf8StringToChars($input)
     {
-        $chars = array();
+        $chars = [];
         $strLen = mb_strlen($input, 'UTF-8');
         for ($i = 0; $i < $strLen; $i++) {
             $chars[] = mb_substr($input, $i, 1, 'UTF-8');
@@ -266,7 +286,6 @@ class Time
      * @param string    $input    localized date string
      * @param string    $locale   optional locale to use, leave blank to use current
      *
-     * @return void
      *
      * @throws \Punic\Exception\ValueNotInList
      */
@@ -297,7 +316,7 @@ class Time
                     break;
             }
             if ($newstate !== $state) {
-                if (in_array($newstate, ['y', 'm', 'd'])) {
+                if (in_array($newstate, ['y', 'm', 'd'], true)) {
                     $order[] = $newstate;
                 }
                 $state = $newstate;
@@ -352,7 +371,7 @@ class Time
             }
         }
         if ($year < 100) {
-            if ($year<70) {
+            if ($year < 70) {
                 $year += 2000;
             } else {
                 $year += 1900;
@@ -369,7 +388,6 @@ class Time
      * @param string    $input    localized time string
      * @param string    $locale   optional locale to use, leave blank to use current
      *
-     * @return void
      *
      * @throws \Punic\Exception\BadArgumentType
      * @throws \Punic\Exception\ValueNotInList
@@ -404,7 +422,7 @@ class Time
                     break;
             }
             if ($newstate !== $state) {
-                if (in_array($newstate, ['h', 'm'])) {
+                if (in_array($newstate, ['h', 'm'], true)) {
                     $order[] = $newstate;
                 }
                 $state = $newstate;
@@ -456,35 +474,13 @@ class Time
             }
         }
         if ($clock12) {
-            if ($hour == 12 && false !== mb_strpos($input, $am)) {
+            if ($hour === 12 && mb_strpos($input, $am) !== false) {
                 $hour = 0;
             }
-            if (false !== mb_strpos($input, $pm)) {
+            if (mb_strpos($input, $pm) !== false) {
                 $hour += 12;
             }
         }
         $datetime->setTime($hour, $minute, $second);
-    }
-
-    /**
-     * Convert a XOOPS DateSelect or DateTime form input into a DateTime object
-     *
-     * @param string|string[] $input  date string, or array of date and time strings
-     * @param string          $locale optional locale to use, leave blank to use current
-     *
-     * @return \DateTime
-     */
-    public static function inputToDateTime($input, $locale = '')
-    {
-        $dateTime = static::cleanTime();
-        $dateTime->setTime(0, 0, 0);
-
-        if (is_array($input)) {
-            static::parseInputDate($dateTime, $input['date'], $locale);
-            static::parseInputTime($dateTime, $input['time'], $locale);
-        } else { // single string should be just a date
-            static::parseInputDate($dateTime, $input, $locale);
-        }
-        return $dateTime;
     }
 }

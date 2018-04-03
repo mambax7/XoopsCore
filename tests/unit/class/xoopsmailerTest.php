@@ -1,24 +1,18 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsGroup;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
-class XoopsMailerTest extends \PHPUnit\Framework\TestCase
+class xoopsmailerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsMailer';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new $this->myclass();
-    }
-
-    protected function getPropertyValue($name)
-    {
-        $prop = new ReflectionProperty(get_class($this->object), $name);
-        $prop->setAccessible(true);
-        return $prop->getValue($this->object);
     }
 
     public function test___construct()
@@ -58,25 +52,25 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
         $x = $this->getPropertyValue('priority');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('toUsers');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('toEmails');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('headers');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('subject');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('body');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('errors');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('success');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('isMail');
         $this->assertSame(false, $x);
         $x = $this->getPropertyValue('isPM');
         $this->assertSame(false, $x);
         $x = $this->getPropertyValue('assignedTags');
-        $this->assertSame(array(), $x);
+        $this->assertSame([], $x);
         $x = $this->getPropertyValue('template');
         $this->assertSame('', $x);
         $x = $this->getPropertyValue('templatedir');
@@ -195,7 +189,7 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $errors = array('message1','message2','message3');
+        $errors = ['message1', 'message2', 'message3'];
         $prop = new ReflectionProperty(get_class($this->object), 'errors');
         $prop->setAccessible(true);
         $prop->setValue($this->object, $errors);
@@ -222,7 +216,7 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $success = array('message1','message2','message3');
+        $success = ['message1', 'message2', 'message3'];
         $prop = new ReflectionProperty(get_class($this->object), 'success');
         $prop->setAccessible(true);
         $prop->setValue($this->object, $success);
@@ -255,7 +249,7 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
         $x = $this->getPropertyValue('assignedTags');
         $this->assertSame($value, $x[strtoupper(trim($tag))]);
 
-        $tags = array('  tag1  ' => 'value1', '  tag2  ' => 'value2');
+        $tags = ['  tag1  ' => 'value1', '  tag2  ' => 'value2'];
         $instance->assign($tags);
         $x = $this->getPropertyValue('assignedTags');
         $this->assertSame('value1', $x['TAG1']);
@@ -270,14 +264,14 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
         $instance->addHeaders($value);
         $x = $this->getPropertyValue('headers');
         $le = $this->getPropertyValue('LE');
-        $this->assertSame(trim($value).$le, $x[0]);
+        $this->assertSame(trim($value) . $le, $x[0]);
     }
 
     public function test_setToEmails()
     {
         $instance = $this->object;
 
-        $emails = array('email@email.com','email@email.com');
+        $emails = ['email@email.com', 'email@email.com'];
         $instance->setToEmails($emails);
         $x = $this->getPropertyValue('toEmails');
         $this->assertSame($emails, $x);
@@ -287,7 +281,7 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $users = array(new XoopsUser(),new XoopsUser());
+        $users = [new XoopsUser(), new XoopsUser()];
         $instance->setToUsers($users);
         $x = $this->getPropertyValue('toUsers');
         $this->assertSame($users, $x);
@@ -299,7 +293,7 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
 
         $group = new XoopsGroup();
         $group->assignVar('groupid', 1);
-        $groups = array($group);
+        $groups = [$group];
         $instance->setToGroups($groups);
         $x = $this->getPropertyValue('toUsers');
         $this->assertTrue(is_array($x));
@@ -331,5 +325,12 @@ class XoopsMailerTest extends \PHPUnit\Framework\TestCase
         $value = 'value';
         $x = $instance->encodeBody($value);
         $this->assertSame(null, $x);
+    }
+
+    protected function getPropertyValue($name)
+    {
+        $prop = new ReflectionProperty(get_class($this->object), $name);
+        $prop->setAccessible(true);
+        return $prop->getValue($this->object);
     }
 }

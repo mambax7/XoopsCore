@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class EditorTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +17,7 @@ class EditorTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new Editor('Caption', 'name', array('name' => 'name'));
+        $this->object = new Editor('Caption', 'name', ['name' => 'name']);
     }
 
     /**
@@ -37,6 +38,6 @@ class EditorTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(false !== strpos($value,'<textarea'));
+        $this->assertTrue(strpos($value, '<textarea') !== false);
     }
 }

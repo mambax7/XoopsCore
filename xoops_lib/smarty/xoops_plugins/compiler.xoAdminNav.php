@@ -22,7 +22,7 @@ function smarty_compiler_xoAdminNav($argStr, &$smarty)
     $xoops = Xoops::getInstance();
 
     $icons = $xoops->getModuleConfig('typebreadcrumb', 'system');
-    if ($icons == '') {
+    if ($icons === '') {
         $icons = 'default';
     }
 

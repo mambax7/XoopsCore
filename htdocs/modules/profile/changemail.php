@@ -26,13 +26,13 @@ include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->getConfigs();
 
-if (!$xoops->user || $xoops->getConfig('allow_chgmail') != 1) {
-    $xoops->redirect(\XoopsBaseConfig::get('url') . "/modules/" . $xoops->module->getVar('dirname', 'n') . "/", 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $xoops->user || $xoops->getConfig('allow_chgmail') !== 1) {
+    $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $xoops->header('module:profile/profile_email.tpl');
 
-if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
+if (! isset($_POST['submit']) || ! isset($_POST['passwd'])) {
     //show change password form
     $form = new Xoops\Form\ThemeForm(_PROFILE_MA_CHANGEMAIL, 'emailform', $_SERVER['REQUEST_URI'], 'post', true);
     $form->addElement(new Xoops\Form\Password(XoopsLocale::PASSWORD, 'passwd'), true);
@@ -42,11 +42,11 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
 } else {
     $pass = trim($_POST['passwd']);
     $email = trim($_POST['newmail']);
-    $errors = array();
-    if (!password_verify($pass, $xoops->user->getVar('pass', 'n'))) {
+    $errors = [];
+    if (! password_verify($pass, $xoops->user->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
-    if (!$xoops->checkEmail($email)) {
+    if (! $xoops->checkEmail($email)) {
         $errors[] = XoopsLocale::E_INVALID_EMAIL;
     }
 
@@ -65,10 +65,10 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $xoopsMailer->useMail();
             $xoopsMailer->setTemplateDir($xoops->module->getVar('dirname', 'n'));
             $xoopsMailer->setTemplate('emailchanged.tpl');
-            $xoopsMailer->assign("SITENAME", $xoops->getConfig('sitename'));
-            $xoopsMailer->assign("ADMINMAIL", $xoops->getConfig('adminmail'));
-            $xoopsMailer->assign("SITEURL", \XoopsBaseConfig::get('url') . "/");
-            $xoopsMailer->assign("NEWEMAIL", $email);
+            $xoopsMailer->assign('SITENAME', $xoops->getConfig('sitename'));
+            $xoopsMailer->assign('ADMINMAIL', $xoops->getConfig('adminmail'));
+            $xoopsMailer->assign('SITEURL', \XoopsBaseConfig::get('url') . '/');
+            $xoopsMailer->assign('NEWEMAIL', $email);
             $xoopsMailer->setToEmails($email);
             $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
             $xoopsMailer->setFromName($xoops->getConfig('sitename'));

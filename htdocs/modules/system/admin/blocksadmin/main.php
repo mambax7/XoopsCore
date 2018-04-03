@@ -9,9 +9,9 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
-use Xoops\Core\FixedGroups;
 
 /**
  * Blocks Administration
@@ -30,7 +30,7 @@ $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -45,14 +45,14 @@ if ($filter) {
 }
 
 $selmod = $selgen = $selgrp = $selvis = null;
-$sel = array(
+$sel = [
     'selmod' => -2,
     'selgen' => -1,
     'selgrp' => FixedGroups::USERS,
-    'selvis' => -1
-);
+    'selvis' => -1,
+];
 foreach ($sel as $key => $value) {
-    $_{$key} = isset($_COOKIE[$key]) ? (int)($_COOKIE[$key]) : $value;
+    $_{$key} = isset($_COOKIE[$key]) ? (int) ($_COOKIE[$key]) : $value;
     ${$key} = $system->cleanVars($method, $key, $_{$key}, 'int');
     setcookie($key, ${$key});
 }
@@ -63,9 +63,9 @@ if ($type === 'preview') {
 }
 
 if (isset($_GET['op'])) {
-    if ($_GET['op'] === "edit" || $_GET['op'] === "delete" || $_GET['op'] === "delete_ok" || $_GET['op'] === "clone") {
+    if ($_GET['op'] === 'edit' || $_GET['op'] === 'delete' || $_GET['op'] === 'delete_ok' || $_GET['op'] === 'clone') {
         $op = $_GET['op'];
-        $bid = isset($_GET['bid']) ? (int)($_GET['bid']) : 0;
+        $bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
     }
 }
 
@@ -162,28 +162,28 @@ switch ($op) {
         $filterform->assign($xoops->tpl());
 
         /* Get blocks */
-        $selvis = ($selvis == -1) ? null : $selvis;
-        $selmod = ($selmod == -2) ? null : $selmod;
-        $order_block = (isset($selvis) ? "" : "b.visible DESC, ") . "b.side,b.weight,b.bid";
+        $selvis = ($selvis === -1) ? null : $selvis;
+        $selmod = ($selmod === -2) ? null : $selmod;
+        $order_block = (isset($selvis) ? '' : 'b.visible DESC, ') . 'b.side,b.weight,b.bid';
 
-        if ($selgrp == 0) {
+        if ($selgrp === 0) {
             // get blocks that are not assigned to any groups
             $blocks_arr = $block_handler->getNonGroupedBlocks($selmod, $toponlyblock = false, $selvis, $order_block);
         } else {
-            $selgrp = ($selgrp == -1) ? null : $selgrp;
+            $selgrp = ($selgrp === -1) ? null : $selgrp;
             $blocks_arr = $block_handler->
                 getAllByGroupModule($selgrp, $selmod, $toponlyblock = false, $selvis, $order_block);
         }
 
         if ($selgen >= 0) {
             foreach (array_keys($blocks_arr) as $bid) {
-                if ($blocks_arr[$bid]->getVar("mid") != $selgen) {
+                if ($blocks_arr[$bid]->getVar('mid') !== $selgen) {
                     unset($blocks_arr[$bid]);
                 }
             }
         }
 
-        $arr = array();
+        $arr = [];
         foreach (array_keys($blocks_arr) as $i) {
             $arr[$i] = $blocks_arr[$i]->getValues();
             $xoops->tpl()->appendByRef('blocks', $arr[$i]);
@@ -229,7 +229,7 @@ switch ($op) {
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('visible', $visible);
-            if (!$block_handler->insertBlock($block)) {
+            if (! $block_handler->insertBlock($block)) {
                 $error = true;
             }
         }
@@ -244,7 +244,7 @@ switch ($op) {
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('side', $side);
-            if (!$block_handler->insertBlock($block)) {
+            if (! $block_handler->insertBlock($block)) {
                 $error = true;
             }
         }
@@ -259,7 +259,7 @@ switch ($op) {
                 if ($order > 0) {
                     $block = $block_handler->get($order);
                     $block->setVar('weight', $i);
-                    if (!$block_handler->insertBlock($block)) {
+                    if (! $block_handler->insertBlock($block)) {
                         $error = true;
                     }
                     ++$i;
@@ -270,7 +270,7 @@ switch ($op) {
         break;
 
     case 'preview':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }
@@ -287,7 +287,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }
@@ -303,7 +303,7 @@ switch ($op) {
         $block_type = $system->cleanVars($_POST, 'block_type', '', 'string');
         $block->setVar('block_type', $block_type);
 
-        if (!$block->isCustom()) {
+        if (! $block->isCustom()) {
             $block->setVars($_POST);
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
@@ -345,13 +345,13 @@ switch ($op) {
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
 
-        if (!$newid = $block_handler->insertBlock($block)) {
+        if (! $newid = $block_handler->insertBlock($block)) {
             $xoops->header();
             echo $xoops->alert('error', $block->getHtmlErrors());
             $xoops->footer();
             exit();
         }
-        if ($newid != 0) {
+        if ($newid !== 0) {
             $blockmodulelink_handler = $xoops->getHandlerBlockModuleLink();
             // Delete old link
             $criteria = new CriteriaCompo(new Criteria('block_id', $newid));
@@ -362,7 +362,7 @@ switch ($op) {
                 $blockmodulelink = $blockmodulelink_handler->create();
                 $blockmodulelink->setVar('block_id', $newid);
                 $blockmodulelink->setVar('module_id', $mid);
-                if (!$blockmodulelink_handler->insert($blockmodulelink)) {
+                if (! $blockmodulelink_handler->insert($blockmodulelink)) {
                     $xoops->header();
                     echo $xoops->alert('error', $blockmodulelink->getHtmlErrors());
                     $xoops->footer();
@@ -372,7 +372,7 @@ switch ($op) {
         }
         $groupperm_handler = $xoops->getHandlerGroupPermission();
         $groups = $_POST['groups'];
-        $groups_with_access = $groupperm_handler->getGroupIds("block_read", $newid);
+        $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
         $removed_groups = array_diff($groups_with_access, $groups);
         if (count($removed_groups) > 0) {
             foreach ($removed_groups as $groupid) {
@@ -389,7 +389,7 @@ switch ($op) {
         $new_groups = array_diff($groups, $groups_with_access);
         if (count($new_groups) > 0) {
             foreach ($new_groups as $groupid) {
-                $groupperm_handler->addRight("block_read", $newid, $groupid);
+                $groupperm_handler->addRight('block_read', $newid, $groupid);
             }
         }
         $xoops->redirect('admin.php?fct=blocksadmin', 1, XoopsLocale::S_DATABASE_UPDATED);
@@ -468,18 +468,18 @@ switch ($op) {
             // Call Header
             $xoops->header('admin:system/system_header.tpl');
             // Display Question
-            echo $xoops->confirm(array(
-                'op'  => 'delete_ok',
+            echo $xoops->confirm([
+                'op' => 'delete_ok',
                 'fct' => 'blocksadmin',
-                'bid' => $block->getVar('bid')
-            ), 'admin.php', sprintf(SystemLocale::QF_ARE_YOU_SURE_TO_DELETE_THIS_BLOCK, $block->getVar('title')));
+                'bid' => $block->getVar('bid'),
+            ], 'admin.php', sprintf(SystemLocale::QF_ARE_YOU_SURE_TO_DELETE_THIS_BLOCK, $block->getVar('title')));
             // Call Footer
             $xoops->footer();
         }
         break;
 
     case 'delete_ok':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }
@@ -507,7 +507,7 @@ switch ($op) {
                     $groupperm_handler->delete($perm, true);
                 }
                 // Delete template
-                if ($block->getVar('template') != '') {
+                if ($block->getVar('template') !== '') {
                     $tplfile_handler = $xoops->getHandlerTplFile();
                     $btemplate = $tplfile_handler->find($xoops->getConfig('template_set'), 'block', $block_id);
                     if (count($btemplate) > 0) {

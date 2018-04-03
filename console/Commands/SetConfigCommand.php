@@ -3,10 +3,9 @@
 namespace XoopsConsole\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
@@ -14,16 +13,15 @@ class SetConfigCommand extends Command
 {
     /**
      * establish the command configuration
-     * @return void
      */
     protected function configure()
     {
-        $this->setName("set-config")
-            ->setDescription("Set a system configuration value")
-            ->setDefinition(array(
+        $this->setName('set-config')
+            ->setDescription('Set a system configuration value')
+            ->setDefinition([
                 new InputArgument('name', InputArgument::REQUIRED, 'Configuration item name'),
                 new InputArgument('value', InputArgument::REQUIRED, 'Value for configuration item'),
-            ))->setHelp(<<<EOT
+            ])->setHelp(<<<EOT
 The <info>set-config</info> command sets a configuration item to the specified value.
 EOT
              );
@@ -34,7 +32,6 @@ EOT
      *
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -50,7 +47,7 @@ EOT
             return;
         }
         $mid = $sysmodule->mid();
-        $criteria = new CriteriaCompo;
+        $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('conf_modid', $mid));
         $criteria->add(new Criteria('conf_name', $name));
         $objArray = $configHandler->getConfigs($criteria);

@@ -28,7 +28,7 @@ class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
     {
         $xoops = Xoops::getInstance();
 
-        if (!function_exists('mb_strlen')) {
+        if (! function_exists('mb_strlen')) {
             return true;
         }
 
@@ -37,23 +37,23 @@ class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
             return true;
         }
 
-        $lengths = array(
-            0          => 100, // default value
-            'message'  => 2,
+        $lengths = [
+            0 => 100, // default value
+            'message' => 2,
             'com_text' => 2,
-            'excerpt'  => 2,
-        );
+            'excerpt' => 2,
+        ];
 
         foreach ($_POST as $key => $data) {
             // dare to ignore arrays/objects
-            if (!is_string($data)) {
+            if (! is_string($data)) {
                 continue;
             }
 
             $check_length = isset($lengths[$key]) ? $lengths[$key] : $lengths[0];
             if (strlen($data) > $check_length) {
-                if (strlen($data) == mb_strlen($data)) {
-                    $this->protector->message .= "No multibyte character was found ($data)\n";
+                if (strlen($data) === mb_strlen($data)) {
+                    $this->protector->message .= "No multibyte character was found (${data})\n";
                     $this->protector->output_log('Singlebyte SPAM', 0, false, 128);
                     die('Protector rejects your post, because your post looks like SPAM');
                 }

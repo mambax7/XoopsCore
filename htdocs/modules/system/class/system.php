@@ -17,9 +17,8 @@
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  */
-class System
+class system
 {
-
     /**
      * @var null|SystemModule
      */
@@ -46,7 +45,7 @@ class System
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -60,7 +59,7 @@ class System
     {
         if ($this->xoops->isUser()) {
             $this->xoops->module = $this->xoops->getModuleByDirname('system');
-            if (!$this->xoops->user->isAdmin($this->xoops->module->mid())) {
+            if (! $this->xoops->user->isAdmin($this->xoops->module->mid())) {
                 return false;
             }
         } else {
@@ -70,8 +69,6 @@ class System
     }
 
     /**
-     * @param $global
-     * @param $key
      * @param string $default
      * @param string $type
      * @return int|mixed|string
@@ -109,7 +106,6 @@ class System
      *                         be loaded if not specified
      * @return  boolean
      * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
-     *
      */
     public function loadLanguage($name, $domain = '', $language = null)
     {
@@ -137,14 +133,14 @@ class System
      */
     public function adminVersion($version, $value = '')
     {
-        static $tblVersion = array();
+        static $tblVersion = [];
         if (is_array($tblVersion) && array_key_exists($version . '.' . $value, $tblVersion)) {
             return $tblVersion[$version . '.' . $value];
         }
         $xoops = Xoops::getInstance();
         $path = $xoops->path('modules/system/admin/' . $version . '/xoops_version.php');
         if (XoopsLoad::fileExists($path)) {
-            $modversion = array();
+            $modversion = [];
             include $path;
             $retvalue = $modversion[$value];
             $tblVersion[$version . '.' . $value] = $retvalue;
@@ -177,7 +173,7 @@ class System
         $total_smarty_cache = 0;
         $total_smarty_compile = 0;
         $total_xoops_cache = 0;
-        if (!empty($cache)) {
+        if (! empty($cache)) {
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
@@ -209,12 +205,12 @@ class System
                         $files = glob($cachePath . 'xoops_cache/*.*');
                         $total_xoops_cache = 0;
                         foreach ($files as $filename) {
-                            if (basename(strtolower($filename)) != 'index.html') {
+                            if (basename(strtolower($filename)) !== 'index.html') {
                                 unlink($filename);
                                 ++$total_xoops_cache;
                             }
                         }
-                        $total_xoops_cache = $status || ($total_xoops_cache>0);
+                        $total_xoops_cache = $status || ($total_xoops_cache > 0);
                         break;
                 }
             }
@@ -222,8 +218,8 @@ class System
             $ret['smarty_compile'] = $total_smarty_compile;
             $ret['xoops_cache'] = $total_xoops_cache;
             return $ret;
-        } else {
-            return false;
         }
+            return false;
+
     }
 }

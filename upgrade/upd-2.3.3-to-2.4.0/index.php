@@ -25,33 +25,34 @@
 
 class upgrade_240 extends xoopsUpgrade
 {
-    var $tasks = array('keys');
+    var
+
+ $tasks = ['keys'];
 
     /**
      * Check if keys already exist
-
      */
     function check_keys()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $tables['modules'] = array('isactive', 'weight', 'hascomments');
-        $tables['users'] = array('level');
-        $tables['online'] = array('online_updated', 'online_uid');
-        $tables['config'] = array('conf_order');
-        $tables['xoopscomments'] = array('com_status');
+        $tables['modules'] = ['isactive', 'weight', 'hascomments'];
+        $tables['users'] = ['level'];
+        $tables['online'] = ['online_updated', 'online_uid'];
+        $tables['config'] = ['conf_order'];
+        $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
-            $sql = "SHOW KEYS FROM `" . $xoops->db()->prefix($table) . "`";
-            if (!$result = $xoops->db()->queryF($sql)) {
+            $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
+            if (! $result = $xoops->db()->queryF($sql)) {
                 continue;
             }
-            $existing_keys = array();
-            while (false !== ($row = $xoops->db()->fetchArray($result))) {
+            $existing_keys = [];
+            while (($row = $xoops->db()->fetchArray($result)) !== false) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
-                if (!in_array($key, $existing_keys)) {
+                if (! in_array($key, $existing_keys, true)) {
                     return false;
                 }
             }
@@ -61,31 +62,30 @@ class upgrade_240 extends xoopsUpgrade
 
     /**
      * Apply keys that are missing
-
      */
     function apply_keys()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $tables['modules'] = array('isactive', 'weight', 'hascomments');
-        $tables['users'] = array('level');
-        $tables['online'] = array('online_updated', 'online_uid');
-        $tables['config'] = array('conf_order');
-        $tables['xoopscomments'] = array('com_status');
+        $tables['modules'] = ['isactive', 'weight', 'hascomments'];
+        $tables['users'] = ['level'];
+        $tables['online'] = ['online_updated', 'online_uid'];
+        $tables['config'] = ['conf_order'];
+        $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
-            $sql = "SHOW KEYS FROM `" . $xoops->db()->prefix($table) . "`";
-            if (!$result = $xoops->db()->queryF($sql)) {
+            $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
+            if (! $result = $xoops->db()->queryF($sql)) {
                 continue;
             }
-            $existing_keys = array();
-            while (false !== ($row = $xoops->db()->fetchArray($result))) {
+            $existing_keys = [];
+            while (($row = $xoops->db()->fetchArray($result)) !== false) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
-                if (!in_array($key, $existing_keys)) {
-                    $sql = "ALTER TABLE `" . $xoops->db()->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
-                    if (!$result = $xoops->db()->queryF($sql)) {
+                if (! in_array($key, $existing_keys, true)) {
+                    $sql = 'ALTER TABLE `' . $xoops->db()->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
+                    if (! $result = $xoops->db()->queryF($sql)) {
                         return false;
                     }
                 }

@@ -1,12 +1,13 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsThemeSetParser';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
@@ -14,7 +15,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
 
     public function test___publicProperties()
     {
-        $items = array('tempArr', 'themeSetData', 'imagesData', 'templatesData');
+        $items = ['tempArr', 'themeSetData', 'imagesData', 'templatesData'];
         foreach ($items as $item) {
             $prop = new ReflectionProperty($this->myclass, $item);
             $this->assertTrue($prop->isPublic());
@@ -47,37 +48,37 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x);
 
         $x = $instance->getThemeSetData();
-        $this->assertTrue(is_array($x) and ($x[$name] == $value));
+        $this->assertTrue(is_array($x) and ($x[$name] === $value));
     }
 
     public function test_getImagesData()
     {
         $instance = $this->object;
 
-        $arr = array(1=>'1', 2=>'2');
+        $arr = [1 => '1', 2 => '2'];
         $instance->setImagesData($arr);
         $x = $instance->getImagesData();
-        $this->assertTrue(is_array($x) and (count($x)==1));
+        $this->assertTrue(is_array($x) and (count($x) === 1));
 
-        $arr = array(1=>'1', 2=>'2');
+        $arr = [1 => '1', 2 => '2'];
         $instance->setImagesData($arr);
         $x = $instance->getImagesData();
-        $this->assertTrue(is_array($x) and (count($x)==2));
+        $this->assertTrue(is_array($x) and (count($x) === 2));
     }
 
     public function test_getTemplatesData()
     {
         $instance = $this->object;
 
-        $arr = array(1=>'1', 2=>'2');
+        $arr = [1 => '1', 2 => '2'];
         $instance->setTemplatesData($arr);
         $x = $instance->getTemplatesData();
-        $this->assertTrue(is_array($x) and (count($x)==1));
+        $this->assertTrue(is_array($x) and (count($x) === 1));
 
-        $arr = array(1=>'1', 2=>'2');
+        $arr = [1 => '1', 2 => '2'];
         $instance->setTemplatesData($arr);
         $x = $instance->getTemplatesData();
-        $this->assertTrue(is_array($x) and (count($x)==2));
+        $this->assertTrue(is_array($x) and (count($x) === 2));
     }
 
     public function test_getTempArr()
@@ -95,11 +96,11 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(false, $x);
 
         $x = $instance->getTempArr();
-        $this->assertTrue(is_array($x) and ($x[$name] == $value));
+        $this->assertTrue(is_array($x) and ($x[$name] === $value));
 
         $instance->setTempArr($name, $value, $delim);
         $x = $instance->getTempArr($name);
-        $this->assertSame($value.$delim.$value, $x);
+        $this->assertSame($value . $delim . $value, $x);
     }
 
     public function test_resetTempArr()

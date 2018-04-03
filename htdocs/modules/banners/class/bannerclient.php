@@ -36,6 +36,7 @@ class BannersBannerclient extends XoopsObject
         $this->initVar('bannerclient_name', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('bannerclient_extrainfo', XOBJ_DTYPE_TXTAREA, null, false);
     }
+
     public function get_new_id()
     {
         return Xoops::getInstance()->db()->lastInsertId();

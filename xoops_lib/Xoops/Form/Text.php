@@ -89,11 +89,11 @@ class Text extends Element
     {
         $this->themeDecorateElement();
         $dataList = $this->isDatalist();
-        if (!empty($dataList)) {
+        if (! empty($dataList)) {
             $this->add('list', 'list_' . $this->getName());
         }
 
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . ' ' . $this->getExtra() .' >';
+        return '<input ' . $attributes . ' ' . $this->getExtra() . ' >';
     }
 }

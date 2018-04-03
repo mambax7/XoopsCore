@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test\Key;
 
 use Xmf\Key\ArrayStorage;

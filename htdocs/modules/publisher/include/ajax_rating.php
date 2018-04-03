@@ -40,12 +40,12 @@ $xoops->disableErrorReporting();
 $publisher = Publisher::getInstance();
 $publisher->loadLanguage('main');
 
-header("Cache-Control: no-cache");
-header("Pragma: nocache");
+header('Cache-Control: no-cache');
+header('Pragma: nocache');
 
 //getting the values
-$rating = (int)($_REQUEST['rating']);
-$itemid = (int)($_REQUEST['itemid']);
+$rating = (int) ($_REQUEST['rating']);
+$itemid = (int) ($_REQUEST['itemid']);
 
 $groups = $xoops->getUserGroups();
 $gperm_handler = $publisher->getGrouppermHandler();
@@ -53,8 +53,8 @@ $hModConfig = $xoops->getHandlerConfig();
 $module_id = $publisher->getModule()->getVar('mid');
 
 //Checking permissions
-if (!$publisher->getConfig('perm_rating') || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)) {
-    $output = "unit_long$itemid|" . XoopsLocale::E_NO_ACCESS_PERMISSION . "\n";
+if (! $publisher->getConfig('perm_rating') || ! $gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)) {
+    $output = "unit_long${itemid}|" . XoopsLocale::E_NO_ACCESS_PERMISSION . "\n";
     echo $output;
     exit();
 }
@@ -63,7 +63,7 @@ $rating_unitwidth = 30;
 $units = 5;
 
 if ($rating > 5 || $rating < 1) {
-    $output = "unit_long$itemid|" . _MD_PUBLISHER_VOTE_BAD . "\n";
+    $output = "unit_long${itemid}|" . _MD_PUBLISHER_VOTE_BAD . "\n";
     echo $output;
     exit();
 }
@@ -79,13 +79,13 @@ $ip = getenv('REMOTE_ADDR');
 /* @var $ratingObj PublisherRating */
 foreach ($ratingObjs as $ratingObj) {
     $current_rating += $ratingObj->getVar('rate');
-    if ($ratingObj->getVar('ip') == $ip || ($uid > 0 && $uid == $ratingObj->getVar('uid'))) {
+    if ($ratingObj->getVar('ip') === $ip || ($uid > 0 && $uid === $ratingObj->getVar('uid'))) {
         $voted = true;
     }
 }
 
 if ($voted) {
-    $output = "unit_long$itemid|" . _MD_PUBLISHER_VOTE_ALREADY . "\n";
+    $output = "unit_long${itemid}|" . _MD_PUBLISHER_VOTE_ALREADY . "\n";
     echo $output;
     exit();
 }
@@ -104,10 +104,10 @@ $current_rating += $rating;
 $publisher->getItemHandler()->updateAll('rating', number_format($current_rating / $count, 4), $criteria, true);
 $publisher->getItemHandler()->updateAll('votes', $count, $criteria, true);
 
-$tense = $count == 1 ? _MD_PUBLISHER_VOTE_lVOTE : _MD_PUBLISHER_VOTE_lVOTES; //plural form votes/vote
+$tense = $count === 1 ? _MD_PUBLISHER_VOTE_lVOTE : _MD_PUBLISHER_VOTE_lVOTES; //plural form votes/vote
 
 // $new_back is what gets 'drawn' on your page after a successful 'AJAX/Javascript' vote
-$new_back = array();
+$new_back = [];
 
 $new_back[] .= '<div class="publisher_unit-rating" style="width:' . $units * $rating_unitwidth . 'px;">';
 $new_back[] .= '<div class="publisher_current-rating" style="width:' . @number_format($current_rating / $count, 2) * $rating_unitwidth . 'px;">' . _MD_PUBLISHER_VOTE_RATING . '</div>';
@@ -128,5 +128,5 @@ $new_back[] .= '<div class="publisher_thanks">' . _MD_PUBLISHER_VOTE_THANKS . '<
 $allnewback = join("\n", $new_back);
 
 //name of the div id to be updated | the html that needs to be changed
-$output = "unit_long$itemid|$allnewback";
+$output = "unit_long${itemid}|${allnewback}";
 echo $output;

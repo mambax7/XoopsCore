@@ -148,7 +148,6 @@ function xoops_isActiveModule($dirname)
 /**
  * @deprecated
  * @param bool $closehead true to close the header
- * @return void
  */
 function xoops_header($closehead = true)
 {
@@ -158,7 +157,6 @@ function xoops_header($closehead = true)
 
 /**
  * @deprecated
- * @return void
  */
 function xoops_footer()
 {
@@ -170,7 +168,6 @@ function xoops_footer()
  * @deprecated
  * @param mixed  $msg   message
  * @param string $title title for message display
- * @return void
  */
 function xoops_error($msg, $title = '')
 {
@@ -182,7 +179,6 @@ function xoops_error($msg, $title = '')
  * @deprecated
  * @param mixed  $msg   message
  * @param string $title title for message display
- * @return void
  */
 function xoops_result($msg, $title = '')
 {
@@ -197,7 +193,6 @@ function xoops_result($msg, $title = '')
  * @param string  $msg      message to display
  * @param string  $submit   submit button message
  * @param boolean $addtoken true to add CSRF token
- * @return void
  */
 function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 {
@@ -293,7 +288,6 @@ function xoops_getbanner()
  * @param bool   $addredirect       add xoops_redirect parameter with current URL to the redirect
  *                                   URL -  used for return from login redirect
  * @param bool   $allowExternalLink allow redirect to external URL
- * @return void
  */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
@@ -429,7 +423,6 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 /**
  * @deprecated
  * @param string $text text
- * @return void
  */
 function xoops_utf8_encode(&$text)
 {
@@ -440,7 +433,6 @@ function xoops_utf8_encode(&$text)
 /**
  * @deprecated
  * @param string $text text
- * @return void
  */
 function xoops_convert_encoding(&$text)
 {
@@ -486,7 +478,6 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  * @deprecated
  * @param string $option config name
  * @param mixed  $new    value
- * @return void
  */
 function xoops_setConfigOption($option, $new = null)
 {
@@ -546,7 +537,6 @@ function xoops_template_touch($tpl_id, $clear_old = true)
  * Clear the module cache
  *
  * @param int $mid Module ID
- * @return void
  */
 function xoops_template_clear_module_cache($mid)
 {

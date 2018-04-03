@@ -1,10 +1,10 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class XoopsCacheModelTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCacheModel';
-    
+
     public function test__construct()
     {
         $instance = new $this->myclass(null);

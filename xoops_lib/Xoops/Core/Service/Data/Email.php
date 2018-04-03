@@ -16,10 +16,6 @@
 namespace Xoops\Core\Service\Data;
 
 use Xmf\Assert;
-use Xoops\Core\Service\Data\EmailAddress;
-use Xoops\Core\Service\Data\EmailAddressList;
-use Xoops\Core\Service\Data\EmailAttachment;
-use Xoops\Core\Service\Data\EmailAttachmentSet;
 
 /**
  * The Email data object is a full email message using EmailAddress addresses.
@@ -44,6 +40,38 @@ use Xoops\Core\Service\Data\EmailAttachmentSet;
  */
 class Email
 {
+    /* assert messages */
+    protected const MESSAGE_BODY = 'Body must be specified';
+
+    protected const MESSAGE_FROM = 'From address must be specified';
+
+    protected const MESSAGE_SUBJECT = 'Subject must be specified';
+
+    protected const MESSAGE_BCC = 'Invalid BCC address specified';
+
+    protected const MESSAGE_CC = 'Invalid CC address specified';
+
+    protected const MESSAGE_REPLY = 'Invalid Reply To address specified';
+
+    protected const MESSAGE_RR = 'Invalid Read Receipt address specified';
+
+    protected const MESSAGE_TO = 'A valid To address must be specified';
+
+    protected const PROPERTY_ADDRESS_BCC = 'bccAddresses';
+
+    protected const PROPERTY_ADDRESS_CC = 'ccAddresses';
+
+    protected const PROPERTY_ADDRESS_REPLY = 'replyToAddresses';
+
+    protected const PROPERTY_ADDRESS_TO = 'toAddresses';
+
+    protected const VALID_ADDRESS_PROPERTIES = [
+        self::PROPERTY_ADDRESS_BCC,
+        self::PROPERTY_ADDRESS_CC,
+        self::PROPERTY_ADDRESS_REPLY,
+        self::PROPERTY_ADDRESS_TO,
+    ];
+
     /** @var string $subject the subject of the message, a required non-empty string */
     protected $subject;
 
@@ -74,28 +102,6 @@ class Email
     /** @var EmailAttachmentSet attachments to be part of the email */
     protected $attachmentSet;
 
-    /* assert messages */
-    protected const MESSAGE_BODY    = 'Body must be specified';
-    protected const MESSAGE_FROM    = 'From address must be specified';
-    protected const MESSAGE_SUBJECT = 'Subject must be specified';
-    protected const MESSAGE_BCC     = 'Invalid BCC address specified';
-    protected const MESSAGE_CC      = 'Invalid CC address specified';
-    protected const MESSAGE_REPLY   = 'Invalid Reply To address specified';
-    protected const MESSAGE_RR      = 'Invalid Read Receipt address specified';
-    protected const MESSAGE_TO      = 'A valid To address must be specified';
-
-    protected const PROPERTY_ADDRESS_BCC   = 'bccAddresses';
-    protected const PROPERTY_ADDRESS_CC    = 'ccAddresses';
-    protected const PROPERTY_ADDRESS_REPLY = 'replyToAddresses';
-    protected const PROPERTY_ADDRESS_TO    = 'toAddresses';
-
-    protected const VALID_ADDRESS_PROPERTIES = [
-        self::PROPERTY_ADDRESS_BCC,
-        self::PROPERTY_ADDRESS_CC,
-        self::PROPERTY_ADDRESS_REPLY,
-        self::PROPERTY_ADDRESS_TO,
-    ];
-
     /**
      * Email constructor.
      *
@@ -115,22 +121,22 @@ class Email
         ?EmailAddress $fromAddress = null,
         ?EmailAddress $toAddress = null
     ) {
-        if (null!==$subject) {
+        if ($subject !== null) {
             $subject = trim($subject);
             Assert::stringNotEmpty($subject, static::MESSAGE_SUBJECT);
             $this->subject = $subject;
         }
-        if (null!==$body) {
+        if ($body !== null) {
             $body = trim($body);
             Assert::stringNotEmpty($body, static::MESSAGE_BODY);
             $this->body = $body;
         }
         try {
-            if (null!==$fromAddress) {
+            if ($fromAddress !== null) {
                 $fromAddress->getEmail();
                 $this->fromAddress = $fromAddress;
             }
-            if (null!==$toAddress) {
+            if ($toAddress !== null) {
                 $toAddress->getEmail();
                 $this->toAddresses = new EmailAddressList([$toAddress]);
             }
@@ -142,13 +148,12 @@ class Email
     /**
      * Return a new object with a the specified body
      *
-     * @param string $body message body
      *
-     * @return Email
+     * @param string $body message body
      *
      * @throws \InvalidArgumentException
      */
-    public function withBody(string $body) : Email
+    public function withBody(string $body): self
     {
         $body = trim($body);
         Assert::stringNotEmpty($body, static::MESSAGE_BODY);
@@ -162,13 +167,12 @@ class Email
      *
      * The htmlBody is optional, while a body (plain text) is required, and must always be specified.
      *
-     * @param string $body HTML message body
      *
-     * @return Email
+     * @param string $body HTML message body
      *
      * @throws \InvalidArgumentException
      */
-    public function withHtmlBody(string $body) : Email
+    public function withHtmlBody(string $body): self
     {
         $body = trim($body);
         Assert::stringNotEmpty($body, static::MESSAGE_BODY);
@@ -186,7 +190,7 @@ class Email
      *
      * @throws \InvalidArgumentException (property was not properly set before used)
      */
-    public function withFromAddress(EmailAddress $fromAddress) : Email
+    public function withFromAddress(EmailAddress $fromAddress): self
     {
         try {
             $fromAddress->getEmail();
@@ -202,13 +206,12 @@ class Email
     /**
      * Return a new object with a the specified subject
      *
-     * @param string $subject message subject
      *
-     * @return Email
+     * @param string $subject message subject
      *
      * @throws \InvalidArgumentException
      */
-    public function withSubject(string $subject) : Email
+    public function withSubject(string $subject): self
     {
         $subject = trim($subject);
         Assert::stringNotEmpty($subject, static::MESSAGE_SUBJECT);
@@ -218,39 +221,14 @@ class Email
     }
 
     /**
-     * withAddresses - utility method to validate and assign a set of addresses
-     *
-     * @param string           $property  property to set, one of VALID_ADDRESS_PROPERTIES
-     * @param EmailAddressList $addresses addresses to be assigned to property
-     *
-     * @return Email a new object with a the specified property set to the specified addresses
-     *
-     * @throws \InvalidArgumentException (a property was not set before used)
-     */
-    protected function withAddresses(string $property, EmailAddressList $addresses) : Email
-    {
-        Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
-        try {
-            $addresses->getAddresses();
-        } catch (\LogicException $e) {
-            throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
-        }
-
-        $new = clone $this;
-        $new->{$property} = $addresses;
-        return $new;
-    }
-
-    /**
      * Return a new object with a the specified bccAddresses
+     *
      *
      * @param EmailAddressList $bccAddresses the addresses to be BCC'ed
      *
-     * @return Email
-     *
      * @throws \InvalidArgumentException (a property was not properly set before used)
      */
-    public function withBccAddresses(EmailAddressList $bccAddresses) : Email
+    public function withBccAddresses(EmailAddressList $bccAddresses): self
     {
         return $this->withAddresses(static::PROPERTY_ADDRESS_BCC, $bccAddresses);
     }
@@ -258,13 +236,12 @@ class Email
     /**
      * Return a new object with a the specified ccAddresses
      *
-     * @param EmailAddressList $ccAddresses the addresses to be CC'ed
      *
-     * @return Email
+     * @param EmailAddressList $ccAddresses the addresses to be CC'ed
      *
      * @throws \InvalidArgumentException (a property was not properly set before used)
      */
-    public function withCcAddresses(EmailAddressList $ccAddresses) : Email
+    public function withCcAddresses(EmailAddressList $ccAddresses): self
     {
         return $this->withAddresses(static::PROPERTY_ADDRESS_CC, $ccAddresses);
     }
@@ -272,13 +249,12 @@ class Email
     /**
      * Return a new object with a the specified replyToAddresses
      *
-     * @param EmailAddressList $replyToAddresses the addresses to receive replies
      *
-     * @return Email
+     * @param EmailAddressList $replyToAddresses the addresses to receive replies
      *
      * @throws \InvalidArgumentException (a property was not properly set before used)
      */
-    public function withReplyToAddresses(EmailAddressList $replyToAddresses) : Email
+    public function withReplyToAddresses(EmailAddressList $replyToAddresses): self
     {
         return $this->withAddresses(static::PROPERTY_ADDRESS_REPLY, $replyToAddresses);
     }
@@ -286,13 +262,12 @@ class Email
     /**
      * Return a new object with a the specified toAddresses
      *
-     * @param EmailAddressList $toAddresses the addresses to receive the message
      *
-     * @return Email
+     * @param EmailAddressList $toAddresses the addresses to receive the message
      *
      * @throws \InvalidArgumentException (a property was not properly set before used)
      */
-    public function withToAddresses(EmailAddressList $toAddresses) : Email
+    public function withToAddresses(EmailAddressList $toAddresses): self
     {
         return $this->withAddresses(static::PROPERTY_ADDRESS_TO, $toAddresses);
     }
@@ -306,7 +281,7 @@ class Email
      *
      * @throws \InvalidArgumentException (property was not properly set before used)
      */
-    public function withReadReceiptAddress(EmailAddress $readReceiptAddress) : Email
+    public function withReadReceiptAddress(EmailAddress $readReceiptAddress): self
     {
         try {
             $readReceiptAddress->getEmail();
@@ -322,13 +297,10 @@ class Email
     /**
      * withAttachments - return a new object with a the specified set of attachments
      *
-     * @param EmailAttachmentSet $attachmentSet
-     *
-     * @return Email
      *
      * @throws \InvalidArgumentException
      */
-    public function withAttachments(EmailAttachmentSet $attachmentSet) : Email
+    public function withAttachments(EmailAttachmentSet $attachmentSet): self
     {
         try {
             $attachmentSet->getAttachments();
@@ -348,7 +320,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getBody() : string
+    public function getBody(): string
     {
         try {
             Assert::stringNotEmpty($this->body, static::MESSAGE_BODY);
@@ -365,7 +337,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getHtmlBody() : ?string
+    public function getHtmlBody(): ?string
     {
         try {
             Assert::nullOrStringNotEmpty($this->htmlBody, static::MESSAGE_BODY);
@@ -382,7 +354,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getFromAddress() : EmailAddress
+    public function getFromAddress(): EmailAddress
     {
         try {
             Assert::notNull($this->fromAddress, static::MESSAGE_FROM);
@@ -401,7 +373,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getSubject() : string
+    public function getSubject(): string
     {
         try {
             Assert::stringNotEmpty($this->subject, static::MESSAGE_SUBJECT);
@@ -413,36 +385,13 @@ class Email
     }
 
     /**
-     * getAddresses
-     *
-     * @param string $property addresses property to get, one of VALID_ADDRESS_PROPERTIES
-     * @param string $message  message for any Assert exception
-     *
-     * @return EmailAddressList|null the specified addresses property or null if not set
-     *
-     * @throws \LogicException (property was not properly set before used)
-     */
-    protected function getAddresses(string $property, string $message) : ?EmailAddressList
-    {
-        try {
-            Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
-            if (null !== $this->{$property}) {
-                Assert::allIsInstanceOf($this->{$property}->getAddresses(), EmailAddress::class, $message);
-            }
-        } catch (\InvalidArgumentException | \LogicException $e) {
-            throw new \LogicException($e->getMessage(), $e->getCode(), $e);
-        }
-        return $this->{$property};
-    }
-
-    /**
      * getBccAddresses
      *
      * @return EmailAddressList|null the BCC address list or null if not set
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getBccAddresses() : ?EmailAddressList
+    public function getBccAddresses(): ?EmailAddressList
     {
         return $this->getAddresses(static::PROPERTY_ADDRESS_BCC, static::MESSAGE_BCC);
     }
@@ -454,7 +403,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getCcAddresses() : ?EmailAddressList
+    public function getCcAddresses(): ?EmailAddressList
     {
         return $this->getAddresses(static::PROPERTY_ADDRESS_CC, static::MESSAGE_CC);
     }
@@ -466,7 +415,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getReplyToAddresses() : ?EmailAddressList
+    public function getReplyToAddresses(): ?EmailAddressList
     {
         return $this->getAddresses(static::PROPERTY_ADDRESS_REPLY, static::MESSAGE_REPLY);
     }
@@ -478,7 +427,7 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getToAddresses() : EmailAddressList
+    public function getToAddresses(): EmailAddressList
     {
         try {
             Assert::notEmpty($this->toAddresses, static::MESSAGE_TO);
@@ -495,9 +444,9 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getReadReceiptAddress() : ?EmailAddress
+    public function getReadReceiptAddress(): ?EmailAddress
     {
-        if (null !== $this->readReceiptAddress) {
+        if ($this->readReceiptAddress !== null) {
             try {
                 Assert::isInstanceOf($this->readReceiptAddress, EmailAddress::class, static::MESSAGE_RR);
                 $this->readReceiptAddress->getEmail();
@@ -515,9 +464,9 @@ class Email
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getAttachments() : ?EmailAttachmentSet
+    public function getAttachments(): ?EmailAttachmentSet
     {
-        if (null !== $this->attachmentSet) {
+        if ($this->attachmentSet !== null) {
             try {
                 $this->attachmentSet->getAttachments();
             } catch (\LogicException $e) {
@@ -525,5 +474,52 @@ class Email
             }
         }
         return $this->attachmentSet;
+    }
+
+    /**
+     * withAddresses - utility method to validate and assign a set of addresses
+     *
+     * @param string           $property  property to set, one of VALID_ADDRESS_PROPERTIES
+     * @param EmailAddressList $addresses addresses to be assigned to property
+     *
+     * @return Email a new object with a the specified property set to the specified addresses
+     *
+     * @throws \InvalidArgumentException (a property was not set before used)
+     */
+    protected function withAddresses(string $property, EmailAddressList $addresses): self
+    {
+        Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
+        try {
+            $addresses->getAddresses();
+        } catch (\LogicException $e) {
+            throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        $new = clone $this;
+        $new->{$property} = $addresses;
+        return $new;
+    }
+
+    /**
+     * getAddresses
+     *
+     * @param string $property addresses property to get, one of VALID_ADDRESS_PROPERTIES
+     * @param string $message  message for any Assert exception
+     *
+     * @return EmailAddressList|null the specified addresses property or null if not set
+     *
+     * @throws \LogicException (property was not properly set before used)
+     */
+    protected function getAddresses(string $property, string $message): ?EmailAddressList
+    {
+        try {
+            Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
+            if ($this->{$property} !== null) {
+                Assert::allIsInstanceOf($this->{$property}->getAddresses(), EmailAddress::class, $message);
+            }
+        } catch (\InvalidArgumentException | \LogicException $e) {
+            throw new \LogicException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $this->{$property};
     }
 }

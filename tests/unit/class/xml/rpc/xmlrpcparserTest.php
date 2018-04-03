@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
 {
@@ -7,7 +7,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
 
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
@@ -19,13 +19,13 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('SaxParser', $instance);
 
         $handlers = $instance->tagHandlers;
-        $this->assertTrue(!empty($handlers));
-        $validHandlers = array('RpcMethodNameHandler','RpcIntHandler','RpcDoubleHandler','RpcBooleanHandler',
-            'RpcStringHandler','RpcDateTimeHandler','RpcBase64Handler','RpcNameHandler','RpcValueHandler',
-            'RpcMemberHandler','RpcStructHandler','RpcArrayHandler');
+        $this->assertTrue(! empty($handlers));
+        $validHandlers = ['RpcMethodNameHandler', 'RpcIntHandler', 'RpcDoubleHandler', 'RpcBooleanHandler',
+            'RpcStringHandler', 'RpcDateTimeHandler', 'RpcBase64Handler', 'RpcNameHandler', 'RpcValueHandler',
+            'RpcMemberHandler', 'RpcStructHandler', 'RpcArrayHandler', ];
         foreach ($handlers as $h) {
             $x = get_class($h);
-            $this->assertTrue(in_array($x, $validHandlers));
+            $this->assertTrue(in_array($x, $validHandlers, true));
         }
     }
 
@@ -37,6 +37,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $instance->setTempName($data);
         $this->assertSame($data, $instance->getTempName());
     }
+
     public function test_setTempValue()
     {
         $instance = $this->object;
@@ -60,7 +61,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x['name']);
 
         $instance->resetTempMember();
-        $this->assertSame(array(), $instance->getTempMember());
+        $this->assertSame([], $instance->getTempMember());
     }
 
     public function test_setWorkingLevel()
@@ -78,13 +79,13 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $member = array('name' => 'john Doe');
+        $member = ['name' => 'john Doe'];
         $instance->setTempStruct($member);
         $x = $instance->getTempStruct();
         $this->assertSame($member['name'], $x['name']);
 
         $instance->resetTempStruct();
-        $this->assertSame(array(), $instance->getTempStruct());
+        $this->assertSame([], $instance->getTempStruct());
     }
 
     public function test_setTempArray()
@@ -97,7 +98,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $x[0]);
 
         $instance->resetTempArray();
-        $this->assertSame(array(), $instance->getTempArray());
+        $this->assertSame([], $instance->getTempArray());
     }
 
     public function test_setMethodName()

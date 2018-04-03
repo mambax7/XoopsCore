@@ -17,14 +17,13 @@
  */
 class PublisherWaitingPlugin implements WaitingPluginInterface
 {
-
     /**
      * @return array
      */
     public function waiting()
     {
         $publisher = Publisher::getInstance();
-        $ret = array();
+        $ret = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', 1));
         $count = $publisher->getItemHandler()->getCount($criteria);
@@ -32,7 +31,7 @@ class PublisherWaitingPlugin implements WaitingPluginInterface
             $ret[] = [
                 'count' => $count,
                 'name' => _MI_PUBLISHER_WAITING,
-                'link' => $publisher->url('admin/item.php')
+                'link' => $publisher->url('admin/item.php'),
             ];
         }
         return $ret;

@@ -24,23 +24,23 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
  *
  * Temporarily try and fix, but set up a (delayed) warning
  */
-if (!class_exists('XoopsLoad', false)) {
-    require_once dirname(__DIR__). '/class/XoopsBaseConfig.php';
+if (! class_exists('XoopsLoad', false)) {
+    require_once dirname(__DIR__) . '/class/XoopsBaseConfig.php';
     XoopsBaseConfig::bootstrapTransition();
     $delayedWarning = 'Patch mainfile.php for XoopsBaseConfig';
 }
 
 global $xoops;
-$GLOBALS['xoops'] =& $xoops;
+$GLOBALS['xoops'] = & $xoops;
 
 //Legacy support
 global $xoopsDB;
-$GLOBALS['xoopsDB'] =& $xoopsDB;
+$GLOBALS['xoopsDB'] = & $xoopsDB;
 /**
  * YOU SHOULD NEVER USE THE FOLLOWING TO CONSTANTS, THEY WILL BE REMOVED
  */
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-defined('NWLINE')or define('NWLINE', "\n");
+defined('NWLINE') or define('NWLINE', "\n");
 
 /**
  * Include files with definitions
@@ -61,7 +61,7 @@ include_once __DIR__ . '/defines.php';
  */
 $xoops = Xoops::getInstance();
 
-$xoops->option =& $GLOBALS['xoopsOption'];
+$xoops->option = & $GLOBALS['xoopsOption'];
 
 /**
  * Create Instance Xoops\Core\Logger Object, the logger manager
@@ -90,13 +90,13 @@ $xoopsSecurity = $xoops->security();
  * Requires functions
  */
 
-if (!defined('XOOPS_XMLRPC')) {
+if (! defined('XOOPS_XMLRPC')) {
     define('XOOPS_DB_CHKREF', 1);
 } else {
     define('XOOPS_DB_CHKREF', 0);
 }
 
-if ('POST' !== \Xmf\Request::getMethod() || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
+if (\Xmf\Request::getMethod() !== 'POST' || ! $xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
     define ('XOOPS_DB_PROXY', 1);
 }
 
@@ -128,7 +128,7 @@ include_once $xoops->path('include/functions.php');
  * Requires functions and database loaded
  */
 $xoops->getConfigs();
-$xoopsConfig =& $xoops->config;
+$xoopsConfig = & $xoops->config;
 
 /**
  * Merge file and db configs.
@@ -151,10 +151,10 @@ $xoops->gzipCompression();
 /**
  * clickjack protection - Add option to HTTP header restricting using site in an iframe
  */
-$xFrameOptions =  isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
+$xFrameOptions = isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
 $xoops->events()->triggerEvent('core.include.common.xframeoption');
-if (!headers_sent() && !empty($xFrameOptions)) {
-    header('X-Frame-Options: ' .$xFrameOptions);
+if (! headers_sent() && ! empty($xFrameOptions)) {
+    header('X-Frame-Options: ' . $xFrameOptions);
 }
 
 /**
@@ -183,7 +183,7 @@ if ($xoops->session()->has('xoopsUserId')) {
     $uid = $xoops->session()->get('xoopsUserId');
     $xoops->user = $member_handler->getUser($uid);
     if ($xoops->user instanceof XoopsUser) {
-        if (((int)($xoops->user->getVar('last_login')) + 60 * 5) < time()) {
+        if (((int) ($xoops->user->getVar('last_login')) + 60 * 5) < time()) {
             $user_handler = $xoops->getHandlerUser();
             $criteria = new Criteria('uid', $uid);
             $user_handler->updateAll('last_login', time(), $criteria, true);
@@ -206,7 +206,7 @@ $xoops->themeSelect();
 /**
  * Closed Site
  */
-if ($xoops->getConfig('closesite') == 1) {
+if ($xoops->getConfig('closesite') === 1) {
     include_once $xoops->path('include/site-closed.php');
 }
 
@@ -222,18 +222,18 @@ if (XoopsLoad::fileExists('./xoops_version.php')) {
     $xoops->moduleDirname = $url_arr[2];
     unset($url_arr);
 
-    if (!$xoops->module || !$xoops->module->getVar('isactive')) {
+    if (! $xoops->module || ! $xoops->module->getVar('isactive')) {
         $xoops->redirect($xoops_url, 3, XoopsLocale::E_NO_MODULE);
         exit();
     }
     $moduleperm_handler = $xoops->getHandlerGroupPermission();
     if ($xoops->isUser()) {
-        if (!$moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), $xoops->user->getGroups())) {
+        if (! $moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), $xoops->user->getGroups())) {
             $xoops->redirect($xoops_url, 1, XoopsLocale::E_NO_ACCESS_PERMISSION, false);
         }
         $xoops->userIsAdmin = $xoops->user->isAdmin($xoops->module->getVar('mid'));
     } else {
-        if (!$moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), FixedGroups::ANONYMOUS)) {
+        if (! $moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), FixedGroups::ANONYMOUS)) {
             $xoops->redirect(
                 $xoops_url . '/user.php?from=' . $xoops->module->getVar('dirname', 'n'),
                 1,
@@ -247,9 +247,9 @@ if (XoopsLoad::fileExists('./xoops_version.php')) {
         $xoops->loadLocale($xoops->module->getVar('dirname', 'n'));
     }
 
-    if ($xoops->module->getVar('hasconfig') == 1
-        || $xoops->module->getVar('hascomments') == 1
-        || $xoops->module->getVar('hasnotification') == 1
+    if ($xoops->module->getVar('hasconfig') === 1
+        || $xoops->module->getVar('hascomments') === 1
+        || $xoops->module->getVar('hasnotification') === 1
     ) {
         $xoops->getModuleConfigs();
     }
@@ -261,10 +261,10 @@ if (XoopsLoad::fileExists('./xoops_version.php')) {
 
 $xoopsTpl = $xoops->tpl();
 $xoTheme = null;
-$xoopsUser =& $xoops->user;
-$xoopsModule =& $xoops->module;
-$xoopsUserIsAdmin =& $xoops->userIsAdmin;
-$xoopsModuleConfig =& $xoops->moduleConfig;
+$xoopsUser = & $xoops->user;
+$xoopsModule = & $xoops->module;
+$xoopsUserIsAdmin = & $xoops->userIsAdmin;
+$xoopsModuleConfig = & $xoops->moduleConfig;
 
 //Creates 'system_modules_active' cache file if it has been deleted.
 $xoops->getActiveModules();

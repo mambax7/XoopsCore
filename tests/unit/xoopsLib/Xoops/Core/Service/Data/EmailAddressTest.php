@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Test\Core\Service\Data;
 
 use Xoops\Core\Service\Data\EmailAddress;
@@ -36,16 +37,16 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
     {
         $address = new EmailAddress('user@example.com', 'name');
         $this->assertInstanceOf('\Xoops\Core\Service\Data\EmailAddress', $address);
-        $this->assertEquals('user@example.com', $address->getEmail());
-        $this->assertEquals('name', $address->getDisplayName());
+        $this->assertSame('user@example.com', $address->getEmail());
+        $this->assertSame('name', $address->getDisplayName());
     }
 
     public function testNewEmailAddressWithFluent()
     {
         $actual = $this->object->withEmail('user@example.com')->withDisplayName('name');
         $this->assertNotSame($this->object, $actual);
-        $this->assertEquals('user@example.com', $actual->getEmail());
-        $this->assertEquals('name', $actual->getDisplayName());
+        $this->assertSame('user@example.com', $actual->getEmail());
+        $this->assertSame('name', $actual->getDisplayName());
         $this->expectException(\LogicException::class);
         $this->object->getEmail();
     }
@@ -74,8 +75,7 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
 
     public function testGetDisplayNameInvalid()
     {
-        $address = new class() extends EmailAddress
-        {
+        $address = new class() extends EmailAddress {
             public function __construct()
             {
                 parent::__construct();

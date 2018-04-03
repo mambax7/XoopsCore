@@ -40,7 +40,7 @@ foreach ($files as $filename_path) {
     }
 }
 $admin_page->addConfigBoxLine($folder_path, 'folder');
-$admin_page->addConfigBoxLine(array($folder_path, '777'), 'chmod');
+$admin_page->addConfigBoxLine([$folder_path, '777'], 'chmod');
 $admin_page->addInfoBox(_MI_MAINTENANCE_DUMP);
 $admin_page->addInfoBoxLine(sprintf(_AM_MAINTENANCE_NBFILES, $count));
 $admin_page->displayIndex();

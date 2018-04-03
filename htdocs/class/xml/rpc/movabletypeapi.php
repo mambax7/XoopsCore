@@ -18,13 +18,8 @@
  * @author          Kazumi Ono (AKA onokazu)
  * @version         $Id $
  */
-class MovableTypeApi extends XoopsXmlRpcApi
+class movabletypeapi extends XoopsXmlRpcApi
 {
-    /**
-     * @param $params
-     * @param $response
-     * @param $module
-     */
     public function __construct(&$params, &$response, &$module)
     {
         parent::__construct($params, $response, $module);
@@ -32,7 +27,7 @@ class MovableTypeApi extends XoopsXmlRpcApi
 
     public function getCategoryList()
     {
-        if (!$this->_checkUser($this->params[1], $this->params[2])) {
+        if (! $this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             $xoopsapi = $this->_getXoopsApi($this->params);

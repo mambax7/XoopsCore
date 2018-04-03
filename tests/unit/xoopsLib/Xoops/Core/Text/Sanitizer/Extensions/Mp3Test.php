@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class Mp3Test extends \PHPUnit\Framework\TestCase
 {
@@ -45,7 +46,7 @@ class Mp3Test extends \PHPUnit\Framework\TestCase
     public function testGetDhtmlEditorSupport()
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
-        $this->assertTrue(2 == count($support));
+        $this->assertTrue(count($support) === 2);
         $this->assertTrue(is_string($support[0]));
         $this->assertTrue(is_string($support[1]));
     }
@@ -58,10 +59,10 @@ class Mp3Test extends \PHPUnit\Framework\TestCase
 
         $in = '[mp3]http://spot.river-styx.com/media/spot6.mp3[/mp3]';
         $actual = $this->sanitizer->filterForDisplay($in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $in = '[mp3 url="http://spot.river-styx.com/media/spot6.mp3" /]';
         $actual = $this->sanitizer->filterForDisplay($in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

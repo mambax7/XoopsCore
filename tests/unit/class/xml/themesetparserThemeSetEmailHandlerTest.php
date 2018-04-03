@@ -1,12 +1,13 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class ThemeSetEmailHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'ThemeSetEmailHandler';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
@@ -32,7 +33,7 @@ class ThemeSetEmailHandlerTest extends \PHPUnit\Framework\TestCase
 
         $input = 'input';
         $parser = new XoopsThemeSetParser($input);
-        $parser->tags = array('author','author');
+        $parser->tags = ['author', 'author'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
         $this->assertSame(null, $x);
@@ -40,7 +41,7 @@ class ThemeSetEmailHandlerTest extends \PHPUnit\Framework\TestCase
 
         $input = 'input';
         $parser = new XoopsThemeSetParser($input);
-        $parser->tags = array('dummy','dummy');
+        $parser->tags = ['dummy', 'dummy'];
         $data = 'data';
         $x = $instance->handleCharacterData($parser, $data);
         $this->assertSame(null, $x);

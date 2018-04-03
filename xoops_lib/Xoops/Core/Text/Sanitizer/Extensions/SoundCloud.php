@@ -31,9 +31,9 @@ class SoundCloud extends ExtensionAbstract
      */
     protected static $defaultConfiguration = [
         'enabled' => false,
-        'params' => "color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false",
-        'width'  => "100%",
-        'height' => "166",
+        'params' => 'color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false',
+        'width' => '100%',
+        'height' => '166',
     ];
 
     /**
@@ -85,8 +85,6 @@ EOH;
      * For backward compatibility, we accept this form, too:
      * [soundcloud]https://api.soundcloud.com/tracks/46363550[/soundcloud]
      * But, the old URL form seems to no longer work correctly :(
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -95,9 +93,9 @@ EOH;
             'soundcloud',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $defaults = [
-                    'url'    => trim($content),
+                    'url' => trim($content),
                     'params' => $this->config['params'],
-                    'width'  => $this->config['width'],
+                    'width' => $this->config['width'],
                     'height' => $this->config['height'],
                 ];
                 $cleanAttributes = $shortcodes->shortcodeAttributes($defaults, $attributes);
@@ -109,7 +107,7 @@ EOH;
                 $cleanParams = array_filter($cleanParams, 'urlencode');
 
                 $template = '<iframe width="%2$s" height="%3$s" scrolling="no" frameborder="no"'
-                    .' src="https://w.soundcloud.com/player/?url=%1$s&amp;color=%4$s&amp;auto_play=%5$s'
+                    . ' src="https://w.soundcloud.com/player/?url=%1$s&amp;color=%4$s&amp;auto_play=%5$s'
                     . '&amp;hide_related=%6$s&amp;show_comments=%7$s&amp;show_user=%8$s&amp;'
                     . 'show_reposts=%9$s"></iframe>';
 

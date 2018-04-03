@@ -16,7 +16,6 @@
  */
 class PmMainmenuPlugin implements MainmenuPluginInterface
 {
-
     /**
      * @return array
      */

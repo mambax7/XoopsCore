@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 namespace Xoops\Html;
 
 use Xoops\Core\AttributeInterface;
@@ -27,14 +26,19 @@ use Xoops\Core\AttributeInterface;
 class Attributes extends \ArrayObject implements AttributeInterface
 {
     /**
+     * @var string[] list of attributes to NOT render
+     */
+    protected $suppressRenderAttributes = [];
+
+    /**
      * __construct
      *
      * @param array $attributes array of attribute name => value pairs
      */
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         parent::__construct([]);
-        if (!empty($attributes)) {
+        if (! empty($attributes)) {
             $this->setAll($attributes);
         }
     }
@@ -44,8 +48,6 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *
      * @param string          $name  name of the attribute
      * @param string|string[] $value value for the attribute
-     *
-     * @return void
      */
     public function add($name, $value)
     {
@@ -57,53 +59,11 @@ class Attributes extends \ArrayObject implements AttributeInterface
             $values = (array) $values;
         }
         foreach ($value as $v) {
-            if (!in_array($v, $values)) {
+            if (! in_array($v, $values, true)) {
                 $values[] = $v;
             }
         }
         $this->offsetSet($name, $values);
-    }
-
-    /**
-     * @var string[] list of attributes to NOT render
-     */
-    protected $suppressRenderAttributes = [];
-
-    /**
-     * Add attributes to the render suppression list
-     *
-     * @param string|string[] $names attributes to suppress
-     *
-     * @return void
-     */
-    protected function suppressRender($names)
-    {
-        $names = (array) $names;
-        $this->suppressRenderAttributes = array_unique(
-            array_merge($this->suppressRenderAttributes, $names)
-        );
-    }
-
-    /**
-     * controls rendering of specific attributes
-     *
-     * Example, some form elements have "attributes" that are not standard html attributes to be
-     * included in the rendered tag, like caption, or the value for a textarea element.
-     *
-     * Also, any attribute starting with a ":" is considered to be a control item, and is not
-     * rendered.
-     *
-     * @param string $name attribute name to check
-     *
-     * @return boolean true if this attribute should be rendered, false otherwise
-     */
-    protected function doRender($name)
-    {
-        if ((':' === substr($name, 0, 1))
-            || (in_array($name, $this->suppressRenderAttributes))) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -115,7 +75,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
     {
         $rendered = '';
         foreach ($this as $name => $value) {
-            if (!$this->doRender($name)) {
+            if (! $this->doRender($name)) {
                 continue;
             }
             if ($name === 'name'
@@ -126,12 +86,12 @@ class Attributes extends \ArrayObject implements AttributeInterface
             }
             if (is_array($value)) {
                 // arrays can be used for class attributes, space separated
-                $set = '="' . htmlspecialchars(implode(' ', $value), ENT_QUOTES) .'"';
-            } elseif ($value===null) {
+                $set = '="' . htmlspecialchars(implode(' ', $value), ENT_QUOTES) . '"';
+            } elseif ($value === null) {
                 // null indicates attribute minimization (name only,) like autofocus or readonly
                 $set = '';
             } else {
-                $set = '="' . htmlspecialchars($value, ENT_QUOTES) .'"';
+                $set = '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
             }
             $rendered .= htmlspecialchars($name, ENT_QUOTES) . $set . ' ';
         }
@@ -166,8 +126,8 @@ class Attributes extends \ArrayObject implements AttributeInterface
     {
         // convert boolean to strings, so getAttribute can return boolean
         // false for attributes that are not defined
-        $value = (false === $value) ? '0' : $value;
-        $value = (true === $value) ? '1' : $value;
+        $value = ($value === false) ? '0' : $value;
+        $value = ($value === true) ? '1' : $value;
 
         $this->offsetSet($name, $value);
         return $this;
@@ -211,7 +171,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
      */
     public function clear()
     {
-        return $this->exchangeArray(array());
+        return $this->exchangeArray([]);
     }
 
     // extras
@@ -253,8 +213,6 @@ class Attributes extends \ArrayObject implements AttributeInterface
      * Set multiple attributes by using an associative array
      *
      * @param array $values array of new attributes
-     *
-     * @return void
      */
     public function setMerge($values)
     {
@@ -273,16 +231,14 @@ class Attributes extends \ArrayObject implements AttributeInterface
      *                      value will be appended to the end of the
      *                      array rather than added with the key $name.
      * @param mixed  $value An attribute array item value.
-     *
-     * @return void
      */
     public function setArrayItem($stem, $name, $value)
     {
-        $newValue = array();
+        $newValue = [];
         if ($this->offsetExists($stem)) {
             $newValue = $this->offsetGet($stem);
-            if (!is_array($newValue)) {
-                $newValue = array();
+            if (! is_array($newValue)) {
+                $newValue = [];
             }
         }
         if ($name === null || $name === '') {
@@ -307,12 +263,47 @@ class Attributes extends \ArrayObject implements AttributeInterface
             return $this->getArrayCopy();
         }
 
-        $likeSet = array();
+        $likeSet = [];
         foreach ($this as $k => $v) {
-            if (substr($k, 0, strlen($nameLike))==$nameLike) {
-                $likeSet[$k]=$v;
+            if (substr($k, 0, strlen($nameLike)) === $nameLike) {
+                $likeSet[$k] = $v;
             }
         }
         return $likeSet;
+    }
+
+    /**
+     * Add attributes to the render suppression list
+     *
+     * @param string|string[] $names attributes to suppress
+     */
+    protected function suppressRender($names)
+    {
+        $names = (array) $names;
+        $this->suppressRenderAttributes = array_unique(
+            array_merge($this->suppressRenderAttributes, $names)
+        );
+    }
+
+    /**
+     * controls rendering of specific attributes
+     *
+     * Example, some form elements have "attributes" that are not standard html attributes to be
+     * included in the rendered tag, like caption, or the value for a textarea element.
+     *
+     * Also, any attribute starting with a ":" is considered to be a control item, and is not
+     * rendered.
+     *
+     * @param string $name attribute name to check
+     *
+     * @return boolean true if this attribute should be rendered, false otherwise
+     */
+    protected function doRender($name)
+    {
+        if ((substr($name, 0, 1) === ':')
+            || (in_array($name, $this->suppressRenderAttributes, true))) {
+            return false;
+        }
+        return true;
     }
 }

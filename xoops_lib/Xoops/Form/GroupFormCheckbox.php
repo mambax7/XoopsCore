@@ -35,7 +35,7 @@ class GroupFormCheckbox extends Element
      *
      * @var array
      */
-    private $optionTree = array();
+    private $optionTree = [];
 
     /**
      * __construct
@@ -63,8 +63,6 @@ class GroupFormCheckbox extends Element
      * Sets the tree structure of items
      *
      * @param array $optionTree options
-     *
-     * @return void
      */
     public function setOptionTree(&$optionTree)
     {
@@ -94,16 +92,16 @@ class GroupFormCheckbox extends Element
             ++$cols;
         }
         $ret .= '</tr></table></td><td class="even" valign="top">';
-        $option_ids = array();
+        $option_ids = [];
         foreach (array_keys($this->optionTree) as $id) {
-            if (!empty($id)) {
+            if (! empty($id)) {
                 $option_ids[] = "'" . $ele_name . '[groups][' . $this->groupId . '][' . $id . ']' . "'";
             }
         }
         $checkAllButtonId = $ele_name . '[checkallbtn][' . $this->groupId . ']';
         $option_ids_str = implode(', ', $option_ids);
-        $ret .= \XoopsLocale::ALL . " <input id=\"" . $checkAllButtonId . "\" type=\"checkbox\" value=\"\" "
-            . "onclick=\"var optionids = new Array(" . $option_ids_str . "); "
+        $ret .= \XoopsLocale::ALL . ' <input id="' . $checkAllButtonId . '" type="checkbox" value="" '
+            . 'onclick="var optionids = new Array(' . $option_ids_str . '); '
             . "xoopsCheckAllElements(optionids, '" . $checkAllButtonId . "');\" />";
         $ret .= '</td></tr></table>';
         return $ret;
@@ -116,15 +114,13 @@ class GroupFormCheckbox extends Element
      * @param array  $option    option
      * @param string $prefix    prefix
      * @param array  $parentIds parent ids
-     *
-     * @return void append
      */
-    private function renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
+    private function renderOptionTree(&$tree, $option, $prefix, $parentIds = [])
     {
         $elementName = $this->getName();
-        $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $elementName . "[groups]["
-            . $this->groupId . "][" . $option['id'] . "]\" id=\"" . $elementName
-            . "[groups][" . $this->groupId . "][" . $option['id'] . "]\" onclick=\"";
+        $tree .= $prefix . '<input type="checkbox" name="' . $elementName . '[groups]['
+            . $this->groupId . '][' . $option['id'] . ']" id="' . $elementName
+            . '[groups][' . $this->groupId . '][' . $option['id'] . ']" onclick="';
         // If there are parent elements, add javascript that will
         // make them selected when this element is checked to make
         // sure permissions to parent items are added as well.
@@ -143,12 +139,12 @@ class GroupFormCheckbox extends Element
                 . "'); if(this.checked != true) {ele.checked = false;}";
         }
         $tree .= '" value="1"';
-        if (in_array($option['id'], $this->get('value', []))) {
+        if (in_array($option['id'], $this->get('value', []), true)) {
             $tree .= ' checked="checked"';
         }
-        $tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $elementName . "[parents]["
-            . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\""
-            . $elementName . "[itemname][" . $option['id'] . "]\" value=\""
+        $tree .= ' />' . $option['name'] . '<input type="hidden" name="' . $elementName . '[parents]['
+            . $option['id'] . ']" value="' . implode(':', $parentIds) . '" /><input type="hidden" name="'
+            . $elementName . '[itemname][' . $option['id'] . ']" value="'
             . htmlspecialchars($option['name']) . "\" /><br />\n";
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {

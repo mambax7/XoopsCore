@@ -11,10 +11,10 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-use Xoops\Core\Kernel\XoopsObject;
-use Xoops\Core\Kernel\Dtype;
-use Money\Money;
 use Money\Currency;
+use Money\Money;
+use Xoops\Core\Kernel\Dtype;
+use Xoops\Core\Kernel\XoopsObject;
 
 /**
  * DtypeMoney
@@ -90,7 +90,7 @@ class DtypeMoney extends DtypeAbstract
     private function unserializeJson($value)
     {
         $decoded = json_decode($value, true, 2, JSON_BIGINT_AS_STRING);
-        if (false === $decoded || !(isset($decoded['amount']) && isset($decoded['currency']))) {
+        if ($decoded === false || ! (isset($decoded['amount']) && isset($decoded['currency']))) {
             return null;
         }
         return new Money((int) $decoded['amount'], new Currency($decoded['currency']));

@@ -40,7 +40,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
     {
         $comments = \Xoops::getModuleHelper('comments'); //need this here to init constants
         $criteria = new CriteriaCompo(new Criteria('status', Comments::STATUS_PENDING));
-        $ret = array();
+        $ret = [];
         if ($count = $comments->getHandlerComment()->getCount($criteria)) {
             $ret['count'] = $count;
             $ret['name'] = Xoops::getInstance()->getHandlerModule()->getByDirname('comments')->getVar('name');
@@ -51,7 +51,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
 
     public function backend($limit)
     {
-        return array();
+        return [];
     }
 
     /**

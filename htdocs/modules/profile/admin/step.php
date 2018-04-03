@@ -29,13 +29,13 @@ $op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
 // Call header
 $xoops->header('admin:profile/steplist.tpl');
 // Get handler
-$regstep_Handler = \Xoops::getModuleHelper('profile')->getHandler("regstep");
+$regstep_Handler = \Xoops::getModuleHelper('profile')->getHandler('regstep');
 
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('step.php');
 
 switch ($op) {
-    case "list":
+    case 'list':
     default:
         // Add Scripts
         $xoops->theme()->addScript('media/xoops/xoops.js');
@@ -45,7 +45,7 @@ switch ($op) {
         $xoops->tpl()->assign('step', true);
         break;
 
-    case "new":
+    case 'new':
         $admin_page->addItemButton(_PROFILE_AM_STEP_LIST, 'step.php', 'application-view-detail');
         $admin_page->renderButton();
         $obj = $regstep_Handler->create();
@@ -53,7 +53,7 @@ switch ($op) {
         $xoops->tpl()->assign('form', $form->render());
         break;
 
-    case "edit":
+    case 'edit':
         $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_STEP_LIST, 'step.php', 'application-view-detail');
         $admin_page->renderButton();
@@ -67,8 +67,8 @@ switch ($op) {
         }
         break;
 
-    case "save":
-        if (!$xoops->security()->check()) {
+    case 'save':
+        if (! $xoops->security()->check()) {
             $xoops->redirect('step.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -89,19 +89,19 @@ switch ($op) {
         $xoops->tpl()->assign('form', $form->render());
         break;
 
-    case "delete":
+    case 'delete':
         $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_STEP_LIST, 'step.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $regstep_Handler->get($id);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$xoops->security()->check()) {
-                    $xoops->redirect("step.php", 3, implode(",", $xoops->security()->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+                if (! $xoops->security()->check()) {
+                    $xoops->redirect('step.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($regstep_Handler->deleteRegstep($obj)) {
-                    $xoops->redirect("step.php", 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_CATEGORY));
+                    $xoops->redirect('step.php', 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_CATEGORY));
                 } else {
                     echo $xoops->alert('error', $obj->getHtmlErrors());
                 }
@@ -110,7 +110,7 @@ switch ($op) {
                 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
                 $xoops->tpl()->assign('form', false);
                 echo $xoops->confirm(
-                    array("ok" => 1, "id" => $id, "op" => "delete"),
+                    ['ok' => 1, 'id' => $id, 'op' => 'delete'],
                     'step.php',
                     sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')) . '<br />'
                 );
@@ -120,12 +120,12 @@ switch ($op) {
         }
         break;
 
-    case "step_update":
+    case 'step_update':
         $id = $system->cleanVars($_POST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $regstep_Handler->get($id);
             $old = $obj->getVar('step_save');
-            $obj->setVar('step_save', !$old);
+            $obj->setVar('step_save', ! $old);
             if ($regstep_Handler->insert($obj)) {
                 exit;
             }

@@ -33,8 +33,7 @@ use Xmf\Yaml;
  */
 class Migrate
 {
-
-    /** @var false|\Xmf\Module\Helper|\Xoops\Module\Helper\HelperAbstract  */
+    /** @var false|\Xmf\Module\Helper|\Xoops\Module\Helper\HelperAbstract */
     protected $helper;
 
     /** @var string[] table names used by module */
@@ -60,13 +59,13 @@ class Migrate
     public function __construct($dirname)
     {
         $this->helper = Helper::getHelper($dirname);
-        if (false === $this->helper) {
-            throw new \InvalidArgumentException("Invalid module $dirname specified");
+        if ($this->helper === false) {
+            throw new \InvalidArgumentException("Invalid module ${dirname} specified");
         }
         $module = $this->helper->getModule();
         $this->moduleTables = $module->getInfo('tables');
         if (empty($this->moduleTables)) {
-            throw new \RuntimeException("No tables established in module");
+            throw new \RuntimeException('No tables established in module');
         }
         $version = $module->getInfo('version');
         $this->tableDefinitionFile = $this->helper->path("sql/{$dirname}_{$version}_migrate.yml");
@@ -118,10 +117,10 @@ class Migrate
      */
     public function getTargetDefinitions()
     {
-        if (!isset($this->targetDefinitions)) {
+        if (! isset($this->targetDefinitions)) {
             $this->targetDefinitions = Yaml::read($this->tableDefinitionFile);
-            if (null === $this->targetDefinitions) {
-                throw new \RuntimeException("No schema definition " . $this->tableDefinitionFile);
+            if ($this->targetDefinitions === null) {
+                throw new \RuntimeException('No schema definition ' . $this->tableDefinitionFile);
             }
         }
         return $this->targetDefinitions;
@@ -161,6 +160,26 @@ class Migrate
     }
 
     /**
+     * Return message from last error encountered
+     *
+     * @return string last error message
+     */
+    public function getLastError()
+    {
+        return $this->tableHandler->getLastError();
+    }
+
+    /**
+     * Return code from last error encountered
+     *
+     * @return int last error number
+     */
+    public function getLastErrNo()
+    {
+        return $this->tableHandler->getLastErrNo();
+    }
+
+    /**
      * Perform any upfront actions before synchronizing the schema.
      *
      * The schema comparison cannot recognize changes such as renamed columns or renamed tables. By overriding
@@ -174,8 +193,6 @@ class Migrate
      *  - table and column renames
      *  - data conversions
      *  - move column data
-     *
-     * @return void
      */
     protected function preSyncActions()
     {
@@ -185,8 +202,6 @@ class Migrate
      * Add table create DDL to the work queue
      *
      * @param string $tableName table to add
-     *
-     * @return void
      */
     protected function addMissingTable($tableName)
     {
@@ -208,8 +223,6 @@ class Migrate
      * Build any DDL required to synchronize an existing table to match the target schema
      *
      * @param string $tableName table to synchronize
-     *
-     * @return void
      */
     protected function synchronizeTable($tableName)
     {
@@ -225,7 +238,7 @@ class Migrate
         $tableDef = $this->tableHandler->dumpTables();
         if (isset($tableDef[$tableName])) {
             foreach ($tableDef[$tableName]['columns'] as $columnData) {
-                if (!$this->targetHasColumn($tableName, $columnData['name'])) {
+                if (! $this->targetHasColumn($tableName, $columnData['name'])) {
                     $this->tableHandler->dropColumn($tableName, $columnData['name']);
                 }
             }
@@ -235,17 +248,17 @@ class Migrate
         if (isset($this->targetDefinitions[$tableName]['keys'])) {
             foreach ($this->targetDefinitions[$tableName]['keys'] as $key => $keyData) {
                 if ($key === 'PRIMARY') {
-                    if (!isset($existingIndexes[$key])) {
+                    if (! isset($existingIndexes[$key])) {
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
-                    } elseif ($existingIndexes[$key]['columns'] !== $keyData['columns']) {
+                    } elseif ($keyData['columns'] !== $existingIndexes[$key]['columns']) {
                         $this->tableHandler->dropPrimaryKey($tableName);
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
                     }
                 } else {
-                    if (!isset($existingIndexes[$key])) {
+                    if (! isset($existingIndexes[$key])) {
                         $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
-                    } elseif ($existingIndexes[$key]['unique'] !== $keyData['unique']
-                        || $existingIndexes[$key]['columns'] !== $keyData['columns']
+                    } elseif ($keyData['unique'] !== $existingIndexes[$key]['unique']
+                        || $keyData['columns'] !== $existingIndexes[$key]['columns']
                     ) {
                         $this->tableHandler->dropIndex($key, $tableName);
                         $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
@@ -253,9 +266,9 @@ class Migrate
                 }
             }
         }
-        if (false !== $existingIndexes) {
+        if ($existingIndexes !== false) {
             foreach ($existingIndexes as $key => $keyData) {
-                if (!isset($this->targetDefinitions[$tableName]['keys'][$key])) {
+                if (! isset($this->targetDefinitions[$tableName]['keys'][$key])) {
                     $this->tableHandler->dropIndex($key, $tableName);
                 }
             }
@@ -296,25 +309,5 @@ class Migrate
             return true;
         }
         return false;
-    }
-
-    /**
-     * Return message from last error encountered
-     *
-     * @return string last error message
-     */
-    public function getLastError()
-    {
-        return $this->tableHandler->getLastError();
-    }
-
-    /**
-     * Return code from last error encountered
-     *
-     * @return int last error number
-     */
-    public function getLastErrNo()
-    {
-        return $this->tableHandler->getLastErrNo();
     }
 }

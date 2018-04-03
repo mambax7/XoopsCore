@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class DhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +18,7 @@ class DhtmlTextAreaTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->object = new DhtmlTextArea('Caption', 'name');
-        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme);
+        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme());
         //$this->markTestSkipped('side effects');
     }
 

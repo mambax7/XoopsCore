@@ -34,8 +34,6 @@ class Session extends AbstractHelper
 
     /**
      * Initialize parent::__construct calls this after verifying module object.
-     *
-     * @return void
      */
     public function init()
     {
@@ -43,26 +41,10 @@ class Session extends AbstractHelper
     }
 
     /**
-     * Add our module prefix to a name
-     *
-     * @param string $name name to prefix
-     *
-     * @return string module prefixed name
-     */
-    protected function prefix($name)
-    {
-        $prefixedName = $this->prefix . $name;
-
-        return $prefixedName;
-    }
-
-    /**
      * Sets a named session variable respecting our module prefix
      *
      * @param string $name  name of variable
      * @param mixed  $value value of variable
-     *
-     * @return void
      */
     public function set($name, $value)
     {
@@ -83,17 +65,15 @@ class Session extends AbstractHelper
         $prefixedName = $this->prefix($name);
         if (isset($_SESSION[$prefixedName])) {
             return unserialize($_SESSION[$prefixedName]);
-        } else {
-            return $default;
         }
+            return $default;
+
     }
 
     /**
      * Deletes a named session variable respecting our module prefix
      *
      * @param string $name name of variable
-     *
-     * @return void
      */
     public function del($name)
     {
@@ -104,16 +84,28 @@ class Session extends AbstractHelper
 
     /**
      * Delete all session variable starting with our module prefix
-     *
-     * @return void
      */
     public function destroy()
     {
         foreach ($_SESSION as $key => $value) {
-            if (0 == substr_compare($key, $this->prefix, 0, strlen($this->prefix))) {
+            if (substr_compare($key, $this->prefix, 0, strlen($this->prefix)) === 0) {
                 $_SESSION[$key] = null;
                 unset($_SESSION[$key]);
             }
         }
+    }
+
+    /**
+     * Add our module prefix to a name
+     *
+     * @param string $name name to prefix
+     *
+     * @return string module prefixed name
+     */
+    protected function prefix($name)
+    {
+        $prefixedName = $this->prefix . $name;
+
+        return $prefixedName;
     }
 }

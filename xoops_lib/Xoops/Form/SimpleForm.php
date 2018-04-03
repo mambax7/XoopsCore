@@ -20,7 +20,7 @@ namespace Xoops\Form;
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
-*/
+ */
 class SimpleForm extends Form
 {
     /**
@@ -28,8 +28,6 @@ class SimpleForm extends Form
      *
      * @param string $extra not in use.
      * @param string $class not in use
-     *
-     * @return void
      */
     public function insertBreak($extra = '', $class = '')
     {
@@ -46,14 +44,14 @@ class SimpleForm extends Form
      */
     public function render()
     {
-        $ret = $this->getTitle() . "\n<form name=\"" . $this->getName() . "\" id=\""
-            . $this->getName() . "\" action=\"" . $this->getAction() . "\" method=\""
-            . $this->getMethod() . "\"" . $this->getExtra() . ">\n";
+        $ret = $this->getTitle() . "\n<form name=\"" . $this->getName() . '" id="'
+            . $this->getName() . '" action="' . $this->getAction() . '" method="'
+            . $this->getMethod() . '"' . $this->getExtra() . ">\n";
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (!$ele->isHidden()) {
-                if (!$ele instanceof Raw) {
-                    $ret .= "<strong>" . $ele->getCaption() . "</strong><br />" . $ele->render() . "<br />\n";
+            if (! $ele->isHidden()) {
+                if (! $ele instanceof Raw) {
+                    $ret .= '<strong>' . $ele->getCaption() . '</strong><br />' . $ele->render() . "<br />\n";
                 } else {
                     $ret .= $ele->render();
                 }

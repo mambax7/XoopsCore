@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\PreloadItem;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
+use Xoops\Core\PreloadItem;
 use Xoops\Module\Plugin;
 use Xoops\Module\Plugin\ConfigCollector;
 
@@ -29,16 +29,14 @@ class CommentsPreload extends PreloadItem
      * add any module specific class map entries
      *
      * @param mixed $args not used
-     *
-     * @return void
      */
     public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
-            'comments'                => $path . '/class/helper.php',
-            'commentscommentrenderer' => $path . '/class/commentrenderer.php'
-        ));
+        XoopsLoad::addMap([
+            'comments' => $path . '/class/helper.php',
+            'commentscommentrenderer' => $path . '/class/commentrenderer.php',
+        ]);
     }
 
     public static function eventCoreFooterStart($args)
@@ -72,8 +70,6 @@ class CommentsPreload extends PreloadItem
      * remove any comeents for module being uninstalled
      *
      * @param XoopsModule $module module object
-     *
-     * @return void
      */
     public static function eventSystemModuleUninstall(XoopsModule $module)
     {

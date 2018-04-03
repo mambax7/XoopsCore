@@ -60,8 +60,8 @@ switch ($op) {
 
         // Display client
         $criteria = new CriteriaCompo();
-        $criteria->setSort("bannerclient_name");
-        $criteria->setOrder("ASC");
+        $criteria->setSort('bannerclient_name');
+        $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_clients);
 
@@ -73,26 +73,26 @@ switch ($op) {
         if ($client_count > 0) {
             foreach (array_keys($client_arr) as $i) {
                 $criteria = new CriteriaCompo();
-                $criteria->add(new Criteria('banner_cid', $client_arr[$i]->getVar("bannerclient_cid"), '='));
+                $criteria->add(new Criteria('banner_cid', $client_arr[$i]->getVar('bannerclient_cid'), '='));
                 $banner_active = $banner_Handler->getCount($criteria);
-                $client['cid'] = $client_arr[$i]->getVar("bannerclient_cid");
-                $client['uid'] = $client_arr[$i]->getVar("bannerclient_uid");
+                $client['cid'] = $client_arr[$i]->getVar('bannerclient_cid');
+                $client['uid'] = $client_arr[$i]->getVar('bannerclient_uid');
                 $client['banner_active'] = $banner_active;
-                if ($client_arr[$i]->getVar("bannerclient_uid") == 0) {
+                if ($client_arr[$i]->getVar('bannerclient_uid') === 0) {
                     $client['uname'] = '/';
                     $client['email'] = '/';
                 } else {
-                    $user = $member_handler->getUser($client_arr[$i]->getVar("bannerclient_uid"));
-                    $client['uname'] = $user->getVar("uname");
-                    $client['email'] = $user->getVar("email");
-                    $response = $xoops->service("Avatar")->getAvatarUrl($user);
+                    $user = $member_handler->getUser($client_arr[$i]->getVar('bannerclient_uid'));
+                    $client['uname'] = $user->getVar('uname');
+                    $client['email'] = $user->getVar('email');
+                    $response = $xoops->service('Avatar')->getAvatarUrl($user);
                     $avatar = $response->getValue();
                     $avatar = empty($avatar) ? '' : $avatar;
                     $client['avatar'] = $avatar;
-                    $client['url'] = $user->getVar("bannerclient_url");
+                    $client['url'] = $user->getVar('bannerclient_url');
                 }
-                $client['name'] = $client_arr[$i]->getVar("bannerclient_name");
-                $client['extrainfo'] = $client_arr[$i]->getVar("bannerclient_extrainfo");
+                $client['name'] = $client_arr[$i]->getVar('bannerclient_name');
+                $client['extrainfo'] = $client_arr[$i]->getVar('bannerclient_extrainfo');
                 $xoops->tpl()->appendByRef('client', $client);
                 $xoops->tpl()->appendByRef('client_banner', $client);
                 unset($client);
@@ -135,8 +135,8 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
-            $xoops->redirect("clients.php", 3, implode(",", $xoops->security()->getErrors()));
+        if (! $xoops->security()->check()) {
+            $xoops->redirect('clients.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
@@ -144,15 +144,15 @@ switch ($op) {
         } else {
             $obj = $client_Handler->create();
         }
-        $obj->setVar("bannerclient_name", Request::getString('name', ''));
-        if ($_POST["user"] === 'Y') {
-            $obj->setVar("bannerclient_uid", Request::getInt('uid', 0));
+        $obj->setVar('bannerclient_name', Request::getString('name', ''));
+        if ($_POST['user'] === 'Y') {
+            $obj->setVar('bannerclient_uid', Request::getInt('uid', 0));
         } else {
-            $obj->setVar("bannerclient_uid", 0);
+            $obj->setVar('bannerclient_uid', 0);
         }
-        $obj->setVar("bannerclient_extrainfo", Request::getString('extrainfo', ''));
+        $obj->setVar('bannerclient_extrainfo', Request::getString('extrainfo', ''));
         if ($client_Handler->insert($obj)) {
-            $xoops->redirect("clients.php", 2, _AM_BANNERS_DBUPDATED);
+            $xoops->redirect('clients.php', 2, _AM_BANNERS_DBUPDATED);
         }
         $xoops->tpl()->assign('error_msg', $xoops->alert('error', $obj->getHtmlErrors()));
         $form = $helper->getForm($obj, 'bannerclient');
@@ -163,9 +163,9 @@ switch ($op) {
         $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             $obj = $client_Handler->get($cid);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$xoops->security()->check()) {
-                    $xoops->redirect("clients.php", 3, implode(",", $xoops->security()->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+                if (! $xoops->security()->check()) {
+                    $xoops->redirect('clients.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($client_Handler->delete($obj)) {
                     // Delete client banners
@@ -178,7 +178,7 @@ switch ($op) {
                             0,
                             strlen($xoops_url . '/uploads/banners/')
                         );
-                        $urlfile =  $xoops_root_path . '/uploads/banners/' . $namefile;
+                        $urlfile = $xoops_root_path . '/uploads/banners/' . $namefile;
                         if ($banner_Handler->delete($obj)) {
                             // delete banner
                             if (is_file($urlfile)) {
@@ -189,15 +189,15 @@ switch ($op) {
                             echo $xoops->alert('error', $obj->getHtmlErrors());
                         }
                     }
-                    $xoops->redirect("clients.php", 2, _AM_BANNERS_DBUPDATED);
+                    $xoops->redirect('clients.php', 2, _AM_BANNERS_DBUPDATED);
                 } else {
                     echo $xoops->alert('error', $obj->getHtmlErrors());
                 }
             } else {
                 echo $xoops->confirm(
-                    array("ok" => 1, "cid" => $cid, "op" => "delete"),
+                    ['ok' => 1, 'cid' => $cid, 'op' => 'delete'],
                     'clients.php',
-                    sprintf(_AM_BANNERS_CLIENTS_SUREDEL, $obj->getVar("bannerclient_name")) . '<br />'
+                    sprintf(_AM_BANNERS_CLIENTS_SUREDEL, $obj->getVar('bannerclient_name')) . '<br />'
                 );
             }
         } else {

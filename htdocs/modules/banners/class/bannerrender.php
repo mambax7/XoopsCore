@@ -19,7 +19,7 @@
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-class BannerRender
+class bannerrender
 {
     /**
      * Constructor
@@ -38,10 +38,10 @@ class BannerRender
      *
      * @return string
      */
-    public function displayBanner($nb_banner = 1, $align = 'H', $client = array(), $ids = '')
+    public function displayBanner($nb_banner = 1, $align = 'H', $client = [], $ids = '')
     {
         $xoops = Xoops::getInstance();
-        XoopsLoad::addMap(array('banners' => __DIR__ . '/helper.php'));
+        XoopsLoad::addMap(['banners' => __DIR__ . '/helper.php']);
         $helper = Banners::getInstance();
         if ($xoops->isActiveModule('banners')) {
             // Get banners handler
@@ -49,14 +49,14 @@ class BannerRender
             // Display banner
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('banner_status', 0, '!='));
-            $sort = ('sqlite' === \XoopsBaseConfig::get('db-type')) ? 'RANDOM()' : 'RAND()';
+            $sort = (\XoopsBaseConfig::get('db-type') === 'sqlite') ? 'RANDOM()' : 'RAND()';
             $criteria->setSort($sort);
-            if (!empty($client)) {
-                if (!in_array(0, $client)) {
+            if (! empty($client)) {
+                if (! in_array(0, $client, true)) {
                     $criteria->add(new Criteria('banner_cid', '(' . implode(',', $client) . ')', 'IN'));
                 }
             }
-            if ($ids == '') {
+            if ($ids === '') {
                 $criteria->setLimit($nb_banner);
                 $criteria->setStart(0);
             } else {
@@ -67,13 +67,13 @@ class BannerRender
             $bannerobject = '';
             if ($numrows > 0) {
                 foreach (array_keys($banner_arr) as $i) {
-                    $imptotal = $banner_arr[$i]->getVar("banner_imptotal");
-                    $impmade = $banner_arr[$i]->getVar("banner_impmade");
-                    $htmlbanner = $banner_arr[$i]->getVar("banner_htmlbanner");
-                    $htmlcode = $banner_arr[$i]->getVar("banner_htmlcode");
-                    $imageurl = $banner_arr[$i]->getVar("banner_imageurl");
-                    $bid = $banner_arr[$i]->getVar("banner_bid");
-                    $clickurl = $banner_arr[$i]->getVar("banner_clickurl");
+                    $imptotal = $banner_arr[$i]->getVar('banner_imptotal');
+                    $impmade = $banner_arr[$i]->getVar('banner_impmade');
+                    $htmlbanner = $banner_arr[$i]->getVar('banner_htmlbanner');
+                    $htmlcode = $banner_arr[$i]->getVar('banner_htmlcode');
+                    $imageurl = $banner_arr[$i]->getVar('banner_imageurl');
+                    $bid = $banner_arr[$i]->getVar('banner_bid');
+                    $clickurl = $banner_arr[$i]->getVar('banner_clickurl');
                     /**
                      * Print the banner
                      */
@@ -91,7 +91,7 @@ class BannerRender
                     } else {
                         $bannerobject .= '&nbsp;';
                     }
-                    if ($helper->getConfig('banners_myip') == $xoops->getEnv('REMOTE_ADDR')) {
+                    if ($helper->getConfig('banners_myip') === $xoops->getEnv('REMOTE_ADDR')) {
                         // EMPTY
                     } else {
                         /**

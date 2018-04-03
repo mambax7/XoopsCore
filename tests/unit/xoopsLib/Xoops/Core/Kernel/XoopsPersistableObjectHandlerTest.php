@@ -20,17 +20,18 @@ class XoopsPersistableObjectHandlerTestInstance extends Xoops\Core\Kernel\XoopsP
 class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsPersistableObjectHandlerTestInstance';
+
     protected $conn = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->conn = \Xoops\Core\Database\Factory::getConnection();
     }
 
     public function test___publicProperties()
     {
-        $items = array('table', 'keyName', 'className', 'table_link', 'identifierName', 'field_link',
-            'field_object');
+        $items = ['table', 'keyName', 'className', 'table_link', 'identifierName', 'field_link',
+            'field_object', ];
         foreach ($items as $item) {
             $prop = new ReflectionProperty($this->myClass, $item);
             $this->assertTrue($prop->isPublic());
@@ -145,7 +146,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass($this->conn, 'system_group', 'Xoops\Core\Kernel\Handlers\XoopsGroup', 'groupid', 'name');
         $value = $instance->getCount();
-        $this->assertTrue((int)$value > 0);
+        $this->assertTrue((int) $value > 0);
     }
 
     public function test_getCounts()
@@ -173,7 +174,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
         $value = $instance->getCountByLink();
-        $this->assertTrue((int)$value > 0);
+        $this->assertTrue((int) $value > 0);
     }
 
     public function test_getCountsByLink()
@@ -192,7 +193,7 @@ class XoopsPersistableObjectHandlerTest extends \PHPUnit\Framework\TestCase
         $instance->field_object = 'groupid';
         $instance->table_link = $this->conn->prefix('system_permission');
         $instance->field_link = 'gperm_groupid';
-        $value = $instance->updateByLink(array('key' => 'value'));
+        $value = $instance->updateByLink(['key' => 'value']);
         $this->assertSame(false, $value);
     }
 

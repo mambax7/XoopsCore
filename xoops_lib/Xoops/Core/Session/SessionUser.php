@@ -11,8 +11,6 @@
 
 namespace Xoops\Core\Session;
 
-use Xoops\Core\HttpRequest;
-use Xmf\Request;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
@@ -27,7 +25,6 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
  */
 class SessionUser
 {
-
     /**
      * @var Manager
      */
@@ -48,13 +45,10 @@ class SessionUser
         $this->xoops = \Xoops::getInstance();
     }
 
-
     /**
      * Check any user data in the current session and clear if invalid.
      *
      * If no user data, check if "remember me" data should be applied
-     *
-     * @return void
      */
     public function establish()
     {
@@ -67,14 +61,13 @@ class SessionUser
         }
 
         // is the usercookie available?
-        $remember = new RememberMe;
+        $remember = new RememberMe();
         $userId = $remember->recall();
-        if (false !== $userId) {
+        if ($userId !== false) {
             $this->setNeedsConfirmed();
             $this->addUserToSession($userId);
         }
     }
-
 
     /**
      * Record a login event in the session. This is to be called by the login
@@ -83,15 +76,13 @@ class SessionUser
      *
      * @param integer $userId     id of user to establish in the session
      * @param boolean $rememberMe add a persistent login cookie
-     *
-     * @return void
      */
     public function recordUserLogin($userId, $rememberMe = false)
     {
         $this->setConfirmed();
         $this->addUserToSession($userId);
         if ($rememberMe) {
-            $remember = new RememberMe;
+            $remember = new RememberMe();
             $remember->createUserCookie($userId);
         }
     }
@@ -100,12 +91,10 @@ class SessionUser
      * Record a login event in the session. This is to be called by the login
      * process, i.e. the user has entered the name and password, and that
      * combination was found valid.
-     *
-     * @return void
      */
     public function recordUserLogout()
     {
-        $remember = new RememberMe;
+        $remember = new RememberMe();
         $remember->forget();
         $this->session->clearSession();
     }
@@ -114,8 +103,6 @@ class SessionUser
      * Check the we have a remember me cookie, and apply if valid
      *
      * @param integer $userId id of user to establish in the session
-     *
-     * @return void
      */
     public function addUserToSession($userId)
     {
@@ -127,7 +114,7 @@ class SessionUser
                 // make sure all primary user data is consistent
                 $session->set('xoopsUserId', $user->getVar('uid'));
                 $session->set('xoopsUserGroups', $user->getGroups());
-                if (!$session->has('SESSION_AUTHSTATUS')) {
+                if (! $session->has('SESSION_AUTHSTATUS')) {
                     $this->setNeedsConfirmed();
                 }
                 // all is good, leave the existing info
@@ -141,8 +128,6 @@ class SessionUser
 
     /**
      * set authorization status to needs confirmed
-     *
-     * @return void
      */
     public function setNeedsConfirmed()
     {
@@ -151,8 +136,6 @@ class SessionUser
 
     /**
      * set authorization status to is confirmed
-     *
-     * @return void
      */
     public function setConfirmed()
     {
@@ -167,6 +150,6 @@ class SessionUser
     public function checkConfirmed()
     {
         return $this->session->has('xoopsUserId') &&
-                ('ok' === $this->session->get('SESSION_AUTHSTATUS', 'failed'));
+                ($this->session->get('SESSION_AUTHSTATUS', 'failed') === 'ok');
     }
 }

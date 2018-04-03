@@ -47,5 +47,4 @@ class Plugins extends Xoops\Module\Helper\HelperAbstract
     {
         return $this->getHandler('plugin');
     }
-
 }

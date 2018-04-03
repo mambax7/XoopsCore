@@ -42,7 +42,7 @@ class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDeco
 
     function decorateMenu(&$menu)
     {
-        $decorations = array('link', 'image', 'title', 'alt_title');
+        $decorations = ['link', 'image', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
             $menu[$decoration] = self::_doDecoration($menu[$decoration]);
         }
@@ -50,7 +50,7 @@ class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDeco
 
     function _doDecoration($string)
     {
-        if (!preg_match('/{(.*\|.*)}/i', $string, $reg)) {
+        if (! preg_match('/{(.*\|.*)}/i', $string, $reg)) {
             return $string;
         }
 

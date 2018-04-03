@@ -31,8 +31,6 @@ interface HtmlToPdfInterface
      * startPdf - start a new pdf
      *
      * @param Response $response \Xoops\Core\Service\Response object
-     *
-     * @return void
      */
     public function startPdf($response);
 
@@ -41,8 +39,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response        \Xoops\Core\Service\Response object
      * @param string   $pageOrientation page orientation, 'P' for portrait, 'L' for landscape
-     *
-     * @return void
      */
     public function setPageOrientation($response, $pageOrientation);
 
@@ -51,8 +47,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pageSize standard named page size, i.e. 'LETTER', 'A4', etc.
-     *
-     * @return void
      */
     public function setPageSize($response, $pageSize);
 
@@ -62,8 +56,6 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $unit     unit used in page size, margins. Possible values include
      *                           'mm' = millimeter, "in" = inches, 'pt' = typographic points
-     *
-     * @return void
      */
     public function setBaseUnit($response, $unit);
 
@@ -75,8 +67,6 @@ interface HtmlToPdfInterface
      * @param float    $topMargin    top margin in base units
      * @param float    $rightMargin  right margin in base units
      * @param float    $bottomMargin bottom margin in base units
-     *
-     * @return void - response->value set to absolute URL to avatar image
      */
     public function setMargins($response, $leftMargin, $topMargin, $rightMargin, $bottomMargin);
 
@@ -87,8 +77,6 @@ interface HtmlToPdfInterface
      * @param string   $fontFamily font family
      * @param string   $fontStyle  font style ('bold', 'italic', etc.)
      * @param float    $fontSize   font size in points
-     *
-     * @return void
      */
     public function setBaseFont($response, $fontFamily, $fontStyle = '', $fontSize = null);
 
@@ -97,8 +85,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response       \Xoops\Core\Service\Response object
      * @param string   $monoFontFamily font family
-     *
-     * @return void
      */
     public function setDefaultMonospacedFont($response, $monoFontFamily);
 
@@ -107,8 +93,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response  \Xoops\Core\Service\Response object
      * @param string   $pdfAuthor author name
-     *
-     * @return void
      */
     public function setAuthor($response, $pdfAuthor);
 
@@ -117,8 +101,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pdfTitle document title
-     *
-     * @return void
      */
     public function setTitle($response, $pdfTitle);
 
@@ -127,8 +109,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $pdfSubject document subject
-     *
-     * @return void
      */
     public function setSubject($response, $pdfSubject);
 
@@ -137,8 +117,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string[] $pdfKeywords array of keywords pertaining to document
-     *
-     * @return void
      */
     public function setKeywords($response, $pdfKeywords);
 
@@ -148,8 +126,6 @@ interface HtmlToPdfInterface
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $html     HTML formated text to include in document
      *                           array     user info, 'uid', 'uname' and 'email' required
-     *
-     * @return void
      */
     public function addHtml($response, $html);
 
@@ -158,8 +134,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
-     *
-     * @return void
      */
     public function outputPdfInline($response, $name);
 
@@ -168,8 +142,6 @@ interface HtmlToPdfInterface
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
-     *
-     * @return void
      */
     public function outputPdfDownload($response, $name);
 
@@ -177,8 +149,6 @@ interface HtmlToPdfInterface
      * fetchPdf - fetch rendered document as a string
      *
      * @param Response $response \Xoops\Core\Service\Response object
-     *
-     * @return void - response->value set to string containing document
      */
     public function fetchPdf($response);
 }

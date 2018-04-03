@@ -30,7 +30,7 @@ class Checkbox extends OptionElement
      *
      * @var array
      */
-    protected $value = array();
+    protected $value = [];
 
     /**
      * Constructor
@@ -67,10 +67,10 @@ class Checkbox extends OptionElement
         $required = $this->has('required');
         $elementOptions = $this->getOptions();
         $elementValue = $this->getValue();
-        if (!is_array($elementValue)) {
+        if (! is_array($elementValue)) {
             $elementValue = (array) $elementValue;
         }
-        $extra = ($this->getExtra() != '' ? " " . $this->getExtra() : '');
+        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
 
         $elementName = $this->getName();
         $elementId = $elementName;
@@ -84,7 +84,7 @@ class Checkbox extends OptionElement
             $this->remove('required');
         }
 
-        $ret = "";
+        $ret = '';
         $inline = (bool) $this->get(':inline', false);
         if ($inline) {
             $ret .= '<div class="input-group">';
@@ -92,7 +92,7 @@ class Checkbox extends OptionElement
         $idCount = 0;
         foreach ($elementOptions as $value => $name) {
             $this->remove('checked');
-            if (!empty($elementValue) && in_array($value, $elementValue)) {
+            if (! empty($elementValue) && in_array($value, $elementValue, true)) {
                 $this->set('checked');
             }
             $this->set('value', $value);
@@ -100,7 +100,7 @@ class Checkbox extends OptionElement
             $this->set('id', $elementId . $idCount);
             if ($inline) {
                 $ret .= '<label class="checkbox-inline">';
-                $ret .= '<input ' . $this->renderAttributeString() . $extra . ">" . $name . "\n";
+                $ret .= '<input ' . $this->renderAttributeString() . $extra . '>' . $name . "\n";
                 $ret .= "</label>\n";
             } else {
                 $ret .= "<div class=\"checkbox\">\n<label>";
@@ -126,7 +126,7 @@ class Checkbox extends OptionElement
     public function renderValidationJS()
     {
         // render custom validation code if any
-        if (!empty($this->customValidationCode)) {
+        if (! empty($this->customValidationCode)) {
             return implode("\n", $this->customValidationCode);
             // generate validation code if required
         } elseif ($this->isRequired()) {
@@ -138,11 +138,11 @@ class Checkbox extends OptionElement
             $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
             return "\n"
             . "var hasChecked = false; var checkBox = myform.elements['{$eltname}'];"
-            . " if (checkBox.length) {for (var i = 0; i < checkBox.length; i++)"
-            . " {if (checkBox[i].checked == true) {hasChecked = true; break;}}}"
-            . "else{if (checkBox.checked == true) {hasChecked = true;}}"
+            . ' if (checkBox.length) {for (var i = 0; i < checkBox.length; i++)'
+            . ' {if (checkBox[i].checked == true) {hasChecked = true; break;}}}'
+            . 'else{if (checkBox.checked == true) {hasChecked = true;}}'
             . "if (!hasChecked) {window.alert(\"{$eltmsg}\");if (checkBox.length)"
-            . " {checkBox[0].focus();}else{checkBox.focus();}return false;}";
+            . ' {checkBox[0].focus();}else{checkBox.focus();}return false;}';
         }
         return '';
     }

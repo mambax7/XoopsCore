@@ -19,13 +19,6 @@
  */
 class ImagesImage_imagemanagerForm extends Xoops\Form\ThemeForm
 {
-
-    /**
-     * @param Array
-     *
-     *        'obj'     => ImagesImage|XoopsObject $obj
-     *        'target'  => textarea id
-     */
     public function __construct($param)
     {
         $xoops = Xoops::getInstance();

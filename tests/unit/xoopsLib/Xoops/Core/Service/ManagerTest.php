@@ -1,12 +1,13 @@
 <?php
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
 class Service_ManagerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = '\Xoops\Core\Service\Manager';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $class = $this->myClass;
         $this->object = $class::getInstance();

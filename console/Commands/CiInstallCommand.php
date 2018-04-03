@@ -5,21 +5,18 @@ namespace XoopsConsole\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Xoops\Core\XoopsTpl;
 
 class CiInstallCommand extends Command
 {
     /**
      * establish the command configuration
-     * @return void
      */
     protected function configure()
     {
-        $this->setName("ci-install")
-            ->setDescription("Install a minimal XOOPS for CI processes")
-            ->setDefinition(array())
+        $this->setName('ci-install')
+            ->setDescription('Install a minimal XOOPS for CI processes')
+            ->setDefinition([])
             ->setHelp(<<<EOT
 The <info>ci-install</info> command installs a default XOOPS system for use in the
 travis-ci continuous integration environment. This command expects on an
@@ -34,7 +31,6 @@ EOT
      *
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -42,7 +38,7 @@ EOT
         $xoops = \Xoops::getInstance();
         $module = 'system';
         $output->writeln(sprintf('Installing %s', $module));
-        if (false !== $xoops->getModuleByDirname($module)) {
+        if ($xoops->getModuleByDirname($module) !== false) {
             $output->writeln(sprintf('<error>%s module is already installed!</error>', $module));
             return;
         }
@@ -53,7 +49,7 @@ EOT
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {
                 foreach ($message as $subMessage) {
-                    if (!is_array($subMessage)) {
+                    if (! is_array($subMessage)) {
                         $output->writeln(strip_tags($subMessage));
                     }
                 }
@@ -61,7 +57,7 @@ EOT
                 $output->writeln(strip_tags($message));
             }
         }
-        if ($result===false) {
+        if ($result === false) {
             $output->writeln(sprintf('<error>Install of %s module failed!</error>', $module));
         } else {
             $output->writeln(sprintf('<info>Install of %s module completed.</info>', $module));
@@ -74,17 +70,17 @@ EOT
         $regdate = time();
         $result = $xoops->db()->insertPrefix(
             'system_user',
-            array(
-            //  'uid'             => 1,             // mediumint(8) unsigned NOT NULL auto_increment,
-                'uname'           => $adminname,    // varchar(25) NOT NULL default '',
-                'email'           => 'nobody@localhost',    // varchar(60) NOT NULL default '',
-                'user_regdate'    => $regdate,      // int(10) unsigned NOT NULL default '0',
-                'user_viewemail'  => 1,             // tinyint(1) unsigned NOT NULL default '0',
-                'pass'            => $adminpass,    // varchar(255) NOT NULL default '',
-                'rank'            => 7,             // smallint(5) unsigned NOT NULL default '0',
-                'level'           => 5,             // tinyint(3) unsigned NOT NULL default '1',
-                'last_login'      => $regdate,      // int(10) unsigned NOT NULL default '0',
-            )
+            [
+                //  'uid'             => 1,             // mediumint(8) unsigned NOT NULL auto_increment,
+                'uname' => $adminname,    // varchar(25) NOT NULL default '',
+                'email' => 'nobody@localhost',    // varchar(60) NOT NULL default '',
+                'user_regdate' => $regdate,      // int(10) unsigned NOT NULL default '0',
+                'user_viewemail' => 1,             // tinyint(1) unsigned NOT NULL default '0',
+                'pass' => $adminpass,    // varchar(255) NOT NULL default '',
+                'rank' => 7,             // smallint(5) unsigned NOT NULL default '0',
+                'level' => 5,             // tinyint(3) unsigned NOT NULL default '1',
+                'last_login' => $regdate,      // int(10) unsigned NOT NULL default '0',
+            ]
         );
         $output->writeln(sprintf('<info>Inserted %d user.</info>', $result));
     }

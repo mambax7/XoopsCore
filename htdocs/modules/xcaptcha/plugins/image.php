@@ -18,7 +18,7 @@
 
 class XcaptchaImage extends Xcaptcha
 {
-    public $config = array();
+    public $config = [];
 
     public $plugin;
 
@@ -32,7 +32,7 @@ class XcaptchaImage extends Xcaptcha
     public function VerifyData()
     {
         $system = System::getInstance();
-        $config = array();
+        $config = [];
         $_POST['num_chars'] = $system->cleanVars($_POST, 'num_chars', 6, 'int');
         $_POST['casesensitive'] = $system->cleanVars($_POST, 'casesensitive', false, 'boolean');
         $_POST['fontsize_min'] = $system->cleanVars($_POST, 'fontsize_min', 10, 'int');

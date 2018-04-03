@@ -25,7 +25,7 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
-class XoopsFile
+class xoopsfile
 {
     /**
      * XoopsFile::getHandler()
@@ -42,7 +42,7 @@ class XoopsFile
         $handler = null;
         $name = strtolower(trim($name));
         $class = 'Xoops' . ucfirst($name) . 'Handler';
-        if (in_array($name, array('file', 'folder'))) {
+        if (in_array($name, ['file', 'folder'], true)) {
             $handler = new $class($path, $create, $mode);
         } else {
             trigger_error(

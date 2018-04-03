@@ -1,8 +1,8 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 $xoops_root_path = \XoopsBaseConfig::get('root-path');
-require_once($xoops_root_path.'/class/xml/rpc/xmlrpcparser.php');
+require_once($xoops_root_path . '/class/xml/rpc/xmlrpcparser.php');
 
 class XoopsXmlRpcArrayTest extends \PHPUnit\Framework\TestCase
 {

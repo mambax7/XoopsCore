@@ -45,7 +45,7 @@ class Editor extends TextArea
     public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
     {
         // Backward compatibility: $name -> editor name; $configs['name'] -> textarea field name
-        if (!isset($configs['editor'])) {
+        if (! isset($configs['editor'])) {
             $configs['editor'] = $name;
             $name = $configs['name'];
             // New: $name -> textarea field name;
@@ -75,9 +75,9 @@ class Editor extends TextArea
                 $this->editor->setRequired($this->isRequired());
                 $ret = $this->editor->renderValidationJS();
                 return $ret;
-            } else {
-                parent::renderValidationJS();
             }
+                parent::renderValidationJS();
+
         }
         return false;
     }

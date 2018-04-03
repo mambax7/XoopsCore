@@ -34,7 +34,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Text(_PROFILE_AM_TITLE, 'field_title', 5, 255, $obj->getVar('field_title', 'e')), true);
         $this->addElement(new Xoops\Form\TextArea(_PROFILE_AM_DESCRIPTION, 'field_description', $obj->getVar('field_description', 'e'), 5, 5));
 
-        if (!$obj->isNew()) {
+        if (! $obj->isNew()) {
             $fieldcat_id = $obj->getVar('cat_id');
         } else {
             $fieldcat_id = 0;
@@ -48,7 +48,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
         $weight->setPattern('^\d+$', _PROFILE_AM_ERROR_WEIGHT);
         $this->addElement($weight, true);
         if ($obj->getVar('field_config') || $obj->isNew()) {
-            if (!$obj->isNew()) {
+            if (! $obj->isNew()) {
                 $this->addElement(new Xoops\Form\Label(_PROFILE_AM_NAME, $obj->getVar('field_name')));
                 $this->addElement(new Xoops\Form\Hidden('id', $obj->getVar('field_id')));
             } else {
@@ -56,14 +56,14 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
             }
 
             //autotext and theme left out of this one as fields of that type should never be changed (valid assumption, I think)
-            $fieldtypes = array(
+            $fieldtypes = [
                 'checkbox' => _PROFILE_AM_CHECKBOX, 'date' => _PROFILE_AM_DATE, 'datetime' => _PROFILE_AM_DATETIME,
                 'longdate' => _PROFILE_AM_LONGDATE, 'group' => _PROFILE_AM_GROUP,
                 'group_multi' => _PROFILE_AM_GROUPMULTI, 'language' => _PROFILE_AM_LANGUAGE,
                 'radio' => _PROFILE_AM_RADIO, 'select' => _PROFILE_AM_SELECT, 'select_multi' => _PROFILE_AM_SELECTMULTI,
                 'textarea' => _PROFILE_AM_TEXTAREA, 'dhtml' => _PROFILE_AM_DHTMLTEXTAREA,
-                'textbox' => _PROFILE_AM_TEXTBOX, 'timezone' => _PROFILE_AM_TIMEZONE, 'yesno' => _PROFILE_AM_YESNO
-            );
+                'textbox' => _PROFILE_AM_TEXTBOX, 'timezone' => _PROFILE_AM_TIMEZONE, 'yesno' => _PROFILE_AM_YESNO,
+            ];
 
             $element_select = new Xoops\Form\Select(_PROFILE_AM_TYPE, 'field_type', $obj->getVar('field_type', 'e'));
             $element_select->addOptionArray($fieldtypes);
@@ -71,8 +71,8 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
             $this->addElement($element_select);
 
             switch ($obj->getVar('field_type')) {
-                case "textbox":
-                    $valuetypes = array(
+                case 'textbox':
+                    $valuetypes = [
                         Dtype::TYPE_ARRAY => _PROFILE_AM_ARRAY,
                         Dtype::TYPE_EMAIL => _PROFILE_AM_EMAIL,
                         Dtype::TYPE_INTEGER => _PROFILE_AM_INT,
@@ -81,17 +81,17 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
                         Dtype::TYPE_TEXT_AREA => _PROFILE_AM_TXTAREA,
                         Dtype::TYPE_TEXT_BOX => _PROFILE_AM_TXTBOX,
                         Dtype::TYPE__URL => _PROFILE_AM_URL,
-                        Dtype::TYPE_OTHER => _PROFILE_AM_OTHER
-                    );
+                        Dtype::TYPE_OTHER => _PROFILE_AM_OTHER,
+                    ];
 
                     $type_select = new Xoops\Form\Select(_PROFILE_AM_VALUETYPE, 'field_valuetype', $obj->getVar('field_valuetype', 'e'), 5, 5);
                     $type_select->addOptionArray($valuetypes);
                     $this->addElement($type_select);
                     break;
 
-                case "select":
-                case "radio":
-                    $valuetypes = array(
+                case 'select':
+                case 'radio':
+                    $valuetypes = [
                         Dtype::TYPE__ARRAY => _PROFILE_AM_ARRAY,
                         Dtype::TYPE__EMAIL => _PROFILE_AM_EMAIL,
                         Dtype::TYPE_INTEGER => _PROFILE_AM_INT,
@@ -100,8 +100,8 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
                         Dtype::TYPE_TEXT_AREA => _PROFILE_AM_TXTAREA,
                         Dtype::TYPE_TEXT_BOX => _PROFILE_AM_TXTBOX,
                         Dtype::TYPE_URL => _PROFILE_AM_URL,
-                        Dtype::TYPE_OTHER => _PROFILE_AM_OTHER
-                    );
+                        Dtype::TYPE_OTHER => _PROFILE_AM_OTHER,
+                    ];
 
                     $type_select = new Xoops\Form\Select(_PROFILE_AM_VALUETYPE, 'field_valuetype', $obj->getVar('field_valuetype', 'e'));
                     $type_select->addOptionArray($valuetypes);
@@ -111,7 +111,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
 
             //$this->addElement(new Xoops\Form\RadioYesNo(_PROFILE_AM_NOTNULL, 'field_notnull', $obj->getVar('field_notnull', 'e') ));
 
-            if ($obj->getVar('field_type') === "select" || $obj->getVar('field_type') === "select_multi" || $obj->getVar('field_type') === "radio" || $obj->getVar('field_type') === "checkbox") {
+            if ($obj->getVar('field_type') === 'select' || $obj->getVar('field_type') === 'select_multi' || $obj->getVar('field_type') === 'radio' || $obj->getVar('field_type') === 'checkbox') {
                 $options = $obj->getVar('field_options');
                 if (count($options) > 0) {
                     $remove_options = new Xoops\Form\Checkbox(_PROFILE_AM_REMOVEOPTIONS, 'removeOptions');
@@ -124,110 +124,110 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
                     $this->addElement($remove_options);
                 }
 
-                $option_text = "<table  cellspacing='1'><tr><td class='width20'>" . _PROFILE_AM_KEY . "</td><td>" . _PROFILE_AM_VALUE . "</td></tr>";
+                $option_text = "<table  cellspacing='1'><tr><td class='width20'>" . _PROFILE_AM_KEY . '</td><td>' . _PROFILE_AM_VALUE . '</td></tr>';
                 for ($i = 0; $i < 3; ++$i) {
                     $option_text .= "<tr><td><input type='text' name='addOption[{$i}][key]' id='addOption[{$i}][key]' size='15' /></td><td><input type='text' name='addOption[{$i}][value]' id='addOption[{$i}][value]' size='35' /></td></tr>";
                     $option_text .= "<tr height='3px'><td colspan='2'> </td></tr>";
                 }
-                $option_text .= "</table>";
+                $option_text .= '</table>';
                 $this->addElement(new Xoops\Form\Label(_PROFILE_AM_ADDOPTION, $option_text));
             }
         }
 
         if ($obj->getVar('field_edit')) {
             switch ($obj->getVar('field_type')) {
-                case "textbox":
-                case "textarea":
-                case "dhtml":
+                case 'textbox':
+                case 'textarea':
+                case 'dhtml':
                     $this->addElement(new Xoops\Form\Text(_PROFILE_AM_MAXLENGTH, 'field_maxlength', 5, 5, $obj->getVar('field_maxlength', 'e')));
                     $this->addElement(new Xoops\Form\TextArea(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "checkbox":
-                case "select_multi":
-                    $def_value = $obj->getVar('field_default', 'e') != null
+                case 'checkbox':
+                case 'select_multi':
+                    $def_value = $obj->getVar('field_default', 'e') !== null
                             ? unserialize($obj->getVar('field_default', 'n')) : null;
                     $element = new Xoops\Form\Select(_PROFILE_AM_DEFAULT, 'field_default', $def_value, 8, true);
                     $options = $obj->getVar('field_options');
                     asort($options);
                     // If options do not include an empty element, then add a blank option to prevent any default selection
-                    if (!in_array('', array_keys($options))) {
+                    if (! in_array('', array_keys($options), true)) {
                         $element->addOption('', XoopsLocale::NONE);
                     }
                     $element->addOptionArray($options);
                     $this->addElement($element);
                     break;
 
-                case "select":
-                case "radio":
-                    $def_value = $obj->getVar('field_default', 'e') != null ? $obj->getVar('field_default') : null;
+                case 'select':
+                case 'radio':
+                    $def_value = $obj->getVar('field_default', 'e') !== null ? $obj->getVar('field_default') : null;
                     $element = new Xoops\Form\Select(_PROFILE_AM_DEFAULT, 'field_default', $def_value);
                     $options = $obj->getVar('field_options');
                     asort($options);
                     // If options do not include an empty element, then add a blank option to prevent any default selection
-                    if (!in_array('', array_keys($options))) {
+                    if (! in_array('', array_keys($options), true)) {
                         $element->addOption('', XoopsLocale::NONE);
                     }
                     $element->addOptionArray($options);
                     $this->addElement($element);
                     break;
 
-                case "date":
+                case 'date':
                     $this->addElement(new Xoops\Form\DateSelect(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "longdate":
+                case 'longdate':
                     $this->addElement(new Xoops\Form\DateSelect(_PROFILE_AM_DEFAULT, 'field_default', strtotime($obj->getVar('field_default', 'e'))));
                     break;
 
-                case "datetime":
+                case 'datetime':
                     $this->addElement(new Xoops\Form\DateTimeSelect(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "yesno":
+                case 'yesno':
                     $this->addElement(new Xoops\Form\RadioYesNo(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "timezone":
+                case 'timezone':
                     $this->addElement(new Xoops\Form\SelectTimeZone(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "language":
+                case 'language':
                     $this->addElement(new Xoops\Form\SelectLanguage(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "group":
+                case 'group':
                     $this->addElement(new Xoops\Form\SelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, $obj->getVar('field_default', 'e')));
                     break;
 
-                case "group_multi":
+                case 'group_multi':
                     $this->addElement(new Xoops\Form\SelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, unserialize($obj->getVar('field_default', 'n')), 5, true));
                     break;
 
-                case "theme":
+                case 'theme':
                     $this->addElement(new Xoops\Form\SelectTheme(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
 
-                case "autotext":
+                case 'autotext':
                     $this->addElement(new Xoops\Form\TextArea(_PROFILE_AM_DEFAULT, 'field_default', $obj->getVar('field_default', 'e')));
                     break;
             }
         }
 
         $groupperm_handler = $xoops->getHandlerGroupPermission();
-        $searchable_types = array(
-            'textbox', 'select', 'radio', 'yesno', 'date', 'datetime', 'timezone', 'language'
-        );
-        if (in_array($obj->getVar('field_type'), $searchable_types)) {
+        $searchable_types = [
+            'textbox', 'select', 'radio', 'yesno', 'date', 'datetime', 'timezone', 'language',
+        ];
+        if (in_array($obj->getVar('field_type'), $searchable_types, true)) {
             $search_groups = $groupperm_handler->getGroupIds('profile_search', $obj->getVar('field_id'), $xoops->module->getVar('mid'));
             $this->addElement(new Xoops\Form\SelectGroup(_PROFILE_AM_PROF_SEARCH, 'profile_search', true, $search_groups, 5, true));
         }
         if ($obj->getVar('field_edit') || $obj->isNew()) {
-            if (!$obj->isNew()) {
+            if (! $obj->isNew()) {
                 //Load groups
                 $editable_groups = $groupperm_handler->getGroupIds('profile_edit', $obj->getVar('field_id'), $xoops->module->getVar('mid'));
             } else {
-                $editable_groups = array();
+                $editable_groups = [];
             }
             $this->addElement(new Xoops\Form\SelectGroup(_PROFILE_AM_PROF_EDITABLE, 'profile_edit', false, $editable_groups, 5, true));
             $this->addElement(new Xoops\Form\RadioYesNo(_PROFILE_AM_REQUIRED, 'field_required', $obj->getVar('field_required', 'e')));

@@ -18,6 +18,7 @@
 
 class Defaultbs2ThemeLocaleEn_US
 {
-    const QUICK_LINKS = "Quick links";
-    const CHOOSE_YOUR_LANGUAGE = "Choose your language";
+    const QUICK_LINKS = 'Quick links';
+
+    const CHOOSE_YOUR_LANGUAGE = 'Choose your language';
 }

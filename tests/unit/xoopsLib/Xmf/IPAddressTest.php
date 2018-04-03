@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test;
 
 use Xmf\IPAddress;
@@ -45,30 +46,30 @@ class IPAddressTest extends \PHPUnit\Framework\TestCase
         $_SERVER['REMOTE_ADDR'] = $testAddress;
         $instance = IPAddress::fromRequest();
         $actual = $instance->asReadable();
-        $this->assertEquals($testAddress, $actual);
+        $this->assertSame($testAddress, $actual);
 
         $testAddress = '3ffe:2a00:100:7031::1';
         $_SERVER['REMOTE_ADDR'] = $testAddress;
         $instance = IPAddress::fromRequest();
         $actual = $instance->asReadable();
-        $this->assertEquals($testAddress, $actual);
+        $this->assertSame($testAddress, $actual);
     }
 
     public function testAsReadable()
     {
-        $this->assertEquals($this->testIPV4, $this->object->asReadable());
-        $this->assertEquals($this->testIPV6, $this->objectV6->asReadable());
+        $this->assertSame($this->testIPV4, $this->object->asReadable());
+        $this->assertSame($this->testIPV6, $this->objectV6->asReadable());
     }
 
     public function testAsBinary()
     {
         $addressV6 = '3031:3233:3435:3637:3839:584F:4F50:5334';
         $instanceV6 = new IPAddress($addressV6);
-        $this->assertEquals($instanceV6->asBinary(), '0123456789XOOPS4');
+        $this->assertSame($instanceV6->asBinary(), '0123456789XOOPS4');
 
         $addressV4 = '67.48.68.69';
         $instanceV4 = new IPAddress($addressV4);
-        $this->assertEquals($instanceV4->asBinary(), 'C0DE');
+        $this->assertSame($instanceV4->asBinary(), 'C0DE');
     }
 
     public function testIpVersion()

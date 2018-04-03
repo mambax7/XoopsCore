@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Test\Core\Service\Data;
 
 use Xoops\Core\Service\Data\Email;
@@ -9,12 +10,12 @@ use Xoops\Core\Service\Data\EmailAttachmentSet;
 
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
+    protected const TEST_FILE = __DIR__ . '/test.png';
+
     /**
      * @var Email
      */
     protected $object;
-
-    protected const TEST_FILE = __DIR__ . '/test.png';
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -51,15 +52,15 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $toAddresses = $message->getToAddresses()->getAddresses();
         $this->assertCount(1, $toAddresses);
         $this->assertSame($to, $toAddresses[0]);
-        $this->assertEquals($subject, $message->getSubject());
-        $this->assertEquals($body, $message->getBody());
+        $this->assertSame($subject, $message->getSubject());
+        $this->assertSame($body, $message->getBody());
     }
 
     public function testNewEmailWithUntrimmedArguments()
     {
         $message = new Email('subject  ', ' body ');
-        $this->assertEquals('subject', $message->getSubject());
-        $this->assertEquals('body', $message->getBody());
+        $this->assertSame('subject', $message->getSubject());
+        $this->assertSame('body', $message->getBody());
     }
 
     public function testNewMessageBadBody()
@@ -90,8 +91,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     public function testForcedBadFromAddress()
     {
-        $message = new class() extends Email
-        {
+        $message = new class() extends Email {
             public function __construct()
             {
                 parent::__construct();
@@ -122,8 +122,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     public function testForcedBadToAddresses()
     {
-        $message = new class() extends Email
-        {
+        $message = new class() extends Email {
             public function __construct()
             {
                 parent::__construct();
@@ -138,7 +137,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $message = $this->object->withBody('body');
         $this->assertNotSame($this->object, $message);
-        $this->assertEquals('body', $message->getBody());
+        $this->assertSame('body', $message->getBody());
 
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withBody('');
@@ -148,7 +147,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $message = $this->object->withSubject('subject');
         $this->assertNotSame($this->object, $message);
-        $this->assertEquals('subject', $message->getSubject());
+        $this->assertSame('subject', $message->getSubject());
 
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withSubject('');
@@ -159,7 +158,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message = $this->object->withFromAddress(new EmailAddress('test@example.com'));
         $this->assertNotSame($this->object, $message);
         $from = $message->getFromAddress();
-        $this->assertEquals('test@example.com', $from->getEmail());
+        $this->assertSame('test@example.com', $from->getEmail());
 
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withFromAddress(new EmailAddress());
@@ -224,7 +223,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
         $message = $this->object->withReadReceiptAddress(new EmailAddress('test@example.com'));
         $this->assertNotSame($this->object, $message);
         $rr = $message->getReadReceiptAddress();
-        $this->assertEquals('test@example.com', $rr->getEmail());
+        $this->assertSame('test@example.com', $rr->getEmail());
 
         $this->expectException(\InvalidArgumentException::class);
         $this->object->withReadReceiptAddress(new EmailAddress());
@@ -232,8 +231,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     public function testForcedBadReadReceiptAddress()
     {
-        $message = new class() extends Email
-        {
+        $message = new class() extends Email {
             public function __construct()
             {
                 parent::__construct();
@@ -270,8 +268,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     public function testWithForcedBadAttachments()
     {
-        $message = new class() extends Email
-        {
+        $message = new class() extends Email {
             public function __construct()
             {
                 parent::__construct();
@@ -286,7 +283,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $message = $this->object->withHtmlBody('<p>body</p>');
         $this->assertNotSame($this->object, $message);
-        $this->assertEquals('<p>body</p>', $message->getHtmlBody());
+        $this->assertSame('<p>body</p>', $message->getHtmlBody());
 
         $this->assertNull($this->object->getHtmlBody());
 
@@ -296,8 +293,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     public function testForcedBadHtmlBody()
     {
-        $message = new class() extends Email
-        {
+        $message = new class() extends Email {
             public function __construct()
             {
                 parent::__construct();

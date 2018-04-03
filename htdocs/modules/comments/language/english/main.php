@@ -55,6 +55,6 @@ define('_MD_COMMENTS_COMANONPOST', 'Allow anonymous comments?');
 define('_MD_COMMENTS_COMNOCOM', 'Disable comments');
 
 //For uninstall
-define("_MD_COMMENTS_DELETE","Deleting comments...");
-define("_MD_COMMENTS_DELETE_ERROR","ERROR: Could not delete comments");
-define("_MD_COMMENTS_DELETED","Comments deleted");
+define('_MD_COMMENTS_DELETE', 'Deleting comments...');
+define('_MD_COMMENTS_DELETE_ERROR', 'ERROR: Could not delete comments');
+define('_MD_COMMENTS_DELETED', 'Comments deleted');

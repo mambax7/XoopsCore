@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +18,7 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->object = new DateTimeSelect('Caption', 'name');
-        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme);
+        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme());
         //$this->markTestSkipped('side effects');
     }
 
@@ -38,8 +39,8 @@ class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new DateTimeSelect('mycaption', 'myname');
-        $newWay = new DateTimeSelect(['caption' => 'mycaption', 'name' => 'myname',]);
-        $this->assertEquals($oldWay->render(), $newWay->render());
+        $newWay = new DateTimeSelect(['caption' => 'mycaption', 'name' => 'myname', ]);
+        $this->assertSame($oldWay->render(), $newWay->render());
     }
 
     public function test_const()

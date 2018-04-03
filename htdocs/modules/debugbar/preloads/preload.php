@@ -27,7 +27,318 @@ use Xoops\Core\PreloadItem;
  */
 class DebugbarPreload extends PreloadItem
 {
-    private static $registry = array();
+    private static $registry = [];
+
+    /**
+     * eventCoreException
+     *
+     * @param Exception $e an exception
+     */
+    public static function eventCoreException($e)
+    {
+        DebugbarLogger::getInstance()->addException($e);
+    }
+
+    /**
+     * add any module specific class map entries
+     *
+     * @param mixed $args not used
+     */
+    public static function eventCoreIncludeCommonClassmaps($args)
+    {
+        $path = dirname(__DIR__);
+        XoopsLoad::addMap([
+            'debugbarlogger' => $path . '/class/debugbarlogger.php',
+        ]);
+    }
+
+    /**
+     * eventCoreIncludeCommonStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreIncludeCommonStart($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+
+        $logger->enable(); //until we get a db connection debug is enabled
+        //if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
+        //    $logger->getDebugbar()['time']->addMeasure('Loading', $_SERVER['REQUEST_TIME_FLOAT'], microtime(true));
+        //}
+        $logger->startTime();
+        $logger->startTime('XOOPS Boot');
+    }
+
+    /**
+     * core.database.noconn
+     *
+     * @param array $args arguments
+     */
+    public static function eventCoreDatabaseNoconn($args)
+    {
+        if (class_exists('DebugbarLogger')) {
+            /* @var $db Xoops\Core\Database\Connection */
+            $db = $args[0];
+            DebugbarLogger::getInstance()->log(LogLevel::ALERT, $db->error(), ['errno' => $db->errno()]);
+        }
+    }
+
+    /**
+     * eventCoreDatabaseNodb
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreDatabaseNodb($args)
+    {
+        if (class_exists('DebugbarLogger')) {
+            /* @var $db Xoops\Core\Database\Connection */
+            $db = $args[0];
+            DebugbarLogger::getInstance()->log(LogLevel::ALERT, $db->error(), ['errno' => $db->errno()]);
+        }
+    }
+
+    /**
+     * eventCoreIncludeCommonAuthSuccess
+     */
+    public static function eventCoreIncludeCommonAuthSuccess()
+    {
+        $xoops = Xoops::getInstance();
+        $logger = DebugbarLogger::getInstance();
+        $configs = self::getConfigs();
+        if ($configs['debugbar_enable']) {
+            $xoops->loadLocale();
+            $xoops->loadLanguage('main', 'debugbar');
+            $logger->enable();
+        } else {
+            $logger->disable();
+        }
+    }
+
+    /**
+     * eventCoreIncludeCommonEnd
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreIncludeCommonEnd($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logger->stopTime('XOOPS Boot');
+        $logger->startTime('Module init');
+    }
+
+    /**
+     * eventCoreTemplateConstructStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreTemplateConstructStart($args)
+    {
+        $tpl = $args[0];
+        $configs = self::getConfigs();
+        if ($configs['debugbar_enable']) {
+            $tpl->debugging_ctrl = 'URL';
+        }
+        if ($configs['debug_smarty_enable']) {
+                $tpl->debugging = Smarty::DEBUG_ON;
+        }
+    }
+
+    /**
+     * eventCoreThemeRenderStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreThemeRenderStart($args)
+    {
+        DebugbarLogger::getInstance()->startTime('Page rendering');
+    }
+
+    /**
+     * eventCoreThemeRenderEnd
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreThemeRenderEnd($args)
+    {
+        DebugbarLogger::getInstance()->stopTime('Page rendering');
+        DebugbarLogger::getInstance()->addSmarty();
+    }
+
+    /**
+     * eventCoreThemeCheckcacheSuccess
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreThemeCheckcacheSuccess($args)
+    {
+        $template = $args[0];
+        $theme = $args[1];
+        DebugbarLogger::getInstance()->addExtra(
+            $template,
+            sprintf('Cached (regenerates every %d seconds)', $theme->contentCacheLifetime)
+        );
+    }
+
+    /**
+     * eventCoreThemeblocksBuildblockStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreThemeblocksBuildblockStart($args)
+    {
+        /* @var $block XoopsBlock */
+        $block = $args[0];
+        $isCached = $args[1];
+        //Logger::getInstance()->addBlock($block->getVar('name'), $isCached, $block->getVar('bcachetime'));
+        $context = ['channel' => 'Blocks', 'cached' => $isCached, 'cachetime' => $block->getVar('bcachetime')];
+        DebugbarLogger::getInstance()->log(LogLevel::INFO, $block->getVar('name'), $context);
+
+    }
+
+    /**
+     * eventCoreDeprecated
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreDeprecated($args)
+    {
+        $message = $args[0];
+        DebugbarLogger::getInstance()->log(LogLevel::WARNING, $message, ['channel' => 'Deprecated']);
+    }
+
+    /**
+     * eventCoreDisableerrorreporting
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreDisableerrorreporting($args)
+    {
+        DebugbarLogger::getInstance()->disable();
+    }
+
+    /**
+     * eventCoreHeaderStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreHeaderStart($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logger->stopTime('Module init');
+        $logger->startTime('XOOPS output init');
+    }
+
+    /**
+     * eventCoreHeaderEnd
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreHeaderEnd($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logger->stopTime('XOOPS output init');
+        $logger->startTime('Module display');
+    }
+
+    /**
+     * eventCoreFooterStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreFooterStart($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logger->stopTime('Module display');
+    }
+
+    /**
+     * eventCoreFooterEnd
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreFooterEnd($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logger->stopTime();
+    }
+
+    /**
+     * eventCoreRedirectStart
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreRedirectStart($args)
+    {
+        DebugbarLogger::getInstance()->stackData();
+    }
+
+    /**
+     * eventCoreSecurityValidatetokenEnd
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreSecurityValidatetokenEnd($args)
+    {
+        $logger = DebugbarLogger::getInstance();
+        $logs = $args[0];
+        foreach ($logs as $log) {
+            $context = ['channel' => 'Extra', 'name' => $log[0]];
+            $logger->log(LogLevel::INFO, $log[1], $context);
+        }
+    }
+
+    /**
+     * eventCoreModuleAddlog
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreModuleAddlog($args)
+    {
+        $context = ['channel' => 'Extra', 'name' => $args[0]];
+        DebugbarLogger::getInstance()->log(LogLevel::DEBUG, $args[1], $context);
+
+    }
+
+    /**
+     * eventDebugLog - dump to DebugLog
+     *
+     * @param mixed $args argument supplied to triggerEvent
+     */
+    public static function eventDebugLog($args)
+    {
+        DebugbarLogger::getInstance()->dump($args);
+    }
+
+    /**
+     * eventDebugTimerStart - start a timer
+     *
+     * @param array $args array of name and label for timer
+     */
+    public static function eventDebugTimerStart($args)
+    {
+        $args = (array) $args;
+        DebugbarLogger::getInstance()->startTime($args[0], isset($args[1]) ? $args[1] : null);
+    }
+
+    /**
+     * eventDebugTimerStop - start a timer
+     *
+     * @param string $args name of timer
+     */
+    public static function eventDebugTimerStop($args)
+    {
+        DebugbarLogger::getInstance()->stopTime($args);
+    }
+
+    /**
+     * eventCoreSessionShutdown
+     *
+     * @param mixed $args arguments supplied to triggerEvent
+     */
+    public static function eventCoreSessionShutdown($args)
+    {
+        DebugbarLogger::getInstance()->renderDebugBar();
+    }
 
     /**
      * getConfigs
@@ -38,7 +349,7 @@ class DebugbarPreload extends PreloadItem
     {
         static $configs = null;
 
-        if (is_null($configs)) {
+        if ($configs === null) {
             $xoops = Xoops::getInstance();
             $user_groups = $xoops->getUserGroups();
             $moduleperm_handler = $xoops->getHandlerGroupPermission();
@@ -69,366 +380,5 @@ class DebugbarPreload extends PreloadItem
         }
 
         return $configs;
-    }
-
-    /**
-     * eventCoreException
-     *
-     * @param Exception $e an exception
-     *
-     * @return void
-     */
-    public static function eventCoreException($e)
-    {
-        DebugbarLogger::getInstance()->addException($e);
-    }
-
-    /**
-     * add any module specific class map entries
-     *
-     * @param mixed $args not used
-     *
-     * @return void
-     */
-    public static function eventCoreIncludeCommonClassmaps($args)
-    {
-        $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
-            'debugbarlogger' => $path . '/class/debugbarlogger.php',
-        ));
-    }
-
-    /**
-     * eventCoreIncludeCommonStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreIncludeCommonStart($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-
-        $logger->enable();//until we get a db connection debug is enabled
-        //if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
-        //    $logger->getDebugbar()['time']->addMeasure('Loading', $_SERVER['REQUEST_TIME_FLOAT'], microtime(true));
-        //}
-        $logger->startTime();
-        $logger->startTime('XOOPS Boot');
-    }
-
-    /**
-     * core.database.noconn
-     *
-     * @param array $args arguments
-     *
-     * @return void
-     */
-    public static function eventCoreDatabaseNoconn($args)
-    {
-        if (class_exists('DebugbarLogger')) {
-            /* @var $db Xoops\Core\Database\Connection */
-            $db = $args[0];
-            DebugbarLogger::getInstance()->log(LogLevel::ALERT, $db->error(), array('errno' => $db->errno()));
-        }
-    }
-
-    /**
-     * eventCoreDatabaseNodb
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreDatabaseNodb($args)
-    {
-        if (class_exists('DebugbarLogger')) {
-            /* @var $db Xoops\Core\Database\Connection */
-            $db = $args[0];
-            DebugbarLogger::getInstance()->log(LogLevel::ALERT, $db->error(), array('errno' => $db->errno()));
-        }
-    }
-
-    /**
-     * eventCoreIncludeCommonAuthSuccess
-     *
-     * @return void
-     */
-    public static function eventCoreIncludeCommonAuthSuccess()
-    {
-        $xoops = Xoops::getInstance();
-        $logger = DebugbarLogger::getInstance();
-        $configs = self::getConfigs();
-        if ($configs['debugbar_enable']) {
-            $xoops->loadLocale();
-            $xoops->loadLanguage('main', 'debugbar');
-            $logger->enable();
-        } else {
-            $logger->disable();
-        }
-    }
-
-    /**
-     * eventCoreIncludeCommonEnd
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreIncludeCommonEnd($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logger->stopTime('XOOPS Boot');
-        $logger->startTime('Module init');
-    }
-
-    /**
-     * eventCoreTemplateConstructStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreTemplateConstructStart($args)
-    {
-        $tpl = $args[0];
-        $configs = self::getConfigs();
-        if ($configs['debugbar_enable']) {
-            $tpl->debugging_ctrl = 'URL';
-        }
-        if ($configs['debug_smarty_enable']) {
-                $tpl->debugging = Smarty::DEBUG_ON;
-        }
-    }
-
-    /**
-     * eventCoreThemeRenderStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreThemeRenderStart($args)
-    {
-        DebugbarLogger::getInstance()->startTime('Page rendering');
-    }
-
-    /**
-     * eventCoreThemeRenderEnd
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreThemeRenderEnd($args)
-    {
-        DebugbarLogger::getInstance()->stopTime('Page rendering');
-        DebugbarLogger::getInstance()->addSmarty();
-    }
-
-    /**
-     * eventCoreThemeCheckcacheSuccess
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreThemeCheckcacheSuccess($args)
-    {
-        $template = $args[0];
-        $theme = $args[1];
-        DebugbarLogger::getInstance()->addExtra(
-            $template,
-            sprintf('Cached (regenerates every %d seconds)', $theme->contentCacheLifetime)
-        );
-    }
-
-    /**
-     * eventCoreThemeblocksBuildblockStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreThemeblocksBuildblockStart($args)
-    {
-        /* @var $block XoopsBlock */
-        $block = $args[0];
-        $isCached= $args[1];
-        //Logger::getInstance()->addBlock($block->getVar('name'), $isCached, $block->getVar('bcachetime'));
-        $context = array('channel'=>'Blocks', 'cached'=>$isCached, 'cachetime'=>$block->getVar('bcachetime'));
-        DebugbarLogger::getInstance()->log(LogLevel::INFO, $block->getVar('name'), $context);
-
-    }
-
-    /**
-     * eventCoreDeprecated
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreDeprecated($args)
-    {
-        $message = $args[0];
-        DebugbarLogger::getInstance()->log(LogLevel::WARNING, $message, array('channel'=>'Deprecated'));
-    }
-
-    /**
-     * eventCoreDisableerrorreporting
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreDisableerrorreporting($args)
-    {
-        DebugbarLogger::getInstance()->disable();
-    }
-
-    /**
-     * eventCoreHeaderStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreHeaderStart($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logger->stopTime('Module init');
-        $logger->startTime('XOOPS output init');
-    }
-
-    /**
-     * eventCoreHeaderEnd
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreHeaderEnd($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logger->stopTime('XOOPS output init');
-        $logger->startTime('Module display');
-    }
-
-    /**
-     * eventCoreFooterStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreFooterStart($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logger->stopTime('Module display');
-    }
-
-    /**
-     * eventCoreFooterEnd
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreFooterEnd($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logger->stopTime();
-    }
-
-    /**
-     * eventCoreRedirectStart
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreRedirectStart($args)
-    {
-        DebugbarLogger::getInstance()->stackData();
-    }
-
-    /**
-     * eventCoreSecurityValidatetokenEnd
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreSecurityValidatetokenEnd($args)
-    {
-        $logger = DebugbarLogger::getInstance();
-        $logs = $args[0];
-        foreach ($logs as $log) {
-            $context = array('channel'=>'Extra', 'name'=>$log[0]);
-            $logger->log(LogLevel::INFO, $log[1], $context);
-        }
-    }
-
-    /**
-     * eventCoreModuleAddlog
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreModuleAddlog($args)
-    {
-        $context = array('channel'=>'Extra', 'name'=>$args[0]);
-        DebugbarLogger::getInstance()->log(LogLevel::DEBUG, $args[1], $context);
-
-    }
-
-    /**
-     * eventDebugLog - dump to DebugLog
-     *
-     * @param mixed $args argument supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventDebugLog($args)
-    {
-        DebugbarLogger::getInstance()->dump($args);
-    }
-
-    /**
-     * eventDebugTimerStart - start a timer
-     *
-     * @param array $args array of name and label for timer
-     *
-     * @return void
-     */
-    public static function eventDebugTimerStart($args)
-    {
-        $args = (array) $args;
-        DebugbarLogger::getInstance()->startTime($args[0], isset($args[1]) ? $args[1] : null);
-    }
-
-    /**
-     * eventDebugTimerStop - start a timer
-     *
-     * @param string $args name of timer
-     *
-     * @return void
-     */
-    public static function eventDebugTimerStop($args)
-    {
-        DebugbarLogger::getInstance()->stopTime($args);
-    }
-
-    /**
-     * eventCoreSessionShutdown
-     *
-     * @param mixed $args arguments supplied to triggerEvent
-     *
-     * @return void
-     */
-    public static function eventCoreSessionShutdown($args)
-    {
-        DebugbarLogger::getInstance()->renderDebugBar();
     }
 }

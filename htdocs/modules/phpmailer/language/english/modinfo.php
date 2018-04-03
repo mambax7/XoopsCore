@@ -15,8 +15,8 @@
  * @author    Richard Griffith <richard@geekwright.com>
  */
 
-define('_MI_PHPMAILER_NAME','PHPMailer');
-define('_MI_PHPMAILER_DESC','Use PHPMailer for Email service');
+define('_MI_PHPMAILER_NAME', 'PHPMailer');
+define('_MI_PHPMAILER_DESC', 'Use PHPMailer for Email service');
 
 define('_MI_PHPMAILER_CONF_SMTPHOST', 'SMTP host(s)');
 define('_MI_PHPMAILER_CONF_SMTPHOST_DESC', 'List of SMTP servers to try to connect to separated by a ";". Example: localhost:25;tls://smtp.example.com:587');

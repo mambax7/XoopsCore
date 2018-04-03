@@ -22,6 +22,6 @@ define('_MI_NOTIFICATIONS_BNAME1', 'Notifications');
 define('_MI_NOTIFICATIONS_BNAME1_DSC', 'Shows notification form block');
 
 //Admin Menu
-define("_MI_NOTIFICATIONS_INDEX", "Home");
-define("_MI_NOTIFICATIONS_ABOUT", "About");
+define('_MI_NOTIFICATIONS_INDEX', 'Home');
+define('_MI_NOTIFICATIONS_ABOUT', 'About');
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Handler;
 
 require_once __DIR__ . '/../../../../init_new.php';
@@ -40,35 +41,35 @@ class FactorySpecTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object->scheme('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertEquals('testing', $this->object->getScheme());
+        $this->assertSame('testing', $this->object->getScheme());
     }
 
     public function testName()
     {
         $instance = $this->object->name('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertEquals('testing', $this->object->getName());
+        $this->assertSame('testing', $this->object->getName());
     }
 
     public function testDirname()
     {
         $instance = $this->object->dirname('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertEquals('testing', $this->object->getDirname());
+        $this->assertSame('testing', $this->object->getDirname());
     }
 
     public function testOptional()
     {
         $instance = $this->object->optional(true);
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertEquals(true, $this->object->getOptional());
+        $this->assertSame(true, $this->object->getOptional());
     }
 
     public function testFqn()
     {
         $instance = $this->object->fqn('testing');
         $this->assertInstanceOf('\Xoops\Core\Handler\FactorySpec', $instance);
-        $this->assertEquals('testing', $this->object->getFQN());
+        $this->assertSame('testing', $this->object->getFQN());
     }
 
     public function testBuild()

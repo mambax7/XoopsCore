@@ -17,20 +17,19 @@
 
 class CodexMainmenuPlugin implements MainmenuPluginInterface
 {
-
     /**
      * @return array
      */
     public function mainmenu()
     {
         $helper = \Xoops::getModuleHelper(basename(dirname(dirname(__DIR__))));
-        $subMenu = array();
+        $subMenu = [];
         // Prevent wasting resources
         if ($helper->isCurrentModule()) {
             $files = \Xoops\Core\Lists\File::getList($helper->path('/'));
             $i = 0;
             foreach ($files as $file) {
-                if (!in_array($file, array('xoops_version.php', 'index.php'))) {
+                if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
                     $fileName = ucfirst(str_replace('.php', '', $file));
                     $subMenu[] = [
                         'name' => $fileName,

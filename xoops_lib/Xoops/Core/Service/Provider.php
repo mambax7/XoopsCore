@@ -59,18 +59,60 @@ class Provider
     protected $service = null;
 
     /** @var AbstractContract[] $providers */
-    protected $providers = array();
+    protected $providers = [];
 
     /**
      * __construct
      *
-     * @param Manager $manager Manager instance
-     * @param string  $service service name (case sensitive)
+     *
+     * @param string $service service name (case sensitive)
      */
     public function __construct(Manager $manager, $service)
     {
         $this->manager = $manager;
         $this->service = $service;
+    }
+
+    /**
+     * All contract specified methods go here
+     *
+     * @param string $name      method to call
+     * @param mixed  $arguments any arguments
+     *
+     * @return Response Response
+     */
+    public function __call($name, $arguments)
+    {
+        $mode = $this->getProviderMode();
+
+        // for right now only one provider will be called, and it should be at the top
+        $object = reset($this->providers);
+        $method = [$object, $name];
+        $response = new Response();
+        if (is_callable($method)) {
+            try {
+                //$object->$name($response, $arguments);
+                array_unshift($arguments, $response);
+                call_user_func_array($method, $arguments);
+            } catch (\Throwable $e) {
+                \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+                $response->setSuccess(false)->addErrorMessage($e->getMessage());
+            }
+        } else {
+            $response->setSuccess(false)->addErrorMessage(sprintf('No method %s', $name));
+        }
+        return $response;
+    }
+
+    /**
+     * All static methods go here and will return null
+     *
+     * @param string $name      not used
+     * @param mixed  $arguments not used
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        return null;
     }
 
     /**
@@ -82,7 +124,7 @@ class Provider
     {
         static $ret = null;
 
-        if ($ret===null) {
+        if ($ret === null) {
             if (count($this->providers)) {
                 $ret = reset($this->providers)->getMode();
             } else {
@@ -96,8 +138,6 @@ class Provider
      * registerProvider - register a provider of a named service
      *
      * @param AbstractContract $object instantiated object that provides the service
-     *
-     * @return void
      */
     public function register(AbstractContract $object)
     {
@@ -123,18 +163,16 @@ class Provider
 
     /**
      * sortProviders - sort providers into priority order
-     *
-     * @return void
      */
     public function sortProviders()
     {
         $sortable = $this->providers;
         usort($sortable, function (AbstractContract $a, AbstractContract $b) {
-            if ($a->getPriority() != $b->getPriority()) {
+            if ($a->getPriority() !== $b->getPriority()) {
                 return ($a->getPriority() > $b->getPriority()) ? 1 : -1;
-            } else {
-                return 0;
             }
+                return 0;
+
         });
         $this->providers = $sortable;
     }
@@ -151,49 +189,5 @@ class Provider
     public function isAvailable()
     {
         return true;
-    }
-
-    /**
-     * All contract specified methods go here
-     *
-     * @param string $name      method to call
-     * @param mixed  $arguments any arguments
-     *
-     * @return Response Response
-     */
-    public function __call($name, $arguments)
-    {
-        $mode = $this->getProviderMode();
-
-        // for right now only one provider will be called, and it should be at the top
-        $object = reset($this->providers);
-        $method = array($object, $name);
-        $response = new Response();
-        if (is_callable($method)) {
-            try {
-                //$object->$name($response, $arguments);
-                array_unshift($arguments, $response);
-                call_user_func_array($method, $arguments);
-            } catch (\Throwable $e) {
-                \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
-                $response->setSuccess(false)->addErrorMessage($e->getMessage());
-            }
-        } else {
-            $response->setSuccess(false)->addErrorMessage(sprintf('No method %s', $name));
-        }
-        return $response;
-    }
-
-    /**
-     * All static methods go here and will return null
-     *
-     * @param string $name      not used
-     * @param mixed  $arguments not used
-     *
-     * @return null
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        return null;
     }
 }

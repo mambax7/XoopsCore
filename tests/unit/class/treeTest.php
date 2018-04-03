@@ -1,11 +1,11 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsConfigItem;
 
-class TreeTest extends \PHPUnit\Framework\TestCase
+class treeTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
     }
 
@@ -28,16 +28,16 @@ class TreeTest extends \PHPUnit\Framework\TestCase
         $item3->initVar('Id', XOBJ_DTYPE_INT, 73);
         $item3->initVar('parentId', XOBJ_DTYPE_INT, 72);
         $item3->initVar('rootId', XOBJ_DTYPE_INT);
-        $objectArr = array($item1,$item2,$item3);
+        $objectArr = [$item1, $item2, $item3];
 
-        $instance=new XoopsObjectTree($objectArr, $myId, $parentId);
+        $instance = new XoopsObjectTree($objectArr, $myId, $parentId);
         $this->assertInstanceOf('XoopsObjectTree', $instance);
 
-        $tree=$instance->getTree();
+        $tree = $instance->getTree();
         $this->assertTrue(is_array($tree));
 
-        $ret=$instance->getByKey(72);
-        $this->assertEquals(72, $ret->getVar('Id'));
+        $ret = $instance->getByKey(72);
+        $this->assertSame(72, $ret->getVar('Id'));
     }
 
     public function test_getTree()

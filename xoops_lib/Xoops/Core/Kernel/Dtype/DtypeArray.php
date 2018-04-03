@@ -43,11 +43,11 @@ class DtypeArray extends DtypeAbstract
             case Dtype::FORMAT_NONE:
                 return $value;
             default:
-                if (!is_array($value)) {
-                    if ($value != '') {
+                if (! is_array($value)) {
+                    if ($value !== '') {
                         $value = unserialize($value);
                     }
-                    $value = is_array($value) ? $value : array();
+                    $value = is_array($value) ? $value : [];
                 }
                 return $value;
         }
@@ -64,7 +64,7 @@ class DtypeArray extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        $value = (array)$value;
+        $value = (array) $value;
         // TODO: Not encoding safe, should try base64_encode -- phppp
         $value = serialize($value);
         return $value;

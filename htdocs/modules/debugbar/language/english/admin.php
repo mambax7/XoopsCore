@@ -15,7 +15,7 @@
  * @author    Richard Griffith <richard@geekwright.com>
  */
 
-define('_MA_DEBUGBAR_PERMISSION_FORM','DebugBar Usage Permissions');
-define('_MA_DEBUGBAR_PERMISSION_GROUPS','Select groups that may use the DebugBar');
-define('_MA_DEBUGBAR_FORM_SUBMIT','Save');
-define('_MA_DEBUGBAR_FORM_PROCESSED','Permissions updated.');
+define('_MA_DEBUGBAR_PERMISSION_FORM', 'DebugBar Usage Permissions');
+define('_MA_DEBUGBAR_PERMISSION_GROUPS', 'Select groups that may use the DebugBar');
+define('_MA_DEBUGBAR_FORM_SUBMIT', 'Save');
+define('_MA_DEBUGBAR_FORM_PROCESSED', 'Permissions updated.');

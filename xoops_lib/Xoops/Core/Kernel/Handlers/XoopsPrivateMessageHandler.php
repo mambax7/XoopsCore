@@ -67,10 +67,10 @@ class XoopsPrivateMessageHandler extends XoopsPersistableObjectHandler
             ->set('read_msg', ':readmsg')
             ->where('msg_id = :msgid')
             ->setParameter(':readmsg', 1, \PDO::PARAM_INT)
-            ->setParameter(':msgid', (int)$pm->getVar('msg_id'), \PDO::PARAM_INT);
+            ->setParameter(':msgid', (int) $pm->getVar('msg_id'), \PDO::PARAM_INT);
         $result = $qb->execute();
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
         return true;

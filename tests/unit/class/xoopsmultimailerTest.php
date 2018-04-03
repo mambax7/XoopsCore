@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
-class XoopsMultiMailerTest extends \PHPUnit\Framework\TestCase
+class xoopsmultimailerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'XoopsMultiMailer';
 

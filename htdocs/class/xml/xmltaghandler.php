@@ -8,7 +8,7 @@
  *
  * @author Ken Egervari, Remi Michalski
  */
-class XmlTagHandler
+class xmltaghandler
 {
     /**
      * @abstract
@@ -21,9 +21,7 @@ class XmlTagHandler
 
     /**
      * @abstract
-     * @param SaxParser $parser
-     * @param array     $attributes
-     * @return void
+     * @param array $attributes
      */
     public function handleBeginElement(SaxParser $parser, &$attributes)
     {
@@ -31,8 +29,6 @@ class XmlTagHandler
 
     /**
      * @abstract
-     * @param SaxParser $parser
-     * @return void
      */
     public function handleEndElement(SaxParser $parser)
     {
@@ -40,9 +36,7 @@ class XmlTagHandler
 
     /**
      * @abstract
-     * @param SaxParser $parser
-     * @param string    $data
-     * @return void
+     * @param string $data
      */
     public function handleCharacterData(SaxParser $parser, &$data)
     {

@@ -32,8 +32,6 @@ abstract class ExtensionAbstract extends SanitizerComponent
      * Register extension with the supplied sanitizer instance
      *
      * was load()
-     *
-     * @return void
      */
     abstract public function registerExtensionProcessing();
 
@@ -48,7 +46,7 @@ abstract class ExtensionAbstract extends SanitizerComponent
      */
     public function getDhtmlEditorSupport($textAreaId)
     {
-        return array('', '');
+        return ['', ''];
     }
 
     /**
@@ -70,8 +68,8 @@ abstract class ExtensionAbstract extends SanitizerComponent
         $altText = $this->ts->escapeForJavascript($altText);
         $url = \Xoops::getInstance()->url('images/form/' . $imageName);
 
-        $buttonCode = '<img src="' . $url .'"'
-            . ' alt="' . $altText .'" title="' . $altText . '"'
+        $buttonCode = '<img src="' . $url . '"'
+            . ' alt="' . $altText . '" title="' . $altText . '"'
             . ' onclick="' . $onclick . '(\'' . $textAreaId . '\'';
         foreach ($prompts as $prompt) {
             $buttonCode .= ', \'' . $this->ts->escapeForJavascript($prompt) . '\'';

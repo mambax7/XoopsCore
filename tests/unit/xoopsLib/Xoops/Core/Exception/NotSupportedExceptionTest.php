@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Exception;
 
 require_once __DIR__ . '/../../../../init_new.php';
@@ -16,7 +17,7 @@ class NotSupportedExceptionTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new NotSupportedException;
+        $this->object = new NotSupportedException();
     }
 
     /**
@@ -41,6 +42,6 @@ class NotSupportedExceptionTest extends \PHPUnit\Framework\TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('Not Supported', $this->object->getName());
+        $this->assertSame('Not Supported', $this->object->getName());
     }
 }

@@ -36,13 +36,13 @@ $pageHasForm = true;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $xoops->events();
     $xoops->loadLocale('system');
-    include_once XOOPS_ROOT_PATH . "/modules/system/class/module.php";
-    include_once XOOPS_ROOT_PATH . "/modules/system/class/system.php";
+    include_once XOOPS_ROOT_PATH . '/modules/system/class/module.php';
+    include_once XOOPS_ROOT_PATH . '/modules/system/class/system.php';
 
     $system_module = new SystemModule();
     $system = System::getInstance();
 
-    $msgs = array();
+    $msgs = [];
     foreach ($_REQUEST['modules'] as $dirname => $installmod) {
         if ($installmod) {
             $msgs[] = $system_module->install($dirname);
@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $tempvar = $msg->modinfo['name'];
             $content .= "<dt>{$tempvar}</dt>";
         }
-        $content .= "</ul>";
+        $content .= '</ul>';
     } else {
-        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_MODULES . "</div>";
+        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_MODULES . '</div>';
     }
 
     //Reset module lists in cache folder
@@ -84,13 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 } else {
-    if (!$xoops->getConfig('locale')) {
+    if (! $xoops->getConfig('locale')) {
         $xoops->setConfig('locale', $_COOKIE['xo_install_lang']);
     }
     $xoops->loadLocale('system');
 
-    include_once XOOPS_ROOT_PATH . "/modules/system/class/module.php";
-    include_once XOOPS_ROOT_PATH . "/modules/system/class/system.php";
+    include_once XOOPS_ROOT_PATH . '/modules/system/class/module.php';
+    include_once XOOPS_ROOT_PATH . '/modules/system/class/system.php';
 
     $system = System::getInstance();
     // Get installed modules
@@ -99,15 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dirlist = $system_module->getInstalledModules();
     $toinstal = 0;
 
-    $javascript = "";
+    $javascript = '';
     $content = "<ul class='log'><li style='background: none;'>";
     $content .= "<table class='module'>\n";
     /* @var $module XoopsModule */
     foreach ($dirlist as $module) {
         clearstatcache();
         $value = 0;
-        $style = "";
-        if (in_array($module->getInfo('dirname'), $wizard->configs['modules'])) {
+        $style = '';
+        if (in_array($module->getInfo('dirname'), $wizard->configs['modules'], true)) {
             $value = 1;
             $style = " style='background-color:#E6EFC2;'";
         }
@@ -117,21 +117,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form->addElement($moduleYN);
 
         $content .= "<tr id='" . $module->getInfo('dirname') . "'" . $style . ">\n";
-        $content .= "    <td class='img' ><img src='" . XOOPS_URL . "/modules/" . $module->getInfo('dirname') . "/" . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
-        $content .= "    <td>";
-        $content .= "        " . $module->getInfo('name') . "&nbsp;" . number_format(round($module->getInfo('version'), 2), 2) . "&nbsp;(" . $module->getInfo('dirname') . ")";
-        $content .= "        <br />" . $module->getInfo('description');
+        $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
+        $content .= '    <td>';
+        $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
+        $content .= '        <br />' . $module->getInfo('description');
         $content .= "    </td>\n";
         $content .= "    <td class='yesno'>";
         $content .= $moduleYN->render();
         $content .= "    </td></tr>\n";
         ++$toinstal;
     }
-    $content .= "</table>";
-    $content .= "</li></ul><script type='text/javascript'>" . $javascript . "</script>";
-    if ($toinstal == 0) {
+    $content .= '</table>';
+    $content .= "</li></ul><script type='text/javascript'>" . $javascript . '</script>';
+    if ($toinstal === 0) {
         $pageHasForm = false;
-        $content = "<div class='x2-note confirmMsg'>" . NO_MODULES_FOUND . "</div>";
+        $content = "<div class='x2-note confirmMsg'>" . NO_MODULES_FOUND . '</div>';
     }
 }
 

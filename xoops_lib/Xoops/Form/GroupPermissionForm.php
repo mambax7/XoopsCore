@@ -37,7 +37,7 @@ class GroupPermissionForm extends Form
      *
      * @var array
      */
-    private $itemTree = array();
+    private $itemTree = [];
 
     /**
      * Name of permission
@@ -73,12 +73,12 @@ class GroupPermissionForm extends Form
     public function __construct($title, $modid, $permname, $permdesc, $url = '', $anonymous = true)
     {
         parent::__construct($title, 'groupperm_form', XOOPS_URL . '/modules/system/admin/groupperm.php', 'post');
-        $this->modid = (int)($modid);
+        $this->modid = (int) ($modid);
         $this->permName = $permname;
         $this->permDesc = $permdesc;
         $this->addElement(new Hidden('modid', $this->modid));
         $this->addElement(new Token($permname));
-        if ($url != "") {
+        if ($url !== '') {
             $this->addElement(new Hidden('redirect_url', $url));
         }
         $this->showAnonymous = $anonymous;
@@ -90,8 +90,6 @@ class GroupPermissionForm extends Form
      * @param integer $itemId     item id
      * @param string  $itemName   item name
      * @param integer $itemParent item parent
-     *
-     * @return void
      */
     public function addItem($itemId, $itemName, $itemParent = 0)
     {
@@ -99,25 +97,6 @@ class GroupPermissionForm extends Form
         $this->itemTree[$itemId]['parent'] = $itemParent;
         $this->itemTree[$itemId]['name'] = $itemName;
         $this->itemTree[$itemId]['id'] = $itemId;
-    }
-
-    /**
-     * Loads all child ids for an item to be used in javascript
-     *
-     * @param int   $itemId   item id
-     * @param array $childIds child ids by reference
-     *
-     * @return void
-     */
-    private function loadAllChildItemIds($itemId, &$childIds)
-    {
-        if (!empty($this->itemTree[$itemId]['children'])) {
-            $children = $this->itemTree[$itemId]['children'];
-            foreach ($children as $fcid) {
-                array_push($childIds, $fcid);
-                $this->loadAllChildItemIds($fcid, $childIds);
-            }
-        }
     }
 
     /**
@@ -131,14 +110,14 @@ class GroupPermissionForm extends Form
         $xoops = \Xoops::getInstance();
         // load all child ids for javascript codes
         foreach (array_keys($this->itemTree) as $item_id) {
-            $this->itemTree[$item_id]['allchild'] = array();
+            $this->itemTree[$item_id]['allchild'] = [];
             $this->loadAllChildItemIds($item_id, $this->itemTree[$item_id]['allchild']);
         }
         $gperm_handler = $xoops->getHandlerGroupPermission();
         $member_handler = $xoops->getHandlerMember();
         $glist = $member_handler->getGroupList();
         foreach (array_keys($glist) as $i) {
-            if ($i == FixedGroups::ANONYMOUS && !$this->showAnonymous) {
+            if ($i === FixedGroups::ANONYMOUS && ! $this->showAnonymous) {
                 continue;
             }
             // get selected item id(s) for each group
@@ -166,11 +145,11 @@ class GroupPermissionForm extends Form
         foreach (array_keys($elements) as $i) {
             if ($elements[$i] instanceof Raw) {
                 $ret .= $elements[$i]->render();
-            } elseif (!$elements[$i]->isHidden()) {
+            } elseif (! $elements[$i]->isHidden()) {
                 $ret .= '<tr valign="top" align="left"><td class="head">' . $elements[$i]->getCaption();
-                if ($elements[$i]->getDescription() != "") {
+                if ($elements[$i]->getDescription() !== '') {
                     $ret .= "<br /><br /><span style='font-weight: normal;'>"
-                        . $elements[$i]->getDescription() . "</span>";
+                        . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= '</td>' . '<td class="even">' . $elements[$i]->render() . '</td></tr>' . '';
             } else {
@@ -180,5 +159,22 @@ class GroupPermissionForm extends Form
         $ret .= '</table>' . $hidden . '</form>';
         $ret .= $this->renderValidationJS(true);
         return $ret;
+    }
+
+    /**
+     * Loads all child ids for an item to be used in javascript
+     *
+     * @param int   $itemId   item id
+     * @param array $childIds child ids by reference
+     */
+    private function loadAllChildItemIds($itemId, &$childIds)
+    {
+        if (! empty($this->itemTree[$itemId]['children'])) {
+            $children = $this->itemTree[$itemId]['children'];
+            foreach ($children as $fcid) {
+                array_push($childIds, $fcid);
+                $this->loadAllChildItemIds($fcid, $childIds);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test;
 
 use Xmf\Uuid;
@@ -9,6 +10,7 @@ class UuidTest extends \PHPUnit\Framework\TestCase
      * @var Random
      */
     protected $object;
+
     protected $myClass = '\Xmf\Uuid';
 
     /**
@@ -38,7 +40,7 @@ class UuidTest extends \PHPUnit\Framework\TestCase
         $anotherResult = Uuid::generate();
         $this->assertRegExp($uuidMatch, $anotherResult);
 
-        $this->assertNotEquals($result, $anotherResult);
+        $this->assertNotSame($result, $anotherResult);
     }
 }
 

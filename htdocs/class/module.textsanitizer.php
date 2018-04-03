@@ -35,7 +35,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      */
     public static function getInstance()
     {
-        if (null === static::$instance) {
+        if (static::$instance === null) {
             static::$instance = new static();
         }
 

@@ -11,10 +11,10 @@
 
 namespace Xoops\Locale;
 
-use Patchwork\Utf8;
-use Xoops\Core\Locale\Punic\Calendar;
-use Punic\Misc;
 use \Xoops\Core\Locale\Time;
+use Patchwork\Utf8;
+use Punic\Misc;
+use Xoops\Core\Locale\Punic\Calendar;
 
 /**
  * XOOPS localization abstract
@@ -47,7 +47,7 @@ abstract class AbstractLocale
      */
     public static function isRtl()
     {
-        return ('right-to-left' === Misc::getCharacterOrder());
+        return (Misc::getCharacterOrder() === 'right-to-left');
     }
 
     /**
@@ -118,15 +118,15 @@ abstract class AbstractLocale
      */
     public static function getFonts()
     {
-        return array(
+        return [
             'Arial',
             'Courier',
             'Georgia',
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler'
-        );
+            'Haettenschweiler',
+        ];
     }
 
     /**
@@ -141,15 +141,15 @@ abstract class AbstractLocale
      */
     public static function getFontSizes()
     {
-        return array(
+        return [
             'xx-small' => 'xx-Small',
-            'x-small'  => 'x-Small',
-            'small'    => 'Small',
-            'medium'   => 'Medium',
-            'large'    => 'Large',
-            'x-large'  => 'x-Large',
-            'xx-large' => 'xx-Large'
-        );
+            'x-small' => 'x-Small',
+            'small' => 'Small',
+            'medium' => 'Medium',
+            'large' => 'Large',
+            'x-large' => 'x-Large',
+            'xx-large' => 'xx-Large',
+        ];
     }
 
     /**
@@ -157,7 +157,7 @@ abstract class AbstractLocale
      */
     public static function getAdminRssUrls()
     {
-        return array('http://www.xoops.org/backend.php');
+        return ['http://www.xoops.org/backend.php'];
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class AbstractLocale
     public static function substr($str, $start, $length, $ellipsis = '…')
     {
         $str2 = mb_strcut($str, $start, $length - strlen($ellipsis));
-        return $str2 . (mb_strlen($str)-$start != mb_strlen($str2) ? $ellipsis : '');
+        return $str2 . (mb_strlen($str) - $start !== mb_strlen($str2) ? $ellipsis : '');
     }
 
     /**
@@ -253,7 +253,7 @@ abstract class AbstractLocale
             case 'custom':
             case 'c':
                 $specialName = Calendar::getDateRelativeName($workingTime, true);
-                if ($specialName != '') {
+                if ($specialName !== '') {
                     return $specialName;
                 }
                 // no break - fall through
@@ -294,7 +294,7 @@ abstract class AbstractLocale
                 return $workingTime->format('Y-m-d H:i:s');
 
             default:
-                if ($format != '') {
+                if ($format !== '') {
                     return $workingTime->format($format);
                 }
                 return Time::formatDateTime($workingTime, 'long');
@@ -333,7 +333,6 @@ abstract class AbstractLocale
      * Sort array values according to current locale rules, maintaining index association
      *
      * @param array $array to sort
-     * @return void
      */
     public static function asort(&$array)
     {

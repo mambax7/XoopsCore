@@ -19,9 +19,6 @@
 
 class XcaptchaTextForm extends Xoops\Form\ThemeForm
 {
-    /**
-     * @param null $obj
-     */
     public function __construct($object = null)
     {
         $this->object = $object;

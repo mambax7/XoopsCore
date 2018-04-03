@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Service\AbstractContract;
 use Xoops\Core\Service\Contract\UserRankInterface;
 use Xoops\Core\Service\Response;
@@ -57,10 +56,6 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      *                               'uid'   => (int) id of system user
      *                               'posts' => (int) contribution count associated with the user
      *                               'rank'  => (int) id of manually assigned rank, 0 if none assigned
-     *
-     * @return void - $response->value set to array of rank information
-     *                    'title' => string that describes the rank
-     *                    'image' => url of image associated with the rank
      */
     public function getUserRank(Response $response, $userinfo)
     {
@@ -79,7 +74,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
         $qb ->select('r.rank_title AS title')
             ->addSelect('r.rank_image AS image')
             ->fromPrefix('userrank_rank', 'r');
-        if ($rank != 0) {
+        if ($rank !== 0) {
             $qb->where($eb->eq('r.rank_id', ':rank'))
                 ->setParameter(':rank', $rank, \PDO::PARAM_INT);
         } else {
@@ -102,16 +97,13 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
      * getAssignableUserRankList - return a list of ranks that can be assigned
      *
      * @param Response $response \Xoops\Core\Service\Response object
-     *
-     * @return void - response->value set to array of (int) id => (string) rank title
-     *                 entries of assignable ranks
      */
     public function getAssignableUserRankList(Response $response)
     {
         $db = \Xoops::getInstance()->db();
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
-        $ret = array();
+        $ret = [];
 
         $sql = $db->createXoopsQueryBuilder();
         $eb = $sql->expr();

@@ -29,11 +29,11 @@ $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
-$conf_ids = array();
+$conf_ids = [];
 $session_expire = null;
 $session_name = null;
 
@@ -62,7 +62,7 @@ switch ($op) {
     case 'show':
     case 'showmod':
         $mod = $system->cleanVars($_GET, 'mod', 1, 'int');
-        if (!$mod) {
+        if (! $mod) {
             $xoops->redirect('admin.php?fct=preferences', 1);
         }
 
@@ -91,8 +91,8 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
-            $xoops->redirect("admin.php?fct=preferences", 3, implode('<br />', $xoops->security()->getErrors()));
+        if (! $xoops->security()->check()) {
+            $xoops->redirect('admin.php?fct=preferences', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $xoopsTpl = new XoopsTpl();
         $count = count($conf_ids);
@@ -105,9 +105,9 @@ switch ($op) {
             for ($i = 0; $i < $count; ++$i) {
                 $config = $config_handler->getConfig($conf_ids[$i]);
                 $new_value = isset(${$config->getVar('conf_name')}) ? ${$config->getVar('conf_name')} : null;
-                if (!is_null($new_value) && (is_array($new_value) || $new_value != $config->getVar('conf_value'))) {
+                if ($new_value !== null && (is_array($new_value) || $new_value !== $config->getVar('conf_value'))) {
                     // if language has been changed
-                    if (!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF
+                    if (! $lang_updated && $config->getVar('conf_catid') === XOOPS_CONF
                         && $config->getVar('conf_name') === 'locale'
                     ) {
                         $xoops->setConfig('locale', ${$config->getVar('conf_name')});
@@ -115,7 +115,7 @@ switch ($op) {
                     }
 
                     // if default theme has been changed
-                    if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF
+                    if (! $theme_updated && $config->getVar('conf_catid') === XOOPS_CONF
                         && $config->getVar('conf_name') === 'theme_set'
                     ) {
                         $member_handler = $xoops->getHandlerMember();
@@ -124,8 +124,8 @@ switch ($op) {
                     }
 
                     // add read permission for the start module to all groups
-                    if (!$startmod_updated && $new_value != '--'
-                        && $config->getVar('conf_catid') == XOOPS_CONF
+                    if (! $startmod_updated && $new_value !== '--'
+                        && $config->getVar('conf_catid') === XOOPS_CONF
                         && $config->getVar('conf_name') === 'startpage'
                     ) {
                         $member_handler = $xoops->getHandlerMember();
@@ -134,7 +134,7 @@ switch ($op) {
                         $module_handler = $xoops->getHandlerModule();
                         $module = $xoops->getModuleByDirname($new_value);
                         foreach ($groups as $groupid => $groupname) {
-                            if (!$moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
+                            if (! $moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
                                 $moduleperm_handler->addRight('module_read', $module->getVar('mid'), $groupid);
                             }
                         }
@@ -152,13 +152,13 @@ switch ($op) {
         // User register_shutdown_function to keep running after connection closes
         // so that cleaning cached files can be finished
         // Cache management should be performed on a separate page
-        $options = array(1, 2, 3); //1 goes for smarty cache, 3 goes for xoops_cache
-        register_shutdown_function(array(&$system, 'cleanCache'), $options);
+        $options = [1, 2, 3]; //1 goes for smarty cache, 3 goes for xoops_cache
+        register_shutdown_function([&$system, 'cleanCache'], $options);
         $xoops->events()->triggerEvent('system.preferences.save');
-        if (isset($redirect) && $redirect != '') {
+        if (isset($redirect) && $redirect !== '') {
             $xoops->redirect($redirect, 2, XoopsLocale::S_DATABASE_UPDATED);
         } else {
-            $xoops->redirect("admin.php?fct=preferences", 2, XoopsLocale::S_DATABASE_UPDATED);
+            $xoops->redirect('admin.php?fct=preferences', 2, XoopsLocale::S_DATABASE_UPDATED);
         }
         break;
 }

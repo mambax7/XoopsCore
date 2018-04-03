@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class RtspTest extends \PHPUnit\Framework\TestCase
 {
@@ -45,7 +46,7 @@ class RtspTest extends \PHPUnit\Framework\TestCase
     public function testGetDhtmlEditorSupport()
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
-        $this->assertTrue(2 == count($support));
+        $this->assertTrue(count($support) === 2);
         $this->assertTrue(is_string($support[0]));
         $this->assertTrue(is_string($support[1]));
     }
@@ -59,6 +60,6 @@ class RtspTest extends \PHPUnit\Framework\TestCase
         $in = '[rtsp=300,200]rtsp://url[/rtsp]';
         $actual = trim($this->sanitizer->filterForDisplay($in));
         $this->assertTrue(is_string($actual));
-        $this->assertEquals($expected, substr($actual, 0, strlen($expected)));
+        $this->assertSame($expected, substr($actual, 0, strlen($expected)));
     }
 }

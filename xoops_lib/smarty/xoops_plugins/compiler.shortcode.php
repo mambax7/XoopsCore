@@ -21,8 +21,8 @@
  * Usage example: {shortcode [b]Hello World[/b]}
  * Output example: <b>Hello World<b>
  *
+ *
  * @param array $args
- * @param Smarty $smarty
  * @return string
  */
 function smarty_compiler_shortcode($args, Smarty $smarty)

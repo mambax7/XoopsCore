@@ -11,9 +11,9 @@
 
 namespace Xoops\Core\Database\Schema;
 
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Sequence;
+use Doctrine\DBAL\Schema\Table;
 
 /**
  * PrefixStripper extends Schema so we can easily add tables and
@@ -33,15 +33,16 @@ use Doctrine\DBAL\Schema\Sequence;
  */
 class PrefixStripper extends Schema
 {
-
     private $xPrefix = '';
+
     private $xDbName = '';
-    private $tableList = array();
+
+    private $tableList = [];
 
     /**
      * constructor
      */
-    public function __construct(array $tables=array(), array $sequences=array(), SchemaConfig $schemaConfig=null)
+    public function __construct(array $tables = [], array $sequences = [], SchemaConfig $schemaConfig = null)
     {
         $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix') . '_');
         $this->xDbName = strtolower(\XoopsBaseConfig::get('db-name'));
@@ -54,8 +55,6 @@ class PrefixStripper extends Schema
      * If no list is specified, all tables will be included
      *
      * @param array $tableList list of tables to include
-     *
-     * @return void
      */
     public function setTableFilter(array $tableList)
     {
@@ -66,8 +65,6 @@ class PrefixStripper extends Schema
      * Add a table object to the schema
      *
      * @param Table $table table object to add
-     *
-     * @return void
      */
     public function addTable(Table $table)
     {
@@ -75,9 +72,9 @@ class PrefixStripper extends Schema
         try {
             $name = $table->getName();
             $len = strlen($this->xPrefix);
-            if (substr_compare($name, $this->xPrefix, 0, $len)===0) {
+            if (substr_compare($name, $this->xPrefix, 0, $len) === 0) {
                 $name = substr($name, $len);
-                if (empty($this->tableList) || in_array($name, $this->tableList)) {
+                if (empty($this->tableList) || in_array($name, $this->tableList, true)) {
                     $idGeneratorType = 0; // how should we handle this?
                     $newtable = new Table(
                         $name,
@@ -99,10 +96,6 @@ class PrefixStripper extends Schema
 
     /**
      * Add a sequence to the schema
-     *
-     * @param Sequence $sequence a sequence
-     *
-     * @return void
      */
     public function addSequence(Sequence $sequence)
     {

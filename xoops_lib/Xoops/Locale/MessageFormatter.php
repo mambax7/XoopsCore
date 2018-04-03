@@ -44,8 +44,8 @@ use Xoops\Core\Exception\NotSupportedException;
 class MessageFormatter
 {
     private $_errorCode = 0;
-    private $_errorMessage = '';
 
+    private $_errorMessage = '';
 
     /**
      * Get the error code from the last operation
@@ -88,7 +88,7 @@ class MessageFormatter
             return $pattern;
         }
 
-        if (!class_exists('MessageFormatter', false)) {
+        if (! class_exists('MessageFormatter', false)) {
             return $this->fallbackFormat($pattern, $params, $language);
         }
 
@@ -124,9 +124,9 @@ class MessageFormatter
             $this->_errorCode = $formatter->getErrorCode();
             $this->_errorMessage = $formatter->getErrorMessage();
             return false;
-        } else {
-            return $result;
         }
+            return $result;
+
     }
 
     /**
@@ -147,7 +147,7 @@ class MessageFormatter
         $this->_errorCode = 0;
         $this->_errorMessage = '';
 
-        if (!class_exists('MessageFormatter', false)) {
+        if (! class_exists('MessageFormatter', false)) {
             throw new NotSupportedException('You have to install PHP intl extension to use this feature.');
         }
 
@@ -162,7 +162,7 @@ class MessageFormatter
         foreach ($tokens as $i => $token) {
             if (is_array($token)) {
                 $param = trim($token[0]);
-                if (!isset($map[$param])) {
+                if (! isset($map[$param])) {
                     $map[$param] = count($map);
                 }
                 $token[0] = $map[$param];
@@ -185,71 +185,14 @@ class MessageFormatter
             $this->_errorMessage = $formatter->getErrorMessage();
 
             return false;
-        } else {
+        }
             $values = [];
             foreach ($result as $key => $value) {
                 $values[$map[$key]] = $value;
             }
 
             return $values;
-        }
-    }
 
-    /**
-     * Replace named placeholders with numeric placeholders and quote unused.
-     *
-     * @param string $pattern The pattern string to replace things into.
-     * @param array $givenParams The array of values to insert into the format string.
-     * @param array $resultingParams Modified array of parameters.
-     * @param array $map
-     * @return string The pattern string with placeholders replaced.
-     */
-    private function replaceNamedArguments($pattern, $givenParams, &$resultingParams = [], &$map = [])
-    {
-        if (($tokens = self::tokenizePattern($pattern)) === false) {
-            return false;
-        }
-        foreach ($tokens as $i => $token) {
-            if (!is_array($token)) {
-                continue;
-            }
-            $param = trim($token[0]);
-            if (isset($givenParams[$param])) {
-                // if param is given, replace it with a number
-                if (!isset($map[$param])) {
-                    $map[$param] = count($map);
-                    // make sure only used params are passed to format method
-                    $resultingParams[$map[$param]] = $givenParams[$param];
-                }
-                $token[0] = $map[$param];
-                $quote = '';
-            } else {
-                // quote unused token
-                $quote = "'";
-            }
-            $type = isset($token[1]) ? trim($token[1]) : 'none';
-            // replace plural and select format recursively
-            if ($type === 'plural' || $type === 'select') {
-                if (!isset($token[2])) {
-                    return false;
-                }
-                if (($subtokens = self::tokenizePattern($token[2])) === false) {
-                    return false;
-                }
-                $c = count($subtokens);
-                for ($k = 0; $k + 1 < $c; $k++) {
-                    if (is_array($subtokens[$k]) || !is_array($subtokens[++$k])) {
-                        return false;
-                    }
-                    $subpattern = $this->replaceNamedArguments(implode(',', $subtokens[$k]), $givenParams, $resultingParams, $map);
-                    $subtokens[$k] = $quote . '{' . $quote . $subpattern . $quote . '}' . $quote;
-                }
-                $token[2] = implode('', $subtokens);
-            }
-            $tokens[$i] = $quote . '{' . $quote . implode(',', $token) . $quote . '}' . $quote;
-        }
-
-        return implode('', $tokens);
     }
 
     /**
@@ -276,6 +219,63 @@ class MessageFormatter
                     return false;
                 }
             }
+        }
+
+        return implode('', $tokens);
+    }
+
+    /**
+     * Replace named placeholders with numeric placeholders and quote unused.
+     *
+     * @param string $pattern The pattern string to replace things into.
+     * @param array $givenParams The array of values to insert into the format string.
+     * @param array $resultingParams Modified array of parameters.
+     * @param array $map
+     * @return string The pattern string with placeholders replaced.
+     */
+    private function replaceNamedArguments($pattern, $givenParams, &$resultingParams = [], &$map = [])
+    {
+        if (($tokens = self::tokenizePattern($pattern)) === false) {
+            return false;
+        }
+        foreach ($tokens as $i => $token) {
+            if (! is_array($token)) {
+                continue;
+            }
+            $param = trim($token[0]);
+            if (isset($givenParams[$param])) {
+                // if param is given, replace it with a number
+                if (! isset($map[$param])) {
+                    $map[$param] = count($map);
+                    // make sure only used params are passed to format method
+                    $resultingParams[$map[$param]] = $givenParams[$param];
+                }
+                $token[0] = $map[$param];
+                $quote = '';
+            } else {
+                // quote unused token
+                $quote = "'";
+            }
+            $type = isset($token[1]) ? trim($token[1]) : 'none';
+            // replace plural and select format recursively
+            if ($type === 'plural' || $type === 'select') {
+                if (! isset($token[2])) {
+                    return false;
+                }
+                if (($subtokens = self::tokenizePattern($token[2])) === false) {
+                    return false;
+                }
+                $c = count($subtokens);
+                for ($k = 0; $k + 1 < $c; $k++) {
+                    if (is_array($subtokens[$k]) || ! is_array($subtokens[++$k])) {
+                        return false;
+                    }
+                    $subpattern = $this->replaceNamedArguments(implode(',', $subtokens[$k]), $givenParams, $resultingParams, $map);
+                    $subtokens[$k] = $quote . '{' . $quote . $subpattern . $quote . '}' . $quote;
+                }
+                $token[2] = implode('', $subtokens);
+            }
+            $tokens[$i] = $quote . '{' . $quote . implode(',', $token) . $quote . '}' . $quote;
         }
 
         return implode('', $tokens);
@@ -352,7 +352,7 @@ class MessageFormatter
             case 'duration':
             case 'choice':
             case 'selectordinal':
-                throw new NotSupportedException("Message format '$type' is not supported. You have to install PHP intl extension to use this feature.");
+                throw new NotSupportedException("Message format '${type}' is not supported. You have to install PHP intl extension to use this feature.");
             case 'number':
                 $format = isset($token[2]) ? trim($token[2]) : null;
                 if (is_numeric($arg) && ($format === null || $format === 'integer')) {
@@ -370,18 +370,18 @@ class MessageFormatter
                 /* http://icu-project.org/apiref/icu4c/classicu_1_1SelectFormat.html
                 selectStyle = (selector '{' message '}')+
                 */
-                if (!isset($token[2])) {
+                if (! isset($token[2])) {
                     return false;
                 }
                 $select = self::tokenizePattern($token[2]);
                 $c = count($select);
                 $message = false;
                 for ($i = 0; $i + 1 < $c; $i++) {
-                    if (is_array($select[$i]) || !is_array($select[$i + 1])) {
+                    if (is_array($select[$i]) || ! is_array($select[$i + 1])) {
                         return false;
                     }
                     $selector = trim($select[$i++]);
-                    if ($message === false && $selector === 'other' || $selector == $arg) {
+                    if ($message === false && $selector === 'other' || $selector === $arg) {
                         $message = implode(',', $select[$i]);
                     }
                 }
@@ -398,7 +398,7 @@ class MessageFormatter
                 keyword = [^[[:Pattern_Syntax:][:Pattern_White_Space:]]]+
                 message: see MessageFormat
                 */
-                if (!isset($token[2])) {
+                if (! isset($token[2])) {
                     return false;
                 }
                 $plural = self::tokenizePattern($token[2]);
@@ -406,18 +406,18 @@ class MessageFormatter
                 $message = false;
                 $offset = 0;
                 for ($i = 0; $i + 1 < $c; $i++) {
-                    if (is_array($plural[$i]) || !is_array($plural[$i + 1])) {
+                    if (is_array($plural[$i]) || ! is_array($plural[$i + 1])) {
                         return false;
                     }
                     $selector = trim($plural[$i++]);
 
-                    if ($i == 1 && strncmp($selector, 'offset:', 7) === 0) {
+                    if ($i === 1 && strncmp($selector, 'offset:', 7) === 0) {
                         $offset = (int) trim(mb_substr($selector, 7, ($pos = mb_strpos(str_replace(["\n", "\r", "\t"], ' ', $selector), ' ', 7, $charset)) - 7, $charset));
                         $selector = trim(mb_substr($selector, $pos + 1, mb_strlen($selector, $charset), $charset));
                     }
                     if ($message === false && $selector === 'other' ||
                         $selector[0] === '=' && (int) mb_substr($selector, 1, mb_strlen($selector, $charset), $charset) === $arg ||
-                        $selector === 'one' && $arg - $offset == 1
+                        $selector === 'one' && $arg - $offset === 1
                     ) {
                         $message = implode(',', str_replace('#', $arg - $offset, $plural[$i]));
                     }

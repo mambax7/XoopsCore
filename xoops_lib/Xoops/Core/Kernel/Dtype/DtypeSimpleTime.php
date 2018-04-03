@@ -11,7 +11,6 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
@@ -41,7 +40,7 @@ class DtypeSimpleTime extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        $value = !is_string($value) ? (int)($value) : strtotime($value);
+        $value = ! is_string($value) ? (int) ($value) : strtotime($value);
         return $value;
     }
 }

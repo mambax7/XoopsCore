@@ -38,11 +38,11 @@ $helper = Notifications::getInstance();
 // to specially encode them first???
 // TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
-if (!isset($_POST['not_submit']) || !isset($_POST['mid'])) {
+if (! isset($_POST['not_submit']) || ! isset($_POST['mid'])) {
     $xoops->redirect($_POST['not_redirect'], 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
-if (!$xoops->security()->check()) {
+if (! $xoops->security()->check()) {
     $xoops->redirect($_POST['not_redirect'], 3, implode('<br />', $xoops->security()->getErrors()));
 }
 
@@ -52,7 +52,7 @@ if (!$xoops->security()->check()) {
 // look as to where/how the notification options are made available.
 $update_list = $_POST['not_list'];
 $module_handler = $xoops->getHandlerModule();
-$module = $xoops->getModuleById((int)($_POST['mid']));
+$module = $xoops->getModuleById((int) ($_POST['mid']));
 $module_id = $module->getVar('mid');
 $user_id = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
 
@@ -64,8 +64,8 @@ $user_id = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
 $notification_handler = $helper->getHandlerNotification();
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
-    $status = !empty($update_item['status']) ? 1 : 0;
-    if (!$status) {
+    $status = ! empty($update_item['status']) ? 1 : 0;
+    if (! $status) {
         $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
     } else {
         $notification_handler->subscribe($category, $item_id, $event, null, $module_id);
@@ -79,11 +79,11 @@ foreach ($update_list as $update_item) {
 // TODO: finish integration with comments... i.e. need calls to
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
-$redirect_args = array();
+$redirect_args = [];
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
     $category_info = $helper->getCategory($category, $module->getVar('dirname'));
-    if (!empty($category_info['item_name'])) {
+    if (! empty($category_info['item_name'])) {
         $redirect_args[$category_info['item_name']] = $item_id;
     }
 }
@@ -94,10 +94,10 @@ $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
     if ($first_arg) {
-        $argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '?' . $arg . '=' . $redirect_args[$arg];
         $first_arg = 0;
     } else {
-        $argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '&' . $arg . '=' . $redirect_args[$arg];
     }
 }
 

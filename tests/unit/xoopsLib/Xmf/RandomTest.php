@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test;
 
 use Xmf\Random;
@@ -9,6 +10,7 @@ class RandomTest extends \PHPUnit\Framework\TestCase
      * @var Random
      */
     protected $object;
+
     protected $myClass = '\Xmf\Random';
 
     /**

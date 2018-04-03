@@ -1,12 +1,13 @@
 <?php
+
 namespace Xoops\Core\Kernel\Dtype;
 
 require_once __DIR__ . '/../../../../../init_new.php';
 
+use Money\Currency;
+use Money\Money;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
-use Money\Money;
-use Money\Currency;
 
 /**
  * Test XoopsObject with a Dtype::TYPE_MONEY var
@@ -41,18 +42,18 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
         $this->xObject = new DtypeMoneyObject();
     }
 
-    public function testContracts()
-    {
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeMoney', $this->object);
-    }
-
     /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
     protected function tearDown()
     {
+    }
+
+    public function testContracts()
+    {
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeMoney', $this->object);
     }
 
     public function testGetVarCleanVar()
@@ -64,13 +65,13 @@ class DtypeMoneyTest extends \PHPUnit\Framework\TestCase
 
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
         $this->assertInstanceOf('\Money\Money', $value);
-        $this->assertEquals($testValue->getAmount(), $value->getAmount());
+        $this->assertSame($testValue->getAmount(), $value->getAmount());
         $this->assertTrue($testValue->getCurrency()->equals($value->getCurrency()));
         $this->assertNotSame($value, $testValue);
 
         $value2 = $this->xObject->getVar($key, Dtype::FORMAT_SHOW);
         $this->assertInstanceOf('\Money\Money', $value2);
-        $this->assertEquals($testValue->getAmount(), $value2->getAmount());
+        $this->assertSame($testValue->getAmount(), $value2->getAmount());
         $this->assertTrue($testValue->getCurrency()->equals($value2->getCurrency()));
         $this->assertNotSame($value, $value2);
     }

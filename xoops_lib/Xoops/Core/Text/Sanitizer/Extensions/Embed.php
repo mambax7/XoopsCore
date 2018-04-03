@@ -43,7 +43,7 @@ class Embed extends FilterAbstract
      */
     public function applyFilter($text)
     {
-        if (!$this->config['enabled']) {
+        if (! $this->config['enabled']) {
             return $text;
         }
 
@@ -70,7 +70,7 @@ class Embed extends FilterAbstract
         $decorated = null;
         $xoops = \Xoops::getInstance();
         $md5 = md5($url);
-        $crc = hash("crc32b", $url);
+        $crc = hash('crc32b', $url);
         $key = implode('/', ['embed', substr($crc, -2), $md5]);
         //$xoops->cache()->delete($key);
         $decorated = $xoops->cache()->cacheRead(
@@ -89,8 +89,8 @@ class Embed extends FilterAbstract
                     }
                     $height = $info->getHeight();
                     $width = $info->getWidth();
-                    if ($this->enableResponsive($return) && !empty($height) && !empty($width)) {
-                        $ratio = (1.5 > ($width/$height)) ? '4by3' : '16by9';
+                    if ($this->enableResponsive($return) && ! empty($height) && ! empty($width)) {
+                        $ratio = (($width / $height) < 1.5) ? '4by3' : '16by9';
                         $return = '<div class="embed-responsive embed-responsive-' . $ratio . '">' . $return . '</div>';
                     }
                 }
@@ -141,7 +141,7 @@ EOT;
         ];
 
         foreach ($excludeList as $test) {
-            if (false !== stripos($code, $test)) {
+            if (stripos($code, $test) !== false) {
                 return false;
             }
         }

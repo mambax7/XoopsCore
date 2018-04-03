@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
-class Scripts_ImageClassTest extends \PHPUnit\Framework\TestCase
+class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
 {
     public function test___construct()
     {
@@ -45,7 +45,7 @@ class Scripts_ImageClassTest extends \PHPUnit\Framework\TestCase
     public function test_getList()
     {
         $image_handler = new XoopsCaptchaImageHandler();
-        $fonts = $image_handler->getList("fonts", "ttf");
+        $fonts = $image_handler->getList('fonts', 'ttf');
         $this->assertTrue(is_array($fonts));
     }
 
@@ -54,7 +54,7 @@ class Scripts_ImageClassTest extends \PHPUnit\Framework\TestCase
         $image_handler = new XoopsCaptchaImageHandler();
         $image_handler->loadFont();
         $this->assertTrue(is_string($image_handler->font));
-        $this->assertTrue(false !== strpos($image_handler->font, '.ttf'));
+        $this->assertTrue(strpos($image_handler->font, '.ttf') !== false);
     }
 
     public function test_setImageSize()
@@ -71,7 +71,7 @@ class Scripts_ImageClassTest extends \PHPUnit\Framework\TestCase
         $image_handler = new XoopsCaptchaImageHandler();
         $value = $image_handler->loadBackground();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(false !== strpos($value, 'image/backgrounds/'));
+        $this->assertTrue(strpos($value, 'image/backgrounds/') !== false);
     }
 
     public function test_createFromFile()

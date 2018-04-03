@@ -22,7 +22,7 @@
 
 use MainmenuLocale as t;
 
-$modversion = array();
+$modversion = [];
 $modversion['name'] = t::MODULE_NAME;
 $modversion['description'] = t::MODULE_DESC;
 $modversion['version'] = '0.1.0';
@@ -49,7 +49,7 @@ $modversion['paypal'] = [
     'business' => 'xoopsfoundation@gmail.com',
     'item_name' => t::DONATION_DESC,
     'amount' => 0,
-    'currency_code' => 'USD'
+    'currency_code' => 'USD',
 ];
 
 // Blocks

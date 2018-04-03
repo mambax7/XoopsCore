@@ -25,19 +25,19 @@ use Xoops\Html\Menu\Link;
 include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 
-if (!$xoops->isUser()) {
+if (! $xoops->isUser()) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 // see https://github.com/dropbox/zxcvbn
 $zxcvbn_path = $xoops->url('modules/profile/assets/js/zxcvbn.js');
-$zxcvbn =<<<EOT
+$zxcvbn = <<<EOT
 (function(){
     var a;
     a=function(){
         var a,b;
         b=document.createElement("script");
-        b.src="$zxcvbn_path";
+        b.src="${zxcvbn_path}";
         b.type="text/javascript";
         b.async=!0;
         a=document.getElementsByTagName("script")[0];
@@ -82,8 +82,8 @@ EOT;
 
 $xoops->header('module:profile/profile_changepass.tpl');
 
-if (!isset($_POST['submit'])) {
-    $xoops->theme()->addScript(null, array('type' => 'application/x-javascript'), $zxcvbn);
+if (! isset($_POST['submit'])) {
+    $xoops->theme()->addScript(null, ['type' => 'application/x-javascript'], $zxcvbn);
     //show change password form
     $form = new Xoops\Form\ThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
     $form->addElement(new Xoops\Form\Password(_PROFILE_MA_OLDPASSWORD, 'oldpass'), true);
@@ -104,14 +104,14 @@ if (!isset($_POST['submit'])) {
     $oldpass = trim($_POST['oldpass']);
     $password = trim($_POST['newpass']);
     $vpass = trim($_POST['vpass']);
-    $errors = array();
-    if (!password_verify($oldpass, $xoops->user->getVar('pass', 'n'))) {
+    $errors = [];
+    if (! password_verify($oldpass, $xoops->user->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
     if (mb_strlen($password) < $xoops->getConfig('minpass')) {
         $errors[] = sprintf(XoopsLocale::EF_PASSWORD_MUST_BE_GREATER_THAN, $xoops->getConfig('minpass'));
     }
-    if ($password != $vpass) {
+    if ($password !== $vpass) {
         $errors[] = XoopsLocale::E_PASSWORDS_MUST_MATCH;
     }
 

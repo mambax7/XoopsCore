@@ -20,7 +20,7 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') or die('XOOPS root path not defined');
 
 include_once dirname(__DIR__) . '/include/common.php';
 
@@ -30,8 +30,8 @@ function publisher_items_new_show($options)
 
     $selectedcatids = explode(',', $options[0]);
 
-    $block = array();
-    if (in_array(0, $selectedcatids)) {
+    $block = [];
+    if (in_array(0, $selectedcatids, true)) {
         $allcats = true;
     } else {
         $allcats = false;
@@ -52,13 +52,13 @@ function publisher_items_new_show($options)
     }
     $xoops = \Xoops::getInstance();
     $thumbService = $xoops->service('thumbnail');
-    $itemsObj = $publisher->getItemHandler()->getItems($limit, $start, array(_PUBLISHER_STATUS_PUBLISHED), -1, $sort, $order, '', true, $criteria);
+    $itemsObj = $publisher->getItemHandler()->getItems($limit, $start, [_PUBLISHER_STATUS_PUBLISHED], -1, $sort, $order, '', true, $criteria);
 
     $totalitems = count($itemsObj);
     if ($itemsObj) {
         for ($i = 0; $i < $totalitems; ++$i) {
 
-            $item = array();
+            $item = [];
             $item['link'] = $itemsObj[$i]->getItemLink(false, isset($options[4]) ? $options[4] : 65);
             $item['id'] = $itemsObj[$i]->getVar('itemid');
             $item['poster'] = $itemsObj[$i]->posterName(); // for make poster name linked, use linkedPosterName() instead of posterName()
@@ -79,7 +79,7 @@ function publisher_items_new_show($options)
                 $item['image_name'] = $itemsObj[$i]->getCategoryName();
             } elseif ($image === 'avatar') {
                 $auid = $itemsObj[$i]->getVar('uid');
-                if ($auid == '0') {
+                if ($auid === '0') {
                     $item['image'] = \XoopsBaseConfig::get('url') . '/uploads/blank.gif';
                     $images = $itemsObj[$i]->getImages();
                     if (is_object($images['main'])) {
@@ -95,11 +95,11 @@ function publisher_items_new_show($options)
 
             $item['title'] = $itemsObj[$i]->title();
 
-            if ($sort === "datesub") {
+            if ($sort === 'datesub') {
                 $item['new'] = $itemsObj[$i]->datesub();
-            } elseif ($sort === "counter") {
+            } elseif ($sort === 'counter') {
                 $item['new'] = $itemsObj[$i]->getVar('counter');
-            } elseif ($sort === "weight") {
+            } elseif ($sort === 'weight') {
                 $item['new'] = $itemsObj[$i]->weight();
             }
 
@@ -118,23 +118,23 @@ function publisher_items_new_edit($options)
 
     $catEle = new Xoops\Form\Label(_MB_PUBLISHER_SELECTCAT, PublisherUtils::createCategorySelect($options[0], 0, true, 'options[0]'));
     $orderEle = new Xoops\Form\Select(_MB_PUBLISHER_ORDER, 'options[1]', $options[1]);
-    $orderEle->addOptionArray(array(
+    $orderEle->addOptionArray([
         'datesub' => _MB_PUBLISHER_DATE,
         'counter' => _MB_PUBLISHER_HITS,
-        'weight'  => _MB_PUBLISHER_WEIGHT
-    ));
+        'weight' => _MB_PUBLISHER_WEIGHT,
+    ]);
 
     $showEle = new Xoops\Form\RadioYesNo(_MB_PUBLISHER_ORDER_SHOW, 'options[2]', $options[2]);
     $dispEle = new Xoops\Form\Text(_MB_PUBLISHER_DISP, 'options[3]', 2, 255, $options[3]);
     $charsEle = new Xoops\Form\Text(_MB_PUBLISHER_CHARS, 'options[4]', 2, 255, $options[4]);
 
     $imageEle = new Xoops\Form\Select(_MB_PUBLISHER_IMAGE_TO_DISPLAY, 'options[5]', $options[5]);
-    $imageEle->addOptionArray(array(
+    $imageEle->addOptionArray([
         'none' => XoopsLocale::NONE,
         'article' => _MB_PUBLISHER_IMAGE_ARTICLE,
         'category' => _MB_PUBLISHER_IMAGE_CATEGORY,
-        'avatar'  => _MB_PUBLISHER_IMAGE_AVATAR
-    ));
+        'avatar' => _MB_PUBLISHER_IMAGE_AVATAR,
+    ]);
 
     $form->addElement($catEle);
     $form->addElement($orderEle);

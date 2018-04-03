@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class SoundCloudTest extends \PHPUnit\Framework\TestCase
 {
@@ -45,7 +46,7 @@ class SoundCloudTest extends \PHPUnit\Framework\TestCase
     public function testGetDhtmlEditorSupport()
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
-        $this->assertTrue(2 == count($support));
+        $this->assertTrue(count($support) === 2);
         $this->assertTrue(is_string($support[0]));
         $this->assertTrue(is_string($support[1]));
     }
@@ -58,6 +59,6 @@ class SoundCloudTest extends \PHPUnit\Framework\TestCase
 
         $in = '[soundcloud url="https://api.soundcloud.com/tracks/80365438" params="color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false" width="100%" height="166" iframe="true" /]';
         $actual = $this->sanitizer->filterForDisplay($in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

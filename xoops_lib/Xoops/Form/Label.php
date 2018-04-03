@@ -23,7 +23,6 @@ namespace Xoops\Form;
  */
 class Label extends Element
 {
-
     /**
      * Constructor
      *

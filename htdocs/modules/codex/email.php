@@ -9,12 +9,12 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use Xmf\Request;
 use Xoops\Core\Service\Data\Email;
 use Xoops\Core\Service\Data\EmailAddress;
-use Xoops\Form\ThemeForm;
-use Xoops\Form\TextArea;
 use Xoops\Form\Button;
-use Xmf\Request;
+use Xoops\Form\TextArea;
+use Xoops\Form\ThemeForm;
 
 /**
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
@@ -27,12 +27,12 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
-if (!$xoops->service('email')->isAvailable()) {
+if (! $xoops->service('email')->isAvailable()) {
     echo 'Please install and configure an email provider to view this demonstration.';
 }
 
 if ($xoops->isUser()) {
-    if ('POST' === Request::getMethod()) {
+    if (Request::getMethod() === 'POST') {
         try {
             $fromAddress = new EmailAddress($xoops->getConfig('from'), $xoops->getConfig('fromname'));
             $name = empty($xoops->user->name()) ? $xoops->user->uname() : $xoops->user->name();
@@ -50,7 +50,7 @@ if ($xoops->isUser()) {
             if ($response->isSuccess()) {
                 echo 'Message sent. Check your inbox.';
             } else {
-                $errors = implode(', ', (array)$response->getErrorMessage());
+                $errors = implode(', ', (array) $response->getErrorMessage());
                 echo 'Your message was not sent<br>';
                 echo $errors;
             }

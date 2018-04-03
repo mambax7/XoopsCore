@@ -54,23 +54,23 @@ function smarty_function_xoops_link($params, &$smarty)
     $urlstr = '';
     if (isset($params['urlvars'])) {
         $szvars = explode('&', $params['urlvars']);
-        $vars = array();
+        $vars = [];
         // Split the string making an array from the ('name','value') pairs
         foreach ($szvars as $szvar) {
             $pos = strpos($szvar, '=');
-            if ($pos != false) { // If a value is specified, use it
-                $vars[] = array('name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1));
+            if ($pos !== false) { // If a value is specified, use it
+                $vars[] = ['name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1)];
             } else { // Otherwise use current one (if any)
                 if (isset($_POST[$szvar])) {
-                    $vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
+                    $vars[] = ['name' => $szvar, 'value' => $_POST[$szvar]];
                 } elseif (isset($_GET[$szvar])) {
-                    $vars[] = array('name' => $szvar, 'value' => $_GET[$szvar]);
+                    $vars[] = ['name' => $szvar, 'value' => $_GET[$szvar]];
                 }
             }
         }
         // Now reconstruct query string from specified variables
         foreach ($vars as $var) {
-            $urlstr = "$urlstr&{$var['name']}={$var['value']}";
+            $urlstr = "${urlstr}&{$var['name']}={$var['value']}";
         }
         if (strlen($urlstr) > 0) {
             $urlstr = '?' . substr($urlstr, 1);
@@ -79,14 +79,14 @@ function smarty_function_xoops_link($params, &$smarty)
 
     // Get default module/page from current ones if necessary
     $module = '';
-    if (!isset($params['module'])) {
+    if (! isset($params['module'])) {
         if ($xoops->isModule()) {
             $module = $xoops->module->getVar('dirname');
         }
     } else {
         $module = $params['module'];
     }
-    if (!isset($params['page'])) {
+    if (! isset($params['page'])) {
         $cur = $_SERVER['PHP_SELF'];
         $page = substr($cur, strrpos($cur, '/') + 1);
     } else {

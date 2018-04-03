@@ -31,7 +31,7 @@ class TextFilter extends FilterAbstract
      */
     protected static $defaultConfiguration = [
         'enabled' => false,
-        'tags' => array(),      // Tags to be filtered out
+        'tags' => [],      // Tags to be filtered out
         'patterns' => [         // patterns to be used for filtering
             'search' => '',
             'replace' => '',
@@ -49,7 +49,7 @@ class TextFilter extends FilterAbstract
     public function applyFilter($text, $force = true)
     {
         $xoops = \Xoops::getInstance();
-        if (!$force && $xoops->userIsAdmin) {
+        if (! $force && $xoops->userIsAdmin) {
             return $text;
         }
 
@@ -60,12 +60,12 @@ class TextFilter extends FilterAbstract
             return $text;
         }
 
-        $tags = array();
-        $search = array();
-        $replace = array();
+        $tags = [];
+        $search = [];
+        $replace = [];
         $config = $this->config;
-        if (!empty($config["patterns"])) {
-            foreach ($config["patterns"] as $pattern) {
+        if (! empty($config['patterns'])) {
+            foreach ($config['patterns'] as $pattern) {
                 if (empty($pattern['search'])) {
                     continue;
                 }
@@ -73,29 +73,29 @@ class TextFilter extends FilterAbstract
                 $replace[] = $pattern['replace'];
             }
         }
-        if (!empty($config["tags"])) {
-            $tags = array_map("trim", $config["tags"]);
+        if (! empty($config['tags'])) {
+            $tags = array_map('trim', $config['tags']);
         }
 
         // Set embedded tags
-        $tags[] = "SCRIPT";
-        $tags[] = "VBSCRIPT";
-        $tags[] = "JAVASCRIPT";
+        $tags[] = 'SCRIPT';
+        $tags[] = 'VBSCRIPT';
+        $tags[] = 'JAVASCRIPT';
         foreach ($tags as $tag) {
-            $search[] = "/<" . $tag . "[^>]*?>.*?<\/" . $tag . ">/si";
-            $replace[] = " [!" . strtoupper($tag) . " FILTERED!] ";
+            $search[] = '/<' . $tag . "[^>]*?>.*?<\/" . $tag . '>/si';
+            $replace[] = ' [!' . strtoupper($tag) . ' FILTERED!] ';
         }
         // Set meta refresh tag
         $search[] = "/<META[^>\/]*HTTP-EQUIV=(['\"])?REFRESH(\\1)[^>\/]*?\/>/si";
-        $replace[] = "";
+        $replace[] = '';
         // Sanitizing scripts in IMG tag
         //$search[]= "/(<IMG[\s]+[^>\/]*SOURCE=)(['\"])?(.*)(\\2)([^>\/]*?\/>)/si";
         //$replace[]="";
         // Set iframe tag
         $search[] = "/<IFRAME[^>\/]*SRC=(['\"])?([^>\/]*)(\\1)[^>\/]*?\/>/si";
-        $replace[] = " [!IFRAME FILTERED! \\2] ";
+        $replace[] = ' [!IFRAME FILTERED! \\2] ';
         $search[] = "/<IFRAME[^>]*?>([^<]*)<\/IFRAME>/si";
-        $replace[] = " [!IFRAME FILTERED! \\1] ";
+        $replace[] = ' [!IFRAME FILTERED! \\1] ';
         // action
         $text = preg_replace($search, $replace, $text);
         return $text;

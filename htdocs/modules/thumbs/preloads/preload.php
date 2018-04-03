@@ -27,8 +27,6 @@ class ThumbsPreload extends PreloadItem
      * listen for core.service.locate.thumbnail event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateThumbnail(Provider $provider)
     {

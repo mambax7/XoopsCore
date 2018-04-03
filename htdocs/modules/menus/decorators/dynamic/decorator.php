@@ -30,9 +30,9 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
 
     public function end(&$menus)
     {
-        $ret = array();
+        $ret = [];
         foreach ($menus as $menu) {
-            if (!preg_match('/{(MODULE\|.*)}/i', $menu['title'], $reg)) {
+            if (! preg_match('/{(MODULE\|.*)}/i', $menu['title'], $reg)) {
                 $ret[] = $menu;
                 continue;
             }
@@ -58,7 +58,7 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
         static $id = -1;
         $xoops = Xoops::getInstance();
         $helper = Menus::getInstance();
-        $ret = array();
+        $ret = [];
 
         /* @var $plugin MenusPluginInterface */
         if ($plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'menus')) {

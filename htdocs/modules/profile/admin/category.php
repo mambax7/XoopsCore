@@ -29,13 +29,13 @@ $op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
 // Call header
 $xoops->header('admin:profile/categorylist.tpl');
 // Get category handler
-$category_Handler = \Xoops::getModuleHelper('profile')->getHandler("category");
+$category_Handler = \Xoops::getModuleHelper('profile')->getHandler('category');
 
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('category.php');
 
 switch ($op) {
-    case "list":
+    case 'list':
     default:
         $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->renderButton();
@@ -46,7 +46,7 @@ switch ($op) {
         $xoops->tpl()->assign('category', true);
         break;
 
-    case "new":
+    case 'new':
         $admin_page->addItemButton(_PROFILE_AM_CATEGORY_LIST, 'category.php', 'application-view-detail');
         $admin_page->renderButton();
         $obj = $category_Handler->create();
@@ -54,7 +54,7 @@ switch ($op) {
         $xoops->tpl()->assign('form', $form->render());
         break;
 
-    case "edit":
+    case 'edit':
         $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_CATEGORY_LIST, 'category.php', 'application-view-detail');
         $admin_page->renderButton();
@@ -68,8 +68,8 @@ switch ($op) {
         }
         break;
 
-    case "save":
-        if (!$xoops->security()->check()) {
+    case 'save':
+        if (! $xoops->security()->check()) {
             $xoops->redirect('category.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -89,19 +89,19 @@ switch ($op) {
         $xoops->tpl()->assign('form', $form->render());
         break;
 
-    case "delete":
+    case 'delete':
         $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_CATEGORY_LIST, 'category.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $category_Handler->get($id);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$xoops->security()->check()) {
-                    $xoops->redirect("category.php", 3, implode(",", $xoops->security()->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+                if (! $xoops->security()->check()) {
+                    $xoops->redirect('category.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($category_Handler->delete($obj)) {
-                    $xoops->redirect("category.php", 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_CATEGORY));
+                    $xoops->redirect('category.php', 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_CATEGORY));
                 } else {
                     echo $xoops->alert('error', $obj->getHtmlErrors());
                 }
@@ -110,7 +110,7 @@ switch ($op) {
                 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
                 $xoops->tpl()->assign('form', false);
                 echo $xoops->confirm(
-                    array("ok" => 1, "id" => $id, "op" => "delete"),
+                    ['ok' => 1, 'id' => $id, 'op' => 'delete'],
                     'category.php',
                     sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')) . '<br />'
                 );

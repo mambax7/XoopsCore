@@ -27,12 +27,12 @@
 $xoops = Xoops::getInstance();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 //  Check is active
-if (!$xoops->getModuleConfig('active_users', 'system')) {
+if (! $xoops->getModuleConfig('active_users', 'system')) {
     $xoops->redirect('admin.php', 2, XoopsLocale::E_SECTION_NOT_ACTIVE);
 }
 
@@ -44,8 +44,6 @@ if (!$xoops->getModuleConfig('active_users', 'system')) {
  *
  * @param int    $uid  uid of user row
  * @param string $type type of processing, 'user' for one user, 'all users' for all
- *
- * @return void
  */
 function synchronize($uid, $type)
 {
@@ -82,12 +80,12 @@ function synchronize($uid, $type)
                 ->fromPrefix('system_user', 'u');
 
             $result = $sql->execute();
-            if (!$result) {
-                $xoops->redirect("admin.php?fct=users", 1, XoopsLocale::E_USER_ID_NOT_FETCHED);
+            if (! $result) {
+                $xoops->redirect('admin.php?fct=users', 1, XoopsLocale::E_USER_ID_NOT_FETCHED);
             }
             $rows = $result->fetchAll();
             foreach ($rows as $row) {
-                synchronize($row['uid'], "user");
+                synchronize($row['uid'], 'user');
             }
             break;
     }

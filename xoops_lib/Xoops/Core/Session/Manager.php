@@ -57,13 +57,11 @@ class Manager implements AttributeInterface
         $this->xoops = \Xoops::getInstance();
         $this->httpRequest = HttpRequest::getInstance();
         $this->sessionUser = new SessionUser($this);
-        $this->fingerprint = new Fingerprint;
+        $this->fingerprint = new Fingerprint();
     }
 
     /**
      * Configure and start the session
-     *
-     * @return void
      */
     public function sessionStart()
     {
@@ -82,8 +80,8 @@ class Manager implements AttributeInterface
 
         $name = $this->xoops->getConfig('session_name');
         $name = (empty($name)) ? 'xoops_session' : $name;
-        $expire = (int)($this->xoops->getConfig('session_expire'));
-        $expire = ($expire>0) ? $expire : 300;
+        $expire = (int) ($this->xoops->getConfig('session_expire'));
+        $expire = ($expire > 0) ? $expire : 300;
 
         $path = \XoopsBaseConfig::get('cookie-path');
         $domain = \XoopsBaseConfig::get('cookie-domain');
@@ -93,11 +91,11 @@ class Manager implements AttributeInterface
 
         session_set_cookie_params(0, $path, $domain, $secure, true);
 
-        $sessionHandler = new Handler;
+        $sessionHandler = new Handler();
         session_set_save_handler($sessionHandler);
 
         //session_register_shutdown();
-        register_shutdown_function(array($this, 'sessionShutdown'));
+        register_shutdown_function([$this, 'sessionShutdown']);
 
         session_start();
 
@@ -107,13 +105,13 @@ class Manager implements AttributeInterface
         }
 
         // Make sure the session hasn't expired, and destroy it if it has
-        if (!$this->validateSession()) {
+        if (! $this->validateSession()) {
             $this->clearSession();
             return;
         }
 
         // Check to see if the session shows sign of hijacking attempt
-        if (!$this->fingerprint->checkSessionPrint($this)) {
+        if (! $this->fingerprint->checkSessionPrint($this)) {
             $this->regenerateSession(); // session data already cleared, just needs new id
             return;
         }
@@ -131,8 +129,6 @@ class Manager implements AttributeInterface
 
     /**
      * Clear the current session and reset fingerprint
-     *
-     * @return void
      */
     public function clearSession()
     {
@@ -143,8 +139,6 @@ class Manager implements AttributeInterface
 
     /**
      * Expire the current session and replace with a fresh one.
-     *
-     * @return void
      */
     public function expireSession()
     {
@@ -177,32 +171,10 @@ class Manager implements AttributeInterface
      * Generate a new id and delete the old session.
      *
      * This should be called whenever permission levels for a user change.
-     *
-     * @return void
      */
     public function regenerateSession()
     {
         session_regenerate_id(true);
-    }
-
-    /**
-     * Validate that the session has not expired.
-     *
-     * @return boolean true is session is valid and not expired, otherwise false
-     */
-    protected function validateSession()
-    {
-        // invalid to have obsolete and not expires
-        if ($this->has('SESSION_MANAGER_OBSOLETE') && !$this->has('SESSION_MANAGER_EXPIRES')) {
-            return false;
-        }
-
-        // if we don't have the expires key, use a future value for test
-        if ($this->get('SESSION_MANAGER_EXPIRES', time()+10) < time()) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -290,7 +262,27 @@ class Manager implements AttributeInterface
     public function clear()
     {
         $oldValues = $_SESSION;
-        $_SESSION = array();
+        $_SESSION = [];
         return $oldValues;
+    }
+
+    /**
+     * Validate that the session has not expired.
+     *
+     * @return boolean true is session is valid and not expired, otherwise false
+     */
+    protected function validateSession()
+    {
+        // invalid to have obsolete and not expires
+        if ($this->has('SESSION_MANAGER_OBSOLETE') && ! $this->has('SESSION_MANAGER_EXPIRES')) {
+            return false;
+        }
+
+        // if we don't have the expires key, use a future value for test
+        if ($this->get('SESSION_MANAGER_EXPIRES', time() + 10) < time()) {
+            return false;
+        }
+
+        return true;
     }
 }

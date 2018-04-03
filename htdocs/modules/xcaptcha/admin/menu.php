@@ -23,7 +23,7 @@ $adminmenu[$cpt]['link'] = 'admin/index.php';
 $adminmenu[$cpt]['icon'] = 'home.png';
 
 static $xcaptcha_handler;
-if (!isset($xcaptcha_handler)) {
+if (! isset($xcaptcha_handler)) {
     include_once dirname(__DIR__) . '/class/xcaptcha.php';
     $xcaptcha_handler = new Xcaptcha();
 }

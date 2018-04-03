@@ -80,7 +80,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('content.php', 3, implode(',', $xoops->security()->getErrors()));
         }
 
@@ -100,10 +100,10 @@ switch ($op) {
         $obj->setVar('content_mkeyword', Request::getString('content_mkeyword', ''));
         $obj->setVar('content_mdescription', Request::getString('content_mdescription', ''));
 
-        $date_create = Request::getArray('content_create', array());
-        if (count($date_create) == 1) {
+        $date_create = Request::getArray('content_create', []);
+        if (count($date_create) === 1) {
             $content_create = strtotime($date_create['date']);
-        } elseif (count($date_create) == 2) {
+        } elseif (count($date_create) === 2) {
             $content_create = strtotime($date_create['date']) + $date_create['time'];
         } else {
             $content_create = time();
@@ -114,40 +114,40 @@ switch ($op) {
         $obj->setVar('content_status', Request::getInt('content_status', 1));
         $obj->setVar('content_maindisplay', Request::getInt('content_maindisplay', 1));
 
-        $content_option = Request::getArray('content_option', array());
-        $obj->setVar('content_dopdf', in_array('pdf', $content_option));
-        $obj->setVar('content_doprint', in_array('print', $content_option));
-        $obj->setVar('content_domail', in_array('mail', $content_option));
-        $obj->setVar('content_doauthor', in_array('author', $content_option));
-        $obj->setVar('content_dodate', in_array('date', $content_option));
-        $obj->setVar('content_dohits', in_array('hits', $content_option));
-        $obj->setVar('content_dorating', in_array('rating', $content_option));
-        $obj->setVar('content_doncoms', in_array('ncoms', $content_option));
-        $obj->setVar('content_docoms', in_array('coms', $content_option));
-        $obj->setVar('content_dosocial', in_array('social', $content_option));
-        $obj->setVar('content_dotitle', in_array('title', $content_option));
-        $obj->setVar('content_donotifications', in_array('notifications', $content_option));
+        $content_option = Request::getArray('content_option', []);
+        $obj->setVar('content_dopdf', in_array('pdf', $content_option, true));
+        $obj->setVar('content_doprint', in_array('print', $content_option, true));
+        $obj->setVar('content_domail', in_array('mail', $content_option, true));
+        $obj->setVar('content_doauthor', in_array('author', $content_option, true));
+        $obj->setVar('content_dodate', in_array('date', $content_option, true));
+        $obj->setVar('content_dohits', in_array('hits', $content_option, true));
+        $obj->setVar('content_dorating', in_array('rating', $content_option, true));
+        $obj->setVar('content_doncoms', in_array('ncoms', $content_option, true));
+        $obj->setVar('content_docoms', in_array('coms', $content_option, true));
+        $obj->setVar('content_dosocial', in_array('social', $content_option, true));
+        $obj->setVar('content_dotitle', in_array('title', $content_option, true));
+        $obj->setVar('content_donotifications', in_array('notifications', $content_option, true));
 
-        if (preg_match('/^\d+$/', Request::getInt('content_weight', 0)) == false) {
+        if (preg_match('/^\d+$/', Request::getInt('content_weight', 0)) === false) {
             $error = true;
             $error_message .= PageLocale::E_WEIGHT . '<br />';
             $obj->setVar('content_weight', 0);
         } else {
             $obj->setVar('content_weight', Request::getInt('content_weight', 0));
         }
-        if ($error == true) {
+        if ($error === true) {
             $xoops->tpl()->assign('error_message', $error_message);
         } else {
             if ($newcontent_id = $content_Handler->insert($obj)) {
                 // update permissions
                 $perm_id = $content_id > 0 ? $content_id : $newcontent_id;
-                $groups_view_item = Request::getArray('groups_view_item', array());
+                $groups_view_item = Request::getArray('groups_view_item', []);
                 $gperm_Handler->updatePerms($perm_id, $groups_view_item);
 
                 //notifications
-                if ($content_id == 0 && $xoops->isActiveModule('notifications')) {
+                if ($content_id === 0 && $xoops->isActiveModule('notifications')) {
                     $notification_handler = Notifications::getInstance()->getHandlerNotification();
-                    $tags = array();
+                    $tags = [];
                     $tags['MODULE_NAME'] = 'page';
                     $tags['ITEM_NAME'] = Request::getString('content_title', '');
                     $tags['ITEM_URL'] = \XoopsBaseConfig::get('url') . '/modules/page/viewpage.php?id=' . $newcontent_id;
@@ -171,8 +171,8 @@ switch ($op) {
         $ok = Request::getInt('ok', 0);
 
         $obj = $content_Handler->get($content_id);
-        if ($ok == 1) {
-            if (!$xoops->security()->check()) {
+        if ($ok === 1) {
+            if (! $xoops->security()->check()) {
                 $xoops->redirect('content.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             // Deleting the content
@@ -197,7 +197,7 @@ switch ($op) {
         } else {
             // deleting main and secondary
             echo $xoops->confirm(
-                array('ok' => 1, 'content_id' => $content_id, 'op' => 'delete'),
+                ['ok' => 1, 'content_id' => $content_id, 'op' => 'delete'],
                 'content.php',
                 XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM
                 . '<br /><span class="red">' . $obj->getvar('content_title') . '<span>'
@@ -210,7 +210,7 @@ switch ($op) {
         if ($content_id > 0) {
             $obj = $content_Handler->get($content_id);
             $old = $obj->getVar('content_status');
-            $obj->setVar('content_status', !$old);
+            $obj->setVar('content_status', ! $old);
             if ($content_Handler->insert($obj)) {
                 exit;
             }
@@ -223,7 +223,7 @@ switch ($op) {
         if ($content_id > 0) {
             $obj = $content_Handler->get($content_id);
             $old = $obj->getVar('content_maindisplay');
-            $obj->setVar('content_maindisplay', !$old);
+            $obj->setVar('content_maindisplay', ! $old);
             if ($content_Handler->insert($obj)) {
                 exit;
             }

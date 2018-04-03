@@ -42,7 +42,7 @@ function xoops_module_update_search(XoopsModule $module)
                 for ($j = 0; $j < $new_confcount; ++$j) {
                     $obj = $config_handler->getConfig($new_configs[$j]->getVar('conf_id'));
                 }
-                $obj->setVar("conf_value", $configs[$i]->getVar('conf_value'));
+                $obj->setVar('conf_value', $configs[$i]->getVar('conf_value'));
                 $config_handler->insertConfig($obj);
                 $config_handler->deleteConfig($configs[$i]);
             }

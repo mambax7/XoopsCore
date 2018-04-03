@@ -29,7 +29,7 @@
  * @link      http://xoops.org
  * @since     2.6.0
  */
-abstract class XoopsCaptchaMethod
+abstract class xoopscaptchamethod
 {
     /**
      * @var XoopsCaptcha
@@ -75,8 +75,8 @@ abstract class XoopsCaptchaMethod
      */
     public function loadConfig($name = '')
     {
-        if (!is_object($this->handler))
-            $this->config = array();
+        if (! is_object($this->handler))
+            $this->config = [];
         else
             $this->config = empty($name)
                 ? $this->handler->config
@@ -90,7 +90,7 @@ abstract class XoopsCaptchaMethod
      */
     public function getCode()
     {
-        return (string)($this->code);
+        return (string) ($this->code);
     }
 
     /**
@@ -121,9 +121,9 @@ abstract class XoopsCaptchaMethod
     public function verify($sessionName = null)
     {
         $is_valid = false;
-        if (!empty($_SESSION["{$sessionName}_code"])) {
-            $func = !empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
-            $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
+        if (! empty($_SESSION["{$sessionName}_code"])) {
+            $func = ! empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
+            $is_valid = ! $func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
         }
         return $is_valid;
     }
@@ -135,5 +135,4 @@ abstract class XoopsCaptchaMethod
     {
         return true;
     }
-
 }

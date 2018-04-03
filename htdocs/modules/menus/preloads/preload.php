@@ -25,16 +25,14 @@ class MenusPreload extends PreloadItem
      * add any module specific class map entries
      *
      * @param mixed $args not used
-     *
-     * @return void
      */
     public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
+        XoopsLoad::addMap([
             'menus' => $path . '/class/helper.php',
             'menusbuilder' => $path . '/class/builder.php',
             'menusdecorator' => $path . '/class/decorator.php',
-        ));
+        ]);
     }
 }

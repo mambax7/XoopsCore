@@ -10,10 +10,10 @@
 */
 
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Kernel\CriteriaElement;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
-use Xoops\Core\Kernel\CriteriaElement;
 
 /**
  * Extended User Profile
@@ -69,7 +69,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @var array
      */
-    private $_fields = array();
+    private $_fields = [];
 
     public function __construct(Connection $db)
     {
@@ -99,7 +99,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Get a {@link ProfileProfile}
      *
-     * @param      $uid
+     *
      * @param bool $createOnFailure create a new {@link ProfileProfile} if none is fetched
      *
      * @return null|ProfileProfile|XoopsObject
@@ -107,7 +107,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public function getProfile($uid, $createOnFailure = true)
     {
         $obj = parent::get($uid);
-        if (!is_object($obj) && $createOnFailure) {
+        if (! is_object($obj) && $createOnFailure) {
             $obj = $this->create();
         }
         return $obj;
@@ -133,7 +133,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      */
     public function loadFields()
     {
-        if (count($this->_fields) == 0) {
+        if (count($this->_fields) === 0) {
             $this->_fields = $this->_fHandler->loadFields();
         }
         return $this->_fields;
@@ -156,8 +156,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Insert a field in the database
      *
-     * @param ProfileField $field
-     * @param bool         $force
+     *
+     * @param bool $force
      *
      * @return bool
      */
@@ -169,8 +169,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Delete a field from the database
      *
-     * @param ProfileField $field
-     * @param bool         $force
+     *
+     * @param bool $force
      *
      * @return bool
      */
@@ -224,7 +224,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if (isset($vars['options'])) {
             $field->setVar('field_options', $vars['options']);
         } else {
-            $field->setVar('field_options', array());
+            $field->setVar('field_options', []);
         }
         if ($this->insertField($field)) {
             $msg = '&nbsp;&nbsp;Field <strong>' . $vars['name'] . '</strong> added to the database';
@@ -249,7 +249,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         foreach ($uservars as $var) {
             unset($obj->vars[$var]);
         }
-        if (count($obj->vars) == 0) {
+        if (count($obj->vars) === 0) {
             return true;
         }
         return parent::insert($obj, $force);
@@ -268,40 +268,40 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Search profiles and users
      *
-     * @param CriteriaElement    $criteria   CriteriaElement
-     * @param array              $searchvars Fields to be fetched
-     * @param array              $groups     for Usergroups is selected (only admin!)
+     *
+     * @param array $searchvars Fields to be fetched
+     * @param array $groups for Usergroups is selected (only admin!)
      *
      * @return array
      */
-    public function search(CriteriaElement $criteria, $searchvars = array(), $groups = null)
+    public function search(CriteriaElement $criteria, $searchvars = [], $groups = null)
     {
         $xoops = Xoops::getInstance();
         $uservars = $this->getUserVars();
 
         $searchvars_user = array_intersect($searchvars, $uservars);
         $searchvars_profile = array_diff($searchvars, $uservars);
-        $sv = array('u.uid, u.uname, u.email, u.user_viewemail');
-        if (!empty($searchvars_user)) {
-            $sv[0] .= ",u." . implode(", u.", $searchvars_user);
+        $sv = ['u.uid, u.uname, u.email, u.user_viewemail'];
+        if (! empty($searchvars_user)) {
+            $sv[0] .= ',u.' . implode(', u.', $searchvars_user);
         }
-        if (!empty($searchvars_profile)) {
-            $sv[] = "p." . implode(", p.", $searchvars_profile);
+        if (! empty($searchvars_profile)) {
+            $sv[] = 'p.' . implode(', p.', $searchvars_profile);
         }
 
         $qb = $xoops->db()->createXoopsQueryBuilder();
 
-        $qb->select((empty($searchvars) ? "u.*, p.*" : implode(", ", $sv)))
+        $qb->select((empty($searchvars) ? 'u.*, p.*' : implode(', ', $sv)))
             ->fromPrefix('system_user', 'u')
             ->leftJoin('u', $this->table, 'p', 'u.uid=p.profile_id');
 
-        if (!empty($groups)) {
+        if (! empty($groups)) {
             $qb->leftJoinPrefix('u', 'system_usergroup', 'g', 'u.uid=g.uid');
         }
 
         $criteria->renderQb($qb);
 
-        if (!empty($groups)) {
+        if (! empty($groups)) {
             $qb->andWhere('g.groupid IN (:grps)')->setParameter('grps', $groups);
         }
 
@@ -310,14 +310,14 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $user_handler = $xoops->getHandlerUser();
         $uservars = $this->getUserVars();
 
-        $users = array();
-        $profiles = array();
+        $users = [];
+        $profiles = [];
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $profile = $this->create(false);
             $user = $user_handler->create(false);
 
             foreach ($myrow as $name => $value) {
-                if (in_array($name, $uservars)) {
+                if (in_array($name, $uservars, true)) {
                     $user->assignVar($name, $value);
                 } else {
                     $profile->assignVar($name, $value);
@@ -331,6 +331,6 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $result = $qb->execute();
         $count = $result->fetchColumn();
 
-        return array($users, $profiles, (int)($count));
+        return [$users, $profiles, (int) ($count)];
     }
 }

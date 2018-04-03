@@ -33,8 +33,6 @@ class XoopsCode extends ExtensionAbstract
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -45,7 +43,7 @@ class XoopsCode extends ExtensionAbstract
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $url = ltrim($attributes[0], '=');
                 $url = \Xoops::getInstance()->url($url);
-                $newcontent = '<a href="' .$url. '">' . $shortcodes->process($content) . '</a>';
+                $newcontent = '<a href="' . $url . '">' . $shortcodes->process($content) . '</a>';
                 return $newcontent;
             }
         );
@@ -55,7 +53,7 @@ class XoopsCode extends ExtensionAbstract
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $url = ltrim($attributes[0], '=');
                 $url = \Xoops::getInstance()->url($url);
-                $newcontent = '<a href="' .$url. '">' . $shortcodes->process($content) . '</a>';
+                $newcontent = '<a href="' . $url . '">' . $shortcodes->process($content) . '</a>';
                 return $newcontent;
             }
         );
@@ -65,7 +63,7 @@ class XoopsCode extends ExtensionAbstract
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $color = ltrim($attributes[0], '=');
                 $color = preg_match('/^[a-f0-9]{3}$|^[a-f0-9]{6}$/i', $color) ? '#' . $color : $color;
-                $newcontent = '<span style="color: ' .$color. '">' . $shortcodes->process($content) . '</span>';
+                $newcontent = '<span style="color: ' . $color . '">' . $shortcodes->process($content) . '</span>';
                 return $newcontent;
             }
         );
@@ -74,7 +72,7 @@ class XoopsCode extends ExtensionAbstract
             'size',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $size = ltrim($attributes[0], '=');
-                $newcontent = '<span style="font-size: ' .$size. '">' . $shortcodes->process($content) . '</span>';
+                $newcontent = '<span style="font-size: ' . $size . '">' . $shortcodes->process($content) . '</span>';
                 return $newcontent;
             }
         );
@@ -83,7 +81,7 @@ class XoopsCode extends ExtensionAbstract
             'font',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $font = ltrim($attributes[0], '=');
-                $newcontent = '<span style="font-family: ' .$font. '">' . $shortcodes->process($content) . '</span>';
+                $newcontent = '<span style="font-family: ' . $font . '">' . $shortcodes->process($content) . '</span>';
                 return $newcontent;
             }
         );

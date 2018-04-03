@@ -34,7 +34,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
     public function item($category, $item_id)
     {
         $xoops = Xoops::getInstance();
-        $item = array();
+        $item = [];
         $item_id = (int) $item_id;
 
         if ($category === 'global') {
@@ -71,23 +71,23 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
      */
     public function categories()
     {
-        $ret = array();
+        $ret = [];
         $ret[1]['name'] = 'global';
         $ret[1]['title'] = _MI_PUBLISHER_GLOBAL_ITEM_NOTIFY;
         $ret[1]['description'] = _MI_PUBLISHER_GLOBAL_ITEM_NOTIFY_DSC;
-        $ret[1]['subscribe_from'] = array('index.php', 'category.php', 'item.php');
+        $ret[1]['subscribe_from'] = ['index.php', 'category.php', 'item.php'];
 
         $ret[2]['name'] = 'category';
         $ret[2]['title'] = _MI_PUBLISHER_CATEGORY_ITEM_NOTIFY;
         $ret[2]['description'] = _MI_PUBLISHER_CATEGORY_ITEM_NOTIFY_DSC;
-        $ret[2]['subscribe_from'] = array('index.php', 'category.php', 'item.php');
+        $ret[2]['subscribe_from'] = ['index.php', 'category.php', 'item.php'];
         $ret[2]['item_name'] = 'categoryid';
         $ret[2]['allow_bookmark'] = 1;
 
         $ret[3]['name'] = 'item';
         $ret[3]['title'] = _MI_PUBLISHER_ITEM_NOTIFY;
         $ret[3]['description'] = _MI_PUBLISHER_ITEM_NOTIFY_DSC;
-        $ret[3]['subscribe_from'] = array('item.php');
+        $ret[3]['subscribe_from'] = ['item.php'];
         $ret[3]['item_name'] = 'itemid';
         $ret[3]['allow_bookmark'] = 1;
         return $ret;
@@ -98,7 +98,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
      */
     public function events()
     {
-        $ret = array();
+        $ret = [];
         $ret[1]['name'] = 'category_created';
         $ret[1]['category'] = 'global';
         $ret[1]['title'] = _MI_PUBLISHER_GLOBAL_ITEM_CATEGORY_CREATED_NOTIFY;
@@ -170,6 +170,6 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
      */
     public function tags($category, $item_id, $event)
     {
-        return array();
+        return [];
     }
 }

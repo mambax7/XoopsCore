@@ -31,9 +31,6 @@ include_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/va
  */
 class XlanguageLanguage extends XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         $this->initVar('xlanguage_id', XOBJ_DTYPE_INT, 0, false, 10);
@@ -64,13 +61,13 @@ class XlanguageLanguage extends XoopsObject
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
             if ($k !== 'dohtml') {
-                if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
+                if ($this->vars[$k]['data_type'] === XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] === XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] === XOBJ_DTYPE_LTIME) {
                     $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
-                } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
+                } elseif ($this->vars[$k]['data_type'] === XOBJ_DTYPE_INT) {
                     $value = $system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
-                } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
+                } elseif ($this->vars[$k]['data_type'] === XOBJ_DTYPE_ARRAY) {
                     $value = $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
@@ -87,9 +84,6 @@ class XlanguageLanguage extends XoopsObject
  */
 class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param null|Connection $db
-     */
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'xlanguage', 'XlanguageLanguage', 'xlanguage_id', 'xlanguage_name');
@@ -136,7 +130,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
      */
     public function createConfig()
     {
-        $cached_config = array();
+        $cached_config = [];
         foreach ($this->getAllLanguage(false) as $key => $language) {
             $cached_config[$language['xlanguage_name']] = $language;
         }
@@ -145,8 +139,6 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param $data
-     *
      * @return bool
      */
     public function writeConfig($data)
@@ -160,61 +152,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param              $pathname
-     * @param mixed|string $pathout
-     *
-     * @return bool
-     */
-    private function createPath($pathname, $pathout = null)
-    {
-        $xoops = Xoops::getInstance();
-        $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
-        $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
-
-        $dest = ($pathout === null) ? \XoopsBaseConfig::get('root-path') : $pathout;
-        $paths = explode('/', $pathname);
-
-        foreach ($paths as $path) {
-            if (!empty($path)) {
-                $dest = $dest . '/' . $path;
-                if (!is_dir($dest)) {
-                    if (!mkdir($dest, 0755)) {
-                        return false;
-                    } else {
-                        $this->writeIndex($xoops->path('uploads'), 'index.html', $dest);
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param $folder_in
-     * @param $source_file
-     * @param $folder_out
-     *
-     * @return bool
-     */
-    private function writeIndex($folder_in, $source_file, $folder_out)
-    {
-        if (!is_dir($folder_out)) {
-            if (!$this->createPath($folder_out)) {
-                return false;
-            }
-        }
-
-        // Simple copy for a file
-        if (is_file($folder_in . '/' . $source_file)) {
-            return copy($folder_in . '/' . $source_file, $folder_out . '/' . basename($source_file));
-        }
-        return false;
-    }
-
-    /**
      * @param null $name
-     *
-     * @return null
      */
     public function getByName($name = null)
     {
@@ -222,7 +160,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
         $name = empty($name) ? $xoops->getConfig('locale') : strtolower($name);
 
         $file_config = $xoops->registry()->get('XLANGUAGE_CONFIG_FILE');
-        if (!XoopsLoad::fileExists($file_config) || !isset($this->cached_config)) {
+        if (! XoopsLoad::fileExists($file_config) || ! isset($this->cached_config)) {
             $this->loadConfig();
         }
 
@@ -255,5 +193,52 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
         $xoops->tpl()->assign('theme', \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme'));
         $xoops->tpl()->assign('languages', $this->getAllLanguage(false));
         return $xoops->tpl()->fetch('admin:xlanguage/xlanguage_admin_list.tpl');
+    }
+
+    /**
+     * @param mixed|string $pathout
+     *
+     * @return bool
+     */
+    private function createPath($pathname, $pathout = null)
+    {
+        $xoops = Xoops::getInstance();
+        $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
+        $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
+
+        $dest = ($pathout === null) ? \XoopsBaseConfig::get('root-path') : $pathout;
+        $paths = explode('/', $pathname);
+
+        foreach ($paths as $path) {
+            if (! empty($path)) {
+                $dest = $dest . '/' . $path;
+                if (! is_dir($dest)) {
+                    if (! mkdir($dest, 0755)) {
+                        return false;
+                    }
+                        $this->writeIndex($xoops->path('uploads'), 'index.html', $dest);
+
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    private function writeIndex($folder_in, $source_file, $folder_out)
+    {
+        if (! is_dir($folder_out)) {
+            if (! $this->createPath($folder_out)) {
+                return false;
+            }
+        }
+
+        // Simple copy for a file
+        if (is_file($folder_in . '/' . $source_file)) {
+            return copy($folder_in . '/' . $source_file, $folder_out . '/' . basename($source_file));
+        }
+        return false;
     }
 }

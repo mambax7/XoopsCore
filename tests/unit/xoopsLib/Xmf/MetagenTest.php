@@ -1,17 +1,13 @@
 <?php
+
 namespace Xmf\Test;
 
 use Xmf\Metagen;
 
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class MetagenTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Metagen
-     */
-    protected $object;
-
     // a known block of text used in some tests
     const DOI_TEXT = <<<EOT
 When in the Course of human events, it becomes necessary for one people to dissolve
@@ -40,12 +36,17 @@ their future security.
 EOT;
 
     /**
+     * @var Metagen
+     */
+    protected $object;
+
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
-        $this->object = new Metagen;
+        $this->object = new Metagen();
     }
 
     /**
@@ -84,31 +85,31 @@ EOT;
     {
         $body = self::DOI_TEXT;
         $numKeys = 20;
-        $forced = array('declaration', 'independence');
+        $forced = ['declaration', 'independence'];
         $keys = $this->object->generateKeywords($body, $numKeys, 3, $forced);
-        $this->assertTrue(count($keys) == $numKeys);
+        $this->assertTrue(count($keys) === $numKeys);
         // test that forced keywords and words with more than 2 occurances are present
         // There should be one more word, one of the words with only one occurance.
         // While repeatable, the choice of that is undefined behavior.
-        $this->assertTrue(in_array('independence', $keys));
-        $this->assertTrue(in_array('government', $keys));
-        $this->assertTrue(in_array('among', $keys));
-        $this->assertTrue(in_array('right', $keys));
-        $this->assertTrue(in_array('powers', $keys));
-        $this->assertTrue(in_array('causes', $keys));
-        $this->assertTrue(in_array('mankind', $keys));
-        $this->assertTrue(in_array('nature', $keys));
-        $this->assertTrue(in_array('men', $keys));
-        $this->assertTrue(in_array('governments', $keys));
-        $this->assertTrue(in_array('long', $keys));
-        $this->assertTrue(in_array('new', $keys));
-        $this->assertTrue(in_array('equal', $keys));
-        $this->assertTrue(in_array('happiness', $keys));
-        $this->assertTrue(in_array('rights', $keys));
-        $this->assertTrue(in_array('form', $keys));
-        $this->assertTrue(in_array('people', $keys));
-        $this->assertTrue(in_array('becomes', $keys));
-        $this->assertFalse(in_array('wombat', $keys));
+        $this->assertTrue(in_array('independence', $keys, true));
+        $this->assertTrue(in_array('government', $keys, true));
+        $this->assertTrue(in_array('among', $keys, true));
+        $this->assertTrue(in_array('right', $keys, true));
+        $this->assertTrue(in_array('powers', $keys, true));
+        $this->assertTrue(in_array('causes', $keys, true));
+        $this->assertTrue(in_array('mankind', $keys, true));
+        $this->assertTrue(in_array('nature', $keys, true));
+        $this->assertTrue(in_array('men', $keys, true));
+        $this->assertTrue(in_array('governments', $keys, true));
+        $this->assertTrue(in_array('long', $keys, true));
+        $this->assertTrue(in_array('new', $keys, true));
+        $this->assertTrue(in_array('equal', $keys, true));
+        $this->assertTrue(in_array('happiness', $keys, true));
+        $this->assertTrue(in_array('rights', $keys, true));
+        $this->assertTrue(in_array('form', $keys, true));
+        $this->assertTrue(in_array('people', $keys, true));
+        $this->assertTrue(in_array('becomes', $keys, true));
+        $this->assertFalse(in_array('wombat', $keys, true));
     }
 
     public function testGenerateDescription()
@@ -118,13 +119,13 @@ EOT;
         $desc = $this->object->generateDescription($body, $numWords);
         $actual = mb_substr($desc, -21, null, 'UTF-8');
         $expected = 'pursuit of Happiness.';
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
         $numWords = 20;
         $desc = $this->object->generateDescription($body, $numWords);
         $actual = mb_substr($desc, -(mb_strlen(Metagen::ELLIPSIS)), null, 'UTF-8');
         $expected = Metagen::ELLIPSIS;
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
     }
 
     public function testGenerateMetaTags()
@@ -140,14 +141,14 @@ EOT;
         $title = 'XOOPS generates your SEO titles for you.';
         $expected = 'XOOPS-generates-SEO-titles';
         $actual = Metagen::generateSeoTitle($title);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
         $expected = $expected . '.html';
         $actual = Metagen::generateSeoTitle($title, '.html');
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
         $title = 'catégorie. 2 xmarticle';
         $expected = 'catégorie-2-xmarticle';
         $actual = Metagen::generateSeoTitle($title);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
     }
 
     public function testGetSearchSummary()
@@ -159,46 +160,46 @@ characters and will need to have in the middle and at each end some very differe
 significant keywords.
 EOT;
 
-        $needles = array();
+        $needles = [];
         $expected = 'Testing this method will require a long' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('testing');
+        $needles = ['testing'];
         $expected = 'Testing this method will require a long' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('significant');
+        $needles = ['significant'];
         $expected = $ellipsis . 'very different significant keywords.';
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('one hundred');
+        $needles = ['one hundred'];
         $expected = $ellipsis . 'that will exceed one hundred twenty' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('testing', 'significant', 'one hundred');
+        $needles = ['testing', 'significant', 'one hundred'];
         $expected = 'Testing this method will require a long' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('significant', 'one hundred', 'testing');
+        $needles = ['significant', 'one hundred', 'testing'];
         $expected = 'Testing this method will require a long' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
-        $needles = array('will');
+        $needles = ['will'];
         $expected = 'Testing this method will require a long' . $ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
 
         $nowhitespace = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0abcdefghijklmnopqrstuvwxyz';
-        $needles = array('0');
+        $needles = ['0'];
         $expected = $ellipsis . 'GHIJKLMNOPQRSTUVWXYZ0abcdefghijklmnopqrs' . $ellipsis;
         $actual = Metagen::getSearchSummary($nowhitespace, $needles, 40);
-        $this->assertEquals($expected, $actual, $actual);
+        $this->assertSame($expected, $actual, $actual);
     }
 
     public function testAsPlainText()
@@ -207,7 +208,7 @@ EOT;
         $method->setAccessible(true);
         $input = " <p><pre> This is\r\na test   of\ncleaning\rup <i>a string.  </pre> ";
         $expected = 'This is a test of cleaning up a string.';
-        $actual = $method->invokeArgs($this->object, array($input));
-        $this->assertEquals($expected, $actual, $actual);
+        $actual = $method->invokeArgs($this->object, [$input]);
+        $this->assertSame($expected, $actual, $actual);
     }
 }

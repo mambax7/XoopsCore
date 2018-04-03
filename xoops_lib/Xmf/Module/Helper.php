@@ -38,11 +38,11 @@ class Helper extends GenericHelper
      */
     public static function getHelper($dirname = 'system')
     {
-        static $instance = array();
+        static $instance = [];
 
         //$dirname = strtolower($dirname);
 
-        if (!isset($instance[$dirname])) {
+        if (! isset($instance[$dirname])) {
             $instance[$dirname] = false;
 
             // if this is a 2.6 system turn everything over to the core

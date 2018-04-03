@@ -20,14 +20,14 @@
  * @version         $Id$
  */
 
-$adminmenu = array();
+$adminmenu = [];
 $i = 1;
 $adminmenu[$i]['title'] = _MI_MAILUSERS_INDEX;
-$adminmenu[$i]['link'] = "admin/index.php";
+$adminmenu[$i]['link'] = 'admin/index.php';
 $adminmenu[$i]['icon'] = 'home.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_MAILUSERS_SENDMAIL;
-$adminmenu[$i]['link'] = "admin/send_mails.php";
+$adminmenu[$i]['link'] = 'admin/send_mails.php';
 $adminmenu[$i]['icon'] = 'mail_country.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_MAILUSERS_ABOUT;

@@ -1,12 +1,13 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class ThemeSetImageHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'ThemeSetImageHandler';
+
     protected $object = null;
-    
-    public function setUp()
+
+    protected function setUp()
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
@@ -17,7 +18,7 @@ class ThemeSetImageHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
         $this->assertInstanceOf('XmlTagHandler', $instance);
     }
-    
+
     public function test_getName()
     {
         $instance = $this->object;
@@ -25,14 +26,14 @@ class ThemeSetImageHandlerTest extends \PHPUnit\Framework\TestCase
         $name = $instance->getName();
         $this->assertSame('image', $name);
     }
-    
+
     public function test_handleBeginElement()
     {
         $instance = $this->object;
 
         $input = 'input';
         $parser = new XoopsThemeSetParser($input);
-        $attributes = array('name' => 'name');
+        $attributes = ['name' => 'name'];
         $instance->handleBeginElement($parser, $attributes);
         $this->assertSame('name', $parser->getTempArr('name'));
     }
@@ -43,7 +44,7 @@ class ThemeSetImageHandlerTest extends \PHPUnit\Framework\TestCase
 
         $input = 'input';
         $parser = new XoopsThemeSetParser($input);
-        $attributes = array('name' => 'name');
+        $attributes = ['name' => 'name'];
         $instance->handleBeginElement($parser, $attributes);
 
         $instance->handleEndElement($parser);

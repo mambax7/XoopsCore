@@ -27,10 +27,22 @@ class FactorySpec
     protected $factory;
 
     protected $specScheme;
+
     protected $specName;
+
     protected $specDirname;
+
     protected $specOptional = false;
+
     protected $specFQN;
+
+    /**
+     * @param Factory $factory factory that created the spec
+     */
+    protected function __construct(Factory $factory)
+    {
+        $this->factory = $factory;
+    }
 
     /**
      * get a new specification instance.
@@ -46,14 +58,6 @@ class FactorySpec
         $instance = new $specClass($factory);
 
         return $instance;
-    }
-
-    /**
-     * @param Factory $factory factory that created the spec
-     */
-    protected function __construct(Factory $factory)
-    {
-        $this->factory = $factory;
     }
 
     /**

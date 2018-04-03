@@ -35,11 +35,11 @@ class ItemList extends Item
      *   'id'       - element id for container association (i.e. aria-labelledby)
      *   'dropdown' - override "dropdown" class, i.e. "dropup"
      */
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         parent::__construct($attributes);
         $this->set('type', Item::TYPE_LIST);
-        if (!$this->has('items')) {
+        if (! $this->has('items')) {
             $this->set('items', []);
         }
     }

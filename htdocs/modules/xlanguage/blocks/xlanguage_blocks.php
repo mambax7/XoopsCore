@@ -1,24 +1,24 @@
 <?php
 /**
- * Xlanguage extension module
- * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code
- * which is considered copyrighted (c) material of the original comment or credit authors.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright       2010-2014 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
- * @since           2.6.0
- * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
- *
- * @param $options
- *
- * @return array
- */
+     * Xlanguage extension module
+     * You may not change or alter any portion of this comment or credits
+     * of supporting developers from this source code or any supporting source code
+     * which is considered copyrighted (c) material of the original comment or credit authors.
+     *
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     *
+     *
+     * @copyright 2010-2014 XOOPS Project (http://xoops.org)
+     * @license GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+     * @package xlanguage
+     * @since 2.6.0
+     * @author Laurent JEN (Aka DuGris)
+     * @version $Id$
+     *
+     * @return array
+     */
 
 function b_xlanguage_select_show($options)
 {
@@ -30,17 +30,17 @@ function b_xlanguage_select_show($options)
 
     $options[3] = $helper->getConfig('theme');
 
-    $block = array();
+    $block = [];
     $helper->getHandlerLanguage()->loadConfig();
 
-    if (!is_array($helper->getHandlerLanguage()->cached_config) || count($helper->getHandlerLanguage()->cached_config) < 1) {
+    if (! is_array($helper->getHandlerLanguage()->cached_config) || count($helper->getHandlerLanguage()->cached_config) < 1) {
         return $block;
     }
 
     $QUERY_STRING_array = array_filter(explode('&', $xoops->getEnv('QUERY_STRING')));
-    $QUERY_STRING_new = array();
+    $QUERY_STRING_new = [];
     foreach ($QUERY_STRING_array as $QUERY) {
-        if (substr($QUERY, 0, (strlen($lang_tag) + 1)) != $lang_tag . '=') {
+        if (substr($QUERY, 0, (strlen($lang_tag) + 1)) !== $lang_tag . '=') {
             $vals = explode('=', $QUERY);
             foreach (array_keys($vals) as $key) {
                 if (preg_match('/^a-z0-9$/i', $vals[$key])) {
@@ -55,7 +55,7 @@ function b_xlanguage_select_show($options)
     $block['delimitor'] = $options[1];
     $block['number'] = $options[2];
 
-    if ($options[0]==='jquery') {
+    if ($options[0] === 'jquery') {
         $xoops = \Xoops::getInstance();
         $xoops->theme()->addBaseScriptAssets('@jqueryui');
     }
@@ -76,8 +76,6 @@ function b_xlanguage_select_show($options)
 }
 
 /**
- * @param $options
- *
  * @return string
  */
 function b_xlanguage_select_edit($options)

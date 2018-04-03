@@ -52,17 +52,11 @@ class DhtmlTextArea extends \XoopsEditor
      *      </li>
      * </ul>
      */
+
     /**
      * @var \XoopsEditor
      */
     public $htmlEditor;
-
-    /**
-     * Hidden text
-     *
-     * @var string
-     */
-    private $hiddenText;
 
     /**
      * @var bool
@@ -82,7 +76,14 @@ class DhtmlTextArea extends \XoopsEditor
     /**
      * @var array
      */
-    public $configs = array();
+    public $configs = [];
+
+    /**
+     * Hidden text
+     *
+     * @var string
+     */
+    private $hiddenText;
 
     /**
      * Constructor
@@ -98,11 +99,11 @@ class DhtmlTextArea extends \XoopsEditor
     public function __construct(
         $caption,
         $name,
-        $value = "",
+        $value = '',
         $rows = 5,
         $cols = 50,
-        $hiddentext = "xoopsHiddenText",
-        $options = array()
+        $hiddentext = 'xoopsHiddenText',
+        $options = []
     ) {
         static $inLoop = 0;
 
@@ -121,20 +122,20 @@ class DhtmlTextArea extends \XoopsEditor
         }
 
         $xoops = \Xoops::getInstance();
-        if (!isset($options['editor'])) {
+        if (! isset($options['editor'])) {
             if ($editor = $xoops->getConfig('editor')) {
                 $options['editor'] = $editor;
             }
         }
 
-        if (!empty($this->htmlEditor) || !empty($options['editor'])) {
+        if (! empty($this->htmlEditor) || ! empty($options['editor'])) {
             $options['name'] = $this->getName();
             $options['value'] = $this->getValue();
-            if (!empty($options['editor'])) {
-                $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : array($options['editor']);
+            if (! empty($options['editor'])) {
+                $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : [$options['editor']];
             }
 
-            if (count($this->htmlEditor) == 1) {
+            if (count($this->htmlEditor) === 1) {
                 $editor_handler = \XoopsEditorHandler::getInstance();
                 $this->htmlEditor = $editor_handler->get($this->htmlEditor[0], $options);
                 if ($inLoop > 1) {
@@ -163,7 +164,7 @@ class DhtmlTextArea extends \XoopsEditor
     public function render()
     {
         if ($this->htmlEditor && is_object($this->htmlEditor)) {
-            if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
+            if (! isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
                 return $this->htmlEditor->render();
             }
         }
@@ -171,8 +172,8 @@ class DhtmlTextArea extends \XoopsEditor
 
         $xoops = \Xoops::getInstance();
 
-        $extra = ($this->getExtra() != '' ? " " . $this->getExtra() : '');
-        $ret = "";
+        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
+        $ret = '';
         // actions
         $ret .= $this->codeIcon() . "<br />\n";
         // fonts
@@ -193,13 +194,13 @@ class DhtmlTextArea extends \XoopsEditor
         $ret .= '<textarea ' . $attributes . $extra . '>' . $this->getValue() . "</textarea>\n";
 
         if (empty($this->skipPreview)) {
-            if (!$xoops->theme()) {
-                $this->js .= implode("", file($xoops->path('media/xoops/image.js')));
+            if (! $xoops->theme()) {
+                $this->js .= implode('', file($xoops->path('media/xoops/image.js')));
             } else {
-                $xoops->theme()->addScript('media/xoops/image.js', array('type' => 'text/javascript'));
+                $xoops->theme()->addScript('media/xoops/image.js', ['type' => 'text/javascript']);
             }
-            $button = "<input id='" . $this->getName() . "_preview_button' " . "type='button' " . "class='btn btn-sm btn-default' value='" . \XoopsLocale::A_PREVIEW . "' " . "onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int)($this->doHtml) . ", '" . $xoops->security()->createToken() . "')\"" . " />";
-            $ret .= "<br />" . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . "<fieldset>" . "<legend>" . $button . "</legend>" . "<div id='" . $this->getName() . "_hidden_data'>" . \XoopsLocale::CLICK_PREVIEW_TO_SEE_CONTENT . "</div>" . "</fieldset>" . "</div>";
+            $button = "<input id='" . $this->getName() . "_preview_button' " . "type='button' " . "class='btn btn-sm btn-default' value='" . \XoopsLocale::A_PREVIEW . "' " . "onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int) ($this->doHtml) . ", '" . $xoops->security()->createToken() . "')\"" . ' />';
+            $ret .= '<br />' . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . '<fieldset>' . '<legend>' . $button . '</legend>' . "<div id='" . $this->getName() . "_hidden_data'>" . \XoopsLocale::CLICK_PREVIEW_TO_SEE_CONTENT . '</div>' . '</fieldset>' . '</div>';
         }
         // Load javascript
         if (empty($js_loaded)) {
@@ -244,18 +245,18 @@ class DhtmlTextArea extends \XoopsEditor
         $extensions = array_filter($myts->listExtensions());
         foreach ($extensions as $extension) {
             list ($button, $js) = $myts->getDhtmlEditorSupport($extension, $textarea_id);
-            if (!empty($button)) {
+            if (! empty($button)) {
                 $code .= $button;
             }
-            if (!empty($js)) {
+            if (! empty($js)) {
                 $this->js .= $js;
             }
         }
-        $code .= '<img src="' . $xoops->url('images/form/code.gif') .'" alt="' . \XoopsLocale::SOURCE_CODE . '" title="'
+        $code .= '<img src="' . $xoops->url('images/form/code.gif') . '" alt="' . \XoopsLocale::SOURCE_CODE . '" title="'
             . \XoopsLocale::SOURCE_CODE . '" onclick="xoopsCodeCode(\'' . $textarea_id . '\', \''
             . $myts->escapeForJavascript(\XoopsLocale::ENTER_CODE) . '\');" onmouseover="style.cursor=\'hand\'" />&nbsp;';
 
-        $code .= '<img src="' . $xoops->url('images/form/quote.gif') .'" alt="' . \XoopsLocale::QUOTE . '" title="'
+        $code .= '<img src="' . $xoops->url('images/form/quote.gif') . '" alt="' . \XoopsLocale::QUOTE . '" title="'
             . \XoopsLocale::QUOTE . '" onclick="xoopsCodeQuote(\'' . $textarea_id . '\', \''
             . $myts->escapeForJavascript(\XoopsLocale::ENTER_QUOTE) . '\');" onmouseover="style.cursor=\'hand\'" />&nbsp;';
 
@@ -278,7 +279,7 @@ class DhtmlTextArea extends \XoopsEditor
         $textarea_id = $this->getName();
         $hiddentext = $this->hiddenText;
 
-        $fontStr = "<script type=\"text/javascript\" language=\"JavaScript\">";
+        $fontStr = '<script type="text/javascript" language="JavaScript">';
         $fontStr .= "var _editor_dialog = ''" . "+ '<select class=\"span2\" id=\'{$textarea_id}Size\' onchange=\'xoopsSetElementAttribute(\"size\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'";
         $fontStr .= "+ '<option value=\'SIZE\'>" . \XoopsLocale::SIZE . "</option>'";
         $localeFontSizes = \XoopsLocale::getFontSizes();
@@ -289,8 +290,8 @@ class DhtmlTextArea extends \XoopsEditor
         $fontStr .= "+ '<select class=\"span2\" id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'";
         $fontStr .= "+ '<option value=\'FONT\'>" . \XoopsLocale::FONT . "</option>'";
         $localeFonts = \XoopsLocale::getFonts();
-        $fontarray = !empty($localeFonts) ? $localeFonts :
-            array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Verdana", "Haettenschweiler");
+        $fontarray = ! empty($localeFonts) ? $localeFonts :
+            ['Arial', 'Courier', 'Georgia', 'Helvetica', 'Impact', 'Verdana', 'Haettenschweiler'];
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
         }
@@ -308,7 +309,7 @@ class DhtmlTextArea extends \XoopsEditor
             }
             _editor_dialog += '</select>';";
 
-        $fontStr .= "document.write(_editor_dialog); </script>";
+        $fontStr .= 'document.write(_editor_dialog); </script>';
 
         $styleStr = "<img src='" . \XoopsBaseConfig::get('url') . "/images/bold.gif' alt='" . \XoopsLocale::BOLD . "' title='" . \XoopsLocale::BOLD . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
         $styleStr .= "<img src='" . \XoopsBaseConfig::get('url') . "/images/italic.gif' alt='" . \XoopsLocale::ITALIC . "' title='" . \XoopsLocale::ITALIC . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
@@ -330,7 +331,7 @@ class DhtmlTextArea extends \XoopsEditor
     public function renderValidationJS()
     {
         if ($this->htmlEditor && is_object($this->htmlEditor) && method_exists($this->htmlEditor, 'renderValidationJS')) {
-            if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
+            if (! isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
                 return $this->htmlEditor->renderValidationJS();
             }
         }

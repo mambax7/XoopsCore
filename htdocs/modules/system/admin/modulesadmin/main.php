@@ -24,7 +24,7 @@ $xoops = Xoops::getInstance();
 $system = System::getInstance();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -38,8 +38,8 @@ if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->m
 $op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
 $module = $system->cleanVars($_REQUEST, 'module', '', 'string');
 
-if (in_array($op, array('install', 'update', 'uninstall'))) {
-    if (!$xoops->security()->check()) {
+if (in_array($op, ['install', 'update', 'uninstall'], true)) {
+    if (! $xoops->security()->check()) {
         $op = 'list';
     }
 }
@@ -94,7 +94,7 @@ switch ($op) {
 
         $mid = $system->cleanVars($_POST, 'id', 0, 'int');
         $value = $system->cleanVars($_POST, 'value', '', 'string');
-        if ($mid != 0) {
+        if ($mid !== 0) {
             $module_handler = $xoops->getHandlerModule();
             $module = $module_handler->getById($mid);
             $module->setVar('name', $value);
@@ -114,9 +114,9 @@ switch ($op) {
                 if ($order > 0) {
                     $module = $module_handler->getById($order);
                     //Change order only for visible modules
-                    if ($module->getVar('weight') != 0) {
+                    if ($module->getVar('weight') !== 0) {
                         $module->setVar('weight', $i);
-                        if (!$module_handler->insertModule($module)) {
+                        if (! $module_handler->insertModule($module)) {
                             $error = true;
                         }
                         ++$i;
@@ -138,14 +138,14 @@ switch ($op) {
             $module = $module_handler->getById($module_id);
             $old = $module->getVar('isactive');
             // Set value
-            $module->setVar('isactive', !$old);
-            if (!$module_handler->insertModule($module)) {
+            $module->setVar('isactive', ! $old);
+            if (! $module_handler->insertModule($module)) {
                 $error = true;
             }
             $blocks = $block_handler->getByModule($module_id);
             /* @var $block XoopsBlock */
             foreach ($blocks as $block) {
-                $block->setVar('isactive', !$old);
+                $block->setVar('isactive', ! $old);
                 $block_handler->insertBlock($block);
             }
             //Set active modules in cache folder
@@ -165,11 +165,11 @@ switch ($op) {
             $module = $module_handler->getById($module_id);
             $old = $module->getVar('weight');
             // Set value
-            $module->setVar('weight', !$old);
-            if (!$module_handler->insertModule($module)) {
+            $module->setVar('weight', ! $old);
+            if (! $module_handler->insertModule($module)) {
                 $error = true;
             } else {
-                echo !$old;
+                echo ! $old;
             }
         }
         break;
@@ -190,7 +190,7 @@ switch ($op) {
         $admin_page->addBreadcrumbLink(XoopsLocale::A_INSTALL);
         $admin_page->renderBreadcrumb();
 
-        $ret = array();
+        $ret = [];
         $system_module = new SystemModule();
         $ret = $system_module->install($module);
         if ($ret) {
@@ -204,7 +204,7 @@ switch ($op) {
             print_r($system_module->error);
             //print_r($system_module->trace);
         }
-        $folder = array(1, 2, 3);
+        $folder = [1, 2, 3];
         $system->cleanCache($folder);
         //Set active modules in cache folder
         $xoops->setActiveModules();
@@ -230,7 +230,7 @@ switch ($op) {
         $admin_page->addBreadcrumbLink(XoopsLocale::A_UNINSTALL);
         $admin_page->renderBreadcrumb();
 
-        $ret = array();
+        $ret = [];
         $system_module = new SystemModule();
         $ret = $system_module->uninstall($module->getVar('dirname'));
         $xoops->tpl()->assign('module', $ret);
@@ -240,7 +240,7 @@ switch ($op) {
             $xoops->tpl()->assign('title', XoopsLocale::A_UNINSTALL);
             $xoops->tpl()->assign('log', $system_module->trace);
         }
-        $folder = array(1, 2, 3);
+        $folder = [1, 2, 3];
         $system->cleanCache($folder);
         //Set active modules in cache folder
         $xoops->setActiveModules();
@@ -267,7 +267,7 @@ switch ($op) {
         $admin_page->addBreadcrumbLink(XoopsLocale::A_UPDATE);
         $admin_page->renderBreadcrumb();
 
-        $ret = array();
+        $ret = [];
         $system_module = new SystemModule();
         $ret = $system_module->update($module->getVar('dirname'));
         $xoops->tpl()->assign('module', $ret);
@@ -278,7 +278,7 @@ switch ($op) {
             $xoops->tpl()->assign('title', XoopsLocale::A_UPDATE);
             $xoops->tpl()->assign('log', $system_module->trace);
         }
-        $folder = array(1, 2, 3);
+        $folder = [1, 2, 3];
         $system->cleanCache($folder);
         //Set active modules in cache folder
         $xoops->setActiveModules();

@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class ButtonTest extends \PHPUnit\Framework\TestCase
 {
@@ -30,12 +31,12 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(false !== strpos($value, '<input'));
-        $this->assertTrue(false !== strpos($value, 'type="button"'));
-        $this->assertTrue(false !== strpos($value, 'name="button_name"'));
-        $this->assertTrue(false !== strpos($value, 'id="button_name"'));
-        $this->assertTrue(false !== strpos($value, 'title="button_caption"'));
-        $this->assertTrue(false !== strpos($value, 'value="button_value"'));
+        $this->assertTrue(strpos($value, '<input') !== false);
+        $this->assertTrue(strpos($value, 'type="button"') !== false);
+        $this->assertTrue(strpos($value, 'name="button_name"') !== false);
+        $this->assertTrue(strpos($value, 'id="button_name"') !== false);
+        $this->assertTrue(strpos($value, 'title="button_caption"') !== false);
+        $this->assertTrue(strpos($value, 'value="button_value"') !== false);
     }
 
     public function test__construct()
@@ -43,11 +44,11 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $oldWay = new Button('mycaption', 'myname', 'myvalue', 'button');
         $newWay = new Button(
             ['caption' => 'mycaption',
-            'type' => 'button',
-            'name' => 'myname',
-            'value' => 'myvalue',]
+                'type' => 'button',
+                'name' => 'myname',
+                'value' => 'myvalue', ]
         );
-        $this->assertEquals($oldWay->render(), $newWay->render());
+        $this->assertSame($oldWay->render(), $newWay->render());
         $this->assertNotFalse($oldWay->hasClassLike('btn'));
     }
 }

@@ -1,25 +1,25 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
-class RecaptchaTest extends \PHPUnit\Framework\TestCase
+class recaptchaTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCaptchaRecaptcha';
-    
+
     public function test___construct()
     {
         $instance = new $this->myclass();
         $this->assertInstanceOf($this->myclass, $instance);
         $this->assertInstanceOf('XoopsCaptchaMethod', $instance);
     }
-    
+
     public function test_isActive()
     {
         $instance = new $this->myclass();
-        
+
         $value = $instance->isActive();
         $this->assertTrue($value);
     }
-    
+
     public function test_render()
     {
         $instance = new $this->myclass();
@@ -28,7 +28,7 @@ class RecaptchaTest extends \PHPUnit\Framework\TestCase
         $value = $instance->render();
         $this->assertTrue(is_string($value));
     }
-    
+
     public function test_verify()
     {
         $instance = new $this->myclass();
@@ -37,10 +37,10 @@ class RecaptchaTest extends \PHPUnit\Framework\TestCase
         $value = $instance->verify('session');
         $this->assertFalse($value);
     }
-    
+
     public function test_verify100()
     {
-        if (false == ($fs = @fsockopen('www.google.com', 80, $errno, $errstr, 10))) {
+        if (($fs = @fsockopen('www.google.com', 80, $errno, $errstr, 10)) === false) {
             $this->markTestSkipped('');
         }
         $instance = new $this->myclass();

@@ -35,11 +35,11 @@ class ProfileMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements M
      */
     public function subMenus()
     {
-        $ret = array();
+        $ret = [];
         if (\Xoops::getInstance()->isUser()) {
-            $ret[] = array('name' => _PROFILE_MI_EDITACCOUNT, 'url' => "edituser.php");
-            $ret[] = array('name' => _PROFILE_MI_PAGE_SEARCH, 'url' => "search.php");
-            $ret[] = array('name' => _PROFILE_MI_CHANGEPASS,  'url' => "changepass.php");
+            $ret[] = ['name' => _PROFILE_MI_EDITACCOUNT, 'url' => 'edituser.php'];
+            $ret[] = ['name' => _PROFILE_MI_PAGE_SEARCH, 'url' => 'search.php'];
+            $ret[] = ['name' => _PROFILE_MI_CHANGEPASS,  'url' => 'changepass.php'];
         }
         return $ret;
     }

@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Module\Plugin\PluginAbstract;
 use Xmf\Metagen;
+use Xoops\Module\Plugin\PluginAbstract;
 
 /**
  * page module
@@ -38,11 +38,10 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
      *           'time' => time modified (unix timestamp)
      *           'uid' => author uid
      *           'image' => icon for search display
-     *
      */
     public function search($queryArray, $andor, $limit, $offset, $userid)
     {
-        $andor = strtolower($andor)==='and' ? 'and' : 'or';
+        $andor = strtolower($andor) === 'and' ? 'and' : 'or';
 
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
@@ -52,8 +51,8 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
             ->orderBy('content_create', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit);
-        if (is_array($queryArray) && !empty($queryArray)) {
-            $queryParts = array();
+        if (is_array($queryArray) && ! empty($queryArray)) {
+            $queryParts = [];
             foreach ($queryArray as $i => $q) {
                 $qterm = ':qterm' . $i;
                 $qb->setParameter($qterm, '%' . $q . '%', \PDO::PARAM_STR);
@@ -64,9 +63,9 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
                 );
             }
             if ($andor === 'and') {
-                $qb->andWhere(call_user_func_array(array($eb, "andX"), $queryParts));
+                $qb->andWhere(call_user_func_array([$eb, 'andX'], $queryParts));
             } else {
-                $qb->andWhere(call_user_func_array(array($eb, "orX"), $queryParts));
+                $qb->andWhere(call_user_func_array([$eb, 'orX'], $queryParts));
             }
         } else {
             $qb->setParameter(':uid', (int) $userid, \PDO::PARAM_INT);
@@ -74,19 +73,19 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
         }
 
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-        $items = array();
+        $items = [];
         $result = $qb->execute();
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
-            $content = $myrow["content_shorttext"] . "<br /><br />" . $myrow["content_text"];
+            $content = $myrow['content_shorttext'] . '<br /><br />' . $myrow['content_text'];
             $content = $myts->displayTarea($content);
-            $items[] = array(
+            $items[] = [
                 'title' => $myrow['content_title'],
                 'content' => Metagen::getSearchSummary($content, $queryArray),
-                'link' => "viewpage.php?id=" . $myrow["content_id"],
+                'link' => 'viewpage.php?id=' . $myrow['content_id'],
                 'time' => $myrow['content_create'],
                 'uid' => $myrow['content_author'],
                 'image' => 'images/logo_small.png',
-            );
+            ];
         }
         return $items;
     }

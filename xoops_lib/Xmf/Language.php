@@ -50,15 +50,15 @@ class Language
     public static function load($name, $domain = '', $language = null)
     {
         if (empty($language)) {
-            if (!empty($GLOBALS['xoopsConfig']['language'])) {
+            if (! empty($GLOBALS['xoopsConfig']['language'])) {
                 $language = $GLOBALS['xoopsConfig']['language'];
             } else {
                 $language = 'english';
             }
         }
-        $path = \XoopsBaseConfig::get('root-path') . '/' . ((empty($domain) || 'global' === $domain) ? ''
+        $path = \XoopsBaseConfig::get('root-path') . '/' . ((empty($domain) || $domain === 'global') ? ''
             : "modules/{$domain}/") . 'language';
-        if (!$ret = static::loadFile("{$path}/{$language}/{$name}.php")) {
+        if (! $ret = static::loadFile("{$path}/{$language}/{$name}.php")) {
             $ret = static::loadFile("{$path}/english/{$name}.php");
         }
 

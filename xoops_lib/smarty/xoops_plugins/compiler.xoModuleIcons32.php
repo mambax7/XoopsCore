@@ -21,7 +21,7 @@ function smarty_compiler_xoModuleIcons32($argStr, &$smarty)
 {
     $xoops = Xoops::getInstance();
     $icons = $xoops->getModuleConfig('typeicons', 'system');
-    if ($icons == '') {
+    if ($icons === '') {
         $icons = 'default';
     }
 

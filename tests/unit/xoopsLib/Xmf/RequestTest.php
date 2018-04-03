@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test;
 
 use Xmf\Request;
@@ -16,7 +17,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new Request;
+        $this->object = new Request();
     }
 
     /**
@@ -31,7 +32,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $method = Request::getMethod();
-        $this->assertTrue(in_array($method, array('GET', 'HEAD', 'POST', 'PUT')));
+        $this->assertTrue(in_array($method, ['GET', 'HEAD', 'POST', 'PUT'], true));
     }
 
     public function testGetVar()
@@ -40,8 +41,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $value = 'testing';
         $_REQUEST[$varname] = $value;
 
-        $this->assertEquals($value, Request::getVar($varname));
-        $this->assertNull(Request::getVar($varname.'no-such-key'));
+        $this->assertSame($value, Request::getVar($varname));
+        $this->assertNull(Request::getVar($varname . 'no-such-key'));
     }
 
     public function testGetInt()
@@ -49,19 +50,18 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = '9';
-        $this->assertEquals(9, Request::getInt($varname));
+        $this->assertSame(9, Request::getInt($varname));
 
         $_REQUEST[$varname] = '123fred5';
-        $this->assertEquals(123, Request::getInt($varname));
+        $this->assertSame(123, Request::getInt($varname));
 
         $_REQUEST[$varname] = '-123.45';
-        $this->assertEquals(-123, Request::getInt($varname));
+        $this->assertSame(-123, Request::getInt($varname));
 
         $_REQUEST[$varname] = 'notanumber';
-        $this->assertEquals(0, Request::getInt($varname));
+        $this->assertSame(0, Request::getInt($varname));
 
-        $this->assertEquals(0, Request::getInt($varname.'no-such-key'));
-
+        $this->assertSame(0, Request::getInt($varname . 'no-such-key'));
 
     }
 
@@ -70,16 +70,16 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = '1.23';
-        $this->assertEquals(1.23, Request::getFloat($varname));
+        $this->assertSame(1.23, Request::getFloat($varname));
 
         $_REQUEST[$varname] = '-1.23';
-        $this->assertEquals(-1.23, Request::getFloat($varname));
+        $this->assertSame(-1.23, Request::getFloat($varname));
 
         $_REQUEST[$varname] = '5.68 blah blah';
-        $this->assertEquals(5.68, Request::getFloat($varname));
+        $this->assertSame(5.68, Request::getFloat($varname));
 
         $_REQUEST[$varname] = '1';
-        $this->assertTrue(1.0 === Request::getFloat($varname));
+        $this->assertTrue(Request::getFloat($varname) === 1.0);
     }
 
     public function testGetBool()
@@ -101,7 +101,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = false;
         $this->assertFalse(Request::getBool($varname));
 
-        $this->assertFalse(Request::getBool($varname.'no-such-key'));
+        $this->assertFalse(Request::getBool($varname . 'no-such-key'));
     }
 
     public function testGetWord()
@@ -109,13 +109,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = 'Lorem';
-        $this->assertEquals('Lorem', Request::getWord($varname));
+        $this->assertSame('Lorem', Request::getWord($varname));
 
         $_REQUEST[$varname] = 'Lorem ipsum 88 59';
-        $this->assertEquals('Loremipsum', Request::getWord($varname));
+        $this->assertSame('Loremipsum', Request::getWord($varname));
 
         $_REQUEST[$varname] = '.99 Lorem_ipsum @%&';
-        $this->assertEquals('Lorem_ipsum', Request::getWord($varname));
+        $this->assertSame('Lorem_ipsum', Request::getWord($varname));
 
         //echo Request::getWord($varname);
     }
@@ -125,13 +125,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = 'Lorem';
-        $this->assertEquals('lorem', Request::getCmd($varname));
+        $this->assertSame('lorem', Request::getCmd($varname));
 
         $_REQUEST[$varname] = 'Lorem ipsum 88 59';
-        $this->assertEquals('loremipsum8859', Request::getCmd($varname));
+        $this->assertSame('loremipsum8859', Request::getCmd($varname));
 
         $_REQUEST[$varname] = '.99 Lorem_ipsum @%&';
-        $this->assertEquals('.99lorem_ipsum', Request::getCmd($varname), Request::getCmd($varname));
+        $this->assertSame('.99lorem_ipsum', Request::getCmd($varname), Request::getCmd($varname));
     }
 
     public function testGetString()
@@ -139,7 +139,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = 'Lorem ipsum </i><script>alert();</script>';
-        $this->assertEquals('Lorem ipsum alert();', Request::getString($varname));
+        $this->assertSame('Lorem ipsum alert();', Request::getString($varname));
     }
 
     public function testGetString2()
@@ -149,7 +149,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $safeTest = '<p>This is a <em>simple</em> test.</p>';
         $_POST[$varname] = $safeTest;
 
-        $this->assertEquals('This is a simple test.', Request::getString($varname, '', 'POST'));
+        $this->assertSame('This is a simple test.', Request::getString($varname, '', 'POST'));
     }
 
     public function testGetStringAllowHtml()
@@ -159,7 +159,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $safeTest = '<p>This is a <em>simple</em> test.</p>';
         $_POST[$varname] = $safeTest;
 
-        $this->assertEquals($safeTest, Request::getString($varname, '', 'POST', Request::MASK_ALLOW_HTML));
+        $this->assertSame($safeTest, Request::getString($varname, '', 'POST', Request::MASK_ALLOW_HTML));
     }
 
     public function testGetStringAllowHtmlXss()
@@ -169,26 +169,26 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $xssTest = '<p>This is a <em>xss</em> <script>alert();</script> test.</p>';
         $_POST[$varname] = $xssTest;
         $xssTestExpect = '<p>This is a <em>xss</em> alert(); test.</p>';
-        $this->assertEquals($xssTestExpect, Request::getString($varname, '', 'POST', Request::MASK_ALLOW_HTML));
+        $this->assertSame($xssTestExpect, Request::getString($varname, '', 'POST', Request::MASK_ALLOW_HTML));
     }
 
     public function testGetArray()
     {
         $varname = 'RequestTest';
 
-        $testArray = array('one', 'two', 'three');
+        $testArray = ['one', 'two', 'three'];
         $_REQUEST[$varname] = $testArray;
 
         $get = Request::getArray($varname, null, 'request');
         $this->assertTrue(is_array($get));
-        $this->assertEquals($get, $testArray);
+        $this->assertSame($get, $testArray);
 
-        $testArray2 = array('one', 'two', '<script>three</script>');
+        $testArray2 = ['one', 'two', '<script>three</script>'];
         $_REQUEST[$varname] = $testArray2;
 
         $get = Request::getArray($varname, null, 'request');
         $this->assertTrue(is_array($get));
-        $this->assertEquals($get, $testArray);
+        $this->assertSame($get, $testArray);
     }
 
     public function testGetText()
@@ -196,7 +196,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $varname = 'RequestTest';
 
         $_REQUEST[$varname] = 'Lorem ipsum </i><script>alert();</script>';
-        $this->assertEquals($_REQUEST[$varname], Request::getText($varname));
+        $this->assertSame($_REQUEST[$varname], Request::getText($varname));
     }
 
     public function testHasVar()
@@ -211,7 +211,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     {
         $varname = 'RequestTest';
         Request::setVar($varname, 'Porshca', 'get');
-        $this->assertEquals($_REQUEST[$varname], 'Porshca');
+        $this->assertSame($_REQUEST[$varname], 'Porshca');
     }
 
     public function testGet()
@@ -222,18 +222,18 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
         $get = Request::get('request');
         $this->assertTrue(is_array($get));
-        $this->assertEquals('Lorem', $get[$varname]);
+        $this->assertSame('Lorem', $get[$varname]);
 
         unset($get);
         $_REQUEST[$varname] = '<i>Lorem ipsum </i><script>alert();</script>';
         $get = Request::get('request');
-        $this->assertEquals('Lorem ipsum alert();', $get[$varname]);
+        $this->assertSame('Lorem ipsum alert();', $get[$varname]);
     }
 
     public function testSet()
     {
         $varname = 'RequestTest';
-        Request::set(array($varname => 'Pourquoi'), 'get');
-        $this->assertEquals($_REQUEST[$varname], 'Pourquoi');
+        Request::set([$varname => 'Pourquoi'], 'get');
+        $this->assertSame($_REQUEST[$varname], 'Pourquoi');
     }
 }

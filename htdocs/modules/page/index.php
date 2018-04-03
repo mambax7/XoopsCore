@@ -35,11 +35,11 @@ $content_arr = $content_Handler->getPagePublished($start, $nb_limit);
 
 // Assign Template variables
 $xoops->tpl()->assign('content_count', $content_count);
-$keywords = array();
+$keywords = [];
 
 if ($content_count > 0) {
     //Cleaning the content of $content, they are assign by blocks and mess the output
-    $xoops->tpl()->assign('content', array());
+    $xoops->tpl()->assign('content', []);
     foreach (array_keys($content_arr) as $i) {
         $content_id = $content_arr[$i]->getVar('content_id');
         $content['id'] = $content_id;

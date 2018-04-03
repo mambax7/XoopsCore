@@ -87,7 +87,6 @@ class UserconfigsOption extends XoopsObject
     {
         return $this->getVar('conf_id', $format);
     }
-
 }
 
 class UserconfigsOptionHandler extends XoopsPersistableObjectHandler

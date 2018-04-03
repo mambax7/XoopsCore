@@ -35,11 +35,11 @@ class Factory
      *
      * @return AuthAbstract|bool Reference to the only instance of authentication class
      */
-    public static function getAuthConnection($uname, $_force=false)
+    public static function getAuthConnection($uname, $_force = false)
     {
         $xoops = \Xoops::getInstance();
         static $auth_instance;
-        if (!isset($auth_instance) || (bool)$_force) {
+        if (! isset($auth_instance) || (bool) $_force) {
             /* @var $config_handler XoopsConfigHandler */
             $authConfig = $xoops->getConfigs();
             if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
@@ -48,12 +48,12 @@ class Factory
                 $xoops_auth_method = $authConfig['auth_method'];
             }
             // Verify if uname allow to bypass LDAP auth
-            if (isset($authConfig['ldap_users_bypass']) && in_array($uname, $authConfig['ldap_users_bypass'])) {
+            if (isset($authConfig['ldap_users_bypass']) && in_array($uname, $authConfig['ldap_users_bypass'], true)) {
                 $xoops_auth_method = 'xoops';
             }
 
             $class = '\Xoops\Auth\\' . ucfirst($xoops_auth_method);
-            if (!class_exists($class)) {
+            if (! class_exists($class)) {
                 trigger_error(\XoopsLocale::EF_CLASS_NOT_FOUND, E_USER_ERROR);
                 return false;
             }

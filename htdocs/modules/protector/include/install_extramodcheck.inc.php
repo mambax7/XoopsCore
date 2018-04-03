@@ -20,12 +20,9 @@
  */
 
 /**
- * @param $xoops_root_path
- * @param $mytrustdirname
- *
  * @return string[]
  */
 function get_writeoks_from_protector($xoops_root_path, $mytrustdirname)
 {
-    return array(dirname(__DIR__) . '/configs');
+    return [dirname(__DIR__) . '/configs'];
 }

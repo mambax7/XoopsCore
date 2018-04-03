@@ -23,33 +23,31 @@ namespace Xoops\Core\Cache;
 class Legacy
 {
     /**
-     * issue deprecated warning
+     * catch all deprecated message
      *
-     * @param string $message message to show, or empty to use default
-     * @return void
+     * @param string $name ignored
+     * @param array  $args ignored
+     *
+     * @return false
      */
-    private static function deprecated($message = 'Obsolete cache call.')
+    public function __call($name, $args)
     {
-        //\Xoops::getInstance()->deprecated($message);
-        $stack = debug_backtrace();
-        $frameSelf = $stack[1];
-        $frame = isset($stack[2]) ? $stack[2] : false;
-        $append = ' ' . get_called_class() . '::' . $frameSelf['function'] . '() called from ';
-        if ($frame !== false) {
-            $append .= $frame['function'] . '() in ';
-        }
-        $append .= $frameSelf['file'] . ' line '. $frameSelf['line'];
-        \Xoops::getInstance()->deprecated($message . $append);
+        self::deprecated(sprintf('XoopsCache->%s() is no longer used', $name));
+        return false;
     }
 
     /**
-     * get default cache
+     * catch all deprecated message for static methods
      *
-     * @return Access cache access object
+     * @param string $name ignored
+     * @param array  $args ignored
+     *
+     * @return false
      */
-    private static function getCache()
+    public static function __callStatic($name, $args)
     {
-        return \Xoops::getInstance()->cache();
+        self::deprecated(sprintf('XoopsCache::%s() is no longer used', $name));
+        return false;
     }
 
     /**
@@ -76,7 +74,7 @@ class Legacy
     public static function write($key, $value, $duration = 0)
     {
         self::deprecated();
-        $ttl = (int)($duration);
+        $ttl = (int) ($duration);
         $ttl = $ttl > 0 ? $ttl : null;
         $cache = self::getCache();
         return $cache->write($key, $value, $ttl);
@@ -125,30 +123,31 @@ class Legacy
     }
 
     /**
-     * catch all deprecated message
+     * issue deprecated warning
      *
-     * @param string $name ignored
-     * @param array  $args ignored
-     *
-     * @return false
+     * @param string $message message to show, or empty to use default
      */
-    public function __call($name, $args)
+    private static function deprecated($message = 'Obsolete cache call.')
     {
-        self::deprecated(sprintf('XoopsCache->%s() is no longer used', $name));
-        return false;
+        //\Xoops::getInstance()->deprecated($message);
+        $stack = debug_backtrace();
+        $frameSelf = $stack[1];
+        $frame = isset($stack[2]) ? $stack[2] : false;
+        $append = ' ' . get_called_class() . '::' . $frameSelf['function'] . '() called from ';
+        if ($frame !== false) {
+            $append .= $frame['function'] . '() in ';
+        }
+        $append .= $frameSelf['file'] . ' line ' . $frameSelf['line'];
+        \Xoops::getInstance()->deprecated($message . $append);
     }
 
     /**
-     * catch all deprecated message for static methods
+     * get default cache
      *
-     * @param string $name ignored
-     * @param array  $args ignored
-     *
-     * @return false
+     * @return Access cache access object
      */
-    public static function __callStatic($name, $args)
+    private static function getCache()
     {
-        self::deprecated(sprintf('XoopsCache::%s() is no longer used', $name));
-        return false;
+        return \Xoops::getInstance()->cache();
     }
 }

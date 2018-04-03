@@ -51,7 +51,7 @@ class Captcha extends Element
      * @param boolean      $skipmember Skip CAPTCHA check for members
      * @param array        $configs    key/value pairs
      */
-    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = true, $configs = array())
+    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = true, $configs = [])
     {
         $this->captchaHandler = \XoopsCaptcha::getInstance();
 

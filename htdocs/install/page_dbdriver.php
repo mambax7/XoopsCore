@@ -37,7 +37,7 @@ if (array_key_exists('DB_PARAMETERS', $settings)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = array('DB_DRIVER', 'DB_PREFIX');
+    $params = ['DB_DRIVER', 'DB_PREFIX'];
     foreach ($params as $name) {
         $settings[$name] = $_POST[$name];
     }
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($settings['DB_DRIVER'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($settings['DB_DRIVER'])) {
     $_SESSION['settings'] = $settings;
     $wizard->redirectToPage('+1');
     exit();
@@ -55,16 +55,16 @@ if (@empty($settings['DB_DRIVER'])) {
     // Fill with default values
     $settings = array_merge(
         $settings,
-        array(
+        [
             'DB_DRIVER' => 'pdo_mysql',
             'DB_PREFIX' => 'x' . substr(md5(time()), 0, 3),
-        )
+        ]
     );
 }
 ob_start();
 ?>
 <?php
-if (!empty($error)) {
+if (! empty($error)) {
     echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
 }
 ?>
@@ -76,7 +76,7 @@ if (!empty($error)) {
         <select size="1" name="DB_DRIVER">
             <?php
             foreach ($wizard->configs['db_types'] as $db_driver => $db_info) {
-                $selected = ($settings['DB_DRIVER'] == $db_driver) ? 'selected' : '';
+                $selected = ($settings['DB_DRIVER'] === $db_driver) ? 'selected' : '';
                 echo "<option value=\"{$db_driver}\" {$selected}>{$db_info['desc']}</option>";
             }
             ?>

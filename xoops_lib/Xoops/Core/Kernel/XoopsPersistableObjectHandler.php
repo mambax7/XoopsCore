@@ -27,30 +27,6 @@ use Xoops\Core\Database\Connection;
 abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
 {
     /**
-     * holds reference to custom extended object handler
-     *
-     * var object
-     *
-     * @access private
-     */
-    /**
-     * static protected
-     */
-    protected $handler;
-
-    /**
-     * holds reference to predefined extended object handlers: read, stats, joint, write, sync
-     *
-     * The handlers hold methods for different purposes, which could be all put together inside of current class.
-     * However, load codes only if they are necessary, thus they are now split out.
-     *
-     * var array of objects
-     *
-     * @access private
-     */
-    private $handlers = array('read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null);
-
-    /**
      * Information about the class, the handler is managing
      *
      * @var string
@@ -89,6 +65,31 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
     public $field_object;
 
     /**
+     * holds reference to custom extended object handler
+     *
+     * var object
+     *
+     * @access private
+     */
+
+    /**
+     * static protected
+     */
+    protected $handler;
+
+    /**
+     * holds reference to predefined extended object handlers: read, stats, joint, write, sync
+     *
+     * The handlers hold methods for different purposes, which could be all put together inside of current class.
+     * However, load codes only if they are necessary, thus they are now split out.
+     *
+     * var array of objects
+     *
+     * @access private
+     */
+    private $handlers = ['read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null];
+
+    /**
      * Constructor
      *
      * @param null|Connection $db             database connection
@@ -112,6 +113,29 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($identifierName) {
             $this->identifierName = $identifierName;
         }
+    }
+
+    /**
+     * Magic method for overloading of delegation
+     *
+     * @param string $name method name
+     * @param array  $args arguments
+     *
+     * @return mixed
+     */
+    public function __call($name, $args)
+    {
+        if (is_object($this->handler) && is_callable([$this->handler, $name])) {
+            return call_user_func_array([$this->handler, $name], $args);
+        }
+        foreach (array_keys($this->handlers) as $_handler) {
+            $handler = $this->loadHandler($_handler);
+            if (is_callable([$handler, $name])) {
+                return call_user_func_array([$handler, $name], $args);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -147,7 +171,7 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
     public function loadHandler($name, $args = null)
     {
         static $handlers;
-        if (!isset($handlers[$name])) {
+        if (! isset($handlers[$name])) {
             $xmf = XoopsModelFactory::getInstance();
             $handlers[$name] = $xmf->loadHandler($this, $name, $args);
         }
@@ -169,29 +193,6 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
          *
          * return self::$handlers[$name];
          */
-    }
-
-    /**
-     * Magic method for overloading of delegation
-     *
-     * @param string $name method name
-     * @param array  $args arguments
-     *
-     * @return mixed
-     */
-    public function __call($name, $args)
-    {
-        if (is_object($this->handler) && is_callable(array($this->handler, $name))) {
-            return call_user_func_array(array($this->handler, $name), $args);
-        }
-        foreach (array_keys($this->handlers) as $_handler) {
-            $handler = $this->loadHandler($_handler);
-            if (is_callable(array($handler, $name))) {
-                return call_user_func_array(array($handler, $name), $args);
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -237,13 +238,13 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
         if (is_array($fields) && count($fields) > 0) {
-            if (!in_array($this->keyName, $fields)) {
+            if (! in_array($this->keyName, $fields, true)) {
                 $fields[] = $this->keyName;
             }
-            $first=true;
+            $first = true;
             foreach ($fields as $field) {
                 if ($first) {
-                    $first=false;
+                    $first = false;
                     $qb->select($field);
                 } else {
                     $qb->addSelect($field);
@@ -255,11 +256,11 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
         $qb->from($this->table, null)
             ->where($eb->eq($this->keyName, ':id'))
             ->setParameter(':id', $id, \PDO::PARAM_INT);
-        if (!$result = $qb->execute()) {
+        if (! $result = $qb->execute()) {
             return $object;
         }
         $row = $result->fetch(\PDO::FETCH_ASSOC);
-        if (!$row) {
+        if (! $row) {
             return $object;
         }
         $object = $this->create(false);

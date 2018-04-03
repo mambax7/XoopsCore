@@ -28,11 +28,11 @@ $xoops->header('admin:images/images_admin_images.tpl');
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('images.php');
 
-$mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+$mimetypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 
 switch ($op) {
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('images.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -40,7 +40,7 @@ switch ($op) {
 
         $category = $helper->getHandlerCategories()->get($imgcat_id);
         $image_id = Request::getInt('image_id', 0);
-        if (isset($image_id) && $image_id != 0) {
+        if (isset($image_id) && $image_id !== 0) {
             $obj = $helper->getHandlerImages()->get($image_id);
             $isnew = false;
         } else {
@@ -60,13 +60,13 @@ switch ($op) {
         $image_body = '';
         $error = true;
         $error_message = '';
-        $xoops_upload_file = Request::getArray('xoops_upload_file', array());
+        $xoops_upload_file = Request::getArray('xoops_upload_file', []);
         if ($_FILES[$xoops_upload_file[0]]['error'] === 0) {
             $xoops_upload_path = \XoopsBaseConfig::get('uploads-path') . '/images';
             $uploader = new XoopsMediaUploader($xoops_upload_path, $mimetypes, $category->getVar('imgcat_maxsize'), $category->getVar('imgcat_maxwidth'), $category->getVar('imgcat_maxheight'));
             if ($uploader->fetchMedia($xoops_upload_file[0])) {
                 $uploader->setPrefix('img');
-                if (!$uploader->upload()) {
+                if (! $uploader->upload()) {
                     $error_message .= $uploader->getErrors();
                     $obj->setVar('image_name', 'blank.gif');
                     $obj->setVar('image_mimetype', 'image/gif');
@@ -84,13 +84,13 @@ switch ($op) {
                 }
             }
         }
-        if ($error == true) {
+        if ($error === true) {
             $xoops->tpl()->assign('error_message', $error_message);
         } else {
             if ($image_id = $helper->getHandlerImages()->insert($obj)) {
-                if ($category->getVar('imgcat_storetype') === 'db'  && $isnew) {
+                if ($category->getVar('imgcat_storetype') === 'db' && $isnew) {
                     $imagebody = $helper->getHandlerImagesBody()->get($image_id);
-                    if (!is_object($imagebody)) {
+                    if (! is_object($imagebody)) {
                         $imagebody = $helper->getHandlerImagesBody()->create();
                         $imagebody->setVar('image_id', $image_id);
                     }
@@ -108,7 +108,7 @@ switch ($op) {
         break;
 
     case 'add':
-        $obj =  $helper->getHandlerImages()->create();
+        $obj = $helper->getHandlerImages()->create();
         $obj->setVar('imgcat_id', $imgcat_id);
         $form = $helper->getForm($obj, 'image');
         $xoops->tpl()->assign('form', $form->render());
@@ -117,7 +117,7 @@ switch ($op) {
     case 'edit':
         $image_id = Request::getInt('image_id', 0);
         if ($image_id > 0) {
-            $obj =  $helper->getHandlerImages()->get($image_id);
+            $obj = $helper->getHandlerImages()->get($image_id);
             $form = $helper->getForm($obj, 'image');
             $xoops->tpl()->assign('form', $form->render());
         }
@@ -127,10 +127,10 @@ switch ($op) {
         $image_id = Request::getInt('image_id', 0);
         if ($image_id > 0) {
             $ok = Request::getInt('ok', 0);
-            $obj =  $helper->getHandlerImages()->get($image_id);
+            $obj = $helper->getHandlerImages()->get($image_id);
 
-            if ($ok == 1) {
-                if (!$xoops->security()->check()) {
+            if ($ok === 1) {
+                if (! $xoops->security()->check()) {
                     $xoops->redirect('images.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
                 }
                 $category = $helper->getHandlerCategories()->get($obj->getVar('imgcat_id'));
@@ -151,7 +151,7 @@ switch ($op) {
                     $img = \XoopsBaseConfig::get('uploads-url') . '/' . $obj->getVar('image_name');
                 }
                 echo $xoops->confirm(
-                    array('op' => 'del', 'ok' => 1, 'image_id' => $image_id, 'imgcat_id' => $obj->getVar('imgcat_id')),
+                    ['op' => 'del', 'ok' => 1, 'image_id' => $image_id, 'imgcat_id' => $obj->getVar('imgcat_id')],
                     \XoopsBaseConfig::get('url') . '/modules/images/admin/images.php',
                     sprintf(_AM_IMAGES_IMG_DELETE, $obj->getVar('image_nicename'))
                     . '<br /><br /><img src="' . $img . '" /><br />'
@@ -165,8 +165,8 @@ switch ($op) {
         if ($image_id > 0) {
             $obj = $helper->getHandlerImages()->get($image_id);
             $old = $obj->getVar('image_display');
-            $obj->setVar('image_display', !$old);
-            if (!$helper->getHandlerImages()->insert($obj)) {
+            $obj->setVar('image_display', ! $old);
+            if (! $helper->getHandlerImages()->insert($obj)) {
                 $error = true;
             }
         }

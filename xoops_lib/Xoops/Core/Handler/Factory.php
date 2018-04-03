@@ -41,28 +41,13 @@ class Factory
     private $schemes;
 
     /**
-     * Returns the *Singleton* instance of this class.
-     *
-     * @return Factory the singleton instance.
-     */
-    public static function getInstance()
-    {
-        if (null === static::$instance) {
-            static::$instance = new static();
-            static::$db = \Xoops::getInstance()->db();
-        }
-
-        return static::$instance;
-    }
-
-    /**
      * Protected constructor to prevent creating a new instance of the
      * *Singleton* via the `new` operator from outside of this class.
      */
     protected function __construct()
     {
         $this->schemes = [
-            'fqn'    => '\Xoops\Core\Handler\Scheme\FQN',
+            'fqn' => '\Xoops\Core\Handler\Scheme\FQN',
             'kernel' => '\Xoops\Core\Handler\Scheme\Kernel',
             'legacy' => '\Xoops\Core\Handler\Scheme\LegacyModule',
         ];
@@ -71,8 +56,6 @@ class Factory
     /**
      * Private clone method to prevent cloning of the instance of the
      * *Singleton* instance.
-     *
-     * @return void
      */
     private function __clone()
     {
@@ -81,11 +64,24 @@ class Factory
     /**
      * Private unserialize method to prevent unserializing of the *Singleton*
      * instance.
-     *
-     * @return void
      */
     private function __wakeup()
     {
+    }
+
+    /**
+     * Returns the *Singleton* instance of this class.
+     *
+     * @return Factory the singleton instance.
+     */
+    public static function getInstance()
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+            static::$db = \Xoops::getInstance()->db();
+        }
+
+        return static::$instance;
     }
 
     /**
@@ -115,13 +111,13 @@ class Factory
         $foundColon = strpos($name, ':');
         if ($foundColon !== false) {
             $scheme = substr($name, 0, $foundColon);
-            $baseName = substr($name, $foundColon+1);
+            $baseName = substr($name, $foundColon + 1);
             $handler = $this->newSpec()->scheme($scheme)->name($baseName)->optional($optional)->build();
             return $handler;
         }
 
         // have namespace separator, assume fully qualified name
-        $foundNS = (false !== strpos($name, '\\'));
+        $foundNS = (strpos($name, '\\') !== false);
         if ($foundNS) {
             $handler = $this->newSpec()->scheme('fqn')->name($name)->optional($optional)->build();
             return $handler;
@@ -153,27 +149,9 @@ class Factory
      */
     public static function newSpec()
     {
-        $instance = Factory::getInstance();
+        $instance = self::getInstance();
         $spec = FactorySpec::getInstance($instance);
         return $spec;
-    }
-
-    /**
-     * @param FactorySpec $spec specification
-     * @return SchemeInterface
-     */
-    private function getSchemeObject(FactorySpec $spec)
-    {
-        $schemeName = $this->schemes[$spec->getScheme()];
-        $scheme = null;
-        if (class_exists($schemeName)) {
-            $scheme = new $schemeName;
-        }
-
-        if (!($scheme instanceof SchemeInterface)) {
-            throw new InvalidHandlerSpecException(sprintf('Unknown scheme %s', $schemeName));
-        }
-        return $scheme;
     }
 
     /**
@@ -204,5 +182,23 @@ class Factory
     public function db()
     {
         return static::$db;
+    }
+
+    /**
+     * @param FactorySpec $spec specification
+     * @return SchemeInterface
+     */
+    private function getSchemeObject(FactorySpec $spec)
+    {
+        $schemeName = $this->schemes[$spec->getScheme()];
+        $scheme = null;
+        if (class_exists($schemeName)) {
+            $scheme = new $schemeName();
+        }
+
+        if (! ($scheme instanceof SchemeInterface)) {
+            throw new InvalidHandlerSpecException(sprintf('Unknown scheme %s', $schemeName));
+        }
+        return $scheme;
     }
 }

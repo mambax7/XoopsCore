@@ -15,10 +15,10 @@
  * @package     system
  */
 
-class Cookie
+class cookie
 {
     // Reserved session keys
-    private static $_reserved = array('XOLOGGERVIEW', 'xoops_user');
+    private static $_reserved = ['XOLOGGERVIEW', 'xoops_user'];
 
     // Static class cannot be initialized
     private function __construct() {}
@@ -145,7 +145,7 @@ class Cookie
         $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
     ){
         // Make sure they aren't trying to set a reserved word
-        if (!in_array($key, self::$_reserved))
+        if (! in_array($key, self::$_reserved, true))
         {
             // If $key is in array format, change it to string representation
             $key = self::_scrubKey($key, true);
@@ -176,13 +176,13 @@ class Cookie
         }
 
         // Converting from string to array
-        else if (!is_array($key))
+        else if (! is_array($key))
         {
             // is this a string representation of an array?
             if (preg_match('/([\w\d]+)\[([\w\d]+)\]$/i', $key, $matches))
             {
                 // Store as key/value pair
-                $key = array($matches[1] => $matches[2]);
+                $key = [$matches[1] => $matches[2]];
             }
         }
 

@@ -71,13 +71,11 @@ class Rtsp extends ExtensionAbstract
                 domobj.focus();
             }
 EOH;
-        return array($buttonCode, $javascript);
+        return [$buttonCode, $javascript];
     }
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {

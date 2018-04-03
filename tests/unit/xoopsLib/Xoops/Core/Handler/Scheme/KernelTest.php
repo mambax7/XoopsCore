@@ -1,8 +1,8 @@
 <?php
+
 namespace Xoops\Core\Handler\Scheme;
 
 use Xoops\Core\Handler\Factory;
-use Xoops\Core\Handler\Scheme\SchemeInterface;
 
 require_once __DIR__ . '/../../../../../init_new.php';
 
@@ -19,7 +19,7 @@ class KernelTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new Kernel;
+        $this->object = new Kernel();
     }
 
     /**
@@ -49,23 +49,23 @@ class KernelTest extends \PHPUnit\Framework\TestCase
 
     public static function handlerValueProvider()
     {
-        return array(
-            ['block'          , '\Xoops\Core\Kernel\Handlers\XoopsBlockHandler'],
+        return [
+            ['block', '\Xoops\Core\Kernel\Handlers\XoopsBlockHandler'],
             ['blockmodulelink', '\Xoops\Core\Kernel\Handlers\XoopsBlockModuleLinkHandler'],
-            ['config'         , '\Xoops\Core\Kernel\Handlers\XoopsConfigHandler'],
-            ['configitem'     , '\Xoops\Core\Kernel\Handlers\XoopsConfigItemHandler'],
-            ['configoption'   , '\Xoops\Core\Kernel\Handlers\XoopsConfigOptionHandler'],
-            ['group'          , '\Xoops\Core\Kernel\Handlers\XoopsGroupHandler'],
-            ['groupperm'      , '\Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler'],
-            ['member'         , '\Xoops\Core\Kernel\Handlers\XoopsMemberHandler'],
-            ['membership'     , '\Xoops\Core\Kernel\Handlers\XoopsMembershipHandler'],
-            ['module'         , '\Xoops\Core\Kernel\Handlers\XoopsModuleHandler'],
-            ['online'         , '\Xoops\Core\Kernel\Handlers\XoopsOnlineHandler'],
-            ['privmessage'    , '\Xoops\Core\Kernel\Handlers\XoopsPrivateMessageHandler'],
-            ['tplfile'        , '\Xoops\Core\Kernel\Handlers\XoopsTplFileHandler'],
-            ['tplset'         , '\Xoops\Core\Kernel\Handlers\XoopsTplSetHandler'],
-            ['user'           , '\Xoops\Core\Kernel\Handlers\XoopsUserHandler'],
-        );
+            ['config', '\Xoops\Core\Kernel\Handlers\XoopsConfigHandler'],
+            ['configitem', '\Xoops\Core\Kernel\Handlers\XoopsConfigItemHandler'],
+            ['configoption', '\Xoops\Core\Kernel\Handlers\XoopsConfigOptionHandler'],
+            ['group', '\Xoops\Core\Kernel\Handlers\XoopsGroupHandler'],
+            ['groupperm', '\Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler'],
+            ['member', '\Xoops\Core\Kernel\Handlers\XoopsMemberHandler'],
+            ['membership', '\Xoops\Core\Kernel\Handlers\XoopsMembershipHandler'],
+            ['module', '\Xoops\Core\Kernel\Handlers\XoopsModuleHandler'],
+            ['online', '\Xoops\Core\Kernel\Handlers\XoopsOnlineHandler'],
+            ['privmessage', '\Xoops\Core\Kernel\Handlers\XoopsPrivateMessageHandler'],
+            ['tplfile', '\Xoops\Core\Kernel\Handlers\XoopsTplFileHandler'],
+            ['tplset', '\Xoops\Core\Kernel\Handlers\XoopsTplSetHandler'],
+            ['user', '\Xoops\Core\Kernel\Handlers\XoopsUserHandler'],
+        ];
     }
 
     public function testBuild_exception()

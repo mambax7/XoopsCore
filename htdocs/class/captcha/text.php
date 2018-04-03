@@ -36,7 +36,7 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
 			. '" id="' . $this->config['name'] . '" size="' . $this->config['num_chars']
 			. '" maxlength="' . $this->config['num_chars'] . '" value="" />';
         $form .= '<br />' . XoopsLocale::INPUT_RESULT_FROM_EXPRESSION;
-        if (!empty($this->config['maxattempts'])) {
+        if (! empty($this->config['maxattempts'])) {
             $form .= '<br />' . sprintf(XoopsLocale::F_MAXIMUM_ATTEMPTS, $this->config['maxattempts']);
         }
         return $form;

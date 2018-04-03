@@ -38,24 +38,20 @@ class NullTheme extends XoopsTheme
      *
      * @return bool
      */
-    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array())
+    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = [])
     {
         return true;
     }
 
     /**
      * Add StyleSheet or CSS code to the document head
-     *
-     * @return void
      */
-    public function addStylesheet($src = '', $attributes = array(), $content = '')
+    public function addStylesheet($src = '', $attributes = [], $content = '')
     {
     }
 
     /**
      * addScriptAssets - add a list of scripts to the page
-     *
-     * @return void
      */
     public function addScriptAssets($assets, $filters = 'default', $target = null)
     {
@@ -63,8 +59,6 @@ class NullTheme extends XoopsTheme
 
     /**
      * addStylesheetAssets - add a list of stylesheets to the page
-     *
-     * @return void
      */
     public function addStylesheetAssets($assets, $filters = 'default', $target = null)
     {
@@ -73,8 +67,6 @@ class NullTheme extends XoopsTheme
     /**
      * addBaseAssets - add a list of assets to the page, these will all
      * be combined into a single asset file at render time
-     *
-     * @return void
      */
     public function addBaseAssets($type, $assets)
     {
@@ -82,8 +74,6 @@ class NullTheme extends XoopsTheme
 
     /**
      * addBaseScriptAssets - add a list of scripts to the page
-     *
-     * @return void
      */
     public function addBaseScriptAssets($assets)
     {
@@ -91,8 +81,6 @@ class NullTheme extends XoopsTheme
 
     /**
      * addBaseStylesheetAssets - add a list of stylesheets to the page
-     *
-     * @return void
      */
     public function addBaseStylesheetAssets($assets)
     {

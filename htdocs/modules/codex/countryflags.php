@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Xmf\Request;
 use \Punic\Territory;
+use Xmf\Request;
 
 /**
  * @author    Richard Griffith <richard@geekwright.com>
@@ -53,7 +53,7 @@ $attributes = ['class' => 'img-thumbnail', 'title' => Territory::getName($countr
 $img = $xoops->service('countryflag')->getImgTag($country, $attributes)->getValue();
 echo $img . '<br /><br />';
 
-if (!$xoops->service('countryflag')->isAvailable()) {
+if (! $xoops->service('countryflag')->isAvailable()) {
     echo 'Please install a countryflag provider to view this demonstration.';
 }
 

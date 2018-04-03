@@ -24,17 +24,17 @@ include_once __DIR__ . '/header.php';
 
 $xoops = Xoops::getInstance();
 $uid = Request::getInt('uid');
-if (!$uid) {
+if (! $uid) {
     $xoops->redirect('index.php', 2, _CO_PUBLISHER_ERROR);
 }
 
 $member_handler = $xoops->getHandlerMember();
 $thisuser = $member_handler->getUser($uid);
-if (!is_object($thisuser)) {
+if (! is_object($thisuser)) {
     $xoops->redirect('index.php', 2, _CO_PUBLISHER_ERROR);
 }
 
-if (!$publisher->getConfig('perm_author_items')) {
+if (! $publisher->getConfig('perm_author_items')) {
     $xoops->redirect('index.php', 2, _CO_PUBLISHER_ERROR);
 }
 
@@ -48,7 +48,7 @@ XoopsLoad::loadFile($publisher->path('footer.php'));
 $criteria = new CriteriaCompo(new Criteria('datesub', time(), '<='));
 $criteria->add(new Criteria('uid', $uid));
 
-$items = $publisher->getItemHandler()->getItems($limit = 0, $start = 0, array(_PUBLISHER_STATUS_PUBLISHED), -1, 'datesub', 'DESC', '', true, $criteria);
+$items = $publisher->getItemHandler()->getItems($limit = 0, $start = 0, [_PUBLISHER_STATUS_PUBLISHED], -1, 'datesub', 'DESC', '', true, $criteria);
 unset($criteria);
 $count = count($items);
 
@@ -59,28 +59,28 @@ $author_name = XoopsUserUtility::getUnameFromId($uid, $publisher->getConfig('for
 $xoopsTpl->assign('author_name_with_link', $author_name);
 
 $xoopsTpl->assign('user_avatarurl', $xoops->service('avatar')->getAvatarUrl($uid)->getValue());
-$categories = array();
+$categories = [];
 if ($count > 0) {
     /* @var $item PublisherItem */
     foreach ($items as $item) {
         $catid = $item->getVar('categoryid');
-        if (!isset($categories[$catid])) {
-            $categories[$catid] = array(
+        if (! isset($categories[$catid])) {
+            $categories[$catid] = [
                 'count_items' => 0,
                 'count_hits' => 0,
                 'title' => $item->getCategoryName(),
-                'link' => $item->getCategoryLink()
-            );
+                'link' => $item->getCategoryLink(),
+            ];
         }
 
         $categories[$catid]['count_items']++;
         $categories[$catid]['count_hits'] += $item->getVar('counter');
-        $categories[$catid]['items'][] = array(
+        $categories[$catid]['items'][] = [
             'title' => $item->title(),
             'hits' => $item->getVar('counter'),
             'link' => $item->getItemLink(),
             'published' => $item->datesub(),
-            'rating' => $item->getVar('rating'));
+            'rating' => $item->getVar('rating'), ];
     }
 }
 

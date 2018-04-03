@@ -31,7 +31,7 @@ $xoops->events()->triggerEvent('core.userinfo.start');
 $xoops->loadLanguage('user');
 include_once $xoops->path('modules/system/constants.php');
 
-$uid = (int)($_GET['uid']);
+$uid = (int) ($_GET['uid']);
 if ($uid <= 0) {
     $xoops->redirect('index.php', 3, XoopsLocale::E_NO_USER_SELECTED);
 }
@@ -40,7 +40,7 @@ $groups = $xoops->getUserGroups();
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 if ($xoops->isUser()) {
-    if ($uid == $xoops->user->getVar('uid')) {
+    if ($uid === $xoops->user->getVar('uid')) {
         $xoopsConfigUser = $xoops->getConfigs();
         $xoops->header('module:system/system_userinfo.tpl');
         $xoops->tpl()->assign('user_ownpage', true);
@@ -48,7 +48,7 @@ if ($xoops->isUser()) {
         $xoops->tpl()->assign('lang_avatar', XoopsLocale::AVATAR);
         $xoops->tpl()->assign('lang_inbox', XoopsLocale::INBOX);
         $xoops->tpl()->assign('lang_logout', XoopsLocale::A_LOGOUT);
-        if ($xoopsConfigUser['self_delete'] == 1) {
+        if ($xoopsConfigUser['self_delete'] === 1) {
             $xoops->tpl()->assign('user_candelete', true);
             $xoops->tpl()->assign('lang_deleteaccount', XoopsLocale::DELETE_ACCOUNT);
         } else {
@@ -58,8 +58,8 @@ if ($xoops->isUser()) {
     } else {
         $member_handler = $xoops->getHandlerMember();
         $thisUser = $member_handler->getUser($uid);
-        if (!is_object($thisUser) || !$thisUser->isActive()) {
-            $xoops->redirect("index.php", 3, XoopsLocale::E_NO_USER_SELECTED);
+        if (! is_object($thisUser) || ! $thisUser->isActive()) {
+            $xoops->redirect('index.php', 3, XoopsLocale::E_NO_USER_SELECTED);
         }
         $xoops->header('module:system/system_userinfo.tpl');
         $xoops->tpl()->assign('user_ownpage', false);
@@ -67,8 +67,8 @@ if ($xoops->isUser()) {
 } else {
     $member_handler = $xoops->getHandlerMember();
     $thisUser = $member_handler->getUser($uid);
-    if (!is_object($thisUser) || !$thisUser->isActive()) {
-        $xoops->redirect("index.php", 3, XoopsLocale::E_NO_USER_SELECTED);
+    if (! is_object($thisUser) || ! $thisUser->isActive()) {
+        $xoops->redirect('index.php', 3, XoopsLocale::E_NO_USER_SELECTED);
     }
     $xoops->header('module:system/system_userinfo.tpl');
     $xoops->tpl()->assign('user_ownpage', false);
@@ -82,24 +82,24 @@ if ($xoops->isUser() && $isAdmin) {
 
 // Let extensions add navigation button(s)
 //$xoops->events()->triggerEvent('core.userinfo.button', array($thisUser, &$btn));
-$response = $xoops->service("Avatar")->getAvatarEditUrl($thisUser);
-$link=$response->getValue();
-if (!empty($link)) {
-    $btn[] = array( 'link' => $link, 'title' => XoopsLocale::AVATAR, 'icon' => 'glyphicon glyphicon-user');
+$response = $xoops->service('Avatar')->getAvatarEditUrl($thisUser);
+$link = $response->getValue();
+if (! empty($link)) {
+    $btn[] = ['link' => $link, 'title' => XoopsLocale::AVATAR, 'icon' => 'glyphicon glyphicon-user'];
     $xoops->tpl()->assign('btn', $btn);
 }
 
 $xoops->tpl()->assign('xoops_pagetitle', sprintf(XoopsLocale::F_ALL_ABOUT, $thisUser->getVar('uname')));
 $xoops->tpl()->assign('lang_allaboutuser', sprintf(XoopsLocale::F_ALL_ABOUT, $thisUser->getVar('uname')));
 
-$response = $xoops->service("Avatar")->getAvatarUrl($thisUser);
+$response = $xoops->service('Avatar')->getAvatarUrl($thisUser);
 $avatar = $response->getValue();
 
 $xoops->tpl()->assign('user_avatarurl', empty($avatar) ? '' : $avatar);
 $xoops->tpl()->assign('lang_realname', XoopsLocale::REAL_NAME);
 $xoops->tpl()->assign('user_realname', $thisUser->getVar('name'));
 $xoops->tpl()->assign('lang_website', XoopsLocale::WEBSITE);
-if ($thisUser->getVar('url', 'E') == '') {
+if ($thisUser->getVar('url', 'E') === '') {
     $xoops->tpl()->assign('user_websiteurl', '');
 } else {
     $xoops->tpl()->assign(
@@ -140,13 +140,13 @@ $xoops->tpl()->assign('lang_signature', XoopsLocale::SIGNATURE);
 $xoops->tpl()->assign('lang_posts', XoopsLocale::POSTS);
 $var = $thisUser->getVar('user_sig', 'N');
 $xoops->tpl()->assign('user_signature', $myts->displayTarea($var, 0, 1, 1));
-if ($thisUser->getVar('user_viewemail') == 1) {
+if ($thisUser->getVar('user_viewemail') === 1) {
     $xoops->tpl()->assign('user_email', $thisUser->getVar('email', 'E'));
 } else {
     if ($xoops->isUser()) {
         // All admins will be allowed to see emails, even those that are not allowed
         // to edit users (I think it's ok like this)
-        if ($xoops->userIsAdmin || ($xoops->user->getVar("uid") == $thisUser->getVar("uid"))) {
+        if ($xoops->userIsAdmin || ($xoops->user->getVar('uid') === $thisUser->getVar('uid'))) {
             $xoops->tpl()->assign('user_email', $thisUser->getVar('email', 'E'));
         } else {
             $xoops->tpl()->assign('user_email', '&nbsp;');
@@ -156,7 +156,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
 if ($xoops->isUser()) {
     $xoops->tpl()->assign(
         'user_pmlink',
-        "<a class=\"btn btn-default\" href=\"javascript:openWithSelfMain('" . $xoops_url . "/pmlite.php?send2=1&amp;to_userid="
+        "<a class=\"btn btn-default\" href=\"javascript:openWithSelfMain('" . $xoops_url . '/pmlite.php?send2=1&amp;to_userid='
         . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><span class=\"glyphicon glyphicon-send\" "
         . 'title="' . sprintf(XoopsLocale::F_SEND_PRIVATE_MESSAGE_TO, $thisUser->getVar('uname')) . '"></span></a>'
     );
@@ -168,13 +168,13 @@ if ($xoops->isActiveModule('userrank')) {
     if (isset($userrank['image']) && $userrank['image']) {
         $xoops->tpl()->assign(
             'user_rankimage',
-            '<img src="' . $userrank['image'] . '" alt="' . $userrank['title']. '" />'
+            '<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />'
         );
     }
     $xoops->tpl()->assign('user_ranktitle', $userrank['title']);
 }
-$date = $thisUser->getVar("last_login");
-if (!empty($date)) {
+$date = $thisUser->getVar('last_login');
+if (! empty($date)) {
     $xoops->tpl()->assign('user_lastlogin', $date);
 }
 
@@ -188,7 +188,7 @@ $groups = $xoops->getUserGroups();
 $read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 
 foreach (array_keys($modules) as $i) {
-    if (in_array($i, $read_allowed)) {
+    if (in_array($i, $read_allowed, true)) {
         /* @var $plugin SearchPluginInterface */
         $plugin = \Xoops\Module\Plugin::getPlugin($modules[$i]->getVar('dirname'), 'search');
         if (method_exists($plugin, 'search')) {
@@ -198,29 +198,29 @@ foreach (array_keys($modules) as $i) {
                 $count = count($results);
 
                 foreach ($results as $k => $result) {
-                    if (isset($result['image']) && $result['image'] != '') {
+                    if (isset($result['image']) && $result['image'] !== '') {
                         $results[$k]['image']
                             = $xoops->url('modules/' . $modules[$i]->getVar('dirname') . '/' . $result['image']);
                     } else {
                         $results[$k]['image'] = $xoops->url('images/icons/posticon2.gif');
                     }
 
-                    if (!preg_match("/^http[s]*:\/\//i", $result['link'])) {
+                    if (! preg_match("/^http[s]*:\/\//i", $result['link'])) {
                         $results[$k]['link']
-                            = $xoops->url("modules/" . $modules[$i]->getVar('dirname') . "/" . $result['link']);
+                            = $xoops->url('modules/' . $modules[$i]->getVar('dirname') . '/' . $result['link']);
                     }
 
                     $results[$k]['title'] = $myts->htmlSpecialChars($result['title']);
                     $results[$k]['title_highligh'] = $myts->htmlSpecialChars($result['title']);
-                    if (!empty($result['time'])) {
+                    if (! empty($result['time'])) {
                         $results[$k]['time'] = $result['time'] ? XoopsLocale::formatTimestamp($result['time']) : '';
                     }
-                    if (!empty($results[$k]['uid'])) {
-                        $results[$k]['uid'] = @(int)($results[$k]['uid']);
+                    if (! empty($results[$k]['uid'])) {
+                        $results[$k]['uid'] = @(int) ($results[$k]['uid']);
                         $results[$k]['uname'] = XoopsUser::getUnameFromId($results[$k]['uid'], true);
                     }
                 }
-                if ($count == 5) {
+                if ($count === 5) {
                     $showall_link = '<a href="search.php?action=showallbyuser&amp;mid='
                         . $modules[$i]->getVar('mid') . '&amp;uid=' . $thisUser->getVar('uid')
                         . '">' . XoopsLocale::SHOW_ALL . '</a>';
@@ -229,12 +229,12 @@ foreach (array_keys($modules) as $i) {
                 }
                 $xoops->tpl()->append(
                     'modules',
-                    array(
+                    [
                         'name' => $modules[$i]->getVar('name'),
                         'image' => $xoops->url('modules/' . $modules[$i]->getVar('dirname') . '/icons/logo_large.png'),
                         'result' => $results,
-                        'showall_link' => $showall_link
-                    )
+                        'showall_link' => $showall_link,
+                    ]
                 );
 
             }

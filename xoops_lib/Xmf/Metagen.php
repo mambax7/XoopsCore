@@ -24,7 +24,6 @@ namespace Xmf;
  */
 class Metagen
 {
-
     /**
      * mbstring encoding
      */
@@ -34,14 +33,12 @@ class Metagen
      * horizontal ellipsis
      * This will be used to replace omitted text.
      */
-    const ELLIPSIS = "…"; // unicode horizontal ellipsis U+2026
+    const ELLIPSIS = '…'; // unicode horizontal ellipsis U+2026
 
     /**
      * assignTitle set the page title
      *
      * @param string $title page title
-     *
-     * @return void
      */
     public static function assignTitle($title)
     {
@@ -54,12 +51,10 @@ class Metagen
      * assignKeywords set the meta keywords tag
      *
      * @param string[] $keywords keywords list
-     *
-     * @return void
      */
     public static function assignKeywords($keywords)
     {
-        if (!empty($keywords) && is_array($keywords)) {
+        if (! empty($keywords) && is_array($keywords)) {
             $keyword_tag = implode(', ', $keywords);
             static::assignThemeMeta('keywords', $keyword_tag);
         }
@@ -69,46 +64,12 @@ class Metagen
      * assignDescription set the meta description tag
      *
      * @param string $description page description
-     *
-     * @return void
      */
     public static function assignDescription($description)
     {
         $description = trim($description);
-        if (!empty($description)) {
+        if (! empty($description)) {
             static::assignThemeMeta('description', $description);
-        }
-    }
-
-    /**
-     * assign meta variables in template engine
-     *
-     * @param string $name  meta name (keywords, description)
-     * @param string $value meta value
-     */
-    protected static function assignThemeMeta($name, $value)
-    {
-        if (class_exists('Xoops', false)) {
-            \Xoops::getInstance()->theme()->addMeta('meta', $name, $value);
-        } else {
-            global $xoTheme;
-            $xoTheme->addMeta('meta', $name, $value);
-        }
-    }
-
-    /**
-     * assign meta variables in template engine
-     *
-     * @param string $name  variable name (i.e. xoops_pagtitle)
-     * @param string $value meta value
-     */
-    protected static function assignTemplateVar($name, $value)
-    {
-        if (class_exists('Xoops', false)) {
-            \Xoops::getInstance()->tpl()->assign($name, $value);
-        } else {
-            global $xoopsTpl;
-            $xoopsTpl->assign($name, $value);
         }
     }
 
@@ -128,9 +89,9 @@ class Metagen
         $minLength = 4,
         $forceKeys = null
     ) {
-        $keyCount = array();
-        if (!is_array($forceKeys)) {
-            $forceKeys = array();
+        $keyCount = [];
+        if (! is_array($forceKeys)) {
+            $forceKeys = [];
         }
 
         $text = static::asPlainText($body);
@@ -161,7 +122,7 @@ class Metagen
             }
         }
 
-        while (!empty($forceKeys)) {
+        while (! empty($forceKeys)) {
             $tempKey = strtolower(array_pop($forceKeys));
             $keyCount[$tempKey] = 999999;
         }
@@ -185,10 +146,10 @@ class Metagen
     {
         $text = static::asPlainText($body);
 
-        $words = explode(" ", $text);
+        $words = explode(' ', $text);
 
         // Only keep $maxWords words
-        $newWords = array();
+        $newWords = [];
         $i = 0;
         while ($i < $wordCount - 1 && $i < count($words)) {
             $newWords[] = $words[$i];
@@ -223,8 +184,6 @@ class Metagen
      * @param int           $minLength minimum length of word to consider as keyword
      * @param int           $wordCount maximum word count for description summary
      * @param string[]|null $forceKeys associative array of keywords to force use
-     *
-     * @return void
      */
     public static function generateMetaTags(
         $title,
@@ -243,20 +202,6 @@ class Metagen
     }
 
     /**
-     * Return true if the string is length > 0
-     *
-     * @param string $var to test
-     *
-     * @return boolean
-     *
-     * @author psylove
-     */
-    protected static function nonEmptyString($var)
-    {
-        return (strlen($var) > 0);
-    }
-
-    /**
      * Create a title for the short_url field of an article
      *
      * @param string $title     title of the article
@@ -268,13 +213,13 @@ class Metagen
      */
     public static function generateSeoTitle($title = '', $extension = '')
     {
-        $title = preg_replace("/[^\p{N}\p{L}]/u", "-", $title);
+        $title = preg_replace("/[^\p{N}\p{L}]/u", '-', $title);
         $title = \Normalizer::normalize($title, \Normalizer::FORM_C);
 
-        $tableau = explode("-", $title);
+        $tableau = explode('-', $title);
         $tableau = array_filter($tableau, 'static::nonEmptyString');
-        $tableau = array_filter($tableau, array(static::stopWordsObject(), 'check'));
-        $title = implode("-", $tableau);
+        $tableau = array_filter($tableau, [static::stopWordsObject(), 'check']);
+        $title = implode('-', $tableau);
 
         $title = (empty($title)) ? '' : $title . $extension;
         return $title;
@@ -313,7 +258,7 @@ class Metagen
                 $haystack = mb_substr($haystack, $start, mb_strlen($haystack), static::ENCODING);
             }
 
-            $post = !(mb_strlen($haystack, static::ENCODING) < $length); // need an ellipsis in back?
+            $post = ! (mb_strlen($haystack, static::ENCODING) < $length); // need an ellipsis in back?
             if ($post) {
                 $haystack = mb_substr($haystack, 0, $length, static::ENCODING);
                 $end = mb_strrpos($haystack, ' ', 0, static::ENCODING);
@@ -329,7 +274,7 @@ class Metagen
                 $haystack = substr($haystack, $start);
             }
 
-            $post = !(strlen($haystack) < $length); // need an ellipsis in back?
+            $post = ! (strlen($haystack) < $length); // need an ellipsis in back?
             if ($post) {
                 $haystack = substr($haystack, 0, $length);
                 $end = strrpos($haystack, ' ', 0);
@@ -340,6 +285,66 @@ class Metagen
         }
         $haystack = ($pre ? static::ELLIPSIS : '') . trim($haystack) . ($post ? static::ELLIPSIS : '');
         return $haystack;
+    }
+
+    /**
+     * checkStopWords - look up a word in a list of stop words and
+     * classify it as a significant word or a stop word.
+     *
+     * @param string $key the word to check
+     *
+     * @return bool True if word is significant, false if it is a stop word
+     * @deprecated since v1.2.0 - use Xmf\StopWords::check()
+     */
+    public static function checkStopWords($key)
+    {
+        return static::stopWordsObject()->check($key);
+    }
+
+    /**
+     * assign meta variables in template engine
+     *
+     * @param string $name  meta name (keywords, description)
+     * @param string $value meta value
+     */
+    protected static function assignThemeMeta($name, $value)
+    {
+        if (class_exists('Xoops', false)) {
+            \Xoops::getInstance()->theme()->addMeta('meta', $name, $value);
+        } else {
+            global $xoTheme;
+            $xoTheme->addMeta('meta', $name, $value);
+        }
+    }
+
+    /**
+     * assign meta variables in template engine
+     *
+     * @param string $name  variable name (i.e. xoops_pagtitle)
+     * @param string $value meta value
+     */
+    protected static function assignTemplateVar($name, $value)
+    {
+        if (class_exists('Xoops', false)) {
+            \Xoops::getInstance()->tpl()->assign($name, $value);
+        } else {
+            global $xoopsTpl;
+            $xoopsTpl->assign($name, $value);
+        }
+    }
+
+    /**
+     * Return true if the string is length > 0
+     *
+     * @param string $var to test
+     *
+     * @return boolean
+     *
+     * @author psylove
+     */
+    protected static function nonEmptyString($var)
+    {
+        return (strlen($var) > 0);
     }
 
     /**
@@ -356,7 +361,7 @@ class Metagen
         $text = static::html2text($text);
         $text = static::purifyText($text);
 
-        $text = str_replace(array("\n", "\r"), ' ', $text);
+        $text = str_replace(["\n", "\r"], ' ', $text);
         $text = preg_replace('/[ ]* [ ]*/', ' ', $text);
 
         return trim($text);
@@ -374,8 +379,8 @@ class Metagen
      */
     protected static function getNeedlePositions($haystack, $needles)
     {
-        $pos = array();
-        $needles = empty($needles) ? array() : (array) $needles;
+        $pos = [];
+        $needles = empty($needles) ? [] : (array) $needles;
         foreach ($needles as $needle) {
             if (function_exists('mb_stripos')) {
                 $i = mb_stripos($haystack, $needle, 0, static::ENCODING);
@@ -440,7 +445,7 @@ class Metagen
      */
     protected static function html2text($document)
     {
-        $search = array(
+        $search = [
             "'<script[^>]*?>.*?</script>'si", // Strip out javascript
             "'<img.*?/>'si",                  // Strip out img tags
             "'<[\/\!]*?[^<>]*?>'si",          // Strip out HTML tags
@@ -453,24 +458,24 @@ class Metagen
             "'&(iexcl|#161);'i",
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
-            "'&(copy|#169);'i"
-        );
+            "'&(copy|#169);'i",
+        ];
 
-        $replace = array(
-            "",
-            "",
-            "",
-            "\\1",
-            "\"",
-            "&",
-            "<",
-            ">",
-            " ",
+        $replace = [
+            '',
+            '',
+            '',
+            '\\1',
+            '"',
+            '&',
+            '<',
+            '>',
+            ' ',
             chr(161),
             chr(162),
             chr(163),
-            chr(169)
-        );
+            chr(169),
+        ];
 
         $text = preg_replace($search, $replace, $document);
 
@@ -486,20 +491,6 @@ class Metagen
     }
 
     /**
-     * checkStopWords - look up a word in a list of stop words and
-     * classify it as a significant word or a stop word.
-     *
-     * @param string $key the word to check
-     *
-     * @return bool True if word is significant, false if it is a stop word
-     * @deprecated since v1.2.0 - use Xmf\StopWords::check()
-     */
-    public static function checkStopWords($key)
-    {
-        return static::stopWordsObject()->check($key);
-    }
-
-    /**
      * Get a StopWords object
      *
      * @return StopWords
@@ -507,7 +498,7 @@ class Metagen
     protected static function stopWordsObject()
     {
         static $object;
-        if (null === $object) {
+        if ($object === null) {
             $object = new StopWords();
         }
         return $object;

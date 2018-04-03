@@ -57,9 +57,6 @@ class PagePage_related_link extends XoopsObject
 
 class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param null|Connection $db
-     */
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'page_related_link', 'pagepage_related_link', 'link_id', 'link_related_id');
@@ -70,7 +67,6 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
         $this->table_link = $this->db->prefix('page_content');
         $this->field_link = 'content_id';
         $this->field_object = 'link_content_id';
-
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('link_related_id', $related_id));
@@ -86,8 +82,8 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
         $criteria->setSort($sort);
         $criteria->setOrder($order);
 
-        $ret = array();
-        $result = parent::getAll($criteria, array('link_content_id'), false);
+        $ret = [];
+        $result = parent::getAll($criteria, ['link_content_id'], false);
         foreach ($result as $k) {
             $ret[] = $k['link_content_id'];
         }
@@ -96,7 +92,7 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
 
     public function getContentUsed()
     {
-        $result = parent::getAll(null, array('link_content_id'), false);
+        $result = parent::getAll(null, ['link_content_id'], false);
         foreach ($result as $k) {
             $ret[] = $k['link_content_id'];
         }
@@ -123,20 +119,20 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
             // create button prev / next
             $keys = array_keys($ret['related_links']);
             foreach ($keys as $k => $i) {
-                if ($content_id == $ret['related_links'][$i]['content_id']) {
-                    if (($k-1) >= 0) {
-                        $ret['prev_id'] = $ret['related_links'][$keys[($k-1)]]['content_id'];
-                        $ret['prev_title'] = $ret['related_links'][$keys[($k-1)]]['content_title'];
+                if ($content_id === $ret['related_links'][$i]['content_id']) {
+                    if (($k - 1) >= 0) {
+                        $ret['prev_id'] = $ret['related_links'][$keys[($k - 1)]]['content_id'];
+                        $ret['prev_title'] = $ret['related_links'][$keys[($k - 1)]]['content_title'];
                     }
-                    if (($k+1) < count($keys)) {
-                        $ret['next_id'] = $ret['related_links'][$keys[($k+1)]]['content_id'];
-                        $ret['next_title'] = $ret['related_links'][$keys[($k+1)]]['content_title'];
+                    if (($k + 1) < count($keys)) {
+                        $ret['next_id'] = $ret['related_links'][$keys[($k + 1)]]['content_id'];
+                        $ret['next_title'] = $ret['related_links'][$keys[($k + 1)]]['content_title'];
                     }
                     break;
                 }
             }
             return $ret;
         }
-        return array();
+        return [];
     }
 }

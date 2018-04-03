@@ -27,7 +27,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('content_status', 0, '!='));
-        $criteria->add(new Criteria('content_author', (int)$uid));
+        $criteria->add(new Criteria('content_author', (int) $uid));
         return \Xoops::getModuleHelper('page')->getContentHandler()->getCount($criteria);
     }
 
@@ -44,7 +44,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
             $ret['link'] = $page->url('admin/content.php');
             return $ret;
         }
-        return array();
+        return [];
     }
 
     /**
@@ -61,14 +61,14 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
      */
     public function backend($limit)
     {
-        $ret = array();
+        $ret = [];
         $page = \Xoops::getModuleHelper('page');
         $contents = $page->getContentHandler()->getPagePublished(0, $limit);
         foreach ($contents as $k => $content) {
-            $ret[$k]['title']   = $content->getVar('content_title');
-            $ret[$k]['link']    = $page->url('viewpage.php') . '?id=' . $content->getVar('content_id');
+            $ret[$k]['title'] = $content->getVar('content_title');
+            $ret[$k]['link'] = $page->url('viewpage.php') . '?id=' . $content->getVar('content_id');
             $ret[$k]['content'] = $content->getVar('content_shorttext') . '<br />' . $content->getVar('content_text');
-            $ret[$k]['date']    = $content->getVar('content_create');
+            $ret[$k]['date'] = $content->getVar('content_create');
         }
         return $ret;
     }

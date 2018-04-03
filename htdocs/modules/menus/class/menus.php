@@ -29,7 +29,7 @@ class MenusMenus extends XoopsObject
      */
     public function __construct()
     {
-        $this->initVar("id", XOBJ_DTYPE_INT);
+        $this->initVar('id', XOBJ_DTYPE_INT);
         $this->initVar('title', XOBJ_DTYPE_TXTBOX);
     }
 }

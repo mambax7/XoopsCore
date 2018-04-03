@@ -52,7 +52,7 @@ class XoopsTarDownloader extends XoopsDownloader
         if (isset($newfilename)) {
             // dirty, but no other way
             for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-                if ($this->archiver->files[$i]['name'] == $filepath) {
+                if ($filepath === $this->archiver->files[$i]['name']) {
                     $this->archiver->files[$i]['name'] = trim($newfilename);
                     break;
                 }
@@ -77,7 +77,7 @@ class XoopsTarDownloader extends XoopsDownloader
         if (isset($newfilename)) {
             // dirty, but no other way
             for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-                if ($this->archiver->files[$i]['name'] == $filepath) {
+                if ($filepath === $this->archiver->files[$i]['name']) {
                     $this->archiver->files[$i]['name'] = trim($newfilename);
                     break;
                 }
@@ -110,9 +110,9 @@ class XoopsTarDownloader extends XoopsDownloader
         }
         // dirty, but no other way
         for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-            if ($this->archiver->files[$i]['name'] == $dummyfile) {
+            if ($dummyfile === $this->archiver->files[$i]['name']) {
                 $this->archiver->files[$i]['name'] = $filename;
-                if ($time != 0) {
+                if ($time !== 0) {
                     $this->archiver->files[$i]['time'] = $time;
                 }
                 break;
@@ -145,9 +145,9 @@ class XoopsTarDownloader extends XoopsDownloader
         }
         // dirty, but no other way
         for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-            if ($this->archiver->files[$i]['name'] == $dummyfile) {
+            if ($dummyfile === $this->archiver->files[$i]['name']) {
                 $this->archiver->files[$i]['name'] = $filename;
-                if ($time != 0) {
+                if ($time !== 0) {
                     $this->archiver->files[$i]['time'] = $time;
                 }
                 break;
@@ -160,8 +160,6 @@ class XoopsTarDownloader extends XoopsDownloader
      *
      * @param string  $name Filename
      * @param boolean $gzip Use GZ compression
-     *
-     * @return void
      */
     public function download($name, $gzip = true)
     {

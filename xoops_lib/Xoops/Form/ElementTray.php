@@ -28,7 +28,7 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @var Element[]
      */
-    protected $elements = array();
+    protected $elements = [];
 
     /**
      * __construct
@@ -72,8 +72,6 @@ class ElementTray extends Element implements ContainerInterface
      *
      * @param Element $formElement Element to add
      * @param boolean $required    true = entry required
-     *
-     * @return void
      */
     public function addElement(Element $formElement, $required = false)
     {
@@ -84,6 +82,7 @@ class ElementTray extends Element implements ContainerInterface
     }
 
     // ContainerInterface
+
     /**
      * get an array of "required" form elements
      *
@@ -109,10 +108,10 @@ class ElementTray extends Element implements ContainerInterface
      */
     public function getElements($recurse = false)
     {
-        if (!$recurse) {
+        if (! $recurse) {
             return $this->elements;
-        } else {
-            $ret = array();
+        }
+            $ret = [];
             foreach ($this->elements as $ele) {
                 if ($ele instanceof ContainerInterface) {
                     /* @var ContainerInterface $ele */
@@ -128,7 +127,35 @@ class ElementTray extends Element implements ContainerInterface
                 unset($ele);
             }
             return $ret;
+
+    }
+
+    /**
+     * prepare HTML to output this group
+     *
+     * @return string HTML output
+     */
+    public function render()
+    {
+        $count = 0;
+        $ret = '<div class="form-inline">';
+        foreach ($this->getElements() as $ele) {
+            /* @var Element $ele */
+            if ($count > 0) {
+                $ret .= $this->getJoiner();
+            }
+            if ($ele->getCaption() !== '') {
+                $ret .= '<div class="form-group">';
+                $ret .= '<label class="control-label">' . $ele->getCaption() . '</label>&nbsp;';
+                $ret .= '</div>';
+            }
+            $ret .= $ele->render() . "\n";
+            if (! $ele->isHidden()) {
+                ++$count;
+            }
         }
+        $ret .= '</div>';
+        return $ret;
     }
 
     /**
@@ -142,33 +169,5 @@ class ElementTray extends Element implements ContainerInterface
     {
         $joiner = $this->get(':joiner');
         return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $joiner)) : $joiner;
-    }
-
-    /**
-     * prepare HTML to output this group
-     *
-     * @return string HTML output
-     */
-    public function render()
-    {
-        $count = 0;
-        $ret = "<div class=\"form-inline\">";
-        foreach ($this->getElements() as $ele) {
-            /* @var Element $ele */
-            if ($count > 0) {
-                $ret .= $this->getJoiner();
-            }
-            if ($ele->getCaption() != '') {
-                $ret .= '<div class="form-group">';
-                $ret .= '<label class="control-label">' . $ele->getCaption() . "</label>&nbsp;";
-                $ret .= '</div>';
-            }
-            $ret .= $ele->render() . "\n";
-            if (!$ele->isHidden()) {
-                ++$count;
-            }
-        }
-        $ret .= '</div>';
-        return $ret;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Kernel\Dtype;
 
 require_once __DIR__ . '/../../../../../init_new.php';
@@ -66,12 +67,12 @@ class DtypeSimpleTimeTest extends \PHPUnit\Framework\TestCase
         $this->xObject[$key] = $testValue;
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals($testValue, $value);
+        $this->assertSame($testValue, $value);
 
         $this->xObject[$key] = date(DATE_RFC850, $testValue);
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals($testValue, $value);
+        $this->assertSame($testValue, $value);
     }
 
     public function provider()

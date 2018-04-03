@@ -31,7 +31,7 @@ if (function_exists('mb_http_output')) {
 
 $categoryid = isset($_GET['categoryid']) ? $_GET['categoryid'] : -1;
 
-if ($categoryid != -1) {
+if ($categoryid !== -1) {
     /* @var $categoryObj PublisherCategory */
     $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
 }
@@ -39,10 +39,10 @@ if ($categoryid != -1) {
 header('Content-Type:text/xml; charset=' . XoopsLocale::getCharset());
 $tpl = new XoopsTpl();
 $tpl->caching = 2;
-$tpl->cache_lifetime= 0;
+$tpl->cache_lifetime = 0;
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-if (!$tpl->isCached('module:publisher/publisher_rss.tpl')) {
+if (! $tpl->isCached('module:publisher/publisher_rss.tpl')) {
     $channel_category = $publisher->getModule()->getVar('name');
     $tpl->assign('channel_charset', XoopsLocale::getCharset());
     $tpl->assign('channel_title', htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES));
@@ -52,8 +52,8 @@ if (!$tpl->isCached('module:publisher/publisher_rss.tpl')) {
     $tpl->assign('channel_webmaster', $xoops->getConfig('adminmail'));
     $tpl->assign('channel_editor', $xoops->getConfig('adminmail'));
 
-    if ($categoryid != -1) {
-        $channel_category .= " > " . $categoryObj->getVar('name');
+    if ($categoryid !== -1) {
+        $channel_category .= ' > ' . $categoryObj->getVar('name');
     }
 
     $tpl->assign('channel_category', htmlspecialchars($channel_category));
@@ -77,11 +77,11 @@ if (!$tpl->isCached('module:publisher/publisher_rss.tpl')) {
         /* @var $item PublisherItem */
         foreach ($sarray as $item) {
             $tpl->append('items',
-                         array('title' => htmlspecialchars($item->title(), ENT_QUOTES),
-                               'link' => $item->getItemUrl(),
-                               'guid' => $item->getItemUrl(),
-                               'pubdate' => XoopsLocale::formatTimestamp($item->getVar('datesub'), 'rss'),
-                               'description' => htmlspecialchars($item->getBlockSummary(300, true), ENT_QUOTES)));
+                         ['title' => htmlspecialchars($item->title(), ENT_QUOTES),
+                             'link' => $item->getItemUrl(),
+                             'guid' => $item->getItemUrl(),
+                             'pubdate' => XoopsLocale::formatTimestamp($item->getVar('datesub'), 'rss'),
+                             'description' => htmlspecialchars($item->getBlockSummary(300, true), ENT_QUOTES), ]);
         }
     }
 }

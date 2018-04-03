@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Core\Text;
 
-require_once __DIR__.'/../../../../init_new.php';
+require_once __DIR__ . '/../../../../init_new.php';
 
 class SanitizerTest extends \PHPUnit\Framework\TestCase
 {
@@ -53,14 +54,14 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->object->addPatternCallback(
             '~(\d{4})-(\d{2})-(\d{2})~',
             function ($matches) {
-                return $matches[2].'/'.$matches[3].'/'.$matches[1];
+                return $matches[2] . '/' . $matches[3] . '/' . $matches[1];
             }
         );
         $text = '2015-12-14';
         $expected = '12/14/2015';
         $actual = $this->object->filterForDisplay($text);
         // Remove the following lines when you implement this test.
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testSmiley()
@@ -80,35 +81,35 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $in = 'http://xoops.org';
         $expected = '<a href="http://xoops.org" title="http://xoops.org"rel="external">http://xoops.org</a>';
         $actual = $this->object->makeClickable($in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testNl2Br()
     {
         $text = "\n";
         $message = $this->object->nl2br($text);
-        $this->assertEquals("\n<br />\n",$message);
+        $this->assertSame("\n<br />\n", $message);
         $text = "\r\n";
         $message = $this->object->nl2br($text);
-        $this->assertEquals("\n<br />\n",$message);
+        $this->assertSame("\n<br />\n", $message);
         $text = "\r";
         $message = $this->object->nl2br($text);
-        $this->assertEquals("\n<br />\n",$message);
+        $this->assertSame("\n<br />\n", $message);
     }
 
     public function testHtmlSpecialChars()
     {
         $text = "\"'<>&";
         $message = $this->object->htmlSpecialChars($text);
-        $this->assertSame('&quot;&#039;&lt;&gt;&amp;',$message);
+        $this->assertSame('&quot;&#039;&lt;&gt;&amp;', $message);
 
         $text = 'toto&titi';
         $message = $this->object->htmlSpecialChars($text);
-        $this->assertSame('toto&amp;titi',$message);
+        $this->assertSame('toto&amp;titi', $message);
 
         $text = 'toto&nbsp;titi';
         $message = $this->object->htmlSpecialChars($text);
-        $this->assertSame('toto&nbsp;titi',$message);
+        $this->assertSame('toto&nbsp;titi', $message);
     }
 
     public function testEscapeForJavascript()
@@ -116,7 +117,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $text = 'enter an "T" for testing';
         $expected = 'enter an \x22T\x22 for testing';
         $actual = $this->object->escapeForJavascript($text);
-        $this->assertEquals($actual, $expected);
+        $this->assertSame($actual, $expected);
     }
 
     public function testEscapeShortCodes()
@@ -124,14 +125,14 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $text = '[Random] [brackets]][';
         $expected = '&#91;Random&#93; &#91;brackets&#93;&#93;&#91;';
         $actual = $this->object->escapeShortCodes($text);
-        $this->assertEquals($actual, $expected);
+        $this->assertSame($actual, $expected);
     }
 
     public function testUndoHtmlSpecialChars()
     {
         $text = '&gt;&lt;&quot;&#039;&amp;nbsp;';
         $message = $this->object->undohtmlSpecialChars($text);
-        $this->assertSame('><"\'&nbsp;',$message);
+        $this->assertSame('><"\'&nbsp;', $message);
     }
 
     /**
@@ -184,7 +185,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
 
     public function testListExtensions()
     {
-        $actual =  $this->object->listExtensions();
+        $actual = $this->object->listExtensions();
         $this->assertTrue(is_array($actual));
     }
 
@@ -192,22 +193,22 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->enableComponentForTesting('soundcloud');
         $support = $this->object->getDhtmlEditorSupport('soundcloud', 'testeditorarea');
-        $this->assertTrue(2 == count($support));
+        $this->assertTrue(count($support) === 2);
         $this->assertTrue(is_string($support[0]));
         $this->assertTrue(is_string($support[1]));
 
         $support = $this->object->getDhtmlEditorSupport('thisisnotarealextension', 'testeditorarea');
-        $this->assertTrue(2 == count($support));
-        $this->assertEquals('', $support[0]);
-        $this->assertEquals('', $support[1]);
+        $this->assertTrue(count($support) === 2);
+        $this->assertSame('', $support[0]);
+        $this->assertSame('', $support[1]);
     }
 
     public function testGetConfig()
     {
-        $actual =  $this->object->getConfig();
+        $actual = $this->object->getConfig();
         $this->assertTrue(is_array($actual));
 
-        $actual =  $this->object->getConfig('xoopscode');
+        $actual = $this->object->getConfig('xoopscode');
         $this->assertTrue(is_array($actual));
     }
 
@@ -217,7 +218,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $expected = $text;
         $actual = $this->object->executeFilter('nosuchfilter', $text);
         $this->object->executeFilter('nosuchfilter', $text);
-        $this->assertEquals($expected, $text);
+        $this->assertSame($expected, $text);
         $this->assertSame($expected, $actual);
     }
 
@@ -232,7 +233,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
     {
         $text = "\x00";
         $message = $this->object->filterxss($text);
-        $this->assertEquals('',$message);
+        $this->assertSame('', $message);
     }
 
     public function testCleanEnum()

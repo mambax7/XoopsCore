@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
-class SnoopyTest extends \PHPUnit\Framework\TestCase
+class snoopyTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Snoopy';
 
@@ -10,5 +10,4 @@ class SnoopyTest extends \PHPUnit\Framework\TestCase
 		$x = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $x);
     }
-
 }

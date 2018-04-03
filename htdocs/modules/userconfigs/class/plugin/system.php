@@ -26,12 +26,12 @@ class UserconfigsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
 
     public function waiting()
     {
-        return array();
+        return [];
     }
 
     public function backend($limit)
     {
-        return array();
+        return [];
     }
 
     public function userMenus()

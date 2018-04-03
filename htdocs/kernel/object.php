@@ -61,7 +61,7 @@ abstract class XoopsPersistableObjectHandler extends Xoops\Core\Kernel\XoopsPers
         $keyName = '',
         $identifierName = ''
     ) {
-        if ($db===null) {
+        if ($db === null) {
             $this->db2 = \Xoops\Core\Database\Factory::getConnection();
             $db = $this->db2;
         }

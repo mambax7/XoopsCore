@@ -32,28 +32,28 @@ class zipfile
     /**
      * Array to store compressed data
      *
-     * @var array $datasec
+     * @var array
      */
-    public $datasec = array();
+    public $datasec = [];
 
     /**
      * Central directory
      *
-     * @var array $ctrl_dir
+     * @var array
      */
-    public $ctrl_dir = array();
+    public $ctrl_dir = [];
 
     /**
      * End of central directory record
      *
-     * @var string $eof_ctrl_dir
+     * @var string
      */
     public $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 
     /**
      * Last offset position
      *
-     * @var integer $old_offset
+     * @var integer
      */
     public $old_offset = 0;
 
@@ -67,7 +67,7 @@ class zipfile
      */
     public function unix2DosTime($unixtime = 0)
     {
-        $timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
+        $timearray = ($unixtime === 0) ? getdate() : getdate($unixtime);
         if ($timearray['year'] < 1980) {
             $timearray['year'] = 1980;
             $timearray['mon'] = 1;
@@ -77,7 +77,9 @@ class zipfile
             $timearray['seconds'] = 0;
         } // end if
         return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) | ($timearray['mday'] << 16) | ($timearray['hours'] << 11) | ($timearray['minutes'] << 5) | ($timearray['seconds'] >> 1);
-    } // end of the 'unix2DosTime()' method
+    }
+
+ // end of the 'unix2DosTime()' method
 
     /**
      * Adds "file" to archive
@@ -144,7 +146,9 @@ class zipfile
         // optional extra field, file comment goes here
         // save to central directory
         $this->ctrl_dir[] = $cdrec;
-    } // end of the 'addFile()' method
+    }
+
+ // end of the 'addFile()' method
 
     /**
      * Dumps out file
@@ -162,5 +166,7 @@ class zipfile
                pack('V', strlen($ctrldir)) . // size of central dir
                pack('V', strlen($data)) . // offset to start of central dir
                "\x00\x00"; // .zip file comment length
-    } // end of the 'file()' method
+    }
+
+ // end of the 'file()' method
 } // end of the 'zipfile' class

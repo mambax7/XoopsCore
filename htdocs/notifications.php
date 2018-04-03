@@ -23,7 +23,7 @@ include __DIR__ . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
 if ($xoops->isActiveModule('notifications')) {
-    $xoops->redirect("modules/notifications/", 0);
+    $xoops->redirect('modules/notifications/', 0);
 } else {
-    $xoops->redirect("index.php", 0);
+    $xoops->redirect('index.php', 0);
 }

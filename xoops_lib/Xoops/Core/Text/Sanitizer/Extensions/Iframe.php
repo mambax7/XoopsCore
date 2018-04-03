@@ -36,8 +36,6 @@ class Iframe extends ExtensionAbstract
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -45,7 +43,7 @@ class Iframe extends ExtensionAbstract
             'iframe',
             function ($attributes, $content, $tagName) {
                 $height = (int) ltrim($attributes[0], '=');
-                $height = $height <10 ? 200 : $height;
+                $height = $height < 10 ? 200 : $height;
                 $url = trim($content);
                 $template = $this->config['template'];
                 $newContent = sprintf($template, $url, $height);

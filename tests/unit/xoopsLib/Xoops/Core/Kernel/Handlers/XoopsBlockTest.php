@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsBlock;
 
@@ -7,7 +7,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops\Core\Kernel\Handlers\XoopsBlock';
 
-    public function setUp()
+    protected function setUp()
     {
     }
 
@@ -15,7 +15,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass();
         $this->assertInstanceOf($this->myClass, $instance);
-        $value=$instance->getVars();
+        $value = $instance->getVars();
         $this->assertTrue(isset($value['bid']));
         $this->assertTrue(isset($value['mid']));
         $this->assertTrue(isset($value['func_num']));
@@ -151,7 +151,7 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
 
     public function test_func_file()
     {
-        $instance=new $this->myClass();
+        $instance = new $this->myClass();
         $value = $instance->func_file();
         $this->assertSame(null, $value);
     }
@@ -222,8 +222,8 @@ class XoopsBlockTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(false, $value);
 
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        require_once $xoops_root_path.'/modules/page/locale/en_US/en_US.php';
-        require_once $xoops_root_path.'/modules/page/locale/en_US/locale.php';
+        require_once $xoops_root_path . '/modules/page/locale/en_US/en_US.php';
+        require_once $xoops_root_path . '/modules/page/locale/en_US/locale.php';
 
         $instance->setVar('dirname', 'page');
         $instance->setVar('func_file', 'page_blocks.php');

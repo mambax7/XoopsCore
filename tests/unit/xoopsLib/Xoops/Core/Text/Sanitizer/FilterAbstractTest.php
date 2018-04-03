@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../init_new.php';
 
 class FilterAbstractTest extends \PHPUnit\Framework\TestCase
 {
@@ -41,5 +42,4 @@ class FilterAbstractTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->reflectedObject->isAbstract());
         $this->assertTrue($this->reflectedObject->hasMethod('applyFilter'));
     }
-
 }

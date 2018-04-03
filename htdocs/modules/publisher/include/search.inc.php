@@ -17,28 +17,28 @@
  * @version         $Id$
  */
 
-function publisher_search($queryarray, $andor, $limit, $offset, $userid, $categories = array(), $sortby = 0, $searchin = "", $extra = "")
+function publisher_search($queryarray, $andor, $limit, $offset, $userid, $categories = [], $sortby = 0, $searchin = '', $extra = '')
 {
     $publisher = Publisher::getInstance();
-    $ret = array();
-    if ($queryarray == '' || count($queryarray) == 0) {
+    $ret = [];
+    if ($queryarray === '' || count($queryarray) === 0) {
         $hightlight_key = '';
     } else {
         $keywords = implode('+', $queryarray);
-        $hightlight_key = "&amp;keywords=" . $keywords;
+        $hightlight_key = '&amp;keywords=' . $keywords;
     }
     $itemsObjs = $publisher->getItemHandler()
-            ->getItemsFromSearch($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
+        ->getItemsFromSearch($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
     $withCategoryPath = $publisher->getConfig('search_cat_path');
 
-    $usersIds = array();
+    $usersIds = [];
     /* @var $obj PublisherItem */
     foreach ($itemsObjs as $obj) {
-        $item['image'] = "images/item_icon.gif";
+        $item['image'] = 'images/item_icon.gif';
         $item['link'] = $obj->getItemUrl();
-        $item['link'] .= (!empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? "?" . ltrim($hightlight_key, '&amp;') : $hightlight_key;
+        $item['link'] .= (! empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? '?' . ltrim($hightlight_key, '&amp;') : $hightlight_key;
         if ($withCategoryPath) {
-            $item['title'] = $obj->getCategoryPath(false) . " > " . $obj->title();
+            $item['title'] = $obj->getCategoryPath(false) . ' > ' . $obj->title();
         } else {
             $item['title'] = $obj->title();
         }
@@ -46,17 +46,17 @@ function publisher_search($queryarray, $andor, $limit, $offset, $userid, $catego
         $item['uid'] = $obj->getVar('uid');
         //"Fulltext search/highlight
         $text = $obj->body();
-        $sanitized_text = "";
+        $sanitized_text = '';
         $text_i = strtolower($text);
-        $queryarray = is_array($queryarray) ? $queryarray : array($queryarray);
+        $queryarray = is_array($queryarray) ? $queryarray : [$queryarray];
 
         //@todo look into xoopslocal
         foreach ($queryarray as $query) {
             $pos = strpos($text_i, strtolower($query)); //xoops_local("strpos", $text_i, strtolower($query));
             $start = max(($pos - 100), 0);
             $length = strlen($query) + 200; //xoops_local("strlen", $query) + 200;
-            $context = $obj->highlight(XoopsLocale::substr($text, $start, $length, " [...]"), $query);
-            $sanitized_text .= "<p>[...] " . $context . "</p>";
+            $context = $obj->highlight(XoopsLocale::substr($text, $start, $length, ' [...]'), $query);
+            $sanitized_text .= '<p>[...] ' . $context . '</p>';
         }
 
         //End of highlight
@@ -69,8 +69,8 @@ function publisher_search($queryarray, $andor, $limit, $offset, $userid, $catego
     }
     $usersNames = XoopsUserUtility::getUnameFromIds($usersIds, $publisher->getConfig('format_realname'), true);
     foreach ($ret as $key => $item) {
-        if ($item["author"] == '') {
-            $ret[$key]["author"] = @$usersNames[$item["uid"]];
+        if ($item['author'] === '') {
+            $ret[$key]['author'] = @$usersNames[$item['uid']];
         }
     }
     unset($usersNames, $usersIds);

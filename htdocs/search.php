@@ -34,5 +34,5 @@ if ($xoops->isActiveModule('search')) {
     }
     $xoops->redirect("modules/search/index.php?{$uri}", 0);
 } else {
-    $xoops->redirect("index.php", 10, 'Oops, Please install search module!!!!');
+    $xoops->redirect('index.php', 10, 'Oops, Please install search module!!!!');
 }

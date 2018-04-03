@@ -26,7 +26,6 @@ namespace Xoops\Form;
  */
 class Raw extends Element
 {
-
     /**
      * __construct
      *

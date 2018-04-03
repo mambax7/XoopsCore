@@ -68,20 +68,20 @@ abstract class DtypeAbstract
      * @param string      $format Dtype::FORMAT_* constant indicating desired formatting
      *
      * @return mixed
-    */
+     */
     public function getVar(XoopsObject $obj, $key, $format)
     {
         $value = $obj->vars[$key]['value'];
-        if ($obj->vars[$key]['options'] != '' && $value != '') {
+        if ($obj->vars[$key]['options'] !== '' && $value !== '') {
             switch (strtolower($format)) {
                 case 's':
                 case Dtype::FORMAT_SHOW:
                     $selected = explode('|', $value);
                     $options = explode('|', $obj->vars[$key]['options']);
                     $i = 1;
-                    $ret = array();
+                    $ret = [];
                     foreach ($options as $op) {
-                        if (in_array($i, $selected)) {
+                        if (in_array($i, $selected, true)) {
                             $ret[] = $op;
                         }
                         ++$i;

@@ -19,15 +19,12 @@
  */
 class Smarty_Resource_Db extends Smarty_Resource_Custom
 {
-
     /**
      * Fetch a template and its modification time from database
      *
      * @param  string  $name   template name
      * @param  string  $source template source
      * @param  integer $mtime  template modification timestamp (epoch)
-     *
-     * @return void
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -62,7 +59,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
      */
     private function dbTplInfo($tpl_name)
     {
-        static $cache = array();
+        static $cache = [];
         global $xoopsConfig;
         $xoops = Xoops::getInstance();
 
@@ -73,16 +70,16 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
         $theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
         $tplfile_handler = $xoops->getHandlerTplFile();
         // If we're not using the "default" template set, then get the templates from the DB
-        if ($tplset !== "default") {
+        if ($tplset !== 'default') {
             $tplobj = $tplfile_handler->find($tplset, null, null, null, $tpl_name, true);
             if (count($tplobj)) {
                 return $cache[$tpl_name] = $tplobj[0];
             }
         }
         // If we'using the default tplset, get the template from the filesystem
-        $tplobj = $tplfile_handler->find("default", null, null, null, $tpl_name, true);
+        $tplobj = $tplfile_handler->find('default', null, null, null, $tpl_name, true);
 
-        if (!count($tplobj)) {
+        if (! count($tplobj)) {
             return $cache[$tpl_name] = $tpl_name;
         }
         /* @var $tplobj XoopsTplFile */
@@ -107,11 +104,11 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
         }
         // First, check for an overloaded version within the theme folder
         $filepath = $directory . "/{$theme}/modules/{$module}/{$path}{$tpl_name}";
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             // If no custom version exists, get the tpl from its default location
             $filepath = \XoopsBaseConfig::get('root-path') . "/modules/{$module}/templates/{$path}{$tpl_name}";
-            if (!file_exists($filepath)) {
-                return $cache[$tpl_name] = $tplobj ;
+            if (! file_exists($filepath)) {
+                return $cache[$tpl_name] = $tplobj;
             }
         }
         return $cache[$tpl_name] = $filepath;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Test\Core\Locale;
 
 use Xoops\Core\Locale\LegacyCodes;
@@ -16,7 +17,7 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new LegacyCodes;
+        $this->object = new LegacyCodes();
     }
 
     /**
@@ -31,7 +32,7 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
     {
         $languageArray = LegacyCodes::getLegacyName('fr_FR');
         $this->assertTrue(is_array($languageArray));
-        $this->assertEquals(1, count($languageArray));
+        $this->assertSame(1, count($languageArray));
         $this->assertTrue(in_array('french', $languageArray, true));
     }
 
@@ -39,14 +40,14 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
     {
         $languageArray = LegacyCodes::getLegacyName('xx_XX');
         $this->assertTrue(is_array($languageArray));
-        $this->assertEquals(0, count($languageArray));
+        $this->assertSame(0, count($languageArray));
     }
 
     public function testGetLegacyNameMultiple()
     {
         $languageArray = LegacyCodes::getLegacyName('pt_BR');
         $this->assertTrue(is_array($languageArray));
-        $this->assertEquals(2, count($languageArray));
+        $this->assertSame(2, count($languageArray));
         $this->assertTrue(in_array('portuguesebr', $languageArray, true));
         $this->assertTrue(in_array('brazilian', $languageArray, true));
     }
@@ -65,8 +66,8 @@ class LegacyCodesTest extends \PHPUnit\Framework\TestCase
 
     public function testGetLocaleCode()
     {
-        $this->assertEquals('en-Latn-US', LegacyCodes::getLocaleCode('english'));
-        $this->assertEquals('zh-Hant-TW', LegacyCodes::getLocaleCode('chinese_zh'));
+        $this->assertSame('en-Latn-US', LegacyCodes::getLocaleCode('english'));
+        $this->assertSame('zh-Hant-TW', LegacyCodes::getLocaleCode('chinese_zh'));
         $this->assertNull(LegacyCodes::getLocaleCode('piglatin'));
     }
 }

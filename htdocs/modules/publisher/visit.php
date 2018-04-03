@@ -33,26 +33,26 @@ $fileId = Request::getInt('fileid');
 $fileObj = $publisher->getFileHandler()->get($fileId);
 
 if ($fileObj->getVar('status') !== _PUBLISHER_STATUS_FILE_ACTIVE) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 /* @var $itemObj PublisherItem */
 $itemObj = $publisher->getItemHandler()->get($fileObj->getVar('itemid'));
 
 // Check user permissions to access this file
-if (!$itemObj->accessGranted()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $itemObj->accessGranted()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 // Creating the category object that holds the selected ITEM
 $categoryObj = $itemObj->category();
 
 $fileObj->updateCounter();
 
-if (!preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {
-    header("Location: " . $fileObj->getFileUrl());
+if (! preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {
+    header('Location: ' . $fileObj->getFileUrl());
 }
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; URL="
-    . $myts->htmlSpecialChars($fileObj->getFileUrl()) . "\"></head><body></body></html>";
+echo '<html><head><meta http-equiv="Refresh" content="0; URL='
+    . $myts->htmlSpecialChars($fileObj->getFileUrl()) . '"></head><body></body></html>';
 exit();

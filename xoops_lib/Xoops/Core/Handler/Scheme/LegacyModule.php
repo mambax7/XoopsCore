@@ -49,7 +49,7 @@ class LegacyModule implements SchemeInterface
             $handler = new $class($spec->getFactory()->db());
         }
         if ($handler === null) {
-            if (false === $spec->getOptional()) {
+            if ($spec->getOptional() === false) {
                 throw new NoHandlerException(sprintf('Class not found %s', $class));
             }
         }

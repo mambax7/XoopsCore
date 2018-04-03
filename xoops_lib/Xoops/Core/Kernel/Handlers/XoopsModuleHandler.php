@@ -45,7 +45,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      * @var array
      * @access private
      */
-    private $cachedModulesByMid = array();
+    private $cachedModulesByMid = [];
 
     /**
      * holds an array of cached module references, indexed by module dirname
@@ -53,7 +53,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      * @var array
      * @access private
      */
-    private $cachedModulesByDirname = array();
+    private $cachedModulesByDirname = [];
 
     /**
      * Constructor
@@ -74,19 +74,19 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      */
     public function getById($id = null)
     {
-        $id = (int)($id);
+        $id = (int) ($id);
         if ($id > 0) {
-            if (!empty($this->cachedModulesByMid[$id])) {
+            if (! empty($this->cachedModulesByMid[$id])) {
                 return $this->cachedModulesByMid[$id];
-            } else {
+            }
                 $module = parent::get($id);
-                if (!is_object($module)) {
+                if (! is_object($module)) {
                     return false;
                 }
                 $this->cachedModulesByMid[$id] = $module;
                 $this->cachedModulesByDirname[$module->getVar('dirname')] = $module;
                 return $module;
-            }
+
         }
         return false;
     }
@@ -102,12 +102,12 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
     {
         $dirname = basename(trim($dirname));
 
-        if (!empty($this->cachedModulesByDirname[$dirname])) {
+        if (! empty($this->cachedModulesByDirname[$dirname])) {
             return $this->cachedModulesByDirname[$dirname];
-        } else {
+        }
             $criteria = new Criteria('dirname', $dirname);
             $modules = $this->getObjectsArray($criteria);
-            if (count($modules) == 1 && is_object($modules[0])) {
+            if (count($modules) === 1 && is_object($modules[0])) {
                 $module = $modules[0];
             } else {
                 return false;
@@ -116,7 +116,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             $this->cachedModulesByDirname[$dirname] = $module;
             $this->cachedModulesByMid[$module->getVar('mid')] = $module;
             return $module;
-        }
+
     }
 
     /**
@@ -128,17 +128,17 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      */
     public function insertModule(XoopsModule $module)
     {
-        if (!parent::insert($module)) {
+        if (! parent::insert($module)) {
             return false;
         }
 
         $dirname = $module->getVar('dirname');
         $mid = $module->getVar('mid');
 
-        if (!empty($this->cachedModulesByDirname[$dirname])) {
+        if (! empty($this->cachedModulesByDirname[$dirname])) {
             unset($this->cachedModulesByDirname[$dirname]);
         }
-        if (!empty($this->cachedModulesByMid[$mid])) {
+        if (! empty($this->cachedModulesByMid[$mid])) {
             unset($this->cachedModulesByMid[$mid]);
         }
         return true;
@@ -153,7 +153,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      */
     public function deleteModule(XoopsModule $module)
     {
-        if (!parent::delete($module)) {
+        if (! parent::delete($module)) {
             return false;
         }
 
@@ -180,7 +180,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             ->where($eb->eq('module_id', ':mid'))
             ->setParameter(':mid', $mid, \PDO::PARAM_INT);
         $result = $qb->execute();
-        $block_id_arr = array();
+        $block_id_arr = [];
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             array_push($block_id_arr, $myrow['block_id']);
         }
@@ -226,10 +226,10 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             }
         }
 
-        if (!empty($this->cachedModulesByDirname[$dirname])) {
+        if (! empty($this->cachedModulesByDirname[$dirname])) {
             unset($this->cachedModulesByDirname[$dirname]);
         }
-        if (!empty($this->cachedModulesByMid[$mid])) {
+        if (! empty($this->cachedModulesByMid[$mid])) {
             unset($this->cachedModulesByMid[$mid]);
         }
         $cache = \Xoops::getInstance()->cache();
@@ -249,7 +249,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      */
     public function getObjectsArray(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $qb->select('*')->fromPrefix('system_module', null);
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
@@ -260,7 +260,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         // During install, we start with no tables and no installed modules. We need to
         // handle the resulting exceptions and return an empty array.
         try {
-            if (!$result = $qb->execute()) {
+            if (! $result = $qb->execute()) {
                 return $ret;
             }
         } catch (\Doctrine\DBAL\Driver\PDOException $e) {
@@ -273,7 +273,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $module = new XoopsModule();
             $module->assignVars($myrow);
-            if (!$id_as_key) {
+            if (! $id_as_key) {
                 $ret[] = $module;
             } else {
                 $ret[$myrow['mid']] = $module;
@@ -294,10 +294,10 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
      */
     public function getNameList(CriteriaElement $criteria = null, $dirname_as_key = false)
     {
-        $ret = array();
+        $ret = [];
         $modules = $this->getObjectsArray($criteria, true);
         foreach (array_keys($modules) as $i) {
-            if (!$dirname_as_key) {
+            if (! $dirname_as_key) {
                 $ret[$i] = $modules[$i]->getVar('name');
             } else {
                 $ret[$modules[$i]->getVar('dirname')] = $modules[$i]->getVar('name');

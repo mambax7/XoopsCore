@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\FixedGroups;
 use Xmf\Request;
+use Xoops\Core\FixedGroups;
 
 /**
  * images module
@@ -35,7 +35,7 @@ $start = Request::getInt('start', 0);
 $imgcat_id = Request::getInt('imgcat_id', 0);
 
 $redirect = basename($xoops->getEnv('SCRIPT_NAME'));
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -45,13 +45,13 @@ $groups = $xoops->getUserGroups();
 // check WRITE right by category before continue
 if (isset($imgcat_id) && ($op === 'addfile' || $op === 'editcat' || $op === 'updatecat' || $op === 'delcatok' || $op === 'delcat')) {
     $imgcat_write = $gperm_handler->checkRight('imgcat_write', $imgcat_id, $groups, $xoops->module->mid());
-    if (!$imgcat_write) {
+    if (! $imgcat_write) {
         $xoops->redirect($redirect, 1);
     }
 }
 
 // Only website administator can delete categories or images
-if (!in_array(FixedGroups::ADMIN, $groups) && ($op === 'delfile' || $op === 'delfileok' || $op === 'delcatok' || $op === 'delcat')) {
+if (! in_array(FixedGroups::ADMIN, $groups, true) && ($op === 'delfile' || $op === 'delfileok' || $op === 'delcatok' || $op === 'delcat')) {
     $xoops->redirect($redirect, 1);
 }
 
@@ -59,7 +59,7 @@ if (!in_array(FixedGroups::ADMIN, $groups) && ($op === 'delfile' || $op === 'del
 if (isset($imgcat_id) && $op === 'list') {
     $imgcat_read = $gperm_handler->checkRight('imgcat_read', $imgcat_id, $groups, $xoops->module->mid());
     $imgcat_write = $gperm_handler->checkRight('imgcat_write', $imgcat_id, $groups, $xoops->module->mid());
-    if (!$imgcat_read && !$imgcat_write) {
+    if (! $imgcat_read && ! $imgcat_write) {
         $xoops->redirect('images.php', 1);
     }
 }

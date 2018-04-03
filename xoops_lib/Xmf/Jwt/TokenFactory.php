@@ -12,7 +12,6 @@
 namespace Xmf\Jwt;
 
 use Xmf\Key\KeyAbstract;
-use Xmf\Key\StorageInterface;
 
 /**
  * Build a token

@@ -29,14 +29,15 @@ use Xmf\Language;
  */
 class Admin
 {
-
     /**
      * The real ModuleAdmin object
      *
      * @var object
      */
     protected static $ModuleAdmin = null;
+
     protected $lastInfoBoxTitle = null;
+
     protected static $paypal = '';
 
     /**
@@ -62,11 +63,11 @@ class Admin
 
         if ($instance === null) {
             if (class_exists('\Xoops\Module\Admin', true)) {
-                $instance = new \Xoops\Module\Admin;
+                $instance = new \Xoops\Module\Admin();
                 static::$ModuleAdmin = $instance;
             } else {
                 include_once $GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-                static::$ModuleAdmin = new \ModuleAdmin;
+                static::$ModuleAdmin = new \ModuleAdmin();
                 Language::load('xmf');
                 $instance = new static();
             }
@@ -97,15 +98,14 @@ class Admin
             $mod = (is_array($value)) ? $value[0] : $value;
             if (xoops_isActiveModule($mod)) {
                 return $this->addConfigAccept(sprintf(_AM_XMF_MODULE_INSTALLED, $mod));
-            } else {
+            }
                 $nomod = (is_array($value)) ? $value[1] : 'error';
                 $line = sprintf(_AM_XMF_MODULE_NOT_INSTALLED, $mod);
                 if ($nomod === 'warning') {
                     return $this->addConfigWarning($line);
-                } else {
-                    return $this->addConfigError($line);
                 }
-            }
+                    return $this->addConfigError($line);
+
         }
         return static::$ModuleAdmin->addConfigBoxLine($value, $type);
     }
@@ -169,9 +169,9 @@ class Admin
      *
      * @return string
      */
-    public function renderButton($position = null, $delimiter = "&nbsp;")
+    public function renderButton($position = null, $delimiter = '&nbsp;')
     {
-        if (null === $position) {
+        if ($position === null) {
             $position = 'right';
         }
 
@@ -183,10 +183,8 @@ class Admin
      *
      * @param string $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
-     *
-     * @return void
      */
-    public function displayButton($position = null, $delimiter = "&nbsp;")
+    public function displayButton($position = null, $delimiter = '&nbsp;')
     {
         echo $this->renderButton($position, $delimiter);
     }
@@ -203,8 +201,6 @@ class Admin
 
     /**
      * Display InfoBox
-     *
-     * @return void
      */
     public function displayInfoBox()
     {
@@ -223,8 +219,6 @@ class Admin
 
     /**
      * Display index page for admin
-     *
-     * @return void
      */
     public function displayIndex()
     {
@@ -235,8 +229,6 @@ class Admin
      * Display the navigation menu
      *
      * @param string $menu menu key (script name, i.e. index.php)
-     *
-     * @return void
      */
     public function displayNavigation($menu = '')
     {
@@ -259,8 +251,6 @@ class Admin
      * Display about page
      *
      * @param bool $logo_xoops display XOOPS logo
-     *
-     * @return void
      */
     public function displayAbout($logo_xoops = true)
     {
@@ -277,11 +267,11 @@ class Admin
     public function addConfigError($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : red; font-weight : bold;'>";
         $line .= "<img src='" . $path . "0.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -298,11 +288,11 @@ class Admin
     public function addConfigAccept($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : green;'>";
         $line .= "<img src='" . $path . "1.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -319,17 +309,16 @@ class Admin
     public function addConfigWarning($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : orange; font-weight : bold;'>";
         $line .= "<img src='" . $path . "warning.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
         return static::$ModuleAdmin->addConfigBoxLine($value, $type);
     }
-
 
     /**
      * Check for installed module and version and do addConfigBoxLine()
@@ -371,20 +360,6 @@ class Admin
         return $return;
     }
 
-    // the following not part of next generation Xoops\Module\Admin
-
-    /**
-     * Are we in a next generation environment?
-     *
-     * not part of next generation Xoops\Module\Admin
-     *
-     * @return bool true if we are in a post XOOPS 2.5.x environment
-     */
-    protected static function isXng()
-    {
-        return class_exists('\Xoops', false);
-    }
-
     /**
      * Get an appropriate imagePath for menu.php use.
      *
@@ -400,11 +375,11 @@ class Admin
     {
         if (static::isXng()) {
             return($image);
-        } else {
+        }
             $path = '../../Frameworks/moduleclasses/icons/32/';
 
             return($path . $image);
-        }
+
     }
 
     /**
@@ -453,11 +428,23 @@ class Admin
      * not part of next generation Xoops\Module\Admin
      *
      * @param string $paypal PayPal identifier for donate button
-     *
-     * @return void
      */
     public static function setPaypal($paypal = '')
     {
         static::$paypal = $paypal;
+    }
+
+    // the following not part of next generation Xoops\Module\Admin
+
+    /**
+     * Are we in a next generation environment?
+     *
+     * not part of next generation Xoops\Module\Admin
+     *
+     * @return bool true if we are in a post XOOPS 2.5.x environment
+     */
+    protected static function isXng()
+    {
+        return class_exists('\Xoops', false);
     }
 }

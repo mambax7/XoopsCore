@@ -22,9 +22,6 @@
 
 class MenusMenus_menuForm extends Xoops\Form\ThemeForm
 {
-    /**
-     * @param MenusMenu $obj
-     */
     public function __construct(MenusMenu $obj)
     {
         global $menu_id;
@@ -49,29 +46,29 @@ class MenusMenus_menuForm extends Xoops\Form\ThemeForm
         $criteria->add(new Criteria('id', $obj->getVar('id'), '<>'));
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
-        $results = $this_handler->getAll($criteria, array('title', 'id', 'pid'));
+        $results = $this_handler->getAll($criteria, ['title', 'id', 'pid']);
         $parent_tree = new XoopsObjectTree($results, 'id', 'pid');
         $parent_select = $parent_tree->makeSelBox('pid', 'title', '-- ', $obj->getVar('pid'), true);
         $this->addElement(new Xoops\Form\Label(_AM_MENUS_MENU_PARENT, $parent_select));
 
-        $formvis = new Xoops\Form\Select(_AM_MENUS_MENU_VISIBLE, "visible", $obj->getVar('visible'));
-        $formvis->addOption("0", XoopsLocale::NO);
-        $formvis->addOption("1", XoopsLocale::YES);
+        $formvis = new Xoops\Form\Select(_AM_MENUS_MENU_VISIBLE, 'visible', $obj->getVar('visible'));
+        $formvis->addOption('0', XoopsLocale::NO);
+        $formvis->addOption('1', XoopsLocale::YES);
         $this->addElement($formvis);
 
-        $formtarget = new Xoops\Form\Select(_AM_MENUS_MENU_TARGET, "target", $obj->getVar('target'));
-        $formtarget->addOption("_self", _AM_MENUS_MENU_TARG_SELF);
-        $formtarget->addOption("_blank", _AM_MENUS_MENU_TARG_BLANK);
-        $formtarget->addOption("_parent", _AM_MENUS_MENU_TARG_PARENT);
-        $formtarget->addOption("_top", _AM_MENUS_MENU_TARG_TOP);
+        $formtarget = new Xoops\Form\Select(_AM_MENUS_MENU_TARGET, 'target', $obj->getVar('target'));
+        $formtarget->addOption('_self', _AM_MENUS_MENU_TARG_SELF);
+        $formtarget->addOption('_blank', _AM_MENUS_MENU_TARG_BLANK);
+        $formtarget->addOption('_parent', _AM_MENUS_MENU_TARG_PARENT);
+        $formtarget->addOption('_top', _AM_MENUS_MENU_TARG_TOP);
         $this->addElement($formtarget);
 
-        $formgroups = new Xoops\Form\SelectGroup(_AM_MENUS_MENU_GROUPS, "groups", true, $obj->getVar('groups'), 5, true);
+        $formgroups = new Xoops\Form\SelectGroup(_AM_MENUS_MENU_GROUPS, 'groups', true, $obj->getVar('groups'), 5, true);
         $formgroups->setDescription(_AM_MENUS_MENU_GROUPS_HELP);
         $this->addElement($formgroups);
 
-        $formhooks = new Xoops\Form\Select(_AM_MENUS_MENU_ACCESS_FILTER, "hooks", $obj->getVar('hooks'), 5, true);
-        $accessFilter = array();
+        $formhooks = new Xoops\Form\Select(_AM_MENUS_MENU_ACCESS_FILTER, 'hooks', $obj->getVar('hooks'), 5, true);
+        $accessFilter = [];
         foreach ($decorators as $decorator) {
             $decorator->accessFilter($accessFilter);
         }

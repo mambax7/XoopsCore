@@ -27,7 +27,6 @@
  */
 abstract class XoopsDownloader
 {
-
     /**
      * @var string
      */
@@ -43,6 +42,35 @@ abstract class XoopsDownloader
      */
     protected $archiver;
 
+     /**
+      * @abstract
+      * @param bool|string $newfilename
+      */
+     abstract function addFile($filepath, $newfilename = null);
+
+    /**
+     * @abstract
+     * @param null $newfilename
+     */
+    abstract function addBinaryFile($filepath, $newfilename = null);
+
+    /**
+     * @abstract
+     * @param int $time
+     */
+    abstract function addFileData(&$data, $filename, $time = 0);
+
+    /**
+     * @abstract
+     * @param int $time
+     */
+    abstract function addBinaryFileData(&$data, $filename, $time = 0);
+
+    /**
+     * @abstract
+     * @param bool $gzip
+     */
+    abstract function download($name, $gzip = true);
 
     /**
      * Send the HTTP header
@@ -67,46 +95,4 @@ abstract class XoopsDownloader
             header('Pragma: no-cache');
         }
     }
-
-    /**
-     * @abstract
-     * @param $filepath
-     * @param boolean|string $newfilename
-     * @return void
-     */
-     abstract function addFile($filepath, $newfilename = null);
-
-    /**
-     * @abstract
-     * @param $filepath
-     * @param null $newfilename
-     * @return void
-     */
-    abstract function addBinaryFile($filepath, $newfilename = null);
-
-    /**
-     * @abstract
-     * @param $data
-     * @param $filename
-     * @param int $time
-     * @return void
-     */
-    abstract function addFileData(&$data, $filename, $time = 0);
-
-    /**
-     * @abstract
-     * @param $data
-     * @param $filename
-     * @param int $time
-     * @return void
-     */
-    abstract function addBinaryFileData(&$data, $filename, $time = 0);
-
-    /**
-     * @abstract
-     * @param $name
-     * @param bool $gzip
-     * @return void
-     */
-    abstract function download($name, $gzip = true);
 }

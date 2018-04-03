@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
@@ -69,13 +68,13 @@ if ($mid > 0) {
         }
         unset($dirlist);
     } else {
-        $list_help = array();
+        $list_help = [];
         $listed_mods[0] = $module->toArray();
         $helplist = $module->getInfo('helpsection');
-        $j=0;
+        $j = 0;
         if (is_array($helplist)) {
             foreach ($helplist as $helpitem) {
-                if (($helpitem['name'] != '') && ($helpitem['link'] != '')) {
+                if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
                     $list_help[$j]['name'] = $helpitem['name'];
                     $list_help[$j]['link'] = 'help.php?mid=' . $mid . '&amp;' . $helpitem['link'];
                     ++$j;
@@ -85,7 +84,7 @@ if ($mid > 0) {
             $xoopsTpl->assign('list_mods', $listed_mods);
         }
         unset ($helplist);
-        if (( $module->getInfo('help') != '' ) && ($j == 0)) {
+        if (( $module->getInfo('help') !== '' ) && ($j === 0)) {
             $help['name'] = $module->getInfo('name');
             $help['link'] = 'help.php?mid=' . $mid . '&amp;' . $module->getInfo('help');
             $xoopsTpl->appendByRef('help', $help);
@@ -152,12 +151,12 @@ if ($mid > 0) {
     $criteria->setOrder('weight');
     // Get all installed modules
     $installed_mods = $xoops->getHandlerModule()->getObjectsArray($criteria);
-    $listed_mods = array();
+    $listed_mods = [];
     $i = 0;
     $j = 0;
     foreach ($installed_mods as $module) {
         /* @var $module XoopsModule */
-        $list_help = array();
+        $list_help = [];
         $listed_mods[$i] = $module->getValues();
         $listed_mods[$i]['image'] = $module->getInfo('image');
         $listed_mods[$i]['adminindex'] = $module->getInfo('adminindex');
@@ -190,12 +189,12 @@ if ($mid > 0) {
             unset($dirlist);
         } else {
             $helplist = $module->getInfo('helpsection');
-            $k=0;
+            $k = 0;
 
             // Only build the list if one has been defined.
             if (is_array($helplist)) {
                 foreach ($helplist as $helpitem) {
-                    if (($helpitem['name'] != '') && ($helpitem['link'] != '')) {
+                    if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
                         $list_help[$j]['name'] = $helpitem['name'];
                         $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
                             . '&amp;' . $helpitem['link'];
@@ -207,14 +206,14 @@ if ($mid > 0) {
             unset($helplist);
 
             // If there is no help section ($k=0), and a lone help parameter has been defined.
-            if (( $module->getInfo('help') != '' ) && ($k == 0)) {
+            if (( $module->getInfo('help') !== '' ) && ($k === 0)) {
                 $list_help[$j]['name'] = $module->getInfo('name');
                 $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
                     . '&amp;' . $module->getInfo('help');
             }
         }
         $listed_mods[$i]['help_page'] = $list_help;
-        if ($module->getInfo('help') == '') {
+        if ($module->getInfo('help') === '') {
             unset($listed_mods[$i]);
         }
         unset($list_help);

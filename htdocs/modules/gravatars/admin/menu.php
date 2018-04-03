@@ -20,16 +20,16 @@
  * @version         $Id$
  */
 
-$adminmenu = array();
+$adminmenu = [];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => XoopsLocale::HOME,
-    'link'  => 'admin/index.php',
-    'icon'  => 'home.png',
-);
+    'link' => 'admin/index.php',
+    'icon' => 'home.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => XoopsLocale::ABOUT,
-    'link'  => 'admin/about.php',
-    'icon'  => 'about.png',
-);
+    'link' => 'admin/about.php',
+    'icon' => 'about.png',
+];

@@ -23,15 +23,15 @@ use Xoops\Module\Plugin;
  */
 function b_waiting_waiting_show()
 {
-    $block = array();
-    $block['waiting'] = array();
+    $block = [];
+    $block['waiting'] = [];
     $plugins = Plugin::getPlugins('waiting');
     /* @var $plugin WaitingPluginInterface */
     foreach ($plugins as $dirName => $plugin) {
 
         //No permissions, no links
         $helper = \Xoops::getModuleHelper($dirName);
-        if (!$helper->isUserAdmin()) {
+        if (! $helper->isUserAdmin()) {
             continue;
         }
 
@@ -42,7 +42,7 @@ function b_waiting_waiting_show()
                     //Image support
                     if (XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
                         $res['image'] = $helper->url('icons/logo_small.png');
-                        $res['icon'] = "$dirName-icon" ;
+                        $res['icon'] = "${dirName}-icon";
                     } else {
                         //Icon support
                         $res['icon'] = isset($res['icon']) ? $res['icon'] : 'glyphicon-time';

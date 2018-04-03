@@ -33,7 +33,7 @@ class DriverList extends \Stash\DriverList
             return self::$drivers[$name];
         }
         foreach (self::$drivers as $driverName => $className) {
-            if (0 == strcasecmp($name, $driverName)) {
+            if (strcasecmp($name, $driverName) === 0) {
                 return $className;
             }
         }

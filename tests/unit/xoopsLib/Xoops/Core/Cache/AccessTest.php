@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../../../../init_new.php';
+require_once __DIR__ . '/../../../../init_new.php';
 
 use Xoops\Core\Cache\Access;
 
@@ -26,7 +26,6 @@ class AccessTest extends \PHPUnit\Framework\TestCase
     protected function tearDown()
     {
     }
-
 
     public function testReadWriteDelete()
     {
@@ -68,13 +67,13 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $ret = $this->object->delete($key);
 
         $ret = $this->object->cacheRead($key, $regenFunction, 60, $value);
-        $this->assertEquals($ret, $value);
+        $this->assertSame($ret, $value);
         // this should return cached value, not current regenFunction result
-        $ret = $this->object->cacheRead($key, $regenFunction, 60, 'not'.$value);
-        $this->assertEquals($ret, $value);
+        $ret = $this->object->cacheRead($key, $regenFunction, 60, 'not' . $value);
+        $this->assertSame($ret, $value);
 
         $ret = $this->object->read($key);
-        $this->assertEquals($ret, $value);
+        $this->assertSame($ret, $value);
     }
 
     public function testGarbageCollect()
@@ -85,7 +84,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($ret);
 
         $ret = $this->object->read($key);
-        $this->assertEquals($ret, $value);
+        $this->assertSame($ret, $value);
 
         sleep(3);
 

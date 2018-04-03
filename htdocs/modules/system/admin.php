@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\FixedGroups;
+use Xoops\Core\Kernel\Criteria;
 
 /**
  * System admin
@@ -32,8 +32,8 @@ $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 $error = false;
 if ($system->checkRight()) {
-    if (isset($fct) && $fct != '') {
-        $fct = preg_replace("/[^a-z0-9_\-]/i", "", $fct);
+    if (isset($fct) && $fct !== '') {
+        $fct = preg_replace("/[^a-z0-9_\-]/i", '', $fct);
         if (XoopsLoad::fileExists($file = $xoops->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php'))) {
             // Load language file
             //system_loadLanguage($fct, $xoopsModule->getVar('dirname', 'n'));
@@ -44,12 +44,12 @@ if ($system->checkRight()) {
             // Get System permission handler
             $sysperm_handler = $xoops->getHandlerGroupPermission();
 
-            $category = !empty($modversion['category']) ? (int)($modversion['category']) : 0;
+            $category = ! empty($modversion['category']) ? (int) ($modversion['category']) : 0;
             unset($modversion);
 
             if ($category > 0) {
                 $group = $xoopsUser->getGroups();
-                if (in_array(FixedGroups::ADMIN, $group) || false != $sysperm_handler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid'))) {
+                if (in_array(FixedGroups::ADMIN, $group, true) || $sysperm_handler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid')) !== false) {
                     if (XoopsLoad::fileExists($file = $xoops->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/main.php'))) {
                         include_once $file;
                         unset($file);
@@ -77,7 +77,7 @@ if ($system->checkRight()) {
     }
 }
 
-if (false != $error) {
+if ($error !== false) {
     $op = $system->cleanVars($_REQUEST, 'op', '', 'string');
     if ($op === 'system_activate') {
         \Xoops::getInstance()->logger()->quiet();
@@ -88,8 +88,8 @@ if (false != $error) {
         $configs = $config_handler->getConfigs($criteria);
         foreach ($configs as $conf) {
             /* @var $conf XoopsConfigItem */
-            if ($conf->getVar('conf_name') == 'active_' . $part) {
-                $conf->setVar('conf_value', !$conf->getVar('conf_value'));
+            if ($conf->getVar('conf_name') === 'active_' . $part) {
+                $conf->setVar('conf_value', ! $conf->getVar('conf_value'));
                 $config_handler->insertConfig($conf);
             }
         }
@@ -111,7 +111,7 @@ if (false != $error) {
     $admin_page->renderTips();
     $groups = $xoopsUser->getGroups();
     $all_ok = false;
-    if (!in_array(FixedGroups::ADMIN, $groups)) {
+    if (! in_array(FixedGroups::ADMIN, $groups, true)) {
         $sysperm_handler = $xoops->getHandlerGroupPermission();
         $ok_syscats = $sysperm_handler->getItemIds('system_admin', $groups);
     } else {
@@ -120,7 +120,7 @@ if (false != $error) {
 
     $admin_dir = \XoopsBaseConfig::get('root-path') . '/modules/system/admin';
     $dirlist = XoopsLists::getDirListAsArray($admin_dir);
-    $inactive_section = array('blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets', 'extensions', 'users', 'services');
+    $inactive_section = ['blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets', 'extensions', 'users', 'services'];
     foreach ($dirlist as $directory) {
         if (XoopsLoad::fileExists($file = $admin_dir . '/' . $directory . '/xoops_version.php')) {
             require $file;
@@ -128,8 +128,8 @@ if (false != $error) {
 
             if ($modversion['hasAdmin']) {
                 if ($xoops->getModuleConfig('active_' . $directory)) {
-                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
-                    if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                    $category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
+                    if ($all_ok !== false || in_array($modversion['category'], $ok_syscats, true)) {
                         $menu['file'] = $directory;
                         $menu['title'] = trim($modversion['name']);
                         $menu['desc'] = str_replace('<br />', ' ', $modversion['description']);
@@ -137,8 +137,8 @@ if (false != $error) {
                         $menu['status'] = true;
                     }
                 } else {
-                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
-                    if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                    $category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
+                    if ($all_ok !== false || in_array($modversion['category'], $ok_syscats, true)) {
                         $menu['file'] = $directory;
                         $menu['title'] = trim($modversion['name']);
                         $menu['desc'] = str_replace('<br />', ' ', $modversion['description']);
@@ -146,7 +146,7 @@ if (false != $error) {
                         $menu['status'] = false;
                     }
                 }
-                if (!in_array($directory, $inactive_section)) {
+                if (! in_array($directory, $inactive_section, true)) {
                     $menu['used'] = true;
                 }
                 switch ($directory) {

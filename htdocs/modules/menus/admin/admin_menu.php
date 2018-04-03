@@ -51,7 +51,7 @@ if (empty($menus_list)) {
     $xoops->redirect('admin_menus.php', 1, _AM_MENUS_MSG_NOMENUS);
 }
 
-if (isset($_REQUEST['menu_id']) && in_array($_REQUEST['menu_id'], array_keys($menus_list))) {
+if (isset($_REQUEST['menu_id']) && in_array($_REQUEST['menu_id'], array_keys($menus_list), true)) {
     $menu_id = $_REQUEST['menu_id'];
     $menu_title = $menus_list[$menu_id];
 } else {
@@ -87,14 +87,14 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin_menu.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
         $msg[] = _AM_MENUS_SAVE;
 
         $id = Request::getInt('id', 0);
-        if (isset($id) && $id !=0) {
+        if (isset($id) && $id !== 0) {
             $obj = $helper->getHandlerMenu()->get($id);
         } else {
             $obj = $helper->getHandlerMenu()->create();
@@ -111,8 +111,8 @@ switch ($op) {
             $weight = $menus[0]->getVar('weight') + 1;
         }
 
-        if (!isset($_POST['hooks'])) {
-            $_POST['hooks'] = array();
+        if (! isset($_POST['hooks'])) {
+            $_POST['hooks'] = [];
         }
         $obj->setVars($_POST);
         $obj->setVar('weight', $weight);
@@ -130,8 +130,8 @@ switch ($op) {
         $ok = Request::getInt('ok', 0);
         $obj = $helper->getHandlerMenu()->get($id);
 
-        if ($ok == 1) {
-            if (!$xoops->security()->check()) {
+        if ($ok === 1) {
+            if (! $xoops->security()->check()) {
                 $xoops->redirect('admin_menu.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($helper->getHandlerMenu()->delete($obj)) {
@@ -141,7 +141,7 @@ switch ($op) {
             }
         } else {
             echo $xoops->confirm(
-                array('ok' => 1, 'id' => $id, 'op' => 'del', 'menu_id' => $menu_id),
+                ['ok' => 1, 'id' => $id, 'op' => 'del', 'menu_id' => $menu_id],
                 $helper->url('admin/admin_menu.php'),
                 _AM_MENUS_MSG_SUREDEL . '<br /><strong>' . $obj->getVar('title') . '</strong>'
             );
@@ -158,7 +158,7 @@ switch ($op) {
         break;
 
     case 'toggle':
-        $visible = ($visible == 1) ? 0 : 1;
+        $visible = ($visible === 1) ? 0 : 1;
         $this_handler = Menus::getInstance()->getHandlerMenu();
         $obj = $this_handler->get($id);
         $obj->setVar('visible', $visible);
@@ -181,7 +181,7 @@ switch ($op) {
         $criteria->setOrder('ASC');
 
         if ($count > 0) {
-            $array = array();
+            $array = [];
             $menus = $this_handler->getObjects($criteria);
             /* @var $menu MenusMenu */
             foreach ($menus as $menu) {

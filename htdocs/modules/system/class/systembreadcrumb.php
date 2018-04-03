@@ -19,8 +19,16 @@
  * @version     $Id$
  */
 
-class SystemBreadcrumb
+class systembreadcrumb
 {
+    var
+
+ $_help;
+
+    var
+
+ $_tips;
+
     /**
      * @var string
      */
@@ -29,11 +37,7 @@ class SystemBreadcrumb
     /**
      * @var array
      */
-    private $_bread = array();
-
-    var $_help;
-
-    var $_tips;
+    private $_bread = [];
 
     /**
      * Actual System BreadCrumb Object
@@ -42,7 +46,7 @@ class SystemBreadcrumb
      */
     private function __construct($fct)
     {
-        if ($fct != '') {
+        if ($fct !== '') {
             $this->_directory = $fct;
         }
     }
@@ -58,7 +62,7 @@ class SystemBreadcrumb
     static public function getInstance($fct = '')
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class($fct);
         }
@@ -72,18 +76,16 @@ class SystemBreadcrumb
 
     /**
      * Add link to breadcrumb
-
      */
     function addLink($title = '', $link = '', $home = false)
     {
-        $this->_bread[] = array(
-            'link' => $link, 'title' => $title, 'home' => $home
-        );
+        $this->_bread[] = [
+            'link' => $link, 'title' => $title, 'home' => $home,
+        ];
     }
 
     /**
      * Add Help link
-
      */
     function addHelp($link = '')
     {
@@ -92,7 +94,6 @@ class SystemBreadcrumb
 
     /**
      * Add Tips
-
      */
     function addTips($value)
     {
@@ -101,7 +102,6 @@ class SystemBreadcrumb
 
     /**
      * Render System BreadCrumb
-
      */
     function render()
     {
@@ -117,11 +117,11 @@ class SystemBreadcrumb
             // Call template
             if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language') . '/help/' . $this->_directory . '.html')) {
                 $xoops->tpl()
-                        ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language') . '/help/' . $this->_directory . '.html');
+                    ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language') . '/help/' . $this->_directory . '.html');
             } else {
                 if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/system/language/english/help/' . $this->_directory . '.html')) {
                     $xoops->tpl()
-                            ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/english/help/' . $this->_directory . '.html');
+                        ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/english/help/' . $this->_directory . '.html');
                 } else {
                     $xoops->tpl()->assign('load_error', 1);
                 }
@@ -133,7 +133,7 @@ class SystemBreadcrumb
                 if ($menu['home']) {
                     $out .= '<li><a href="' . $menu['link'] . '" title="' . $menu['title'] . '"><img src="images/home.png" alt="' . $menu['title'] . '" class="home" /></a></li>';
                 } else {
-                    if ($menu['link'] != '') {
+                    if ($menu['link'] !== '') {
                         $out .= '<li><a href="' . $menu['link'] . '" title="' . $menu['title'] . '">' . $menu['title'] . '</a></li>';
                     } else {
                         $out .= '<li>' . $menu['title'] . '</li>';

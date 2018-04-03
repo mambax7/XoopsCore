@@ -65,12 +65,12 @@ class XoopsEditor extends Xoops\Form\TextArea
         $this->set('cols', 50);
 
         $args = func_get_args();
-        $configs = array();
+        $configs = [];
         // For backward compatibility
-        if (!empty($args)) {
-            if (!is_array($args[0])) {
+        if (! empty($args)) {
+            if (! is_array($args[0])) {
                 $i = 0;
-                foreach (array('caption', 'name', 'value', 'rows', 'cols', 'hiddentext') as $key) {
+                foreach (['caption', 'name', 'value', 'rows', 'cols', 'hiddentext'] as $key) {
                     if (isset($args[$i])) {
                         $configs[$key] = $args[$i];
                     }
@@ -84,9 +84,9 @@ class XoopsEditor extends Xoops\Form\TextArea
         // TODO: switch to property_exists() as of PHP 5.1.0
         $vars = get_class_vars(__CLASS__);
         foreach ($configs as $key => $val) {
-            $method = "set" . ucfirst($key);
+            $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
-                $this->$method($val);
+                $this->{$method}($val);
             } else {
                 if (array_key_exists("_{$key}", $vars)) {
                     $this->{"_{$key}"} = $val;
@@ -113,12 +113,11 @@ class XoopsEditor extends Xoops\Form\TextArea
 
     /**
      * @param array $options
-     * @return void
      */
     public function setConfig($options)
     {
         foreach ($options as $key => $val) {
-            $this->$key = $val;
+            $this->{$key} = $val;
         }
     }
 }
@@ -137,7 +136,7 @@ class XoopsEditorHandler
     /**
      * @var string
      */
-    public $root_path = "";
+    public $root_path = '';
 
     /**
      * @var bool
@@ -147,7 +146,7 @@ class XoopsEditorHandler
     /**
      * @var array
      */
-    public $allowed_editors = array();
+    public $allowed_editors = [];
 
     /**
      * Constructor
@@ -167,7 +166,7 @@ class XoopsEditorHandler
     static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -189,22 +188,20 @@ class XoopsEditorHandler
             return $editor;
         }
         $list = array_keys($this->getList($noHtml));
-        if (empty($OnFailure) || !in_array($OnFailure, $list)) {
+        if (empty($OnFailure) || ! in_array($OnFailure, $list, true)) {
             $OnFailure = $list[0];
         }
         $editor = $this->_loadEditor($OnFailure, $options);
         return $editor;
     }
 
-
     /**
-     * @param bool $noHtml
      * @return array
      */
     public function buildEditorList()
     {
-        $list = array();
-        $order = array();
+        $list = [];
+        $order = [];
         $fileList = XoopsLists::getDirListAsArray($this->root_path . '/');
 
         foreach ($fileList as $item) {
@@ -221,7 +218,7 @@ class XoopsEditorHandler
                     continue;
                 }
                 $order[] = $config['order'];
-                $list[$item] = array('title' => $config['title'], 'nohtml' => $config['nohtml']);
+                $list[$item] = ['title' => $config['title'], 'nohtml' => $config['nohtml']];
             }
         }
         array_multisort($order, $list);
@@ -237,15 +234,15 @@ class XoopsEditorHandler
         $xoops = Xoops::getInstance();
         $list = $xoops->cache()->cacheRead(
             XoopsEditor::CACHE_KEY_EDITOR_LIST,
-            array($this, 'buildEditorList')
+            [$this, 'buildEditorList']
         );
         $editors = array_keys($list);
-        if (!empty($this->allowed_editors)) {
+        if (! empty($this->allowed_editors)) {
             $editors = array_intersect($editors, $this->allowed_editors);
         }
-        $returnList = array();
+        $returnList = [];
         foreach ($editors as $name) {
-            if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
+            if (! empty($noHtml) && empty($list[$name]['nohtml'])) {
                 continue;
             }
             $returnList[$name] = $list[$name]['title'];
@@ -254,9 +251,7 @@ class XoopsEditorHandler
     }
 
     /**
-     * @param XoopsEditor $editor
      * @param array $options
-     * @return void
      */
     function setConfig(XoopsEditor $editor, $options)
     {
@@ -274,7 +269,7 @@ class XoopsEditorHandler
     {
         $xoops = Xoops::getInstance();
         $editor = null;
-        if (empty($name) || !array_key_exists($name, $this->getList())) {
+        if (empty($name) || ! array_key_exists($name, $this->getList())) {
             return $editor;
         }
         $editor_path = $this->root_path . '/' . $name;

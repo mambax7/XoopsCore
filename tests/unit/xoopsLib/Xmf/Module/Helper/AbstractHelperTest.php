@@ -1,7 +1,8 @@
 <?php
+
 namespace Xmf\Module\Helper;
 
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
 class AbstractHelperTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,9 +36,9 @@ class AbstractHelperTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertTrue(method_exists($this->object, 'setDebug'));
         $this->object->setDebug(true);
-        $this->assertAttributeEquals(true, 'debug', $this->object);
+        $this->assertAttributeSame(true, 'debug', $this->object);
         $this->object->setDebug(false);
-        $this->assertAttributeEquals(false, 'debug', $this->object);
+        $this->assertAttributeSame(false, 'debug', $this->object);
     }
 
     public function testAddLog()

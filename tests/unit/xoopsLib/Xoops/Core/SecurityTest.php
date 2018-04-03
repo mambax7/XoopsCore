@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 use Xoops\Core\Security;
 
@@ -11,7 +11,9 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
     protected $object;
 
     protected $SERVER_save;
+
     protected $SESSION_save;
+
     protected $moduleConfig_save;
 
     /**
@@ -49,7 +51,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         if(isset($_SESSION)) unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken();
-        $this->assertTrue(!empty($token));
+        $this->assertTrue(! empty($token));
 
         $value = $instance->check(true, $token);
         $this->assertTrue($value);
@@ -67,7 +69,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
-        $this->assertTrue(!empty($token));
+        $this->assertTrue(! empty($token));
         sleep(2);
         $value = $instance->check(true, $token);
         $this->assertFalse($value);
@@ -83,7 +85,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->createToken();
         $x = $_SESSION['XOOPS_TOKEN_SESSION'];
         $token = array_pop($x);
-        $this->assertFalse(is_null($token));
+        $this->assertFalse($token === null);
         $id = $token['id'];
         $expire = $token['expire'];
         $db_prefix = \XoopsBaseConfig::get('db-prefix');
@@ -92,9 +94,9 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         $tkName = 'MY_TOKEN';
         $value = $instance->createToken(1, $tkName);
-        $x = $_SESSION[$tkName.'_SESSION'];
+        $x = $_SESSION[$tkName . '_SESSION'];
         $token = array_pop($x);
-        $this->assertFalse(is_null($token));
+        $this->assertFalse($token === null);
         $id = $token['id'];
         $this->assertSame($id, $value);
         unset($_SESSION['MY_TOKEN_SESSION']);
@@ -106,7 +108,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken();
-        $this->assertTrue(!empty($token));
+        $this->assertTrue(! empty($token));
 
         $value = $instance->validateToken($token);
         $this->assertTrue($value);
@@ -124,7 +126,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
-        $this->assertTrue(!empty($token));
+        $this->assertTrue(! empty($token));
         sleep(2);
         $value = $instance->validateToken($token);
         $this->assertFalse($value);
@@ -139,7 +141,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken();
-        $this->assertTrue(!empty($token));
+        $this->assertTrue(! empty($token));
 
         $instance->clearTokens();
         $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
@@ -151,17 +153,17 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token1 = $instance->createToken(1);
-        $this->assertTrue(!empty($token1));
+        $this->assertTrue(! empty($token1));
 
         $token2 = $instance->createToken(10);
-        $this->assertTrue(!empty($token2));
+        $this->assertTrue(! empty($token2));
 
-        $this->assertTrue(count($_SESSION['XOOPS_TOKEN_SESSION']) == 2);
+        $this->assertTrue(count($_SESSION['XOOPS_TOKEN_SESSION']) === 2);
 
         sleep(2);
 
         $instance->garbageCollection();
-        $this->assertTrue(count($_SESSION['XOOPS_TOKEN_SESSION']) == 1);
+        $this->assertTrue(count($_SESSION['XOOPS_TOKEN_SESSION']) === 1);
     }
 
     public function test_checkReferer()
@@ -171,7 +173,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->checkReferer(0);
         $this->assertTrue($value);
 
-        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url');;
+        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url'); ;
         $value = $instance->checkReferer();
         $this->assertTrue($value);
 
@@ -193,8 +195,8 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($result);
 
         $xoops = \Xoops::getInstance();
-        $xoops->setConfig('enable_badips',1);
-        $xoops->setConfig('bad_ips', array('bad_ip1', 'bad_ip2'));
+        $xoops->setConfig('enable_badips', 1);
+        $xoops->setConfig('bad_ips', ['bad_ip1', 'bad_ip2']);
 
         $_SERVER['REMOTE_ADDR'] = 'bad_ip3';
         $result = $instance->checkBadips();
@@ -212,12 +214,12 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $this->assertNotFalse(strpos($value, 'id="XOOPS_TOKEN_REQUEST"'));
         $this->assertNotFalse(strpos($value, 'value="'));
 
-        $token = "MY_TOKEN";
+        $token = 'MY_TOKEN';
         $value = $instance->getTokenHTML($token);
         $this->assertTrue(strpos($value, '<input') === 0);
         $this->assertNotFalse(strpos($value, 'type="hidden"'));
-        $this->assertNotFalse(strpos($value, 'name="'.$token.'_REQUEST"'));
-        $this->assertNotFalse(strpos($value, 'id="'.$token.'_REQUEST"'));
+        $this->assertNotFalse(strpos($value, 'name="' . $token . '_REQUEST"'));
+        $this->assertNotFalse(strpos($value, 'id="' . $token . '_REQUEST"'));
         $this->assertNotFalse(strpos($value, 'value="'));
     }
 
@@ -225,15 +227,14 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $str1 = "string1";
+        $str1 = 'string1';
         $instance->setErrors($str1);
         $instance->setErrors($str1);
         $value = $instance->getErrors();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(count($value)==2);
+        $this->assertTrue(count($value) === 2);
         $value = $instance->getErrors(true);
         $this->assertTrue(is_string($value));
-        $this->assertSame($str1.'<br />'.$str1.'<br />', $value);
+        $this->assertSame($str1 . '<br />' . $str1 . '<br />', $value);
     }
-
 }

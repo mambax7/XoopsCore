@@ -41,7 +41,7 @@ use Xoops\Core\XoopsTpl;
  */
 function smarty_function_xoblock($params, &$smarty)
 {
-    if (!isset($params['id'])) {
+    if (! isset($params['id'])) {
         return false;
     }
 
@@ -51,15 +51,15 @@ function smarty_function_xoblock($params, &$smarty)
     $display_none = (isset($params['display']) && $params['display'] === 'none') ? true : false;
     $options = (isset($params['options'])) ? $params['options'] : false;
     $groups = (isset($params['groups'])) ? explode('|', $params['groups']) : false;
-    $cache = (isset($params['cache'])) ? (int)($params['cache']) : false;
+    $cache = (isset($params['cache'])) ? (int) ($params['cache']) : false;
 
-    $block_id = (int)($params['id']);
+    $block_id = (int) ($params['id']);
 
     $block_handler = $xoops->getHandlerBlock();
     static $block_objs;
-    if (!isset($block_objs[$block_id])) {
+    if (! isset($block_objs[$block_id])) {
         $blockObj = $block_handler->get($block_id);
-        if (!is_object($blockObj)) {
+        if (! is_object($blockObj)) {
             return false;
         }
         $block_objs[$block_id] = $blockObj;
@@ -69,16 +69,16 @@ function smarty_function_xoblock($params, &$smarty)
     $user_groups = $xoops->getUserGroups();
 
     static $allowed_blocks;
-    if (count($allowed_blocks) == 0) {
+    if (count($allowed_blocks) === 0) {
         $allowed_blocks = $block_handler->getAllBlocksByGroup($user_groups, false);
     }
 
     if ($groups) {
-        if (!array_intersect($user_groups, $groups)) {
+        if (! array_intersect($user_groups, $groups)) {
             return false;
         }
     } else {
-        if (!in_array($block_id, $allowed_blocks)) {
+        if (! in_array($block_id, $allowed_blocks, true)) {
             return false;
         }
     }
@@ -99,7 +99,7 @@ function smarty_function_xoblock($params, &$smarty)
     $block_renderer = new \Xoops\Core\Theme\Plugins\Blocks();
     $block_renderer->theme = $xoops->theme();
     $block = $block_renderer->buildBlock($blockObj, $tpl);
-    if (!$display_none) {
+    if (! $display_none) {
         return $block['content'];
     }
     return '';

@@ -41,13 +41,10 @@ interface CommentsPluginInterface
 
     /**
      * This method will be executed upon successful post of an approved comment.
+     *
      * This includes comment posts by administrators, and change of comment status from 'pending' to 'active' state.
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
-     *
-     * @param CommentsComment $comment
-     *
-     * @return void
      */
     public function approve(CommentsComment $comment);
 
@@ -56,8 +53,6 @@ interface CommentsPluginInterface
      *
      * @param int $item_id The unique ID of an item
      * @param int $total_num The total number of active comments
-     *
-     * @return void
      */
     public function update($item_id, $total_num);
 
@@ -75,6 +70,5 @@ interface CommentsPluginInterface
      * @return array
      */
     public function itemInfo($item_id);
-
 }
 

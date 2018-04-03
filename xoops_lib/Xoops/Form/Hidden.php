@@ -23,7 +23,6 @@ namespace Xoops\Form;
  */
 class Hidden extends Element
 {
-
     /**
      * Constructor
      *
@@ -52,6 +51,6 @@ class Hidden extends Element
     public function render()
     {
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . $this->getExtra() .' >' . "\n";
+        return '<input ' . $attributes . $this->getExtra() . ' >' . "\n";
     }
 }

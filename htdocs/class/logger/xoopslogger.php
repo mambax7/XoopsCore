@@ -25,43 +25,15 @@
  * @link       http://xoops.org
  * @see        Xoops\Logger
  * @deprecated since 2.6.0
- *
  */
-class XoopsLogger
+class xoopslogger
 {
     /**
-     * getInstance - get only instance of this class
-     * 
-     * @return object XoopsLogger
-     * @deprecated
-     */
-    public static function getInstance()
-    {
-        static $instance;
-        if (!isset($instance)) {
-            $class = __CLASS__;
-            $instance = new $class();
-        }
-        return $instance;
-    }
-
-    /**
-     * deprecatedWarning - centralized warning for all methods
-     * 
-     * @return void
-     */
-    private function deprecatedWarning()
-    {
-        Xoops::getInstance()->deprecated('XoopsLogger is deprecated since 2.6.0, see Xoops\Core\Logger');
-    }
-
-    /**
      * magic set method
-     * 
+     *
      * @param string $var does nothing
      * @param mixed  $val does nothing
      *
-     * @return void
      * @depreciated
      */
     public function __set($var, $val)
@@ -74,7 +46,6 @@ class XoopsLogger
      *
      * @param mixed $var does nothing
      *
-     * @return void
      * @depreciated
      */
     public function __get($var)
@@ -84,15 +55,38 @@ class XoopsLogger
 
     /**
      * magic call method
-     * 
+     *
      * @param string $method does nothing
      * @param mixed  $args   does nothing
      *
-     * @return void
      * @depreciated
      */
     public function __call($method, $args)
     {
         $this->deprecatedWarning();
+    }
+
+    /**
+     * getInstance - get only instance of this class
+     *
+     * @return object XoopsLogger
+     * @deprecated
+     */
+    public static function getInstance()
+    {
+        static $instance;
+        if (! isset($instance)) {
+            $class = __CLASS__;
+            $instance = new $class();
+        }
+        return $instance;
+    }
+
+    /**
+     * deprecatedWarning - centralized warning for all methods
+     */
+    private function deprecatedWarning()
+    {
+        Xoops::getInstance()->deprecated('XoopsLogger is deprecated since 2.6.0, see Xoops\Core\Logger');
     }
 }

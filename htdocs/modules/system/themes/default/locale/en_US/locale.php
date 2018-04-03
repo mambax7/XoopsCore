@@ -18,5 +18,4 @@
 
 class DefaultThemeLocale extends DefaultThemeLocaleEn_US
 {
-
 }

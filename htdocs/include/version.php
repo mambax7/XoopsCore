@@ -19,5 +19,5 @@
  * Define XOOPS version
  * @todo This should be eliminated in favor of \Xoops::VERSION, but it is still required in installer
  */
-$XoopsIncludeVersionString  = class_exists('\Xoops', false) ? \Xoops::VERSION : 'XOOPS 2.6.0';
+$XoopsIncludeVersionString = class_exists('\Xoops', false) ? \Xoops::VERSION : 'XOOPS 2.6.0';
 define('XOOPS_VERSION', $XoopsIncludeVersionString);

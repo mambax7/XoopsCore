@@ -52,8 +52,6 @@ abstract class GenericHelper extends AbstractHelper
 
     /**
      * Initialize parent::__construct calls this after verifying module object.
-     *
-     * @return void
      */
     public function init()
     {
@@ -68,10 +66,10 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function getModule()
     {
-        if ($this->object == null) {
+        if ($this->object === null) {
             $this->initObject();
         }
-        if (!is_object($this->object)) {
+        if (! is_object($this->object)) {
             $this->addLog("ERROR :: Module '{$this->dirname}' does not exist");
         }
 
@@ -89,16 +87,16 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function getConfig($name = null, $default = null)
     {
-        if ($this->configs == null) {
+        if ($this->configs === null) {
             $this->initConfig();
         }
         if (empty($name)) {
-            $this->addLog("Getting all config");
+            $this->addLog('Getting all config');
 
             return $this->configs;
         }
 
-        if (!isset($this->configs[$name])) {
+        if (! isset($this->configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
             return $default;
         }
@@ -119,11 +117,11 @@ abstract class GenericHelper extends AbstractHelper
     {
         $ret = false;
         $name = strtolower($name);
-        if (!isset($this->handlers[$name])) {
+        if (! isset($this->handlers[$name])) {
             $this->initHandler($name);
         }
 
-        if (!isset($this->handlers[$name])) {
+        if (! isset($this->handlers[$name])) {
             $this->addLog("ERROR :: Handler '{$name}' does not exist");
         } else {
             $this->addLog("Getting handler '{$name}'");
@@ -131,75 +129,6 @@ abstract class GenericHelper extends AbstractHelper
         }
 
         return $ret;
-    }
-
-    /**
-     * get a module object
-     *
-     * @return void
-     */
-    protected function initObject()
-    {
-        global $xoopsModule;
-        if (isset($xoopsModule) && is_object($xoopsModule)
-            && $xoopsModule->getVar('dirname') == $this->dirname
-        ) {
-            $this->object = $xoopsModule;
-        } else {
-            /* @var $module_handler \XoopsModuleHandler */
-            $module_handler = xoops_getHandler('module');
-            $this->object = $module_handler->getByDirname($this->dirname);
-        }
-        $this->addLog('INIT MODULE OBJECT');
-    }
-
-    /**
-     * get module configs
-     *
-     * @return void
-     */
-    protected function initConfig()
-    {
-        $this->addLog('INIT CONFIG');
-        global $xoopsModule;
-        if (isset($xoopsModule) && is_object($xoopsModule)
-            && $xoopsModule->getVar('dirname') == $this->dirname
-        ) {
-            global $xoopsModuleConfig;
-            $this->configs = $xoopsModuleConfig;
-        } else {
-            /* @var $config_handler \XoopsConfigHandler */
-            $config_handler = xoops_getHandler('config');
-            $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
-        }
-    }
-
-    /**
-     * get a handler instance and store in $this->_handlers
-     *
-     * @param string $name name of handler to load
-     *
-     * @return void
-     */
-    protected function initHandler($name)
-    {
-        $this->addLog('INIT ' . $name . ' HANDLER');
-
-        if (!isset($this->handlers[$name])) {
-            $hnd_file = XOOPS_ROOT_PATH . "/modules/{$this->dirname}/class/{$name}.php";
-            if (file_exists($hnd_file)) {
-                include_once $hnd_file;
-            }
-            $class = ucfirst(strtolower($this->dirname))
-                . ucfirst(strtolower($name)) . 'Handler';
-            if (class_exists($class)) {
-                $db = \XoopsDatabaseFactory::getDatabaseConnection();
-                $this->handlers[$name] = new $class($db);
-                $this->addLog("Loading class '{$class}'");
-            } else {
-                $this->addLog("ERROR :: Class '{$class}' could not be loaded");
-            }
-        }
     }
 
     /**
@@ -227,7 +156,7 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function isCurrentModule()
     {
-        if ($GLOBALS['xoopsModule']->getVar('dirname') == $this->dirname) {
+        if ($GLOBALS['xoopsModule']->getVar('dirname') === $this->dirname) {
             return true;
         }
 
@@ -275,11 +204,72 @@ abstract class GenericHelper extends AbstractHelper
      * @param string $url     module relative url (i.e. index.php)
      * @param int    $time    time in seconds to show redirect message
      * @param string $message redirect message
-     *
-     * @return void
      */
     public function redirect($url, $time = 3, $message = '')
     {
         redirect_header($this->url($url), $time, $message);
+    }
+
+    /**
+     * get a module object
+     */
+    protected function initObject()
+    {
+        global $xoopsModule;
+        if (isset($xoopsModule) && is_object($xoopsModule)
+            && $xoopsModule->getVar('dirname') === $this->dirname
+        ) {
+            $this->object = $xoopsModule;
+        } else {
+            /* @var $module_handler \XoopsModuleHandler */
+            $module_handler = xoops_getHandler('module');
+            $this->object = $module_handler->getByDirname($this->dirname);
+        }
+        $this->addLog('INIT MODULE OBJECT');
+    }
+
+    /**
+     * get module configs
+     */
+    protected function initConfig()
+    {
+        $this->addLog('INIT CONFIG');
+        global $xoopsModule;
+        if (isset($xoopsModule) && is_object($xoopsModule)
+            && $xoopsModule->getVar('dirname') === $this->dirname
+        ) {
+            global $xoopsModuleConfig;
+            $this->configs = $xoopsModuleConfig;
+        } else {
+            /* @var $config_handler \XoopsConfigHandler */
+            $config_handler = xoops_getHandler('config');
+            $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
+        }
+    }
+
+    /**
+     * get a handler instance and store in $this->_handlers
+     *
+     * @param string $name name of handler to load
+     */
+    protected function initHandler($name)
+    {
+        $this->addLog('INIT ' . $name . ' HANDLER');
+
+        if (! isset($this->handlers[$name])) {
+            $hnd_file = XOOPS_ROOT_PATH . "/modules/{$this->dirname}/class/{$name}.php";
+            if (file_exists($hnd_file)) {
+                include_once $hnd_file;
+            }
+            $class = ucfirst(strtolower($this->dirname))
+                . ucfirst(strtolower($name)) . 'Handler';
+            if (class_exists($class)) {
+                $db = \XoopsDatabaseFactory::getDatabaseConnection();
+                $this->handlers[$name] = new $class($db);
+                $this->addLog("Loading class '{$class}'");
+            } else {
+                $this->addLog("ERROR :: Class '{$class}' could not be loaded");
+            }
+        }
     }
 }

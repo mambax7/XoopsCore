@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class TableFormTest extends \PHPUnit\Framework\TestCase
 {
@@ -31,18 +32,18 @@ class TableFormTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->insertBreak();
         $value = $this->object->render();
-        $this->assertTrue(false !== strpos($value, '<tr valign="top" align="left"><td></td></tr>'));
+        $this->assertTrue(strpos($value, '<tr valign="top" align="left"><td></td></tr>') !== false);
     }
 
     public function testRender()
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(false !== strpos($value, '<form'));
-        $this->assertTrue(false !== strpos($value, 'name="name"'));
-        $this->assertTrue(false !== strpos($value, 'id="name"'));
-        $this->assertTrue(false !== strpos($value, 'action="action"'));
-        $this->assertTrue(false !== strpos($value, 'method="post"'));
-        $this->assertTrue(false !== strpos($value, '</form>'));
+        $this->assertTrue(strpos($value, '<form') !== false);
+        $this->assertTrue(strpos($value, 'name="name"') !== false);
+        $this->assertTrue(strpos($value, 'id="name"') !== false);
+        $this->assertTrue(strpos($value, 'action="action"') !== false);
+        $this->assertTrue(strpos($value, 'method="post"') !== false);
+        $this->assertTrue(strpos($value, '</form>') !== false);
     }
 }

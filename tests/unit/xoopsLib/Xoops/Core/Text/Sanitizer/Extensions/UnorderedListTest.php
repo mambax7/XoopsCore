@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class UnorderedListTest extends \PHPUnit\Framework\TestCase
 {
@@ -51,6 +52,6 @@ class UnorderedListTest extends \PHPUnit\Framework\TestCase
         $in = '[ul][li]item[/li][/ul]';
         $expected = '<ul><li>item</li></ul>';
         $actual = $this->sanitizer->filterForDisplay($in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

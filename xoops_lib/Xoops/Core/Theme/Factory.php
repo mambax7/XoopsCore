@@ -33,7 +33,7 @@ class Factory
      *
      * @var array
      */
-    public $allowedThemes = array();
+    public $allowedThemes = [];
 
     /**
      * Default theme to instantiate if none specified
@@ -56,7 +56,7 @@ class Factory
      *
      * @return XoopsTheme
      */
-    public function createInstance($options = array())
+    public function createInstance($options = [])
     {
         $xoops = \Xoops::getInstance();
         // Grab the theme folder from request vars if present
@@ -70,7 +70,7 @@ class Factory
                 if (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
                     $options['folderName'] = $_SESSION[$this->xoBundleIdentifier]['defaultTheme'];
                 } else {
-                    if (empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
+                    if (empty($options['folderName']) || ! $this->isThemeAllowed($options['folderName'])) {
                         $options['folderName'] = $this->defaultTheme;
                     }
                 }
@@ -80,7 +80,7 @@ class Factory
         $options['path'] = \XoopsBaseConfig::get('themes-path') . '/' . $options['folderName'];
         $inst = new XoopsTheme();
         foreach ($options as $k => $v) {
-            $inst->$k = $v;
+            $inst->{$k} = $v;
         }
         $inst->xoInit();
         return $inst;
@@ -95,6 +95,6 @@ class Factory
      */
     public function isThemeAllowed($name)
     {
-        return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
+        return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes, true));
     }
 }

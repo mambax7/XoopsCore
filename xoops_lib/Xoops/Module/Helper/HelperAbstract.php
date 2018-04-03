@@ -38,33 +38,19 @@ abstract class HelperAbstract
 
     /**
      * initialize - nothing to do here
-     *
-     * @return void
      */
     public function init()
     {
     }
 
     /**
-     * @param string $dirname dirname of the module
-     *
-     * @return void
-     */
-    protected function setDirname($dirname)
-    {
-        $this->dirname = strtolower($dirname);
-    }
-
-    /**
      * Set debug option on or off
      *
      * @param bool $debug true to enable debugging log, false to disable
-     *
-     * @return void
      */
     public function setDebug($debug)
     {
-        $this->debug = (bool)$debug;
+        $this->debug = (bool) $debug;
     }
 
     /**
@@ -79,7 +65,7 @@ abstract class HelperAbstract
         if ($className === 'Xoops\Module\Helper\Dummy') {
             $id = @\Xoops::getInstance()->registry()->get('module_helper_id');
         }
-        if (!isset($instance[$id])) {
+        if (! isset($instance[$id])) {
             /* @var $class HelperAbstract */
             $class = new $className();
             $class->init();
@@ -93,7 +79,7 @@ abstract class HelperAbstract
      */
     public function getModule()
     {
-        if ($this->module == null) {
+        if ($this->module === null) {
             $this->initModule();
         }
         return $this->module;
@@ -122,11 +108,11 @@ abstract class HelperAbstract
     {
         $configs = $this->xoops()->getModuleConfigs($this->dirname);
         if (empty($name)) {
-            $this->addLog("Getting all config");
+            $this->addLog('Getting all config');
             return $configs;
         }
         $name = strtolower($name);
-        if (!isset($configs[$name])) {
+        if (! isset($configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
             return $default;
         }
@@ -164,18 +150,16 @@ abstract class HelperAbstract
 
     /**
      * Turn off caching for this module
-     *
-     * @return void
      */
     public function disableCache()
     {
         $this->xoops()->appendConfig(
             'module_cache',
-            array($this->getModule()->getVar('mid') => 0),
+            [$this->getModule()->getVar('mid') => 0],
             true,
             $this->dirname
         );
-        $this->addLog("Disabling module cache");
+        $this->addLog('Disabling module cache');
     }
 
     /**
@@ -185,7 +169,7 @@ abstract class HelperAbstract
      */
     public function isCurrentModule()
     {
-        if ($this->xoops()->moduleDirname == $this->dirname) {
+        if ($this->xoops()->moduleDirname === $this->dirname) {
             return true;
         }
         return false;
@@ -234,8 +218,6 @@ abstract class HelperAbstract
      * @param string $url     url to redirect to
      * @param int    $time    time to delay
      * @param string $message message to show
-     *
-     * @return void
      */
     public function redirect($url, $time = 3, $message = '')
     {
@@ -255,13 +237,11 @@ abstract class HelperAbstract
 
     /**
      * Load locale for our dirname
-     *
-     * @return void
      */
     public function loadLocale()
     {
         $this->xoops()->loadLocale($this->dirname);
-        $this->addLog("Loading locale");
+        $this->addLog('Loading locale');
     }
 
     /**
@@ -278,9 +258,30 @@ abstract class HelperAbstract
     }
 
     /**
-     * Get a XoopsModule object for this module
+     * Add a message to the module helper's log
      *
-     * @return void
+     * @param string $message message to log
+     */
+    public function addLog($message)
+    {
+        if ($this->debug) {
+            $this->xoops()->events()->triggerEvent('core.module.addlog', [
+                $this->getModule()->getVar('name'),
+                $message,
+            ]);
+        }
+    }
+
+    /**
+     * @param string $dirname dirname of the module
+     */
+    protected function setDirname($dirname)
+    {
+        $this->dirname = strtolower($dirname);
+    }
+
+    /**
+     * Get a XoopsModule object for this module
      */
     private function initModule()
     {
@@ -289,26 +290,9 @@ abstract class HelperAbstract
         } else {
             $this->module = $this->xoops()->getModuleByDirname($this->dirname);
         }
-        if (!$this->module instanceof XoopsModule) {
+        if (! $this->module instanceof XoopsModule) {
             $this->module = $this->xoops()->getHandlerModule()->create();
         }
         $this->addLog('Loading module');
-    }
-
-    /**
-     * Add a message to the module helper's log
-     *
-     * @param string $message message to log
-     *
-     * @return void
-     */
-    public function addLog($message)
-    {
-        if ($this->debug) {
-            $this->xoops()->events()->triggerEvent('core.module.addlog', array(
-                $this->getModule()->getVar('name'),
-                $message
-            ));
-        }
     }
 }

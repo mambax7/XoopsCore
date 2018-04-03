@@ -28,7 +28,6 @@ use Xoops\Core\Database\Factory;
  */
 class XoopsDatabaseFactory extends Factory
 {
-
     /**
      * Get a reference to the only instance of database class and connects to DB
      *
@@ -47,19 +46,19 @@ class XoopsDatabaseFactory extends Factory
         static $legacy;
 
         $file = \XoopsBaseConfig::get('root-path') . '/class/database/mysqldatabase.php';
-        if (!isset($legacy) && file_exists($file)) {
+        if (! isset($legacy) && file_exists($file)) {
             require_once $file;
-            if (!defined('XOOPS_DB_PROXY')) {
+            if (! defined('XOOPS_DB_PROXY')) {
                 $class = 'XoopsMysqlDatabaseSafe';
             } else {
                 $class = 'XoopsMysqlDatabaseProxy';
             }
-            \Xoops::getInstance()->events()->triggerEvent('core.class.database.databasefactory.connection', array(&$class));
+            \Xoops::getInstance()->events()->triggerEvent('core.class.database.databasefactory.connection', [&$class]);
             $legacy = new $class();
             $legacy->setPrefix(\XoopsBaseConfig::get('db-prefix'));
             $legacy->conn = \Xoops\Core\Database\Factory::getConnection();
         }
-        if (is_null($legacy->conn)) {
+        if ($legacy->conn === null) {
             trigger_error('notrace:Unable to connect to database', E_USER_ERROR);
         }
         return $legacy;

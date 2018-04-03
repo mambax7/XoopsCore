@@ -19,6 +19,6 @@
  * @version         $Id$
  */
 
-class XoopsSecurity extends Xoops\Core\Security
+class xoopssecurity extends Xoops\Core\Security
 {
 }

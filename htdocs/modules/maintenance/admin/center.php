@@ -48,22 +48,22 @@ switch ($op) {
 
     case 'maintenance_save':
         // Check security
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('center.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $admin_page->addItemButton(_AM_MAINTENANCE_CENTER_RETURN, 'center.php', 'application-view-detail');
         $admin_page->renderButton();
 
         $session = $system->cleanVars($_REQUEST, 'session', 1, 'int');
-        $cache = $system->cleanVars($_REQUEST, 'cache', array(), 'array');
-        $tables = $system->cleanVars($_REQUEST, 'tables', array(), 'array');
-        $tables_op = $system->cleanVars($_REQUEST, 'maintenance', array(), 'array');
+        $cache = $system->cleanVars($_REQUEST, 'cache', [], 'array');
+        $tables = $system->cleanVars($_REQUEST, 'tables', [], 'array');
+        $tables_op = $system->cleanVars($_REQUEST, 'maintenance', [], 'array');
         $xoops->db();
         global $xoopsDB;
         $db = $xoopsDB;
         //Cache
         $res_cache = $system->cleanCache($cache);
-        if (!empty($cache)) {
+        if (! empty($cache)) {
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
@@ -85,21 +85,21 @@ switch ($op) {
             }
         }
         //Session
-        if ($session == 1) {
+        if ($session === 1) {
             $result = $db->queryF('TRUNCATE TABLE ' . $db->prefix('session'));
             $result ? $result_session = true : $result_session = false;
             $xoops->tpl()->assign('result_session', $result_session);
             $xoops->tpl()->assign('session', true);
         }
         //Maintenance tables
-        if (!empty($tables) && !empty($tables_op)) {
-            $tab = array();
+        if (! empty($tables) && ! empty($tables_op)) {
+            $tab = [];
             for ($i = 0; $i < 4; ++$i) {
                 $tab[$i] = $i + 1;
             }
-            $tab1 = array();
+            $tab1 = [];
             for ($i = 0; $i < 4; ++$i) {
-                if (in_array($tab[$i], $tables_op)) {
+                if (in_array($tab[$i], $tables_op, true)) {
                     $tab1[$i] = $tab[$i];
                 } else {
                     $tab1[$i] = '0';

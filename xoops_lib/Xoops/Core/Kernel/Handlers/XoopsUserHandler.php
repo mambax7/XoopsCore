@@ -37,7 +37,6 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  */
 class XoopsUserHandler extends XoopsPersistableObjectHandler
 {
-
     /**
      * Constructor
      *

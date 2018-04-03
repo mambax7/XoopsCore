@@ -29,8 +29,6 @@ class PhpmailerPreload extends PreloadItem
      * listen for core.service.locate.email event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateEmail(Provider $provider)
     {
@@ -44,8 +42,6 @@ class PhpmailerPreload extends PreloadItem
      * listen for core.service.locate.useremailmessage event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateUserEmailMessage(Provider $provider)
     {

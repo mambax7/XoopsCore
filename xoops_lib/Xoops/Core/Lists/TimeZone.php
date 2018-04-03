@@ -11,8 +11,8 @@
 
 namespace Xoops\Core\Lists;
 
-use Xoops\Core\Locale\Punic\Calendar;
 use Punic\Territory;
+use Xoops\Core\Locale\Punic\Calendar;
 
 /**
  * TimeZone - provide list of timezone names
@@ -40,7 +40,7 @@ class TimeZone extends ListAbstract
         $timeZones = $xoops->cache()->cacheRead(
             $key,
             function () {
-                $timeZones = array();
+                $timeZones = [];
                 $territories = Territory::getContinentsAndCountries();
                 $maxLen = 0;
                 $utcDtz = new \DateTimeZone('UTC');
@@ -51,16 +51,16 @@ class TimeZone extends ListAbstract
                         foreach ($allZones as $zone) {
                             $maxLen = max(strlen($zone), $maxLen);
                             $name = Calendar::getTimezoneExemplarCity($zone);
-                            if (!isset($timeZones[$zone]) && !empty($name)) {
+                            if (! isset($timeZones[$zone]) && ! empty($name)) {
                                 $timeZones[$zone] = $cName['name'] . '/' . $name;
                             }
                         }
                     }
                 }
                 \XoopsLocale::asort($timeZones);
-                $default = array(
+                $default = [
                     'UTC' => Calendar::getTimezoneNameNoLocationSpecific(new \DateTimeZone('GMT')),
-                );
+                ];
                 $timeZones = array_merge($default, $timeZones);
                 return $timeZones;
             }

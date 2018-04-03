@@ -19,9 +19,9 @@
 define('_MI_SEARCH_NAME', 'Search');
 define('_MI_SEARCH_DSC', 'Provides search ability for modules');
 
-define("_MI_SEARCH_DOSEARCH", "Enable global searches?");
-define("_MI_SEARCH_DOSEARCHDSC", "Allow searching for posts/items within your site.");
-define("_MI_SEARCH_MINSEARCH", "Minimum keyword length");
-define("_MI_SEARCH_MINSEARCHDSC", "Enter the minimum keyword length that users are required to enter to perform search");
+define('_MI_SEARCH_DOSEARCH', 'Enable global searches?');
+define('_MI_SEARCH_DOSEARCHDSC', 'Allow searching for posts/items within your site.');
+define('_MI_SEARCH_MINSEARCH', 'Minimum keyword length');
+define('_MI_SEARCH_MINSEARCHDSC', 'Enter the minimum keyword length that users are required to enter to perform search');
 
-define("_MI_SEARCH_BNAME1","Search");
+define('_MI_SEARCH_BNAME1', 'Search');

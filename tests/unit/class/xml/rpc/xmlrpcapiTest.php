@@ -1,27 +1,21 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
-use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
+use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsXmlRpcApi';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
-        $params = array('p1'=>'one');
+        $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
         $module = new XoopsModule();
         $this->object = new $this->myclass($params, $response, $module);
-    }
-
-    protected function getPropertyValue($name)
-    {
-        $prop = new ReflectionProperty(get_class($this->object), $name);
-        $prop->setAccessible(true);
-        return $prop->getValue($this->object);
     }
 
     public function test___construct()
@@ -134,8 +128,15 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $params = array();
+        $params = [];
         $x = $instance->_getXoopsApi($params);
         $this->assertInstanceOf($this->myclass, $x);
+    }
+
+    protected function getPropertyValue($name)
+    {
+        $prop = new ReflectionProperty(get_class($this->object), $name);
+        $prop->setAccessible(true);
+        return $prop->getValue($this->object);
     }
 }

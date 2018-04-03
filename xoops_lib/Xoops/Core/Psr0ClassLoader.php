@@ -5,15 +5,15 @@ namespace Xoops\Core;
 /**
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
- * 
+ *
  * From the PHP Framework Interop Group
  *
  * Examples
- * 
+ *
  * @code
  *     $myLibLoader = new SplClassLoader('mylib', '/path/to/mylib/src');
  *     $myLibLoader->register();
- *     
+ *
  *     $zendLoader = new SplClassLoader('Zend', '/path/to/zend/lib');
  *     $zendLoader->setNamespaceSeparator('_');
  *     $zendLoader->register();
@@ -33,18 +33,19 @@ namespace Xoops\Core;
 class Psr0ClassLoader
 {
     private $fileExtension = '.php';
+
     private $namespace;
+
     private $includePath;
+
     private $namespaceSeparator = '\\';
 
     /**
      * Creates a new SplClassLoader that loads classes of the
      * specified namespace.
-     * 
+     *
      * @param string $ns          The namespace to use.
      * @param string $includePath Path to the namespaces top directory
-     * 
-     * @return void
      */
     public function __construct($ns = null, $includePath = null)
     {
@@ -54,12 +55,12 @@ class Psr0ClassLoader
 
     /**
      * addLoader sets all basic options and registers the autoloader
-     * 
+     *
      * @param type $namespace namespace
      * @param type $path      path to the namespace's top directory
      * @param type $separator namespace separator
      * @param type $extension file extension
-     * 
+     *
      * @return SplClassLoader
      */
     public static function addLoader($namespace, $path, $separator = '\\', $extension = '.php')
@@ -71,12 +72,11 @@ class Psr0ClassLoader
         $loader->register();
         return $loader;
     }
+
     /**
      * Sets the namespace separator used by classes in the namespace of this class loader.
-     * 
+     *
      * @param string $sep The separator to use.
-     * 
-     * @return void
      */
     public function setNamespaceSeparator($sep)
     {
@@ -95,10 +95,8 @@ class Psr0ClassLoader
 
     /**
      * Sets the base include path for all class files in the namespace of this class loader.
-     * 
+     *
      * @param string $includePath include path
-     * 
-     * @return void
      */
     public function setIncludePath($includePath)
     {
@@ -117,10 +115,8 @@ class Psr0ClassLoader
 
     /**
      * Sets the file extension of class files in the namespace of this class loader.
-     * 
+     *
      * @param string $fileExtension file extension
-     * 
-     * @return void
      */
     public function setFileExtension($fileExtension)
     {
@@ -139,40 +135,34 @@ class Psr0ClassLoader
 
     /**
      * Installs this class loader on the SPL autoload stack.
-     * 
-     * @return void
      */
     public function register()
     {
-        spl_autoload_register(array($this, 'loadClass'));
+        spl_autoload_register([$this, 'loadClass']);
     }
 
     /**
      * Uninstalls this class loader from the SPL autoloader stack.
-     * 
-     * @return void
      */
     public function unregister()
     {
-        spl_autoload_unregister(array($this, 'loadClass'));
+        spl_autoload_unregister([$this, 'loadClass']);
     }
 
     /**
      * Loads the given class or interface.
      *
      * @param string $className The name of the class to load.
-     * 
-     * @return void
      */
     public function loadClass($className)
     {
-        if (null === $this->namespace
-            || $this->namespace.$this->namespaceSeparator
-            === substr($className, 0, strlen($this->namespace.$this->namespaceSeparator))
+        if ($this->namespace === null
+            || $this->namespace . $this->namespaceSeparator
+            === substr($className, 0, strlen($this->namespace . $this->namespaceSeparator))
         ) {
             $fileName = '';
             $namespace = '';
-            if (false !== ($lastNsPos = strripos($className, $this->namespaceSeparator))) {
+            if (($lastNsPos = strripos($className, $this->namespaceSeparator)) !== false) {
                 $namespace = substr($className, 0, $lastNsPos);
                 $className = substr($className, $lastNsPos + 1);
                 $fileName = str_replace(

@@ -159,7 +159,7 @@ $factory->create([
     'caption' => 'Sub Cat',
     'name' => 'select_subcat',
     'size' => 5,
-    'value' => [2,4,6],
+    'value' => [2, 4, 6],
     'option' => [
         1 => 'Sub 1',
         2 => 'Sub 2',

@@ -26,22 +26,22 @@
 
 defined( 'XOOPS_ROOT_PATH' ) or die();
 
-$dirs = getDirList( "." );
+$dirs = getDirList( '.' );
 
-$results = array();
-$files = array();
+$results = [];
+$files = [];
 $needUpgrade = false;
 
-$_SESSION['xoops_upgrade'] = array();
+$_SESSION['xoops_upgrade'] = [];
 
 foreach ($dirs as $dir) {
-    if (strpos( $dir, "-to-")) {
+    if (strpos( $dir, '-to-')) {
         $upgrader = include_once "{$dir}/index.php";
         if (is_object($upgrader)) {
-            if (!( $results[$dir] = $upgrader->isApplied())) {
+            if (! ( $results[$dir] = $upgrader->isApplied())) {
                 $_SESSION['xoops_upgrade']['steps'][] = $dir;
                 $needUpgrade = true;
-                if (!empty( $upgrader->usedFiles)) {
+                if (! empty( $upgrader->usedFiles)) {
                     $files = array_merge( $files, $upgrader->usedFiles );
                 }
             }
@@ -49,7 +49,7 @@ foreach ($dirs as $dir) {
     }
 }
 
-if ($needUpgrade && !empty($files)) {
+if ($needUpgrade && ! empty($files)) {
     foreach ($files as $k => $file) {
         if (is_writable("../{$file}")) {
             unset($files[$k]);
@@ -63,23 +63,23 @@ if ($needUpgrade && !empty($files)) {
 <?php foreach ($results as $upd => $res) { ?>
     <tr>
         <td><?php echo $upd; ?></td>
-        <td class="result-<?php echo $res?'y':'x'; ?>"><?php echo $res?'y':'x'; ?></td>
+        <td class="result-<?php echo $res ? 'y' : 'x'; ?>"><?php echo $res ? 'y' : 'x'; ?></td>
     </tr>
 <?php } ?>
 </table>
 <?php
-    if (!$needUpgrade) {
+    if (! $needUpgrade) {
         $update_link = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _UPDATE_SYSTEM_MODULE . '</a>';
-        echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . "</div>";
+        echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . '</div>';
         return;
-    } else {
-        if (!empty($files)) {
-            echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "<br />" . _SET_FILES_WRITABLE . "</p><ul>";
+    }
+        if (! empty($files)) {
+            echo '<div class="x2-note"><p>' . _NEED_UPGRADE . '<br />' . _SET_FILES_WRITABLE . '</p><ul>';
             foreach ($files as $file) echo "<li>{$file}</li>\n";
-            echo "</ul></div>";
+            echo '</ul></div>';
             echo '<a id="link-next" href="index.php">' . _RELOAD . '</a>';
         } else {
             echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a>';
         }
-    }
+
 ?>

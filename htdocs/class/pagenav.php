@@ -27,6 +27,7 @@ class XoopsPageNav
      *
      * @access private
      */
+
     /**
      * @var int
      */
@@ -61,13 +62,13 @@ class XoopsPageNav
      * @param string $start_name    Name for "start" or "offset"
      * @param string $extra_arg     Additional arguments to pass in the URL
      */
-    public function __construct($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
+    public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '')
     {
-        $this->total = (int)($total_items);
-        $this->perpage = (int)($items_perpage);
-        $this->current = (int)($current_start);
+        $this->total = (int) ($total_items);
+        $this->perpage = (int) ($items_perpage);
+        $this->current = (int) ($current_start);
         $this->extra = $extra_arg;
-        if ($extra_arg != '' && (substr($extra_arg, - 5) !== '&amp;' || substr($extra_arg, - 1) !== '&')) {
+        if ($extra_arg !== '' && (substr($extra_arg, - 5) !== '&amp;' || substr($extra_arg, - 1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
         $this->url = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
@@ -84,15 +85,15 @@ class XoopsPageNav
      *
      * @return string
      */
-    public function renderNav($offset = 4, $size = "", $align = "right", $prev_text = "&laquo;", $next_text = "&raquo;")
+    public function renderNav($offset = 4, $size = '', $align = 'right', $prev_text = '&laquo;', $next_text = '&raquo;')
     {
         $xoops = Xoops::getInstance();
         $ret = '';
-        $nav = array();
+        $nav = [];
         if ($this->total <= $this->perpage) {
             return $ret;
         }
-        if (($this->total != 0) && ($this->perpage != 0)) {
+        if (($this->total !== 0) && ($this->perpage !== 0)) {
             $total_pages = ceil($this->total / $this->perpage);
             if ($total_pages > 1) {
                 $prev = $this->current - $this->perpage;
@@ -107,14 +108,14 @@ class XoopsPageNav
                 $first_text = '';
                 $first_url = '';
                 $counter = 1;
-                $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+                $current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
                 while ($counter <= $total_pages) {
-                    if ($counter == $current_page) {
+                    if ($counter === $current_page) {
                         $nav['text'] = $counter;
                         $nav['url'] = '';
                         $nav['active'] = 0;
-                    } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
-                        if ($counter == $total_pages && $current_page < $total_pages - $offset) {
+                    } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter === 1 || $counter === $total_pages) {
+                        if ($counter === $total_pages && $current_page < $total_pages - $offset) {
                             $nav['text'] = '...';
                             $nav['url'] = '';
                             $nav['active'] = 0;
@@ -126,7 +127,7 @@ class XoopsPageNav
                             $nav['url'] = $this->url . (($counter - 1) * $this->perpage) . $this->extra;
                             $nav['active'] = 1;
                         }
-                        if ($counter == 1 && $current_page > 1 + $offset) {
+                        if ($counter === 1 && $current_page > 1 + $offset) {
                             $nav['text'] = '...';
                             $nav['url'] = '';
                             $nav['active'] = 0;
@@ -165,7 +166,7 @@ class XoopsPageNav
                 $size = '';
         }
         $xoops->tpl()->assign('size', $size);
-        
+
         $xoops->tpl()->assign('align', ' pagination-' . $align);
         $xoops->tpl()->assign('pagination_nav', true);
         $ret = $xoops->tpl()->fetch('module:system/system_pagenav.tpl');
@@ -180,7 +181,7 @@ class XoopsPageNav
      *
      * @return string|false
      */
-    public function renderSelect($align = "right", $showbutton = false)
+    public function renderSelect($align = 'right', $showbutton = false)
     {
         $xoops = Xoops::getInstance();
         $ret = '';
@@ -190,11 +191,11 @@ class XoopsPageNav
         $total_pages = ceil($this->total / $this->perpage);
         if ($total_pages > 1) {
             $counter = 1;
-            $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+            $current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
             while ($counter <= $total_pages) {
                 $select['text'] = $counter;
                 $select['value'] = $this->url . (($counter - 1) * $this->perpage) . $this->extra;
-                if ($counter == $current_page) {
+                if ($counter === $current_page) {
                     $select['selected'] = 1;
                 } else {
                     $select['selected'] = 0;
@@ -204,7 +205,7 @@ class XoopsPageNav
                 ++$counter;
             }
         }
-        $xoops->tpl()->assign('onchange', "location=this.options[this.options.selectedIndex].value;");
+        $xoops->tpl()->assign('onchange', 'location=this.options[this.options.selectedIndex].value;');
         $xoops->tpl()->assign('pagination_select', true);
         $xoops->tpl()->assign('showbutton', $showbutton);
         $xoops->tpl()->assign('align', ' pagination-' . $align);

@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Html\Menu;
 
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
 class ItemTest extends \PHPUnit\Framework\TestCase
 {

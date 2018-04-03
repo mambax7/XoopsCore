@@ -32,7 +32,7 @@ function publisher_latest_files_show($options)
      * $oprions[3] : bool TRUE to link to the file download, FALSE to link to the article
      */
 
-    $block = array();
+    $block = [];
 
     $sort = $options[1];
     $order = PublisherUtils::getOrderBy($sort);
@@ -43,13 +43,13 @@ function publisher_latest_files_show($options)
     $filesObj = $publisher->getFileHandler()->getAllFiles(0, _PUBLISHER_STATUS_FILE_ACTIVE, $limit, 0, $sort, $order, explode(',', $options[0]));
     /* @var $fileObj PublisherFile */
     foreach ($filesObj as $fileObj) {
-        $aFile = array();
+        $aFile = [];
         $aFile['link'] = $directDownload ? $fileObj->getFileLink() : $fileObj->getItemLink();
-        if ($sort === "datesub") {
+        if ($sort === 'datesub') {
             $aFile['new'] = $fileObj->datesub();
-        } elseif ($sort === "counter") {
+        } elseif ($sort === 'counter') {
             $aFile['new'] = $fileObj->getVar('counter');
-        } elseif ($sort === "weight") {
+        } elseif ($sort === 'weight') {
             $aFile['new'] = $fileObj->getVar('weight');
         }
         $block['files'][] = $aFile;
@@ -64,11 +64,11 @@ function publisher_latest_files_edit($options)
 
     $catEle = new Xoops\Form\Label(_MB_PUBLISHER_SELECTCAT, PublisherUtils::createCategorySelect($options[0], 0, true, 'options[0]'));
     $orderEle = new Xoops\Form\Select(_MB_PUBLISHER_ORDER, 'options[1]', $options[1]);
-    $orderEle->addOptionArray(array(
+    $orderEle->addOptionArray([
         'datesub' => _MB_PUBLISHER_DATE,
         'counter' => _MB_PUBLISHER_HITS,
-        'weight'  => _MB_PUBLISHER_WEIGHT,
-    ));
+        'weight' => _MB_PUBLISHER_WEIGHT,
+    ]);
     $dispEle = new Xoops\Form\Text(_MB_PUBLISHER_DISP, 'options[2]', 10, 255, $options[2]);
     $directEle = new Xoops\Form\RadioYesNo(_MB_PUBLISHER_DIRECTDOWNLOAD, 'options[3]', $options[3]);
 

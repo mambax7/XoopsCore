@@ -29,9 +29,9 @@ use Xoops\Core\Kernel\CriteriaCompo;
 function b_system_newmembers_show($options)
 {
     $xoops = Xoops::getInstance();
-    $block = array();
+    $block = [];
     $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
-    $limit = (!empty($options[0])) ? $options[0] : 10;
+    $limit = (! empty($options[0])) ? $options[0] : 10;
     $criteria->setOrder('DESC');
     $criteria->setSort('user_regdate');
     $criteria->setLimit($limit);
@@ -39,7 +39,7 @@ function b_system_newmembers_show($options)
     $newmembers = $member_handler->getUsers($criteria);
     $count = count($newmembers);
     for ($i = 0; $i < $count; ++$i) {
-        if ($options[1] == 1) {
+        if ($options[1] === 1) {
             $block['users'][$i]['avatar'] = $newmembers[$i]->getVar('user_avatar') !== 'blank.gif' ? \XoopsBaseConfig::get('uploads-url') . '/' . $newmembers[$i]->getVar('user_avatar') : '';
         } else {
             $block['users'][$i]['avatar'] = '';

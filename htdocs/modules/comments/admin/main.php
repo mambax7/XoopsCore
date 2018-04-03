@@ -34,28 +34,28 @@ $xoops->header('admin:comments/comments.tpl');
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('main.php');
 
-$limit_array = array(20, 50, 100);
+$limit_array = [20, 50, 100];
 $status_array =
-    array(Comments::STATUS_PENDING => _MD_COMMENTS_PENDING, Comments::STATUS_ACTIVE => _MD_COMMENTS_ACTIVE, Comments::STATUS_HIDDEN => _MD_COMMENTS_HIDDEN);
-$status_array2 = array(
+    [Comments::STATUS_PENDING => _MD_COMMENTS_PENDING, Comments::STATUS_ACTIVE => _MD_COMMENTS_ACTIVE, Comments::STATUS_HIDDEN => _MD_COMMENTS_HIDDEN];
+$status_array2 = [
     Comments::STATUS_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _MD_COMMENTS_PENDING . '</span>',
     Comments::STATUS_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _MD_COMMENTS_ACTIVE . '</span>',
-    Comments::STATUS_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _MD_COMMENTS_HIDDEN . '</span>'
-);
+    Comments::STATUS_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _MD_COMMENTS_HIDDEN . '</span>',
+];
 $start = 0;
 $status_array[0] = _AM_COMMENTS_FORM_ALL_STATUS;
 
-$comments = array();
-$status = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0
-    : (int)($_REQUEST['status']);
+$comments = [];
+$status = (! isset($_REQUEST['status']) || ! in_array((int) ($_REQUEST['status']), array_keys($status_array), true)) ? 0
+    : (int) ($_REQUEST['status']);
 
-$module = !isset($_REQUEST['module']) ? 0 : (int)($_REQUEST['module']);
+$module = ! isset($_REQUEST['module']) ? 0 : (int) ($_REQUEST['module']);
 
-$modules_array = array();
+$modules_array = [];
 $module_handler = $xoops->getHandlerModule();
 $available_plugins = \Xoops\Module\Plugin::getPlugins('comments');
-if (!empty($available_plugins)) {
-    $criteria = new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)).  "')", 'IN');
+if (! empty($available_plugins)) {
+    $criteria = new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN');
     $module_array = $module_handler->getNameList($criteria);
 }
 
@@ -88,25 +88,25 @@ switch ($op) {
         $form_purge->addElement(new Xoops\Form\DateSelect(_AM_COMMENTS_FORM_PURGE_DATE_BEFORE, 'comments_before'));
 
         //user
-        $form_purge->addElement(new Xoops\Form\SelectUser(_AM_COMMENTS_FORM_PURGE_USER, "comments_userid", false, @$_REQUEST['comments_userid'], 5, true));
+        $form_purge->addElement(new Xoops\Form\SelectUser(_AM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, @$_REQUEST['comments_userid'], 5, true));
 
         //groups
-        $groupe_select = new Xoops\Form\SelectGroup(_AM_COMMENTS_FORM_PURGE_GROUPS, "comments_groupe", false, '', 5, true);
+        $groupe_select = new Xoops\Form\SelectGroup(_AM_COMMENTS_FORM_PURGE_GROUPS, 'comments_groupe', false, '', 5, true);
         $form_purge->addElement($groupe_select);
 
         //Status
-        $status = new Xoops\Form\Select(_AM_COMMENTS_FORM_PURGE_STATUS, "comments_status", '');
+        $status = new Xoops\Form\Select(_AM_COMMENTS_FORM_PURGE_STATUS, 'comments_status', '');
         $options = $status_array;
         $status->addOptionArray($options);
         $form_purge->addElement($status, true);
 
         //Modules
-        $modules = new Xoops\Form\Select(_AM_COMMENTS_FORM_PURGE_MODULES, "comments_modules", '');
+        $modules = new Xoops\Form\Select(_AM_COMMENTS_FORM_PURGE_MODULES, 'comments_modules', '');
         $options = $module_array;
         $modules->addOptionArray($options);
         $form_purge->addElement($modules, true);
-        $form_purge->addElement(new Xoops\Form\Hidden("op", "comments_purge"));
-        $form_purge->addElement(new Xoops\Form\Button("", "submit", XoopsLocale::A_SUBMIT, "submit"));
+        $form_purge->addElement(new Xoops\Form\Hidden('op', 'comments_purge'));
+        $form_purge->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
         $xoops->tpl()->assign('form', $form_purge->render());
         break;
 
@@ -114,14 +114,14 @@ switch ($op) {
         $criteria = new CriteriaCompo();
         $verif = false;
         if (isset($_POST['comments_after']) && isset($_POST['comments_before'])) {
-            if ($_POST['comments_after'] != $_POST['comments_before']) {
+            if ($_POST['comments_after'] !== $_POST['comments_before']) {
                 $after = $system->cleanVars($_POST, 'comments_after', time(), 'date');
                 $before = $system->cleanVars($_POST, 'comments_before', time(), 'date');
                 if ($after) {
-                    $criteria->add(new Criteria('created', $after, ">"));
+                    $criteria->add(new Criteria('created', $after, '>'));
                 }
                 if ($before) {
-                    $criteria->add(new Criteria('created', $before, "<"));
+                    $criteria->add(new Criteria('created', $before, '<'));
                 }
                 $verif = true;
             }
@@ -137,14 +137,14 @@ switch ($op) {
             $verif = true;
         }
         $comments_userid = $system->cleanVars($_POST, 'comments_userid', '', 'string');
-        if ($comments_userid != '') {
+        if ($comments_userid !== '') {
             foreach ($_REQUEST['comments_userid'] as $del) {
                 $criteria->add(new Criteria('uid', $del), 'OR');
             }
             $verif = true;
         }
         $comments_groupe = $system->cleanVars($_POST, 'comments_groupe', '', 'string');
-        if ($comments_groupe != '') {
+        if ($comments_groupe !== '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
                 $member_handler = $xoops->getHandlerMember();
                 $members = $member_handler->getUsersByGroup($u_name, true);
@@ -159,7 +159,7 @@ switch ($op) {
             $verif = true;
         }
         if (isset($_POST['commentslist_id'])) {
-            $commentslist_count = (!empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id']))
+            $commentslist_count = (! empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id']))
                 ? count($_POST['commentslist_id']) : 0;
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
@@ -168,12 +168,12 @@ switch ($op) {
             }
             $verif = true;
         }
-        if ($verif == true) {
+        if ($verif === true) {
             if ($comment_handler->deleteAll($criteria)) {
-                $helper->redirect("admin/main.php", 3, XoopsLocale::S_DATABASE_UPDATED);
+                $helper->redirect('admin/main.php', 3, XoopsLocale::S_DATABASE_UPDATED);
             }
         } else {
-            $helper->redirect("admin/main.php", 3, XoopsLocale::S_DATABASE_UPDATED);
+            $helper->redirect('admin/main.php', 3, XoopsLocale::S_DATABASE_UPDATED);
         }
         break;
 
@@ -205,13 +205,13 @@ switch ($op) {
 
         $xoops->tpl()->assign('comments_count', $comments_count);
 
-        $comments_arr = array();
+        $comments_arr = [];
         $comments_start = 0;
         $comments_limit = 0;
         if ($comments_count > 0) {
             $comments_start = $system->cleanVars($_REQUEST, 'comments_start', 0, 'int');
             $comments_limit = $system->cleanVars($_REQUEST, 'comments_limit', 0, 'int');
-            if (!in_array($comments_limit, $limit_array)) {
+            if (! in_array($comments_limit, $limit_array, true)) {
                 $comments_limit = $helper->getConfig('com_pager');
             }
             $criteria->setLimit($comments_limit);
@@ -226,7 +226,7 @@ switch ($op) {
 
         foreach ($module_array as $k => $v) {
             $sel = '';
-            if ($k == $module) {
+            if ($k === $module) {
                 $sel = ' selected="selected"';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
@@ -235,7 +235,7 @@ switch ($op) {
 
         foreach ($status_array as $k => $v) {
             $sel = '';
-            if (isset($status) && $k == $status) {
+            if (isset($status) && $k === $status) {
                 $sel = ' selected="selected"';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
@@ -245,7 +245,7 @@ switch ($op) {
         $form .= '</select>&nbsp;<select class="span2" name="comments_limit">';
         foreach ($limit_array as $k) {
             $sel = '';
-            if (isset($limit) && $k == $limit) {
+            if (isset($limit) && $k === $limit) {
                 $sel = ' selected="selected"';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $k . '</option>';
@@ -266,14 +266,14 @@ switch ($op) {
                     }
                 }
 
-                $comments_icon = ($comments_arr[$i]->getVar('icon') == '') ? '/images/icons/no_posticon.gif'
+                $comments_icon = ($comments_arr[$i]->getVar('icon') === '') ? '/images/icons/no_posticon.gif'
                     : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('icon'), ENT_QUOTES);
                 $comments_icon = '<img src="' . \XoopsBaseConfig::get('url') . $comments_icon . '" alt="" />';
 
                 $comments['comments_id'] = $id;
                 $comments['comments_poster'] = $comments_poster_uname;
                 $comments['comments_icon'] = $comments_icon;
-                $comments['comments_title'] = '<a href="main.php?op=comments_jump&amp;item_id=' . $comments_arr[$i]->getVar("id") . '">' . $comments_arr[$i]->getVar("title")  . '</a>';
+                $comments['comments_title'] = '<a href="main.php?op=comments_jump&amp;item_id=' . $comments_arr[$i]->getVar('id') . '">' . $comments_arr[$i]->getVar('title') . '</a>';
                 $comments['comments_ip'] = $comments_arr[$i]->getVar('ip');
                 $comments['comments_date'] = XoopsLocale::formatTimestamp($comments_arr[$i]->getVar('created'));
                 $comments['comments_text'] = $myts->undoHtmlSpecialChars($comments_arr[$i]->getVar('text'));

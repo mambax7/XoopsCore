@@ -11,21 +11,21 @@
 
 namespace Xoops\Core\Database\Schema;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
-use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Sequence;
+use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\Visitor\Visitor;
 
 /**
  * RemovePrefixes is a Schema Visitor that builds an new Schema object
  * without the XOOPS_DB_PREFIX. A table list can be optionally applied to
  * filter the Schema.
- * 
+ *
  * This depends on PrefixStripper to do a lot of the grunt work.
- * 
+ *
  * @category  Xoops\Core\Database\Schema\RemovePrefixes
  * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
@@ -37,7 +37,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  */
 class RemovePrefixes implements Visitor
 {
-
     protected $newSchema;
 
     /**
@@ -45,12 +44,12 @@ class RemovePrefixes implements Visitor
      */
     public function __construct()
     {
-        $this->newSchema = new PrefixStripper;
+        $this->newSchema = new PrefixStripper();
     }
 
     /**
      * return the generated Schema
-     * 
+     *
      * @return Schema the generated schema object
      */
     public function getNewSchema()
@@ -60,12 +59,10 @@ class RemovePrefixes implements Visitor
 
     /**
      * set list of tables to limit schema
-     * 
+     *
      * If no list is specified, all tables will be included
-     * 
+     *
      * @param array $tableList list of tables to allow
-     * 
-     * @return void
      */
     public function setTableFilter(array $tableList)
     {
@@ -74,10 +71,8 @@ class RemovePrefixes implements Visitor
 
     /**
      * Accept schema - not used in this context
-     * 
+     *
      * @param Schema $schema a schema object
-     * 
-     * @return void
      */
     public function acceptSchema(Schema $schema)
     {
@@ -88,8 +83,6 @@ class RemovePrefixes implements Visitor
      * Accept a table with all its dependencies.
      *
      * @param Table $table a table object
-     * 
-     * @return void
      */
     public function acceptTable(Table $table)
     {
@@ -101,8 +94,6 @@ class RemovePrefixes implements Visitor
      *
      * @param Table  $table  a table object to accept a column into
      * @param Column $column a column object to be accepted
-     * 
-     * @return void
      */
     public function acceptColumn(Table $table, Column $column)
     {
@@ -111,11 +102,9 @@ class RemovePrefixes implements Visitor
 
     /**
      * Accept a foreign key in the schema - not used in this context
-     * 
-     * @param Table                $localTable   local table to have foreign key
-     * @param ForeignKeyConstraint $fkConstraint foreign key constraint
-     * 
-     * @return void
+     *
+     *
+     * @param Table $localTable local table to have foreign key
      */
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
@@ -124,11 +113,9 @@ class RemovePrefixes implements Visitor
 
     /**
      * Accept an Index - not used in this context
-     * 
+     *
      * @param Table $table indexed table
      * @param Index $index index to accept
-     * 
-     * @return void
      */
     public function acceptIndex(Table $table, Index $index)
     {
@@ -137,10 +124,8 @@ class RemovePrefixes implements Visitor
 
     /**
      * Accept a sequence
-     * 
+     *
      * @param Sequence $sequence sequence to accept
-     * 
-     * @return void
      */
     public function acceptSequence(Sequence $sequence)
     {

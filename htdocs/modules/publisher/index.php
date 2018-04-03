@@ -38,7 +38,7 @@ $start = Request::getInt('start');
 $totalCategories = $publisher->getCategoryHandler()->getCategoriesCount(0);
 
 // if there ain't no category to display, let's get out of here
-if ($totalCategories == 0) {
+if ($totalCategories === 0) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 2, _MD_PUBLISHER_NO_TOP_PERMISSIONS);
 }
 
@@ -53,8 +53,8 @@ $categoriesObj = $publisher->getCategoryHandler()->getCategories($publisher->get
 
 // if no categories are found, exit
 $totalCategoriesOnPage = count($categoriesObj);
-if ($totalCategoriesOnPage == 0) {
-    $xoops->redirect("javascript:history.go(-1)", 2, _MD_PUBLISHER_NO_CAT_EXISTS);
+if ($totalCategoriesOnPage === 0) {
+    $xoops->redirect('javascript:history.go(-1)', 2, _MD_PUBLISHER_NO_CAT_EXISTS);
 }
 
 // Get subcats of the top categories
@@ -64,15 +64,15 @@ $subcats = $publisher->getCategoryHandler()->getSubCats($categoriesObj);
 $totalItems = $publisher->getCategoryHandler()->publishedItemsCount();
 
 // real total count of items
-$real_total_items = $publisher->getItemHandler()->getItemsCount(-1, array(_PUBLISHER_STATUS_PUBLISHED));
+$real_total_items = $publisher->getItemHandler()->getItemsCount(-1, [_PUBLISHER_STATUS_PUBLISHED]);
 
-if ($publisher->getConfig('idxcat_display_last_item') == 1) {
+if ($publisher->getConfig('idxcat_display_last_item') === 1) {
     // Get the last item in each category
-    $last_itemObj = $publisher->getItemHandler()->getLastPublishedByCat(array_merge(array($categoriesObj), $subcats));
+    $last_itemObj = $publisher->getItemHandler()->getLastPublishedByCat(array_merge([$categoriesObj], $subcats));
 }
 
 // Max size of the title in the last item column
-$lastitemsize = (int)($publisher->getConfig('idxcat_last_item_size'));
+$lastitemsize = (int) ($publisher->getConfig('idxcat_last_item_size'));
 
 $idxcat_show_subcats = $publisher->getConfig('idxcat_show_subcats');
 // Hide sub categories in main page only - hacked by Mowaffak
@@ -80,7 +80,7 @@ if ($idxcat_show_subcats === 'nomain') {
     $idxcat_show_subcats = 'no';
 }
 
-$categories = array();
+$categories = [];
 /* @var $category PublisherCategory */
 foreach ($categoriesObj as $cat_id => $category) {
 
@@ -126,8 +126,8 @@ foreach ($categoriesObj as $cat_id => $category) {
     }
     $category->setVar('itemcount', $total);
 
-    if (!isset($categories[$cat_id])) {
-        $categories[$cat_id] = array();
+    if (! isset($categories[$cat_id])) {
+        $categories[$cat_id] = [];
     }
 
     $categories[$cat_id] = $category->toArrayTable($categories[$cat_id]);
@@ -192,14 +192,14 @@ $xoopsTpl->assign('indexpage', true);
 
 // Category Navigation Bar
 $pagenav = new XoopsPageNav($totalCategories, $publisher->getConfig('idxcat_cat_perpage'), $catstart, 'catstart', '');
-if ($publisher->getConfig('format_image_nav') == 1) {
+if ($publisher->getConfig('format_image_nav') === 1) {
     $xoopsTpl->assign('catnavbar', '<div style="text-align:right;">' . $pagenav->renderImageNav() . '</div>');
 } else {
     $xoopsTpl->assign('catnavbar', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
 }
 // ITEM Navigation Bar
 $pagenav = new XoopsPageNav($real_total_items, $publisher->getConfig('idxcat_index_perpage'), $start, 'start', '');
-if ($publisher->getConfig('format_image_nav') == 1) {
+if ($publisher->getConfig('format_image_nav') === 1) {
     $xoopsTpl->assign('navbar', '<div style="text-align:right;">' . $pagenav->renderImageNav() . '</div>');
 } else {
     $xoopsTpl->assign('navbar', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
@@ -215,8 +215,8 @@ $publisher_metagen = new PublisherMetagen($publisher->getModule()->getVar('name'
 $publisher_metagen->createMetaTags();
 
 // RSS Link
-if ($publisher->getConfig('idxcat_show_rss_link') == 1) {
-    $link = sprintf("<a href='%s' title='%s'><img src='%s' border=0 alt='%s'></a>", PUBLISHER_URL . "/backend.php", _MD_PUBLISHER_RSSFEED, PUBLISHER_URL . "/images/rss.gif", _MD_PUBLISHER_RSSFEED);
+if ($publisher->getConfig('idxcat_show_rss_link') === 1) {
+    $link = sprintf("<a href='%s' title='%s'><img src='%s' border=0 alt='%s'></a>", PUBLISHER_URL . '/backend.php', _MD_PUBLISHER_RSSFEED, PUBLISHER_URL . '/images/rss.gif', _MD_PUBLISHER_RSSFEED);
     $xoopsTpl->assign('rssfeed_link', $link);
 }
 

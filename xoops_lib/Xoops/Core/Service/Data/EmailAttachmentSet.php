@@ -12,7 +12,6 @@
 namespace Xoops\Core\Service\Data;
 
 use Xmf\Assert;
-use Xoops\Core\Service\Data\EmailAttachment;
 
 /**
  * The EmailAttachmentSet data object is a traversable list of EmailAttachment objects
@@ -34,27 +33,27 @@ use Xoops\Core\Service\Data\EmailAttachment;
  */
 class EmailAttachmentSet
 {
+    /* assert messages */
+    protected const MESSAGE_ATTACHMENT = 'EmailAttachment is invalid';
+
+    protected const MESSAGE_LIST = 'EmailAttachment list is empty';
+
     /** @var EmailAttachment[] $attachments an array of EmailAttachment objects */
     protected $attachments;
 
-    /* assert messages */
-    protected const MESSAGE_ATTACHMENT = 'EmailAttachment is invalid';
-    protected const MESSAGE_LIST       = 'EmailAttachment list is empty';
-
     /**
-     *  constructor.
+     * constructor.
      *
      * If an argument is null, the corresponding value will not be set. Values can be set
      * later with the with*() methods, but each will result in a new object.
      *
-     * @param null|EmailAttachment[] $addresses an array of EmailAddress objects
      *
      * @throws \InvalidArgumentException
      * @throws \LogicException
      */
     public function __construct(?array $attachments = null)
     {
-        if (null!==$attachments) {
+        if ($attachments !== null) {
             Assert::allIsInstanceOf($attachments, EmailAttachment::class, static::MESSAGE_ATTACHMENT);
             try {
                 /** @var EmailAttachment $attachment */
@@ -72,13 +71,12 @@ class EmailAttachmentSet
     /**
      * withAddedAttachments - return a new object with the supplied EmailAddress array added
      *
-     * @param EmailAttachment[] $attachments an array of EmailAttachment objects
      *
-     * @return EmailAttachmentSet
+     * @param EmailAttachment[] $attachments an array of EmailAttachment objects
      *
      * @throws \InvalidArgumentException
      */
-    public function withAddedAttachments(array $attachments) : EmailAttachmentSet
+    public function withAddedAttachments(array $attachments): self
     {
         Assert::allIsInstanceOf($attachments, EmailAttachment::class, static::MESSAGE_ATTACHMENT);
         try {
@@ -87,7 +85,7 @@ class EmailAttachmentSet
                 $attachment->getFilename();
                 $attachment->getStringBody();
             }
-            $existingAttachments = (null === $this->attachments) ? [] : $this->getAttachments();
+            $existingAttachments = ($this->attachments === null) ? [] : $this->getAttachments();
         } catch (\LogicException $e) {
             throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
@@ -103,7 +101,7 @@ class EmailAttachmentSet
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getAttachments() : array
+    public function getAttachments(): array
     {
         try {
             Assert::notNull($this->attachments, static::MESSAGE_LIST);
@@ -126,7 +124,7 @@ class EmailAttachmentSet
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getEachAttachment() : \Generator
+    public function getEachAttachment(): \Generator
     {
         $this->getAttachments();
         foreach ($this->attachments as $attachment) {

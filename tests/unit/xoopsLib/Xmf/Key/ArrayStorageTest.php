@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test\Key;
 
 use Xmf\Key\ArrayStorage;
@@ -16,7 +17,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new ArrayStorage;
+        $this->object = new ArrayStorage();
     }
 
     /**
@@ -32,7 +33,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
         $name = 'name';
         $data = 'data';
         $this->object->save($name, $data);
-        $this->assertEquals($data, $this->object[$name]);
+        $this->assertSame($data, $this->object[$name]);
     }
 
     public function testFetch()
@@ -41,7 +42,7 @@ class ArrayStorageTest extends \PHPUnit\Framework\TestCase
         $data = 'data';
         $this->assertFalse($this->object->fetch($name));
         $this->object->save($name, $data);
-        $this->assertEquals($this->object->fetch($name), $data);
+        $this->assertSame($this->object->fetch($name), $data);
     }
 
     public function testExists()

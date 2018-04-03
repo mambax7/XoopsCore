@@ -47,8 +47,6 @@ class SubjectIcon extends ListAbstract
      *
      * @param OptionElement $element      Form element to add options to
      * @param string        $subDirectory subdirectory (deprecated)
-     *
-     * @return void
      */
     public static function setOptionsArray(OptionElement $element, $subDirectory = '')
     {

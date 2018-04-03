@@ -66,7 +66,7 @@ function updPath( key, val ) {
         <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)" />
         <span id="rootpathimg"><?php echo genPathCheckHtml( 'root', $ctrl->validPath['root'] ); ?></span>
         <?php
-        if ($ctrl->validPath['root'] && !empty( $ctrl->permErrors['root'])) {
+        if ($ctrl->validPath['root'] && ! empty( $ctrl->permErrors['root'])) {
             echo '<div id="rootperms" class="x2-note">';
             echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';
@@ -89,7 +89,7 @@ function updPath( key, val ) {
         <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)" />
         <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data'] ); ?></span>
         <?php
-        if ($ctrl->validPath['data'] && !empty( $ctrl->permErrors['data'])) {
+        if ($ctrl->validPath['data'] && ! empty( $ctrl->permErrors['data'])) {
             echo '<div id="dataperms" class="x2-note">';
             echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';

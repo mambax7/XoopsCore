@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
 class PrefixStripperTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +16,7 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new $this->myClass();
 
-        $tables = array();
+        $tables = [];
         $instance->setTableFilter($tables);
         $this->assertTrue(true);
     }
@@ -25,7 +25,7 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
     {
         $table = new Doctrine\DBAL\Schema\Table('system_group');
 
-        $instance = new $this->myClass(array($table));
+        $instance = new $this->myClass([$table]);
 
         $value = $instance->getTable('system_group');
         $this->assertinstanceOf('Doctrine\DBAL\Schema\Table', $value);
@@ -35,7 +35,7 @@ class PrefixStripperTest extends \PHPUnit\Framework\TestCase
     {
         $sequence = new Doctrine\DBAL\Schema\Sequence('sequence');
 
-        $instance = new $this->myClass(array(), array($sequence));
+        $instance = new $this->myClass([], [$sequence]);
 
         $value = $instance->getSequence('sequence');
         $this->assertInstanceOf('Doctrine\DBAL\Schema\Sequence', $value);

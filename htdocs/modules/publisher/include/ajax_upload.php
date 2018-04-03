@@ -32,8 +32,8 @@ include_once __DIR__ . '/common.php';
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
-if (!$xoops->isActiveModule('images')) {
-    $arr = array('error', '!!!');
+if (! $xoops->isActiveModule('images')) {
+    $arr = ['error', '!!!'];
     echo json_encode($arr);
     exit();
 }
@@ -45,40 +45,40 @@ $group = $xoops->getUserGroups();
 
 $filename = basename($_FILES['publisher_upload_file']['name']);
 $image_nicename = isset($_POST['image_nicename']) ? trim($_POST['image_nicename']) : '';
-if ($image_nicename == '' || $image_nicename == _CO_PUBLISHER_IMAGE_NICENAME) {
+if ($image_nicename === '' || $image_nicename === _CO_PUBLISHER_IMAGE_NICENAME) {
     $image_nicename = $filename;
 }
 
-$imgcat_id = isset($_POST['imgcat_id']) ? (int)($_POST['imgcat_id']) : 0;
+$imgcat_id = isset($_POST['imgcat_id']) ? (int) ($_POST['imgcat_id']) : 0;
 
 $imgcat_handler = Images::getInstance()->getHandlerCategories();
 $imgcat = $imgcat_handler->get($imgcat_id);
 
 $error = false;
-if (!is_object($imgcat)) {
+if (! is_object($imgcat)) {
     $error = _CO_PUBLISHER_IMAGE_CAT_NONE;
 } else {
     $imgcatperm_handler = $xoops->getHandlerGroupPermission();
     if ($xoops->isUser()) {
-        if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoops->user->getGroups())) {
+        if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoops->user->getGroups())) {
             $error = _CO_PUBLISHER_IMAGE_CAT_NONE;
         }
     } else {
-        if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, FixedGroups::ANONYMOUS)) {
+        if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, FixedGroups::ANONYMOUS)) {
             $error = _CO_PUBLISHER_IMAGE_CAT_NOPERM;
         }
     }
 }
 
 $image = null;
-if ($error == false) {
-    $uploader = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path') . '/images', array(
-        'image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'
-    ), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+if ($error === false) {
+    $uploader = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path') . '/images', [
+        'image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png',
+    ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia('publisher_upload_file')) {
-        if (!$uploader->upload()) {
-            $error = implode("<br>", $uploader->getErrors(false));
+        if (! $uploader->upload()) {
+            $error = implode('<br>', $uploader->getErrors(false));
         } else {
             $image_handler = Images::getInstance()->getHandlerImages();
             $image = $image_handler->create();
@@ -96,21 +96,21 @@ if ($error == false) {
                 $image->setVar('image_body', $fbinary);
                 @unlink($uploader->getSavedDestination());
             }
-            if (!$image_handler->insert($image)) {
+            if (! $image_handler->insert($image)) {
                 $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $image->getVar('image_nicename'));
             }
         }
     } else {
-        $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $filename) . "<br>" . implode("<br>", $uploader->getErrors(false));
+        $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $filename) . '<br>' . implode('<br>', $uploader->getErrors(false));
     }
 }
 
 if ($error) {
-    $arr = array('error', PublisherUtils::convertCharset($error));
+    $arr = ['error', PublisherUtils::convertCharset($error)];
 } else {
-    $arr = array(
-        'success', $image->getVar("image_name"), PublisherUtils::convertCharset($image->getVar("image_nicename"))
-    );
+    $arr = [
+        'success', $image->getVar('image_name'), PublisherUtils::convertCharset($image->getVar('image_nicename')),
+    ];
 }
 
 $echo = json_encode($arr);

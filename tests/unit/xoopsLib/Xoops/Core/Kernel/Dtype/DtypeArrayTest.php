@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Kernel\Dtype;
 
 require_once __DIR__ . '/../../../../../init_new.php';
@@ -35,7 +36,7 @@ class DtypeArrayTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new DtypeArray;
+        $this->object = new DtypeArray();
         $this->xObject = new DtypeArrayObject();
     }
 
@@ -69,8 +70,8 @@ class DtypeArrayTest extends \PHPUnit\Framework\TestCase
         //var_dump($this->xObject->vars[$key]['value']);
         $value = $this->xObject[$key];
         $this->assertTrue(is_array($value));
-        $this->assertEquals('Spot', $value['dog']);
-        $this->assertEquals('run', $value['see']);
+        $this->assertSame('Spot', $value['dog']);
+        $this->assertSame('run', $value['see']);
 
         $value = $this->xObject->getVar($key, Dtype::FORMAT_SHOW);
         $this->assertTrue(is_array($value));
@@ -79,6 +80,6 @@ class DtypeArrayTest extends \PHPUnit\Framework\TestCase
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
         $this->assertTrue(is_string($value));
         //var_dump($value);
-        $this->assertEquals("a:5:{s:", substr($value, 0, 7));
+        $this->assertSame('a:5:{s:', substr($value, 0, 7));
     }
 }

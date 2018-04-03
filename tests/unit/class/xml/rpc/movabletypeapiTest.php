@@ -1,15 +1,15 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
-class MovableTypeApiTest extends \PHPUnit\Framework\TestCase
+class movabletypeapiTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'MovableTypeApi';
 
     public function test___construct()
     {
-        $params = array('p1'=>'one');
+        $params = ['p1' => 'one'];
         $response = new XoopsXmlRpcResponse();
         $module = new XoopsModule();
         $x = new $this->myclass($params, $response, $module);

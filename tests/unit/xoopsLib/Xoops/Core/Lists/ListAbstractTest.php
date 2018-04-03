@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Lists;
 
 require_once __DIR__ . '/../../../../init_new.php';

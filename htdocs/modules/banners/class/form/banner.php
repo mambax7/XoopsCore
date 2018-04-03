@@ -34,12 +34,12 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
             $blank_img = 'blank.gif';
             $html_banner = 0;
         } else {
-            if (substr_count($obj->getVar('banner_imageurl'), $xoops_upload_url . '/banners/') == 0) {
+            if (substr_count($obj->getVar('banner_imageurl'), $xoops_upload_url . '/banners/') === 0) {
                 $blank_img = 'blank.gif';
             } else {
                 $namefile =
                     substr_replace($obj->getVar('banner_imageurl'), '', 0, strlen($xoops_upload_url . '/banners/'));
-                $pathfile =  $xoops->path('uploads/banners/') . $namefile;
+                $pathfile = $xoops->path('uploads/banners/') . $namefile;
                 if (is_file($pathfile)) {
                     $blank_img = str_replace($xoops_upload_url . '/banners/', '', $obj->getVar('banner_imageurl', 'e'));
                 } else {
@@ -79,7 +79,7 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
         $imgtray_img->addElement(
             new Xoops\Form\Label(
                 '',
-                "<br /><img src='" . $xoops_upload_url . "/banners/" . $blank_img
+                "<br /><img src='" . $xoops_upload_url . '/banners/' . $blank_img
                 . "' name='image_img' id='xo-banners-img' alt='' />"
             )
         );
@@ -94,7 +94,7 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\RadioYesNo(_AM_BANNERS_BANNERS_USEHTML, 'htmlbanner', $html_banner));
 
         $this->addElement(new Xoops\Form\TextArea(_AM_BANNERS_BANNERS_CODEHTML, 'htmlcode', $obj->getVar('banner_htmlcode'), 5, 5), false);
-        if (!$obj->isNew()) {
+        if (! $obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('bid', $obj->getVar('banner_bid')));
         }
         $this->addElement(new Xoops\Form\Hidden('op', 'save'));

@@ -45,7 +45,7 @@ class ButtonTray extends Element
             $this->set('value', $value);
             $this->setWithDefaults('type', $type, 'submit', ['button', 'submit', 'reset']);
             $this->setWithDefaults(':showdelete', $showDelete, false, [true, false]);
-            if (!empty($onclick)) {
+            if (! empty($onclick)) {
                 $this->setExtra($onclick);
             }
         }

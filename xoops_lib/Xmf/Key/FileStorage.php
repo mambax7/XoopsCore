@@ -25,14 +25,13 @@ namespace Xmf\Key;
  */
 class FileStorage implements StorageInterface
 {
-
     /**
-     * @var string $storagePath filesystem path to storage
+     * @var string filesystem path to storage
      */
     protected $storagePath;
 
     /**
-     * @var string $systemSecret prefix unique to this system
+     * @var string prefix unique to this system
      */
     protected $systemSecret;
 
@@ -44,34 +43,8 @@ class FileStorage implements StorageInterface
      */
     public function __construct($storagePath = null, $systemSecret = null)
     {
-        $this->storagePath = (null === $storagePath) ? XOOPS_VAR_PATH . '/data' : $storagePath;
-        $this->systemSecret = (null === $systemSecret) ? $this->generateSystemSecret() : $systemSecret;
-    }
-
-    /**
-     * Fetch key data by name
-     *
-     * @param string $name key name
-     *
-     * @return string file name
-     */
-    protected function fileName($name)
-    {
-        return $this->storagePath . "/{$this->systemSecret}-key-{$name}.php";
-    }
-
-    /**
-     * Construct a string related to the system to make name less predictable
-     *
-     * @return string
-     */
-    protected function generateSystemSecret()
-    {
-        $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $prefix = $db->prefix();
-        $secret = md5($prefix);
-        $secret = substr($secret, 8, 8);
-        return $secret;
+        $this->storagePath = ($storagePath === null) ? XOOPS_VAR_PATH . '/data' : $storagePath;
+        $this->systemSecret = ($systemSecret === null) ? $this->generateSystemSecret() : $systemSecret;
     }
 
     /**
@@ -84,12 +57,12 @@ class FileStorage implements StorageInterface
      */
     public function save($name, $data)
     {
-        if (empty($data) || !is_string($data)) {
+        if (empty($data) || ! is_string($data)) {
             throw new \DomainException('Invalid key data');
         }
         $fileContents = "<?php\n//**Warning** modifying this file will break things!\n"
             . "return '{$data}';\n";
-        return (false !== file_put_contents($this->fileName($name), $fileContents));
+        return (file_put_contents($this->fileName($name), $fileContents) !== false);
     }
 
     /**
@@ -126,5 +99,31 @@ class FileStorage implements StorageInterface
     public function delete($name)
     {
         return unlink($this->fileName($name));
+    }
+
+    /**
+     * Fetch key data by name
+     *
+     * @param string $name key name
+     *
+     * @return string file name
+     */
+    protected function fileName($name)
+    {
+        return $this->storagePath . "/{$this->systemSecret}-key-{$name}.php";
+    }
+
+    /**
+     * Construct a string related to the system to make name less predictable
+     *
+     * @return string
+     */
+    protected function generateSystemSecret()
+    {
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        $prefix = $db->prefix();
+        $secret = md5($prefix);
+        $secret = substr($secret, 8, 8);
+        return $secret;
     }
 }

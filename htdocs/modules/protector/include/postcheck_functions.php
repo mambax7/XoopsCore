@@ -32,14 +32,14 @@ function protector_postcheck()
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && stristr(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         $module_handler = $xoops->getHandlerModule();
         /* @var $module XoopsModule */
-        $module = $module_handler->get((int)(@$_GET['mod']));
+        $module = $module_handler->get((int) (@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
     }
 
     // configs writable check
-    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
+    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && ! is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
 
@@ -56,7 +56,7 @@ function protector_postcheck()
 
     // phpmailer vulnerability
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
-    if (in_array(substr(XOOPS_VERSION, 0, 12), array('XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'))) {
+    if (in_array(substr(XOOPS_VERSION, 0, 12), ['XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'], true)) {
         $xoopsMailerConfig = $xoops->getConfigs();
         if ($xoopsMailerConfig['mailmethod'] === 'sendmail' && md5_file(\XoopsBaseConfig::get('root-path') . '/class/mail/phpmailer/class.phpmailer.php') === 'ee1c09a8e579631f0511972f929fe36a') {
             echo '<strong>phpmailer security hole! Change the preferences of mail from "sendmail" to another, or upgrade the core right now! (message by protector)</strong>';
@@ -64,12 +64,12 @@ function protector_postcheck()
     }
 
     // global enabled or disabled
-    if (!empty($conf['global_disabled'])) {
+    if (! empty($conf['global_disabled'])) {
         return true;
     }
 
     // group1_ips (groupid=1)
-    if ($xoops->isUser() && in_array(1, $xoops->user->getGroups())) {
+    if ($xoops->isUser() && in_array(1, $xoops->user->getGroups(), true)) {
         $group1_ips = $protector->get_group1_ips(true);
         if (implode('', array_keys($group1_ips))) {
             $group1_allow = $protector->ip_match($group1_ips);
@@ -83,7 +83,7 @@ function protector_postcheck()
     $reliable_ips = @unserialize(@$conf['reliable_ips']);
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
-            if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+            if (! empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
                 return true;
             }
         }
@@ -95,7 +95,7 @@ function protector_postcheck()
         $can_ban = count(@array_intersect($xoops->user->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
     } else {
         // login failed check
-        if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
+        if ((! empty($_POST['uname']) && ! empty($_POST['pass'])) || (! empty($_COOKIE['autologin_uname']) && ! empty($_COOKIE['autologin_pass']))) {
             $protector->check_brute_force();
         }
         $uid = 0;
@@ -118,11 +118,11 @@ function protector_postcheck()
     // DOS/CRAWLER skipping based on 'dirname' or getcwd()
     $dos_skipping = false;
     $skip_dirnames = explode('|', @$conf['dos_skipmodules']);
-    if (!is_array($skip_dirnames)) {
-        $skip_dirnames = array();
+    if (! is_array($skip_dirnames)) {
+        $skip_dirnames = [];
     }
     if ($xoops->isModule()) {
-        if (in_array($xoops->module->getVar('dirname'), $skip_dirnames)) {
+        if (in_array($xoops->module->getVar('dirname'), $skip_dirnames, true)) {
             $dos_skipping = true;
         }
     } else {
@@ -140,7 +140,7 @@ function protector_postcheck()
     }
 
     // DoS Attack
-    if (empty($dos_skipping) && !$protector->check_dos_attack($uid, $can_ban)) {
+    if (empty($dos_skipping) && ! $protector->check_dos_attack($uid, $can_ban)) {
         $protector->output_log($protector->last_error_type, $uid, true, 16);
     }
 
@@ -150,7 +150,7 @@ function protector_postcheck()
     $ips = explode('.', $_SERVER['REMOTE_ADDR']);
     $remote_numip = @$ips[0] * 0x1000000 + @$ips[1] * 0x10000 + @$ips[2] * 0x100 + @$ips[3];
     $shift = 32 - @$conf['session_fixed_topbit'];
-    if ($shift < 32 && $shift >= 0 && !empty($_SESSION['protector_last_ip']) && $protector_last_numip >> $shift != $remote_numip >> $shift) {
+    if ($shift < 32 && $shift >= 0 && ! empty($_SESSION['protector_last_ip']) && $protector_last_numip >> $shift !== $remote_numip >> $shift) {
         if ($xoops->isUser() && count(array_intersect($xoops->user->getGroups(), unserialize($conf['groups_denyipmove'])))) {
             $protector->purge(true);
         }
@@ -158,7 +158,7 @@ function protector_postcheck()
     $_SESSION['protector_last_ip'] = $_SERVER['REMOTE_ADDR'];
 
     // SQL Injection "Isolated /*"
-    if (!$protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
+    if (! $protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
         if (($conf['isocom_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } else {
@@ -173,7 +173,7 @@ function protector_postcheck()
     }
 
     // SQL Injection "UNION"
-    if (!$protector->check_sql_union(@$conf['union_action'] & 1)) {
+    if (! $protector->check_sql_union(@$conf['union_action'] & 1)) {
         if (($conf['union_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } else {
@@ -187,16 +187,16 @@ function protector_postcheck()
         }
     }
 
-    if (!empty($_POST)) {
+    if (! empty($_POST)) {
         // SPAM Check
         if ($xoops->isUser()) {
-            if (!$xoops->user->isAdmin() && $conf['spamcount_uri4user']) {
-                $protector->spam_check((int)($conf['spamcount_uri4user']), $xoops->user->getVar('uid'));
+            if (! $xoops->user->isAdmin() && $conf['spamcount_uri4user']) {
+                $protector->spam_check((int) ($conf['spamcount_uri4user']), $xoops->user->getVar('uid'));
             }
         } else {
             if ($conf['spamcount_uri4guest']) {
 
-                $protector->spam_check((int)($conf['spamcount_uri4guest']), 0);
+                $protector->spam_check((int) ($conf['spamcount_uri4guest']), 0);
             }
         }
 
@@ -205,7 +205,7 @@ function protector_postcheck()
     }
 
     // register.php Protection
-    if ($_SERVER['SCRIPT_FILENAME'] == \XoopsBaseConfig::get('root-path') . '/register.php') {
+    if ($_SERVER['SCRIPT_FILENAME'] === \XoopsBaseConfig::get('root-path') . '/register.php') {
         $protector->call_filter('postcommon_register');
     }
 

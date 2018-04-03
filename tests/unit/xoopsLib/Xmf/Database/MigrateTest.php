@@ -1,7 +1,8 @@
 <?php
+
 namespace Xmf\Database;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class MigrateTest extends \PHPUnit\Framework\TestCase
 {

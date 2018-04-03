@@ -30,12 +30,10 @@ class ThemeForm extends Form
      *
      * @param string $extra HTML to be displayed in the empty row.
      * @param string $class CSS class name for <td> tag
-     *
-     * @return void
      */
     public function insertBreak($extra = '', $class = '')
     {
-        $class = ($class != '' ? " class=\"" . $class . "\"" : " class=\"break\"");
+        $class = ($class !== '' ? ' class="' . $class . '"' : ' class="break"');
         // Fix for $extra tag not showing
         if ($extra) {
             $value = '<div' . $class . '>' . $extra . '</div>';
@@ -84,7 +82,7 @@ class ThemeForm extends Form
         $hidden = '';
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (!$ele->isHidden()) {
+            if (! $ele->isHidden()) {
                 $input['name'] = $ele->getName();
                 $input['caption'] = $ele->getCaption();
                 $input['description'] = $ele->getDescription();
@@ -95,7 +93,7 @@ class ThemeForm extends Form
                 $xoops->tpl()->appendByRef('xo_input', $input);
                 unset($input);
             } else {
-                $hidden .= $ele->render(). "\n";
+                $hidden .= $ele->render() . "\n";
             }
 
         }

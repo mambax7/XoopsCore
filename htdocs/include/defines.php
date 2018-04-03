@@ -108,4 +108,4 @@ body {font-size: 12px; background-color: #f0f0f0; text-align: center;}
 </html>"
 );
 
-define('_XOOPS_FATAL_BACKTRACE', "Backtrace");
+define('_XOOPS_FATAL_BACKTRACE', 'Backtrace');

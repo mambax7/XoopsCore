@@ -27,7 +27,7 @@ function publisher_date_to_date_show($options)
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
     $publisher = Publisher::getInstance();
 
-    $block = array();
+    $block = [];
 
     $criteria = new CriteriaCompo();
     $criteria->add(new Criteria('datesub', strtotime($options[0]), '>'));
@@ -59,7 +59,7 @@ function publisher_date_to_date_show($options)
         $block['lang_poster'] = _MB_PUBLISHER_POSTEDBY;
         $block['lang_date'] = _MB_PUBLISHER_DATE;
         $modulename = $myts->displayTarea($publisher->getModule()->getVar('name'));
-        $block['lang_visitItem'] = _MB_PUBLISHER_VISITITEM . " " . $modulename;
+        $block['lang_visitItem'] = _MB_PUBLISHER_VISITITEM . ' ' . $modulename;
         $block['lang_articles_from_to'] = sprintf(_MB_PUBLISHER_ARTICLES_FROM_TO, $options[0], $options[1]);
     }
 

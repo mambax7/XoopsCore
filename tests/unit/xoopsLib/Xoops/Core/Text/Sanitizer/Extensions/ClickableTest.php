@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class ClickableTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,11 +50,11 @@ class ClickableTest extends \PHPUnit\Framework\TestCase
         $in = 'http://xoops.org';
         $expected = '<a href="http://xoops.org" title="http://xoops.org"rel="external">http://xoops.org</a>';
         $actual = $this->sanitizer->executeFilter('clickable', $in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $in = 'fred@example.com';
         $expected = '<a href="mailto:fred@example.com" title="fred@example.com">fred@example.com</a>';
         $actual = $this->sanitizer->executeFilter('clickable', $in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

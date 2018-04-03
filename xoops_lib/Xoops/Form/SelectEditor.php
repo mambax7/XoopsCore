@@ -26,7 +26,7 @@ class SelectEditor extends ElementTray
     /**
      * @var array
      */
-    public $allowed_editors = array();
+    public $allowed_editors = [];
 
     /**
      * @var Form
@@ -62,7 +62,7 @@ class SelectEditor extends ElementTray
         $name = 'editor',
         $value = null,
         $nohtml = false,
-        $allowed_editors = array()
+        $allowed_editors = []
     ) {
         parent::__construct(\XoopsLocale::A_SELECT);
         $this->allowed_editors = $allowed_editors;
@@ -81,7 +81,7 @@ class SelectEditor extends ElementTray
     {
         $editor_handler = \XoopsEditorHandler::getInstance();
         $editor_handler->allowed_editors = $this->allowed_editors;
-        $option_select = new Select("", $this->name, $this->value);
+        $option_select = new Select('', $this->name, $this->value);
         $onchangeCode = '"if(this.options[this.selectedIndex].value.length > 0 ){window.document.forms.'
             . $this->form->getName() . '.submit();}"';
         $option_select->set('onchange', $onchangeCode);

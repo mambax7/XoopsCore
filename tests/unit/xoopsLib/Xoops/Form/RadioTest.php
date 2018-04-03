@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class RadioTest extends \PHPUnit\Framework\TestCase
 {
@@ -46,7 +47,7 @@ class RadioTest extends \PHPUnit\Framework\TestCase
 
     public function testAddOptionArray()
     {
-        $this->object->addOptionArray(array('key' => 'value', 'just_key' => null));
+        $this->object->addOptionArray(['key' => 'value', 'just_key' => null]);
         $value = $this->object->getOptions();
         $this->assertTrue(is_array($value));
         $this->assertSame('value', $value['key']);
@@ -58,15 +59,14 @@ class RadioTest extends \PHPUnit\Framework\TestCase
         $this->object->addOption('key', 'value');
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(false !== strpos($value, '<label class="radio'));
-        $this->assertTrue(false !== strpos($value, ' type="radio"'));
+        $this->assertTrue(strpos($value, '<label class="radio') !== false);
+        $this->assertTrue(strpos($value, ' type="radio"') !== false);
     }
-
 
     public function test__construct()
     {
         $oldWay = new Radio('mycaption', 'myname', 'myvalue');
         $newWay = new Radio(['caption' => 'mycaption', 'type' => 'button', 'name' => 'myname', ':inline' => null]);
-        $this->assertEquals($oldWay->render(), $newWay->render());
+        $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

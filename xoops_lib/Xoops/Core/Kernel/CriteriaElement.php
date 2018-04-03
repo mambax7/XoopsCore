@@ -61,7 +61,6 @@ abstract class CriteriaElement
      */
     protected $groupBy = '';
 
-
     /**
      * Render the criteria element
      *
@@ -112,8 +111,6 @@ abstract class CriteriaElement
      * set sort column
      *
      * @param string $sort sort column
-     *
-     * @return void
      */
     public function setSort($sort)
     {
@@ -134,14 +131,12 @@ abstract class CriteriaElement
      * set sort order
      *
      * @param string $order sort order ASC or DESC
-     *
-     * @return void
      */
     public function setOrder($order)
     {
         if (is_string($order)) {
             $order = strtoupper($order);
-            if (in_array($order, array('ASC', 'DESC'))) {
+            if (in_array($order, ['ASC', 'DESC'], true)) {
                 $this->order = $order;
             }
         }
@@ -161,12 +156,10 @@ abstract class CriteriaElement
      * set row limit
      *
      * @param int $limit row limit
-     *
-     * @return void
      */
     public function setLimit($limit = 0)
     {
-        $this->limit = (int)($limit);
+        $this->limit = (int) ($limit);
     }
 
     /**
@@ -183,12 +176,10 @@ abstract class CriteriaElement
      * set first row offset
      *
      * @param int $start offset of first row
-     *
-     * @return void
      */
     public function setStart($start = 0)
     {
-        $this->start = (int)($start);
+        $this->start = (int) ($start);
     }
 
     /**
@@ -205,8 +196,6 @@ abstract class CriteriaElement
      * set group by
      *
      * @param string $group group by
-     *
-     * @return void
      */
     public function setGroupBy($group)
     {
@@ -220,6 +209,6 @@ abstract class CriteriaElement
      */
     public function getGroupBy()
     {
-        return isset($this->groupBy) ? $this->groupBy : "";
+        return isset($this->groupBy) ? $this->groupBy : '';
     }
 }

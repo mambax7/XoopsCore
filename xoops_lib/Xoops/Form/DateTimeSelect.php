@@ -24,7 +24,9 @@ namespace Xoops\Form;
 class DateTimeSelect extends ElementTray
 {
     const SHOW_BOTH = 1;
+
     const SHOW_DATE = 0;
+
     const SHOW_TIME = 2;
 
     /**
@@ -80,8 +82,8 @@ class DateTimeSelect extends ElementTray
         }
 
         $minuteInterval = $this->get(':minuteinterval', 15);
-        $hours    = (int) ltrim($workingTime->format('H'), '0');
-        $minutes  = (int) ltrim($workingTime->format('i'), '0');
+        $hours = (int) ltrim($workingTime->format('H'), '0');
+        $minutes = (int) ltrim($workingTime->format('i'), '0');
 
         $timeDefinition = [
             'caption' => '',
@@ -89,11 +91,11 @@ class DateTimeSelect extends ElementTray
             'id' => $this->get('name') . '-time',
             'size' => 1,
             'value' => \Xoops\Core\Locale\Time::formatTime(
-                $hours * 3600 + 60*$minuteInterval * ceil($minutes / $minuteInterval),
+                $hours * 3600 + 60 * $minuteInterval * ceil($minutes / $minuteInterval),
                 'short',
                 new \DateTimeZone('UTC')
             ),
-            ElementFactory::FORM_KEY => $this
+            ElementFactory::FORM_KEY => $this,
         ];
 
         if ($displayTime) {

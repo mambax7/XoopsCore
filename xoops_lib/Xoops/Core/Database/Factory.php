@@ -30,7 +30,6 @@ use Xoops\Core\Database\Logging\XoopsDebugStack;
  */
 class Factory
 {
-
     /**
      * Get a reference to the only instance of database class and connects to DB
      *
@@ -50,17 +49,17 @@ class Factory
     public static function getConnection($options = null)
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
 			$xoops = \Xoops::getInstance();
             $config = new \Doctrine\DBAL\Configuration();
             $config->setSQLLogger(new XoopsDebugStack());
             $parameters = \XoopsBaseConfig::get('db-parameters');
-            if (!empty($parameters) && is_array($parameters)) {
+            if (! empty($parameters) && is_array($parameters)) {
                 $connectionParams = $parameters;
                 $connectionParams['wrapperClass'] = '\Xoops\Core\Database\Connection';
             } else {
                 $driver = 'pdo_' . \XoopsBaseConfig::get('db-type');
-                $connectionParams = array(
+                $connectionParams = [
                     'dbname' => \XoopsBaseConfig::get('db-name'),
                     'user' => \XoopsBaseConfig::get('db-user'),
                     'password' => \XoopsBaseConfig::get('db-pass'),
@@ -68,17 +67,17 @@ class Factory
                     'charset' => \XoopsBaseConfig::get('db-charset'),
                     'driver' => $driver,
                     'wrapperClass' => '\Xoops\Core\Database\Connection',
-                );
+                ];
                 // Support for other doctrine databases
 				$xoops_db_port = \XoopsBaseConfig::get('db-port');
-                if (!empty($xoops_db_port)) {
+                if (! empty($xoops_db_port)) {
                     $connectionParams['port'] = $xoops_db_port;
                 }
 				$xoops_db_socket = \XoopsBaseConfig::get('db-socket');
-                if (!empty($xoops_db_socket)) {
+                if (! empty($xoops_db_socket)) {
                     $connectionParams['unix_socket'] = $xoops_db_socket;
                 }
-                if (!is_null($options) && is_array($options)) {
+                if ($options !== null && is_array($options)) {
                     $connectionParams['driverOptions'] = $options;
                 }
             }
@@ -87,7 +86,7 @@ class Factory
                 $connectionParams,
                 $config
             );
-            if (!defined('XOOPS_DB_PROXY') || ('GET' !== \Xmf\Request::getMethod()) || (php_sapi_name() === 'cli')) {
+            if (! defined('XOOPS_DB_PROXY') || (\Xmf\Request::getMethod() !== 'GET') || (PHP_SAPI === 'cli')) {
                 $instance->setSafe(true);
             }
         }

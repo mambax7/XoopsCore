@@ -26,7 +26,6 @@ use Xoops\Core\Database\Connection;
  */
 class Ldap extends AuthAbstract
 {
-
     /**
      * @var
      */
@@ -35,8 +34,8 @@ class Ldap extends AuthAbstract
     /**
      * @var string
      */
-
     public $ldap_port = '389';
+
     /**
      * @var string
      */
@@ -114,7 +113,7 @@ class Ldap extends AuthAbstract
      */
     public function __construct(Connection $dao = null)
     {
-        if (!extension_loaded('ldap')) {
+        if (! extension_loaded('ldap')) {
             trigger_error(sprintf(\XoopsLocale::F_EXTENSION_PHP_NOT_LOADED, 'LDAP'), E_USER_ERROR);
             return;
         }
@@ -124,7 +123,7 @@ class Ldap extends AuthAbstract
         //Configuration options that are stored in the database
         $configs = $xoops->getConfigs();
         foreach ($configs as $key => $val) {
-            $this->$key = $val;
+            $this->{$key} = $val;
         }
     }
 
@@ -146,14 +145,14 @@ class Ldap extends AuthAbstract
         if ($this->ds) {
             ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, $this->ldap_version);
             if ($this->ldap_use_TLS) { // We use TLS secure connection
-                if (!ldap_start_tls($this->ds)) {
+                if (! ldap_start_tls($this->ds)) {
                     $this->setErrors(0, \XoopsLocale::E_TLS_CONNECTION_NOT_OPENED);
                 }
             }
             // If the uid is not in the DN we proceed to a search
             // The uid is not always in the dn
             $userDN = $this->getUserDN($uname);
-            if (!(is_string($userDN))) {
+            if (! (is_string($userDN))) {
                 return false;
             }
             // We bind as user to test the credentials
@@ -161,9 +160,9 @@ class Ldap extends AuthAbstract
             if ($authenticated) {
                 // We load the Xoops User database
                 return $this->loadXoopsUser($userDN, $uname, $pwd);
-            } else {
-                $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userDN . ')');
             }
+                $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userDN . ')');
+
         } else {
             $this->setErrors(0, \XoopsLocale::E_CANNOT_CONNECT_TO_SERVER);
         }
@@ -182,9 +181,9 @@ class Ldap extends AuthAbstract
     public function getUserDN($uname)
     {
         $userDN = false;
-        if (!$this->ldap_loginname_asdn) {
+        if (! $this->ldap_loginname_asdn) {
             // Bind with the manager
-            if (!ldap_bind($this->ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
+            if (! ldap_bind($this->ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
                 $this->setErrors(
                     ldap_errno($this->ds),
                     ldap_err2str(ldap_errno($this->ds)) . '(' . $this->ldap_manager_dn . ')'
@@ -221,7 +220,7 @@ class Ldap extends AuthAbstract
      */
     public function getFilter($uname)
     {
-        if ($this->ldap_filter_person != '') {
+        if ($this->ldap_filter_person !== '') {
             $filter = str_replace('@@loginname@@', $uname, $this->ldap_filter_person);
         } else {
             $filter = $this->ldap_loginldap_attr . '=' . $uname;

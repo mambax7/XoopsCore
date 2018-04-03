@@ -33,7 +33,7 @@ class Handler implements \SessionHandlerInterface
     private $db;
 
     /**
-     * @var string $sessionTable
+     * @var string
      */
     private $sessionTable = 'system_session';
 
@@ -111,8 +111,8 @@ class Handler implements \SessionHandlerInterface
      **/
     public function write($session_id, $session_data)
     {
-        $expires =  (isset($_SESSION['SESSION_MANAGER_EXPIRES']))
-            ? (int)($_SESSION['SESSION_MANAGER_EXPIRES'])
+        $expires = (isset($_SESSION['SESSION_MANAGER_EXPIRES']))
+            ? (int) ($_SESSION['SESSION_MANAGER_EXPIRES'])
             : time() + (session_cache_expire() * 60);
         //$oldIsolation = $this->db->getTransactionIsolation();
         //$this->db->setTransactionIsolation(Connection::TRANSACTION_REPEATABLE_READ);
@@ -129,14 +129,14 @@ class Handler implements \SessionHandlerInterface
             ->setParameter(':sessdata', $session_data, \PDO::PARAM_STR);
         $this->db->setForce(true);
         $result = $qb->execute();
-        if ($result<=0) {
+        if ($result <= 0) {
             $qb = $this->db->createXoopsQueryBuilder();
             $qb ->insertPrefix($this->sessionTable)
-                ->values(array(
-                    'session_id'   => ':sessid',
-                    'expires_at'   => ':expires',
+                ->values([
+                    'session_id' => ':sessid',
+                    'expires_at' => ':expires',
                     'session_data' => ':sessdata',
-                    ))
+                ])
                 ->setParameter(':sessid', $session_id, \PDO::PARAM_STR)
                 ->setParameter(':expires', $expires, \PDO::PARAM_INT)
                 ->setParameter(':sessdata', $session_data, \PDO::PARAM_STR);
@@ -146,7 +146,7 @@ class Handler implements \SessionHandlerInterface
         //$this->db->commit();
         //$this->db->setTransactionIsolation($oldIsolation);
 
-        return (boolean) ($result>0);
+        return (boolean) ($result > 0);
     }
 
     /**
@@ -186,6 +186,6 @@ class Handler implements \SessionHandlerInterface
             ->setParameter(':expires', $mintime, \PDO::PARAM_INT);
         $this->db->setForce(true);
         $result = $qb->execute();
-        return (boolean) ($result>0);
+        return (boolean) ($result > 0);
     }
 }

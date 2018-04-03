@@ -1,9 +1,9 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
-use Xoops\Form\Element;
 
 class ElementTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,7 +33,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $arrAttr = array('title' => 'title_value', 'name' => 'name_value[]');
+        $arrAttr = ['title' => 'title_value', 'name' => 'name_value[]'];
         $instance->setAll($arrAttr);
 
         $value = $instance->renderAttributeString();
@@ -43,7 +43,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
 
     public function testRenderAttributeString100()
     {
-        $arrAttr = array('caption' => 'caption_value');
+        $arrAttr = ['caption' => 'caption_value'];
         $this->object->setAll($arrAttr);
 
         $value = $this->object->renderAttributeString();
@@ -51,7 +51,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $value);
 
         $this->object->clear();
-        $arrAttr = array('caption' => 'caption_value', ':pattern_description' => 'pattern description');
+        $arrAttr = ['caption' => 'caption_value', ':pattern_description' => 'pattern description'];
         $this->object->setAll($arrAttr);
         $value = $this->object->renderAttributeString();
         $expected = 'title="caption_value - pattern description" id="0" ';
@@ -62,7 +62,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $arrAttr = array('title' => 'title_value', 'id'=>100);
+        $arrAttr = ['title' => 'title_value', 'id' => 100];
         $instance->setAll($arrAttr);
 
         $value = $instance->renderAttributeString();
@@ -77,7 +77,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->getValue();
         $this->assertSame($name, $value);
 
-        $names = array('name1', 'name2');
+        $names = ['name1', 'name2'];
         $this->object->setValue($names);
         $value = $this->object->getValue();
         $this->assertSame($names, $value);
@@ -110,7 +110,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $result = $instance->getAccessString($str);
 
         $expected = '<span style="text-decoration: underline;">n</span>ame';
-        $this->assertTrue(false !== strpos($result, $expected));
+        $this->assertTrue(strpos($result, $expected) !== false);
 
         $str = 'this sentence contains no access string';
         $result = $instance->getAccessString($str);
@@ -184,7 +184,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $name = 'name';
         $instance->setName($name);
 
-        $data = array('key1'=>'value1','key2'=>'value2',);
+        $data = ['key1' => 'value1', 'key2' => 'value2', ];
         $instance->setDatalist($data);
 
         $result = $instance->renderDatalist();
@@ -293,15 +293,15 @@ class ElementTest extends \PHPUnit\Framework\TestCase
 
         $this->object->addCustomValidationCode('');
         $value = $this->object->renderValidationJS();
-        $this->assertEquals($value, '');
+        $this->assertSame($value, '');
 
         $this->object->addCustomValidationCode('');
         $value = $this->object->renderValidationJS();
-        $this->assertEquals($value, "\n");
+        $this->assertSame($value, "\n");
 
         $this->object->addCustomValidationCode('', true);
         $value = $this->object->renderValidationJS();
-        $this->assertEquals($value, '');
+        $this->assertSame($value, '');
     }
 
     public function test_hasClassLike()
@@ -337,11 +337,11 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $enum = ['red', 'blue', 'green'];
         $default = 'black';
         $this->object->setWithDefaults($name, '', $default, $enum);
-        $this->assertEquals($default, $this->object->get($name));
+        $this->assertSame($default, $this->object->get($name));
         $this->object->setWithDefaults($name, 'purple', $default, $enum);
-        $this->assertEquals($default, $this->object->get($name));
+        $this->assertSame($default, $this->object->get($name));
         $this->object->setWithDefaults($name, 'blue', $default, $enum);
-        $this->assertEquals('blue', $this->object->get($name));
+        $this->assertSame('blue', $this->object->get($name));
     }
 
     public function test_setIfNotEmpty()
@@ -383,64 +383,64 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         //$this->assertFalse(isset($instance[$key]));
         $instance->setValue($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'name';
         $value = 'testname';
         $this->assertFalse(isset($instance[$key]));
         $instance->setName($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'accesskey';
         $value = 'testkey';
         $this->assertFalse(isset($instance[$key]));
         $instance->setAccessKey($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'class';
         $value = 'testclass';
         $this->assertFalse(isset($instance[$key]));
         $instance->setClass($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals([$value], $instance[$key]);
+        $this->assertSame([$value], $instance[$key]);
 
         $key = 'pattern';
         $value = 'testpattern';
         $this->assertFalse(isset($instance[$key]));
         $instance->setPattern($value, 'testdesc');
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
-        $this->assertEquals('testdesc', $instance[':pattern_description']);
+        $this->assertSame($value, $instance[$key]);
+        $this->assertSame('testdesc', $instance[':pattern_description']);
 
         $key = 'datalist';
         $value = 'testdatalist';
         $this->assertFalse(isset($instance[$key]));
         $instance->setDatalist($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals([$value], $instance[$key]);
+        $this->assertSame([$value], $instance[$key]);
 
         $key = 'caption';
         $value = 'testcaption';
         $this->assertFalse(isset($instance[$key]));
         $instance->setCaption($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'title';
         $value = 'testtitle';
         $this->assertFalse(isset($instance[$key]));
         $instance->setTitle($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'description';
         $value = 'testdescription';
         $this->assertFalse(isset($instance[$key]));
         $instance->setDescription($value);
         $this->assertTrue(isset($instance[$key]));
-        $this->assertEquals($value, $instance[$key]);
+        $this->assertSame($value, $instance[$key]);
 
         $key = 'hidden';
         $this->assertFalse(array_key_exists($key, $instance));

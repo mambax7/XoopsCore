@@ -41,8 +41,6 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
      *
      * @param array       &$obj array of config objects
      * @param XoopsModule $mod module
-     *
-     * @return void
      */
     public function getForm(&$obj, XoopsModule $mod)
     {
@@ -55,47 +53,47 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         }
         $xoops->loadLocale($mod->getVar('dirname'));
         $configs = $mod->getInfo('config');
-        $configNames = array();
+        $configNames = [];
         foreach (array_keys($configs) as $i) {
-            $configNames[$configs[$i]['name']] =& $configs[$i];
+            $configNames[$configs[$i]['name']] = & $configs[$i];
         }
         $configCats = $mod->getInfo('configcat');
-        if (!$configCats) {
-            $configCats = array(
-                'default' => array(
-                    'name'        => SystemLocale::OTHER_SETTINGS,
-                    'description' => ''
-                )
-            );
+        if (! $configCats) {
+            $configCats = [
+                'default' => [
+                    'name' => SystemLocale::OTHER_SETTINGS,
+                    'description' => '',
+                ],
+            ];
         }
 
-        if (!in_array('default', array_keys($configCats))) {
-            $configCats['default'] = array(
-                'name'        => SystemLocale::OTHER_SETTINGS,
-                'description' => ''
-            );
+        if (! in_array('default', array_keys($configCats), true)) {
+            $configCats['default'] = [
+                'name' => SystemLocale::OTHER_SETTINGS,
+                'description' => '',
+            ];
         }
 
         foreach (array_keys($configNames) as $name) {
-            if (!isset($configNames[$name]['category'])) {
+            if (! isset($configNames[$name]['category'])) {
                 $configNames[$name]['category'] = 'default';
             }
         }
 
         $tabTray = new Xoops\Form\TabTray('', 'pref_tabtay');
-        $tabs = array();
+        $tabs = [];
         foreach ($configCats as $name => $info) {
             $tabs[$name] = new Xoops\Form\Tab($info['name'], 'pref_tab_' . $name);
-            if (isset($info['description']) && $info['description'] != '') {
+            if (isset($info['description']) && $info['description'] !== '') {
                 $tabs[$name]->addElement(new Xoops\Form\Label('', $info['description']));
             }
         }
 
         $xoops->events()->triggerEvent('system.preferences.form', $mod);
 
-        if (!empty($_REQUEST["redirect"])) {
+        if (! empty($_REQUEST['redirect'])) {
             $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-            $this->addElement(new Xoops\Form\Hidden('redirect', $myts->htmlSpecialChars($_REQUEST["redirect"])));
+            $this->addElement(new Xoops\Form\Hidden('redirect', $myts->htmlSpecialChars($_REQUEST['redirect'])));
         } elseif ($mod->getInfo('adminindex')) {
             $this->addElement(new Xoops\Form\Hidden(
                 'redirect',
@@ -105,7 +103,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         $count = count($obj);
         for ($i = 0; $i < $count; ++$i) {
             $title = \Xoops\Locale::translate($obj[$i]->getVar('conf_title'), $mod->getVar('dirname'));
-            $desc = ($obj[$i]->getVar('conf_desc') != '') ?
+            $desc = ($obj[$i]->getVar('conf_desc') !== '') ?
                 \Xoops\Locale::translate($obj[$i]->getVar('conf_desc'), $mod->getVar('dirname')) : '';
             switch ($obj[$i]->getVar('conf_formtype')) {
 
@@ -113,7 +111,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                     if ($obj[$i]->getVar('conf_valuetype') === 'array') {
                         // this is exceptional.. only when value type is arrayneed a smarter way for this
-                        $ele = ($obj[$i]->getVar('conf_value') != '')
+                        $ele = ($obj[$i]->getVar('conf_value') !== '')
                             ? new Xoops\Form\TextArea(
                                 $title,
                                 $obj[$i]->getVar('conf_name'),
@@ -176,7 +174,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                 case 'theme_multi':
                     $ele = ($obj[$i]->getVar('conf_formtype') !== 'theme_multi') ? new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput()) : new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput(), 5, true);
                     $dirlist = XoopsLists::getThemesList();
-                    if (!empty($dirlist)) {
+                    if (! empty($dirlist)) {
                         asort($dirlist);
                         $ele->addOptionArray($dirlist);
                     }
@@ -243,24 +241,24 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                     $module_handler = $xoops->getHandlerModule();
                     $modules = $module_handler->getObjectsArray(new Criteria('hasmain', 1), true);
                     $currrent_val = $obj[$i]->getConfValueForOutput();
-                    $cache_options = array(
-                        '0'       => XoopsLocale::NO_CACHE,
-                        '30'      => sprintf(XoopsLocale::F_SECONDS, 30),
-                        '60'      => XoopsLocale::ONE_MINUTE,
-                        '300'     => sprintf(XoopsLocale::F_MINUTES, 5),
-                        '1800'    => sprintf(XoopsLocale::F_MINUTES, 30),
-                        '3600'    => XoopsLocale::ONE_HOUR,
-                        '18000'   => sprintf(XoopsLocale::F_HOURS, 5),
-                        '86400'   => XoopsLocale::ONE_DAY,
-                        '259200'  => sprintf(XoopsLocale::F_DAYS, 3),
-                        '604800'  => XoopsLocale::ONE_WEEK,
-                        '2592000' => XoopsLocale::ONE_MONTH
-                    );
+                    $cache_options = [
+                        '0' => XoopsLocale::NO_CACHE,
+                        '30' => sprintf(XoopsLocale::F_SECONDS, 30),
+                        '60' => XoopsLocale::ONE_MINUTE,
+                        '300' => sprintf(XoopsLocale::F_MINUTES, 5),
+                        '1800' => sprintf(XoopsLocale::F_MINUTES, 30),
+                        '3600' => XoopsLocale::ONE_HOUR,
+                        '18000' => sprintf(XoopsLocale::F_HOURS, 5),
+                        '86400' => XoopsLocale::ONE_DAY,
+                        '259200' => sprintf(XoopsLocale::F_DAYS, 3),
+                        '604800' => XoopsLocale::ONE_WEEK,
+                        '2592000' => XoopsLocale::ONE_MONTH,
+                    ];
                     if (count($modules) > 0) {
                         $ele = new Xoops\Form\ElementTray($title, '<br />');
                         foreach (array_keys($modules) as $mid) {
-                            $c_val = isset($currrent_val[$mid]) ? (int)($currrent_val[$mid]) : null;
-                            $selform = new Xoops\Form\Select($modules[$mid]->getVar('name'), $obj[$i]->getVar('conf_name') . "[$mid]", $c_val);
+                            $c_val = isset($currrent_val[$mid]) ? (int) ($currrent_val[$mid]) : null;
+                            $selform = new Xoops\Form\Select($modules[$mid]->getVar('name'), $obj[$i]->getVar('conf_name') . "[${mid}]", $c_val);
                             $selform->addOptionArray($cache_options);
                             $ele->addElement($selform);
                             unset($selform);
@@ -272,19 +270,19 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
 
                 case 'site_cache':
                     $ele = new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
-                    $ele->addOptionArray(array(
-                        '0'       => XoopsLocale::NO_CACHE,
-                        '30'      => sprintf(XoopsLocale::F_SECONDS, 30),
-                        '60'      => XoopsLocale::ONE_MINUTE,
-                        '300'     => sprintf(XoopsLocale::F_MINUTES, 5),
-                        '1800'    => sprintf(XoopsLocale::F_MINUTES, 30),
-                        '3600'    => XoopsLocale::ONE_HOUR,
-                        '18000'   => sprintf(XoopsLocale::F_HOURS, 5),
-                        '86400'   => XoopsLocale::ONE_DAY,
-                        '259200'  => sprintf(XoopsLocale::F_DAYS, 3),
-                        '604800'  => XoopsLocale::ONE_WEEK,
-                        '2592000' => XoopsLocale::ONE_MONTH
-                    ));
+                    $ele->addOptionArray([
+                        '0' => XoopsLocale::NO_CACHE,
+                        '30' => sprintf(XoopsLocale::F_SECONDS, 30),
+                        '60' => XoopsLocale::ONE_MINUTE,
+                        '300' => sprintf(XoopsLocale::F_MINUTES, 5),
+                        '1800' => sprintf(XoopsLocale::F_MINUTES, 30),
+                        '3600' => XoopsLocale::ONE_HOUR,
+                        '18000' => sprintf(XoopsLocale::F_HOURS, 5),
+                        '86400' => XoopsLocale::ONE_DAY,
+                        '259200' => sprintf(XoopsLocale::F_DAYS, 3),
+                        '604800' => XoopsLocale::ONE_WEEK,
+                        '2592000' => XoopsLocale::ONE_MONTH,
+                    ]);
                     break;
 
                 case 'password':

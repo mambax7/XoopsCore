@@ -11,8 +11,8 @@
 
 namespace Xoops\Core;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Xoops\Core\Logger - dispatch log requests to any registered loggers.
@@ -47,12 +47,60 @@ class Logger implements LoggerInterface
     /**
      * @var LoggerInterface[] chain of PSR-3 compatible loggers to call
      */
-    private $loggers = array();
+    private $loggers = [];
 
     /**
      * @var boolean do we have active loggers?
      */
     private $logging_active = false;
+
+    // Deprecated uses
+
+    /**
+     * Keep deprecated calls from failing
+     *
+     * @param string $var property
+     * @param string $val value
+     *
+     *
+     * @deprecated
+     */
+    public function __set($var, $val)
+    {
+        $this->deprecatedMessage();
+        // legacy compatibility: turn off logger display for $xoopsLogger->activated = false; usage
+        if ($var === 'activated' && ! $val) {
+            $this->quiet();
+        }
+
+    }
+
+    /**
+     * Keep deprecated calls from failing
+     *
+     * @param string $var property
+     *
+     *
+     * @deprecated
+     */
+    public function __get($var)
+    {
+        $this->deprecatedMessage();
+    }
+
+    /**
+     * Keep deprecated calls from failing
+     *
+     * @param string $method method
+     * @param string $args   arguments
+     *
+     *
+     * @deprecated
+     */
+    public function __call($method, $args)
+    {
+        $this->deprecatedMessage();
+    }
 
     /**
      * @var boolean just to prevent fatal legacy errors. Does nothing. Stop it!
@@ -67,13 +115,13 @@ class Logger implements LoggerInterface
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
             // Always catch errors, for security reasons
-            set_error_handler(array($instance, 'handleError'));
+            set_error_handler([$instance, 'handleError']);
             // grab any uncaught exception
-            set_exception_handler(array($instance, 'handleException'));
+            set_exception_handler([$instance, 'handleException']);
         }
 
         return $instance;
@@ -88,8 +136,6 @@ class Logger implements LoggerInterface
      * @param string  $errorString error message
      * @param string  $errorFile   file
      * @param integer $errorLine   line number
-     *
-     * @return void
      */
     public function handleError($errorNumber, $errorString, $errorFile, $errorLine)
     {
@@ -99,7 +145,7 @@ class Logger implements LoggerInterface
             // we still need messages, so check and deal with it
 
             $msg = ': ' . sprintf(
-                (class_exists('\XoopsLocale', false) ? \XoopsLocale::EF_LOGGER_FILELINE : "%s in file %s line %s"),
+                (class_exists('\XoopsLocale', false) ? \XoopsLocale::EF_LOGGER_FILELINE : '%s in file %s line %s'),
                 $this->sanitizePath($errorString),
                 $this->sanitizePath($errorFile),
                 $errorLine
@@ -133,7 +179,7 @@ class Logger implements LoggerInterface
             }
         }
 
-        if ($errorNumber == E_USER_ERROR) {
+        if ($errorNumber === E_USER_ERROR) {
             $trace = true;
             if (substr($errorString, 0, '8') === 'notrace:') {
                 $trace = false;
@@ -143,14 +189,14 @@ class Logger implements LoggerInterface
             if ($trace) {
                 $trace = debug_backtrace();
                 array_shift($trace);
-                if ('cli' === php_sapi_name()) {
+                if ('cli' === PHP_SAPI) {
                     foreach ($trace as $step) {
                         if (isset($step['file'])) {
                             fprintf(STDERR, "%s (%d)\n", $this->sanitizePath($step['file']), $step['line']);
                         }
                     }
                 } else {
-                    echo "<div style='color:#f0f0f0;background-color:#f0f0f0'>" . _XOOPS_FATAL_BACKTRACE . ":<br />";
+                    echo "<div style='color:#f0f0f0;background-color:#f0f0f0'>" . _XOOPS_FATAL_BACKTRACE . ':<br />';
                     foreach ($trace as $step) {
                         if (isset($step['file'])) {
                             printf("%s (%d)\n<br />", $this->sanitizePath($step['file']), $step['line']);
@@ -167,14 +213,200 @@ class Logger implements LoggerInterface
      * Exception handling callback.
      *
      * @param \Exception|\Throwable $e uncaught Exception or Error
-     *
-     * @return void
      */
     public function handleException($e)
     {
         if ($this->isThrowable($e)) {
             $msg = $e->getMessage();
             $this->reportFatalError($msg);
+        }
+    }
+
+    /**
+     * clean a path to remove sensitive details
+     *
+     * @param string $message text to sanitize
+     *
+     * @return string sanitized message
+     */
+    public function sanitizePath($message)
+    {
+        $cleaners = [
+            ['\\', '/', ],
+            [\XoopsBaseConfig::get('var-path'), 'VAR', ],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('var-path'))), 'VAR', ],
+            [\XoopsBaseConfig::get('lib-path'), 'LIB', ],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('lib-path'))), 'LIB', ],
+            [\XoopsBaseConfig::get('root-path'), 'ROOT', ],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('root-path'))), 'ROOT', ],
+            [\XoopsBaseConfig::get('db-name') . '.', '', ],
+            [\XoopsBaseConfig::get('db-name'), '', ],
+            [\XoopsBaseConfig::get('db-prefix') . '_', '', ],
+            [\XoopsBaseConfig::get('db-user'), '***', ],
+            [\XoopsBaseConfig::get('db-pass'), '***', ],
+        ];
+        $stringsToClean = array_column($cleaners, 0);
+        $replacementStings = array_column($cleaners, 1);
+
+        $message = str_replace($stringsToClean, $replacementStings, $message);
+
+        return $message;
+    }
+
+    /**
+     * add a PSR-3 compatible logger to the chain
+     *
+     * @param object $logger a PSR-3 compatible logger object
+     */
+    public function addLogger($logger)
+    {
+        if (is_object($logger) && method_exists($logger, 'log')) {
+                $this->loggers[] = $logger;
+                $this->logging_active = true;
+        }
+    }
+
+    /**
+     * System is unusable.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function emergency($message, array $context = [])
+    {
+        $this->log(LogLevel::EMERGENCY, $message, $context);
+    }
+
+    /**
+     * Action must be taken immediately.
+     *
+     * Example: Entire website down, database unavailable, etc. This should
+     * trigger the SMS alerts and wake you up.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function alert($message, array $context = [])
+    {
+        $this->log(LogLevel::ALERT, $message, $context);
+    }
+
+    /**
+     * Critical conditions.
+     *
+     * Example: Application component unavailable, unexpected exception.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function critical($message, array $context = [])
+    {
+        $this->log(LogLevel::CRITICAL, $message, $context);
+    }
+
+    /**
+     * Runtime errors that do not require immediate action but should typically
+     * be logged and monitored.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function error($message, array $context = [])
+    {
+        $this->log(LogLevel::ERROR, $message, $context);
+    }
+
+    /**
+     * Exceptional occurrences that are not errors.
+     *
+     * Example: Use of deprecated APIs, poor use of an API, undesirable things
+     * that are not necessarily wrong.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function warning($message, array $context = [])
+    {
+        $this->log(LogLevel::WARNING, $message, $context);
+    }
+
+    /**
+     * Normal but significant events.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function notice($message, array $context = [])
+    {
+        $this->log(LogLevel::NOTICE, $message, $context);
+    }
+
+    /**
+     * Interesting events.
+     *
+     * Example: User logs in, SQL logs.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function info($message, array $context = [])
+    {
+        $this->log(LogLevel::INFO, $message, $context);
+    }
+
+    /**
+     * Detailed debug information.
+     *
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function debug($message, array $context = [])
+    {
+        $this->log(LogLevel::DEBUG, $message, $context);
+    }
+
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed  $level   PSR-3 LogLevel constant
+     * @param string $message message
+     * @param array  $context array of context data for this log entry
+     */
+    public function log($level, $message, array $context = [])
+    {
+        if (! empty($this->loggers)) {
+            foreach ($this->loggers as $logger) {
+                if (is_object($logger)) {
+                    try {
+                        $logger->log($level, $message, $context);
+                    } catch (\Exception $e) {
+                        // just ignore, as we can't do anything, not even log it.
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * quiet - turn off output if output is rendered in XOOPS page output.
+     * This is intended to assist ajax code that may fail with any extra
+     * content the logger may introduce.
+     *
+     * It should have no effect on loggers using other methods, such a write
+     * to file.
+     */
+    public function quiet()
+    {
+        if (! empty($this->loggers)) {
+            foreach ($this->loggers as $logger) {
+                if (is_object($logger) && method_exists($logger, 'quiet')) {
+                    try {
+                        $logger->quiet();
+                    } catch (\Exception $e) {
+                        // just ignore, as we can't do anything, not even log it.
+                    }
+                }
+            }
         }
     }
 
@@ -195,13 +427,11 @@ class Logger implements LoggerInterface
      * Announce fatal error, attempt to log
      *
      * @param string $msg error message to report
-     *
-     * @return void
      */
     private function reportFatalError($msg)
     {
-        $msg=$this->sanitizePath($msg);
-        if ('cli' === php_sapi_name()) {
+        $msg = $this->sanitizePath($msg);
+        if ('cli' === PHP_SAPI) {
             fprintf(STDERR, "\nError : %s\n", $msg);
         } else {
             if (defined('_XOOPS_FATAL_MESSAGE')) {
@@ -214,270 +444,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * clean a path to remove sensitive details
-     *
-     * @param string $message text to sanitize
-     *
-     * @return string sanitized message
-     */
-    public function sanitizePath($message)
-    {
-        $cleaners = [
-            ['\\', '/',],
-            [\XoopsBaseConfig::get('var-path'), 'VAR',],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('var-path'))), 'VAR',],
-            [\XoopsBaseConfig::get('lib-path'), 'LIB',],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('lib-path'))), 'LIB',],
-            [\XoopsBaseConfig::get('root-path'), 'ROOT',],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('root-path'))), 'ROOT',],
-            [\XoopsBaseConfig::get('db-name') . '.', '',],
-            [\XoopsBaseConfig::get('db-name'), '',],
-            [\XoopsBaseConfig::get('db-prefix') . '_', '',],
-            [\XoopsBaseConfig::get('db-user'), '***',],
-            [\XoopsBaseConfig::get('db-pass'), '***',],
-        ];
-        $stringsToClean = array_column($cleaners, 0);
-        $replacementStings = array_column($cleaners, 1);
-
-        $message = str_replace($stringsToClean, $replacementStings, $message);
-
-        return $message;
-    }
-
-    /**
-     * add a PSR-3 compatible logger to the chain
-     *
-     * @param object $logger a PSR-3 compatible logger object
-     *
-     * @return void
-     */
-    public function addLogger($logger)
-    {
-        if (is_object($logger) && method_exists($logger, 'log')) {
-                $this->loggers[] = $logger;
-                $this->logging_active = true;
-        }
-    }
-
-    /**
-     * System is unusable.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function emergency($message, array $context = array())
-    {
-        $this->log(LogLevel::EMERGENCY, $message, $context);
-    }
-
-    /**
-     * Action must be taken immediately.
-     *
-     * Example: Entire website down, database unavailable, etc. This should
-     * trigger the SMS alerts and wake you up.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function alert($message, array $context = array())
-    {
-        $this->log(LogLevel::ALERT, $message, $context);
-    }
-
-    /**
-     * Critical conditions.
-     *
-     * Example: Application component unavailable, unexpected exception.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function critical($message, array $context = array())
-    {
-        $this->log(LogLevel::CRITICAL, $message, $context);
-    }
-
-    /**
-     * Runtime errors that do not require immediate action but should typically
-     * be logged and monitored.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function error($message, array $context = array())
-    {
-        $this->log(LogLevel::ERROR, $message, $context);
-    }
-
-    /**
-     * Exceptional occurrences that are not errors.
-     *
-     * Example: Use of deprecated APIs, poor use of an API, undesirable things
-     * that are not necessarily wrong.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function warning($message, array $context = array())
-    {
-        $this->log(LogLevel::WARNING, $message, $context);
-    }
-
-    /**
-     * Normal but significant events.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function notice($message, array $context = array())
-    {
-        $this->log(LogLevel::NOTICE, $message, $context);
-    }
-
-    /**
-     * Interesting events.
-     *
-     * Example: User logs in, SQL logs.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function info($message, array $context = array())
-    {
-        $this->log(LogLevel::INFO, $message, $context);
-    }
-
-    /**
-     * Detailed debug information.
-     *
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function debug($message, array $context = array())
-    {
-        $this->log(LogLevel::DEBUG, $message, $context);
-    }
-
-    /**
-     * Logs with an arbitrary level.
-     *
-     * @param mixed  $level   PSR-3 LogLevel constant
-     * @param string $message message
-     * @param array  $context array of context data for this log entry
-     *
-     * @return void
-     */
-    public function log($level, $message, array $context = array())
-    {
-        if (!empty($this->loggers)) {
-            foreach ($this->loggers as $logger) {
-                if (is_object($logger)) {
-                    try {
-                        $logger->log($level, $message, $context);
-                    } catch (\Exception $e) {
-                        // just ignore, as we can't do anything, not even log it.
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * quiet - turn off output if output is rendered in XOOPS page output.
-     * This is intended to assist ajax code that may fail with any extra
-     * content the logger may introduce.
-     *
-     * It should have no effect on loggers using other methods, such a write
-     * to file.
-     *
-     * @return void
-     */
-    public function quiet()
-    {
-        if (!empty($this->loggers)) {
-            foreach ($this->loggers as $logger) {
-                if (is_object($logger) && method_exists($logger, 'quiet')) {
-                    try {
-                        $logger->quiet();
-                    } catch (\Exception $e) {
-                        // just ignore, as we can't do anything, not even log it.
-                    }
-                }
-            }
-        }
-    }
-
-    // Deprecated uses
-
-    /**
-     * Keep deprecated calls from failing
-     *
-     * @param string $var property
-     * @param string $val value
-     *
-     * @return void
-     *
-     * @deprecated
-     */
-    public function __set($var, $val)
-    {
-        $this->deprecatedMessage();
-        // legacy compatibility: turn off logger display for $xoopsLogger->activated = false; usage
-        if ($var==='activated' && !$val) {
-            $this->quiet();
-        }
-
-    }
-
-    /**
-     * Keep deprecated calls from failing
-     *
-     * @param string $var property
-     *
-     * @return void
-     *
-     * @deprecated
-     */
-    public function __get($var)
-    {
-        $this->deprecatedMessage();
-    }
-
-    /**
-     * Keep deprecated calls from failing
-     *
-     * @param string $method method
-     * @param string $args   arguments
-     *
-     * @return void
-     *
-     * @deprecated
-    */
-    public function __call($method, $args)
-    {
-        $this->deprecatedMessage();
-    }
-
-    /**
      * issue a deprecated warning
-     *
-     * @return void
      */
     private function deprecatedMessage()
     {

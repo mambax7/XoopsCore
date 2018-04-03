@@ -60,7 +60,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      *
      * @var     array
      */
-    private $cachedConfigs = array();
+    private $cachedConfigs = [];
 
     /**
      * Constructor
@@ -94,7 +94,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
     {
         /* @var $config XoopsConfigItem */
         $config = $this->itemHandler->get($id);
-        if ($withoptions == true) {
+        if ($withoptions === true) {
             $config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
         }
         return $config;
@@ -109,7 +109,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
      */
     public function insertConfig(XoopsConfigItem $config)
     {
-        if (!$this->itemHandler->insert($config)) {
+        if (! $this->itemHandler->insert($config)) {
             return false;
         }
         $options = $config->getConfOptions();
@@ -117,13 +117,13 @@ class XoopsConfigHandler extends XoopsObjectHandler
         $conf_id = $config->getVar('conf_id');
         for ($i = 0; $i < $count; ++$i) {
             $options[$i]->setVar('conf_id', $conf_id);
-            if (!$this->optionHandler->insert($options[$i])) {
+            if (! $this->optionHandler->insert($options[$i])) {
                 foreach ($options[$i]->getErrors() as $msg) {
                     $config->setErrors($msg);
                 }
             }
         }
-        if (!empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
+        if (! empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
             unset($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
         }
         return true;
@@ -138,12 +138,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
      */
     public function deleteConfig(XoopsConfigItem $config)
     {
-        if (!$this->itemHandler->delete($config)) {
+        if (! $this->itemHandler->delete($config)) {
             return false;
         }
         $options = $config->getConfOptions();
         $count = count($options);
-        if ($count == 0) {
+        if ($count === 0) {
             $options = $this->getConfigOptions(new Criteria('conf_id', $config->getVar('conf_id')));
             $count = count($options);
         }
@@ -152,7 +152,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
                 $this->optionHandler->delete($options[$i]);
             }
         }
-        if (!empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
+        if (! empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
             unset($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
         }
         return true;
@@ -171,7 +171,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
         $criteria2 = new CriteriaCompo();
         if ($criteria) {
             $criteria2->add($criteria);
-            if (!$criteria->getSort()) {
+            if (! $criteria->getSort()) {
                 $criteria2->setSort('conf_order');
                 $criteria2->setOrder('ASC');
             }
@@ -203,8 +203,8 @@ class XoopsConfigHandler extends XoopsObjectHandler
      */
     public function getConfigsByModule($module = 0)
     {
-        $ret = array();
-        $criteria = new Criteria('conf_modid', (int)($module));
+        $ret = [];
+        $criteria = new Criteria('conf_modid', (int) ($module));
         $configs = $this->getConfigs($criteria, true);
         if (is_array($configs)) {
             foreach (array_keys($configs) as $i) {
@@ -227,13 +227,13 @@ class XoopsConfigHandler extends XoopsObjectHandler
     public function getConfigsByCat($category, $module = 0)
     {
         static $_cachedConfigs;
-        if (!empty($_cachedConfigs[$module][$category])) {
+        if (! empty($_cachedConfigs[$module][$category])) {
             return $_cachedConfigs[$module][$category];
-        } else {
-            $ret = array();
-            $criteria = new CriteriaCompo(new Criteria('conf_modid', (int)($module)));
-            if (!empty($category)) {
-                $criteria->add(new Criteria('conf_catid', (int)($category)));
+        }
+            $ret = [];
+            $criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($module)));
+            if (! empty($category)) {
+                $criteria->add(new Criteria('conf_catid', (int) ($category)));
             }
             $configs = $this->getConfigs($criteria, true);
             if (is_array($configs)) {
@@ -243,7 +243,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
             }
             $_cachedConfigs[$module][$category] = $ret;
             return $_cachedConfigs[$module][$category];
-        }
+
     }
 
     /**
@@ -305,9 +305,9 @@ class XoopsConfigHandler extends XoopsObjectHandler
      */
     public function getConfigList($conf_modid, $conf_catid = 0)
     {
-        if (!empty($this->cachedConfigs[$conf_modid][$conf_catid])) {
+        if (! empty($this->cachedConfigs[$conf_modid][$conf_catid])) {
             return $this->cachedConfigs[$conf_modid][$conf_catid];
-        } else {
+        }
             $criteria = new CriteriaCompo(new Criteria('conf_modid', $conf_modid));
             if (empty($conf_catid)) {
                 $criteria->add(new Criteria('conf_catid', $conf_catid));
@@ -316,12 +316,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
             $criteria->setOrder('ASC');
             $configs = $this->itemHandler->getObjects($criteria);
             $confcount = count($configs);
-            $ret = array();
+            $ret = [];
             for ($i = 0; $i < $confcount; ++$i) {
                 $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }
             $this->cachedConfigs[$conf_modid][$conf_catid] = $ret;
             return $ret;
-        }
+
     }
 }

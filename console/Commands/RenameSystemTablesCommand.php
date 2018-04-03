@@ -4,9 +4,8 @@ namespace XoopsConsole\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class RenameSystemTablesCommand extends Command
 {
@@ -26,21 +25,21 @@ EOT
     {
 
         $tableNames = [
-            'newblocks'        => 'system_block',
-            'block_module_link'=> 'system_blockmodule',
-            'config'           => 'system_config',
-            'configoption'     => 'system_configoption',
-            'groups'           => 'system_group',
+            'newblocks' => 'system_block',
+            'block_module_link' => 'system_blockmodule',
+            'config' => 'system_config',
+            'configoption' => 'system_configoption',
+            'groups' => 'system_group',
             'group_permission' => 'system_permission',
-            'groups_users_link'=> 'system_usergroup',
-            'modules'          => 'system_module',
-            'online'           => 'system_online',
-            'priv_msgs'        => 'system_privatemessage',
-            'ranks'            => 'userrank_rank',
-            'tplfile'          => 'system_tplfile',
-            'tplset'           => 'system_tplset',
-            'tplsource'        => 'system_tplsource',
-            'users'            => 'system_user',
+            'groups_users_link' => 'system_usergroup',
+            'modules' => 'system_module',
+            'online' => 'system_online',
+            'priv_msgs' => 'system_privatemessage',
+            'ranks' => 'userrank_rank',
+            'tplfile' => 'system_tplfile',
+            'tplset' => 'system_tplset',
+            'tplsource' => 'system_tplsource',
+            'users' => 'system_user',
         ];
 
         $undo = false;
@@ -53,7 +52,7 @@ EOT
 
         $renameTable = function ($existingName, $newName) use ($migrate) {
             $status = $migrate->useTable($newName);
-            if (!$status) {
+            if (! $status) {
                 $status = $migrate->useTable($existingName);
                 if ($status) {
                     $migrate->renameTable($existingName, $newName);

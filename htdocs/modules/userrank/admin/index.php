@@ -33,13 +33,13 @@ $userrank_handler = $xoops->getModuleHandler('rank', 'userrank');
 $admin_page->addInfoBox(_USERRANK_MI_USERRANK);
 
 $count_all = $userrank_handler->getCount();
-$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBTOTAL, '<span class="red">'.$count_all.'</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBTOTAL, '<span class="red">' . $count_all . '</span>'));
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('rank_special', 1));
 $count_special = $userrank_handler->getCount($criteria);
 
-$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBSPECIAL, '<span class="red">'.$count_special.'</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBSPECIAL, '<span class="red">' . $count_special . '</span>'));
 
 $admin_page->displayIndex();
 

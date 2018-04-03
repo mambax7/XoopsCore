@@ -27,18 +27,18 @@ namespace Xoops\Core;
 class Events
 {
     /**
-     * @var array $preloadList array containing information about the event observers
+     * @var array array containing information about the event observers
      */
-    protected $preloadList = array();
+    protected $preloadList = [];
 
     /**
-     * @var array $eventListeners - $eventListeners['eventName'][]=Closure
+     * @var array -['eventName'][]=Closure
      * key is event name, value is array of callables
      */
-    protected $eventListeners = array();
+    protected $eventListeners = [];
 
     /**
-     * @type bool $eventsEnabled
+     * @type bool
      */
     protected $eventsEnabled = true;
 
@@ -58,12 +58,67 @@ class Events
     {
         static $instance = false;
 
-        if (!$instance) {
-            $instance = new Events();
+        if (! $instance) {
+            $instance = new self();
             $instance->initializeListeners();
         }
 
         return $instance;
+    }
+
+    /**
+     * Trigger a specific event
+     *
+     * @param string $eventName Name of the event to trigger
+     * @param mixed  $args      Method arguments
+     */
+    public function triggerEvent($eventName, $args = [])
+    {
+        if ($this->eventsEnabled) {
+            $eventName = $this->toInternalEventName($eventName);
+            if (isset($this->eventListeners[$eventName])) {
+                foreach ($this->eventListeners[$eventName] as $event) {
+                    if (is_callable($event)) {
+                        call_user_func($event, $args);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * addListener - add a listener, providing a callback for a specific event.
+     *
+     * @param string   $eventName the event name
+     * @param callable $callback  any callable acceptable for call_user_func
+     */
+    public function addListener($eventName, $callback)
+    {
+        $eventName = $this->toInternalEventName($eventName);
+        $this->eventListeners[$eventName][] = $callback;
+    }
+
+    /**
+     * getEvents - for debugging only, return list of event listeners
+     *
+     * @return array of events and listeners
+     */
+    public function getEvents()
+    {
+        return $this->eventListeners;
+    }
+
+    /**
+     * hasListeners - for debugging only, return list of event listeners
+     *
+     * @param string $eventName event name
+     *
+     * @return boolean true if one or more listeners are registered for the event
+     */
+    public function hasListeners($eventName)
+    {
+        $eventName = $this->toInternalEventName($eventName);
+        return array_key_exists($eventName, $this->eventListeners);
     }
 
     /**
@@ -73,15 +128,13 @@ class Events
      * system_modules_active, for example) triggers regeneration, which may trigger events
      * that listeners are not prepared to handle. In such circumstances, module level class
      * mapping will not have been done.
-     *
-     * @return void
      */
     protected function initializeListeners()
     {
         $this->eventsEnabled = false;
         // clear state in case this is invoked more than once
-        $this->preloadList = array();
-        $this->eventListeners = array();
+        $this->preloadList = [];
+        $this->eventListeners = [];
         $this->setPreloads();
         $this->setEvents();
         $this->eventsEnabled = true;
@@ -89,21 +142,19 @@ class Events
 
     /**
      * Get list of all available preload files
-     *
-     * @return void
      */
     protected function setPreloads()
     {
         $cache = \Xoops::getInstance()->cache();
         $key = 'system/modules/preloads';
-        if (!$this->preloadList = $cache->read($key)) {
+        if (! $this->preloadList = $cache->read($key)) {
             // get active modules from the xoops instance
             $modules_list = \Xoops::getInstance()->getActiveModules();
             if (empty($modules_list)) {
                 // this should only happen if an exception was thrown in setActiveModules()
-                $modules_list = array ('system');
+                $modules_list = ['system'];
             }
-            $this->preloadList =array();
+            $this->preloadList = [];
             $i = 0;
             foreach ($modules_list as $module) {
                 if (is_dir($dir = \XoopsBaseConfig::get('root-path') . "/modules/{$module}/preloads/")) {
@@ -143,49 +194,25 @@ class Events
      * The prefered preload definition is the unified preloads/preload.php file
      * containing a single PreloadItem class name concatenating the module name and
      * the literal 'Preload'. This class can listen for events from any source.
-     *
-     * @return void
      */
     protected function setEvents()
     {
         $xoops = \Xoops::getInstance();
         foreach ($this->preloadList as $preload) {
-            $path = $xoops->path('modules/' . $preload['module'] . '/preloads/' . $preload['file']. '.php');
+            $path = $xoops->path('modules/' . $preload['module'] . '/preloads/' . $preload['file'] . '.php');
             include_once $path;
             $class_name = ucfirst($preload['module'])
                 . ($preload['file'] === 'preload' ? '' : ucfirst($preload['file']) )
                 . 'Preload';
-            if (!class_exists($class_name)) {
+            if (! class_exists($class_name)) {
                 continue;
             }
             $class_methods = get_class_methods($class_name);
             foreach ($class_methods as $method) {
                 if (strpos($method, 'event') === 0) {
                     $eventName = strtolower(str_replace('event', '', $method));
-                    $event = array($class_name, $method);
+                    $event = [$class_name, $method];
                     $this->eventListeners[$eventName][] = $event;
-                }
-            }
-        }
-    }
-
-    /**
-     * Trigger a specific event
-     *
-     * @param string $eventName Name of the event to trigger
-     * @param mixed  $args      Method arguments
-     *
-     * @return void
-     */
-    public function triggerEvent($eventName, $args = array())
-    {
-        if ($this->eventsEnabled) {
-            $eventName = $this->toInternalEventName($eventName);
-            if (isset($this->eventListeners[$eventName])) {
-                foreach ($this->eventListeners[$eventName] as $event) {
-                    if (is_callable($event)) {
-                        call_user_func($event, $args);
-                    }
                 }
             }
         }
@@ -202,42 +229,5 @@ class Events
     protected function toInternalEventName($eventName)
     {
         return strtolower(str_replace('.', '', $eventName));
-    }
-
-    /**
-     * addListener - add a listener, providing a callback for a specific event.
-     *
-     * @param string   $eventName the event name
-     * @param callable $callback  any callable acceptable for call_user_func
-     *
-     * @return void
-     */
-    public function addListener($eventName, $callback)
-    {
-        $eventName = $this->toInternalEventName($eventName);
-        $this->eventListeners[$eventName][]=$callback;
-    }
-
-    /**
-     * getEvents - for debugging only, return list of event listeners
-     *
-     * @return array of events and listeners
-     */
-    public function getEvents()
-    {
-        return $this->eventListeners;
-    }
-
-    /**
-     * hasListeners - for debugging only, return list of event listeners
-     *
-     * @param string $eventName event name
-     *
-     * @return boolean true if one or more listeners are registered for the event
-     */
-    public function hasListeners($eventName)
-    {
-        $eventName = $this->toInternalEventName($eventName);
-        return array_key_exists($eventName, $this->eventListeners);
     }
 }

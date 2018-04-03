@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
 class Xoops_Module_Helper_AbstractTestInstance extends Xoops\Module\Helper\HelperAbstract
 {
@@ -36,7 +36,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
     public function test___construct()
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $dir = $xoops_root_path.'/modules/avatar';
+        $dir = $xoops_root_path . '/modules/avatar';
         $instance = new $this->myClass($dir);
         $this->assertInstanceOf($this->myClass, $instance);
     }
@@ -110,7 +110,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance->setDirname('system');
         $x = $instance->getConfig($name);
         $this->assertTrue(is_string($x));
-        $this->assertTrue(!empty($x));
+        $this->assertTrue(! empty($x));
     }
 
     public function test_getConfigs()
@@ -147,7 +147,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance->disableCache();
 
         $x = $instance->xoops()->getModuleConfig('module_cache', 'avatars');
-        $this->assertSame(array($instance->getModule()->getVar('mid') => 0), $x);
+        $this->assertSame([$instance->getModule()->getVar('mid') => 0], $x);
 
     }
 

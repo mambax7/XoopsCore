@@ -63,53 +63,53 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
         $error = false;
         $path = '';
         if ($skin_from_theme) {
-            $path = "themes/" . $this->xoops()->getConfig('theme_set') . "/menu";
-            if (!XoopsLoad::fileExists($this->xoops()->path("{$path}/skin_version.php"))) {
+            $path = 'themes/' . $this->xoops()->getConfig('theme_set') . '/menu';
+            if (! XoopsLoad::fileExists($this->xoops()->path("{$path}/skin_version.php"))) {
                 $error = true;
             }
         }
 
-        if ($error || !$skin_from_theme) {
+        if ($error || ! $skin_from_theme) {
             $path = "modules/menus/skins/{$skin}";
         }
 
         $file = $this->xoops()->path("{$path}/skin_version.php");
-        $info = array();
+        $info = [];
 
         if (XoopsLoad::fileExists($file)) {
             include $file;
-            $info =& $skinversion;
+            $info = & $skinversion;
         }
 
         $info['path'] = $this->xoops()->path($path);
         $info['url'] = $this->xoops()->url($path);
 
-        if (!isset($info['template'])) {
-            $info['template'] = $this->xoops()->path("modules/menus/templates/block.tpl");
+        if (! isset($info['template'])) {
+            $info['template'] = $this->xoops()->path('modules/menus/templates/block.tpl');
         } else {
             $info['template'] = $this->xoops()->path("{$path}/" . $info['template']);
         }
 
-        if (!isset($info['prefix'])) {
+        if (! isset($info['prefix'])) {
             $info['prefix'] = $skin;
         }
 
         if (isset($info['css'])) {
-            $info['css'] = (array)$info['css'];
+            $info['css'] = (array) $info['css'];
             foreach ($info['css'] as $key => $value) {
                 $info['css'][$key] = $this->xoops()->url("{$path}/{$value}");
             }
         }
 
         if (isset($info['js'])) {
-            $info['js'] = (array)$info['js'];
+            $info['js'] = (array) $info['js'];
             foreach ($info['js'] as $key => $value) {
                 $info['js'][$key] = $this->xoops()->url("{$path}/{$value}");
             }
         }
 
-        if (!isset($info['config'])) {
-            $info['config'] = array();
+        if (! isset($info['config'])) {
+            $info['config'] = [];
         }
 
         return $info;

@@ -32,18 +32,18 @@ function publisher_items_spot_show($options)
     $opt_display_poster = $options[4];
     $opt_display_comment = $options[5];
     $opt_display_type = $options[6];
-    $opt_truncate = (int)($options[7]);
+    $opt_truncate = (int) ($options[7]);
     $opt_catimage = $options[8];
-    if ($opt_categoryid == 0) {
+    if ($opt_categoryid === 0) {
         $opt_categoryid = -1;
     }
-    $block = array();
-    if ($opt_display_last == 1) {
+    $block = [];
+    if ($opt_display_last === 1) {
         $itemsObj = $publisher->getItemHandler()->getAllPublished($opt_items_count, 0, $opt_categoryid, $sort = 'datesub', $order = 'DESC', 'summary');
         $i = 1;
         $itemsCount = count($itemsObj);
         if ($itemsObj) {
-            if ($opt_categoryid != -1 && $opt_catimage) {
+            if ($opt_categoryid !== -1 && $opt_catimage) {
                 $cat = $publisher->getCategoryHandler()->get($opt_categoryid);
                 $category['name'] = $cat->getVar('name');
                 $category['categoryurl'] = $cat->getCategoryUrl();
@@ -75,7 +75,7 @@ function publisher_items_spot_show($options)
         foreach ($sel_items as $item_id) {
             /* @var $itemObj PublisherItem */
             $itemObj = $publisher->getItemHandler()->get($item_id);
-            if (!$itemObj->notLoaded()) {
+            if (! $itemObj->notLoaded()) {
                 $item = $itemObj->toArray();
                 $item['who_when'] = sprintf(_MB_PUBLISHER_WHO_WHEN, $itemObj->posterName(), $itemObj->datesub());
                 if ($i < $itemsCount) {
@@ -92,10 +92,10 @@ function publisher_items_spot_show($options)
             }
         }
     }
-    if (!isset($block['items']) || count($block['items']) == 0) {
+    if (! isset($block['items']) || count($block['items']) === 0) {
         return false;
     }
-    $block["publisher_url"] = PUBLISHER_URL;
+    $block['publisher_url'] = PUBLISHER_URL;
     $block['lang_reads'] = _MB_PUBLISHER_READS;
     $block['lang_comments'] = _MB_PUBLISHER_COMMENTS;
     $block['lang_readmore'] = _MB_PUBLISHER_READMORE;
@@ -118,7 +118,7 @@ function publisher_items_spot_edit($options)
     $itemsObj = $publisher->getItemHandler()->getList($criteria);
     $keys = array_keys($itemsObj);
     unset($criteria);
-    if (empty($options[3]) || ($options[3] == 0)) {
+    if (empty($options[3]) || ($options[3] === 0)) {
         $sel_items = isset($keys[0]) ? $keys[0] : 0;
     } else {
         $sel_items = explode(',', $options[3]);
@@ -128,10 +128,10 @@ function publisher_items_spot_edit($options)
     $whoEle = new Xoops\Form\RadioYesNo(_MB_PUBLISHER_DISPLAY_WHO_AND_WHEN, 'options[4]', $options[4]);
     $comEle = new Xoops\Form\RadioYesNo(_MB_PUBLISHER_DISPLAY_COMMENTS, 'options[5]', $options[5]);
     $typeEle = new Xoops\Form\Select(_MB_PUBLISHER_DISPLAY_TYPE, 'options[6]', $options[6]);
-    $typeEle->addOptionArray(array(
+    $typeEle->addOptionArray([
         'block' => _MB_PUBLISHER_DISPLAY_TYPE_BLOCK,
         'bullet' => _MB_PUBLISHER_DISPLAY_TYPE_BULLET,
-    ));
+    ]);
     $truncateEle = new Xoops\Form\Text(_MB_PUBLISHER_TRUNCATE, 'options[7]', 4, 255, $options[7]);
     $imageEle = new Xoops\Form\RadioYesNo(_MB_PUBLISHER_DISPLAY_CATIMAGE, 'options[8]', $options[8]);
     $form->addElement($autoEle);

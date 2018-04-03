@@ -42,18 +42,15 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
      */
     public function extraParams()
     {
-        return array();
+        return [];
     }
 
     /**
      * This method will be executed upon successful post of an approved comment.
+     *
      * This includes comment posts by administrators, and change of comment status from 'pending' to 'active' state.
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
-     *
-     * @param CommentsComment $comment
-     *
-     * @return void
      */
     public function approve(CommentsComment $comment)
     {
@@ -65,13 +62,11 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
      *
      * @param int $item_id   The unique ID of an item
      * @param int $total_num The total number of active comments
-     *
-     * @return void
      */
     public function update($item_id, $total_num)
     {
         $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('page_content') . ' SET content_comments = ' . (int)($total_num) . ' WHERE content_id = ' . (int)($item_id);
+        $sql = 'UPDATE ' . $db->prefix('page_content') . ' SET content_comments = ' . (int) ($total_num) . ' WHERE content_id = ' . (int) ($item_id);
         $db->query($sql);
     }
 
@@ -90,18 +85,18 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
      */
     public function itemInfo($item_id)
     {
-        $ret = array();
+        $ret = [];
         // Get handler
         $content_Handler = \Xoops::getModuleHelper('page')->getContentHandler();
         $view_content = $content_Handler->get($item_id);
-        if (count($view_content) == 0 || $view_content->getVar('content_status') == 0) {
+        if (count($view_content) === 0 || $view_content->getVar('content_status') === 0) {
             return $ret;
-        } else {
+        }
             $ret['title'] = $view_content->getVar('content_title');
             $ret['text'] = $view_content->getVar('content_shorttext') . $view_content->getVar('content_text');
             $ret['uid'] = $view_content->getVar('content_author');
             $ret['timestamp'] = $view_content->getVar('content_create');
-        }
+
         return $ret;
     }
 }

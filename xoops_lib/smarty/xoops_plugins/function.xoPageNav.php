@@ -17,13 +17,13 @@ function smarty_function_xoPageNav($params, &$smarty)
     if ($pageSize < 1) {
         $pageSize = 10;
     }
-    $pagesCount = (int)($itemsCount / $pageSize);
+    $pagesCount = (int) ($itemsCount / $pageSize);
     if ($itemsCount <= $pageSize || $pagesCount < 2) {
         return '';
     }
     $str = '';
-    $currentPage = (int)($offset / $pageSize) + 1;
-    $lastPage = (int)($itemsCount / $pageSize) + 1;
+    $currentPage = (int) ($offset / $pageSize) + 1;
+    $lastPage = (int) ($itemsCount / $pageSize) + 1;
 
     $minPage = min(1, ceil($currentPage - $linksCount / 2));
     $maxPage = max($lastPage, floor($currentPage + $linksCount / 2));
@@ -34,12 +34,12 @@ function smarty_function_xoPageNav($params, &$smarty)
     }
     for ($i = $minPage; $i <= $maxPage; ++$i) {
         $tgt = htmlspecialchars($xoops->url(str_replace('%s', ($i - 1) * $pageSize, $url)), ENT_QUOTES);
-        $str .= "<a href='$tgt'>$i</a>";
+        $str .= "<a href='${tgt}'>${i}</a>";
     }
     if ($currentPage < $lastPage) {
         $str .= '<a href="' . $xoops->url(str_replace('%s', $offset + $pageSize, $url)) . '">Next</a>';
     }
-    $class = @!empty($class) ? htmlspecialchars($class, ENT_QUOTES) : 'pagenav';
+    $class = @! empty($class) ? htmlspecialchars($class, ENT_QUOTES) : 'pagenav';
 
     $str = "<div class='{$class}'>{$str}</div>";
     return $str;

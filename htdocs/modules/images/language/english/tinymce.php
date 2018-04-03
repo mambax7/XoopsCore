@@ -17,6 +17,6 @@
  * @version         $Id$
  */
 
-define("_IMAGES_TINYMCE_TITLE", "Insert image form Images module");
-define("_IMAGES_TINYMCE_BROWSER", "Images");
-define("_IMAGES_TINYMCE_ADD", "Add image");
+define('_IMAGES_TINYMCE_TITLE', 'Insert image form Images module');
+define('_IMAGES_TINYMCE_BROWSER', 'Images');
+define('_IMAGES_TINYMCE_ADD', 'Add image');

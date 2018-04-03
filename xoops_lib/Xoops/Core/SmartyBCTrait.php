@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core;
 
 /**
@@ -51,7 +52,7 @@ trait SmartyBCTrait
      *
      * @var array
      */
-    public $trusted_dir = array();
+    public $trusted_dir = [];
 
     /**
      * wrapper for assign_by_ref
@@ -126,7 +127,7 @@ trait SmartyBCTrait
      * @throws \SmartyException
      * @internal param array $block_functs list of methods that are block format
      */
-    public function register_object($object, $object_impl, $allowed = array(), $smarty_args = true, $block_methods = array())
+    public function register_object($object, $object_impl, $allowed = [], $smarty_args = true, $block_methods = [])
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
         settype($allowed, 'array');
@@ -476,7 +477,7 @@ trait SmartyBCTrait
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
         $this->deprecated(__METHOD__, __FILE__, (__LINE__ + 1));
-        trigger_error("Smarty error: $error_msg", $error_type);
+        trigger_error("Smarty error: ${error_msg}", $error_type);
     }
 
     protected function deprecated($function, $file, $line)

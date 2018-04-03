@@ -61,10 +61,10 @@ class XlanguageLanguageForm extends Xoops\Form\ThemeForm
         $flagPath = 'media/xoops/images/flags/' . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/';
         $image_select = new Xoops\Form\Select('', 'xlanguage_image', $obj->getVar('xlanguage_image'));
         \Xoops\Core\Lists\ImageFile::setOptionsArray($image_select, $xoops->path($flagPath));
-        $image_select->setExtra("onchange='showImgSelected(\"image\", \"xlanguage_image\", \"/media/xoops/images/flags/" . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . "/\", \"\", \"" . \XoopsBaseConfig::get('url') . "\")'");
+        $image_select->setExtra("onchange='showImgSelected(\"image\", \"xlanguage_image\", \"/media/xoops/images/flags/" . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/", "", "' . \XoopsBaseConfig::get('url') . "\")'");
         $image_tray = new Xoops\Form\ElementTray('', '&nbsp;');
         $image_tray->addElement($image_select);
-        $image_tray->addElement(new Xoops\Form\Label('', "<div style='padding: 8px;'><img style='width:24px; height:24px; ' src='" . \XoopsBaseConfig::get('url') . "/media/xoops/images/flags/" . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . "/" . $obj->getVar("xlanguage_image") . "' name='image' id='image' alt='' /></div>"));
+        $image_tray->addElement(new Xoops\Form\Label('', "<div style='padding: 8px;'><img style='width:24px; height:24px; ' src='" . \XoopsBaseConfig::get('url') . '/media/xoops/images/flags/' . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/' . $obj->getVar('xlanguage_image') . "' name='image' id='image' alt='' /></div>"));
         $image_option_tray->addElement($image_tray);
         $this->addElement($image_option_tray);
 

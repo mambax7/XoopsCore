@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Key;
 
 class FileStorageTest extends \PHPUnit\Framework\TestCase
@@ -37,7 +38,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
         $name = $this->testKey;
         $data = 'data';
         $this->object->save($name, $data);
-        $this->assertEquals($data, $this->object->fetch($name));
+        $this->assertSame($data, $this->object->fetch($name));
     }
 
     public function testFetch()
@@ -46,7 +47,7 @@ class FileStorageTest extends \PHPUnit\Framework\TestCase
         $data = 'data';
         $this->assertFalse(@$this->object->fetch($name));
         $this->object->save($name, $data);
-        $this->assertEquals($this->object->fetch($name), $data);
+        $this->assertSame($this->object->fetch($name), $data);
     }
 
     public function testExists()

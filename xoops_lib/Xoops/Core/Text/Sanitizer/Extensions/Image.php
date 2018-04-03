@@ -26,7 +26,6 @@ use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
  */
 class Image extends ExtensionAbstract
 {
-
     protected static $jsLoaded;
 
     /**
@@ -42,8 +41,6 @@ class Image extends ExtensionAbstract
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -57,10 +54,10 @@ class Image extends ExtensionAbstract
                     'id' => 0,
                     'url' => trim($content),
                     'align' => '',
-                    'width'  => $this->config['max_width'],
+                    'width' => $this->config['max_width'],
                 ];
                 $cleanAttributes = $this->shortcodes->shortcodeAttributes($defaults, $attributes);
-                if (0 !== $cleanAttributes['id']) {
+                if ($cleanAttributes['id'] !== 0) {
                     $cleanAttributes['url'] = $xoops->url('/image.php?id=' . $cleanAttributes['id']);
                 }
                 $url = $cleanAttributes['url'];
@@ -72,7 +69,7 @@ class Image extends ExtensionAbstract
                     true
                 );
                 $class = '';
-                if ($cleanAttributes['align']!= '') {
+                if ($cleanAttributes['align'] !== '') {
                     $class = ' class="' . $cleanAttributes['align'] . '"';
                 }
                 $width = $cleanAttributes['width'];
@@ -80,14 +77,14 @@ class Image extends ExtensionAbstract
                     $width .= 'px';
                 }
 
-                if (!$config['allowimage']) {
+                if (! $config['allowimage']) {
                     $template = '<a href="%1$s" rel="external">%2$s</a>';
                     $alt = $this->ts->htmlSpecialChars($url);
-                } elseif ($config['resize'] && !$config['clickable']) {
+                } elseif ($config['resize'] && ! $config['clickable']) {
                     $alt = $this->ts->htmlSpecialChars(\XoopsLocale::RESIZED_IMAGE);
                     $template = '<img src="%1$s" alt="%2$s"%3$s style="max-width: %4$s;" />';
                 } elseif ($config['resize'] && $config['clickable']) {
-                    if (!self::$jsLoaded) {
+                    if (! self::$jsLoaded) {
                         self::$jsLoaded = true;
                         $xoops->theme()->addScript(
                             'media/xoops/image.js',

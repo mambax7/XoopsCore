@@ -38,7 +38,6 @@ class Dummy extends HelperAbstract
 
     /**
      * @param string $dirname dirname of the module
-     * @return void
      */
     public function setDirname($dirname)
     {

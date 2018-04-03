@@ -35,8 +35,6 @@ abstract class AbstractContract
      * setPriority - set the priority for this contract provider
      *
      * @param integer $priority - priority of this contract provider
-     *
-     * @return void
      */
     public function setPriority($priority)
     {

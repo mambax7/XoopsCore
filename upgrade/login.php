@@ -1,5 +1,5 @@
 <?php
-defined("XOOPS_ROOT_PATH") OR DIE();
+defined('XOOPS_ROOT_PATH') OR DIE();
 
 if (empty($_POST['uname']) || empty($_POST['pass'])) {
 ?>
@@ -23,19 +23,19 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
 } else {
     $xoops = Xoops::getInstance();
     $myts = MyTextsanitizer::getInstance();
-    $uname = !isset($_POST['uname']) ? '' : $myts->addSlashes( trim($_POST['uname']) );
-    $pass = !isset($_POST['pass']) ? '' : $myts->addSlashes( trim($_POST['pass']) );
+    $uname = ! isset($_POST['uname']) ? '' : $myts->addSlashes( trim($_POST['uname']) );
+    $pass = ! isset($_POST['pass']) ? '' : $myts->addSlashes( trim($_POST['pass']) );
 
     $member_handler = $xoops->getHandlerMember();
 
-    if (!@include_once XOOPS_ROOT_PATH.'/language/' . $upgrade_language . '/auth.php') {
-        include_once XOOPS_ROOT_PATH.'/language/english/auth.php';
+    if (! @include_once XOOPS_ROOT_PATH . '/language/' . $upgrade_language . '/auth.php') {
+        include_once XOOPS_ROOT_PATH . '/language/english/auth.php';
     }
     $xoopsAuth = Xoops_Auth_Factory::getAuthConnection($uname);
     $user = $xoopsAuth->authenticate($uname, $pass);
 
     // For XOOPS 2.2*
-    if (!is_object($user)) {
+    if (! is_object($user)) {
         $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
         $criteria->add(new Criteria('pass', md5($pass)));
         list($user) = $member_handler->getUsers($criteria);
@@ -44,9 +44,9 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     $isAllowed = false;
     if (is_object($user) && $user->getVar('level') > 0) {
         $isAllowed = true;
-        if ($xoops->getConfig('closesite') == 1) {
+        if ($xoops->getConfig('closesite') === 1) {
             $groups = $user->getGroups();
-            if (in_array(XOOPS_GROUP_ADMIN, $groups) || array_intersect($groups, $xoopsConfig['closesite_okgrp'])) {
+            if (in_array(XOOPS_GROUP_ADMIN, $groups, true) || array_intersect($groups, $xoopsConfig['closesite_okgrp'])) {
                 $isAllowed = true;
             }  else {
                 $isAllowed = false;
@@ -55,28 +55,28 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     }
     if ($isAllowed) {
         $user->setVar('last_login', time());
-        if (!$member_handler->insertUser($user)) {
+        if (! $member_handler->insertUser($user)) {
         }
         // Regenerate a new session id and destroy old session
         $xoops->sess_handler->regenerate_id(true);
-        $_SESSION = array();
+        $_SESSION = [];
         $_SESSION['xoopsUserId'] = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
         $user_theme = $user->getVar('theme');
-        if (in_array($user_theme, $xoops->getConfig('theme_set_allowed'))) {
+        if (in_array($user_theme, $xoops->getConfig('theme_set_allowed'), true)) {
             $_SESSION['xoopsUserTheme'] = $user_theme;
         }
 
         // Set cookie for rememberme
         if ($xoops->getConfig('usercookie')) {
-            if ( !empty($_POST["rememberme"]) ) {
-                setcookie($xoops->getConfig('usercookie'), $_SESSION['xoopsUserId'], time() + 31536000, '/',  '', 0);
+            if ( ! empty($_POST['rememberme']) ) {
+                setcookie($xoops->getConfig('usercookie'), $_SESSION['xoopsUserId'], time() + 31536000, '/', '', 0);
             } else {
-                setcookie($xoops->getConfig('usercookie'), 0, -1, '/',  '', 0);
+                setcookie($xoops->getConfig('usercookie'), 0, -1, '/', '', 0);
             }
         }
     }
 
-    header("location: " . XOOPS_URL . "/upgrade/index.php");
+    header('location: ' . XOOPS_URL . '/upgrade/index.php');
     exit();
 }

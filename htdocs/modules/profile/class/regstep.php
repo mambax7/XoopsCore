@@ -39,9 +39,6 @@ class ProfileRegstep extends XoopsObject
 
 class ProfileRegstepHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param null|Connection $db
-     */
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'profile_regstep', 'profileregstep', 'step_id', 'step_name');

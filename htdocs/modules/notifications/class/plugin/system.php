@@ -21,7 +21,7 @@ class NotificationsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract imple
 {
     public function userPosts($uid)
     {
-        return array();
+        return [];
     }
 
     public function waiting()
@@ -31,7 +31,7 @@ class NotificationsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract imple
 
     public function backend($limit)
     {
-        return array();
+        return [];
     }
 
     public function userMenus()

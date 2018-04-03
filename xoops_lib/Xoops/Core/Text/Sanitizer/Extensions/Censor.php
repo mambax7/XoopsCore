@@ -59,7 +59,7 @@ class Censor extends FilterAbstract
 
         if ($enabled === false
             || empty($censorWords)
-            || ((false === $this->config['censor_admin']) && $xoops->userIsAdmin)
+            || (($this->config['censor_admin'] === false) && $xoops->userIsAdmin)
         ) {
             return $text;
         }
@@ -69,12 +69,12 @@ class Censor extends FilterAbstract
 
         foreach ($censorWords as $bad) {
             $bad = trim($bad);
-            if (!empty($bad)) {
-                if (false === stripos($text, $bad)) {
+            if (! empty($bad)) {
+                if (stripos($text, $bad) === false) {
                     continue;
                 }
                 if ((bool) $this->config['censor_terminate']) {
-                    trigger_error("Censor words found", E_USER_ERROR);
+                    trigger_error('Censor words found', E_USER_ERROR);
                     return '';
                 }
                 $patterns[] = "/(^|[^0-9a-z_]){$bad}([^0-9a-z_]|$)/siU";

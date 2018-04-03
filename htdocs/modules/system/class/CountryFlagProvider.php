@@ -31,6 +31,33 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
     protected $flagSource = 'media/xoops/images/flags/';
 
     /**
+     * Some CLDR (Unicode Common Locale Data Repository) territory codes are not officially
+     * assigned codes, exceptional reservations*, or are a disjoined territory of a county.
+     * These will need to be mappped to a (hopefully) suitable flag.
+     *
+     * @var string[]
+     */
+    private $overrideMap = [
+        'AC' => 'SH',       // *Ascension Island part of Saint Helena, Ascension and Tristan da Cunha
+        'BQ' => 'NL',       // Caribbean Netherlands
+        'BV' => 'NO',       // Bouvet Island, dependency of Norway
+        'CP' => 'FR',       // *Clipperton Island,  overseas possession of France
+        'DG' => 'GB',       // *Diego Garcia, British Indian Ocean Territory disputed sovereignty
+        'EA' => 'ES',       // *Ceuta & Melilla, Spanish cities on the north coast of Africa
+        'GF' => 'FR',       // French Guiana, overseas region of France
+        'GP' => 'FR',       // Guadeloupe, overseas region of France
+        'HM' => 'AU',       // Heard & McDonald Islands, Australian external territory
+        'IO' => 'GB',       // British Indian Ocean Territory
+        'PM' => 'FR',       // St. Pierre & Miquelon, territorial overseas collectivity of France
+        'RE' => 'FR',       // Réunion, overseas region of France
+        'SJ' => 'NO',       // Svalbard & Jan Mayen, integrated parts of Norway not allocated to counties
+        'SX' => 'NL',       // Sint Maarten,  constituent country of the Kingdom of the Netherlands
+        'TA' => 'SH',       // *Tristan da Cunha part of Saint Helena, Ascension and Tristan da Cunha
+        'UM' => 'US',       // U.S. Outlying Islands
+        'XK' => '_kosovo',  // (User-assigned range) temporary assigned code
+    ];
+
+    /**
      * getName - get a short name for this service provider. This should be unique within the
      * scope of the named service, so using module dirname is suggested.
      *
@@ -51,6 +78,29 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
         return 'Built in CountryFlag provider';
     }
 
+    /**
+     * getImgTag - get a full HTML tag or string to display a flag based on county code
+     *
+     * @param Response $response    \Xoops\Core\Service\Response object
+     * @param string   $countryCode ISO 3166-1 alpha-2 code to select flag
+     * @param array    $attributes  array of attribute name => value pairs for img tag
+     * @param string   $size        'small', 'medium' or 'large'
+     */
+    public function getImgTag(
+        Response $response,
+        $countryCode,
+        $attributes = [],
+        $size = 'large'
+    ) {
+        $url = $this->getFlagUrl($countryCode, $size);
+        if (! is_array($attributes)) {
+            $attributes = [];
+        }
+
+        $imgTag = new Img(['src' => $url, 'alt' => $countryCode]);
+        $imgTag->setMerge($attributes);
+        $response->setValue($imgTag->render());
+    }
 
     /**
      * getFlagUrl
@@ -80,39 +130,12 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
 
         $file = $xoops->path($flagFile);
         // switch to unknown if file is not readable
-        if (!is_readable($file)) {
+        if (! is_readable($file)) {
             $flagFile = $flagDir . '_unknown.png';
         }
         $url = $xoops->url($flagFile);
         return $url;
     }
-
-    /**
-     * Some CLDR (Unicode Common Locale Data Repository) territory codes are not officially
-     * assigned codes, exceptional reservations*, or are a disjoined territory of a county.
-     * These will need to be mappped to a (hopefully) suitable flag.
-     *
-     * @var string[]
-     */
-    private $overrideMap = array (
-        'AC' => 'SH',       // *Ascension Island part of Saint Helena, Ascension and Tristan da Cunha
-        'BQ' => 'NL',       // Caribbean Netherlands
-        'BV' => 'NO',       // Bouvet Island, dependency of Norway
-        'CP' => 'FR',       // *Clipperton Island,  overseas possession of France
-        'DG' => 'GB',       // *Diego Garcia, British Indian Ocean Territory disputed sovereignty
-        'EA' => 'ES',       // *Ceuta & Melilla, Spanish cities on the north coast of Africa
-        'GF' => 'FR',       // French Guiana, overseas region of France
-        'GP' => 'FR',       // Guadeloupe, overseas region of France
-        'HM' => 'AU',       // Heard & McDonald Islands, Australian external territory
-        'IO' => 'GB',       // British Indian Ocean Territory
-        'PM' => 'FR',       // St. Pierre & Miquelon, territorial overseas collectivity of France
-        'RE' => 'FR',       // Réunion, overseas region of France
-        'SJ' => 'NO',       // Svalbard & Jan Mayen, integrated parts of Norway not allocated to counties
-        'SX' => 'NL',       // Sint Maarten,  constituent country of the Kingdom of the Netherlands
-        'TA' => 'SH',       // *Tristan da Cunha part of Saint Helena, Ascension and Tristan da Cunha
-        'UM' => 'US',       // U.S. Outlying Islands
-        'XK' => '_kosovo',  // (User-assigned range) temporary assigned code
-    );
 
     /**
      * getCountryOverride
@@ -127,31 +150,5 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
             ? $this->overrideMap[$countryCode]
             : $countryCode;
         return $countryCode;
-    }
-
-    /**
-     * getImgTag - get a full HTML tag or string to display a flag based on county code
-     *
-     * @param Response $response    \Xoops\Core\Service\Response object
-     * @param string   $countryCode ISO 3166-1 alpha-2 code to select flag
-     * @param array    $attributes  array of attribute name => value pairs for img tag
-     * @param string   $size        'small', 'medium' or 'large'
-     *
-     * @return void  - response->value set to image tag
-     */
-    public function getImgTag(
-        Response $response,
-        $countryCode,
-        $attributes = array(),
-        $size = 'large'
-    ) {
-        $url = $this->getFlagUrl($countryCode, $size);
-        if (!is_array($attributes)) {
-            $attributes = array();
-        }
-
-        $imgTag = new Img(array('src' => $url, 'alt' => $countryCode));
-        $imgTag->setMerge($attributes);
-        $response->setValue($imgTag->render());
     }
 }

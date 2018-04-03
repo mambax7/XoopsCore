@@ -28,8 +28,6 @@ class QrcodePreload extends PreloadItem
      * listen for core.service.locate.qrcode event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateQrcode(Provider $provider)
     {

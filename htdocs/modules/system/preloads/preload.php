@@ -23,23 +23,23 @@ class SystemPreload extends PreloadItem
     {
         $xoops = Xoops::getInstance();
         $url = $args[0];
-        if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+        if (preg_match('/[\\0-\\31]|about:|script:/i', $url)) {
+            if (! preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
                 $url = \XoopsBaseConfig::get('url');
             }
         }
-        if (!headers_sent() && $xoops->getConfig('redirect_message_ajax')
+        if (! headers_sent() && $xoops->getConfig('redirect_message_ajax')
             && $xoops->getConfig('redirect_message_ajax')
         ) {
             $_SESSION['redirect_message'] = $args[2];
-            header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
+            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
             exit();
         }
     }
 
     public static function eventCoreHeaderCheckcache($args)
     {
-        if (!empty($_SESSION['redirect_message'])) {
+        if (! empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->contentCacheLifetime = 0;
             unset($_SESSION['redirect_message']);
@@ -48,13 +48,13 @@ class SystemPreload extends PreloadItem
 
     public static function eventCoreHeaderAddmeta($args)
     {
-        if (!empty($_SESSION['redirect_message'])) {
+        if (! empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->addBaseStylesheetAssets('xoops.css');
             $xoops->theme()->addBaseStylesheetAssets('@fontawesome');
             $xoops->theme()->addBaseScriptAssets('@jquery');
             $xoops->theme()->addBaseScriptAssets('@jgrowl');
-            $xoops->theme()->addScript('', array('type' => 'text/javascript'), '
+            $xoops->theme()->addScript('', ['type' => 'text/javascript'], '
             (function($){
                 $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
@@ -66,13 +66,13 @@ class SystemPreload extends PreloadItem
 
     public static function eventSystemClassGuiHeader($args)
     {
-        if (!empty($_SESSION['redirect_message'])) {
+        if (! empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->addBaseStylesheetAssets('xoops.css');
             $xoops->theme()->addBaseStylesheetAssets('@fontawesome');
             $xoops->theme()->addBaseScriptAssets('@jquery');
             $xoops->theme()->addBaseScriptAssets('@jgrowl');
-            $xoops->theme()->addScript('', array('type' => 'text/javascript'), '
+            $xoops->theme()->addScript('', ['type' => 'text/javascript'], '
             (function($){
             $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
@@ -87,8 +87,6 @@ class SystemPreload extends PreloadItem
      * listen for core.service.locate.countryflag event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateCountryflag(Provider $provider)
     {

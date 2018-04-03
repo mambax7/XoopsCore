@@ -29,8 +29,7 @@ class Debug extends \Kint
      *
      * @var float[]
      */
-
-    private static $times = array();
+    private static $times = [];
 
     /**
      * indexed array of timer data in form
@@ -38,16 +37,14 @@ class Debug extends \Kint
      *
      * @var array
      */
-
-    private static $timerQueue = array();
+    private static $timerQueue = [];
 
     /**
      * associative array of timer labels
      *
      * @var string[]
      */
-
-    private static $timerLabels = array();
+    private static $timerLabels = [];
 
     /**
      * Force dump via debug.log event, if possible
@@ -56,30 +53,9 @@ class Debug extends \Kint
     private static $eventDumper = false;
 
     /**
-     * doOnce - do some local housekeeping on first use. Any method needing this
-     * assist just calls every time, the one time logic is all here.
-     *
-     * @return void
-     */
-    private static function doOnce()
-    {
-        static $done;
-        if (true !== $done) {
-            $done = true;
-            $class = get_called_class();
-            parent::$aliases[] = [$class, 'dump'];
-            parent::$aliases[] = [$class, 'backtrace'];
-            // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
-            \Kint_Renderer_Rich::$theme = 'aante-light.css';
-        }
-    }
-
-    /**
      * Dump one or more variables
      *
      * @param mixed $data variable(s) to dump
-     *
-     * @return void
      */
     public static function dump($data = null)
     {
@@ -94,7 +70,7 @@ class Debug extends \Kint
             }
         } else {
             static::doOnce();
-            forward_static_call_array(array('parent', 'dump'), $args);
+            forward_static_call_array(['parent', 'dump'], $args);
         }
     }
 
@@ -102,8 +78,6 @@ class Debug extends \Kint
      * Dump one or more variables to the log
      *
      * @param mixed $data variable(s) to dump
-     *
-     * @return void
      */
     public static function log($data = null)
     {
@@ -121,8 +95,6 @@ class Debug extends \Kint
      * dump using debug.log event if possible (i.e. in debugbar, instead of in page)
      *
      * @param bool $value true to use event
-     *
-     * @return void
      */
     public static function useEventDumper($value = true)
     {
@@ -131,8 +103,6 @@ class Debug extends \Kint
 
     /**
      * Display debug backtrace
-     *
-     * @return void
      */
     public static function backtrace()
     {
@@ -144,13 +114,11 @@ class Debug extends \Kint
      *
      * @param string      $name  unique name for timer
      * @param string|null $label optional label for this timer
-     *
-     * @return void
      */
     public static function startTimer($name, $label = null)
     {
         $events = \Xoops::getInstance()->events();
-        $var = array($name);
+        $var = [$name];
         $var[] = empty($label) ? $name : $label;
         $eventName = 'debug.timer.start';
         if ($events->hasListeners($eventName)) {
@@ -164,8 +132,6 @@ class Debug extends \Kint
      * Stop a timer
      *
      * @param string $name unique name for timer
-     *
-     * @return void
      */
     public static function stopTimer($name)
     {
@@ -174,7 +140,7 @@ class Debug extends \Kint
         if ($events->hasListeners($eventName)) {
             $events->triggerEvent($eventName, $name);
         } else {
-            echo $name . ' - ' . (int)(microtime(true) - self::$times[$name]) . " \n";
+            echo $name . ' - ' . (int) (microtime(true) - self::$times[$name]) . " \n";
         }
     }
 
@@ -187,8 +153,6 @@ class Debug extends \Kint
      *
      * @param string      $name  unique name for timer
      * @param string|null $label optional label for this timer
-     *
-     * @return void
      */
     public static function startQueuedTimer($name, $label = null)
     {
@@ -200,17 +164,15 @@ class Debug extends \Kint
      * Stop a queued timer
      *
      * @param string $name unique name for timer
-     *
-     * @return void
      */
     public static function stopQueuedTimer($name)
     {
         if (isset(self::$timerLabels[$name]) && isset(self::$times[$name])) {
-            $queueItem = array(
+            $queueItem = [
                 'label' => self::$timerLabels[$name],
                 'start' => self::$times[$name],
                 'elapsed' => microtime(true) - self::$times[$name],
-                );
+            ];
             self::$timerQueue[] = $queueItem;
         }
     }
@@ -228,8 +190,8 @@ class Debug extends \Kint
     public static function dumpQueuedTimers($returnOnly = false)
     {
         $queue = self::$timerQueue;
-        self::$timerQueue = array();
-        if (!$returnOnly) {
+        self::$timerQueue = [];
+        if (! $returnOnly) {
             static::dump($queue);
         }
 
@@ -246,15 +208,13 @@ class Debug extends \Kint
      *                             Controls display of parameters in trace output
      * @param string $collect_return argument for ini_set('xdebug.collect_return',?)
      *                             Controls display of function return value in trace
-     *
-     * @return void
      */
     public static function startTrace($tracefile = '', $collect_params = '3', $collect_return = 'On')
     {
         if (function_exists('xdebug_start_trace')) {
             ini_set('xdebug.collect_params', $collect_params);
             ini_set('xdebug.collect_return', $collect_return);
-            if ($tracefile == '') {
+            if ($tracefile === '') {
                 $tracefile = \XoopsBaseConfig::get('var-path') . '/logs/php_trace';
             }
             xdebug_start_trace($tracefile);
@@ -265,13 +225,28 @@ class Debug extends \Kint
      * stop_trace - turn off xdebug trace
      *
      * Requires xdebug extension
-     *
-     * @return void
      */
     public static function stopTrace()
     {
         if (function_exists('xdebug_stop_trace')) {
             xdebug_stop_trace();
+        }
+    }
+
+    /**
+     * doOnce - do some local housekeeping on first use. Any method needing this
+     * assist just calls every time, the one time logic is all here.
+     */
+    private static function doOnce()
+    {
+        static $done;
+        if ($done !== true) {
+            $done = true;
+            $class = get_called_class();
+            parent::$aliases[] = [$class, 'dump'];
+            parent::$aliases[] = [$class, 'backtrace'];
+            // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
+            \Kint_Renderer_Rich::$theme = 'aante-light.css';
         }
     }
 }

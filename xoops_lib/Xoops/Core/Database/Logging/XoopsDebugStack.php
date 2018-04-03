@@ -33,7 +33,6 @@ class XoopsDebugStack extends DebugStack
      * @param string $sql The SQL to be executed.
      * @param array $params The SQL parameters.
      * @param array $types The SQL parameter types.
-     * @return void
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
@@ -54,8 +53,6 @@ class XoopsDebugStack extends DebugStack
      *   - 'params'      => array of bound parameters
      *   - 'types'       => array of parameter types
      *   - 'executionMS' => float of execution time in microseconds
-     *
-     * @return void
      */
     public function stopQuery()
     {

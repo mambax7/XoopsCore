@@ -54,7 +54,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
         $config[$i]['formtype'] = 'select';
         $config[$i]['valuetype'] = 'int';
         $config[$i]['default'] = 1;
-        $config[$i]['options'] = array_flip(array('Option 1', 'Option 2'));
+        $config[$i]['options'] = array_flip(['Option 1', 'Option 2']);
         $config[$i]['category'] = 'cat_1';
         ++$i;
         $config[$i]['name'] = 'config_2';

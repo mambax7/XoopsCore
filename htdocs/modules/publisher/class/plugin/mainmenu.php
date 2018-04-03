@@ -22,7 +22,7 @@ class PublisherMainmenuPlugin implements MainmenuPluginInterface
     public function mainmenu()
     {
         $helper = \Xoops::getModuleHelper(basename(dirname(dirname(__DIR__))));
-        $subMenu = array();
+        $subMenu = [];
         // Prevent wasting resources
         if ($helper->isCurrentModule()) {
             //Todo: Implement submenu;

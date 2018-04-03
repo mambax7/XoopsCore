@@ -29,7 +29,7 @@ require_once __DIR__ . '/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
-$_SESSION['settings'] = array();
+$_SESSION['settings'] = [];
 
 setcookie('xo_install_lang', 'en_US', null, null, null);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
@@ -39,20 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
     $wizard->redirectToPage('+1');
     exit();
 }
-$_SESSION['settings'] = array();
+$_SESSION['settings'] = [];
 
 setcookie('xo_install_user', '', null, null, null);
 
 //$title = LANGUAGE_SELECTION;
 $content = '<div class="languages">';
 
-$languages = getDirList("./locale/");
+$languages = getDirList('./locale/');
 foreach ($languages as $lang) {
-    $sel = ($lang == $wizard->language) ? ' checked="checked"' : '';
+    $sel = ($lang === $wizard->language) ? ' checked="checked"' : '';
     $content .= "<label><input type=\"radio\" name=\"lang\" value=\"{$lang}\"{$sel} />{$lang}</label>\n";
 }
 
-$content .= "</div>";
+$content .= '</div>';
 
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = true;

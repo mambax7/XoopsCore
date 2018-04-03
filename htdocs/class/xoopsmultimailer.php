@@ -34,7 +34,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @link      http://xoops.org
  * @since     2.6.0
  */
-class XoopsMultiMailer extends PHPMailer
+class xoopsmultimailer extends PHPMailer
 {
     /**
      * 'from' address
@@ -51,6 +51,7 @@ class XoopsMultiMailer extends PHPMailer
     public $FromName = '';
 
     // can be 'smtp', 'sendmail', or 'mail'
+
     /**
      * Method to be used when sending the mail.
      *
@@ -118,11 +119,11 @@ class XoopsMultiMailer extends PHPMailer
         parent::__construct();
         $xoops = Xoops::getInstance();
         $this->From = $xoops->getConfig('from');
-        if ($this->From == '') {
+        if ($this->From === '') {
             $this->From = $xoops->getConfig('adminmail');
         }
         $this->Sender = $this->From;
-        if ('smtpauth' === $xoops->getConfig('mailmethod')) {
+        if ($xoops->getConfig('mailmethod') === 'smtpauth') {
             $this->Mailer = 'smtp';
             $this->SMTPAuth = true;
             $this->Username = $xoops->getConfig('smtpuser');

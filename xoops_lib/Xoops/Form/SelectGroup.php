@@ -11,8 +11,8 @@
 
 namespace Xoops\Form;
 
-use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\FixedGroups;
+use Xoops\Core\Kernel\Criteria;
 
 /**
  * SelectGroup - a select field with a choice of available groups

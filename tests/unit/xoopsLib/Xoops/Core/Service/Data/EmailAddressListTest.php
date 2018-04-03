@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Test\Core\Service\Data;
 
 use Xoops\Core\Service\Data\EmailAddress;
@@ -58,8 +59,8 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
 
         $actualAddresses = $actual->getAddresses();
         $this->assertCount(2, $actualAddresses);
-        $this->assertEquals('name', $actualAddresses[0]->getDisplayName());
-        $this->assertEquals('user@example.com', $actualAddresses[0]->getEmail());
+        $this->assertSame('name', $actualAddresses[0]->getDisplayName());
+        $this->assertSame('user@example.com', $actualAddresses[0]->getEmail());
 
         $this->expectException(\LogicException::class);
         $this->object->getAddresses();
@@ -85,7 +86,7 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
             ++$count;
             $this->assertContains((string) $count, $address->getEmail());
         }
-        $this->assertEquals(3, $count);
+        $this->assertSame(3, $count);
     }
 
     public function testGetEachAddressException()
@@ -97,6 +98,6 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
             }
         } catch (\LogicException $e) {
         }
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 }

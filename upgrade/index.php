@@ -32,10 +32,10 @@ defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to t
  */
 function getDirList($dirname)
 {
-    $dirlist = array();
+    $dirlist = [];
     if (is_dir($dirname) && $handle = opendir($dirname)) {
-        while (false !== ($file = readdir($handle))) {
-            if (substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs') {
+        while (($file = readdir($handle)) !== false) {
+            if (substr( $file, 0, 1 ) !== '.' && strtolower($file) !== 'cvs') {
                 if (is_dir("{$dirname}/{$file}")) {
                     $dirlist[] = $file;
                 }
@@ -69,7 +69,7 @@ function getDbValue($db, $table, $field, $condition = '')
 $upgrade_language = $xoops->getConfig('language');
 // $xoopsConfig might not be able fetched
 if (empty($upgrade_language)) {
-    include_once "./language.php";
+    include_once './language.php';
     $upgrade_language = xoops_detectLanguage();
 }
 
@@ -77,9 +77,9 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     include_once "./language/{$upgrade_language}/upgrade.php";
 } else if (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
     include_once "./language/{$upgrade_language}_utf8/upgrade.php";
-    $upgrade_language .= "_utf8";
-} else if (file_exists("./language/english/upgrade.php")) {
-    include_once "./language/english/upgrade.php";
+    $upgrade_language .= '_utf8';
+} else if (file_exists('./language/english/upgrade.php')) {
+    include_once './language/english/upgrade.php';
     $upgrade_language = 'english';
 } else {
     echo 'no language file.';
@@ -88,8 +88,8 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
 
 
 ob_start();
-if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
-    include_once "login.php";
+if (! $xoops->isUser() || ! $xoops->user->isAdmin()) {
+    include_once 'login.php';
 } else {
     $op = @$_REQUEST['action'];
     if (empty( $_SESSION['xoops_upgrade']['steps'])) {
@@ -103,10 +103,10 @@ if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
         $upgrader = include_once "{$next}/index.php";
         $res = $upgrader->apply();
         if ($message = $upgrader->message()) {
-            echo "<p>" . $message . "</p>";
+            echo '<p>' . $message . '</p>';
         }
 
-        if (!$res) {
+        if (! $res) {
             array_unshift( $_SESSION['xoops_upgrade']['steps'], $next );
             echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
         } else {

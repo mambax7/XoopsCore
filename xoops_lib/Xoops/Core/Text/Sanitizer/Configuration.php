@@ -54,7 +54,7 @@ class Configuration extends ConfigurationAbstract
     {
         $xoops = \Xoops::getInstance();
 
-        $sanitizerPrefs = array();
+        $sanitizerPrefs = [];
 
         try {
             $file = $xoops->path($this->sanitizerPrefsFilename);
@@ -62,13 +62,13 @@ class Configuration extends ConfigurationAbstract
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
         }
-        if (!is_array($sanitizerPrefs)) {
-            $sanitizerPrefs = array();
+        if (! is_array($sanitizerPrefs)) {
+            $sanitizerPrefs = [];
         }
         $changed = false;
         $defaultPrefs = new DefaultConfiguration();
         foreach ($defaultPrefs as $name => $value) {
-            if (!array_key_exists($name, $sanitizerPrefs)) {
+            if (! array_key_exists($name, $sanitizerPrefs)) {
                 $sanitizerPrefs[$name] = $defaultPrefs[$name];
                 $changed = true;
             }
@@ -83,8 +83,6 @@ class Configuration extends ConfigurationAbstract
      * saveSanitizerPreferences - record array of sanitizer preferences in config file
      *
      * @param array $sanitizerPrefs array of sanitizer preferences to save
-     *
-     * @return void
      */
     protected function saveSanitizerPrefrences($sanitizerPrefs)
     {

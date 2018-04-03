@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class IframeTest extends \PHPUnit\Framework\TestCase
 {
@@ -51,6 +52,6 @@ class IframeTest extends \PHPUnit\Framework\TestCase
         $in = '[iframe=300,200]url[/iframe]';
         $actual = trim($this->sanitizer->filterForDisplay($in));
         $this->assertTrue(is_string($actual));
-        $this->assertEquals($expected, substr($actual, 0, strlen($expected)));
+        $this->assertSame($expected, substr($actual, 0, strlen($expected)));
     }
 }

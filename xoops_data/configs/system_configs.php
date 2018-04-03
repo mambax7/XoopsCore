@@ -1,7 +1,7 @@
 <?php
 
-return array(
-        /**#@+
+return [
+    /**#@+
          * Extended HTML editor for {@link XoopsFormDhtmlTextArea}
          *
          * <p>If an extended HTML editor is set, the renderer will be replaced by the specified editor, usually a visual or WYSIWYG editor.</p>
@@ -21,22 +21,22 @@ return array(
          *      </ul></li>
          * </ul>
          */
-        //"editor"    => "fckeditor",
-        //"editor"    => "dhtmlext",
-        /**#@-*/
+    //"editor"    => "fckeditor",
+    //"editor"    => "dhtmlext",
+    /**#@-*/
 
-        // iframe clickjack protection - value used to set X-Frame-Options header
-        //'xFrameOptions' => 'sameorigin',
+    // iframe clickjack protection - value used to set X-Frame-Options header
+    //'xFrameOptions' => 'sameorigin',
 
-        // set to true to disable shortcode processing in theme
-        //'disable_theme_shortcodes' => true,
+    // set to true to disable shortcode processing in theme
+    //'disable_theme_shortcodes' => true,
 
-        /** XOOPS admin security warnings
-         *
-         * <ul>Display admin security warnings:
-         *  <li> 0 - Disabled</li>
-         *  <li> 1 - Enabled</li>
-         * </ul>
-         */
-        'admin_warnings_enable' => 1,
-    );
+    /** XOOPS admin security warnings
+     *
+     * <ul>Display admin security warnings:
+     *  <li> 0 - Disabled</li>
+     *  <li> 1 - Enabled</li>
+     * </ul>
+     */
+    'admin_warnings_enable' => 1,
+];

@@ -183,7 +183,6 @@ class XoopsTplFile extends XoopsObject
         return $this->getVar('tpl_source', $format);
     }
 
-
     /**
      * getSource
      *

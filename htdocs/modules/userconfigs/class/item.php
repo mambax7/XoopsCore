@@ -28,14 +28,13 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  */
 class UserconfigsItem extends XoopsObject
 {
-
     /**
      * Config options
      *
      * @var    array
      * @access    private
      */
-    private $_confOptions = array();
+    private $_confOptions = [];
 
     /**
      * Constructor
@@ -162,14 +161,14 @@ class UserconfigsItem extends XoopsObject
     {
         switch ($this->getVar('conf_valuetype')) {
         case 'int':
-            return (int)($this->getVar('conf_value', 'n'));
+            return (int) ($this->getVar('conf_value', 'n'));
             break;
         case 'array':
             $value = @unserialize($this->getVar('conf_value', 'n'));
-            return $value ? $value : array();
+            return $value ? $value : [];
         case 'float':
             $value = $this->getVar('conf_value', 'n');
-            return (float)$value;
+            return (float) $value;
             break;
         case 'textarea':
             return $this->getVar('conf_value');
@@ -188,7 +187,7 @@ class UserconfigsItem extends XoopsObject
     {
         switch ($this->getVar('conf_valuetype')) {
         case 'array':
-            if (!is_array($value)) {
+            if (! is_array($value)) {
                 $value = explode('|', trim($value));
             }
             $this->setVar('conf_value', serialize($value));
@@ -234,11 +233,10 @@ class UserconfigsItem extends XoopsObject
     /**
      * Clear options from this item
      *
-     * @return void
      **/
     public function clearConfOptions()
     {
-        $this->_confOptions = array();
+        $this->_confOptions = [];
     }
 }
 

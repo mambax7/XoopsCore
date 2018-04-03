@@ -33,15 +33,16 @@ use Xmf\Assert;
  */
 class EmailAddress
 {
+    /* assert messages */
+    protected const MESSAGE_ADDRESS = 'Email address is invalid';
+
+    protected const MESSAGE_NAME = 'Display name is invalid';
+
     /** @var string $email an email address, i.e. user@example.com */
     protected $email;
 
     /** @var string $displayName a display name associated with an email address, i.e. "John Doe" */
     protected $displayName;
-
-    /* assert messages */
-    protected const MESSAGE_ADDRESS = 'Email address is invalid';
-    protected const MESSAGE_NAME    = 'Display name is invalid';
 
     /**
      * EmailAddress constructor.
@@ -58,15 +59,15 @@ class EmailAddress
      */
     public function __construct(?string $email = null, ?string $displayName = null)
     {
-        if (null!==$email) {
+        if ($email !== null) {
             $email = trim($email);
             Assert::true(
-                false!==filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE),
+                filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE) !== false,
                 static::MESSAGE_ADDRESS
             );
             $this->email = $email;
         }
-        if (null!==$displayName) {
+        if ($displayName !== null) {
             $displayName = trim($displayName);
             $displayName = empty($displayName) ? null : $displayName;
             Assert::nullOrStringNotEmpty($displayName, static::MESSAGE_NAME);
@@ -81,11 +82,11 @@ class EmailAddress
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getEmail() : string
+    public function getEmail(): string
     {
         try {
             Assert::true(
-                false!==filter_var($this->email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE),
+                filter_var($this->email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE) !== false,
                 static::MESSAGE_ADDRESS
             );
         } catch (\InvalidArgumentException $e) {
@@ -101,7 +102,7 @@ class EmailAddress
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getDisplayName() : ?string
+    public function getDisplayName(): ?string
     {
         try {
             Assert::nullOrStringNotEmpty($this->displayName, static::MESSAGE_NAME);
@@ -114,13 +115,12 @@ class EmailAddress
     /**
      * Return a new object with a the specified email
      *
-     * @param string $email an email address, i.e. user@example.com
      *
-     * @return EmailAddress
+     * @param string $email an email address, i.e. user@example.com
      *
      * @throws \InvalidArgumentException
      */
-    public function withEmail(string $email) : EmailAddress
+    public function withEmail(string $email): self
     {
         return new static($email, $this->displayName);
     }
@@ -128,15 +128,14 @@ class EmailAddress
     /**
      * Return a new object with a the specified email
      *
-     * @param string $displayName a display name associated with the email
-     *                            address, i.e. "John Doe" or other non-empty string.
-     *                            Empty or all whitespace strings will be ignored.
      *
-     * @return EmailAddress
+     * @param string $displayName a display name associated with the email
+     * address, i.e. "John Doe" or other non-empty string.
+     * Empty or all whitespace strings will be ignored.
      *
      * @throws \InvalidArgumentException
      */
-    public function withDisplayName(string $displayName) : EmailAddress
+    public function withDisplayName(string $displayName): self
     {
         return new static($this->email, $displayName);
     }

@@ -42,23 +42,6 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
 class Joint extends XoopsModelAbstract
 {
     /**
-     * Validate information for the linkage
-     *
-     * @return bool
-     */
-    private function validateLinks()
-    {
-        if (empty($this->handler->table_link) || empty($this->handler->field_link)) {
-            trigger_error("The linked table is not set yet.", E_USER_WARNING);
-            return false;
-        }
-        if (empty($this->handler->field_object)) {
-            $this->handler->field_object = $this->handler->field_link;
-        }
-        return true;
-    }
-
-    /**
      * get a list of objects matching a condition joint with another related object
      *
      * @param CriteriaElement|null $criteria     criteria to match
@@ -78,20 +61,20 @@ class Joint extends XoopsModelAbstract
         $field_link = null,
         $field_object = null
     ) {
-        if (!empty($field_link)) {
+        if (! empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
-        if (!empty($field_object)) {
+        if (! empty($field_object)) {
             $this->handler->field_object = $field_object;
         }
-        if (!$this->validateLinks()) {
+        if (! $this->validateLinks()) {
             return false;
         }
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         if (is_array($fields) && count($fields)) {
-            if (!in_array("o." . $this->handler->keyName, $fields)) {
-                $fields[] = "o." . $this->handler->keyName;
+            if (! in_array('o.' . $this->handler->keyName, $fields, true)) {
+                $fields[] = 'o.' . $this->handler->keyName;
             }
             $first = true;
             foreach ($fields as $field) {
@@ -117,7 +100,7 @@ class Joint extends XoopsModelAbstract
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        $ret = array();
+        $ret = [];
         if ($asObject) {
             while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $object = $this->handler->create(false);
@@ -145,7 +128,7 @@ class Joint extends XoopsModelAbstract
      */
     public function getCountByLink(CriteriaElement $criteria = null)
     {
-        if (!$this->validateLinks()) {
+        if (! $this->validateLinks()) {
             return false;
         }
 
@@ -177,7 +160,7 @@ class Joint extends XoopsModelAbstract
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
     {
-        if (!$this->validateLinks()) {
+        if (! $this->validateLinks()) {
             return false;
         }
 
@@ -201,7 +184,7 @@ class Joint extends XoopsModelAbstract
 
         $result = $qb->execute();
 
-        $ret = array();
+        $ret = [];
         while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
@@ -221,22 +204,22 @@ class Joint extends XoopsModelAbstract
      */
     public function updateByLink(array $data, CriteriaElement $criteria = null)
     {
-        if (!$this->validateLinks()) {
+        if (! $this->validateLinks()) {
             return false;
         }
         if (empty($data) || empty($criteria)) { // avoid update all records
             return false;
         }
 
-        $set = array();
+        $set = [];
         foreach ($data as $key => $val) {
             $set[] = "o.{$key}=" . $this->handler->db2->quote($val);
         }
-        $sql = " UPDATE {$this->handler->table} AS o" . " SET " . implode(", ", $set)
+        $sql = " UPDATE {$this->handler->table} AS o" . ' SET ' . implode(', ', $set)
             . " LEFT JOIN {$this->handler->table_link} AS l "
             . "ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
-            $sql .= " " . $criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
 
         return $this->handler->db2->executeUpdate($sql);
@@ -254,7 +237,7 @@ class Joint extends XoopsModelAbstract
      */
     public function deleteByLink(CriteriaElement $criteria = null)
     {
-        if (!$this->validateLinks()) {
+        if (! $this->validateLinks()) {
             return false;
         }
         if (empty($criteria)) { //avoid delete all records
@@ -265,9 +248,26 @@ class Joint extends XoopsModelAbstract
             . "LEFT JOIN {$this->handler->table_link} AS l "
             . "ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
-            $sql .= " " . $criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
 
         return $this->handler->db2->executeUpdate($sql);
+    }
+
+    /**
+     * Validate information for the linkage
+     *
+     * @return bool
+     */
+    private function validateLinks()
+    {
+        if (empty($this->handler->table_link) || empty($this->handler->field_link)) {
+            trigger_error('The linked table is not set yet.', E_USER_WARNING);
+            return false;
+        }
+        if (empty($this->handler->field_object)) {
+            $this->handler->field_object = $this->handler->field_link;
+        }
+        return true;
     }
 }

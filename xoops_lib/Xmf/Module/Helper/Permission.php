@@ -45,8 +45,6 @@ class Permission extends AbstractHelper
 
     /**
      * Initialize parent::__construct calls this after verifying module object.
-     *
-     * @return void
      */
     public function init()
     {
@@ -88,7 +86,6 @@ class Permission extends AbstractHelper
      * @param string $message      message to display with redirect
      * @param bool   $trueifadmin  true to always return true for admin groups
      *
-     * @return void
      **/
     public function checkPermissionRedirect(
         $gperm_name,
@@ -107,7 +104,7 @@ class Permission extends AbstractHelper
             $this->mid,
             (bool) $trueifadmin
         );
-        if (!$permission) {
+        if (! $permission) {
             $helper = Helper::getHelper($this->dirname);
             $helper->redirect($url, $time, $message);
         }
@@ -174,7 +171,7 @@ class Permission extends AbstractHelper
     public function deletePermissionForItem($gperm_name, $gperm_itemid)
     {
         $gperm_itemid = (int) $gperm_itemid;
-        if (!is_array($gperm_name)) {
+        if (! is_array($gperm_name)) {
             $gperm_name = (array) $gperm_name;
         }
         $return = true;

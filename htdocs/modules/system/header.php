@@ -30,7 +30,7 @@ XoopsLoad::load('extension', 'system');
 $system = System::getInstance();
 
 // Check user rights
-if (!$system->checkRight()) {
+if (! $system->checkRight()) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 

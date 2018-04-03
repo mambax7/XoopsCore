@@ -24,7 +24,7 @@
  * @version     $Id$
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if ( ! defined( 'XOOPS_ROOT_PATH' ) ) {
     die( 'Bad installation: please add this folder to the XOOPS install you want to upgrade');
 }
 
@@ -41,7 +41,7 @@ function genPathCheckHtml( $path, $valid )
         }
         $msg = $myts->htmlspecialchars( $msg, ENT_QUOTES, _UPGRADE_CHARSET, false );
         return '<span class="result-y">y</span> ' . $msg;
-    }  else {
+    }
         switch ($path) {
         case 'lib':
         case 'data':
@@ -51,7 +51,7 @@ function genPathCheckHtml( $path, $valid )
         }
         $msg = $myts->htmlspecialchars( $msg, ENT_QUOTES, _UPGRADE_CHARSET, false );
         return '<span class="result-x">x</span> ' . $msg;
-    }
+
 }
 
 
@@ -73,7 +73,7 @@ $myts = MyTextSanitizer::getInstance();
     <div class="xoform-help"><?php echo $myts->htmlspecialchars(XOOPS_DATA_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false ); ?></div>
     <span class="bold"><?php echo $ctrl->xoopsPath['data']; ?></span>
     <div><?php echo genPathCheckHtml('data', $ctrl->validPath['data'] ); ?></div>
-    <?php if ( $ctrl->validPath['data'] && !empty( $ctrl->permErrors['data'] ) ) { ?>
+    <?php if ( $ctrl->validPath['data'] && ! empty( $ctrl->permErrors['data'] ) ) { ?>
     <div id="dataperms" class="x2-note">
     <?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
     <ul class="diags">

@@ -9,9 +9,9 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
-use Xoops\Core\FixedGroups;
 
 /**
  * Groups Manager
@@ -29,7 +29,7 @@ $xoops = Xoops::getInstance();
 $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 // Parameters
@@ -67,8 +67,8 @@ switch ($op) {
         $start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("groupid");
-        $criteria->setOrder("ASC");
+        $criteria->setSort('groupid');
+        $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_group);
         $groups_arr = $groups_handler->getAll($criteria);
@@ -78,12 +78,12 @@ switch ($op) {
         $xoops->tpl()->assign('groups_count', $groups_count);
         /* @var $group XoopsGroup */
         foreach ($groups_arr as $group) {
-            $groups_id = $group->getVar("groupid");
+            $groups_id = $group->getVar('groupid');
             $groups['groups_id'] = $groups_id;
-            $groups['name'] = $group->getVar("name");
-            $groups['description'] = $group->getVar("description");
+            $groups['name'] = $group->getVar('name');
+            $groups['description'] = $group->getVar('description');
             $member_handler = $xoops->getHandlerMember();
-            if ($groups_id != FixedGroups::ANONYMOUS) {
+            if ($groups_id !== FixedGroups::ANONYMOUS) {
                 $group_id_arr[0] = $groups_id;
                 $nb_users_by_groups = $member_handler->getUserCountByGroupLink($group_id_arr);
                 $groups['nb_users_by_groups'] = sprintf(SystemLocale::F_USERS, $nb_users_by_groups);
@@ -93,7 +93,7 @@ switch ($op) {
             $edit_delete = '<a href="admin.php?fct=groups&amp;op=groups_edit&amp;groups_id=' . $groups_id . '">'
                 . '<img src="./images/icons/edit.png" border="0" alt="' . SystemLocale::EDIT_GROUP
                 . '" title="' . SystemLocale::EDIT_GROUP . '"></a>';
-            if (!in_array($group->getVar("groupid"), array(FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS, FixedGroups::REMOVED))
+            if (! in_array($group->getVar('groupid'), [FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS, FixedGroups::REMOVED], true)
             ) {
                 $groups['delete'] = 1;
                 $edit_delete .= '<a href="admin.php?fct=groups&amp;op=groups_delete&amp;groups_id=' . $groups_id . '">'
@@ -156,22 +156,22 @@ switch ($op) {
 
     //Save a new group
     case 'groups_save_add':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=groups', 3, implode('<br />', $xoops->security()->getErrors()));
         }
-        $system_catids = $system->cleanVars($_POST, 'system_catids', array(), 'array');
-        $admin_mids = $system->cleanVars($_POST, 'admin_mids', array(), 'array');
-        $read_mids = $system->cleanVars($_POST, 'read_mids', array(), 'array');
-        $read_bids = $system->cleanVars($_POST, 'read_bids', array(), 'array');
+        $system_catids = $system->cleanVars($_POST, 'system_catids', [], 'array');
+        $admin_mids = $system->cleanVars($_POST, 'admin_mids', [], 'array');
+        $read_mids = $system->cleanVars($_POST, 'read_mids', [], 'array');
+        $read_bids = $system->cleanVars($_POST, 'read_bids', [], 'array');
 
         $member_handler = $xoops->getHandlerMember();
         $group = $member_handler->createGroup();
-        $group->setVar('name', $_POST["name"]);
-        $group->setVar('description', $_POST["desc"]);
+        $group->setVar('name', $_POST['name']);
+        $group->setVar('description', $_POST['desc']);
         if (count($system_catids) > 0) {
             $group->setVar('group_type', 'Admin');
         }
-        if (!$member_handler->insertGroup($group)) {
+        if (! $member_handler->insertGroup($group)) {
             $xoops->header();
             echo $xoops->alert('error', $group->getHtmlErrors());
             $xoops->footer();
@@ -222,22 +222,22 @@ switch ($op) {
 
     //Save a edit group
     case 'groups_save_update':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=groups', 3, implode('<br />', $xoops->security()->getErrors()));
         }
-        $system_catids = $system->cleanVars($_POST, 'system_catids', array(), 'array');
-        $admin_mids = $system->cleanVars($_POST, 'admin_mids', array(), 'array');
-        $read_mids = $system->cleanVars($_POST, 'read_mids', array(), 'array');
-        $read_bids = $system->cleanVars($_POST, 'read_bids', array(), 'array');
+        $system_catids = $system->cleanVars($_POST, 'system_catids', [], 'array');
+        $admin_mids = $system->cleanVars($_POST, 'admin_mids', [], 'array');
+        $read_mids = $system->cleanVars($_POST, 'read_mids', [], 'array');
+        $read_bids = $system->cleanVars($_POST, 'read_bids', [], 'array');
 
         $member_handler = $xoops->getHandlerMember();
         $gid = $system->cleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
-            $group->setVar('name', $_POST["name"]);
-            $group->setVar('description', $_POST["desc"]);
+            $group->setVar('name', $_POST['name']);
+            $group->setVar('description', $_POST['desc']);
             // if this group is not one of the default groups
-            if (!in_array($group->getVar('groupid'), array(FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS))
+            if (! in_array($group->getVar('groupid'), [FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS], true)
             ) {
                 if (count($system_catids) > 0) {
                     $group->setVar('group_type', 'Admin');
@@ -245,7 +245,7 @@ switch ($op) {
                     $group->setVar('group_type', '');
                 }
             }
-            if (!$member_handler->insertGroup($group)) {
+            if (! $member_handler->insertGroup($group)) {
                 $xoops->header();
                 echo $group->getHtmlErrors();
                 $xoops->footer();
@@ -298,7 +298,7 @@ switch ($op) {
                     $gperm_handler->insert($blockperm);
                 }
                 $xoops->db()->commit();
-                $xoops->redirect("admin.php?fct=groups", 1, XoopsLocale::S_DATABASE_UPDATED);
+                $xoops->redirect('admin.php?fct=groups', 1, XoopsLocale::S_DATABASE_UPDATED);
             }
         } else {
             $xoops->redirect('admin.php?fct=groups', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
@@ -316,15 +316,15 @@ switch ($op) {
         $groups_id = $system->cleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
             $obj = $groups_handler->get($groups_id);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$xoops->security()->check()) {
-                    $xoops->redirect("admin.php?fct=groups", 3, implode(",", $xoops->security()->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+                if (! $xoops->security()->check()) {
+                    $xoops->redirect('admin.php?fct=groups', 3, implode(',', $xoops->security()->getErrors()));
                 }
-                if ($groups_id > 0 && !in_array($groups_id, array(
-                        FixedGroups::ADMIN,
-                        FixedGroups::USERS,
-                        FixedGroups::ANONYMOUS
-                    ))
+                if ($groups_id > 0 && ! in_array($groups_id, [
+                    FixedGroups::ADMIN,
+                    FixedGroups::USERS,
+                    FixedGroups::ANONYMOUS,
+                ], true)
                 ) {
                     $member_handler = $xoops->getHandlerMember();
                     $group = $member_handler->getGroup($groups_id);
@@ -344,13 +344,13 @@ switch ($op) {
                 $system_breadcrumb->render();
                 // Display message
                 echo $xoops->confirm(
-                    array(
-                        "ok" => 1,
-                        "groups_id" => $_REQUEST["groups_id"],
-                        "op" => "groups_delete"
-                    ),
+                    [
+                        'ok' => 1,
+                        'groups_id' => $_REQUEST['groups_id'],
+                        'op' => 'groups_delete',
+                    ],
                     'admin.php?fct=groups',
-                    SystemLocale::Q_ARE_YOU_SURE_DELETE_THIS_GROUP . '<br />' . $obj->getVar("name") . '<br />'
+                    SystemLocale::Q_ARE_YOU_SURE_DELETE_THIS_GROUP . '<br />' . $obj->getVar('name') . '<br />'
                 );
             }
         } else {
@@ -380,7 +380,7 @@ switch ($op) {
                 }
             }
             //if ($error == true)
-            $xoops->redirect("admin.php?fct=users", 1, XoopsLocale::S_DATABASE_UPDATED);
+            $xoops->redirect('admin.php?fct=users', 1, XoopsLocale::S_DATABASE_UPDATED);
         }
         break;
 }

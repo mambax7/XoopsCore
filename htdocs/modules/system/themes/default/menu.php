@@ -29,12 +29,12 @@ use Xoops\Core\FixedGroups;
  */
 
 $xoops = Xoops::getInstance();
-$groups = array();
+$groups = [];
 if (is_object($xoops->user)) {
     $groups = $xoops->user->getGroups();
 }
 $all_ok = false;
-if (!in_array(FixedGroups::ADMIN, $groups)) {
+if (! in_array(FixedGroups::ADMIN, $groups, true)) {
     $sysperm_handler = $xoops->getHandlerGroupPermission();
     $ok_syscats = $sysperm_handler->getItemIds('system_admin', $groups);
 } else {
@@ -51,8 +51,8 @@ foreach ($dirlist as $file) {
         include $admin_dir . '/' . $file . '/xoops_version.php';
         if ($modversion['hasAdmin']) {
             if ($xoops->getModuleConfig('active_' . $file, 'system')) {
-                $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
-                if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                $category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
+                if ($all_ok !== false || in_array($modversion['category'], $ok_syscats, true)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
                     $adminmenu[$index]['desc'] = trim($modversion['description']);
                     $adminmenu[$index]['link'] = 'admin.php?fct=' . $file;

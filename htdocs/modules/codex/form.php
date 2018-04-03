@@ -26,7 +26,7 @@ $form = new Xoops\Form\ThemeForm('Form Example', 'form_example', 'form.php', 'po
 $code = new Xoops\Form\Text('Code', 'code', 10, 25, '', 'Code...');
 $code->setDescription('Description code');
 $code->setPattern('^.{3,}$', 'You need at least 3 characters');
-$code->setDatalist(array('list 1','list 2','list 3'));
+$code->setDatalist(['list 1', 'list 2', 'list 3']);
 $form->addElement($code, true);
 
 $password = new Xoops\Form\Password('Password', 'password', null, null, '', 'off', 'Enter Password');
@@ -72,7 +72,7 @@ $checkbox->addOption(3, 'Checkbox 3');
 $checkbox->setDescription('Description Checkbox');
 $form->addElement($checkbox, true);
 
-$label= new Xoops\Form\Label('Label', 'label', 'label');
+$label = new Xoops\Form\Label('Label', 'label', 'label');
 $label->setDescription('Description Label');
 $form->addElement($label, true);
 
@@ -93,8 +93,8 @@ $select->setDescription('Description Select');
 $form->addElement($select, true);
 
 $select_optgroup = new Xoops\Form\Select('Select Optgroup', 'select_optgroup', '', 1, false);
-$select_optgroup->addOptionGroup('Swiss', array(1 => 'Geneva', 2 => 'Bern', 3 => 'Zurich'));
-$select_optgroup->addOptionGroup('France', array(4 => 'Paris', 5 => 'Lyon', 6 => 'Grenoble', 7 => 'Marseille'));
+$select_optgroup->addOptionGroup('Swiss', [1 => 'Geneva', 2 => 'Bern', 3 => 'Zurich']);
+$select_optgroup->addOptionGroup('France', [4 => 'Paris', 5 => 'Lyon', 6 => 'Grenoble', 7 => 'Marseille']);
 $select_optgroup->setDescription('Description Select Optgroup');
 $form->addElement($select_optgroup, true);
 

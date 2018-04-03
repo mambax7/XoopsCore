@@ -25,8 +25,6 @@ class Thumbs extends HelperAbstract
 {
     /**
      * init
-     *
-     * @return void
      */
     public function init()
     {
@@ -45,7 +43,7 @@ class Thumbs extends HelperAbstract
     public function buildThumbPath($imgPath, $width, $height)
     {
         //$xoops = \Xoops::getInstance();
-        if ($width==0 && $height==0) {
+        if ($width === 0 && $height === 0) {
             $width = $this->getConfig('thumbs_width');
             $height = $this->getConfig('thumbs_height');
         }
@@ -54,7 +52,7 @@ class Thumbs extends HelperAbstract
         if ($pathParts['dirname'] === '.') {
             $pathParts['dirname'] = '';
         }
-        $thumbPath = 'assets/thumbs/' . $pathParts['dirname'].$sizeDir.$pathParts['basename'];
+        $thumbPath = 'assets/thumbs/' . $pathParts['dirname'] . $sizeDir . $pathParts['basename'];
 
         return $thumbPath;
     }

@@ -23,10 +23,10 @@ class CodexSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements Se
         $queries = implode(' ', (array) $queries);
 
         $files = \Xoops\Core\Lists\File::getList($xoops->path('modules/codex/'));
-        $res = array();
+        $res = [];
         $i = 0;
         foreach ($files as $file) {
-            if (!in_array($file, array('xoops_version.php', 'index.php'))) {
+            if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
                 $fileName = ucfirst(str_replace('.php', '', $file));
                 if (stripos($fileName, $queries) !== false) {
                     $res[$i]['link'] = $file;

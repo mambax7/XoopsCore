@@ -41,11 +41,11 @@ class DtypeTextArea extends DtypeAbstract
         switch (strtolower($format)) {
             case 's':
             case Dtype::FORMAT_SHOW:
-                $html = !empty($obj->vars['dohtml']['value']) ? 1 : 0;
-                $xcode = (!isset($obj->vars['doxcode']['value']) || $obj->vars['doxcode']['value'] == 1) ? 1 : 0;
-                $smiley = (!isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                $image = (!isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] == 1) ? 1 : 0;
-                $br = (!isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] == 1) ? 1 : 0;
+                $html = ! empty($obj->vars['dohtml']['value']) ? 1 : 0;
+                $xcode = (! isset($obj->vars['doxcode']['value']) || $obj->vars['doxcode']['value'] === 1) ? 1 : 0;
+                $smiley = (! isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] === 1) ? 1 : 0;
+                $image = (! isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] === 1) ? 1 : 0;
+                $br = (! isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] === 1) ? 1 : 0;
                 return $this->ts->displayTarea($value, $html, $smiley, $xcode, $image, $br);
 
             case 'e':
@@ -53,11 +53,11 @@ class DtypeTextArea extends DtypeAbstract
                 return htmlspecialchars($value, ENT_QUOTES);
             case 'p':
             case Dtype::FORMAT_PREVIEW:
-                $html = !empty($obj->vars['dohtml']['value']) ? 1 : 0;
-                $xcode = (!isset($obj->vars['doxcode']['value']) || $obj->vars['doxcode']['value'] == 1) ? 1 : 0;
-                $smiley = (!isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                $image = (!isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] == 1) ? 1 : 0;
-                $br = (!isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] == 1) ? 1 : 0;
+                $html = ! empty($obj->vars['dohtml']['value']) ? 1 : 0;
+                $xcode = (! isset($obj->vars['doxcode']['value']) || $obj->vars['doxcode']['value'] === 1) ? 1 : 0;
+                $smiley = (! isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] === 1) ? 1 : 0;
+                $image = (! isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] === 1) ? 1 : 0;
+                $br = (! isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] === 1) ? 1 : 0;
                 return $this->ts->previewTarea($value, $html, $smiley, $xcode, $image, $br);
             case 'f':
             case Dtype::FORMAT_FORM_PREVIEW:
@@ -80,7 +80,7 @@ class DtypeTextArea extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        if ($obj->vars[$key]['required'] && $value != '0' && $value == '') {
+        if ($obj->vars[$key]['required'] && $value !== '0' && $value === '') {
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
             return $value;
         }

@@ -33,8 +33,6 @@ class ProtectorCorePreload extends PreloadItem
 {
     /**
      * @static
-     *
-     * @param $args
      */
     static function eventCoreIncludeCommonStart($args)
     {
@@ -44,8 +42,6 @@ class ProtectorCorePreload extends PreloadItem
 
     /**
      * @static
-     *
-     * @param $args
      */
     static function eventCoreIncludeCommonEnd($args)
     {
@@ -55,8 +51,6 @@ class ProtectorCorePreload extends PreloadItem
 
     /**
      * @static
-     *
-     * @param $args
      */
     static function eventCoreClassDatabaseDatabasefactoryConnection($args)
     {
@@ -69,7 +63,7 @@ class ProtectorCorePreload extends PreloadItem
         // "DB Layer Trapper"
         $force_override = strstr(@$_SERVER['REQUEST_URI'], 'protector/admin/index.php?page=advisory') ? true : false;
         //$force_override = true ;
-        if ($force_override || !empty($conf['enable_dblayertrap'])) {
+        if ($force_override || ! empty($conf['enable_dblayertrap'])) {
             @define('PROTECTOR_ENABLED_ANTI_SQL_INJECTION', 1);
             $protector->dblayertrap_init($force_override);
         }

@@ -64,39 +64,39 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      */
     public function write($uid, $uname, $time, $module, $ip)
     {
-        $criteria = array();
+        $criteria = [];
         $criteria['online_uid'] = $uid;
-        if ($uid == 0) {
+        if ($uid === 0) {
             $criteria['online_ip'] = $ip;
         }
         $rows = $this->db2->updatePrefix(
             'system_online',
-            array(
-               'online_uname'   => $uname,
-               'online_updated' => $time,
-               'online_module'  => $module,
-            ),
+            [
+                'online_uname' => $uname,
+                'online_updated' => $time,
+                'online_module' => $module,
+            ],
             $criteria
         );
         if ($rows === false) {
             return false;
         }
-        if ($rows == 0) {
+        if ($rows === 0) {
             $rows = $this->db2->insertPrefix(
                 'system_online',
-                array(
-                    'online_uid'     => $uid,
-                    'online_uname'   => $uname,
+                [
+                    'online_uid' => $uid,
+                    'online_uname' => $uname,
                     'online_updated' => $time,
-                    'online_ip'      => $ip,
-                    'online_module'  => $module,
-                )
+                    'online_ip' => $ip,
+                    'online_module' => $module,
+                ]
             );
         }
         if ($rows === false) {
             return false;
         }
-        return ($rows>0);
+        return ($rows > 0);
     }
 
     /**
@@ -108,8 +108,8 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      */
     public function destroy($uid)
     {
-        $criteria = new Criteria('online_uid', (int)($uid));
-        if (false === $this->deleteAll($criteria)) {
+        $criteria = new Criteria('online_uid', (int) ($uid));
+        if ($this->deleteAll($criteria) === false) {
             return false;
         }
         return true;
@@ -126,8 +126,8 @@ class XoopsOnlineHandler extends XoopsPersistableObjectHandler
      */
     public function gc($expire)
     {
-        $criteria = new Criteria('online_updated', time() - (int)($expire), '<');
-        if (false === $this->deleteAll($criteria)) {
+        $criteria = new Criteria('online_updated', time() - (int) ($expire), '<');
+        if ($this->deleteAll($criteria) === false) {
             return false;
         }
         return true;

@@ -17,6 +17,6 @@
  * @version         $Id$
  */
 
-define("_SMILIES_TINYMCE_TITLE", "Insert smiley form Smilies module");
-define("_SMILIES_TINYMCE_BROWSER", "Smilies");
-define("_SMILIES_TINYMCE_ADD", "Add smiley");
+define('_SMILIES_TINYMCE_TITLE', 'Insert smiley form Smilies module');
+define('_SMILIES_TINYMCE_BROWSER', 'Smilies');
+define('_SMILIES_TINYMCE_ADD', 'Add smiley');

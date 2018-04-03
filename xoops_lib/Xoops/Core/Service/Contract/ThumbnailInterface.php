@@ -36,8 +36,6 @@ interface ThumbnailInterface
      * @param string   $imgPath  path to image to be thumbed
      * @param integer  $width    maximum width of thumbnail in pixels, 0 to use default
      * @param integer  $height   maximum height of thumbnail in pixels, 0 to use default
-     *
-     * @return void  - response->value set to URL string
      */
     public function getImgUrl(Response $response, $imgPath, $width = 0, $height = 0);
 
@@ -49,14 +47,12 @@ interface ThumbnailInterface
      * @param integer  $width      maximum width of thumbnail in pixels, 0 to use default
      * @param integer  $height     maximum height of thumbnail in pixels, 0 to use default
      * @param array    $attributes array of attribute name => value pairs for img tag
-     *
-     * @return void  - response->value set to image tag
      */
     public function getImgTag(
         Response $response,
         $imgPath,
         $width = 0,
         $height = 0,
-        $attributes = array()
+        $attributes = []
     );
 }

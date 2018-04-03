@@ -27,7 +27,7 @@ $xoops = Xoops::getInstance();
 $security = $xoops->security();
 
 // Check users rights
-if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
+if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
     http_response_code(401);
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
@@ -41,22 +41,22 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
     // we need to decide how to handle that. Right now, some js will redirect us from
     // provider sort to service select just before the token should expire.
     if (isset($_POST['token']) && $security->validateToken($_POST['token'], false)) {
-        if (isset($_POST['op']) && $_POST['op']==='order') {
+        if (isset($_POST['op']) && $_POST['op'] === 'order') {
             if (isset($_POST['service'])) {
-                $service=$_POST['service'];
+                $service = $_POST['service'];
                 if (isset($_POST[$service]) && is_array($_POST[$service])) {
                     $service_order = array_flip($_POST[$service]);
                     $sm = Manager::getInstance();
                     $sm->saveChoice($service, $service_order);
-                    exit("OK");
+                    exit('OK');
                 }
             }
         }
         http_response_code(400);
-        exit("Parameter error");
+        exit('Parameter error');
     }
     http_response_code(403);
-    exit("Token error");
+    exit('Token error');
 }
 
 $xoops->theme()->addBaseStylesheetAssets('@jqueryuicss');
@@ -76,7 +76,7 @@ $admin_page->addTips(SystemLocale::SERVICES_TIPS);
 $admin_page->renderBreadcrumb();
 $admin_page->renderTips();
 
-$selected_service='';
+$selected_service = '';
 if (isset($_GET['service'])) {
     $selected_service = strtolower(XoopsFilterInput::clean($_GET['service'], 'WORD'));
 }
@@ -86,29 +86,29 @@ $sm = Manager::getInstance();
 $filter = 'coreservicelocate';
 $eventList = $xoops->events()->getEvents();
 $l = strlen($filter);
-$filteredList = array();
+$filteredList = [];
 foreach ($eventList as $k => $v) {
-    if (strncasecmp($filter, $k, $l) == 0) {
+    if (strncasecmp($filter, $k, $l) === 0) {
         $filteredList[] = strtolower(substr($k, $l));
     }
 }
 
 
-$service_list = array();
+$service_list = [];
 sort($filteredList);
 foreach ($filteredList as $v) {
-    $service_list[] = array(
+    $service_list[] = [
         'name' => $v,
         'display' => ucfirst($v),
-        'active' => ($v==$selected_service),
-        );
+        'active' => ($v === $selected_service),
+    ];
 }
 $xoops->tpl()->assign('service_list', $service_list);
 if (empty($filteredList)) {
     $xoops->tpl()->assign('message', $xoops->alert('error', 'No service providers are installed.', 'No Services'));
 }
 
-if (!empty($selected_service) && in_array($selected_service, $filteredList)) {
+if (! empty($selected_service) && in_array($selected_service, $filteredList, true)) {
     $providers = $xoops->service($selected_service)->getRegistered();
     $service = ucfirst($selected_service);
     $mode = reset($providers)->getMode();
@@ -129,13 +129,13 @@ if (!empty($selected_service) && in_array($selected_service, $filteredList)) {
     }
     $xoops->tpl()->assign('message', $xoops->alert('info', $modeDesc, 'Service Mode'));
 
-    $provider_list = array();
+    $provider_list = [];
     foreach ($providers as $p) {
-        $provider_list[] = array(
+        $provider_list[] = [
             'name' => $p->getName(),
             'description' => $p->getDescription(),
             'priority' => $p->getPriority(),
-        );
+        ];
     }
     $xoops->tpl()->assign('provider_list', $provider_list);
     $xoops->tpl()->assign('token', $security->createToken(901));

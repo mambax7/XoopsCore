@@ -27,7 +27,7 @@ $xoops_url = \XoopsBaseConfig::get('url');
 // from $_POST we use keys: uname, pass, rememberme, xoops_redirect
 $uname = Request::getString('uname', '', 'POST');
 $pass = Request::getString('pass', '', 'POST');
-if ($uname == '' || $pass == '') {
+if ($uname === '' || $pass === '') {
     $xoops->redirect($xoops_url . '/user.php', 1, XoopsLocale::E_INCORRECT_LOGIN);
     exit();
 }
@@ -39,42 +39,42 @@ $member_handler = $xoops->getHandlerMember();
 $xoopsAuth = \Xoops\Auth\Factory::getAuthConnection($uname);
 $user = $xoopsAuth->authenticate($uname, $pass);
 
-if (false != $user) {
+if ($user !== false) {
     /* @var $user XoopsUser */
-    if (0 == $user->getVar('level')) {
+    if ($user->getVar('level') === 0) {
         $xoops->redirect($xoops_url . '/index.php', 5, XoopsLocale::E_SELECTED_USER_DEACTIVATED_OR_NOT_ACTIVE);
         exit();
     }
-    if (in_array(FixedGroups::REMOVED, $user->getGroups())) {
+    if (in_array(FixedGroups::REMOVED, $user->getGroups(), true)) {
         $xoops->redirect($xoops_url . '/index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
         exit();
     }
-    if ($xoops->getConfig('closesite') == 1) {
+    if ($xoops->getConfig('closesite') === 1) {
         $allowed = false;
         foreach ($user->getGroups() as $group) {
-            if (in_array($group, $xoops->getConfig('closesite_okgrp')) || FixedGroups::ADMIN == $group) {
+            if (in_array($group, $xoops->getConfig('closesite_okgrp'), true) || $group === FixedGroups::ADMIN) {
                 $allowed = true;
                 break;
             }
         }
-        if (!$allowed) {
+        if (! $allowed) {
             $xoops->redirect($xoops_url . '/index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
             exit();
         }
     }
     $user->setVar('last_login', time());
-    if (!$member_handler->insertUser($user)) {
+    if (! $member_handler->insertUser($user)) {
     }
 
     $xoops->session()->user()->recordUserLogin($user->getVar('uid'), $rememberme);
     $user_theme = $user->getVar('theme');
-    if (in_array($user_theme, $xoops->getConfig('theme_set_allowed'))) {
+    if (in_array($user_theme, $xoops->getConfig('theme_set_allowed'), true)) {
         $_SESSION['xoopsUserTheme'] = $user_theme;
     }
 
     $xoops->events()->triggerEvent('core.include.checklogin.success');
 
-    if (!empty($xoops_redirect) && !strpos($xoops_redirect, 'register')) {
+    if (! empty($xoops_redirect) && ! strpos($xoops_redirect, 'register')) {
         $xoops_redirect = rawurldecode($xoops_redirect);
         $parsed = parse_url($xoops_url);
         $url = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';

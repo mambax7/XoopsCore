@@ -49,7 +49,7 @@ class Response
     {
         $this->value = $value;
         $this->success = $success;
-        if ($errorMessage!==null) {
+        if ($errorMessage !== null) {
             $this->addErrorMessage($errorMessage);
         }
     }
@@ -121,7 +121,7 @@ class Response
      */
     public function addErrorMessage($errorMessage)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($this->errorMessage)) {
             $ret = $this->errorMessage;
         } elseif (is_scalar($this->errorMessage)) {

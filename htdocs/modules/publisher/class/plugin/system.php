@@ -27,7 +27,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', 2));
-        $criteria->add(new Criteria('uid', (int)$uid));
+        $criteria->add(new Criteria('uid', (int) $uid));
         return Publisher::getInstance()->getItemHandler()->getCount($criteria);
     }
 
@@ -37,7 +37,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
     public function waiting()
     {
         $publisher = Publisher::getInstance();
-        $ret = array();
+        $ret = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', 1));
         $count = $publisher->getItemHandler()->getCount($criteria);

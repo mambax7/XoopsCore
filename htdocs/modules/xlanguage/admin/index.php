@@ -21,7 +21,7 @@ include __DIR__ . '/header.php';
 switch ($op) {
 
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
         }
 
@@ -68,17 +68,17 @@ switch ($op) {
         if (isset($xlanguage_id) && $xlanguage_id > 0) {
             if ($lang = $helper->getHandlerLanguage()->get($xlanguage_id)) {
                 $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
-                if ($delete == 1) {
-                    if (!$xoops->security()->check()) {
+                if ($delete === 1) {
+                    if (! $xoops->security()->check()) {
                         $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
                     }
                     $helper->getHandlerLanguage()->delete($lang);
                     $helper->getHandlerLanguage()->createConfig();
                     $xoops->redirect('index.php', 2, _AM_XLANGUAGE_DELETED);
                 } else {
-                    $confirm = $xoops->confirm(array(
-                        'ok' => 1, 'xlanguage_id' => $xlanguage_id, 'op' => 'del'
-                    ), $_SERVER['REQUEST_URI'], sprintf(_AM_XLANGUAGE_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $lang->getVar('xlanguage_name')));
+                    $confirm = $xoops->confirm([
+                        'ok' => 1, 'xlanguage_id' => $xlanguage_id, 'op' => 'del',
+                    ], $_SERVER['REQUEST_URI'], sprintf(_AM_XLANGUAGE_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $lang->getVar('xlanguage_name')));
                     $confirm = '<div class="confirm">' . $confirm . '</div>';
                     $admin_page->addInfoBox(_MI_XLANGUAGE_DELETE);
                     $admin_page->addInfoBoxLine($confirm);

@@ -34,8 +34,8 @@ $hModConfig = $xoops->getHandlerConfig();
 $module_id = $publisher->getModule()->getVar('mid');
 
 //Checking permissions
-if (!$publisher->getConfig('perm_rating')
-    || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)
+if (! $publisher->getConfig('perm_rating')
+    || ! $gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)
 ) {
     $xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
@@ -56,7 +56,7 @@ $ip = getenv('REMOTE_ADDR');
 /* @var $ratingObj PublisherRating */
 foreach ($ratingObjs as $ratingObj) {
     $current_rating += $ratingObj->getVar('rate');
-    if ($ratingObj->getVar('ip') == $ip || ($uid > 0 && $uid == $ratingObj->getVar('uid'))) {
+    if ($ratingObj->getVar('ip') === $ip || ($uid > 0 && $uid === $ratingObj->getVar('uid'))) {
         $voted = true;
     }
 }

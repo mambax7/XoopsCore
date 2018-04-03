@@ -50,42 +50,6 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
         return 'Thumbnail generation using stefangabos/zebra_image';
     }
 
-
-    /**
-     * getThumbnailUrl
-     *
-     * @param string  $imgPath path to image to be thumbed
-     * @param integer $width   maximum width of thumbnail in pixels, 0 to use default
-     * @param integer $height  maximum height of thumbnail in pixels, 0 to use default
-     *
-     * @return string URL to obtain QR Code image of $qrText
-     */
-    private function getThumbnailUrl($imgPath, $width, $height)
-    {
-        $xoops = \Xoops::getInstance();
-        $helper  = $xoops->getModuleHelper('thumbs');
-        $thumbPath = $helper->buildThumbPath($imgPath, $width, $height);
-
-        $originalMtime = filemtime($xoops->path($imgPath));
-        $thumbMtime = filemtime($xoops->path($thumbPath));
-        if (false===$thumbMtime || $originalMtime>$thumbMtime) {
-            $params = array(
-                'img' => (string) $imgPath,
-            );
-            if ($height) {
-                $params['h'] = $height;
-            }
-            if ($width) {
-                $params['w'] = $width;
-            }
-            $url = $xoops->buildUrl($xoops->url($this->renderScript), $params);
-        } else {
-            $url = $xoops->url($thumbPath);
-        }
-
-        return $url;
-    }
-
     /**
      * getImgUrl - get URL to a thumbnail of the supplied image
      *
@@ -93,8 +57,6 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      * @param string   $imgPath  path to image to be thumbed
      * @param integer  $width    maximum width of thumbnail in pixels, 0 to use default
      * @param integer  $height   maximum height of thumbnail in pixels, 0 to use default
-     *
-     * @return void  - response->value set to URL string
      */
     public function getImgUrl(Response $response, $imgPath, $width = 0, $height = 0)
     {
@@ -109,23 +71,56 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
      * @param integer  $width      maximum width of thumbnail in pixels, 0 to use default
      * @param integer  $height     maximum height of thumbnail in pixels, 0 to use default
      * @param array    $attributes array of attribute name => value pairs for img tag
-     *
-     * @return void  - response->value set to image tag
      */
     public function getImgTag(
         Response $response,
         $imgPath,
         $width = 0,
         $height = 0,
-        $attributes = array()
+        $attributes = []
     ) {
         $url = $this->getThumbnailUrl($imgPath, $width, $height);
-        if (!is_array($attributes)) {
-            $attributes = array();
+        if (! is_array($attributes)) {
+            $attributes = [];
         }
 
-        $imgTag = new Img(array('src' => $url));
+        $imgTag = new Img(['src' => $url]);
         $imgTag->setMerge($attributes);
         $response->setValue($imgTag->render());
+    }
+
+    /**
+     * getThumbnailUrl
+     *
+     * @param string  $imgPath path to image to be thumbed
+     * @param integer $width   maximum width of thumbnail in pixels, 0 to use default
+     * @param integer $height  maximum height of thumbnail in pixels, 0 to use default
+     *
+     * @return string URL to obtain QR Code image of $qrText
+     */
+    private function getThumbnailUrl($imgPath, $width, $height)
+    {
+        $xoops = \Xoops::getInstance();
+        $helper = $xoops->getModuleHelper('thumbs');
+        $thumbPath = $helper->buildThumbPath($imgPath, $width, $height);
+
+        $originalMtime = filemtime($xoops->path($imgPath));
+        $thumbMtime = filemtime($xoops->path($thumbPath));
+        if ($thumbMtime === false || $originalMtime > $thumbMtime) {
+            $params = [
+                'img' => (string) $imgPath,
+            ];
+            if ($height) {
+                $params['h'] = $height;
+            }
+            if ($width) {
+                $params['w'] = $width;
+            }
+            $url = $xoops->buildUrl($xoops->url($this->renderScript), $params);
+        } else {
+            $url = $xoops->url($thumbPath);
+        }
+
+        return $url;
     }
 }

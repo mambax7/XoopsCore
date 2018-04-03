@@ -24,12 +24,12 @@ use Xoops\Module\Plugin;
 function b_usermenu_usermenu_show()
 {
     // Check permissions
-    if (!\Xoops::getInstance()->isUser()) {
+    if (! \Xoops::getInstance()->isUser()) {
         return false;
     }
 
-    $block = array();
-    $block['usermenu'] = array();
+    $block = [];
+    $block['usermenu'] = [];
     $plugins = Plugin::getPlugins('usermenu');
     /* @var $plugin UsermenuPluginInterface */
     foreach ($plugins as $dirName => $plugin) {
@@ -40,10 +40,10 @@ function b_usermenu_usermenu_show()
             foreach ($results as $res) {
                 if (is_array($res) && isset($res['name']) && isset($res['link'])) {
                     $res['image'] = false;
-                    if (!isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
+                    if (! isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
                         $res['image'] = $helper->url('icons/logo_small.png');
-                        $res['icon'] = "$dirName-icon";
-                    } elseif (!isset($res['icon'])) {
+                        $res['icon'] = "${dirName}-icon";
+                    } elseif (! isset($res['icon'])) {
                         $res['icon'] = 'glyphicon-time';
                     }
 
@@ -51,7 +51,7 @@ function b_usermenu_usermenu_show()
                     if ($helper->isCurrentModule() && isset($res['subMenu']) && is_array($res['subMenu'])) {
                         foreach ($res['subMenu'] as  $key => $subMenu) {
                             if (isset($subMenu['name']) && isset($subMenu['link'])) {
-                                $subMenu['icon'] = isset($subMenu['icon']) ? $subMenu['icon'] :'glyphicon-menu-right';
+                                $subMenu['icon'] = isset($subMenu['icon']) ? $subMenu['icon'] : 'glyphicon-menu-right';
                                 $res['subMenu'][$key] = $subMenu;
                             }
                         }

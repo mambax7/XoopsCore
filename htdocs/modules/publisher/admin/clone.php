@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-include_once __DIR__ . "/admin_header.php";
+include_once __DIR__ . '/admin_header.php';
 
 $xoops = Xoops::getInstance();
 PublisherUtils::cpHeader();
@@ -27,7 +27,7 @@ PublisherUtils::openCollapsableBar('clone', 'cloneicon', _AM_PUBLISHER_CLONE, _A
 
 if (@$_POST['op'] === 'submit') {
 
-    if (!$xoops->security()->check()) {
+    if (! $xoops->security()->check()) {
         $xoops->redirect('clone.php', 3, implode('<br />', $xoops->security()->getErrors()));
     }
 
@@ -44,21 +44,21 @@ if (@$_POST['op'] === 'submit') {
         $xoops->redirect('clone.php', 3, sprintf(_AM_PUBLISHER_CLONE_EXISTS, $clone));
     }
 
-    $patterns = array(
+    $patterns = [
         strtolower(PUBLISHER_DIRNAME) => strtolower($clone),
         strtoupper(PUBLISHER_DIRNAME) => strtoupper($clone),
-        ucfirst(strtolower(PUBLISHER_DIRNAME)) => ucfirst(strtolower($clone))
-    );
+        ucfirst(strtolower(PUBLISHER_DIRNAME)) => ucfirst(strtolower($clone)),
+    ];
 
     $patKeys = array_keys($patterns);
     $patValues = array_values($patterns);
     publisher_cloneFileFolder(PUBLISHER_ROOT_PATH);
     $logocreated = publisher_createLogo(strtolower($clone));
 
-    $msg = "";
+    $msg = '';
     if (is_dir(\XoopsBaseConfig::get('root-path') . '/modules/' . strtolower($clone))) {
-        $msg .= sprintf(_AM_PUBLISHER_CLONE_CONGRAT, "<a href='" . \XoopsBaseConfig::get('url') . "/modules/system/admin.php?fct=modulesadmin'>" . ucfirst(strtolower($clone)) . "</a>") . "<br />\n";
-        if (!$logocreated) {
+        $msg .= sprintf(_AM_PUBLISHER_CLONE_CONGRAT, "<a href='" . \XoopsBaseConfig::get('url') . "/modules/system/admin.php?fct=modulesadmin'>" . ucfirst(strtolower($clone)) . '</a>') . "<br />\n";
+        if (! $logocreated) {
             $msg .= _AM_PUBLISHER_CLONE_IMAGEFAIL;
         }
     } else {
@@ -81,10 +81,10 @@ PublisherUtils::closeCollapsableBar('clone', 'cloneicon');
 $xoops->footer();
 
 // work around for PHP < 5.0.x
-if (!function_exists('file_put_contents')) {
+if (! function_exists('file_put_contents')) {
     function file_put_contents($filename, $data, $file_append = false)
     {
-        if ($fp = fopen($filename, (!$file_append ? 'w+' : 'a+'))) {
+        if ($fp = fopen($filename, (! $file_append ? 'w+' : 'a+'))) {
             fputs($fp, $data);
             fclose($fp);
         }
@@ -128,18 +128,17 @@ function publisher_cloneFileFolder($path)
 
 function publisher_createLogo($dirname)
 {
-    if (!extension_loaded("gd")) {
+    if (! extension_loaded('gd')) {
         return false;
-    } else {
-        $required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
+    }
+        $required_functions = ['imagecreatetruecolor', 'imagecolorallocate', 'imagefilledrectangle', 'imagejpeg', 'imagedestroy', 'imageftbbox'];
         foreach ($required_functions as $func) {
-            if (!function_exists($func)) {
+            if (! function_exists($func)) {
                 return false;
             }
         }
-    }
 
-    if (!XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path') . "/modules/" . $dirname . "/images/module_logo.png") || !XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path') . "/modules/" . $dirname . "/images/VeraBd.ttf")) {
+    if (! XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png') || ! XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/VeraBd.ttf')) {
         return false;
     }
 
@@ -152,13 +151,13 @@ function publisher_createLogo($dirname)
     // Write text
     $text_color = imagecolorallocate($imageModule, 0, 0, 0);
     $space_to_border = (80 - strlen($dirname) * 6.5) / 2;
-    imagefttext($imageModule, 8.5, 0, $space_to_border, 45, $text_color, $font, ucfirst($dirname), array());
+    imagefttext($imageModule, 8.5, 0, $space_to_border, 45, $text_color, $font, ucfirst($dirname), []);
 
     // Set transparency color
     $white = imagecolorallocatealpha($imageModule, 255, 255, 255, 127);
     imagefill($imageModule, 0, 0, $white);
     imagecolortransparent($imageModule, $white);
-    imagepng($imageModule, \XoopsBaseConfig::get('root-path') . "/modules/" . $dirname . "/images/module_logo.png");
+    imagepng($imageModule, \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png');
     imagedestroy($imageModule);
     return true;
 }

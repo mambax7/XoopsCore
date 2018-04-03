@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class Xoops_Locale_AbstractTestInstance extends Xoops\Locale\AbstractLocale
 {
@@ -9,7 +9,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 {
     protected $myClass = 'Xoops_Locale_AbstractTestInstance';
 
-    public function setUp()
+    protected function setUp()
     {
         \Xoops\Locale::setCurrent('en_US');
         \Xoops\Locale::setTimeZone(new \DateTimeZone('America/New_York'));
@@ -35,8 +35,8 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance = $this->myClass;
 
         $x = $instance::setLocale();
-        if (false === $x) {
-            $this->markTestSkipped('setlocale() returned false');;
+        if ($x === false) {
+            $this->markTestSkipped('setlocale() returned false'); ;
         }
         $y = $instance::getLocale();
         $this->assertSame($y, $x);
@@ -86,15 +86,15 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->myClass;
 
-        $f = array(
+        $f = [
             'Arial',
             'Courier',
             'Georgia',
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler'
-        );
+            'Haettenschweiler',
+        ];
         $x = $instance::getFonts();
         $this->assertSame($f, $x);
     }
@@ -103,15 +103,15 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->myClass;
 
-        $fs = array(
+        $fs = [
             'xx-small' => 'xx-Small',
-            'x-small'  => 'x-Small',
-            'small'    => 'Small',
-            'medium'   => 'Medium',
-            'large'    => 'Large',
-            'x-large'  => 'x-Large',
-            'xx-large' => 'xx-Large'
-        );
+            'x-small' => 'x-Small',
+            'small' => 'Small',
+            'medium' => 'Medium',
+            'large' => 'Large',
+            'x-large' => 'x-Large',
+            'xx-large' => 'xx-Large',
+        ];
 
         $x = $instance::getFontSizes();
         $this->assertSame($fs, $x);
@@ -122,44 +122,43 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance = $this->myClass;
 
         $x = $instance::getAdminRssUrls();
-        $this->assertSame(array('http://www.xoops.org/backend.php'), $x);
+        $this->assertSame(['http://www.xoops.org/backend.php'], $x);
     }
 
     public function test_substr()
     {
         $instance = $this->myClass;
 
-        $str = "stringstringstringstringstring";
+        $str = 'stringstringstringstringstring';
         $x = $instance::substr($str, 15, 10);
-        $this->assertSame("ingstri…", $x);
-        $str = "stringstring";
+        $this->assertSame('ingstri…', $x);
+        $str = 'stringstring';
         $x = $instance::substr($str, 6, 10);
-        $this->assertSame("string", $x);
+        $this->assertSame('string', $x);
     }
 
     public function test_utf8_encode()
     {
         $instance = $this->myClass;
 
-        $str = "stringstring";
+        $str = 'stringstring';
         $x = $instance::utf8_encode($str);
         $this->assertSame($str, $x);
     }
-
 
     public function test_convert_encoding()
     {
         $instance = $this->myClass;
 
-        $x = $instance::convert_encoding("blah");
-        $this->assertSame("blah", $x);
+        $x = $instance::convert_encoding('blah');
+        $this->assertSame('blah', $x);
     }
 
     public function test_trim()
     {
         $instance = $this->myClass;
 
-        $str = "  string ";
+        $str = '  string ';
         $x = $instance::trim($str);
         $this->assertSame(trim($str), $x);
     }
@@ -182,7 +181,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance::formatTimestamp($time, $format);
         $this->assertSame($expected, $value);
-        if (!empty($shortform)) {
+        if (! empty($shortform)) {
             $value = $instance::formatTimestamp($time, $shortform);
             $this->assertSame($expected, $value);
         }
@@ -190,7 +189,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
     public function formatTimestampProvider()
     {
-        return array(
+        return [
             ['en_US', 'America/New_York', 'full',         'f', 'Monday, December 14, 2015 at 12:00:00 AM Eastern Standard Time'],
             ['en_US', 'America/New_York', 'full-date',    '',  'Monday, December 14, 2015'],
             ['en_US', 'America/New_York', 'full-time',    '',  '12:00:00 AM Eastern Standard Time'],
@@ -212,7 +211,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
             ['fr_FR', 'Europe/Paris',     'short-time',   '',  '00:00'],
             ['fr_FR', 'Europe/Paris',     'rss',          '',  'Sun, 13 Dec 2015 23:00:00 +0000'],
             ['fr_FR', 'Europe/Paris',     'mysql',        '',  '2015-12-13 23:00:00'],
-        );
+        ];
     }
 
     /**
@@ -225,7 +224,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         \Xoops\Locale::setTimeZone(new \DateTimeZone($timezone));
         \Xoops\Locale::setCurrent($locale);
 
-        $dateTime = new \DateTime;
+        $dateTime = new \DateTime();
         $interval = new \DateInterval($interval);
         if ($op === 'add') {
             $dateTime->add($interval);
@@ -239,7 +238,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
     public function formatTimestampElapsedProvider()
     {
-        return array(
+        return [
             ['en_US', 'America/New_York', 'elapse', '',    'PT0S',    'now'],
             ['en_US', 'America/New_York', 'custom', '',    'PT0S',    'Today'],
             ['en_US', 'America/New_York', 'elapse', 'add', 'PT3S',    'in 3 seconds'],
@@ -257,7 +256,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
             ['fr_FR', 'Europe/Paris',     'elapse', 'sub', 'P1DT1H',  'hier'],
             ['fr_FR', 'Europe/Paris',     'elapse', 'sub', 'P12DT4H', 'il y a 12 jours'],
             ['fr_FR', 'Europe/Paris',     'elapse', 'sub', 'P2Y3M',   'il y a 2 ans'],
-        );
+        ];
     }
 
     public function test_number_format()

@@ -15,22 +15,22 @@
  * @author          Richard Griffith <richard@geekwright.com>
  */
 
-$adminmenu=array();
+$adminmenu = [];
 // Index
-$adminmenu[] = array(
-    'title' => _MI_SCHEMATOOL_ADMIN_INDEX ,
-    'link'  => 'admin/index.php' ,
-    'icon'  => 'home.png'
-);
+$adminmenu[] = [
+    'title' => _MI_SCHEMATOOL_ADMIN_INDEX,
+    'link' => 'admin/index.php',
+    'icon' => 'home.png',
+];
 // About
-$adminmenu[] = array(
-    'title' => _MI_SCHEMATOOL_ADMIN_ABOUT ,
-    'link'  => 'admin/about.php' ,
-    'icon'  => 'about.png'
-);
+$adminmenu[] = [
+    'title' => _MI_SCHEMATOOL_ADMIN_ABOUT,
+    'link' => 'admin/about.php',
+    'icon' => 'about.png',
+];
 // SchemaTool
-$adminmenu[] = array(
-    'title' => _MI_SCHEMATOOL_ADMIN_TOOL ,
-    'link'  => 'admin/schematool.php' ,
-    'icon'  => 'schematool.png'
-);
+$adminmenu[] = [
+    'title' => _MI_SCHEMATOOL_ADMIN_TOOL,
+    'link' => 'admin/schematool.php',
+    'icon' => 'schematool.png',
+];

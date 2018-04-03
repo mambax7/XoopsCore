@@ -26,14 +26,13 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 /**
  * xoops_module_update_system
  *
- * @param XoopsModule $module
  *
  * @return bool
  */
 function xoops_module_update_system(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();
-    if ($module->getVar('version') == 100) {
+    if ($module->getVar('version') === 100) {
         $qb = $xoops->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
         $sql = $qb->select('t1.tpl_id')
@@ -44,14 +43,14 @@ function xoops_module_update_system(XoopsModule $module)
             ->andWhere($eb->eq('t1.tpl_file', 't2.tpl_file'))
             ->andWhere($eb->eq('t1.tpl_id', 't2.tpl_id'));
         $result = $sql->execute();
-        $tplids = array();
+        $tplids = [];
         while (list($tplid) = $result->fetch(PDO::FETCH_NUM)) {
             $tplids[] = $tplid;
         }
         if (count($tplids) > 0) {
             $tplfile_handler = $xoops->getHandlerTplFile();
             $duplicate_files = $tplfile_handler->getTplObjects(
-                new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN")
+                new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN')
             );
 
             if (count($duplicate_files) > 0) {
@@ -82,7 +81,7 @@ function xoops_module_update_system(XoopsModule $module)
                 for ($j = 0; $j < $new_confcount; ++$j) {
                     $obj = $config_handler->getConfig($new_configs[$j]->getVar('conf_id'));
                 }
-                $obj->setVar("conf_value", $configs[$i]->getVar('conf_value'));
+                $obj->setVar('conf_value', $configs[$i]->getVar('conf_value'));
                 $config_handler->insertConfig($obj);
                 $config_handler->deleteConfig($configs[$i]);
             }

@@ -4,7 +4,7 @@ namespace XoopsConsole;
 
 use XoopsConsole\Library\XCApplication;
 
-if (php_sapi_name() != 'cli') {
+if (PHP_SAPI !== 'cli') {
     die ('CLI use only');
 }
 
@@ -29,11 +29,11 @@ $configs = (include 'config.php');
 
 $mainfile = $configs->get('mainfile');
 if (file_exists($mainfile)) {
-    $xoopsOption["nocommon"] = true;
+    $xoopsOption['nocommon'] = true;
     include_once $mainfile;
     $xoops = \Xoops::getInstance();
     $xoops->loadLocale();
-    $xoops->setTheme(new \Xoops\Core\Theme\NullTheme);
+    $xoops->setTheme(new \Xoops\Core\Theme\NullTheme());
     $xoopsLogger = $xoops->logger();
     $xoops->events();
     $psr4loader = new \Xoops\Core\Psr4ClassLoader();
@@ -53,7 +53,7 @@ if (file_exists($mainfile)) {
 $app = new XCApplication('XOOPS Console', '0.1.0');
 $app->XContainer = $configs;
 
-$app->addCommands(array(
+$app->addCommands([
     new \XoopsConsole\Commands\CiBootstrapCommand(),
     new \XoopsConsole\Commands\CiInstallCommand(),
     new \XoopsConsole\Commands\InstallModuleCommand(),
@@ -62,6 +62,6 @@ $app->addCommands(array(
     new \XoopsConsole\Commands\SetConfigCommand(),
     new \XoopsConsole\Commands\RenameSystemTablesCommand(),
     new \XoopsConsole\Commands\Utf8mb4ModuleCommand(),
-));
+]);
 
 $app->run();

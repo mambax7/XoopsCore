@@ -22,7 +22,7 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
-**/
+ **/
 
 require_once __DIR__ . '/include/common.inc.php';
 
@@ -47,8 +47,8 @@ ob_start();
 <tbody>
 <tr>
     <th><?php echo SERVER_API; ?></th>
-    <td><?php echo php_sapi_name(); ?><br />
-        <?php echo $_SERVER["SERVER_SOFTWARE"]; ?></td>
+    <td><?php echo PHP_SAPI; ?><br />
+        <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 </tr>
 
 <tr>
@@ -99,7 +99,7 @@ ob_start();
 <tbody>
 <?php
 foreach ($wizard->configs['extensions'] as $key => $value) {
-    echo "<tr><th>" . $value[1] . "</th><td>" . $value[2] . "</td></tr>";
+    echo '<tr><th>' . $value[1] . '</th><td>' . $value[2] . '</td></tr>';
 }
 ?>
 

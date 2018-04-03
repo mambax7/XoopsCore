@@ -11,9 +11,8 @@
 
 namespace Xmf\Jwt;
 
-use Xmf\Request;
-use Xmf\Jwt\KeyFactory;
 use Xmf\Key\KeyAbstract;
+use Xmf\Request;
 
 /**
  * Validate and get payload from a token string
@@ -38,7 +37,7 @@ class TokenReader
      *
      * @throws \InvalidArgumentException on unusable key name
      */
-    public static function fromString($key, $token, $assertClaims = array())
+    public static function fromString($key, $token, $assertClaims = [])
     {
         $key = ($key instanceof KeyAbstract) ? $key : KeyFactory::build($key);
         $jwt = new JsonWebToken($key);
@@ -56,7 +55,7 @@ class TokenReader
      *
      * @throws \InvalidArgumentException on unusable key name
      */
-    public static function fromCookie($key, $cookieName, $assertClaims = array())
+    public static function fromCookie($key, $cookieName, $assertClaims = [])
     {
         $token = Request::getString($cookieName, '', 'COOKIE');
         if (empty($token)) {
@@ -76,7 +75,7 @@ class TokenReader
      *
      * @throws \InvalidArgumentException on unusable key name
      */
-    public static function fromRequest($key, $attributeName, $assertClaims = array())
+    public static function fromRequest($key, $attributeName, $assertClaims = [])
     {
         $token = Request::getString($attributeName, '');
         if (empty($token)) {
@@ -96,7 +95,7 @@ class TokenReader
      *
      * @throws \InvalidArgumentException on unusable key name
      */
-    public static function fromHeader($key, $assertClaims = array(), $headerName = 'Authorization')
+    public static function fromHeader($key, $assertClaims = [], $headerName = 'Authorization')
     {
         $header = Request::getHeader($headerName, '');
         if (empty($header)) {
@@ -104,7 +103,7 @@ class TokenReader
         }
         $header = trim($header);
         $space = strpos($header, ' '); // expecting "Bearer base64-token-string"
-        if (false !== $space) {
+        if ($space !== false) {
             $header = substr($header, $space);
         }
         $token = trim($header);

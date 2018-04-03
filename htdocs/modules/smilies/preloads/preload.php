@@ -29,8 +29,6 @@ class SmiliesPreload extends PreloadItem
      * listen for core.service.locate.emoji event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateEmoji(Provider $provider)
     {
@@ -43,14 +41,12 @@ class SmiliesPreload extends PreloadItem
      * add any module specific class map entries
      *
      * @param mixed $args not used
-     *
-     * @return void
      */
     public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
+        XoopsLoad::addMap([
             'smilies' => $path . '/class/helper.php',
-        ));
+        ]);
     }
 }

@@ -27,8 +27,8 @@ $xoops->disableErrorReporting();
 
 $itemid = Request::getInt('itemid');
 
-if ($itemid == 0) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+if ($itemid === 0) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Creating the ITEM object for the selected ITEM
@@ -37,12 +37,12 @@ $itemObj = $publisher->getItemHandler()->get($itemid);
 
 // if the selected ITEM was not found, exit
 if ($itemObj->notLoaded()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Check user permissions to access that category of the selected ITEM
-if (!$itemObj->accessGranted()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $itemObj->accessGranted()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 // Creating the category object that holds the selected ITEM
@@ -56,12 +56,12 @@ $item['body'] = $itemObj->body();
 $item['categoryname'] = $myts->displayTarea($categoryObj->getVar('name'));
 
 $mainImage = $itemObj->getMainImage();
-if ($mainImage['image_path'] != '') {
+if ($mainImage['image_path'] !== '') {
     $item['image'] = '<img src="' . $mainImage['image_path'] . '" alt="'
                     . $myts->undoHtmlSpecialChars($mainImage['image_name']) . '"/>';
 }
 $xoopsTpl->assign('item', $item);
-$xoopsTpl->assign('printtitle', $xoops->getConfig('sitename') . " - " . PublisherUtils::html2text($categoryObj->getCategoryPath()) . " > " . $myts->displayTarea($itemObj->title()));
+$xoopsTpl->assign('printtitle', $xoops->getConfig('sitename') . ' - ' . PublisherUtils::html2text($categoryObj->getCategoryPath()) . ' > ' . $myts->displayTarea($itemObj->title()));
 $xoopsTpl->assign('printlogourl', $publisher->getConfig('print_logourl'));
 $xoopsTpl->assign('printheader', $myts->displayTarea($publisher->getConfig('print_header'), 1));
 $xoopsTpl->assign('lang_category', _CO_PUBLISHER_CATEGORY);

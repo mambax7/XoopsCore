@@ -27,8 +27,6 @@ class TableForm extends Form
 {
     /**
      * Insert an empty row in the table to serve as a separator.
-     *
-     * @return void
      */
     public function insertBreak()
     {
@@ -47,11 +45,11 @@ class TableForm extends Form
         $ret = $this->getTitle() . "\n" . '<form name="' . $this->getName() . '" id="'
             . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod()
             . '"' . $this->getExtra() . '>' . "\n" . '<table border="0" width="100%">' . "\n";
-        $hidden = "";
+        $hidden = '';
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (!$ele->isHidden()) {
-                if (!$ele instanceof Raw) {
+            if (! $ele->isHidden()) {
+                if (! $ele instanceof Raw) {
                     $ret .= '<tr valign="top" align="left"><td>' . $ele->getCaption();
                     if ($ele_desc = $ele->getDescription()) {
                         $ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';

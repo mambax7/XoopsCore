@@ -62,17 +62,17 @@ class TabTray extends ElementTray
         $ret .= '</ul><br>' . "\n";
 
         $hidden = '';
-        $extras = array();
+        $extras = [];
 
         $ret .= '<div class="tab-content">';
         $active = ' in active';
 
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (!$ele->isHidden()) {
-                if (!$ele instanceof Raw) {
+            if (! $ele->isHidden()) {
+                if (! $ele instanceof Raw) {
                     if ($ele instanceof Tab) {
-                        $ret .= '<div class="tab-pane fade' . $active .'" id="tab_'. $ele->getName() . '">';
+                        $ret .= '<div class="tab-pane fade' . $active . '" id="tab_' . $ele->getName() . '">';
                         $ret .= $ele->render();
                         $ret .= '</div>' . "\n";
                         $active = '';
@@ -86,7 +86,7 @@ class TabTray extends ElementTray
                 $hidden .= $ele->render();
             }
         }
-        if (!empty($extras)) {
+        if (! empty($extras)) {
             $tray = new ElementTray('', $this->getJoiner());
             foreach ($extras as $extra) {
                 $tray->addElement($extra);

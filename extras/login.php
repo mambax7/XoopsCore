@@ -6,15 +6,15 @@
 $path = '/path/to/xoops/directory';
 
 include $path . '/mainfile.php';
-if (!defined('XOOPS_ROOT_PATH')) {
+if (! defined('XOOPS_ROOT_PATH')) {
     exit();
 }
 include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
-$op = (isset($_POST['op']) && $_POST['op'] == 'dologin') ? 'dologin' : 'login';
+$op = (isset($_POST['op']) && $_POST['op'] === 'dologin') ? 'dologin' : 'login';
 
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 $password = isset($_POST['userpass']) ? trim($_POST['userpass']) : '';
-if ($username == '' || $password == '') {
+if ($username === '' || $password === '') {
     $op = 'login';
 }
 
@@ -27,10 +27,10 @@ echo '
     <link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />
 ';
 $style = xoops_getcss($xoopsConfig['theme_set']);
-if ($style == '') {
+if ($style === '') {
     $style = xoops_getcss($xoopsConfig['theme_set']);
 }
-if ($style != '') {
+if ($style !== '') {
     echo '<link rel="stylesheet" type="text/css" media="all" href="' . $style . '" />';
 }
 echo '
@@ -38,36 +38,36 @@ echo '
   <body>
 ';
 
-if ($op == 'dologin') {
+if ($op === 'dologin') {
     $member_handler = xoops_gethandler('member');
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
     $user = $member_handler->loginUser($username, $password);
     if (is_object($user)) {
-        if (0 == $user->getVar('level')) {
+        if ($user->getVar('level') === 0) {
             redirect_header(XOOPS_URL . '/index.php', 5, XoopsLocale::E_SELECTED_USER_DEACTIVATED_OR_NOT_ACTIVE);
             exit();
         }
-        if ($xoopsConfig['closesite'] == 1) {
+        if ($xoopsConfig['closesite'] === 1) {
             $allowed = false;
             foreach ($user->getGroups() as $group) {
-                if (in_array($group, $xoopsConfig['closesite_okgrp']) || XOOPS_GROUP_ADMIN == $group) {
+                if (in_array($group, $xoopsConfig['closesite_okgrp'], true) || $group === XOOPS_GROUP_ADMIN) {
                     $allowed = true;
                     break;
                 }
             }
-            if (!$allowed) {
+            if (! $allowed) {
                 redirect_header(XOOPS_URL . '/index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
                 exit();
             }
         }
         $user->setVar('last_login', time());
-        if (!$member_handler->insertUser($user)) {
+        if (! $member_handler->insertUser($user)) {
         }
-        $_SESSION = array();
+        $_SESSION = [];
         $_SESSION['xoopsUserId'] = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
-        if (!empty($xoopsConfig['use_ssl'])) {
-            xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN, XoopsLocale::A_LOGIN);
+        if (! empty($xoopsConfig['use_ssl'])) {
+            xoops_confirm([$xoopsConfig['sslpost_name'] => session_id()], XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN, XoopsLocale::A_LOGIN);
         } else {
             echo sprintf(XoopsLocale::SF_THANK_YOU_FOR_LOGGING_IN, $user->getVar('uname'));
             echo '<div style="text-align:center;"><input value="' . XoopsLocale::A_CLOSE . '" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
@@ -77,7 +77,7 @@ if ($op == 'dologin') {
     }
 }
 
-if ($op == 'login') {
+if ($op === 'login') {
     echo '
     <div style="text-align: center; padding: 5; margin: 0">
     <form action="login.php" method="post">

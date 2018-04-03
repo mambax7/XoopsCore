@@ -166,12 +166,10 @@ class AvatarsAvatar extends XoopsObject
      * Set User Count
      *
      * @param int $value user count
-     *
-     * @return void
      */
     public function setUserCount($value)
     {
-        $this->userCount = (int)($value);
+        $this->userCount = (int) ($value);
     }
 
     /**
@@ -212,7 +210,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      */
     public function getObjectsWithCount(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria === null) {
             $criteria = new Criteria('');
         }
@@ -224,14 +222,14 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
             ->leftJoinPrefix('l', 'avatars_user_link', 'u', 'u.avatar_id=a.avatar_id');
         $criteria->renderQb($qb);
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $avatar = new AvatarsAvatar();
             $avatar->assignVars($myrow);
             $avatar->setUserCount($myrow['count']);
-            if (!$id_as_key) {
+            if (! $id_as_key) {
                 $ret[] = $avatar;
             } else {
                 $ret[$myrow['avatar_id']] = $avatar;
@@ -251,8 +249,8 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      */
     public function addUser($avatar_id, $user_id)
     {
-        $avatar_id = (int)($avatar_id);
-        $user_id = (int)($user_id);
+        $avatar_id = (int) ($avatar_id);
+        $user_id = (int) ($user_id);
         if ($avatar_id < 1 || $user_id < 1) {
             return false;
         }
@@ -269,10 +267,10 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $qb ->insertPrefix('avatars_user_link')
             ->values(
-                array(
+                [
                     'avatar_id' => ':aid',
-                    'user_id' => ':uid'
-                )
+                    'user_id' => ':uid',
+                ]
             )
             ->setParameter(':aid', $avatar_id, \PDO::PARAM_INT)
             ->setParameter(':uid', $user_id, \PDO::PARAM_INT);
@@ -293,14 +291,14 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
      */
     public function getUser(AvatarsAvatar $avatar)
     {
-        $ret = array();
+        $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $qb ->select('user_id')
             ->fromPrefix('avatars_user_link', 'l')
             ->where('l.avatar_id = :bid')
             ->setParameter(':bid', $avatar->getVar('avatar_id'), \PDO::PARAM_INT);
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
@@ -325,12 +323,12 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
-            $criteria->add(new Criteria('avatar_display', (int)($avatar_display)));
+            $criteria->add(new Criteria('avatar_display', (int) ($avatar_display)));
         }
         $avatars = $this->getObjects($criteria, true);
-        $ret = array(
-            'avatars/blank.gif' => XoopsLocale::NONE
-        );
+        $ret = [
+            'avatars/blank.gif' => XoopsLocale::NONE,
+        ];
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
         }

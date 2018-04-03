@@ -40,6 +40,6 @@ class PublisherGroupPermHandler extends XoopsGroupPermHandler
     public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true)
     {
         $trueifadmin = false;
-        return  parent::checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid, $trueifadmin);
+        return parent::checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid, $trueifadmin);
     }
 }

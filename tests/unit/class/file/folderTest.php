@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
 {
@@ -41,7 +41,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test___publicProperties()
     {
-        $items = array('path', 'sort', 'mode');
+        $items = ['path', 'sort', 'mode'];
         foreach ($items as $item) {
             $prop = new ReflectionProperty($this->myClass, $item);
             $this->assertTrue($prop->isPublic());
@@ -99,7 +99,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
 
         $file = __DIR__ . '/.dummy';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $value = $instance->read(false, true);
         $this->assertTrue(is_array($value[0]));
@@ -124,12 +124,12 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($value));
 
         $value = $instance->find('.*TestDoesntExists.php');
-        $this->assertSame(array(), $value);
+        $this->assertSame([], $value);
     }
 
     public function testFindRecursive()
     {
-        $dir = __DIR__.'/../';
+        $dir = __DIR__ . '/../';
         $instance = new $this->myClass($dir, false, false);
         $this->assertTrue(file_exists($dir));
         $value = $instance->findRecursive('.*Test.php', true);
@@ -139,7 +139,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
     public function testIsWindowsPath()
     {
         $class = $this->myClass;
-        $result = $class::isWindowsPath("C:\\Windows\\Temp");
+        $result = $class::isWindowsPath('C:\\Windows\\Temp');
         $this->assertTrue($result);
         $result = $class::isWindowsPath('unixRelativePath/test/test');
         $this->assertFalse($result);
@@ -164,7 +164,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
     public function testNormalizePath()
     {
         $class = $this->myClass;
-        $dir = "C:\\Windows\\Temp";
+        $dir = 'C:\\Windows\\Temp';
         $result = $class::isWindowsPath($dir);
         $this->assertTrue($result);
         $result = $class::normalizePath($dir);
@@ -180,7 +180,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
     public function testCorrectSlashFor()
     {
         $class = $this->myClass;
-        $dir = "C:\\Windows\\Temp";
+        $dir = 'C:\\Windows\\Temp';
         $result = $class::isWindowsPath($dir);
         $this->assertTrue($result);
         $result = $class::correctSlashFor($dir);
@@ -198,15 +198,15 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $class = $this->myClass;
         $dir = __DIR__;
         $result = $class::slashTerm($dir);
-        $this->assertSame($dir.DIRECTORY_SEPARATOR, $result);
+        $this->assertSame($dir . DIRECTORY_SEPARATOR, $result);
 
-        $dir = __DIR__.'\\';
+        $dir = __DIR__ . '\\';
         $result = $class::slashTerm($dir);
         $this->assertSame($dir, $result);
 
         $dir = 'unixRelativePath/test/test';
         $result = $class::slashTerm($dir);
-        $this->assertSame($dir.'/', $result);
+        $this->assertSame($dir . '/', $result);
 
         $dir = 'unixRelativePath/test/test/';
         $result = $class::slashTerm($dir);
@@ -219,19 +219,19 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $element = 'element';
         $dir = __DIR__;
         $result = $class::addPathElement($dir, $element);
-        $this->assertSame($dir.DIRECTORY_SEPARATOR.$element, $result);
+        $this->assertSame($dir . DIRECTORY_SEPARATOR . $element, $result);
 
-        $dir = __DIR__.'\\';
+        $dir = __DIR__ . '\\';
         $result = $class::addPathElement($dir, $element);
-        $this->assertSame($dir.$element, $result);
+        $this->assertSame($dir . $element, $result);
 
         $dir = 'unixRelativePath/test/test';
         $result = $class::addPathElement($dir, $element);
-        $this->assertSame($dir.'/'.$element, $result);
+        $this->assertSame($dir . '/' . $element, $result);
 
         $dir = 'unixRelativePath/test/test/';
         $result = $class::addPathElement($dir, $element);
-        $this->assertSame($dir.$element, $result);
+        $this->assertSame($dir . $element, $result);
     }
 
     public function testInXoopsPath()
@@ -293,8 +293,8 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($instance->messages()));
         $this->assertFalse($instance->errors());
 
-        touch($dir.'/'.$path. '/dummy1.tmp');
-        touch($dir.'/'.$path. '/dummy2.tmp');
+        touch($dir . '/' . $path . '/dummy1.tmp');
+        touch($dir . '/' . $path . '/dummy2.tmp');
 
         $value = $instance->delete($path);
         $this->assertTrue($value);
@@ -356,7 +356,7 @@ class XoopsFolderHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($dir, false, false);
         $this->assertTrue(file_exists($dir));
 
-        $result = $instance->realpath($dir.'/../cache');
+        $result = $instance->realpath($dir . '/../cache');
         $this->assertSame($base, basename(dirname($result)));
     }
 

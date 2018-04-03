@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
@@ -8,15 +8,19 @@ class CriteriaElementTestInstance extends CriteriaElement
     public function render()
     {
     }
+
     public function renderWhere()
     {
     }
+
     public function renderLdap()
     {
     }
+
     public function renderQb(QueryBuilder $qb = null, $whereMode = '')
     {
     }
+
     public function buildExpressionQb(QueryBuilder $qb)
     {
     }

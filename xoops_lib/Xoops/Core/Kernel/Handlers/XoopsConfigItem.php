@@ -46,13 +46,12 @@ define('XOOPS_CONF_AUTH', 7);
  */
 class XoopsConfigItem extends XoopsObject
 {
-
     /**
      * Config options
      *
      * @var    array
      */
-    private $configurationOptions = array();
+    private $configurationOptions = [];
 
     /**
      * Constructor
@@ -212,14 +211,14 @@ class XoopsConfigItem extends XoopsObject
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
-                return (int)($this->getVar('conf_value', 'n'));
+                return (int) ($this->getVar('conf_value', 'n'));
                 break;
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'n'));
-                return $value ? $value : array();
+                return $value ? $value : [];
             case 'float':
                 $value = $this->getVar('conf_value', 'n');
-                return (float)$value;
+                return (float) $value;
                 break;
             case 'textarea':
                 return $this->getVar('conf_value');
@@ -233,14 +232,12 @@ class XoopsConfigItem extends XoopsObject
      * Set a config value
      *
      * @param mixed $value       Value by reference
-     *
-     * @return void
      */
     public function setConfValueForInput(&$value)
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'array':
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = explode('|', trim($value));
                 }
                 $this->setVar('conf_value', serialize($value));
@@ -258,8 +255,6 @@ class XoopsConfigItem extends XoopsObject
      * Assign one or more configuration options
      *
      * @param XoopsConfigOption|XoopsConfigOption[] $option configuration option(s)
-     *
-     * @return void
      */
     public function setConfOptions($option)
     {
@@ -288,10 +283,9 @@ class XoopsConfigItem extends XoopsObject
     /**
      * Clear options from this item
      *
-     * @return void
      **/
     public function clearConfOptions()
     {
-        $this->configurationOptions = array();
+        $this->configurationOptions = [];
     }
 }

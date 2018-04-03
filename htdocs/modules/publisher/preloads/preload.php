@@ -31,11 +31,11 @@ class PublisherPreload extends PreloadItem
     static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
+        XoopsLoad::addMap([
             'publishermetagen' => $path . '/class/metagen.php',
             'publisher' => $path . '/class/helper.php',
             'publisherutils' => $path . '/class/utils.php',
             'publisherblockform' => $path . '/class/blockform.php',
-        ));
+        ]);
     }
 }

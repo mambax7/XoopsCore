@@ -41,12 +41,12 @@ class Stats extends XoopsModelAbstract
         $groupBy = false;
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
             $temp = $criteria->getGroupBy();
-            if (!empty($temp)) {
+            if (! empty($temp)) {
                 $qb->select($temp);
                 $groupBy = true;
             }
         }
-        if (!$groupBy) {
+        if (! $groupBy) {
             $qb->select('COUNT(*)');
         } else {
             $qb->addSelect('COUNT(*)');
@@ -58,7 +58,7 @@ class Stats extends XoopsModelAbstract
         }
         try {
             $result = $qb->execute();
-            if (!$result) {
+            if (! $result) {
                 return 0;
             }
         } catch (\Exception $e) {
@@ -66,16 +66,16 @@ class Stats extends XoopsModelAbstract
             return 0;
         }
 
-        if ($groupBy == false) {
+        if ($groupBy === false) {
             list ($count) = $result->fetch(\PDO::FETCH_NUM);
             return $count;
-        } else {
-            $ret = array();
+        }
+            $ret = [];
             while (list ($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
                 $ret[$id] = $count;
             }
             return $ret;
-        }
+
     }
 
     /**
@@ -89,7 +89,7 @@ class Stats extends XoopsModelAbstract
     {
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
 
-        $ret = array();
+        $ret = [];
         $limit = null;
         $start = null;
         $groupby_key = $this->handler->keyName;
@@ -107,7 +107,7 @@ class Stats extends XoopsModelAbstract
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        if (!$result) {
+        if (! $result) {
             return $ret;
         }
         while (list ($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {

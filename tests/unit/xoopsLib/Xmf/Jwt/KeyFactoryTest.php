@@ -1,4 +1,5 @@
 <?php
+
 namespace Xmf\Test\Jwt;
 
 use Xmf\Jwt\KeyFactory;
@@ -50,12 +51,12 @@ class KeyFactoryTest extends \PHPUnit\Framework\TestCase
         $actual = KeyFactory::build($this->testKey, $this->storage);
         $this->assertNotSame($instance, $actual);
 
-        $this->assertEquals($instance->getSigning(), $actual->getSigning());
+        $this->assertSame($instance->getSigning(), $actual->getSigning());
     }
 
     public function testBuildException()
     {
         $this->expectException('\InvalidArgumentException');
-        $instance = KeyFactory::build(array('muck'), $this->storage);
+        $instance = KeyFactory::build(['muck'], $this->storage);
     }
 }

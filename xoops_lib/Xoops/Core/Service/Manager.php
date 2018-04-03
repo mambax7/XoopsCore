@@ -51,22 +51,25 @@ class Manager
      * Service Mode constant - Multiple mode where all located services will be
      * dispatched in priority order.
      */
-    const MODE_MULTIPLE  = 8;
+    const MODE_MULTIPLE = 8;
 
     /**
      * Provider priorities
      */
     const PRIORITY_SELECTED = 0;
-    const PRIORITY_HIGH     = 1;
-    const PRIORITY_MEDIUM   = 5;
-    const PRIORITY_LOW      = 9;
+
+    const PRIORITY_HIGH = 1;
+
+    const PRIORITY_MEDIUM = 5;
+
+    const PRIORITY_LOW = 9;
 
     /**
      * Services registry - array keyed on service name, with provider object as value
      *
      * @var array
      */
-    protected $services = array();
+    protected $services = [];
 
     /**
      * Provider Preferences - array keyed on service name, where each element is
@@ -103,8 +106,8 @@ class Manager
     {
         static $instance = false;
 
-        if (!$instance) {
-            $instance = new Manager();
+        if (! $instance) {
+            $instance = new self();
         }
 
         return $instance;
@@ -119,7 +122,7 @@ class Manager
     {
         $xoops = \Xoops::getInstance();
 
-        $providerPrefs = array();
+        $providerPrefs = [];
 
         try {
             $file = $xoops->path($this->providerPrefsFilename);
@@ -127,49 +130,13 @@ class Manager
                 $providerPrefs = Yaml::read($xoops->path($file));
             }
             if (empty($providerPrefs)) {
-                $providerPrefs = array();
+                $providerPrefs = [];
             }
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
-            $providerPrefs = array();
+            $providerPrefs = [];
         }
         return $providerPrefs;
-    }
-
-    /**
-     * readProviderPrefs - read configured provider preferences from cache
-     *
-     * @return array of configured provider preferences
-     */
-    protected function readProviderPrefs()
-    {
-        $xoops = \Xoops::getInstance();
-        $providerPrefs = $xoops->cache()->cacheRead(
-            $this->providerPrefsCacheKey,
-            array($this, 'readYamlProviderPrefs')
-        );
-        return $providerPrefs;
-    }
-
-    /**
-     * saveProviderPrefs - record array of provider preferences in config file, and
-     * update cache
-     *
-     * @param array $providerPrefs array of provider preferences to save
-     *
-     * @return void
-     */
-    protected function saveProviderPrefs($providerPrefs)
-    {
-        if (is_array($providerPrefs)) {
-            $xoops = \Xoops::getInstance();
-            try {
-                Yaml::save($providerPrefs, $xoops->path($this->providerPrefsFilename));
-                $xoops->cache()->write($this->providerPrefsCacheKey, $providerPrefs);
-            } catch (\Exception $e) {
-                $xoops->events()->triggerEvent('core.exception', $e);
-            }
-        }
     }
 
     /**
@@ -180,8 +147,6 @@ class Manager
      *
      * @param string $service the service name being set
      * @param array  $choices array of priorities for each of the named service providers
-     *
-     * @return void
      */
     public function saveChoice($service, $choices)
     {
@@ -203,8 +168,6 @@ class Manager
      *
      * @param string $service the service name being set
      * @param array  $choices array of priorities for each of the named service providers
-     *
-     * @return void
      */
     public function registerChoice($service, $choices)
     {
@@ -257,9 +220,9 @@ class Manager
             // In response to trigger message, the contract implementor should register()
             $xoops->events()->triggerEvent($event, $provider);
             // get reference to the list of providers and prioritize it.
-            $registered=$provider->getRegistered();
+            $registered = $provider->getRegistered();
             if (count($registered)) {
-                $choices = isset($this->providerPrefs[$service]) ? $this->providerPrefs[$service] : array();
+                $choices = isset($this->providerPrefs[$service]) ? $this->providerPrefs[$service] : [];
                 foreach ($registered as $p) {
                     $name = strtolower($p->getName());
                     if (isset($choices[$name])) {
@@ -275,5 +238,39 @@ class Manager
         }
 
         return $provider;
+    }
+
+    /**
+     * readProviderPrefs - read configured provider preferences from cache
+     *
+     * @return array of configured provider preferences
+     */
+    protected function readProviderPrefs()
+    {
+        $xoops = \Xoops::getInstance();
+        $providerPrefs = $xoops->cache()->cacheRead(
+            $this->providerPrefsCacheKey,
+            [$this, 'readYamlProviderPrefs']
+        );
+        return $providerPrefs;
+    }
+
+    /**
+     * saveProviderPrefs - record array of provider preferences in config file, and
+     * update cache
+     *
+     * @param array $providerPrefs array of provider preferences to save
+     */
+    protected function saveProviderPrefs($providerPrefs)
+    {
+        if (is_array($providerPrefs)) {
+            $xoops = \Xoops::getInstance();
+            try {
+                Yaml::save($providerPrefs, $xoops->path($this->providerPrefsFilename));
+                $xoops->cache()->write($this->providerPrefsCacheKey, $providerPrefs);
+            } catch (\Exception $e) {
+                $xoops->events()->triggerEvent('core.exception', $e);
+            }
+        }
     }
 }

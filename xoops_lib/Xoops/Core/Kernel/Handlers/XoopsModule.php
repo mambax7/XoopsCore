@@ -43,14 +43,15 @@ class XoopsModule extends XoopsObject
      * @var array
      */
     public $adminmenu;
-    /**
-    *
-    * @var array
-    */
-    private $internalMessages = array();
 
     protected $xoops_url;
+
     protected $xoops_root_path;
+
+    /**
+     * @var array
+     */
+    private $internalMessages = [];
 
     /**
      * Constructor
@@ -82,31 +83,30 @@ class XoopsModule extends XoopsObject
      * @param string  $dirname module directory
      * @param boolean $verbose true for more information
      *
-     * @return void
      * @todo module 'version' should be semver based -- 1.0.0 should be OK, not an error
      */
     public function loadInfoAsVar($dirname, $verbose = true)
     {
         $dirname = basename($dirname);
-        if (!isset($this->modinfo)) {
+        if (! isset($this->modinfo)) {
             $this->loadInfo($dirname, $verbose);
         }
         $this->setVar('name', $this->modinfo['name']);
         // see @todo
         $versionPieces = explode('.', $this->modinfo['version']);
         if (count($versionPieces) > 2) {
-            $this->modinfo['version'] = $versionPieces[0].'.'.$versionPieces[1];
+            $this->modinfo['version'] = $versionPieces[0] . '.' . $versionPieces[1];
         }
-        $this->setVar('version', (int)(100 * ($this->modinfo['version'] + 0.001)));
+        $this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)));
         $this->setVar('dirname', $this->modinfo['dirname']);
-        $hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
-        $hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
-        $hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
+        $hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] === 1) ? 1 : 0;
+        $hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] === 1) ? 1 : 0;
+        $hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] === 1) ? 1 : 0;
         $hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config']))
-            || !empty($this->modinfo['hasComments'])) ? 1 : 0;
-        $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
+            || ! empty($this->modinfo['hasComments'])) ? 1 : 0;
+        $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] === 1) ? 1 : 0;
         // RMV-NOTIFY
-        $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
+        $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] === 1) ? 1 : 0;
         $this->setVar('hasmain', $hasmain);
         $this->setVar('hasadmin', $hasadmin);
         $this->setVar('hassearch', $hassearch);
@@ -120,8 +120,6 @@ class XoopsModule extends XoopsObject
      * add a message
      *
      * @param string $str message to add
-     *
-     * @return void
      */
     public function setMessage($str)
     {
@@ -165,7 +163,7 @@ class XoopsModule extends XoopsObject
      */
     public function getInfo($name = null)
     {
-        if (!isset($this->modinfo)) {
+        if (! isset($this->modinfo)) {
             $this->loadInfo($this->getVar('dirname'));
         }
         if (isset($name)) {
@@ -185,7 +183,7 @@ class XoopsModule extends XoopsObject
      */
     public function mainLink()
     {
-        if ($this->getVar('hasmain') == 1) {
+        if ($this->getVar('hasmain') === 1) {
             $ret = '<a href="' . $this->xoops_url . '/modules/' . $this->getVar('dirname') . '/">'
                 . $this->getVar('name') . '</a>';
             return $ret;
@@ -200,12 +198,12 @@ class XoopsModule extends XoopsObject
      */
     public function subLink()
     {
-        $ret = array();
+        $ret = [];
         if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
-                $ret[] = array(
-                    'name' => $submenu['name'] ,
-                    'url' => $submenu['url']);
+                $ret[] = [
+                    'name' => $submenu['name'],
+                    'url' => $submenu['url'], ];
             }
         }
         return $ret;
@@ -213,14 +211,12 @@ class XoopsModule extends XoopsObject
 
     /**
      * Load the admin menu for the module
-     *
-     * @return void
      */
     public function loadAdminMenu()
     {
         $file = $this->xoops_root_path . '/modules/' . $this->getInfo('dirname') . '/' . $this->getInfo('adminmenu');
-        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && \XoopsLoad::fileExists($file)) {
-            $adminmenu = array();
+        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') !== '' && \XoopsLoad::fileExists($file)) {
+            $adminmenu = [];
             include $file;
             $this->adminmenu = $adminmenu;
         }
@@ -233,7 +229,7 @@ class XoopsModule extends XoopsObject
      */
     public function getAdminMenu()
     {
-        if (!isset($this->adminmenu)) {
+        if (! isset($this->adminmenu)) {
             $this->loadAdminMenu();
         }
         return $this->adminmenu;
@@ -265,13 +261,13 @@ class XoopsModule extends XoopsObject
         $xoops->loadLanguage('modinfo', $dirname);
         $xoops->loadLocale($dirname);
 
-        if (!\XoopsLoad::fileExists($file = $xoops->path('modules/' . $dirname . '/xoops_version.php'))) {
-            if (false != $verbose) {
-                echo "Module File for $dirname Not Found!";
+        if (! \XoopsLoad::fileExists($file = $xoops->path('modules/' . $dirname . '/xoops_version.php'))) {
+            if ($verbose !== false) {
+                echo "Module File for ${dirname} Not Found!";
             }
             return false;
         }
-        $modversion = array();
+        $modversion = [];
         include $file;
         $modVersions[$dirname] = $modversion;
         $this->modinfo = $modVersions[$dirname];

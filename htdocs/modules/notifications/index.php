@@ -24,7 +24,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $helper = Notifications::getInstance();
 
-if (!$xoops->isUser()) {
+if (! $xoops->isUser()) {
     $xoops->redirect($xoops->url('www/index.php'), 3, _MD_NOTIFICATIONS_NOACCESS);
 }
 
@@ -71,23 +71,23 @@ switch ($op) {
 
         // Generate the info for the template
         $module_handler = $xoops->getHandlerModule();
-        $modules = array();
+        $modules = [];
         $prev_modid = -1;
         $prev_category = -1;
         $prev_item = -1;
-        $modulesObj = array();
+        $modulesObj = [];
         foreach ($notifications as $n) {
             /* @var $n NotificationsNotification */
             $modid = $n->getVar('modid');
-            if ($modid != $prev_modid) {
+            if ($modid !== $prev_modid) {
                 $prev_modid = $modid;
                 $prev_category = -1;
                 $prev_item = -1;
                 $module = $xoops->getModuleById($modid);
                 $modulesObj[$modid] = $module;
-                $modules[$modid] = array(
-                    'id' => $modid, 'name' => $module->getVar('name'), 'categories' => array()
-                );
+                $modules[$modid] = [
+                    'id' => $modid, 'name' => $module->getVar('name'), 'categories' => [],
+                ];
                 // TODO: note, we could auto-generate the url from the id
                 // and category info... (except when category has multiple
                 // subscription scripts defined...)
@@ -99,35 +99,35 @@ switch ($op) {
                 // Get the lookup function, if exists
             }
             $category = $n->getVar('category');
-            if ($category != $prev_category) {
-                $category_info = array();
+            if ($category !== $prev_category) {
+                $category_info = [];
                 $prev_category = $category;
                 $prev_item = -1;
                 $category_info = $helper->getCategory($category, $modulesObj[$modid]->getVar('dirname'));
-                $modules[$modid]['categories'][$category] = array(
-                    'name' => $category, 'title' => $category_info['title'], 'items' => array()
-                );
+                $modules[$modid]['categories'][$category] = [
+                    'name' => $category, 'title' => $category_info['title'], 'items' => [],
+                ];
             }
             $item = $n->getVar('itemid');
-            if ($item != $prev_item) {
+            if ($item !== $prev_item) {
                 $prev_item = $item;
 
                 $item_info = $helper->getItem($category, $item, $modulesObj[$modid]->getVar('dirname'));
-                $modules[$modid]['categories'][$category]['items'][$item] = array(
-                    'id' => $item, 'name' => $item_info['name'], 'url' => $item_info['url'], 'notifications' => array()
-                );
+                $modules[$modid]['categories'][$category]['items'][$item] = [
+                    'id' => $item, 'name' => $item_info['name'], 'url' => $item_info['url'], 'notifications' => [],
+                ];
             }
             $event_info = $helper->getEvent($category, $n->getVar('event'), $modulesObj[$n->getVar('modid')]->getVar('dirname'));
-            $modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
-                'id'             => $n->getVar('id'), 'module_id' => $n->getVar('modid'),
-                'category'       => $n->getVar('category'), 'category_title' => $category_info['title'],
-                'item_id'        => $n->getVar('itemid'), 'event' => $n->getVar('event'),
-                'event_title'    => $event_info['title'], 'user_id' => $n->getVar('uid')
-            );
+            $modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = [
+                'id' => $n->getVar('id'), 'module_id' => $n->getVar('modid'),
+                'category' => $n->getVar('category'), 'category_title' => $category_info['title'],
+                'item_id' => $n->getVar('itemid'), 'event' => $n->getVar('event'),
+                'event_title' => $event_info['title'], 'user_id' => $n->getVar('uid'),
+            ];
         }
         $xoops->header('module:notifications/list.tpl');
         $xoops->tpl()->assign('modules', $modules);
-        $user_info = array('uid' => $xoops->user->getVar('uid'));
+        $user_info = ['uid' => $xoops->user->getVar('uid')];
         $xoops->tpl()->assign('user', $user_info);
         $xoops->tpl()->assign('lang_cancel', XoopsLocale::A_CANCEL);
         $xoops->tpl()->assign('lang_clear', _MD_NOTIFICATIONS_CLEAR);
@@ -161,9 +161,9 @@ switch ($op) {
             $helper->redirect('index.php', 2, _MD_NOTIFICATIONS_NOTHINGTODELETE);
         }
         $xoops->header();
-        $hidden_vars = array(
-            'uid' => $uid, 'delete_ok' => 1, 'del_not' => $_POST['del_not']
-        );
+        $hidden_vars = [
+            'uid' => $uid, 'delete_ok' => 1, 'del_not' => $_POST['del_not'],
+        ];
         echo '<h4>' . _MD_NOTIFICATIONS_DELETINGNOTIFICATIONS . '</h4>';
         echo $xoops->confirm($hidden_vars, $xoops->getEnv('PHP_SELF'), _MD_NOTIFICATIONS_RUSUREDEL);
         $xoops->footer();
@@ -173,7 +173,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $helper->redirect('index.php', 2, implode('<br />', $xoops->security()->getErrors()));
         }
         if (empty($_POST['del_not'])) {
@@ -183,7 +183,7 @@ switch ($op) {
         foreach ($_POST['del_not'] as $n_array) {
             foreach ($n_array as $n) {
                 $notification = $notification_handler->get($n);
-                if ($notification->getVar('uid') == $uid) {
+                if ($notification->getVar('uid') === $uid) {
                     $notification_handler->delete($notification);
                 }
             }

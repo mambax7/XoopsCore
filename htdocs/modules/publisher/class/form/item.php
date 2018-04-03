@@ -33,28 +33,28 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 {
     private $checkperm = true;
 
-    private $tabs = array(
-        _CO_PUBLISHER_TAB_MAIN  => 'mainTab', _CO_PUBLISHER_TAB_IMAGES => 'imagesTab',
-        _CO_PUBLISHER_TAB_FILES => 'filesTab', _CO_PUBLISHER_TAB_OTHERS => 'othersTab'
-    );
+    private $tabs = [
+        _CO_PUBLISHER_TAB_MAIN => 'mainTab', _CO_PUBLISHER_TAB_IMAGES => 'imagesTab',
+        _CO_PUBLISHER_TAB_FILES => 'filesTab', _CO_PUBLISHER_TAB_OTHERS => 'othersTab',
+    ];
 
-    private $mainTab = array(
+    private $mainTab = [
         _PUBLISHER_SUBTITLE, _PUBLISHER_ITEM_SHORT_URL, _PUBLISHER_ITEM_TAG, _PUBLISHER_SUMMARY, _PUBLISHER_DOHTML,
         _PUBLISHER_DOSMILEY, _PUBLISHER_DOXCODE, _PUBLISHER_DOIMAGE, _PUBLISHER_DOLINEBREAK, _PUBLISHER_DATESUB,
-        _PUBLISHER_STATUS, _PUBLISHER_AUTHOR_ALIAS, _PUBLISHER_NOTIFY, _PUBLISHER_AVAILABLE_PAGE_WRAP, _PUBLISHER_UID
-    );
+        _PUBLISHER_STATUS, _PUBLISHER_AUTHOR_ALIAS, _PUBLISHER_NOTIFY, _PUBLISHER_AVAILABLE_PAGE_WRAP, _PUBLISHER_UID,
+    ];
 
-    private $imagesTab = array(
-        _PUBLISHER_IMAGE_ITEM
-    );
+    private $imagesTab = [
+        _PUBLISHER_IMAGE_ITEM,
+    ];
 
-    private $filesTab = array(
-        _PUBLISHER_ITEM_UPLOAD_FILE
-    );
+    private $filesTab = [
+        _PUBLISHER_ITEM_UPLOAD_FILE,
+    ];
 
-    private $othersTab = array(
-        _PUBLISHER_ITEM_META_KEYWORDS, _PUBLISHER_ITEM_META_DESCRIPTION, _PUBLISHER_WEIGHT, _PUBLISHER_ALLOWCOMMENTS
-    );
+    private $othersTab = [
+        _PUBLISHER_ITEM_META_KEYWORDS, _PUBLISHER_ITEM_META_DESCRIPTION, _PUBLISHER_WEIGHT, _PUBLISHER_ALLOWCOMMENTS,
+    ];
 
     /**
      * __construct
@@ -97,7 +97,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
         $buttonTray = new Xoops\Form\ElementTray('', '');
 
-        if (!$obj->isNew()) {
+        if (! $obj->isNew()) {
             $buttonTray->addElement(new Xoops\Form\Button('', 'additem', XoopsLocale::A_SUBMIT, 'submit')); //orclone
 
         } else {
@@ -119,12 +119,20 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
+     * setCheckPermissions
+     *
+     * @param boolean $checkperm true to check permissions, false to ignore permissions
+     */
+    public function setCheckPermissions($checkperm)
+    {
+        $this->checkperm = (bool) $checkperm;
+    }
+
+    /**
      * Build the main tab
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildMainTab(PublisherItem $obj, ContainerInterface $mainTab)
     {
@@ -176,10 +184,10 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         // Available pages to wrap
         if ($this->isGranted(_PUBLISHER_AVAILABLE_PAGE_WRAP)) {
             $wrap_pages = XoopsLists::getHtmlListAsArray(PublisherUtils::getUploadDir(true, 'content'));
-            $available_wrap_pages_text = array();
+            $available_wrap_pages_text = [];
             foreach ($wrap_pages as $page) {
-                $available_wrap_pages_text[] = "<span onclick='publisherPageWrap(\"body\", \"[pagewrap=$page] \");'"
-                    . " onmouseover='style.cursor=\"pointer\"'>$page</span>";
+                $available_wrap_pages_text[] = "<span onclick='publisherPageWrap(\"body\", \"[pagewrap=${page}] \");'"
+                    . " onmouseover='style.cursor=\"pointer\"'>${page}</span>";
             }
             $available_wrap_pages = new Xoops\Form\Label(
                 _CO_PUBLISHER_AVAILABLE_PAGE_WRAP,
@@ -196,7 +204,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         // Trabis : well, maybe is because you are getting 6000 objects into memory , no??? LOL
         if ($this->isGranted(_PUBLISHER_UID)) {
             $uid_select =
-                new Xoops\Form\SelectUser(_CO_PUBLISHER_UID, 'uid', true, array($obj->getVar('uid', 'e')), 1, false);
+                new Xoops\Form\SelectUser(_CO_PUBLISHER_UID, 'uid', true, [$obj->getVar('uid', 'e')], 1, false);
             $uid_select->setDescription(_CO_PUBLISHER_UID_DSC);
             $mainTab->addElement($uid_select);
         }
@@ -217,12 +225,12 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
         // STATUS
         if ($this->isGranted(_PUBLISHER_STATUS)) {
-            $options = array(
+            $options = [
                 _PUBLISHER_STATUS_PUBLISHED => _CO_PUBLISHER_PUBLISHED,
-                _PUBLISHER_STATUS_OFFLINE   => _CO_PUBLISHER_OFFLINE,
+                _PUBLISHER_STATUS_OFFLINE => _CO_PUBLISHER_OFFLINE,
                 _PUBLISHER_STATUS_SUBMITTED => _CO_PUBLISHER_SUBMITTED,
-                _PUBLISHER_STATUS_REJECTED  => _CO_PUBLISHER_REJECTED
-            );
+                _PUBLISHER_STATUS_REJECTED => _CO_PUBLISHER_REJECTED,
+            ];
             $status_select = new Xoops\Form\Select(_CO_PUBLISHER_STATUS, 'status', $obj->getVar('status'));
             $status_select->addOptionArray($options);
             $status_select->setDescription(_CO_PUBLISHER_STATUS_DSC);
@@ -232,7 +240,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
         // Datesub
         if ($this->isGranted(_PUBLISHER_DATESUB)) {
-            $datesub = ($obj->getVar('datesub') == 0) ? time() : $obj->getVar('datesub');
+            $datesub = ($obj->getVar('datesub') === 0) ? time() : $obj->getVar('datesub');
             $datesub_datetime = new Xoops\Form\DateTimeSelect(_CO_PUBLISHER_DATESUB, 'datesub', $datesub);
             $datesub_datetime->setDescription(_CO_PUBLISHER_DATESUB_DSC);
             $mainTab->addElement($datesub_datetime);
@@ -251,8 +259,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildEditors(PublisherItem $obj, ContainerInterface $mainTab)
     {
@@ -263,12 +269,12 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         $allowed_editors = PublisherUtils::getEditors($publisher->getPermissionHandler()->getGrantedItems('editors'));
 
         $nohtml = false;
-        if (count($allowed_editors) == 1) {
+        if (count($allowed_editors) === 1) {
             $editor = $allowed_editors[0];
         } else {
             if (count($allowed_editors) > 0) {
                 $editor = @$_POST['editor'];
-                if (!empty($editor)) {
+                if (! empty($editor)) {
                     PublisherUtils::setCookieVar('publisher_editor', $editor);
                 } else {
                     $editor = PublisherUtils::getCookieVar('publisher_editor');
@@ -276,7 +282,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                         $editor = $xoops->user->getVar('publisher_editor'); // Need set through user profile
                     }
                 }
-                $editor = (empty($editor) || !in_array($editor, $allowed_editors))
+                $editor = (empty($editor) || ! in_array($editor, $allowed_editors, true))
                     ? $publisher->getConfig('submit_editor') : $editor;
 
                 $form_editor = new Xoops\Form\SelectEditor($this, 'editor', $editor, $nohtml, $allowed_editors);
@@ -286,21 +292,21 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             }
         }
 
-        $editor_configs = array();
-        $editor_configs["rows"] = !$publisher->getConfig('submit_editor_rows')
+        $editor_configs = [];
+        $editor_configs['rows'] = ! $publisher->getConfig('submit_editor_rows')
             ? 35 : $publisher->getConfig('submit_editor_rows');
-        $editor_configs["cols"] = !$publisher->getConfig('submit_editor_cols')
+        $editor_configs['cols'] = ! $publisher->getConfig('submit_editor_cols')
             ? 60 : $publisher->getConfig('submit_editor_cols');
-        $editor_configs["width"] = !$publisher->getConfig('submit_editor_width')
-            ? "100%" : $publisher->getConfig('submit_editor_width');
-        $editor_configs["height"] = !$publisher->getConfig('submit_editor_height')
-            ? "400px" : $publisher->getConfig('submit_editor_height');
+        $editor_configs['width'] = ! $publisher->getConfig('submit_editor_width')
+            ? '100%' : $publisher->getConfig('submit_editor_width');
+        $editor_configs['height'] = ! $publisher->getConfig('submit_editor_height')
+            ? '400px' : $publisher->getConfig('submit_editor_height');
 
         // SUMMARY
         if ($this->isGranted(_PUBLISHER_SUMMARY)) {
             // Description
-            $editor_configs["name"] = "summary";
-            $editor_configs["value"] = $obj->getVar('summary', 'e');
+            $editor_configs['name'] = 'summary';
+            $editor_configs['value'] = $obj->getVar('summary', 'e');
             $summary_text =
                 new Xoops\Form\Editor(_CO_PUBLISHER_SUMMARY, $editor, $editor_configs, $nohtml, $onfailure = null);
             $summary_text->setDescription(_CO_PUBLISHER_SUMMARY_DSC);
@@ -308,8 +314,8 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         }
 
         // BODY
-        $editor_configs["name"] = "body";
-        $editor_configs["value"] = $obj->getVar('body', 'e');
+        $editor_configs['name'] = 'body';
+        $editor_configs['value'] = $obj->getVar('body', 'e');
         $body_text = new Xoops\Form\Editor(_CO_PUBLISHER_BODY, $editor, $editor_configs, $nohtml, $onfailure = null);
         $body_text->setDescription(_CO_PUBLISHER_BODY_DSC);
         $mainTab->addElement($body_text);
@@ -321,8 +327,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildTSOptions(PublisherItem $obj, ContainerInterface $mainTab)
     {
@@ -350,14 +354,11 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         }
     }
 
-
     /**
      * Build the files tab
      *
      * @param PublisherItem      $obj      data source
      * @param ContainerInterface $filesTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildFilesTab(PublisherItem $obj, ContainerInterface $filesTab)
     {
@@ -384,30 +385,30 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $filesTab->addElement($status_select);
             unset($status_select);
 
-            $file_box = new Xoops\Form\File(_CO_PUBLISHER_ITEM_UPLOAD_FILE, "item_upload_file");
+            $file_box = new Xoops\Form\File(_CO_PUBLISHER_ITEM_UPLOAD_FILE, 'item_upload_file');
             $file_box->setDescription(_CO_PUBLISHER_ITEM_UPLOAD_FILE_DSC);
             $file_box->set('size', 50);
             $filesTab->addElement($file_box);
             unset($file_box);
 
-            if (!$obj->isNew()) {
+            if (! $obj->isNew()) {
                 $filesObj = $publisher->getFileHandler()->getAllFiles($obj->getVar('itemid'));
                 if (count($filesObj) > 0) {
                     $table = '';
                     $table .= "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
-                    $table .= "<tr>";
+                    $table .= '<tr>';
                     $table .= "<td width='50' class='bg3' align='center'><strong>ID</strong></td>";
                     $table .= "<td width='150' class='bg3' align='left'><strong>"
-                        . _AM_PUBLISHER_FILENAME . "</strong></td>";
+                        . _AM_PUBLISHER_FILENAME . '</strong></td>';
                     $table .= "<td class='bg3' align='left'><strong>"
-                        . _AM_PUBLISHER_DESCRIPTION . "</strong></td>";
+                        . _AM_PUBLISHER_DESCRIPTION . '</strong></td>';
                     $table .= "<td width='60' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_HITS . "</strong></td>";
+                        . _AM_PUBLISHER_HITS . '</strong></td>';
                     $table .= "<td width='100' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_UPLOADED_DATE . "</strong></td>";
+                        . _AM_PUBLISHER_UPLOADED_DATE . '</strong></td>';
                     $table .= "<td width='60' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_ACTION . "</strong></td>";
-                    $table .= "</tr>";
+                        . _AM_PUBLISHER_ACTION . '</strong></td>';
+                    $table .= '</tr>';
 
                     /* @var $fileObj PublisherFile */
                     foreach ($filesObj as $fileObj) {
@@ -417,21 +418,21 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                         $delete = "<a href='file.php?op=del&fileid=" . $fileObj->getVar('fileid')
                             . "'><img src='" . PUBLISHER_URL . "/images/links/delete.png' title='"
                             . _CO_PUBLISHER_DELETEFILE . "' alt='" . _CO_PUBLISHER_DELETEFILE . "'/></a>";
-                        if ($fileObj->getVar('status') == 0) {
+                        if ($fileObj->getVar('status') === 0) {
                             $notVisible = "<img src='" . PUBLISHER_URL . "/images/no.gif'/>";
                         } else {
                             $notVisible = '';
                         }
-                        $table .= "<tr>";
-                        $table .= "<td class='head' align='center'>" . $fileObj->getVar('fileid') . "</td>";
-                        $table .= "<td class='odd' align='left'>" . $notVisible . $fileObj->getFileLink() . "</td>";
-                        $table .= "<td class='even' align='left'>" . $fileObj->getVar('description') . "</td>";
-                        $table .= "<td class='even' align='center'>" . $fileObj->getVar('counter') . "";
-                        $table .= "<td class='even' align='center'>" . $fileObj->datesub() . "</td>";
+                        $table .= '<tr>';
+                        $table .= "<td class='head' align='center'>" . $fileObj->getVar('fileid') . '</td>';
+                        $table .= "<td class='odd' align='left'>" . $notVisible . $fileObj->getFileLink() . '</td>';
+                        $table .= "<td class='even' align='left'>" . $fileObj->getVar('description') . '</td>';
+                        $table .= "<td class='even' align='center'>" . $fileObj->getVar('counter') . '';
+                        $table .= "<td class='even' align='center'>" . $fileObj->datesub() . '</td>';
                         $table .= "<td class='even' align='center'> {$modify} {$delete} </td>";
-                        $table .= "</tr>";
+                        $table .= '</tr>';
                     }
-                    $table .= "</table>";
+                    $table .= '</table>';
 
                     $files_box = new Xoops\Form\Label(_CO_PUBLISHER_FILES_LINKED, $table);
                     $filesTab->addElement($files_box);
@@ -447,8 +448,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
      *
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $imagesTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildImagesTab(PublisherItem $obj, ContainerInterface $imagesTab)
     {
@@ -461,9 +460,9 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $image_handler = Images::getInstance()->getHandlerImages();
 
             $objimages = $obj->getImages();
-            $mainarray = is_object($objimages['main']) ? array($objimages['main']) : array();
+            $mainarray = is_object($objimages['main']) ? [$objimages['main']] : [];
             $mergedimages = array_merge($mainarray, $objimages['others']);
-            $objimage_array = array();
+            $objimage_array = [];
             /* @var $imageObj ImagesImage */
             foreach ($mergedimages as $imageObj) {
                 $objimage_array[$imageObj->getVar('image_name')] = $imageObj->getVar('image_nicename');
@@ -472,8 +471,8 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $catlist = $imgcat_handler->getListByPermission($group, 'imgcat_read', 1);
             $catids = array_keys($catlist);
 
-            $imageObjs = array();
-            if (!empty($catids)) {
+            $imageObjs = [];
+            if (! empty($catids)) {
                 $criteria = new CriteriaCompo(new Criteria('imgcat_id', '(' . implode(',', $catids) . ')', 'IN'));
                 $criteria->add(new Criteria('image_display', 1));
                 $criteria->setSort('image_nicename');
@@ -481,7 +480,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                 $imageObjs = $image_handler->getObjects($criteria, true);
                 unset($criteria);
             }
-            $image_array = array();
+            $image_array = [];
             foreach ($imageObjs as $imageObj) {
                 $image_array[$imageObj->getVar('image_name')] = $imageObj->getVar('image_nicename');
             }
@@ -520,10 +519,10 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                 . 'publisher_updateSelectOption("image_item", "image_featured");'
             );
 
-            $opentable = new Xoops\Form\Label('', "<table><tr><td>");
-            $addcol = new Xoops\Form\Label('', "</td><td>");
-            $addbreak = new Xoops\Form\Label('', "<br />");
-            $closetable = new Xoops\Form\Label('', "</td></tr></table>");
+            $opentable = new Xoops\Form\Label('', '<table><tr><td>');
+            $addcol = new Xoops\Form\Label('', '</td><td>');
+            $addbreak = new Xoops\Form\Label('', '<br />');
+            $closetable = new Xoops\Form\Label('', '</td></tr></table>');
 
             $xoops->theme()->addScript(PUBLISHER_URL . '/js/ajaxupload.3.9.js');
             //todo, find replacement for error class
@@ -570,7 +569,7 @@ $(document).ready(function(){
             $messages = new Xoops\Form\Label('', "<div id='publisher_upload_message'></div>");
             $button = new Xoops\Form\Label(
                 '',
-                "<div id='publisher_upload_button'>" . _CO_PUBLISHER_IMAGE_UPLOAD_NEW . "</div>"
+                "<div id='publisher_upload_button'>" . _CO_PUBLISHER_IMAGE_UPLOAD_NEW . '</div>'
             );
             $nicename = new Xoops\Form\Text('', 'image_nicename', 30, 30, _CO_PUBLISHER_IMAGE_NICENAME);
 
@@ -614,7 +613,7 @@ $(document).ready(function(){
             $imagesTab->addElement($image_tray);
 
             $imagename = is_object($objimages['main']) ? $objimages['main']->getVar('image_name') : '';
-            $imageforpath = ($imagename != '') ? $imagename : 'blank.gif';
+            $imageforpath = ($imagename !== '') ? $imagename : 'blank.gif';
 
             $image_select3 = new Xoops\Form\Select(_CO_PUBLISHER_IMAGE_ITEM, 'image_featured', $imagename, 1);
             $image_select3->addOptionArray($objimage_array);
@@ -644,8 +643,6 @@ $(document).ready(function(){
      *
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $othersTab add elements to this tab/form
-     *
-     * @return void
      */
     private function buildOthersTab(PublisherItem $obj, ContainerInterface $othersTab)
     {
@@ -694,18 +691,6 @@ $(document).ready(function(){
     }
 
     /**
-     * setCheckPermissions
-     *
-     * @param boolean $checkperm true to check permissions, false to ignore permissions
-     *
-     * @return void
-     */
-    public function setCheckPermissions($checkperm)
-    {
-        $this->checkperm = (bool)$checkperm;
-    }
-
-    /**
      * isGranted
      *
      * @param int $item permission item to check
@@ -716,7 +701,7 @@ $(document).ready(function(){
     {
         $publisher = Publisher::getInstance();
         $ret = false;
-        if (!$this->checkperm || $publisher->getPermissionHandler()->isGranted('form_view', $item)) {
+        if (! $this->checkperm || $publisher->getPermissionHandler()->isGranted('form_view', $item)) {
             $ret = true;
         }
         return $ret;
@@ -731,12 +716,12 @@ $(document).ready(function(){
      */
     private function hasTab($tab)
     {
-        if (!isset($tab) || !isset($this->tabs[$tab])) {
+        if (! isset($tab) || ! isset($this->tabs[$tab])) {
             return false;
         }
 
         $tabRef = $this->tabs[$tab];
-        $items = $this->$tabRef;
+        $items = $this->{$tabRef};
         foreach ($items as $item) {
             if ($this->isGranted($item)) {
                 return true;

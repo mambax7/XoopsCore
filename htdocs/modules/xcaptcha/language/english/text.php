@@ -18,9 +18,9 @@
  */
 define('_MI_XCAPTCHA_ADMENU_TEXT', 'Text');
 
-if (!defined('_XCAPTCHA_TEXT')) {
+if (! defined('_XCAPTCHA_TEXT')) {
     define('_XCAPTCHA_FORM_TEXT', 'Configuration CAPTCHA : Texte');
-    if (!defined('_XCAPTCHA_NUM_CHARS')) {
+    if (! defined('_XCAPTCHA_NUM_CHARS')) {
         define('_XCAPTCHA_NUM_CHARS', 'Number of characters');
     }
 

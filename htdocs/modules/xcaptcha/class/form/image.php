@@ -19,9 +19,6 @@
 
 class XcaptchaImageForm extends Xoops\Form\ThemeForm
 {
-    /**
-     * @param null $obj
-     */
     public function __construct($object = null)
     {
         $this->object = $object;
@@ -58,7 +55,7 @@ class XcaptchaImageForm extends Xoops\Form\ThemeForm
         $this->addElement($backtype_form, false);
 
         $backnum_form = new Xoops\Form\Select(_XCAPTCHA_BACKGROUND_NUM, 'background_num', $this->config['background_num']);
-        for ($i = 10; $i <= 100; $i = $i+10) {
+        for ($i = 10; $i <= 100; $i = $i + 10) {
             $backnum_form->addOption($i, $i);
         }
         $this->addElement($backnum_form, false);

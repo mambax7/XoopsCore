@@ -34,7 +34,7 @@ echo '<br><br>';
 $img = $xoops->service('thumbnail')->getImgTag($image)->getValue();
 echo $img;
 
-if (!$xoops->service('thumbnail')->isAvailable()) {
+if (! $xoops->service('thumbnail')->isAvailable()) {
     echo 'Please install a thumbnail provider to view this demonstration.';
 }
 

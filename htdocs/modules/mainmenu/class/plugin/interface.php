@@ -22,7 +22,6 @@
 
 interface MainmenuPluginInterface
 {
-
     /**
      * Used to populate the Mainmenu Block
      *

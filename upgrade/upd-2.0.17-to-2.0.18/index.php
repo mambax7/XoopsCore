@@ -16,10 +16,10 @@ class upgrade_2018 extends xoopsUpgrade
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $sql = "SHOW COLUMNS FROM " . $db->prefix("config") . " LIKE 'conf_title'";
+        $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
         $result = $db->queryF($sql);
-        while (false !== ($row = $db->fetchArray($result))) {
-            if (strtolower(trim($row["Type"])) == "varchar(255)") {
+        while (($row = $db->fetchArray($result)) !== false) {
+            if (strtolower(trim($row['Type'])) === 'varchar(255)') {
                 return true;
             }
         }
@@ -31,7 +31,7 @@ class upgrade_2018 extends xoopsUpgrade
         //echo $sql . "<br />";
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        if (!($ret = $db->queryF($sql))) {
+        if (! ($ret = $db->queryF($sql))) {
             echo $db->error();
         }
     }
@@ -40,15 +40,15 @@ class upgrade_2018 extends xoopsUpgrade
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $this->fields = array(
-            "config"            => array(
-                "conf_title" => "varchar(255) NOT NULL default ''", "conf_desc" => "varchar(255) NOT NULL default ''"
-            ), "configcategory" => array("confcat_name" => "varchar(255) NOT NULL default ''"),
-        );
+        $this->fields = [
+            'config' => [
+                'conf_title' => "varchar(255) NOT NULL default ''", 'conf_desc' => "varchar(255) NOT NULL default ''",
+            ], 'configcategory' => ['confcat_name' => "varchar(255) NOT NULL default ''"],
+        ];
 
         foreach ($this->fields as $table => $data) {
             foreach ($data as $field => $property) {
-                $sql = "ALTER TABLE " . $db->prefix($table) . " CHANGE `$field` `$field` $property";
+                $sql = 'ALTER TABLE ' . $db->prefix($table) . " CHANGE `${field}` `${field}` ${property}";
                 $this->query($sql);
             }
         }

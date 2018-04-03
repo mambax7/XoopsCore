@@ -26,7 +26,7 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
 $content = Request::getString('text', '');
 
-if (!$xoops->security()->validateToken(@$_POST['token'], false)) {
+if (! $xoops->security()->validateToken(@$_POST['token'], false)) {
     $content = 'Direct access is not allowed!!!';
 }
 $html = empty($_POST['html']) ? 0 : 1;
@@ -45,4 +45,4 @@ if (! headers_sent()) {
     header('Cache-Control: private, no-cache');
     header('Pragma: no-cache');
 }
-echo "<div>" . $content . "</div>";
+echo '<div>' . $content . '</div>';

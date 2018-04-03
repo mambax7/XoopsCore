@@ -20,16 +20,16 @@
 
 $skinversion['template'] = 'templates/template.tpl';
 
-$skinversion['css'] = array(
+$skinversion['css'] = [
     'css/superfish.css',
-    'css/superfish-navbar.css'
-);
+    'css/superfish-navbar.css',
+];
 
-$skinversion['js'] = array(
+$skinversion['js'] = [
     '../../js/jquery-1.3.2.min.js',
     '../../js/hoverIntent.js',
-    '../../js/superfish.js'
-);
+    '../../js/superfish.js',
+];
 
 $header = "\n" . '<script type="text/javascript">';
 $header .= "\n" . '  var $sfnav = jQuery.noConflict()';

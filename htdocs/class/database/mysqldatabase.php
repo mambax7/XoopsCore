@@ -25,22 +25,20 @@
  * @link       http://xoops.org
  * @since      2.6.0
  * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
- *
  */
 class XoopsMySQLDatabase extends XoopsDatabase
 {
-
-    /**
-     * @var object keep track of last result since we need it for getAffectedRows
-     */
-    private $lastResult = null;
-
     /**
      * Database connection
      *
      * @var Xoops\Core\Database\Connection;
      */
     public $conn;
+
+    /**
+     * @var object keep track of last result since we need it for getAffectedRows
+     */
+    private $lastResult = null;
 
     /**
      * Database connection is established
@@ -57,26 +55,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
     private $selectdb;
 
     /**
-     * Issue a deprecated warning once per session
-     *
-     * @return void
-     */
-    protected function deprecated()
-    {
-        static $warning_issued = false;
-        if (!$warning_issued) {
-            $warning_issued = true;
-            $stack = debug_backtrace();
-            $frame = $stack[1];
-            Xoops::getInstance()->deprecated(
-                'Legacy XoopsDB is deprecated since 2.6.0; all calls should be using Doctrine through $xoops->db(). '
-                . 'Called from ' . $frame['function'] . '() in ' . $frame['file'] . ' line '. $frame['line']
-            );
-        }
-    }
-
-
-    /**
      * connect to the database
      *
      * @param bool $selectdb select the database now?
@@ -91,7 +69,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
         $this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] !== 'GET');
         return $this->connect;
     }
-
 
     /**
      * generate an ID for a new row
@@ -121,7 +98,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchRow($result)
     {
         $this->deprecated();
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_NUM);
@@ -139,7 +116,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_ASSOC);
@@ -157,7 +134,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_BOTH);
@@ -175,7 +152,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_OBJ);
@@ -223,7 +200,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Close MySQL connection
      *
-     * @return void
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
     public function close()
@@ -304,7 +280,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        return  $this->conn->quote($string);
+        return $this->conn->quote($string);
     }
 
     /**
@@ -338,7 +314,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (!empty($limit)) {
+        if (! empty($limit)) {
             if (empty($start)) {
                 $start = 0;
             }
@@ -349,18 +325,18 @@ class XoopsMySQLDatabase extends XoopsDatabase
         try {
             $result = $this->conn->query($sql);
         } catch (Exception $e) {
-            $result=false;
+            $result = false;
         }
         $this->lastResult = $result;
         $events->triggerEvent('core.database.query.end');
 
         if ($result) {
-            $events->triggerEvent('core.database.query.success', (array($sql)));
+            $events->triggerEvent('core.database.query.success', ([$sql]));
             return $result;
-        } else {
-            $events->triggerEvent('core.database.query.failure', (array($sql, $this)));
-            return false;
         }
+            $events->triggerEvent('core.database.query.failure', ([$sql, $this]));
+            return false;
+
     }
 
     /**
@@ -373,7 +349,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
      *
-     * @return void
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      */
     public function query($sql, $limit = 0, $start = 0)
@@ -394,7 +369,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (false !== ($fp = fopen($file, 'r'))) {
+        if (($fp = fopen($file, 'r')) !== false) {
             $sql_queries = trim(fread($fp, filesize($file)));
             SqlUtility::splitMySqlFile($pieces, $sql_queries);
             foreach ($pieces as $query) {
@@ -402,7 +377,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
                 // [4] contains unprefixed table name
                 $prefixed_query
                     = SqlUtility::prefixQuery(trim($query), $this->prefix());
-                if ($prefixed_query != false) {
+                if ($prefixed_query !== false) {
                     $this->query($prefixed_query[0]);
                 }
             }
@@ -450,10 +425,10 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $temp = ($result->getColumnMeta($offset));
             $t = $temp['native_type'];
 
-            $temp = (string)(
+            $temp = (string) (
                 ((($t === 'STRING') || ($t === 'VAR_STRING') ) ? 'string' : '' ) .
-                ( (in_array($t, array('TINY', 'SHORT', 'LONG', 'LONGLONG', 'INT24'))) ? 'int' : '' ) .
-                ( (in_array($t, array('FLOAT', 'DOUBLE', 'DECIMAL', 'NEWDECIMAL'))) ? 'real' : '' ) .
+                ( (in_array($t, ['TINY', 'SHORT', 'LONG', 'LONGLONG', 'INT24'], true)) ? 'int' : '' ) .
+                ( (in_array($t, ['FLOAT', 'DOUBLE', 'DECIMAL', 'NEWDECIMAL'], true)) ? 'real' : '' ) .
                 ( ($t === 'TIMESTAMP') ? 'timestamp' : '' ) .
                 ( ($t === 'YEAR') ? 'year' : '') .
                 ( (($t === 'DATE') || ($t === 'NEWDATE') ) ? 'date' : '' ) .
@@ -462,7 +437,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
                 ( ($t === 'ENUM') ? 'enum' : '' ) .
                 ( ($t === 'GEOMETRY') ? 'geometry' : '' ) .
                 ( ($t === 'DATETIME') ? 'datetime' : '' ) .
-                ( (in_array($t, array('TINY_BLOB', 'BLOB', 'MEDIUM_BLOB', 'LONG_BLOB' ))) ? 'blob' : '' ) .
+                ( (in_array($t, ['TINY_BLOB', 'BLOB', 'MEDIUM_BLOB', 'LONG_BLOB'], true)) ? 'blob' : '' ) .
                 ( ($t === 'NULL') ? 'null' : '' )
             );
             return $temp;
@@ -499,5 +474,22 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $version = $conn->getAttribute(\PDO::ATTR_SERVER_VERSION);
         }
         return $version;
+    }
+
+    /**
+     * Issue a deprecated warning once per session
+     */
+    protected function deprecated()
+    {
+        static $warning_issued = false;
+        if (! $warning_issued) {
+            $warning_issued = true;
+            $stack = debug_backtrace();
+            $frame = $stack[1];
+            Xoops::getInstance()->deprecated(
+                'Legacy XoopsDB is deprecated since 2.6.0; all calls should be using Doctrine through $xoops->db(). '
+                . 'Called from ' . $frame['function'] . '() in ' . $frame['file'] . ' line ' . $frame['line']
+            );
+        }
     }
 }

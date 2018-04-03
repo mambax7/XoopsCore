@@ -16,7 +16,7 @@
  * @version         $Id$
  */
 
-class Search extends Xoops\Module\Helper\HelperAbstract
+class search extends Xoops\Module\Helper\HelperAbstract
 {
     /**
      * Init the module

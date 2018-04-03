@@ -1,9 +1,9 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 require_once(XOOPS_TU_ROOT_PATH . '/class/logger/xoopslogger.php');
 
-class XoopsLoggerTest extends \PHPUnit\Framework\TestCase
+class xoopsloggerTest extends \PHPUnit\Framework\TestCase
 {
     // "XoopsLogger is deprecated since 2.6.0, use the module 'logger' instead"
 

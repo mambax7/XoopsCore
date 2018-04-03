@@ -58,7 +58,7 @@ class DateSelect extends Text
         $display_value = \Xoops\Core\Locale\Time::formatDate($this->getValue(false));
 
         $dataList = $this->isDatalist();
-        if (!empty($dataList)) {
+        if (! empty($dataList)) {
             $this->add('list', 'list_' . $this->getName());
         }
 
@@ -80,7 +80,7 @@ class DateSelect extends Text
 
         $this->set('class', 'form-control');
         $ret = '<div class="input-group">';
-        $ret .= '<input ' . $attributes . ' value="' . $display_value . '" ' . $this->getExtra() .' >';
+        $ret .= '<input ' . $attributes . ' value="' . $display_value . '" ' . $this->getExtra() . ' >';
         $ret .= '<span class="input-group-btn">';
         $ret .= '<button class="btn btn-default" type="button" ';
         $ret .= 'data-toggle="tooltip" data-placement="left" title="' . \XoopsLocale::A_SELECT . '" ';

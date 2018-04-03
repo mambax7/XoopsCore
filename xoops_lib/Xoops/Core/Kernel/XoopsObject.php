@@ -12,7 +12,6 @@
 
 namespace Xoops\Core\Kernel;
 
-use Xoops\Core\Kernel\Dtype;
 
 /**
  * Establish Xoops object datatype legacy defines
@@ -20,20 +19,20 @@ use Xoops\Core\Kernel\Dtype;
  *
  * These will eventually be removed. See Xoops\Core\Kernel\Dtype for more.
  */
-define('XOBJ_DTYPE_TXTBOX',  Dtype::TYPE_TEXT_BOX);
+define('XOBJ_DTYPE_TXTBOX', Dtype::TYPE_TEXT_BOX);
 define('XOBJ_DTYPE_TXTAREA', Dtype::TYPE_TEXT_AREA);
-define('XOBJ_DTYPE_INT',     Dtype::TYPE_INTEGER);
-define('XOBJ_DTYPE_URL',     Dtype::TYPE_URL);
-define('XOBJ_DTYPE_EMAIL',   Dtype::TYPE_EMAIL);
-define('XOBJ_DTYPE_ARRAY',   Dtype::TYPE_ARRAY);
-define('XOBJ_DTYPE_OTHER',   Dtype::TYPE_OTHER);
-define('XOBJ_DTYPE_SOURCE',  Dtype::TYPE_SOURCE);
-define('XOBJ_DTYPE_STIME',   Dtype::TYPE_SHORT_TIME);
-define('XOBJ_DTYPE_MTIME',   Dtype::TYPE_MEDIUM_TIME);
-define('XOBJ_DTYPE_LTIME',   Dtype::TYPE_LONG_TIME);
-define('XOBJ_DTYPE_FLOAT',   Dtype::TYPE_FLOAT);
+define('XOBJ_DTYPE_INT', Dtype::TYPE_INTEGER);
+define('XOBJ_DTYPE_URL', Dtype::TYPE_URL);
+define('XOBJ_DTYPE_EMAIL', Dtype::TYPE_EMAIL);
+define('XOBJ_DTYPE_ARRAY', Dtype::TYPE_ARRAY);
+define('XOBJ_DTYPE_OTHER', Dtype::TYPE_OTHER);
+define('XOBJ_DTYPE_SOURCE', Dtype::TYPE_SOURCE);
+define('XOBJ_DTYPE_STIME', Dtype::TYPE_SHORT_TIME);
+define('XOBJ_DTYPE_MTIME', Dtype::TYPE_MEDIUM_TIME);
+define('XOBJ_DTYPE_LTIME', Dtype::TYPE_LONG_TIME);
+define('XOBJ_DTYPE_FLOAT', Dtype::TYPE_FLOAT);
 define('XOBJ_DTYPE_DECIMAL', Dtype::TYPE_DECIMAL);
-define('XOBJ_DTYPE_ENUM',    Dtype::TYPE_ENUM);
+define('XOBJ_DTYPE_ENUM', Dtype::TYPE_ENUM);
 
 /**
  * Base class for all objects in the Xoops kernel (and beyond)
@@ -54,14 +53,19 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @var array
      */
-    public $vars = array();
+    public $vars = [];
 
     /**
      * variables cleaned for store in DB
      *
      * @var array
      */
-    public $cleanVars = array();
+    public $cleanVars = [];
+
+    /**
+     * @var string
+     */
+    public $plugin_path;
 
     /**
      * is it a newly created object?
@@ -82,12 +86,7 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @var array
      */
-    private $errors = array();
-
-    /**
-     * @var string
-     */
-    public $plugin_path;
+    private $errors = [];
 
     /**
      * constructor
@@ -101,9 +100,16 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
+     * Adjust a newly cloned object
+     */
+    public function __clone()
+    {
+        // need this to notify the handler class that this is a newly created object
+        $this->setNew();
+    }
+
+    /**
      * used for new/clone objects
-     *
-     * @return void
      */
     public function setNew()
     {
@@ -112,8 +118,6 @@ abstract class XoopsObject implements \ArrayAccess
 
     /**
      * clear new flag
-     *
-     * @return void
      */
     public function unsetNew()
     {
@@ -134,8 +138,6 @@ abstract class XoopsObject implements \ArrayAccess
      * mark modified objects as dirty
      *
      * used for modified objects only
-     *
-     * @return void
      */
     public function setDirty()
     {
@@ -144,8 +146,6 @@ abstract class XoopsObject implements \ArrayAccess
 
     /**
      * cleaar dirty flag
-     *
-     * @return void
      */
     public function unsetDirty()
     {
@@ -172,19 +172,17 @@ abstract class XoopsObject implements \ArrayAccess
      * @param bool   $required  require html form input?
      * @param mixed  $maxlength for Dtype::TYPE_TEXT_BOX type only
      * @param string $options   does this data have any select options?
-     *
-     * @return void
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '')
     {
-        $this->vars[$key] = array(
+        $this->vars[$key] = [
             'value' => $value,
             'required' => $required,
             'data_type' => $data_type,
             'maxlength' => $maxlength,
             'changed' => false,
-            'options' => $options
-        );
+            'options' => $options,
+        ];
     }
 
     /**
@@ -192,8 +190,6 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @param string $key   name of the variable to assign
      * @param mixed  $value value to assign
-     *
-     * @return void
      */
     public function assignVar($key, $value)
     {
@@ -206,8 +202,6 @@ abstract class XoopsObject implements \ArrayAccess
      * assign values to multiple variables in a batch
      *
      * @param array $var_arr associative array of values to assign
-     *
-     * @return void
      */
     public function assignVars($var_arr)
     {
@@ -223,12 +217,10 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @param string $key     name of the variable to assign
      * @param mixed  $value   value to assign
-     *
-     * @return void
      */
     public function setVar($key, $value)
     {
-        if (!empty($key) && isset($value) && isset($this->vars[$key])) {
+        if (! empty($key) && isset($value) && isset($this->vars[$key])) {
             $this->vars[$key]['value'] = $value;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -239,8 +231,6 @@ abstract class XoopsObject implements \ArrayAccess
      * assign values to multiple variables in a batch
      *
      * @param array $var_arr associative array of values to assign
-     *
-     * @return void
      */
     public function setVars($var_arr)
     {
@@ -263,9 +253,9 @@ abstract class XoopsObject implements \ArrayAccess
         if (empty($var)) {
             return true;
         }
-        $var = !is_array($var) ? array($var) : $var;
+        $var = ! is_array($var) ? [$var] : $var;
         foreach ($var as $key) {
-            if (!isset($this->vars[$key])) {
+            if (! isset($this->vars[$key])) {
                 continue;
             }
             $this->vars[$key]['changed'] = null;
@@ -282,15 +272,13 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @param mixed  $var_arr associative array of values to assign
      * @param string $pref    prefix (only keys starting with the prefix will be set)
-     *
-     * @return void
      */
     public function setFormVars($var_arr = null, $pref = 'xo_')
     {
         $len = strlen($pref);
         if (is_array($var_arr)) {
             foreach ($var_arr as $key => $value) {
-                if ($pref == substr($key, 0, $len)) {
+                if ($pref === substr($key, 0, $len)) {
                     $this->setVar(substr($key, $len), $value);
                 }
             }
@@ -318,10 +306,10 @@ abstract class XoopsObject implements \ArrayAccess
      */
     public function getValues($keys = null, $format = Dtype::FORMAT_SHOW, $maxDepth = 1)
     {
-        if (!isset($keys)) {
+        if (! isset($keys)) {
             $keys = array_keys($this->vars);
         }
-        $vars = array();
+        $vars = [];
         if (is_array($keys)) {
             foreach ($keys as $key) {
                 if (isset($this->vars[$key])) {
@@ -351,7 +339,7 @@ abstract class XoopsObject implements \ArrayAccess
     public function getVar($key, $format = Dtype::FORMAT_SHOW)
     {
         $ret = null;
-        if (!isset($this->vars[$key])) {
+        if (! isset($this->vars[$key])) {
             return $ret;
         }
         $ret = Dtype::getVar($this, $key, $format);
@@ -366,9 +354,9 @@ abstract class XoopsObject implements \ArrayAccess
     public function cleanVars()
     {
         $existing_errors = $this->getErrors();
-        $this->errors = array();
+        $this->errors = [];
         foreach ($this->vars as $k => $v) {
-            if (!$v['changed']) {
+            if (! $v['changed']) {
             } else {
                 $this->cleanVars[$k] = Dtype::cleanVar($this, $k);
             }
@@ -394,20 +382,9 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * Adjust a newly cloned object
-     */
-    public function __clone()
-    {
-        // need this to notify the handler class that this is a newly created object
-        $this->setNew();
-    }
-
-    /**
      * add an error
      *
      * @param string $err_str to add
-     *
-     * @return void
      */
     public function setErrors($err_str)
     {
@@ -437,7 +414,7 @@ abstract class XoopsObject implements \ArrayAccess
     public function getHtmlErrors()
     {
         $ret = '<h4>Errors</h4>';
-        if (!empty($this->errors)) {
+        if (! empty($this->errors)) {
             foreach ($this->errors as $error) {
                 $ret .= $error . '<br />';
             }
@@ -490,8 +467,6 @@ abstract class XoopsObject implements \ArrayAccess
      *
      * @param mixed $offset array key
      * @param mixed $value
-     *
-     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -502,8 +477,6 @@ abstract class XoopsObject implements \ArrayAccess
      * offsetUnset
      *
      * @param mixed $offset array key
-     *
-     * @return void
      */
     public function offsetUnset($offset)
     {

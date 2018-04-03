@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Handler\Scheme;
 
 use Xoops\Core\Handler\Factory;
@@ -18,7 +19,7 @@ class SchemeInterfaceTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        if (version_compare(phpversion(), '7.1.0beta3', '=')) {
+        if (version_compare(PHP_VERSION, '7.1.0beta3', '=')) {
             //var_dump(phpversion());
             $this->markTestSkipped('segfault on mock access?');
         }

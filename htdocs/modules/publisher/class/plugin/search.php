@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Xoops\Module\Plugin\PluginAbstract;
 use Xmf\Metagen;
+use Xoops\Module\Plugin\PluginAbstract;
 
 /**
  *  Publisher class
@@ -28,35 +28,35 @@ class PublisherSearchPlugin extends PluginAbstract implements SearchPluginInterf
 {
     public function search($queryarray, $andor, $limit, $offset, $userid)
     {
-        $categories = array();
+        $categories = [];
         $sortby = 0;
-        $searchin = "";
-        $extra = "";
+        $searchin = '';
+        $extra = '';
         return self::searchAdvanced($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
     }
 
-    public function searchAdvanced($queryarray, $andor, $limit, $offset, $userid, $categories = array(), $sortby = 0, $searchin = "", $extra = "")
+    public function searchAdvanced($queryarray, $andor, $limit, $offset, $userid, $categories = [], $sortby = 0, $searchin = '', $extra = '')
     {
         $publisher = Publisher::getInstance();
-        $ret = array();
-        if ($queryarray == '' || count($queryarray) == 0) {
+        $ret = [];
+        if ($queryarray === '' || count($queryarray) === 0) {
             $hightlight_key = '';
         } else {
             $keywords = implode('+', $queryarray);
-            $hightlight_key = "&amp;keywords=" . $keywords;
+            $hightlight_key = '&amp;keywords=' . $keywords;
         }
         $itemsObjs = $publisher->getItemHandler()
-                ->getItemsFromSearch($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
+            ->getItemsFromSearch($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
         $withCategoryPath = $publisher->getConfig('search_cat_path');
 
-        $usersIds = array();
+        $usersIds = [];
         /* @var $obj PublisherItem */
         foreach ($itemsObjs as $obj) {
-            $item['image'] = "images/item_icon.gif";
+            $item['image'] = 'images/item_icon.gif';
             $item['link'] = $obj->getItemUrl();
-            $item['link'] .= (!empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? "?" . ltrim($hightlight_key, '&amp;') : $hightlight_key;
+            $item['link'] .= (! empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? '?' . ltrim($hightlight_key, '&amp;') : $hightlight_key;
             if ($withCategoryPath) {
-                $item['title'] = $obj->getCategoryPath(false) . " > " . $obj->title();
+                $item['title'] = $obj->getCategoryPath(false) . ' > ' . $obj->title();
             } else {
                 $item['title'] = $obj->title();
             }
@@ -71,8 +71,8 @@ class PublisherSearchPlugin extends PluginAbstract implements SearchPluginInterf
         }
         $usersNames = XoopsUserUtility::getUnameFromIds($usersIds, $publisher->getConfig('format_realname'), true);
         foreach ($ret as $key => $item) {
-            if ($item["author"] == '') {
-                $ret[$key]["author"] = @$usersNames[$item["uid"]];
+            if ($item['author'] === '') {
+                $ret[$key]['author'] = @$usersNames[$item['uid']];
             }
         }
         unset($usersNames, $usersIds);

@@ -9,6 +9,9 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
+use Xmf\Yaml;
 use Xoops\Core\Database\Schema\ImportSchema;
 use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Criteria;
@@ -16,9 +19,6 @@ use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\Handlers\XoopsBlock;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Module\Plugin\ConfigCollector;
-use Xmf\Yaml;
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
 
 /**
  * System Module
@@ -32,14 +32,21 @@ use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
  */
 class SystemModule
 {
-    public $error = array();
-    public $trace = array();
-    protected $modulesList = array();
-    protected $modulesDirnames = array();
-    protected $config_delng = array();
-    protected $template_delng = array();
-    protected $config_old = array();
-    protected $reservedTables = array(
+    public $error = [];
+
+    public $trace = [];
+
+    protected $modulesList = [];
+
+    protected $modulesDirnames = [];
+
+    protected $config_delng = [];
+
+    protected $template_delng = [];
+
+    protected $config_old = [];
+
+    protected $reservedTables = [
         'system_blockmodule',
         'system_config',
         'system_configoption',
@@ -55,7 +62,7 @@ class SystemModule
         'system_tplset',
         'system_tplsource',
         'system_user',
-    );
+    ];
 
     /**
      * Constructor
@@ -91,10 +98,10 @@ class SystemModule
         $criteria->setSort('weight');
         // Get all installed modules
         $modules = $module_handler->getObjects($criteria, true);
-        $list = array();
+        $list = [];
         /* @var $module XoopsModule */
         foreach ($modules as $module) {
-            if (!$module->getInfo('extension')) {
+            if (! $module->getInfo('extension')) {
                 if ($module->getInfo('dirname') === 'system') {
                     $module->setInfo('can_delete', false);
                     $module->setInfo('can_disable', false);
@@ -102,7 +109,7 @@ class SystemModule
                     $module->setInfo('can_delete', true);
                     $module->setInfo('can_disable', true);
                 }
-                if (round($module->getInfo('version'), 2) != $module->getVar('version')) {
+                if (round($module->getInfo('version'), 2) !== $module->getVar('version')) {
                     $module->setInfo('warning_update', true);
                 }
                 if (XoopsLoad::fileExists(
@@ -126,7 +133,7 @@ class SystemModule
                     $module->setInfo('options', $module->getAdminMenu());
                 }
 
-                $groups = array();
+                $groups = [];
                 if (is_object($xoops->user)) {
                     $groups = $xoops->user->getGroups();
                 }
@@ -163,17 +170,17 @@ class SystemModule
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
 
-        $ret = array();
+        $ret = [];
         $i = 0;
         foreach ($this->modulesList as $file) {
             if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
                 clearstatcache();
                 $file = trim($file);
-                if (!in_array($file, $this->modulesDirnames)) {
+                if (! in_array($file, $this->modulesDirnames, true)) {
                     /* @var $module XoopsModule */
                     $module = $module_handler->create();
                     $module->loadInfo($file);
-                    if (!$module->getInfo('extension')) {
+                    if (! $module->getInfo('extension')) {
                         $module->setInfo('mid', $i);
                         $module->setInfo('version', round($module->getInfo('version'), 2));
                         $ret[] = $module;
@@ -204,7 +211,7 @@ class SystemModule
         } catch (DBALException $e) {
             $cnt = 0;
         }
-        if ($cnt == 0) {
+        if ($cnt === 0) {
             /* @var $module XoopsModule */
             $module = $module_handler->create();
             $module->loadInfoAsVar($mod);
@@ -212,47 +219,47 @@ class SystemModule
             $module->setVar('isactive', 1);
             $module->setVar('last_update', time());
             $install_script = $module->getInfo('onInstall');
-            if ($install_script && trim($install_script) != '') {
+            if ($install_script && trim($install_script) !== '') {
                 XoopsLoad::loadFile($xoops->path('modules/' . $mod . '/' . trim($install_script)));
             }
             $func = "xoops_module_pre_install_{$mod}";
             // If pre install function is defined, execute
             if (function_exists($func)) {
                 $result = $func($module);
-                if (!$result) {
+                if (! $result) {
                     $this->error[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                     $this->error = array_merge($this->error, $module->getErrors());
                     return false;
-                } else {
+                }
                     $this->trace[] = sprintf(XoopsLocale::SF_EXECUTED, "<strong>{$func}</strong>");
                     $this->trace = array_merge($this->trace, $module->getMessages());
-                }
+
             }
             // Create tables
-            $created_tables = array();
-            if (count($this->error) == 0) {
+            $created_tables = [];
+            if (count($this->error) === 0) {
                 $schema_file = $module->getInfo('schema');
                 $sql_file = $module->getInfo('sqlfile');
-                if (!empty($schema_file)) {
+                if (! empty($schema_file)) {
                     $schema_file_path = \XoopsBaseConfig::get('root-path') . '/modules/' . $mod . '/' . $schema_file;
-                    if (!XoopsLoad::fileExists($schema_file_path)) {
+                    if (! XoopsLoad::fileExists($schema_file_path)) {
                         $this->error[] =
                             sprintf(SystemLocale::EF_SQL_FILE_NOT_FOUND, "<strong>{$schema_file}</strong>");
                         return false;
                     }
-                    $importer = new ImportSchema;
+                    $importer = new ImportSchema();
                     $importSchema = $importer->importSchemaArray(Yaml::read($schema_file_path));
                     $synchronizer = new SingleDatabaseSynchronizer($xoops->db());
                     $synchronizer->updateSchema($importSchema, true);
-                } elseif (is_array($sql_file) && !empty($sql_file[\XoopsBaseConfig::get('db-type')])) {
+                } elseif (is_array($sql_file) && ! empty($sql_file[\XoopsBaseConfig::get('db-type')])) {
                     $xoops->deprecated('Install SQL files are deprecated since 2.6.0. Convert to portable Schemas');
 
                     $sql_file_path = \XoopsBaseConfig::get('root-path') . '/modules/' . $mod . '/' . $sql_file[\XoopsBaseConfig::get('db-type')];
-                    if (!XoopsLoad::fileExists($sql_file_path)) {
+                    if (! XoopsLoad::fileExists($sql_file_path)) {
                         $this->error[] =
                             sprintf(SystemLocale::EF_SQL_FILE_NOT_FOUND, "<strong>{$sql_file_path}</strong>");
                         return false;
-                    } else {
+                    }
                         $this->trace[] = sprintf(SystemLocale::SF_SQL_FILE_FOUND, "<strong>{$sql_file_path}</strong>");
                         $this->trace[] = SystemLocale::MANAGING_TABLES;
 
@@ -263,7 +270,7 @@ class SystemModule
                             // [0] contains the prefixed query
                             // [4] contains unprefixed table name
                             $prefixed_query = SqlUtility::prefixQuery($piece, $xoops->db()->prefix());
-                            if (!$prefixed_query) {
+                            if (! $prefixed_query) {
                                 $this->error[]['sub'] = '<span class="red">' . sprintf(
                                     XoopsLocale::EF_INVALID_SQL,
                                     '<strong>' . $piece . '</strong>'
@@ -271,20 +278,20 @@ class SystemModule
                                 break;
                             }
                             // check if the table name is reserved
-                            if (!in_array($prefixed_query[4], $this->reservedTables) || $mod === 'system') {
+                            if (! in_array($prefixed_query[4], $this->reservedTables, true) || $mod === 'system') {
                                 // not reserved, so try to create one
                                 try {
                                     $result = $xoops->db()->query($prefixed_query[0]);
                                 } catch (Exception $e) {
                                     $xoops->events()->triggerEvent('core.exception', $e);
-                                    $result=false;
+                                    $result = false;
                                 }
 
-                                if (!$result) {
+                                if (! $result) {
                                     $this->error[] = $xoops->db()->errorInfo();
                                     break;
-                                } else {
-                                    if (!in_array($prefixed_query[4], $created_tables)) {
+                                }
+                                    if (! in_array($prefixed_query[4], $created_tables, true)) {
                                         $this->trace[]['sub'] = sprintf(
                                             XoopsLocale::SF_TABLE_CREATED,
                                             '<strong>' . $xoops->db()->prefix($prefixed_query[4]) . '</strong>'
@@ -296,7 +303,7 @@ class SystemModule
                                             '<strong>' . $xoops->db()->prefix($prefixed_query[4]) . '</strong>'
                                         );
                                     }
-                                }
+
                             } else {
                                 // the table name is reserved, so halt the installation
                                 $this->error[]['sub'] = sprintf(
@@ -318,12 +325,12 @@ class SystemModule
                             }
                             return false;
                         }
-                    }
+
                 }
             }
             // Save module info, blocks, templates and perms
-            if (count($this->error) == 0) {
-                if (!$module_handler->insertModule($module)) {
+            if (count($this->error) === 0) {
+                if (! $module_handler->insertModule($module)) {
                     $this->error[] = sprintf(
                         XoopsLocale::EF_NOT_INSERTED_TO_DATABASE,
                         '<strong>' . $module->getVar('name') . '</strong>'
@@ -335,7 +342,7 @@ class SystemModule
                             $xoops->events()->triggerEvent('core.exception', $e);
                         }
                     }
-                    $this->error[] = sprintf(XoopsLocale::EF_NOT_INSTALLED, "<strong>" . $module->name() . "</strong>");
+                    $this->error[] = sprintf(XoopsLocale::EF_NOT_INSTALLED, '<strong>' . $module->name() . '</strong>');
                     $this->error[] = XoopsLocale::C_ERRORS;
                     unset($module);
                     unset($created_tables);
@@ -359,9 +366,9 @@ class SystemModule
                 $this->installConfigs($module);
 
                 if ($module->getInfo('hasMain')) {
-                    $groups = array(FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS);
+                    $groups = [FixedGroups::ADMIN, FixedGroups::USERS, FixedGroups::ANONYMOUS];
                 } else {
-                    $groups = array(FixedGroups::ADMIN);
+                    $groups = [FixedGroups::ADMIN];
                 }
                 // retrieve all block ids for this module
                 $block_handler = $xoops->getHandlerBlock();
@@ -375,7 +382,7 @@ class SystemModule
                         $mperm->setVar('gperm_itemid', $module->getVar('mid'));
                         $mperm->setVar('gperm_name', 'module_admin');
                         $mperm->setVar('gperm_modid', 1);
-                        if (!$gperm_handler->insert($mperm)) {
+                        if (! $gperm_handler->insert($mperm)) {
                             $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                 SystemLocale::EF_GROUP_ID_ADMIN_ACCESS_RIGHT_NOT_ADDED,
                                 '<strong>' . $mygroup . '</strong>'
@@ -393,7 +400,7 @@ class SystemModule
                     $mperm->setVar('gperm_itemid', $module->getVar('mid'));
                     $mperm->setVar('gperm_name', 'module_read');
                     $mperm->setVar('gperm_modid', 1);
-                    if (!$gperm_handler->insert($mperm)) {
+                    if (! $gperm_handler->insert($mperm)) {
                         $this->trace[]['sub'] = '<span class="red">' . sprintf(
                             SystemLocale::EF_GROUP_ID_USER_ACCESS_RIGHT_NOT_ADDED,
                             '<strong>' . $mygroup . '</strong>'
@@ -411,14 +418,14 @@ class SystemModule
                         $bperm->setVar('gperm_itemid', $blc);
                         $bperm->setVar('gperm_name', 'block_read');
                         $bperm->setVar('gperm_modid', 1);
-                        if (!$gperm_handler->insert($bperm)) {
+                        if (! $gperm_handler->insert($bperm)) {
                             $this->trace[]['sub'] = '<span class="red">'
                             . SystemLocale::E_BLOCK_ACCESS_NOT_ADDED . ' Block ID: <strong>'
                             . $blc . '</strong> Group ID: <strong>' . $mygroup . '</strong></span>';
                         } else {
                             $this->trace[]['sub'] = SystemLocale::S_BLOCK_ACCESS_ADDED
-                                . sprintf(SystemLocale::F_BLOCK_ID, "<strong>" . $blc . "</strong>")
-                                . sprintf(SystemLocale::F_GROUP_ID, "<strong>" . $mygroup . "</strong>");
+                                . sprintf(SystemLocale::F_BLOCK_ID, '<strong>' . $blc . '</strong>')
+                                . sprintf(SystemLocale::F_GROUP_ID, '<strong>' . $mygroup . '</strong>');
                         }
                         unset($bperm);
                     }
@@ -431,7 +438,7 @@ class SystemModule
                 $func = "xoops_module_install_{$mod}";
                 if (function_exists($func)) {
                     $result = $func($module);
-                    if (!$result) {
+                    if (! $result) {
                         $this->trace[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                         $this->trace = array_merge($this->trace, $module->getErrors());
                     } else {
@@ -455,7 +462,7 @@ class SystemModule
             $this->error[] = sprintf(
                 XoopsLocale::EF_NOT_INSTALLED,
                 '<strong>' . $mod . '</strong>'
-            ) . "&nbsp;" . XoopsLocale::C_ERRORS;
+            ) . '&nbsp;' . XoopsLocale::C_ERRORS;
             return false;
         }
         return false;
@@ -479,44 +486,44 @@ class SystemModule
             $this->error[] = sprintf(
                 XoopsLocale::EF_NOT_UNINSTALLED,
                 '<strong>' . $module->getVar('name') . '</strong>'
-            ) . "&nbsp;" . XoopsLocale::C_ERRORS;
-            $this->error[] = " - " . SystemLocale::E_SYSTEM_MODULE_CANNOT_BE_DEACTIVATED;
+            ) . '&nbsp;' . XoopsLocale::C_ERRORS;
+            $this->error[] = ' - ' . SystemLocale::E_SYSTEM_MODULE_CANNOT_BE_DEACTIVATED;
             return false;
-        } elseif ($module->getVar('dirname') == $xoops->getConfig('startpage')) {
+        } elseif ($module->getVar('dirname') === $xoops->getConfig('startpage')) {
             $this->error[] = sprintf(
                 XoopsLocale::EF_NOT_UNINSTALLED,
                 '<strong>' . $module->getVar('name') . '</strong>'
-            ) . "&nbsp;" . XoopsLocale::C_ERRORS;
-            $this->error[] = " - " . SystemLocale::E_THIS_MODULE_IS_SET_AS_DEFAULT_START_PAGE;
+            ) . '&nbsp;' . XoopsLocale::C_ERRORS;
+            $this->error[] = ' - ' . SystemLocale::E_THIS_MODULE_IS_SET_AS_DEFAULT_START_PAGE;
             return false;
-        } else {
+        }
             // Load module specific install script if any
             $uninstall_script = $module->getInfo('onUninstall');
-            if ($uninstall_script && trim($uninstall_script) != '') {
+            if ($uninstall_script && trim($uninstall_script) !== '') {
                 XoopsLoad::loadFile($xoops->path('modules/' . $mod . '/' . trim($uninstall_script)));
             }
             $func = "xoops_module_pre_uninstall_{$mod}";
             // If pre uninstall function is defined, execute
             if (function_exists($func)) {
                 $result = $func($module);
-                if (!$result) {
+                if (! $result) {
                     $this->error[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                     $this->error[] = sprintf(
                         XoopsLocale::EF_NOT_UNINSTALLED,
                         '<strong>' . $module->getVar('name') . '</strong>'
-                    ) . "&nbsp;" . XoopsLocale::C_ERRORS;
+                    ) . '&nbsp;' . XoopsLocale::C_ERRORS;
                     $this->error = array_merge($this->error, $module->getErrors());
                     return false;
-                } else {
+                }
                     $this->trace[] = sprintf(XoopsLocale::SF_EXECUTED, "<strong>{$func}</strong>");
                     $this->trace = array_merge($this->trace, $module->getMessages());
-                }
+
             }
 
-            if (false === $module_handler->deleteModule($module)) {
+            if ($module_handler->deleteModule($module) === false) {
                 $this->error[] = sprintf(XoopsLocale::EF_NOT_DELETED, $module->getVar('name'));
                 return false;
-            } else {
+            }
                 // delete templates
                 $this->deleteTemplates($module);
 
@@ -525,7 +532,7 @@ class SystemModule
 
                 // Delete tables used by this module
                 $modtables = $module->getInfo('tables');
-                if ($modtables != false && is_array($modtables)) {
+                if ($modtables !== false && is_array($modtables)) {
                     // get a schema manager
                     $schemaManager = $xoops->db()->getSchemaManager();
                     // create schema from the current database
@@ -534,7 +541,7 @@ class SystemModule
                     $this->trace[] = SystemLocale::MANAGING_TABLES;
                     foreach ($modtables as $table) {
                         // prevent deletion of reserved core tables!
-                        if (!in_array($table, $this->reservedTables)) {
+                        if (! in_array($table, $this->reservedTables, true)) {
                             $toSchema->dropTable($xoops->db()->prefix($table));
                             $this->trace[]['sub'] = sprintf(
                                 XoopsLocale::SF_TABLE_DROPPED,
@@ -553,7 +560,7 @@ class SystemModule
 
                 // delete permissions if any
                 $gperm_handler = $xoops->getHandlerGroupPermission();
-                if (false === $gperm_handler->deleteByModule($module->getVar('mid'))) {
+                if ($gperm_handler->deleteByModule($module->getVar('mid')) === false) {
                     $this->trace[] = '<span class="red">' . SystemLocale::E_GROUP_PERMISSIONS_NOT_DELETED . '</span>';
                 } else {
                     $this->trace[] = SystemLocale::S_GROUP_PERMISSIONS_DELETED;
@@ -566,7 +573,7 @@ class SystemModule
                 $func = 'xoops_module_uninstall_' . $mod;
                 if (function_exists($func)) {
                     $result = $func($module);
-                    if (!$result) {
+                    if (! $result) {
                         $this->trace[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                         $this->trace = array_merge($this->error, $module->getErrors());
                     } else {
@@ -580,8 +587,7 @@ class SystemModule
                 );
                 $xoops->events()->triggerEvent('system.module.uninstall', $module);
                 return $module;
-            }
-        }
+
     }
 
     /**
@@ -605,18 +611,18 @@ class SystemModule
         $module->setVar('name', $temp_name);
         $module->setVar('last_update', time());
 
-        if (!$module_handler->insertModule($module)) {
-            $this->error[] = sprintf(XoopsLocale::EF_NOT_UPDATED, "<strong>" . $module->getVar('name') . "</strong>");
+        if (! $module_handler->insertModule($module)) {
+            $this->error[] = sprintf(XoopsLocale::EF_NOT_UPDATED, '<strong>' . $module->getVar('name') . '</strong>');
             return false;
-        } else {
+        }
             // execute module specific preupdate script if any
             $update_script = $module->getInfo('onUpdate');
-            if (false != $update_script && trim($update_script) != '') {
+            if ($update_script !== false && trim($update_script) !== '') {
                 XoopsLoad::loadFile($xoops->path('modules/' . $mod . '/' . trim($update_script)));
                 $func = 'xoops_module_pre_update_' . $mod;
                 if (function_exists($func)) {
                     $result = $func($module, $prev_version);
-                    if (!$result) {
+                    if (! $result) {
                         $this->trace[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                         $this->trace = array_merge($this->error, $module->getErrors());
                     } else {
@@ -628,14 +634,14 @@ class SystemModule
 
             // update schema
             $schema_file = $module->getInfo('schema');
-            if (!empty($schema_file)) {
+            if (! empty($schema_file)) {
                 $schema_file_path = \XoopsBaseConfig::get('root-path') . '/modules/' . $mod . '/' . $schema_file;
-                if (!XoopsLoad::fileExists($schema_file_path)) {
+                if (! XoopsLoad::fileExists($schema_file_path)) {
                     $this->error[] =
                         sprintf(SystemLocale::EF_SQL_FILE_NOT_FOUND, "<strong>{$schema_file}</strong>");
                     return false;
                 }
-                $importer = new ImportSchema;
+                $importer = new ImportSchema();
                 $importSchema = $importer->importSchemaArray(Yaml::read($schema_file_path));
                 $synchronizer = new SingleDatabaseSynchronizer($xoops->db());
                 $synchronizer->updateSchema($importSchema, true);
@@ -661,12 +667,12 @@ class SystemModule
 
             // execute module specific update script if any
             $update_script = $module->getInfo('onUpdate');
-            if (false != $update_script && trim($update_script) != '') {
+            if ($update_script !== false && trim($update_script) !== '') {
                 XoopsLoad::loadFile($xoops->path('modules/' . $mod . '/' . trim($update_script)));
                 $func = 'xoops_module_update_' . $mod;
                 if (function_exists($func)) {
                     $result = $func($module, $prev_version);
-                    if (!$result) {
+                    if (! $result) {
                         $this->trace[] = sprintf(XoopsLocale::EF_NOT_EXECUTED, $func);
                         $this->trace = array_merge($this->error, $module->getErrors());
                     } else {
@@ -677,7 +683,7 @@ class SystemModule
             }
             $this->trace[] = sprintf(XoopsLocale::SF_UPDATED, '<strong>' . $module->getVar('name', 's') . '</strong>');
             return $module;
-        }
+
     }
 
     /**
@@ -702,12 +708,12 @@ class SystemModule
                 $path = $xoops->path('modules/' . $dirname . '/templates/' . $template);
                 break;
         }
-        if (!XoopsLoad::fileExists($path)) {
+        if (! XoopsLoad::fileExists($path)) {
             return $ret;
-        } else {
-            $lines = file($path);
         }
-        if (!$lines) {
+            $lines = file($path);
+
+        if (! $lines) {
             return $ret;
         }
         $count = count($lines);
@@ -721,8 +727,6 @@ class SystemModule
      * installTemplates
      *
      * @param XoopsModule $module module context
-     *
-     * @return void
      */
     public function installTemplates(XoopsModule $module)
     {
@@ -733,7 +737,7 @@ class SystemModule
             $tplfile_handler = $xoops->getHandlerTplFile();
             foreach ($templates as $tpl) {
                 $tpl['file'] = trim($tpl['file']);
-                if (!in_array($tpl['file'], $this->template_delng)) {
+                if (! in_array($tpl['file'], $this->template_delng, true)) {
                     $type = (isset($tpl['type']) ? $tpl['type'] : 'module');
                     $tpldata = $this->getTemplate($module->getVar('dirname'), $tpl['file'], $type);
                     $tplfile = $tplfile_handler->create();
@@ -751,7 +755,7 @@ class SystemModule
                     $tplfile->setVar('tpl_tplset', 'default');
                     $tplfile->setVar('tpl_file', $tpl['file']);
                     $tplfile->setVar('tpl_desc', $tpl['description']);
-                    if (!$tplfile_handler->insertTpl($tplfile)) {
+                    if (! $tplfile_handler->insertTpl($tplfile)) {
                         $this->trace[]['sub'] = '<span class="red">' . sprintf(
                             SystemLocale::EF_TEMPLATE_NOT_ADDED_TO_DATABASE,
                             '<strong>' . $tpl['file'] . '</strong>'
@@ -763,7 +767,7 @@ class SystemModule
                             '<strong>' . $tpl['file'] . '</strong>'
                         );
                         if ($module->getVar('dirname') === 'system') {
-                            if (!$xoops->templateTouch($newid)) {
+                            if (! $xoops->templateTouch($newid)) {
                                 $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                     SystemLocale::EF_TEMPLATE_NOT_RECOMPILED,
                                     '<strong>' . $tpl['file'] . '</strong>'
@@ -776,7 +780,7 @@ class SystemModule
                             }
                         } else {
                             if ($xoops->config['template_set'] === 'default') {
-                                if (!$xoops->templateTouch($newid)) {
+                                if (! $xoops->templateTouch($newid)) {
                                     $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                         SystemLocale::EF_TEMPLATE_NOT_RECOMPILED,
                                         '<strong>' . $tpl['file'] . '</strong>'
@@ -805,8 +809,6 @@ class SystemModule
      * deleteTemplates
      *
      * @param XoopsModule $module module context
-     *
-     * @return void
      */
     public function deleteTemplates(XoopsModule $module)
     {
@@ -818,7 +820,7 @@ class SystemModule
             // delete template file entry in db
             /* @var $template XoopsTplFile */
             foreach ($templates as $template) {
-                if (!$tplfile_handler->deleteTpl($template)) {
+                if (! $tplfile_handler->deleteTpl($template)) {
                     $this->template_delng[] = $template->getVar('tpl_file');
                 }
             }
@@ -829,8 +831,6 @@ class SystemModule
      * installBlocks
      *
      * @param XoopsModule $module module context
-     *
-     * @return void
      */
     public function installBlocks(XoopsModule $module)
     {
@@ -840,12 +840,12 @@ class SystemModule
         $block_handler = $xoops->getHandlerBlock();
         $blockmodulelink_handler = $xoops->getHandlerBlockModuleLink();
         $tplfile_handler = $xoops->getHandlerTplFile();
-        $showfuncs = array();
-        $funcfiles = array();
+        $showfuncs = [];
+        $funcfiles = [];
         if (is_array($blocks) && count($blocks) > 0) {
             foreach ($blocks as $i => $block) {
-                if (isset($block['show_func']) && $block['show_func'] != ''
-                    && isset($block['file']) && $block['file'] != ''
+                if (isset($block['show_func']) && $block['show_func'] !== ''
+                    && isset($block['file']) && $block['file'] !== ''
                 ) {
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
@@ -855,7 +855,7 @@ class SystemModule
                     $criteria->add(new Criteria('func_num', $i));
 
                     $block_obj = $block_handler->getObjects($criteria);
-                    if (count($block_obj) == 0) {
+                    if (count($block_obj) === 0) {
                         $block_obj[0] = $block_handler->create();
                         $block_obj[0]->setVar('func_num', $i);
                         $block_obj[0]->setVar('mid', $module->getVar('mid'));
@@ -880,10 +880,10 @@ class SystemModule
                     $block_obj[0]->setVar('show_func', isset($block['show_func']) ? $block['show_func'] : '');
                     $block_obj[0]->setVar('edit_func', isset($block['edit_func']) ? $block['edit_func'] : '');
                     $template = $this->getTemplate($module->getVar('dirname'), $block['template'], 'blocks');
-                    $block_obj[0]->setVar('template', !empty($template) ? $block['template'] : '');
+                    $block_obj[0]->setVar('template', ! empty($template) ? $block['template'] : '');
                     $block_obj[0]->setVar('last_modified', time());
 
-                    if (!$block_handler->insert($block_obj[0])) {
+                    if (! $block_handler->insert($block_obj[0])) {
                         $this->trace[]['sub'] = '<span class="red">' . sprintf(
                             XoopsLocale::EF_NOT_UPDATED,
                             $block_obj[0]->getVar('name')
@@ -897,16 +897,16 @@ class SystemModule
                             '<strong>' . $block_obj[0]->getVar('bid') . '</strong>'
                         );
 
-                        if (0 == $blockmodulelink_handler->getCount(new Criteria('block_id', $block_obj[0]->getVar('bid')))) {
+                        if ($blockmodulelink_handler->getCount(new Criteria('block_id', $block_obj[0]->getVar('bid'))) === 0) {
                             $blockmodulelink = $blockmodulelink_handler->create();
                             $blockmodulelink->setVar('block_id', $block_obj[0]->getVar('bid'));
                             $blockmodulelink->setVar('module_id', 0); //show on all pages
                             $blockmodulelink_handler->insert($blockmodulelink);
                         }
 
-                        if ($template != '') {
+                        if ($template !== '') {
                             $tplfile = $tplfile_handler->find('default', 'block', $block_obj[0]->getVar('bid'));
-                            if (count($tplfile) == 0) {
+                            if (count($tplfile) === 0) {
                                 $tplfile_new = $tplfile_handler->create();
                                 $tplfile_new->setVar('tpl_module', $module->getVar('dirname'));
                                 $tplfile_new->setVar('tpl_refid', $block_obj[0]->getVar('bid'));
@@ -922,7 +922,7 @@ class SystemModule
                             $tplfile_new->setVar('tpl_desc', $block['description']);
                             $tplfile_new->setVar('tpl_lastmodified', time());
                             $tplfile_new->setVar('tpl_lastimported', 0);
-                            if (!$tplfile_handler->insertTpl($tplfile_new)) {
+                            if (! $tplfile_handler->insertTpl($tplfile_new)) {
                                 $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                     SystemLocale::EF_TEMPLATE_NOT_UPDATED,
                                     '<strong>' . $block['template'] . '</strong>'
@@ -933,7 +933,7 @@ class SystemModule
                                     '<strong>' . $block['template'] . '</strong>'
                                 );
                                 if ($module->getVar('dirname') === 'system') {
-                                    if (!$xoops->templateTouch($tplfile_new->getVar('tpl_id'))) {
+                                    if (! $xoops->templateTouch($tplfile_new->getVar('tpl_id'))) {
                                         $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                             SystemLocale::EF_TEMPLATE_NOT_RECOMPILED,
                                             '<strong>' . $block['template'] . '</strong>'
@@ -946,7 +946,7 @@ class SystemModule
                                     }
                                 } else {
                                     if ($xoops->config['template_set'] === 'default') {
-                                        if (!$xoops->templateTouch($tplfile_new->getVar('tpl_id'))) {
+                                        if (! $xoops->templateTouch($tplfile_new->getVar('tpl_id'))) {
                                             $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                                 SystemLocale::EF_TEMPLATE_NOT_RECOMPILED,
                                                 '<strong>' . $block['template'] . '</strong>'
@@ -968,16 +968,16 @@ class SystemModule
         $blocks = $block_handler->getByModule($module->getVar('mid'));
         foreach ($blocks as $block) {
             /* @var $block XoopsBlock */
-            if (!in_array($block->getVar('show_func'), $showfuncs)
-                || !in_array($block->getVar('func_file'), $funcfiles)
+            if (! in_array($block->getVar('show_func'), $showfuncs, true)
+                || ! in_array($block->getVar('func_file'), $funcfiles, true)
             ) {
-                if (!$block_handler->delete($block)) {
+                if (! $block_handler->delete($block)) {
                     $this->trace[]['sub'] = '<span class="red">' . sprintf(
                         SystemLocale::EF_BLOCK_NOT_DELETED,
-                        "<strong>" . $block->getVar('name') . "</strong>"
+                        '<strong>' . $block->getVar('name') . '</strong>'
                     ) . sprintf(
                         SystemLocale::F_BLOCK_ID,
-                        "<strong>" . $block->getVar('bid') . "</strong>"
+                        '<strong>' . $block->getVar('bid') . '</strong>'
                     ) . '</span>';
                 } else {
                     $this->trace[]['sub'] = sprintf(
@@ -987,19 +987,19 @@ class SystemModule
                         SystemLocale::F_BLOCK_ID,
                         '<strong>' . $block->getVar('bid') . '</strong>'
                     );
-                    if ($block->getVar('template') != '') {
+                    if ($block->getVar('template') !== '') {
                         $tplfiles = $tplfile_handler->find(null, 'block', $block->getVar('bid'));
                         if (is_array($tplfiles)) {
                             /* @var $tplfile XoopsTplFile */
                             foreach ($tplfiles as $tplfile) {
-                                if (!$tplfile_handler->deleteTpl($tplfile)) {
+                                if (! $tplfile_handler->deleteTpl($tplfile)) {
                                     $this->trace[]['sub'] = '<span class="red">'
                                         . SystemLocale::E_BLOCK_TEMPLATE_DEPRECATED_NOT_REMOVED
                                         . '(ID: <strong>' . $tplfile->getVar('tpl_id') . '</strong>)</span>';
                                 } else {
                                     $this->trace[]['sub'] = sprintf(
                                         SystemLocale::SF_BLOCK_TEMPLATE_DEPRECATED,
-                                        "<strong>" . $tplfile->getVar('tpl_file') . "</strong>"
+                                        '<strong>' . $tplfile->getVar('tpl_file') . '</strong>'
                                     );
                                 }
                             }
@@ -1012,10 +1012,6 @@ class SystemModule
 
     /**
      * deleteBlocks
-     *
-     * @param XoopsModule $module module
-     *
-     * @return void
      */
     public function deleteBlocks(XoopsModule $module)
     {
@@ -1027,42 +1023,42 @@ class SystemModule
             $this->trace[] = SystemLocale::MANAGING_BLOCKS;
             /* @var $block XoopsBlock */
             foreach ($blocks as $block) {
-                if (false === $block_handler->deleteBlock($block)) {
+                if ($block_handler->deleteBlock($block) === false) {
                     $this->trace[]['sub'] = '<span class="red">' . sprintf(
                         SystemLocale::EF_BLOCK_NOT_DELETED,
-                        "<strong>" . $block->getVar('name') . "</strong>"
+                        '<strong>' . $block->getVar('name') . '</strong>'
                     ) . sprintf(
                         SystemLocale::F_BLOCK_ID,
-                        "<strong>" . $block->getVar('bid') . "</strong>"
+                        '<strong>' . $block->getVar('bid') . '</strong>'
                     ) . '</span>';
                 } else {
                     $this->trace[]['sub'] = sprintf(
                         SystemLocale::SF_BLOCK_DELETED,
-                        "<strong>" . $block->getVar('name') . "</strong>"
+                        '<strong>' . $block->getVar('name') . '</strong>'
                     ) . sprintf(
                         SystemLocale::F_BLOCK_ID,
-                        "<strong>" . $block->getVar('bid') . "</strong>"
+                        '<strong>' . $block->getVar('bid') . '</strong>'
                     );
                 }
-                if ($block->getVar('template') != '') {
+                if ($block->getVar('template') !== '') {
                     $templates = $tplfile_handler->find(null, 'block', $block->getVar('bid'));
                     /* @var $template XoopsTplFile */
                     foreach ($templates as $template) {
-                        if (!$tplfile_handler->delete($template)) {
+                        if (! $tplfile_handler->delete($template)) {
                             $this->trace[]['sub'] = '<span class="red">' . sprintf(
                                 SystemLocale::EF_BLOCK_TEMPLATE_NOT_DELETED,
                                 $template->getVar('tpl_file')
                             ) . sprintf(
                                 SystemLocale::F_TEMPLATE_ID,
-                                "<strong>" . $template->getVar('tpl_id') . "</strong>"
+                                '<strong>' . $template->getVar('tpl_id') . '</strong>'
                             ) . '</span>';
                         } else {
                             $this->trace[]['sub'] = sprintf(
                                 SystemLocale::SF_BLOCK_TEMPLATE_DELETED,
-                                "<strong>" . $template->getVar('tpl_file') . "</strong>"
+                                '<strong>' . $template->getVar('tpl_file') . '</strong>'
                             ) . sprintf(
                                 SystemLocale::F_TEMPLATE_ID,
-                                "<strong>" . $template->getVar('tpl_id') . "</strong>"
+                                '<strong>' . $template->getVar('tpl_id') . '</strong>'
                             );
                         }
                     }
@@ -1074,10 +1070,6 @@ class SystemModule
 
     /**
      * deleteConfigs
-     *
-     * @param XoopsModule $module module
-     *
-     * @return void
      */
     public function deleteConfigs(XoopsModule $module)
     {
@@ -1089,10 +1081,10 @@ class SystemModule
             $this->trace[] = SystemLocale::MANAGING_PREFERENCES;
             /* @var $config XoopsConfigItem */
             foreach ($configs as $config) {
-                if (!$config_handler->deleteConfig($config)) {
+                if (! $config_handler->deleteConfig($config)) {
                     $this->trace[]['sub'] = '<span class="red">'
                         . SystemLocale::E_CONFIG_DATA_NOT_DELETED
-                        . sprintf(SystemLocale::F_CONFIG_ID, "<strong>" . $config->getVar('conf_id') . "</strong>")
+                        . sprintf(SystemLocale::F_CONFIG_ID, '<strong>' . $config->getVar('conf_id') . '</strong>')
                         . '</span>';
                     // save the name of config failed to delete for later use
                     $this->config_delng[] = $config->getVar('conf_name');
@@ -1101,7 +1093,7 @@ class SystemModule
                     $this->config_old[$config->getVar('conf_name')]['formtype'] = $config->getVar('conf_formtype');
                     $this->config_old[$config->getVar('conf_name')]['valuetype'] = $config->getVar('conf_valuetype');
                     $this->trace[]['sub'] = SystemLocale::S_CONFIG_DATA_DELETED
-                        . sprintf(SystemLocale::F_CONFIG_ID, "<strong>" . $config->getVar('conf_id') . "</strong>");
+                        . sprintf(SystemLocale::F_CONFIG_ID, '<strong>' . $config->getVar('conf_id') . '</strong>');
                 }
             }
         }
@@ -1111,16 +1103,14 @@ class SystemModule
      * installconfigs
      *
      * @param XoopsModule $module module being installed
-     *
-     * @return void
      */
     public function installConfigs(XoopsModule $module)
     {
         $xoops = Xoops::getInstance();
         // now reinsert them with the new settings
         $configs = $module->getInfo('config');
-        if (!is_array($configs)) {
-            $configs = array();
+        if (! is_array($configs)) {
+            $configs = [];
         }
 
         $collector = new ConfigCollector($module, $configs);
@@ -1132,7 +1122,7 @@ class SystemModule
             $order = 0;
             foreach ($configs as $config) {
                 // only insert ones that have been deleted previously with success
-                if (!in_array($config['name'], $this->config_delng)) {
+                if (! in_array($config['name'], $this->config_delng, true)) {
                     $confobj = $config_handler->createConfig();
                     $confobj->setVar('conf_modid', $module->getVar('mid'));
                     $confobj->setVar('conf_catid', 0);
@@ -1142,8 +1132,8 @@ class SystemModule
                     $confobj->setVar('conf_formtype', $config['formtype']);
                     $confobj->setVar('conf_valuetype', $config['valuetype']);
                     if (isset($this->config_old[$config['name']]['value'])
-                        && $this->config_old[$config['name']]['formtype'] == $config['formtype']
-                        && $this->config_old[$config['name']]['valuetype'] == $config['valuetype']
+                        && $config['formtype'] === $this->config_old[$config['name']]['formtype']
+                        && $config['valuetype'] === $this->config_old[$config['name']]['valuetype']
                     ) {
                         // preserver the old value if any
                         // form type and value type must be the same
@@ -1172,14 +1162,14 @@ class SystemModule
                         }
                     }
                     ++$order;
-                    if (false != $config_handler->insertConfig($confobj)) {
+                    if ($config_handler->insertConfig($confobj) !== false) {
                         $this->trace[]['sub'] = sprintf(
                             SystemLocale::SF_CONFIG_ADDED,
-                            "<strong>" . $config['name'] . "</strong>"
+                            '<strong>' . $config['name'] . '</strong>'
                         ) . $confop_msgs;
                     } else {
                         $this->trace[]['sub'] = '<span class="red">'
-                            . sprintf(SystemLocale::EF_CONFIG_NOT_ADDED, "<strong>" . $config['name'] . "</strong>")
+                            . sprintf(SystemLocale::EF_CONFIG_NOT_ADDED, '<strong>' . $config['name'] . '</strong>')
                             . '</span>';
                     }
                     unset($confobj);

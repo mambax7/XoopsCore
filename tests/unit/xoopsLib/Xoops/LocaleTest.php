@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 {
@@ -54,14 +54,14 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
     {
         $path = \XoopsBaseConfig::get('root-path');
         if (! class_exists('Comments', false)) {
-            \XoopsLoad::addMap(array(
-                'comments'          => $path . '/modules/comments/class/helper.php',
-            ));
+            \XoopsLoad::addMap([
+                'comments' => $path . '/modules/comments/class/helper.php',
+            ]);
         }
         if (! class_exists('MenusDecorator', false)) {
-            \XoopsLoad::addMap(array(
-                'menusdecorator'    => $path . '/modules/menus/class/decorator.php',
-            ));
+            \XoopsLoad::addMap([
+                'menusdecorator' => $path . '/modules/menus/class/decorator.php',
+            ]);
         }
 
         $class = $this->myClass;
@@ -78,7 +78,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $dirname = 'xoops';
         $x = $class::getClassFromDirname($dirname);
-        $this->assertSame(ucfirst($dirname).'Locale', $x);
+        $this->assertSame(ucfirst($dirname) . 'Locale', $x);
     }
 
     public function test_getThemeClassFromDirname()
@@ -88,7 +88,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $dirname = 'xoops';
         $x = $class::getThemeClassFromDirname($dirname);
-        $this->assertSame(ucfirst($dirname).'ThemeLocale', $x);
+        $this->assertSame(ucfirst($dirname) . 'ThemeLocale', $x);
     }
 
     public function test_getUserLocales()
@@ -97,7 +97,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $locales = $class::getUserLocales();
         $this->assertTrue(is_array($locales));
-        $this->assertTrue(in_array('en_US', $locales));
+        $this->assertTrue(in_array('en_US', $locales, true));
     }
 
     public function test_normalizeLocale()
@@ -106,11 +106,11 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $locale = 'en-latn-us';
         $actual = $class::normalizeLocale($locale, '_', false);
-        $this->assertEquals('en_US', $actual);
+        $this->assertSame('en_US', $actual);
         $actual = $class::normalizeLocale($locale, '-', false);
-        $this->assertEquals('en-US', $actual);
+        $this->assertSame('en-US', $actual);
         $actual = \Xoops\Locale::normalizeLocale($locale, '_');
-        $this->assertEquals('en_Latn_US', $actual);
+        $this->assertSame('en_Latn_US', $actual);
     }
 
     public function test_normalizeDomain()
@@ -119,10 +119,10 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $domain = 'Xoops';
         $actual = $class::normalizeDomain($domain);
-        $this->assertEquals('xoops', $actual);
+        $this->assertSame('xoops', $actual);
 
         $domain = 'xoops';
         $actual = $class::normalizeDomain($domain);
-        $this->assertEquals('xoops', $actual);
+        $this->assertSame('xoops', $actual);
     }
 }

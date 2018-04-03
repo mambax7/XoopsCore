@@ -13,8 +13,8 @@ namespace Xoops\Core\Kernel\Model;
 
 use Xoops\Core\Kernel\CriteriaElement;
 use Xoops\Core\Kernel\Dtype;
-use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsModelAbstract;
+use Xoops\Core\Kernel\XoopsObject;
 
 /**
  * Object write handler class.
@@ -42,9 +42,9 @@ class Write extends XoopsModelAbstract
     public function cleanVars(XoopsObject $object)
     {
         $vars = $object->getVars();
-        $object->cleanVars = array();
+        $object->cleanVars = [];
         foreach ($vars as $k => $v) {
-            if (!$v["changed"]) {
+            if (! $v['changed']) {
                 continue;
             }
             $object->cleanVars[$k] = Dtype::cleanVar($object, $k);
@@ -64,21 +64,21 @@ class Write extends XoopsModelAbstract
      */
     public function insert(XoopsObject $object, $force = true)
     {
-        if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
+        if (! (class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
                 "Object '" . get_class($object) . "' is not an instance of '" . $this->handler->className . "'",
                 E_USER_NOTICE
             );
             return false;
         }
-        if (!$object->isDirty()) {
+        if (! $object->isDirty()) {
             trigger_error(
                 "Data entry is not inserted - the object '" . get_class($object) . "' is not dirty",
                 E_USER_NOTICE
             );
             return false;
         }
-        if (!$this->cleanVars($object)) {
+        if (! $this->cleanVars($object)) {
             trigger_error(
                 "Insert failed in method 'cleanVars' of object '" . get_class($object) . "'" . $object->getHtmlErrors(),
                 E_USER_WARNING
@@ -97,21 +97,21 @@ class Write extends XoopsModelAbstract
             if ($force) {
                 $this->handler->db2->setForce($force);
             }
-            if (!$this->handler->db2->insert($this->handler->table, $object->cleanVars)) {
+            if (! $this->handler->db2->insert($this->handler->table, $object->cleanVars)) {
                 return false;
             }
-            if (!$object->getVar($this->handler->keyName) && $object_id = $this->handler->db2->lastInsertId()) {
+            if (! $object->getVar($this->handler->keyName) && $object_id = $this->handler->db2->lastInsertId()) {
                 $object->assignVar($this->handler->keyName, $object_id);
             }
             $object->unsetNew(); // object is no longer New
         } else {
-            if (!empty($object->cleanVars)) {
+            if (! empty($object->cleanVars)) {
                 $result = $this->handler->db2->update(
                     $this->handler->table,
                     $object->cleanVars,
-                    array($this->handler->keyName => $object->getVar($this->handler->keyName))
+                    [$this->handler->keyName => $object->getVar($this->handler->keyName)]
                 );
-                if (!$result && (int)($this->handler->db2->errorCode())) {
+                if (! $result && (int) ($this->handler->db2->errorCode())) {
                     return false;
                 }
             }
@@ -129,7 +129,7 @@ class Write extends XoopsModelAbstract
      */
     public function delete(XoopsObject $object, $force = false)
     {
-        if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
+        if (! (class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
                 "Object '" . get_class($object) . "' is not an instance of '" . $this->handler->className . "'",
                 E_USER_NOTICE
@@ -143,7 +143,7 @@ class Write extends XoopsModelAbstract
         $qb->delete($this->handler->table);
         if (is_array($this->handler->keyName)) {
             for ($i = 0; $i < count($this->handler->keyName); ++$i) {
-                if ($i == 0) {
+                if ($i === 0) {
                     $qb->where(
                         $eb->eq(
                             $this->handler->keyName[$i],

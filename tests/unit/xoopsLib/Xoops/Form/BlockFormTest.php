@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class BlockFormTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +17,7 @@ class BlockFormTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new BlockForm;
+        $this->object = new BlockForm();
     }
 
     /**
@@ -36,17 +37,17 @@ class BlockFormTest extends \PHPUnit\Framework\TestCase
         $this->object->addElement($button);
 
         $x = $this->object->render();
-        $this->assertTrue(false !== strpos($x, '<div class="form-group">'));
-        $this->assertTrue(false !== strpos($x, '<label>' . $caption .'</label>'));
-        $this->assertTrue(false !== strpos($x, '<input type="button"'));
-        $this->assertTrue(false !== strpos($x, 'name="' . $name .'"'));
-        $this->assertTrue(false !== strpos($x, 'id="' . $name .'"'));
-        $this->assertTrue(false !== strpos($x, 'title="' . $caption .'"'));
-        $this->assertTrue(false !== strpos($x, 'value="' . $value .'"'));
+        $this->assertTrue(strpos($x, '<div class="form-group">') !== false);
+        $this->assertTrue(strpos($x, '<label>' . $caption . '</label>') !== false);
+        $this->assertTrue(strpos($x, '<input type="button"') !== false);
+        $this->assertTrue(strpos($x, 'name="' . $name . '"') !== false);
+        $this->assertTrue(strpos($x, 'id="' . $name . '"') !== false);
+        $this->assertTrue(strpos($x, 'title="' . $caption . '"') !== false);
+        $this->assertTrue(strpos($x, 'value="' . $value . '"') !== false);
 
         $button->setHidden();
         $x = $this->object->render();
-        $this->assertTrue(false !== strpos($x, '<input type="button"'));
-        $this->assertTrue(false !== strpos($x, ' hidden '));
+        $this->assertTrue(strpos($x, '<input type="button"') !== false);
+        $this->assertTrue(strpos($x, ' hidden ') !== false);
     }
 }

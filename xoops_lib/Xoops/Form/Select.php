@@ -29,7 +29,7 @@ class Select extends OptionElement
      *
      * @var array
      */
-    protected $value = array();
+    protected $value = [];
 
     /**
      * Constructor
@@ -76,37 +76,15 @@ class Select extends OptionElement
         return (int) $this->get('size');
     }
 
-     /**
+    /**
      * Add multiple optgroup
      *
      * @param string $name     name attribute
      * @param array  $optgroup Associative array of value->name pairs
-     *
-     * @return void
      */
     public function addOptionGroup($name, $optgroup)
     {
         $this->setArrayItem('option', $name, $optgroup);
-    }
-
-    /**
-     * render a single option
-     *
-     * @param string   $optionValue   option element value
-     * @param string   $optionDisplay displayed text
-     * @param string[] $selected      selected option values
-     *
-     * @return string
-     */
-    protected function renderOption($optionValue, $optionDisplay, $selected)
-    {
-        $rendered = '<option value="' . htmlspecialchars($optionValue, ENT_QUOTES) . '"';
-        if (in_array($optionValue, $selected)) {
-            $rendered .= ' selected="selected"';
-        }
-        $rendered .= '>' . $optionDisplay . '</option>' . "\n";
-
-        return $rendered;
     }
 
     /**
@@ -120,10 +98,10 @@ class Select extends OptionElement
 
         $ele_options = $this->getOptions();
 
-        $extra = ($this->getExtra() != '' ? " " . $this->getExtra() : '');
+        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
         $this->themeDecorateElement();
         $attributes = $this->renderAttributeString();
-        $rendered = '<select ' . $attributes . $extra .' >' . "\n";
+        $rendered = '<select ' . $attributes . $extra . ' >' . "\n";
 
         if (empty($ele_optgroup)) {
             foreach ($ele_options as $value => $display) {
@@ -150,7 +128,7 @@ class Select extends OptionElement
     public function renderValidationJS()
     {
         // render custom validation code if any
-        if (!empty($this->customValidationCode)) {
+        if (! empty($this->customValidationCode)) {
             return implode("\n", $this->customValidationCode);
             // generate validation code if required
         } elseif ($this->isRequired()) {
@@ -161,11 +139,31 @@ class Select extends OptionElement
                 : sprintf(\XoopsLocale::F_ENTER, $eltcaption);
             $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
             return "\nvar hasSelected = false; var selectBox = myform.{$eltname};"
-                . "for (i = 0; i < selectBox.options.length; i++ ) { "
+                . 'for (i = 0; i < selectBox.options.length; i++ ) { '
                 . "if (selectBox.options[i].selected == true && selectBox.options[i].value != '') "
-                . "{ hasSelected = true; break; } }" . "if (!hasSelected) "
+                . '{ hasSelected = true; break; } }' . 'if (!hasSelected) '
                 . "{ window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
         }
         return '';
+    }
+
+    /**
+     * render a single option
+     *
+     * @param string   $optionValue   option element value
+     * @param string   $optionDisplay displayed text
+     * @param string[] $selected      selected option values
+     *
+     * @return string
+     */
+    protected function renderOption($optionValue, $optionDisplay, $selected)
+    {
+        $rendered = '<option value="' . htmlspecialchars($optionValue, ENT_QUOTES) . '"';
+        if (in_array($optionValue, $selected, true)) {
+            $rendered .= ' selected="selected"';
+        }
+        $rendered .= '>' . $optionDisplay . '</option>' . "\n";
+
+        return $rendered;
     }
 }

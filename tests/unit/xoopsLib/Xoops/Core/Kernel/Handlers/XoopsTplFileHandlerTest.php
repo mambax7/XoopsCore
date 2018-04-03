@@ -1,17 +1,18 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
-use Xoops\Core\Kernel\Handlers\XoopsTplFileHandler;
-use Xoops\Core\Kernel\Handlers\XoopsTplFile;
 use Xoops\Core\Kernel\Criteria;
+use Xoops\Core\Kernel\Handlers\XoopsTplFile;
 
 class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
 {
-    protected $myclass='Xoops\Core\Kernel\Handlers\XoopsTplFileHandler';
+    protected $myclass = 'Xoops\Core\Kernel\Handlers\XoopsTplFileHandler';
+
     protected $conn = null;
+
     protected $xoopsTplfile = '\Xoops\Core\Kernel\Handlers\XoopsTplFile';
 
-    public function setUp()
+    protected function setUp()
     {
         $this->conn = Xoops::getInstance()->db();
         $this->conn->setSafe();
@@ -28,7 +29,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testContracts()
     {
-        $instance=new $this->myclass($this->conn);
+        $instance = new $this->myclass($this->conn);
         $this->assertInstanceOf('\Xoops\Core\Kernel\Handlers\XoopsTplFileHandler', $instance);
         $this->assertInstanceOf('\Xoops\Core\Kernel\XoopsPersistableObjectHandler', $instance);
     }
@@ -55,7 +56,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $instance->loadSource($source);
         $this->assertSame(true, $value);
         $tmp = $source->tpl_source();
-        $this->assertTrue(!empty($tmp));
+        $this->assertTrue(! empty($tmp));
     }
 
     public function test_insertTpl()
@@ -144,7 +145,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $instance->find(null, 1);
         $this->assertTrue(is_array($value));
 
-        $value = $instance->find(null, array(1, 2, 3));
+        $value = $instance->find(null, [1, 2, 3]);
     }
 
     public function test_templateExists()

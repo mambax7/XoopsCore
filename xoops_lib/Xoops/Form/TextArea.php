@@ -33,7 +33,7 @@ class TextArea extends Element
      * @param integer      $cols        number of columns
      * @param string       $placeholder placeholder for this element.
      */
-    public function __construct($caption, $name = null, $value = "", $rows = 5, $cols = 50, $placeholder = '')
+    public function __construct($caption, $name = null, $value = '', $rows = 5, $cols = 50, $placeholder = '')
     {
         if (is_array($caption)) {
             parent::__construct($caption);
@@ -92,7 +92,7 @@ class TextArea extends Element
         $this->themeDecorateElement();
 
         $attributes = $this->renderAttributeString();
-        return '<textarea ' . $attributes . ' ' . $this->getExtra() .' >'
+        return '<textarea ' . $attributes . ' ' . $this->getExtra() . ' >'
             . $this->getValue() . '</textarea>';
     }
 }

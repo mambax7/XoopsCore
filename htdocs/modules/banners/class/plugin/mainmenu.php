@@ -16,7 +16,6 @@
  */
 class BannersMainmenuPlugin implements MainmenuPluginInterface
 {
-
     /**
      * @return array
      */

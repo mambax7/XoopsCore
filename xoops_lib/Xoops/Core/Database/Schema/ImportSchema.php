@@ -11,17 +11,17 @@
 
 namespace Xoops\Core\Database\Schema;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
-use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Sequence;
+use Doctrine\DBAL\Schema\Table;
 
 /**
  * ImportSchema processes an array of schema information and creates
  * a XOOPS_DB_PREFIX prefixed Schema object.
- * 
+ *
  * @category  Xoops\Core\Database\Schema\ImportSchema
  * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
@@ -33,10 +33,11 @@ use Doctrine\DBAL\Schema\Index;
  */
 class ImportSchema
 {
-
     private $xPrefix = '';
+
     private $xDbName = '';
-    private $schemaArray = array();
+
+    private $schemaArray = [];
 
     /**
      * Constructor
@@ -49,15 +50,15 @@ class ImportSchema
 
     /**
      * Import an array into a schema
-     * 
+     *
      * @param array $schemaArray array version of a schema object
-     * 
+     *
      * @return Schema object built from input array
      */
     public function importSchemaArray(array $schemaArray)
     {
-        $tables = array();
-        $sequences = array();
+        $tables = [];
+        $sequences = [];
         $this->schemaArray = $schemaArray;
         foreach ($schemaArray as $type => $entity) {
             switch ($type) {
@@ -76,20 +77,20 @@ class ImportSchema
      * Build array of Table objects to add to the schema
      *
      * @param array $tableArray array of table definitions
-     * 
+     *
      * @return array of Table objects
      */
     public function importTables(array $tableArray)
     {
-        $tables=array();
+        $tables = [];
         foreach ($tableArray as $name => $tabledef) {
             //echo '<h2>Table: ' . $name . '</h2>';
             //Debug::dump($tabledef);
             $tableName = $this->xPrefix . $name;
-            $columns = array();
-            $indexes = array();
-            $fkConstraints = array();
-            $options = array();
+            $columns = [];
+            $indexes = [];
+            $fkConstraints = [];
+            $options = [];
             $idGeneratorType = 0;
             foreach ($tabledef['columns'] as $colName => $colOptions) {
                 $colType = \Doctrine\DBAL\Types\Type::getType($colOptions['type']);
@@ -138,12 +139,12 @@ class ImportSchema
      * Build array of Sequence objects to add to the schema
      *
      * @param array $sequenceArray array of table definitions
-     * 
+     *
      * @return array of Sequence objects
      */
     public function importSequences(array $sequenceArray)
     {
-        $sequences = array();
+        $sequences = [];
 
         foreach ($sequenceArray as $name => $sequenceDef) {
             //echo '<h2>Sequence: ' . $name . '</h2>';

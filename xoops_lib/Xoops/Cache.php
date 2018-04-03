@@ -24,5 +24,4 @@ namespace Xoops;
  */
 class Cache extends \Xoops\Core\Cache\Legacy
 {
-
 }

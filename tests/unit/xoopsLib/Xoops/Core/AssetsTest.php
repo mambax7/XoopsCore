@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 use Xoops\Core\Assets;
 
@@ -61,5 +61,4 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         array_map('unlink', glob($dir . $glob));
         rmdir($dir);
     }
-
 }

@@ -12,7 +12,6 @@
 namespace Xoops\Core\Service\Data;
 
 use Xmf\Assert;
-use Xoops\Core\Service\Data\EmailAddress;
 
 /**
  * The EmailAddressList data object is a traversable list of EmailAddress objects
@@ -34,12 +33,13 @@ use Xoops\Core\Service\Data\EmailAddress;
  */
 class EmailAddressList
 {
-    /** @var EmailAddress[] $addresses an array of EmailAddress objects */
-    protected $addresses;
-
     /* assert messages */
     protected const MESSAGE_ADDRESS = 'EmailAddress is invalid';
-    protected const MESSAGE_LIST    = 'EmailAddress list is empty';
+
+    protected const MESSAGE_LIST = 'EmailAddress list is empty';
+
+    /** @var EmailAddress[] $addresses an array of EmailAddress objects */
+    protected $addresses;
 
     /**
      * EmailAddress constructor.
@@ -53,7 +53,7 @@ class EmailAddressList
      */
     public function __construct(?array $addresses = null)
     {
-        if (null!==$addresses) {
+        if ($addresses !== null) {
             Assert::allIsInstanceOf($addresses, EmailAddress::class, static::MESSAGE_ADDRESS);
             try {
                 /** @var EmailAddress $address */
@@ -70,13 +70,12 @@ class EmailAddressList
     /**
      * withAddedAddresses - return a new object with the supplied EmailAddress array added
      *
-     * @param EmailAddress[] $addresses  an array of EmailAddress objects
      *
-     * @return EmailAddressList
+     * @param EmailAddress[] $addresses an array of EmailAddress objects
      *
      * @throws \InvalidArgumentException
      */
-    public function withAddedAddresses(array $addresses) : EmailAddressList
+    public function withAddedAddresses(array $addresses): self
     {
         Assert::allIsInstanceOf($addresses, EmailAddress::class, static::MESSAGE_ADDRESS);
         try {
@@ -84,7 +83,7 @@ class EmailAddressList
             foreach ($addresses as $address) {
                 $address->getEmail();
             }
-            $existingAddresses = (null === $this->addresses) ? [] : $this->getAddresses();
+            $existingAddresses = ($this->addresses === null) ? [] : $this->getAddresses();
         } catch (\LogicException $e) {
             throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
@@ -100,7 +99,7 @@ class EmailAddressList
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getAddresses() : array
+    public function getAddresses(): array
     {
         try {
             Assert::notNull($this->addresses, static::MESSAGE_LIST);
@@ -122,7 +121,7 @@ class EmailAddressList
      *
      * @throws \LogicException (property was not properly set before used)
      */
-    public function getEachAddress() : \Generator
+    public function getEachAddress(): \Generator
     {
         $this->getAddresses();
         foreach ($this->addresses as $address) {

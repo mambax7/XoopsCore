@@ -18,29 +18,29 @@
  */
 class XcaptchaRecaptcha extends Xcaptcha
 {
-    public $config = array();
+    public $config = [];
 
     public $plugin;
 
     function __construct()
     {
         $this->xcaptcha_handler = Xcaptcha::getInstance();
-        $this->config           = $this->xcaptcha_handler->loadConfig('recaptcha');
-        $this->plugin           = 'recaptcha';
+        $this->config = $this->xcaptcha_handler->loadConfig('recaptcha');
+        $this->plugin = 'recaptcha';
     }
 
     function VerifyData()
     {
-        $xoops        = Xoops::getInstance();
-        $default_lang = array_search(ucfirst($xoops->getConfig('language')), $this->getLanguages());
-        $default_lang = (!$default_lang) ? 'en' : $default_lang;
+        $xoops = Xoops::getInstance();
+        $default_lang = array_search(ucfirst($xoops->getConfig('language')), $this->getLanguages(), true);
+        $default_lang = (! $default_lang) ? 'en' : $default_lang;
 
-        $system               = System::getInstance();
-        $config               = array();
+        $system = System::getInstance();
+        $config = [];
         $_POST['private_key'] = $system->cleanVars($_POST, 'private_key', 'Your private key', 'string');
-        $_POST['public_key']  = $system->cleanVars($_POST, 'public_key', 'Your public key', 'string');
-        $_POST['theme']       = $system->cleanVars($_POST, 'theme', 'red', 'string');
-        $_POST['lang']        = $system->cleanVars($_POST, 'lang', $default_lang, 'string');
+        $_POST['public_key'] = $system->cleanVars($_POST, 'public_key', 'Your public key', 'string');
+        $_POST['theme'] = $system->cleanVars($_POST, 'theme', 'red', 'string');
+        $_POST['lang'] = $system->cleanVars($_POST, 'lang', $default_lang, 'string');
         foreach (array_keys($this->config) as $key) {
             $config[$key] = $_POST[$key];
         }
@@ -50,16 +50,16 @@ class XcaptchaRecaptcha extends Xcaptcha
 
     function getThemes()
     {
-        return array(
-            'red'        => 'RED (default theme)',
-            'white'      => 'WHITE',
+        return [
+            'red' => 'RED (default theme)',
+            'white' => 'WHITE',
             'blackglass' => 'BLACKGLASS',
-            'clean'      => 'CLEAN',);
+            'clean' => 'CLEAN', ];
     }
 
     function getLanguages()
     {
-        return array(
+        return [
             'en' => 'English',
             'nl' => 'Dutch',
             'fr' => 'French',
@@ -68,6 +68,6 @@ class XcaptchaRecaptcha extends Xcaptcha
             'pt' => 'Portuguese',
             'ru' => 'Russian',
             'es' => 'Spanish',
-            'tr' => 'Turkish',);
+            'tr' => 'Turkish', ];
     }
 }

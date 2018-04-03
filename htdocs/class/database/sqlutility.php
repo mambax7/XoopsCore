@@ -25,7 +25,7 @@
  * @since     2.6.0
  */
 
-class SqlUtility
+class sqlutility
 {
     /**
      * Function from phpMyAdmin (http://phpwizard.net/projects/phpMyAdmin/)
@@ -52,30 +52,28 @@ class SqlUtility
             if ($in_string) {
                 while (true) {
                     $i = strpos($sql, $string_start, $i);
-                    if (!$i) {
+                    if (! $i) {
                         $ret[] = $sql;
                         return true;
-                    } else {
+                    }
                         if ($string_start === '`' || $sql[$i - 1] !== '\\') {
                             $string_start = '';
                             $in_string = false;
                             break;
-                        } else {
+                        }
                             $j = 2;
                             $escaped_backslash = false;
                             while ($i - $j > 0 && $sql[$i - $j] === '\\') {
-                                $escaped_backslash = !$escaped_backslash;
+                                $escaped_backslash = ! $escaped_backslash;
                                 ++$j;
                             }
                             if ($escaped_backslash) {
                                 $string_start = '';
                                 $in_string = false;
                                 break;
-                            } else {
-                                ++$i;
                             }
-                        }
-                    }
+                                ++$i;
+
                 }
             } else {
                 if ($char === ';') {
@@ -92,24 +90,24 @@ class SqlUtility
                         $in_string = true;
                         $string_start = $char;
                     } else {
-                        if ($char === '#' || ($char === ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] == '--')) {
+                        if ($char === '#' || ($char === ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] === '--')) {
                             $start_of_comment = (($sql[$i] === '#') ? $i : $i - 2);
                             $end_of_comment = (strpos(' ' . $sql, "\012", $i + 2)) ? strpos(' ' . $sql, "\012", $i + 2)
                                 : strpos(' ' . $sql, "\015", $i + 2);
-                            if (!$end_of_comment) {
+                            if (! $end_of_comment) {
                                 return true;
-                            } else {
+                            }
                                 $sql = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
                                 $sql_len = strlen($sql);
                                 $i--;
-                            }
+
                         }
                     }
                 }
             }
         }
 
-        if (!empty($sql) && trim($sql) != '') {
+        if (! empty($sql) && trim($sql) !== '') {
             $ret[] = $sql;
         }
         return true;
@@ -130,7 +128,7 @@ class SqlUtility
         if (preg_match($pattern, $query, $matches)
             || preg_match($pattern2, $query, $matches)
         ) {
-            $replace = "\\1 " . $prefix . "_\\4\\5";
+            $replace = '\\1 ' . $prefix . '_\\4\\5';
             $matches[0] = preg_replace($pattern, $replace, $query);
             return $matches;
         }

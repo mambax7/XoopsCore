@@ -16,7 +16,6 @@
  */
 class PageMainmenuPlugin implements MainmenuPluginInterface
 {
-
     /**
      * @return array
      */

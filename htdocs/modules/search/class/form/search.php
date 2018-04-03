@@ -20,8 +20,6 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
 {
     /**
      * We are not using this for objects but we need to override the constructor
-     *
-     * @param null $obj
      */
     public function __construct($obj = null)
     {
@@ -37,11 +35,11 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
         // create form elements
         $this->addElement(new Xoops\Form\Text(_MD_SEARCH_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes($this->queryArrayToString($queries)), ENT_QUOTES)), true);
         $type_select = new Xoops\Form\Select(_MD_SEARCH_TYPE, 'andor', $andor);
-        $type_select->addOptionArray(array(
-            'AND' => _MD_SEARCH_ALL, 'OR' => _MD_SEARCH_ANY //, 'exact' => _MD_SEARCH_EXACT
-        ));
+        $type_select->addOptionArray([
+            'AND' => _MD_SEARCH_ALL, 'OR' => _MD_SEARCH_ANY, //, 'exact' => _MD_SEARCH_EXACT
+        ]);
         $this->addElement($type_select);
-        if (!empty($mids)) {
+        if (! empty($mids)) {
             $mods_checkbox = new Xoops\Form\Checkbox(_MD_SEARCH_SEARCHIN, 'mids[]', $mids);
         } else {
             $mods_checkbox = new Xoops\Form\Checkbox(_MD_SEARCH_SEARCHIN, 'mids[]', $mid);
@@ -54,14 +52,14 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
             //todo, would be nice to have the module ids availabe also
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
-            if (isset($available_modules) && !empty($available_modules)) {
+            if (isset($available_modules) && ! empty($available_modules)) {
                 $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
             }
             $module_handler = $xoops->getHandlerModule();
             $mods_checkbox->addOptionArray($module_handler->getNameList($criteria));
         } else {
             /* @var $module XoopsModule */
-            $module_array = array();
+            $module_array = [];
             foreach ($modules as $mid => $module) {
                 $module_array[$mid] = $module->getVar('name');
             }
@@ -89,7 +87,7 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
     {
         $query = '';
         foreach ($queries as $term) {
-            if (false === strpos($term, ' ')) {
+            if (strpos($term, ' ') === false) {
                 $query .= $term . ' ';
             } else {
                 $query .= '"' . $term . '" ';

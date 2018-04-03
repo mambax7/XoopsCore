@@ -19,10 +19,10 @@
  * @version         $Id$
  */
 
-define("_IMAGES_MANAGER", "Image Manager");
-define("_IMAGES_NAME", "Image name");
-define("_IMAGES_IMAGE", "Image");
-define("_IMAGES_MIME", "MIME type");
-define("_IMAGES_ALIGN", "Align");
-define("_IMAGES_ADD", "Add image");
-define("_IMAGES_CLOSE", "Close");
+define('_IMAGES_MANAGER', 'Image Manager');
+define('_IMAGES_NAME', 'Image name');
+define('_IMAGES_IMAGE', 'Image');
+define('_IMAGES_MIME', 'MIME type');
+define('_IMAGES_ALIGN', 'Align');
+define('_IMAGES_ADD', 'Add image');
+define('_IMAGES_CLOSE', 'Close');

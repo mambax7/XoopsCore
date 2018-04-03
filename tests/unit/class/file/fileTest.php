@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
 class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 {
@@ -13,7 +13,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_publicProperties()
     {
-        $items = array('folder', 'name', 'info', 'handle', 'lock');
+        $items = ['folder', 'name', 'info', 'handle', 'lock'];
         foreach ($items as $item) {
             $prop = new ReflectionProperty($this->myClass, $item);
             $this->assertTrue($prop->isPublic());
@@ -89,7 +89,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $instance->offset(0);
         $this->assertTrue($value);
         $data = '';
-        while (!feof($instance->handle)) {
+        while (! feof($instance->handle)) {
             $data .= fgets($instance->handle, 4096);
         }
         $data = trim($data);
@@ -124,7 +124,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
         $data = "line1\nline2\r\nline3\r";
         $value = $instance->prepare($data);
-        if (substr(PHP_OS, 0, 3) == 'WIN') {
+        if (substr(PHP_OS, 0, 3) === 'WIN') {
             $target = "line1\r\nline2\r\nline3\r\n";
         } else {
             $target = "line1\nline2\nline3\n";
@@ -143,11 +143,11 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         @unlink($file);
         $instance = new $this->myClass($file, false);
         $this->assertFalse($instance->exists($file));
-        $data = "dummy for unit tests";
+        $data = 'dummy for unit tests';
         $value = $instance->write($data);
         $this->assertTrue($value);
 
-        $data = "dummy for unit tests";
+        $data = 'dummy for unit tests';
         $value = $instance->append($data);
         $this->assertTrue($value);
         @unlink($file);
@@ -250,7 +250,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass($file, true);
         $this->assertTrue($instance->exists($file));
 
-        $data = "dummy for unit tests";
+        $data = 'dummy for unit tests';
         $value = $instance->write($data);
         $this->assertTrue($value);
 
@@ -282,7 +282,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $perms = substr(sprintf('%o', fileperms($file)), -4);
         $this->assertTrue(is_int($result));
@@ -303,7 +303,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $length = strlen($str);
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
@@ -324,7 +324,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $instance = new $this->myClass($file, false);
@@ -344,7 +344,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $instance = new $this->myClass($file, false);
@@ -362,9 +362,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_readable()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $instance = new $this->myClass($file, false);
@@ -382,9 +382,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_owner()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $instance = new $this->myClass($file, false);
@@ -402,9 +402,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_group()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $instance = new $this->myClass($file, false);
@@ -422,9 +422,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_lastAccess()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $atime = fileatime($file);
@@ -444,9 +444,9 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_lastChange()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
-        $str = "a string for test";
+        $str = 'a string for test';
         $result = file_put_contents($file, $str);
         $this->assertTrue(is_int($result));
         $atime = filemtime($file);
@@ -466,7 +466,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function test_folder()
     {
-        $file = __DIR__. DIRECTORY_SEPARATOR .'dummy.txt';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dummy.txt';
         @unlink($file);
         $instance = new $this->myClass($file, true);
         $this->assertTrue($instance->exists($file));

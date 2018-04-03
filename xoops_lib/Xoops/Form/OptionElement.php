@@ -31,8 +31,6 @@ abstract class OptionElement extends Element
      *
      * @param string $value value attribute
      * @param string $name  name attribute
-     *
-     * @return void
      */
     public function addOption($value, $name = null)
     {
@@ -47,8 +45,6 @@ abstract class OptionElement extends Element
      * Add multiple options
      *
      * @param array $options Associative array of value->name pairs
-     *
-     * @return void
      */
     public function addOptionArray($options)
     {
@@ -72,11 +68,11 @@ abstract class OptionElement extends Element
     public function getOptions($encode = 0)
     {
         $options = $this->get('option', []);
-        if (!$encode) {
+        if (! $encode) {
             return $options;
         }
         $myts = Sanitizer::getInstance();
-        $value = array();
+        $value = [];
         foreach ($options as $val => $name) {
             $value[(bool) $encode ? $myts->htmlSpecialChars($val) : $val] = ($encode > 1)
                 ? $myts->htmlSpecialChars($name) : $name;

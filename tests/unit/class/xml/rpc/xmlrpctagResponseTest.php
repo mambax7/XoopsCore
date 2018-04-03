@@ -1,12 +1,13 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class XoopsXmlRpcResponseTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsXmlRpcResponse';
+
     protected $object = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $input = 'input';
         $this->object = new $this->myclass($input);
@@ -24,6 +25,6 @@ class XoopsXmlRpcResponseTest extends \PHPUnit\Framework\TestCase
 
         $x = $instance->render();
         $this->assertTrue(is_string($x));
-        $this->assertTrue(!empty($x));
+        $this->assertTrue(! empty($x));
     }
 }

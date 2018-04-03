@@ -34,7 +34,7 @@ if (isset($_POST['op'])) {
 }
 
 if ($op === 'main') {
-    if (!$xoops->isUser()) {
+    if (! $xoops->isUser()) {
         $xoops->header('module:profile/profile_userform.tpl');
         $xoops->tpl()->assign('lang_login', XoopsLocale::A_LOGIN);
         $xoops->tpl()->assign('lang_username', XoopsLocale::C_USERNAME);
@@ -52,7 +52,7 @@ if ($op === 'main') {
         $xoops->tpl()->assign('mailpasswd_token', $xoops->security()->createToken());
         include __DIR__ . '/footer.php';
     }
-    if (!empty($_GET['xoops_redirect'])) {
+    if (! empty($_GET['xoops_redirect'])) {
         $redirect = trim($_GET['xoops_redirect']);
         $isExternal = false;
         if ($pos = strpos($redirect, '://')) {
@@ -61,7 +61,7 @@ if ($op === 'main') {
                 $isExternal = true;
             }
         }
-        if (!$isExternal) {
+        if (! $isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
@@ -77,7 +77,7 @@ if ($op === 'login') {
 
 if ($op === 'logout') {
     $message = '';
-    $_SESSION = array();
+    $_SESSION = [];
     $xoops->session()->user()->recordUserLogout();
     // clear entry from online users table
     if ($xoops->isUser()) {
@@ -88,32 +88,32 @@ if ($op === 'logout') {
 }
 
 if ($op === 'actv') {
-    $id = (int)($_GET['id']);
+    $id = (int) ($_GET['id']);
     $actkey = trim($_GET['actkey']);
     $xoops->redirect("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
 }
 
 if ($op === 'delete') {
-    if (!$xoops->isUser() || $xoops->getConfig('self_delete') != 1) {
+    if (! $xoops->isUser() || $xoops->getConfig('self_delete') !== 1) {
         $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
     } else {
         $groups = $xoops->user->getGroups();
-        if (in_array(FixedGroups::ADMIN, $groups)) {
+        if (in_array(FixedGroups::ADMIN, $groups, true)) {
             // users in the webmasters group may not be deleted
             $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 5, XoopsLocale::E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED);
         }
-        $ok = !isset($_POST['ok']) ? 0 : (int)($_POST['ok']);
-        if ($ok != 1) {
+        $ok = ! isset($_POST['ok']) ? 0 : (int) ($_POST['ok']);
+        if ($ok !== 1) {
             $xoops->header();
             echo $xoops->confirm(
-                array('op' => 'delete', 'ok' => 1),
+                ['op' => 'delete', 'ok' => 1],
                 'user.php',
                 XoopsLocale::Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT . '<br/>' . XoopsLocale::THIS_WILL_REMOVE_ALL_YOUR_INFO
             );
             include __DIR__ . '/footer.php';
         } else {
-            $del_uid = $xoops->user->getVar("uid");
-            if (false != $xoops->getHandlerMember()->deleteUser($xoops->user)) {
+            $del_uid = $xoops->user->getVar('uid');
+            if ($xoops->getHandlerMember()->deleteUser($xoops->user) !== false) {
                 $xoops->getHandlerOnline()->destroy($del_uid);
 
                 //todo, use preload here?

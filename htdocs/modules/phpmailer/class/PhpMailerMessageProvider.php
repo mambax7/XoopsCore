@@ -12,11 +12,11 @@
 use Xmf\Assert;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Service\AbstractContract;
-use Xoops\Core\Service\Response;
 use Xoops\Core\Service\Contract\UserEmailMessageInterface;
-use Xoops\Core\Service\Data\Message;
 use Xoops\Core\Service\Data\Email;
 use Xoops\Core\Service\Data\EmailAddress;
+use Xoops\Core\Service\Data\Message;
+use Xoops\Core\Service\Response;
 
 /**
  * phpmailer module
@@ -49,12 +49,6 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
         return 'User messages by email using PHPMailer.';
     }
 
-    /**
-     * @param \Xoops\Core\Service\Response     $response
-     * @param \Xoops\Core\Service\Data\Message $message
-     *
-     * @return void - reports success or failure through $response->success
-     */
     public function sendMessage(Response $response, Message $message)
     {
         try {
@@ -70,20 +64,16 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
         }
         // Relay to Email Service
         $emailResponse = \Xoops::getInstance()->service('email')->sendEmail($email);
-        if (!$emailResponse->isSuccess()) {
+        if (! $emailResponse->isSuccess()) {
             $response->setSuccess(false);
             $response->addErrorMessage($emailResponse->getErrorMessage());
         }
     }
 
     /**
-     * @param int $userid
-     *
-     * @return \Xoops\Core\Service\Data\EmailAddress
-     *
      * @throws \InvalidArgumentException -- bad userid
      */
-    protected function getEmailAddressByUser(int $userid) : EmailAddress
+    protected function getEmailAddressByUser(int $userid): EmailAddress
     {
         $userHandler = \Xoops::getInstance()->getHandlerMember();
         $user = $userHandler->getUser($userid);

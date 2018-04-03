@@ -62,7 +62,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
      */
     public function getGroupsByUser($uid)
     {
-        $ret = array();
+        $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
         $qb ->select('groupid')
@@ -88,14 +88,14 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
      */
     public function getUsersByGroup($groupid, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
         $qb ->select('uid')
             ->fromPrefix('system_usergroup', 'g')
             ->where($eb->eq('g.groupid', ':gid'))
             ->setParameter(':gid', $groupid, \PDO::PARAM_INT);
-        if ($limit!=0 || $start!=0) {
+        if ($limit !== 0 || $start !== 0) {
             $qb->setFirstResult($start)
                 ->setMaxResults($limit);
         }

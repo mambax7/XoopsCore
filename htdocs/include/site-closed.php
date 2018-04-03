@@ -26,40 +26,40 @@ $xoops = Xoops::getInstance();
 $allowed = false;
 if ($xoops->isUser()) {
     foreach ($xoops->user->getGroups() as $group) {
-        if (in_array($group, $xoops->getConfig('closesite_okgrp')) || FixedGroups::ADMIN == $group) {
+        if (in_array($group, $xoops->getConfig('closesite_okgrp'), true) || $group === FixedGroups::ADMIN) {
             $allowed = true;
             break;
         }
     }
 } else {
-    if (!empty($_POST['xoops_login'])) {
+    if (! empty($_POST['xoops_login'])) {
         include_once $xoops->path('include/checklogin.php');
         exit();
     }
 }
 
-if (!$allowed) {
+if (! $allowed) {
     $xoopsThemeFactory = null;
     $xoopsThemeFactory = new \Xoops\Core\Theme\Factory();
     $xoopsThemeFactory->allowedThemes = $xoops->getConfig('theme_set_allowed');
     $xoopsThemeFactory->defaultTheme = $xoops->getConfig('theme_set');
-    $xoops->setTheme($xoopsThemeFactory->createInstance(array('plugins' => array())));
+    $xoops->setTheme($xoopsThemeFactory->createInstance(['plugins' => []]));
     unset($xoopsThemeFactory);
-    $xoops->theme()->addScript('/include/xoops.js', array('type' => 'text/javascript'));
+    $xoops->theme()->addScript('/include/xoops.js', ['type' => 'text/javascript']);
     $xoops->setTpl($xoops->theme()->template);
-    $xoops->tpl()->assign(array(
-                           'xoops_theme' => $xoops->getConfig('theme_set'),
-                           'xoops_imageurl' => \XoopsBaseConfig::get('themes-url') . '/' . $xoops->getConfig('theme_set') . '/',
-                           'xoops_themecss' => $xoops->getCss($xoops->getConfig('theme_set')),
-                           'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-                           'xoops_sitename' => htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES),
-                           'xoops_slogan' => htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES),
-                           'xoops_dirname' => $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system',
-                           'xoops_banner' => $xoops->getConfig('banners') ? $xoops->getBanner() : '&nbsp;',
-                           'xoops_pagetitle' => $xoops->isModule() ? $xoops->module->getVar('name') : htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES),
-                           'lang_login' => XoopsLocale::A_LOGIN, 'lang_username' => XoopsLocale::C_USERNAME, 'lang_password' => XoopsLocale::C_PASSWORD,
-                           'lang_siteclosemsg' => $xoops->getConfig('closesite_text')
-                      ));
+    $xoops->tpl()->assign([
+        'xoops_theme' => $xoops->getConfig('theme_set'),
+        'xoops_imageurl' => \XoopsBaseConfig::get('themes-url') . '/' . $xoops->getConfig('theme_set') . '/',
+        'xoops_themecss' => $xoops->getCss($xoops->getConfig('theme_set')),
+        'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+        'xoops_sitename' => htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES),
+        'xoops_slogan' => htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES),
+        'xoops_dirname' => $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system',
+        'xoops_banner' => $xoops->getConfig('banners') ? $xoops->getBanner() : '&nbsp;',
+        'xoops_pagetitle' => $xoops->isModule() ? $xoops->module->getVar('name') : htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES),
+        'lang_login' => XoopsLocale::A_LOGIN, 'lang_username' => XoopsLocale::C_USERNAME, 'lang_password' => XoopsLocale::C_PASSWORD,
+        'lang_siteclosemsg' => $xoops->getConfig('closesite_text'),
+    ]);
     //todo check if we can use $xoops->getConfig() instead
     $config_handler = $xoops->getHandlerConfig();
     $criteria = new CriteriaCompo(new Criteria('conf_modid', 1));
@@ -68,11 +68,11 @@ if (!$allowed) {
     foreach (array_keys($config) as $i) {
         $name = $config[$i]->getVar('conf_name', 'n');
         $value = $config[$i]->getVar('conf_value', 'n');
-        if (substr($name, 0, 5) == 'meta_') {
-            $xoops->tpl()->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
+        if (substr($name, 0, 5) === 'meta_') {
+            $xoops->tpl()->assign("xoops_${name}", htmlspecialchars($value, ENT_QUOTES));
         } else {
             // prefix each tag with 'xoops_'
-            $xoops->tpl()->assign("xoops_$name", $value);
+            $xoops->tpl()->assign("xoops_${name}", $value);
         }
     }
     $xoops->tpl()->debugging = false;

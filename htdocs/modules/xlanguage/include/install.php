@@ -20,8 +20,6 @@
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * @param XoopsModule $module
- *
  * @return bool
  */
 function xoops_module_install_xlanguage(XoopsModule $module)
@@ -33,9 +31,6 @@ function xoops_module_install_xlanguage(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
- * @param             $version
- *
  * @return bool
  */
 function xoops_module_update_xlanguage(XoopsModule $module, $version)
@@ -44,7 +39,6 @@ function xoops_module_update_xlanguage(XoopsModule $module, $version)
 }
 
 /**
- * @param              $pathname
  * @param mixed|string $pathout
  *
  * @return bool
@@ -59,14 +53,14 @@ function xlanguage_mkdirs($pathname, $pathout = null)
     $paths = explode('/', $pathname);
 
     foreach ($paths as $path) {
-        if (!empty($path)) {
+        if (! empty($path)) {
             $dest = $dest . '/' . $path;
-            if (!is_dir($dest)) {
-                if (!mkdir($dest, 0755)) {
+            if (! is_dir($dest)) {
+                if (! mkdir($dest, 0755)) {
                     return false;
-                } else {
-                    xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
                 }
+                    xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
+
             }
         }
     }
@@ -75,16 +69,12 @@ function xlanguage_mkdirs($pathname, $pathout = null)
 }
 
 /**
- * @param $folder_in
- * @param $source_file
- * @param $folder_out
- *
  * @return bool
  */
 function xlanguage_copyfile($folder_in, $source_file, $folder_out)
 {
-    if (!is_dir($folder_out)) {
-        if (!xlanguage_mkdirs($folder_out)) {
+    if (! is_dir($folder_out)) {
+        if (! xlanguage_mkdirs($folder_out)) {
             return false;
         }
     }

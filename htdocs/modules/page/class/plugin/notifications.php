@@ -30,7 +30,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     public function item($category, $item_id)
     {
         $xoops = Xoops::getInstance();
-        $item = array();
+        $item = [];
         $item_id = (int) $item_id;
 
         if ($category === 'global') {
@@ -39,7 +39,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
             return $item;
         }
 
-        if ($category == 'item') {
+        if ($category === 'item') {
             $sql = 'SELECT content_title FROM ' . $xoopsDB->prefix('page_content') . ' WHERE content_id = ' . $item_id;
             $result = $xoopsDB->query($sql); // TODO: error check
             $result_array = $xoopsDB->fetchArray($result);
@@ -58,16 +58,16 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     {
         Xoops::getInstance()->loadLocale('page');
 
-        $ret = array();
+        $ret = [];
         $ret[1]['name'] = 'global';
         $ret[1]['title'] = PageLocale::NOTIFICATION_GLOBAL;
         $ret[1]['description'] = PageLocale::NOTIFICATION_GLOBAL_DSC;
-        $ret[1]['subscribe_from'] = array('index.php', 'viewpage.php');
+        $ret[1]['subscribe_from'] = ['index.php', 'viewpage.php'];
 
         $ret[2]['name'] = 'item';
         $ret[2]['title'] = PageLocale::NOTIFICATION_ITEM;
         $ret[2]['description'] = PageLocale::NOTIFICATION_ITEM_DSC;
-        $ret[2]['subscribe_from'] = array('viewpage.php');
+        $ret[2]['subscribe_from'] = ['viewpage.php'];
         $ret[2]['item_name'] = 'id';
         $ret[2]['allow_bookmark'] = 1;
         return $ret;
@@ -80,7 +80,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     {
         Xoops::getInstance()->loadLocale('page');
 
-        $ret = array();
+        $ret = [];
         $ret[1]['name'] = 'newcontent';
         $ret[1]['category'] = 'global';
         $ret[1]['title'] = PageLocale::NOTIFICATION_GLOBAL_NEWCONTENT;
@@ -90,6 +90,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         $ret[1]['mail_subject'] = PageLocale::NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
         return $ret;
     }
+
     /**
      * @param string $category
      * @param int    $item_id
@@ -99,6 +100,6 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      */
     public function tags($category, $item_id, $event)
     {
-        return array();
+        return [];
     }
 }

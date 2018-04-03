@@ -18,7 +18,7 @@
 
 class XcaptchaText extends Xcaptcha
 {
-    public $config = array();
+    public $config = [];
 
     public $plugin;
 
@@ -32,7 +32,7 @@ class XcaptchaText extends Xcaptcha
     function VerifyData()
     {
         $system = System::getInstance();
-        $config = array();
+        $config = [];
         $_POST['num_chars'] = $system->cleanVars($_POST, 'num_chars', 6, 'int');
         foreach (array_keys($this->config) as $key) {
             $config[$key] = $_POST[$key];

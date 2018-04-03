@@ -30,8 +30,8 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $itemid = Request::getInt('itemid');
 $item_page_id = Request::getInt('page', -1);
 
-if ($itemid == 0) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+if ($itemid === 0) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Creating the item object for the selected item
@@ -39,8 +39,8 @@ if ($itemid == 0) {
 $itemObj = $publisher->getItemHandler()->get($itemid);
 
 // if the selected item was not found, exit
-if (!$itemObj) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+if (! $itemObj) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 $xoops->header('module:publisher/publisher_item.tpl');
@@ -57,12 +57,12 @@ XoopsLoad::loadFile($publisher->path('footer.php'));
 $categoryObj = $publisher->getCategoryHandler()->get($itemObj->getVar('categoryid'));
 
 // Check user permissions to access that category of the selected item
-if (!$itemObj->accessGranted()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $itemObj->accessGranted()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 // Update the read counter of the selected item
-if (!$xoops->isUser() || (PublisherUtils::IsUserAdmin() && $publisher->getConfig('item_admin_hits') == 1) || ($xoops->isUser() && !PublisherUtils::IsUserAdmin())) {
+if (! $xoops->isUser() || (PublisherUtils::IsUserAdmin() && $publisher->getConfig('item_admin_hits') === 1) || ($xoops->isUser() && ! PublisherUtils::IsUserAdmin())) {
     $itemObj->updateCounter();
 }
 
@@ -84,7 +84,7 @@ switch ($publisher->getConfig('format_order_by')) {
         break;
 }
 
-if ($publisher->getConfig('item_other_items_type') === "previous_next") {
+if ($publisher->getConfig('item_other_items_type') === 'previous_next') {
     // Retrieving the next and previous object
     $previous_item_link = '';
     $previous_item_url = '';
@@ -110,15 +110,15 @@ if ($publisher->getConfig('item_other_items_type') === "previous_next") {
 }
 
 //CAREFUL!! with many items this will exhaust memory
-if ($publisher->getConfig('item_other_items_type') === "all") {
+if ($publisher->getConfig('item_other_items_type') === 'all') {
     $itemsObj = $publisher->getItemHandler()->getAllPublished(0, 0, $categoryObj->getVar('categoryid'), $sort, $order, '', true, true);
-    $items = array();
+    $items = [];
     /* @var $theitemObj PublisherItem */
     foreach ($itemsObj as $theitemObj) {
         $theitem['titlelink'] = $theitemObj->getItemLink();
         $theitem['datesub'] = $theitemObj->datesub();
         $theitem['counter'] = $theitemObj->getVar('counter');
-        if ($theitemObj->getVar('itemid')== $itemObj->getVar('itemid')) {
+        if ($theitemObj->getVar('itemid') === $itemObj->getVar('itemid')) {
             $theitem['titlelink'] = $theitemObj->title();
         }
         $items[] = $theitem;
@@ -133,7 +133,7 @@ $item = $itemObj->toArray($item_page_id);
 $xoopsTpl->assign('show_subtitle', $publisher->getConfig('item_disp_subtitle'));
 
 if ($itemObj->getVar('pagescount') > 0) {
-    if ($item_page_id == -1) {
+    if ($item_page_id === -1) {
         $item_page_id = 0;
     }
     $pagenav = new XoopsPageNav($itemObj->getVar('pagescount'), 1, $item_page_id, 'page', 'itemid=' . $itemObj->getVar('itemid'));
@@ -141,22 +141,22 @@ if ($itemObj->getVar('pagescount') > 0) {
 }
 
 // Creating the files object associated with this item
-$file = array();
-$files = array();
-$embeded_files = array();
+$file = [];
+$files = [];
+$embeded_files = [];
 $filesObj = $itemObj->getFiles();
 
 // check if user has permission to modify files
 $hasFilePermissions = true;
-if (!(PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj))) {
+if (! (PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj))) {
     $hasFilePermissions = false;
 }
 
 /* @var $fileObj PublisherFile */
 foreach ($filesObj as $fileObj) {
-    $file = array();
+    $file = [];
     $file['mod'] = false;
-    if ($hasFilePermissions || ($xoops->isUser() && $fileObj->getVar('uid') == $xoops->user->getVar('uid') )) {
+    if ($hasFilePermissions || ($xoops->isUser() && $fileObj->getVar('uid') === $xoops->user->getVar('uid') )) {
         $file['mod'] = true;
     }
 
@@ -189,7 +189,7 @@ $xoopsTpl->assign('itemid', $itemObj->getVar('itemid'));
 $xoopsTpl->assign('sectionname', $publisher->getModule()->getVar('name'));
 $xoopsTpl->assign('modulename', $publisher->getModule()->getVar('dirname'));
 $xoopsTpl->assign('module_home', PublisherUtils::moduleHome($publisher->getConfig('format_linked_path')));
-$xoopsTpl->assign('categoryPath', $item['categoryPath'] . " > " . $item['title']);
+$xoopsTpl->assign('categoryPath', $item['categoryPath'] . ' > ' . $item['title']);
 $xoopsTpl->assign('commentatarticlelevel', $publisher->getConfig('perm_com_art_level'));
 $xoopsTpl->assign('com_rule', $publisher->getConfig('com_rule'));
 $xoopsTpl->assign('other_items', $publisher->getConfig('item_other_items_type'));
@@ -209,7 +209,7 @@ $publisher_metagen = new PublisherMetagen($itemObj->getVar('title'), $itemObj->g
 $publisher_metagen->createMetaTags();
 
 // Include the comments if the selected ITEM supports comments
-if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') == 1) || !$publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') <> 0)) {
+if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') === 1) || ! $publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') !== 0)) {
     $xoopsTpl->assign('canComment', true);
     //Comments::getInstance()->renderView();
     // Problem with url_rewrite and posting comments :

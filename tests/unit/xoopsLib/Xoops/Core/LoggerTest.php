@@ -1,14 +1,14 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
-use Xoops\Core\Logger;
 use Psr\Log\LogLevel;
+use Xoops\Core\Logger;
 
 class MY_Logger
 {
-    public function log($level, $message, array $context = array(), $echo = true)
+    public function log($level, $message, array $context = [], $echo = true)
     {
-        $str = $level .':'. $message .':'. var_export($context,true);
+        $str = $level . ':' . $message . ':' . var_export($context, true);
         if ($echo)
             echo $str;
         else
@@ -72,13 +72,13 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $errline = 'errline';
 
         ob_start();
-        $instance->handleError($errno,$errstr,$errfile,$errline);
+        $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(false !== strpos($result,'notice:'));
-        $this->assertTrue(false !== strpos($result,'errstr'));
-        $this->assertTrue(false !== strpos($result,'errfile'));
-        $this->assertTrue(false !== strpos($result,'errline'));
+        $this->assertTrue(strpos($result, 'notice:') !== false);
+        $this->assertTrue(strpos($result, 'errstr') !== false);
+        $this->assertTrue(strpos($result, 'errfile') !== false);
+        $this->assertTrue(strpos($result, 'errline') !== false);
 	}
 
 	public function test_handleError120()
@@ -91,13 +91,13 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $errline = 'errline';
 
         ob_start();
-        $instance->handleError($errno,$errstr,$errfile,$errline);
+        $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(false !== strpos($result,'notice:'));
-        $this->assertTrue(false !== strpos($result,'errstr'));
-        $this->assertTrue(false !== strpos($result,'errfile'));
-        $this->assertTrue(false !== strpos($result,'errline'));
+        $this->assertTrue(strpos($result, 'notice:') !== false);
+        $this->assertTrue(strpos($result, 'errstr') !== false);
+        $this->assertTrue(strpos($result, 'errfile') !== false);
+        $this->assertTrue(strpos($result, 'errline') !== false);
 	}
 
 	public function test_handleError140()
@@ -110,18 +110,18 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $errline = 'errline';
 
         ob_start();
-        $instance->handleError($errno,$errstr,$errfile,$errline);
+        $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(false !== strpos($result,'warning:'));
-        $this->assertTrue(false !== strpos($result,'errstr'));
-        $this->assertTrue(false !== strpos($result,'errfile'));
-        $this->assertTrue(false !== strpos($result,'errline'));
+        $this->assertTrue(strpos($result, 'warning:') !== false);
+        $this->assertTrue(strpos($result, 'errstr') !== false);
+        $this->assertTrue(strpos($result, 'errfile') !== false);
+        $this->assertTrue(strpos($result, 'errline') !== false);
 	}
 
 	public function test_handleError160()
 	{
-        if (!(E_STRICT & error_reporting())) {
+        if (! (E_STRICT & error_reporting())) {
             $this->markTestSkipped('E_STRICT reporting is off');
         }
         $instance = $this->object;
@@ -132,13 +132,13 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $errline = 'errline';
 
         ob_start();
-        $instance->handleError($errno,$errstr,$errfile,$errline);
+        $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(false !== strpos($result,'warning:'));
-        $this->assertTrue(false !== strpos($result,'errstr'));
-        $this->assertTrue(false !== strpos($result,'errfile'));
-        $this->assertTrue(false !== strpos($result,'errline'));
+        $this->assertTrue(strpos($result, 'warning:') !== false);
+        $this->assertTrue(strpos($result, 'errstr') !== false);
+        $this->assertTrue(strpos($result, 'errfile') !== false);
+        $this->assertTrue(strpos($result, 'errline') !== false);
 	}
 
 	public function test_handleError200()
@@ -151,13 +151,13 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $errline = 'errline';
 
         ob_start();
-        $instance->handleError($errno,$errstr,$errfile,$errline);
+        $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(false !== strpos($result,'error:'));
-        $this->assertTrue(false !== strpos($result,'errstr'));
-        $this->assertTrue(false !== strpos($result,'errfile'));
-        $this->assertTrue(false !== strpos($result,'errline'));
+        $this->assertTrue(strpos($result, 'error:') !== false);
+        $this->assertTrue(strpos($result, 'errstr') !== false);
+        $this->assertTrue(strpos($result, 'errfile') !== false);
+        $this->assertTrue(strpos($result, 'errline') !== false);
 	}
 
 	public function test_handleException()
@@ -203,12 +203,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->emergency($message,$context);
+        $instance->emergency($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::EMERGENCY,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::EMERGENCY, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -217,12 +217,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->alert($message,$context);
+        $instance->alert($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::ALERT,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::ALERT, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -231,12 +231,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->critical($message,$context);
+        $instance->critical($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::CRITICAL,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::CRITICAL, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -245,12 +245,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->error($message,$context);
+        $instance->error($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::ERROR,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::ERROR, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -259,12 +259,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->warning($message,$context);
+        $instance->warning($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::WARNING,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::WARNING, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -273,12 +273,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->notice($message,$context);
+        $instance->notice($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::NOTICE,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::NOTICE, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -287,12 +287,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->info($message,$context);
+        $instance->info($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::INFO,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::INFO, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -301,12 +301,12 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $message = 'message';
-        $context = array('k1'=>'v1', 'k2'=>'v2');
+        $context = ['k1' => 'v1', 'k2' => 'v2'];
         ob_start();
-        $instance->debug($message,$context);
+        $instance->debug($message, $context);
         $result = ob_get_clean();
 
-        $expected = $this->logger->log(LogLevel::DEBUG,$message,$context,false);
+        $expected = $this->logger->log(LogLevel::DEBUG, $message, $context, false);
         $this->assertSame($expected, $result);
 	}
 
@@ -326,9 +326,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 	{
         if (! class_exists('', false)) {
             $path = \XoopsBaseConfig::get('root-path');
-            XoopsLoad::addMap(array(
+            XoopsLoad::addMap([
                 'debugbarlogger' => $path . '/modules/debugbar/class/debugbarlogger.php',
-            ));
+            ]);
         }
 
         $instance = $this->object;
@@ -340,6 +340,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $expected = $this->logger->quiet(false);
         $this->assertSame($expected, $result);
 	}
+
 /*
 	public function test___get()
 	{

@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class ColorPickerTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +18,7 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->object = new ColorPicker('Caption', 'name');
-        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme);
+        \Xoops::getInstance()->setTheme(new \Xoops\Core\Theme\NullTheme());
         //$this->markTestSkipped('side effects');
     }
 
@@ -46,10 +47,10 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new ColorPicker('mycaption', 'myname');
-        $newWay = new ColorPicker(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname',]);
+        $newWay = new ColorPicker(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname', ]);
 
-        $this->assertEquals(substr($oldWay->render(),0,18), substr($newWay->render(),0,18));
-        $this->assertEquals(substr($oldWay->render(),-40), substr($newWay->render(),-40));
-        $this->assertEquals(strlen($oldWay->render()), strlen($newWay->render()));
+        $this->assertSame(substr($oldWay->render(), 0, 18), substr($newWay->render(), 0, 18));
+        $this->assertSame(substr($oldWay->render(), -40), substr($newWay->render(), -40));
+        $this->assertSame(strlen($oldWay->render()), strlen($newWay->render()));
     }
 }

@@ -30,25 +30,25 @@ $xoops = Xoops::getInstance();
 //$xoops->pathTranslation(); // alread run in Xoops __construct
 
 // Fetch path from query string if path is not set, i.e. through a direct request
-if (!isset($path)) {
-    if (!empty($_SERVER['QUERY_STRING'])) {
+if (! isset($path)) {
+    if (! empty($_SERVER['QUERY_STRING'])) {
         $path = $_SERVER['QUERY_STRING'];
         $path = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
     } else {
-        header("HTTP/1.0 404 Not Found");
+        header('HTTP/1.0 404 Not Found');
         exit();
     }
 }
 
 $path_type = substr($path, 0, strpos($path, '/'));
-if (!isset($xoops->paths[$path_type])) {
-    $path = "XOOPS/" . $path;
-    $path_type = "XOOPS";
+if (! isset($xoops->paths[$path_type])) {
+    $path = 'XOOPS/' . $path;
+    $path_type = 'XOOPS';
 }
 
 //We are not allowing output of xoops_data
 if ($path_type === 'var') {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
@@ -56,14 +56,14 @@ $file = realpath($xoops->path($path));
 $dir = realpath($xoops->paths[$path_type][0]);
 
 //We are not allowing directory traversal either
-if ($file===false || $dir===false || !strstr($file, $dir)) {
-    header("HTTP/1.0 404 Not Found");
+if ($file === false || $dir === false || ! strstr($file, $dir)) {
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 //We can't output empty files and php files do not output
 if (empty($file) || strpos($file, '.php') !== false) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
@@ -72,7 +72,7 @@ $mtime = filemtime($file);
 
 // Is there really a file to output?
 if ($mtime === false) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
@@ -88,15 +88,15 @@ $ext = (isset($path_parts['extension'])) ? $path_parts['extension'] : '';
 $mimetype = \Xoops\Core\MimeTypes::findType($ext);
 //Do not output garbage
 if (empty($mimetype)) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 // Output now
 // seconds, minutes, hours, days
-$expires = 60*60*24*15;
+$expires = 60 * 60 * 24 * 15;
 //header("Pragma: public");
-header("Cache-Control: public, max-age=" . $expires);
+header('Cache-Control: public, max-age=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', $mtime));
 header('Content-type: ' . $mimetype);

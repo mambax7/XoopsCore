@@ -31,13 +31,13 @@ $xoops = \Xoops::getInstance();
 $xoops->header('admin:waiting/waiting_admin_plugins.tpl');
 (new \Xoops\Module\Admin())->renderNavigation('plugins.php');
 
-$contents = array();
+$contents = [];
 $plugins = Plugin::getPlugins('waiting');
 foreach ($plugins as $dirName => $plugin) {
 
     //No permissions, no links
     $helper = \Xoops::getModuleHelper($dirName);
-    if (!$helper->isUserAdmin()) {
+    if (! $helper->isUserAdmin()) {
         continue;
     }
 
@@ -48,7 +48,7 @@ foreach ($plugins as $dirName => $plugin) {
                 $contents[] = [
                     'pluginDirName' => $dirName,
                     'pluginName' => $xoops->getModuleByDirname($dirName)->getVar('name'),
-                    'pluginItems' => $res
+                    'pluginItems' => $res,
                 ];
             } else {
                 $contents[] = [
@@ -57,8 +57,8 @@ foreach ($plugins as $dirName => $plugin) {
                     'pluginItems' => [
                         'name' => '',
                         'link' => '',
-                        'count' => 0
-                    ]
+                        'count' => 0,
+                    ],
                 ];
             }
         }

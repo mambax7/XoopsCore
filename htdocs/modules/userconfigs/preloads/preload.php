@@ -9,8 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\PreloadItem;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
+use Xoops\Core\PreloadItem;
 
 /**
  * Userconfigs
@@ -23,28 +23,23 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  */
 class UserconfigsPreload extends PreloadItem
 {
-
     /**
      * add any module specific class map entries
      *
      * @param mixed $args not used
-     *
-     * @return void
      */
     public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
-        XoopsLoad::addMap(array(
+        XoopsLoad::addMap([
             'userconfigs' => $path . '/class/helper.php',
-        ));
+        ]);
     }
 
     /**
      * remove any userconfigs for module being uninstalled
      *
      * @param XoopsModule $module module object
-     *
-     * @return void
      */
     public static function eventSystemModuleUninstall(XoopsModule $module)
     {

@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../../init_new.php';
 
 class QuoteTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,7 +50,7 @@ class QuoteTest extends \PHPUnit\Framework\TestCase
         $in = '[quote]stuff[/quote]';
         $expected = 'Quote:<div class="xoopsQuote"><blockquote>stuff</blockquote></div>';
         $actual = $this->sanitizer->executeFilter('quote', $in);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
         //var_dump($actual);
     }
 }

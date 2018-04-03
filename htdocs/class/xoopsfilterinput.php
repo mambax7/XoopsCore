@@ -32,6 +32,6 @@
  * @link      http://xoops.org
  * @since     2.5.7
  */
-class XoopsFilterInput extends Xmf\FilterInput
+class xoopsfilterinput extends Xmf\FilterInput
 {
 }

@@ -37,7 +37,7 @@ function page_blocks_show($options)
             $block[$k] = $v;
         }
         // related
-        $block['related'] =  $page->getLinkHandler()->menu_related($options[1]);
+        $block['related'] = $page->getLinkHandler()->menu_related($options[1]);
 
         // get vote by user
         $block['yourvote'] = $page->getRatingHandler()->getVotebyUser($options[1]);
@@ -49,7 +49,7 @@ function page_blocks_show($options)
         $block['mode'] = $options[0];
 
         if ($options[0] === 'random') {
-            $sort = ('sqlite' === \XoopsBaseConfig::get('db-type')) ? 'RANDOM()' : 'RAND()';
+            $sort = (\XoopsBaseConfig::get('db-type') === 'sqlite') ? 'RANDOM()' : 'RAND()';
             $content = $page->getContentHandler()->getPagePublished(0, $options[3], $sort);
         } else {
             $content = $page->getContentHandler()->getPagePublished(0, $options[3], 'content_' . $options[1], $options[2]);

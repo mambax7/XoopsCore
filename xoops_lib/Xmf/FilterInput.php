@@ -35,13 +35,16 @@ namespace Xmf;
 class FilterInput
 {
     protected $tagsArray;         // default is empty array
+
     protected $attrArray;         // default is empty array
 
     protected $tagsMethod;        // default is 0
+
     protected $attrMethod;        // default is 0
 
     protected $xssAuto;           // default is 1
-    protected $tagBlacklist = array(
+
+    protected $tagBlacklist = [
         'applet',
         'body',
         'bgsound',
@@ -63,10 +66,11 @@ class FilterInput
         'script',
         'style',
         'title',
-        'xml'
-    );
+        'xml',
+    ];
+
     // also will strip ALL event handlers
-    protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
+    protected $attrBlacklist = ['action', 'background', 'codebase', 'dynsrc', 'lowsrc'];
 
     /**
      * Constructor
@@ -78,8 +82,8 @@ class FilterInput
      * @param int   $xssAuto    - 0 = only auto clean essentials, 1 = allow clean blacklisted tags/attr
      */
     protected function __construct(
-        $tagsArray = array(),
-        $attrArray = array(),
+        $tagsArray = [],
+        $attrArray = [],
         $tagsMethod = 0,
         $attrMethod = 0,
         $xssAuto = 1
@@ -94,11 +98,11 @@ class FilterInput
             $attrArray[$i] = strtolower($attrArray[$i]);
         }
         // assign to member vars
-        $this->tagsArray  = (array) $tagsArray;
-        $this->attrArray  = (array) $attrArray;
+        $this->tagsArray = (array) $tagsArray;
+        $this->attrArray = (array) $attrArray;
         $this->tagsMethod = $tagsMethod;
         $this->attrMethod = $attrMethod;
-        $this->xssAuto    = $xssAuto;
+        $this->xssAuto = $xssAuto;
     }
 
     /**
@@ -117,8 +121,8 @@ class FilterInput
      * @return FilterInput object.
      */
     public static function getInstance(
-        $tagsArray = array(),
-        $attrArray = array(),
+        $tagsArray = [],
+        $attrArray = [],
         $tagsMethod = 0,
         $attrMethod = 0,
         $xssAuto = 1
@@ -127,10 +131,10 @@ class FilterInput
 
         $className = get_called_class(); // so an extender gets an instance of itself
 
-        $sig = md5(serialize(array($className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto)));
+        $sig = md5(serialize([$className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto]));
 
-        if (!isset($instances)) {
-            $instances = array();
+        if (! isset($instances)) {
+            $instances = [];
         }
 
         if (empty($instances[$sig])) {
@@ -162,10 +166,10 @@ class FilterInput
         } elseif (is_string($source)) {
             // clean this string
             return $this->remove($this->decode($source));
-        } else {
+        }
             // return parameter as given
             return $source;
-        }
+
     }
 
     /**
@@ -186,7 +190,7 @@ class FilterInput
 
         // need an instance for methods, since this is supposed to be static
         // we must instantiate the class - this will take defaults
-        if (!is_object($filter)) {
+        if (! is_object($filter)) {
             $filter = static::getInstance();
         }
 
@@ -270,20 +274,20 @@ class FilterInput
                 $result = (string) $this->process($source);
                 // allow only relative, http or https
                 $urlparts = parse_url($result);
-                if (!empty($urlparts['scheme'])
-                    && !($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')
+                if (! empty($urlparts['scheme'])
+                    && ! ($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')
                 ) {
                     $result = '';
                 }
                 // do not allow quotes, tag brackets or controls
-                if (!preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
+                if (! preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
                     $result = '';
                 }
                 break;
 
             case 'EMAIL':
                 $result = (string) $source;
-                if (!filter_var((string) $source, FILTER_VALIDATE_EMAIL)) {
+                if (! filter_var((string) $source, FILTER_VALIDATE_EMAIL)) {
                     $result = '';
                 }
                 break;
@@ -292,7 +296,7 @@ class FilterInput
                 $result = (string) $source;
                 // this may be too restrictive.
                 // Should the FILTER_FLAG_NO_PRIV_RANGE flag be excluded?
-                if (!filter_var((string) $source, FILTER_VALIDATE_IP)) {
+                if (! filter_var((string) $source, FILTER_VALIDATE_IP)) {
                     $result = '';
                 }
                 break;
@@ -306,17 +310,99 @@ class FilterInput
     }
 
     /**
+     * gather - gather input from a source
+     *
+     * @param string $source    name of source superglobal, get, post or cookie
+     * @param array  $input_map each element of the array is an array consisting of
+     *                          elements to gather and clean from source
+     *                            - name - key in source superglobal, no default
+     *                            - type - FilterInput::clean type, default string
+     *                            - default - default value, default ''
+     *                            - trim - true to trim spaces from input, default true
+     *                            - max length - maximum length to accept, 0=no limit, default 0
+     *                          Example: array('op','string','view',true)
+     * @param mixed  $require   name of required element, or false for nothing
+     *                          required name. If the require name is set, values
+     *                          will only be returned if the key $require is set
+     *                          in the source array.
+     *
+     * @return array|false array of cleaned elements as specified by input_map, or
+     *                     false if require key specified but not set
+     *
+     * @deprecated
+     */
+    public static function gather($source, $input_map, $require = false)
+    {
+        $output = [];
+
+        if (! empty($source)) {
+            $source = strtolower($source);
+            foreach ($input_map as $input) {
+                // set defaults
+                if (isset($input[0])) {
+                    $name = $input[0];
+                    $type = isset($input[1]) ? $input[1] : 'string';
+                    $default = isset($input[2]) ?
+                        (($require && $require === $name) ? '' : $input[2]) : '';
+                    $trim = isset($input[3]) ? $input[3] : true;
+                    $maxlen = isset($input[4]) ? $input[4] : 0;
+                    $value = $default;
+                    switch ($source) {
+                        case 'get':
+                            if (isset($_GET[$name])) {
+                                $value = $_GET[$name];
+                            }
+                            break;
+                        case 'post':
+                            if (isset($_POST[$name])) {
+                                $value = $_POST[$name];
+                            }
+                            break;
+                        case 'cookie':
+                            if (isset($_COOKIE[$name])) {
+                                $value = $_COOKIE[$name];
+                            }
+                            break;
+                    }
+                    if ($trim) {
+                        $value = trim($value);
+                    }
+                    if ($maxlen > 0) {
+                        if (function_exists('mb_strlen')) {
+                            if (mb_strlen($value) > $maxlen) {
+                                $value = mb_substr($value, 0, $maxlen);
+                            }
+                        } else {
+                            $value = substr($value, 0, $maxlen);
+                        }
+                        if ($trim) {
+                            $value = trim($value);
+                        }
+                    }
+                    $output[$name] = self::clean($value, $type);
+                }
+            }
+        }
+        if ($require) {
+            if (empty($output[$require])) {
+                $output = false;
+            }
+        }
+        return $output;
+    }
+
+    /**
      * Internal method to iteratively remove all unwanted tags and attributes
      *
-     * @param String $source - input string to be 'cleaned'
+     * @param string $source - input string to be 'cleaned'
      *
-     * @return String $source - 'cleaned' version of input parameter
+     * @return string $source - 'cleaned' version of input parameter
      */
     protected function remove($source)
     {
         $loopCounter = 0;
         // provides nested-tag protection
-        while ($source != $this->filterTags($source)) {
+        while ($source !== $this->filterTags($source)) {
             $source = $this->filterTags($source);
             ++$loopCounter;
         }
@@ -327,9 +413,9 @@ class FilterInput
     /**
      * Internal method to strip a string of certain tags
      *
-     * @param String $source - input string to be 'cleaned'
+     * @param string $source - input string to be 'cleaned'
      *
-     * @return String $source - 'cleaned' version of input parameter
+     * @return string $source - 'cleaned' version of input parameter
      */
     protected function filterTags($source)
     {
@@ -359,14 +445,14 @@ class FilterInput
             }
             $currentTag = substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength = strlen($currentTag);
-            if (!$tagOpen_end) {
+            if (! $tagOpen_end) {
                 $preTag .= $postTag;
             }
             // iterate through tag finding attribute pairs - setup
             $tagLeft = $currentTag;
-            $attrSet = array();
+            $attrSet = [];
             $currentSpace = strpos($tagLeft, ' ');
-            if (substr($currentTag, 0, 1) === "/") {
+            if (substr($currentTag, 0, 1) === '/') {
                 // is end tag
                 $isCloseTag = true;
                 list($tagName) = explode(' ', $currentTag);
@@ -377,9 +463,9 @@ class FilterInput
                 list($tagName) = explode(' ', $currentTag);
             }
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName))
-                || (!$tagName)
-                || ((in_array(strtolower($tagName), $this->tagBlacklist))
+            if ((! preg_match('/^[a-z][a-z0-9]*$/i', $tagName))
+                || (! $tagName)
+                || ((in_array(strtolower($tagName), $this->tagBlacklist, true))
                     && ($this->xssAuto))
             ) {
                 $postTag = substr($postTag, ($tagLength + 2));
@@ -409,7 +495,7 @@ class FilterInput
                     $attr = substr($fromSpace, 0, $nextSpace);
                 }
                 // last attr pair
-                if (!$attr) {
+                if (! $attr) {
                     $attr = $fromSpace;
                 }
                 // add to attribute pairs array
@@ -419,11 +505,11 @@ class FilterInput
                 $currentSpace = strpos($tagLeft, ' ');
             }
             // appears in array specified by user
-            $tagFound = in_array(strtolower($tagName), $this->tagsArray);
+            $tagFound = in_array(strtolower($tagName), $this->tagsArray, true);
             // remove this tag on condition
-            if ((!$tagFound && $this->tagsMethod) || ($tagFound && !$this->tagsMethod)) {
+            if ((! $tagFound && $this->tagsMethod) || ($tagFound && ! $this->tagsMethod)) {
                 // reconstruct tag with allowed attributes
-                if (!$isCloseTag) {
+                if (! $isCloseTag) {
                     $attrSet = $this->filterAttr($attrSet);
                     $preTag .= '<' . $tagName;
                     $attrSetCount = count($attrSet);
@@ -431,7 +517,7 @@ class FilterInput
                         $preTag .= ' ' . $attrSet[$i];
                     }
                     // reformat single tags to XHTML
-                    if (strpos($fromTagOpen, "</" . $tagName)) {
+                    if (strpos($fromTagOpen, '</' . $tagName)) {
                         $preTag .= '>';
                     } else {
                         $preTag .= ' />';
@@ -460,21 +546,21 @@ class FilterInput
      */
     protected function filterAttr($attrSet)
     {
-        $newSet = array();
+        $newSet = [];
         // process attributes
         $attrSetCount = count($attrSet);
         for ($i = 0; $i < $attrSetCount; ++$i) {
             // skip blank spaces in tag
-            if (!$attrSet[$i]) {
+            if (! $attrSet[$i]) {
                 continue;
             }
             // split into attr name and value
             $attrSubSet = explode('=', trim($attrSet[$i]));
             list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
             // removes all "non-regular" attr names AND also attr blacklisted
-            if ((!preg_match('/[a-z]*$/i', $attrSubSet[0]))
+            if ((! preg_match('/[a-z]*$/i', $attrSubSet[0]))
                 || (($this->xssAuto)
-                    && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist))
+                    && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist, true))
                         || (substr($attrSubSet[0], 0, 2) === 'on')))
             ) {
                 continue;
@@ -510,13 +596,13 @@ class FilterInput
             }
 
             // if matches user defined array
-            $attrFound = in_array(strtolower($attrSubSet[0]), $this->attrArray);
+            $attrFound = in_array(strtolower($attrSubSet[0]), $this->attrArray, true);
             // keep this attr on condition
-            if ((!$attrFound && $this->attrMethod) || ($attrFound && !$this->attrMethod)) {
+            if ((! $attrFound && $this->attrMethod) || ($attrFound && ! $this->attrMethod)) {
                 if ($attrSubSet[1]) {
                     // attr has value
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
-                } elseif ($attrSubSet[1] == "0") {
+                } elseif ($attrSubSet[1] === '0') {
                     // attr has decimal zero as value
                     $newSet[] = $attrSubSet[0] . '="0"';
                 } else {
@@ -532,9 +618,9 @@ class FilterInput
     /**
      * Try to convert to plaintext
      *
-     * @param String $source string to decode
+     * @param string $source string to decode
      *
-     * @return String $source decoded
+     * @return string $source decoded
      */
     protected function decode($source)
     {
@@ -559,87 +645,5 @@ class FilterInput
         );
 
         return $source;
-    }
-
-    /**
-     * gather - gather input from a source
-     *
-     * @param string $source    name of source superglobal, get, post or cookie
-     * @param array  $input_map each element of the array is an array consisting of
-     *                          elements to gather and clean from source
-     *                            - name - key in source superglobal, no default
-     *                            - type - FilterInput::clean type, default string
-     *                            - default - default value, default ''
-     *                            - trim - true to trim spaces from input, default true
-     *                            - max length - maximum length to accept, 0=no limit, default 0
-     *                          Example: array('op','string','view',true)
-     * @param mixed  $require   name of required element, or false for nothing
-     *                          required name. If the require name is set, values
-     *                          will only be returned if the key $require is set
-     *                          in the source array.
-     *
-     * @return array|false array of cleaned elements as specified by input_map, or
-     *                     false if require key specified but not set
-     *
-     * @deprecated
-     */
-    public static function gather($source, $input_map, $require = false)
-    {
-        $output = array();
-
-        if (!empty($source)) {
-            $source = strtolower($source);
-            foreach ($input_map as $input) {
-                // set defaults
-                if (isset($input[0])) {
-                    $name = $input[0];
-                    $type = isset($input[1]) ? $input[1] : 'string';
-                    $default = isset($input[2]) ?
-                        (($require && $require==$name) ? '': $input[2]) : '';
-                    $trim = isset($input[3]) ? $input[3] : true;
-                    $maxlen = isset($input[4]) ? $input[4] : 0;
-                    $value = $default;
-                    switch ($source) {
-                        case 'get':
-                            if (isset($_GET[$name])) {
-                                $value=$_GET[$name];
-                            }
-                            break;
-                        case 'post':
-                            if (isset($_POST[$name])) {
-                                $value=$_POST[$name];
-                            }
-                            break;
-                        case 'cookie':
-                            if (isset($_COOKIE[$name])) {
-                                $value=$_COOKIE[$name];
-                            }
-                            break;
-                    }
-                    if ($trim) {
-                        $value = trim($value);
-                    }
-                    if ($maxlen>0) {
-                        if (function_exists('mb_strlen')) {
-                            if (mb_strlen($value)>$maxlen) {
-                                $value=mb_substr($value, 0, $maxlen);
-                            }
-                        } else {
-                            $value=substr($value, 0, $maxlen);
-                        }
-                        if ($trim) {
-                            $value = trim($value);
-                        }
-                    }
-                    $output[$name] = self::clean($value, $type);
-                }
-            }
-        }
-        if ($require) {
-            if (empty($output[$require])) {
-                $output = false;
-            }
-        }
-        return $output;
     }
 }

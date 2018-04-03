@@ -33,8 +33,8 @@ class Flash extends ExtensionAbstract
         'enabled' => false,
         'detect_dimension' => '1',
         'template' => '<object type="application/x-shockwave-flash" data="%1$s" width="%2$d" height="%3$d"></object>',
-        'fallback_width'  => "320",
-        'fallback_height' => "240",
+        'fallback_width' => '320',
+        'fallback_height' => '240',
     ];
 
     /**
@@ -89,20 +89,18 @@ EOF;
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
         $function = function ($attributes, $content, $tagName) {
-            if (array_key_exists(0, $attributes) && '=' === substr($attributes[0], 0, 1)) {
+            if (array_key_exists(0, $attributes) && substr($attributes[0], 0, 1) === '=') {
                 $args = ltrim($attributes[0], '=');
                 list($width, $height) = explode(',', $args);
                 $url = $content;
             } else {
                 $defaults = [
-                    'url'    => trim($content),
-                    'width'  => null,
+                    'url' => trim($content),
+                    'width' => null,
                     'height' => null,
                 ];
                 $cleanAttributes = $this->shortcodes->shortcodeAttributes($defaults, $attributes);
@@ -110,7 +108,7 @@ EOF;
                 $width = $cleanAttributes['width'];
                 $height = $cleanAttributes['height'];
             }
-            if ((empty($width) || empty($height)) && (bool)$this->config['detect_dimension']) {
+            if ((empty($width) || empty($height)) && (bool) $this->config['detect_dimension']) {
                 $dimension = @getimagesize($content);
                 if ($dimension !== false) {
                     list($width, $height) = $dimension;

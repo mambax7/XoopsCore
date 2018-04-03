@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../init_new.php');
+require_once(__DIR__ . '/../../../../init_new.php');
 
 class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,11 +15,11 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $this->assertInstanceOf($this->myclass, $criteria);
         $this->assertInstanceOf('Xoops\Core\Kernel\CriteriaElement', $criteria);
-        $this->assertEquals($column, $criteria->column);
-        $this->assertEquals($value, $criteria->value);
-        $this->assertEquals($operator, $criteria->operator);
-        $this->assertEquals($prefix, $criteria->prefix);
-        $this->assertEquals($function, $criteria->function);
+        $this->assertSame($column, $criteria->column);
+        $this->assertSame($value, $criteria->value);
+        $this->assertSame($operator, $criteria->operator);
+        $this->assertSame($prefix, $criteria->prefix);
+        $this->assertSame($function, $criteria->function);
     }
 
     public function test___construct100() {
@@ -29,11 +29,11 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $prefix = '';
         $function = '';
         $criteria = new $this->myclass($column);
-        $this->assertEquals($column, $criteria->column);
-        $this->assertEquals($value, $criteria->value);
-        $this->assertEquals($operator, $criteria->operator);
-        $this->assertEquals($prefix, $criteria->prefix);
-        $this->assertEquals($function, $criteria->function);
+        $this->assertSame($column, $criteria->column);
+        $this->assertSame($value, $criteria->value);
+        $this->assertSame($operator, $criteria->operator);
+        $this->assertSame($prefix, $criteria->prefix);
+        $this->assertSame($function, $criteria->function);
     }
 
     public function test_render()
@@ -45,7 +45,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column);
         $clause = $criteria->render();
-        $this->assertEquals('', $clause);
+        $this->assertSame('', $clause);
     }
 
     public function test_render100()
@@ -57,7 +57,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->render();
-        $this->assertEquals("$column $operator '$value'", $clause);
+        $this->assertSame("${column} ${operator} '${value}'", $clause);
     }
 
     public function test_render200()
@@ -69,7 +69,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->render();
-        $this->assertEquals("$prefix.$column $operator", $clause);
+        $this->assertSame("${prefix}.${column} ${operator}", $clause);
     }
 
     public function test_render300()
@@ -81,7 +81,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->render();
-        $this->assertEquals("$prefix.$column $operator", $clause);
+        $this->assertSame("${prefix}.${column} ${operator}", $clause);
     }
 
     public function test_render400()
@@ -93,7 +93,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->render();
-        $this->assertEquals("$prefix.$column $operator $value", $clause);
+        $this->assertSame("${prefix}.${column} ${operator} ${value}", $clause);
     }
 
     public function test_render500()
@@ -105,7 +105,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->render();
-        $this->assertEquals("$prefix.$column $operator $value", $clause);
+        $this->assertSame("${prefix}.${column} ${operator} ${value}", $clause);
     }
 
     public function test_renderLdap()
@@ -117,7 +117,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->renderLdap();
-        $this->assertEquals("($column $operator $value)", $clause);
+        $this->assertSame("(${column} ${operator} ${value})", $clause);
     }
 
     public function test_renderWhere()
@@ -129,7 +129,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $clause = $criteria->renderWhere();
-        $this->assertEquals("WHERE $prefix.$column $operator $value", $clause);
+        $this->assertSame("WHERE ${prefix}.${column} ${operator} ${value}", $clause);
     }
 
     public function test_renderQb()
@@ -154,7 +154,6 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
 		$qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
 		$x = $criteria->buildExpressionQb($qb);
-		$this->assertSame("$prefix.$column ".strtoupper($operator)." $value", $x);
+		$this->assertSame("${prefix}.${column} " . strtoupper($operator) . " ${value}", $x);
     }
-
 }

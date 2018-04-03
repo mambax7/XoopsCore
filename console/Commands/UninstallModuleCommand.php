@@ -3,21 +3,20 @@
 namespace XoopsConsole\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Xoops\Core\XoopsTpl;
 
 class UninstallModuleCommand extends Command
 {
     protected function configure()
     {
-        $this->setName("uninstall-module")
-            ->setDescription("Uninstall a module")
-            ->setDefinition(array(
+        $this->setName('uninstall-module')
+            ->setDescription('Uninstall a module')
+            ->setDefinition([
                 new InputArgument('module', InputArgument::REQUIRED, 'Module directory name'),
-            ))->setHelp(<<<EOT
+            ])->setHelp(<<<EOT
 The <info>uninstall-module</info> command uninstalls a currently installed module.
 EOT
             );
@@ -28,7 +27,7 @@ EOT
         $module = $input->getArgument('module');
         $output->writeln(sprintf('Uninstalling %s', $module));
         $xoops = \Xoops::getInstance();
-        if (false === $xoops->getModuleByDirname($module)) {
+        if ($xoops->getModuleByDirname($module) === false) {
             $output->writeln(sprintf('<error>%s is not an installed module!</error>', $module));
             return;
         }
@@ -39,7 +38,7 @@ EOT
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {
                 foreach ($message as $subMessage) {
-                    if (!is_array($subMessage)) {
+                    if (! is_array($subMessage)) {
                         $output->writeln(strip_tags($subMessage));
                     }
                 }
@@ -47,7 +46,7 @@ EOT
                 $output->writeln(strip_tags($message));
             }
         }
-        if ($result===false) {
+        if ($result === false) {
             $output->writeln(sprintf('<error>Uninstall of %s failed!</error>', $module));
         } else {
             $output->writeln(sprintf('<info>Uninstall of %s completed.</info>', $module));

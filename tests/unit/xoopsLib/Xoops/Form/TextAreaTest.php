@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class TextAreaTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,20 +50,20 @@ class TextAreaTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(false !== strpos($value, '<textarea'));
-        $this->assertTrue(false !== strpos($value, 'name="name"'));
-        $this->assertTrue(false !== strpos($value, 'rows="5"'));
-        $this->assertTrue(false !== strpos($value, 'cols="10"'));
-        $this->assertTrue(false !== strpos($value, 'placeholder="placeholder"'));
-        $this->assertTrue(false !== strpos($value, 'title="Caption"'));
-        $this->assertTrue(false !== strpos($value, 'id="name"'));
-        $this->assertTrue(false !== strpos($value, '>value<'));
+        $this->assertTrue(strpos($value, '<textarea') !== false);
+        $this->assertTrue(strpos($value, 'name="name"') !== false);
+        $this->assertTrue(strpos($value, 'rows="5"') !== false);
+        $this->assertTrue(strpos($value, 'cols="10"') !== false);
+        $this->assertTrue(strpos($value, 'placeholder="placeholder"') !== false);
+        $this->assertTrue(strpos($value, 'title="Caption"') !== false);
+        $this->assertTrue(strpos($value, 'id="name"') !== false);
+        $this->assertTrue(strpos($value, '>value<') !== false);
     }
 
     public function test__construct()
     {
         $oldWay = new TextArea('mycaption', 'myname', 'myvalue');
-        $newWay = new TextArea(['caption' => 'mycaption', 'name' => 'myname', 'value' => 'myvalue',]);
-        $this->assertEquals($oldWay->render(), $newWay->render());
+        $newWay = new TextArea(['caption' => 'mycaption', 'name' => 'myname', 'value' => 'myvalue', ]);
+        $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

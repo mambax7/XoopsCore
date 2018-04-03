@@ -28,7 +28,7 @@
  * @subpackage Lists
  * @access public
  */
-class XoopsLists
+class xoopslists
 {
     /**
      * get list of timezones
@@ -79,7 +79,7 @@ class XoopsLists
      */
     public static function getDirListAsArray($path)
     {
-        $ignored = array('cvs', '_darcs');
+        $ignored = ['cvs', '_darcs'];
         return \Xoops\Core\Lists\Directory::getList($path, $ignored);
     }
 
@@ -91,7 +91,6 @@ class XoopsLists
      *
      * @return array
      */
-
     public static function getFileListAsArray($path, $prefix = '')
     {
         return \Xoops\Core\Lists\File::getList($path, $prefix);
@@ -143,7 +142,7 @@ class XoopsLists
      */
     public static function getLangList()
     {
-        $lang_list = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/language/');
+        $lang_list = self::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/language/');
 
         return $lang_list;
     }

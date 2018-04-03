@@ -1,9 +1,10 @@
 <?php
+
 namespace Xoops\Core\Text\Sanitizer;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__.'/../../../../../init_new.php';
+require_once __DIR__ . '/../../../../../init_new.php';
 
 class NullFilterTest extends \PHPUnit\Framework\TestCase
 {
@@ -40,6 +41,6 @@ class NullFilterTest extends \PHPUnit\Framework\TestCase
         $text = 'Why does my cat sleep so much?';
         $expected = $text;
         $actual = $this->sanitizer->executeFilter('nosuchfilter', $text);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

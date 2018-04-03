@@ -73,8 +73,6 @@ EOH;
 
     /**
      * Register extension with the supplied sanitizer instance
-     *
-     * @return void
      */
     public function registerExtensionProcessing()
     {
@@ -87,7 +85,7 @@ EOH;
 
                 $template = '<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6"'
                     . ' id="WindowsMediaPlayer" width="%2$s" height="%3$s">' . "\n"
-                    . '<param name="URL" value="%1$s">'. "\n"
+                    . '<param name="URL" value="%1$s">' . "\n"
                     . '<param name="AutoStart" value="0">' . "\n"
                     . '<embed autostart="0" src="%1$s" type="video/x-ms-wmv" width="%2$s" height="%3$s"'
                     . ' controls="ImageWindow" console="cons"> </embed>' . "\n"

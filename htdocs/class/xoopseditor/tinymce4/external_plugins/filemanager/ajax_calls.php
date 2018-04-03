@@ -1,7 +1,7 @@
 <?php
 
 include('config/config.php');
-if($_SESSION['RF']["verify"] !== "RESPONSIVEfilemanager") die('Access Denied!');
+if($_SESSION['RF']['verify'] !== 'RESPONSIVEfilemanager') die('Access Denied!');
 include('include/utils.php');
 
 if (isset($_SESSION['RF']['language_file']) && file_exists($_SESSION['RF']['language_file'])){
@@ -11,13 +11,13 @@ else {
 	die('Language file is missing!');
 }
 
-if(isset($_GET['action'])) 
+if(isset($_GET['action']))
 {
-    switch($_GET['action']) 
+    switch($_GET['action'])
     {
 		case 'view':
 		    if(isset($_GET['type'])) {
-				$_SESSION['RF']["view_type"] = $_GET['type'];
+				$_SESSION['RF']['view_type'] = $_GET['type'];
 			}
 			else {
 				die('view type number missing');
@@ -25,83 +25,83 @@ if(isset($_GET['action']))
 			break;
 		case 'sort':
 			if(isset($_GET['sort_by'])) {
-				$_SESSION['RF']["sort_by"] = $_GET['sort_by'];
+				$_SESSION['RF']['sort_by'] = $_GET['sort_by'];
 			}
-			
+
 			if(isset($_GET['descending'])) {
-				$_SESSION['RF']["descending"] = $_GET['descending'] === "TRUE";
+				$_SESSION['RF']['descending'] = $_GET['descending'] === 'TRUE';
 			}
 			break;
 		case 'image_size': // not used
-	    	$pos = strpos($_POST['path'],$upload_dir);
-			if ($pos !== FALSE) 
+	    	$pos = strpos($_POST['path'], $upload_dir);
+			if ($pos !== FALSE)
 			{
-				$info=getimagesize(substr_replace($_POST['path'],$current_path,$pos,strlen($upload_dir)));
+				$info = getimagesize(substr_replace($_POST['path'], $current_path, $pos, strlen($upload_dir)));
 				echo json_encode($info);
 			}
 	    	break;
 		case 'save_img':
-		    $info=pathinfo($_POST['name']);
+		    $info = pathinfo($_POST['name']);
 
 		    if (strpos($_POST['path'], '/') === 0
 			|| strpos($_POST['path'], '../') !== FALSE
 			|| strpos($_POST['path'], './') === 0
 			|| strpos($_POST['url'], 'http://featherfiles.aviary.com/') !== 0
-			|| $_POST['name'] != fix_filename($_POST['name'], $transliteration)
-			|| !in_array(strtolower($info['extension']), array('jpg','jpeg','png')))
+			|| $_POST['name'] !== fix_filename($_POST['name'], $transliteration)
+			|| ! in_array(strtolower($info['extension']), ['jpg', 'jpeg', 'png'], true))
 		    {
 			    die('wrong data');
 			}
 
 		    $image_data = get_file_by_url($_POST['url']);
-		    if ($image_data === FALSE) 
+		    if ($image_data === FALSE)
 		    {
 		        die(lang_Aviary_No_Save);
 		    }
 
-		    file_put_contents($current_path.$_POST['path'].$_POST['name'],$image_data);
+		    file_put_contents($current_path . $_POST['path'] . $_POST['name'], $image_data);
 
-		    create_img_gd($current_path.$_POST['path'].$_POST['name'], $thumbs_base_path.$_POST['path'].$_POST['name'], 122, 91);
+		    create_img_gd($current_path . $_POST['path'] . $_POST['name'], $thumbs_base_path . $_POST['path'] . $_POST['name'], 122, 91);
 		    // TODO something with this function cause its blowing my mind
-		    new_thumbnails_creation($current_path.$_POST['path'],$current_path.$_POST['path'].$_POST['name'],$_POST['name'],$current_path,$relative_image_creation,$relative_path_from_current_pos,$relative_image_creation_name_to_prepend,$relative_image_creation_name_to_append,$relative_image_creation_width,$relative_image_creation_height,$fixed_image_creation,$fixed_path_from_filemanager,$fixed_image_creation_name_to_prepend,$fixed_image_creation_to_append,$fixed_image_creation_width,$fixed_image_creation_height);
+		    new_thumbnails_creation($current_path . $_POST['path'], $current_path . $_POST['path'] . $_POST['name'], $_POST['name'], $current_path, $relative_image_creation, $relative_path_from_current_pos, $relative_image_creation_name_to_prepend, $relative_image_creation_name_to_append, $relative_image_creation_width, $relative_image_creation_height, $fixed_image_creation, $fixed_path_from_filemanager, $fixed_image_creation_name_to_prepend, $fixed_image_creation_to_append, $fixed_image_creation_width, $fixed_image_creation_height);
 		    break;
 		case 'extract':
-		    if(strpos($_POST['path'],'/')===0 || strpos($_POST['path'],'../')!==FALSE || strpos($_POST['path'],'./')===0) {
+		    if(strpos($_POST['path'], '/') === 0 || strpos($_POST['path'], '../') !== FALSE || strpos($_POST['path'], './') === 0) {
 				die('wrong path');
 			}
 
-		    $path = $current_path.$_POST['path'];
+		    $path = $current_path . $_POST['path'];
 		    $info = pathinfo($path);
-		    $base_folder = $current_path.fix_dirname($_POST['path'])."/";
+		    $base_folder = $current_path . fix_dirname($_POST['path']) . '/';
 
 		    switch($info['extension'])
 		    {
-				case "zip":
-				    $zip = new ZipArchive;
+				case 'zip':
+				    $zip = new ZipArchive();
 				    if ($zip->open($path) === TRUE) {
 						//make all the folders
-						for($i = 0; $i < $zip->numFiles; $i++) 
-						{ 
+						for($i = 0; $i < $zip->numFiles; $i++)
+						{
 						    $OnlyFileName = $zip->getNameIndex($i);
-						    $FullFileName = $zip->statIndex($i);    
-						    if (substr($FullFileName['name'], -1, 1) ==="/")
+						    $FullFileName = $zip->statIndex($i);
+						    if (substr($FullFileName['name'], -1, 1) === '/')
 						    {
-								create_folder($base_folder.$FullFileName['name']);
+								create_folder($base_folder . $FullFileName['name']);
 						    }
 						}
 						//unzip into the folders
-						for($i = 0; $i < $zip->numFiles; $i++) 
-						{ 
+						for($i = 0; $i < $zip->numFiles; $i++)
+						{
 						    $OnlyFileName = $zip->getNameIndex($i);
-						    $FullFileName = $zip->statIndex($i);    
-					    
-						    if (!(substr($FullFileName['name'], -1, 1) ==="/"))
+						    $FullFileName = $zip->statIndex($i);
+
+						    if (! (substr($FullFileName['name'], -1, 1) === '/'))
 						    {
 								$fileinfo = pathinfo($OnlyFileName);
-								if(in_array(strtolower($fileinfo['extension']),$ext))
+								if(in_array(strtolower($fileinfo['extension']), $ext, true))
 								{
-								    copy('zip://'. $path .'#'. $OnlyFileName , $base_folder.$FullFileName['name'] ); 
-								} 
+								    copy('zip://' . $path . '#' . $OnlyFileName, $base_folder . $FullFileName['name'] );
+								}
 						    }
 						}
 						$zip->close();
@@ -112,19 +112,19 @@ if(isset($_GET['action']))
 
 				    break;
 
-				case "gz":
+				case 'gz':
 				    $p = new PharData($path);
 				    $p->decompress(); // creates files.tar
 
 				    break;
 
-				case "tar":
+				case 'tar':
 				    // unarchive from the tar
 				    $phar = new PharData($path);
 				    $phar->decompressFiles();
-				    $files = array();
+				    $files = [];
 				    check_files_extensions_on_phar( $phar, $files, '', $ext );
-				    $phar->extractTo( $current_path.fix_dirname( $_POST['path'] )."/", $files, TRUE );
+				    $phar->extractTo( $current_path . fix_dirname( $_POST['path'] ) . '/', $files, TRUE );
 
 				    break;
 
@@ -132,8 +132,8 @@ if(isset($_GET['action']))
 					die(lang_Zip_Invalid);
 		    }
 		    break;
-		case 'media_preview':    
-			$preview_file = $_GET["file"];
+		case 'media_preview':
+			$preview_file = $_GET['file'];
 			$info = pathinfo($preview_file);
 			?>
 			<div id="jp_container_1" class="jp-video " style="margin:0 auto;">
@@ -184,7 +184,7 @@ if(isset($_GET['action']))
 			    </div>
 			  </div>
 			<?php
-			if(in_array(strtolower($info['extension']), $ext_music)) {
+			if(in_array(strtolower($info['extension']), $ext_music, true)) {
 			?>
 
 				<script type="text/javascript">
@@ -210,7 +210,7 @@ if(isset($_GET['action']))
 				  </script>
 
 			<?php
-			} elseif(in_array(strtolower($info['extension']), $ext_video)) {
+			} elseif(in_array(strtolower($info['extension']), $ext_video, true)) {
 			?>
 			    
 			    <script type="text/javascript">
@@ -242,13 +242,13 @@ if(isset($_GET['action']))
 				die('wrong sub-action');
 			}
 
-			if (trim($_POST['path']) == '' || trim($_POST['path_thumb']) == '') {
+			if (trim($_POST['path']) === '' || trim($_POST['path_thumb']) === '') {
 				die('no path');
 			}
 
-			$path = $current_path.$_POST['path'];
+			$path = $current_path . $_POST['path'];
 		    $info = pathinfo($path);
-		    $base_folder = $current_path.fix_dirname($_POST['path'])."/";
+		    $base_folder = $current_path . fix_dirname($_POST['path']) . '/';
 
 			if (is_dir($path))
 			{
@@ -289,7 +289,7 @@ if(isset($_GET['action']))
 	    default: die('no action passed');
     }
 }
-else 
+else
 {
 	die('no action passed');
 }

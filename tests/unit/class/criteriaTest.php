@@ -1,10 +1,10 @@
 <?php
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
-class CriteriaTest extends \PHPUnit\Framework\TestCase
+class criteriaTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'Criteria';
-    
+
     public function test___construct()
     {
         $column = 'column';

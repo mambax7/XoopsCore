@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../../../init_new.php';
+require_once __DIR__ . '/../../../init_new.php';
 
 use Xoops\Core\HttpRequest;
 
@@ -9,7 +9,9 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
      * @var HttpRequest
      */
     protected $object;
+
     protected $myClass = '\Xoops\Core\HttpRequest';
+
     protected $save_SERVER = null;
 
     /**
@@ -181,7 +183,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $_SERVER = array();
+        $_SERVER = [];
         $_SERVER['PATH_TRANSLATED'] = '//a///test//test.php';
         $this->assertSame('/a/test/test.php', $instance->getEnv('SCRIPT_FILENAME'));
 
@@ -192,7 +194,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
 
     public function test_getEnv_document_root()
     {
-        $_SERVER = array();
+        $_SERVER = [];
         $_SERVER['SCRIPT_NAME'] = 'test/filename';
         $_SERVER['SCRIPT_FILENAME'] = '/a/test/filename.php';
         $this->assertSame('/a/', $this->object->getEnv('DOCUMENT_ROOT'));
@@ -201,7 +203,7 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
 
     public function test_getEnv_php_self()
     {
-        $_SERVER = array();
+        $_SERVER = [];
         $_SERVER['DOCUMENT_ROOT'] = '/a/dir';
         $_SERVER['SCRIPT_FILENAME'] = '/a/dir/test/filename.php';
         $this->assertSame('/test/filename.php', $this->object->getEnv('PHP_SELF'));
@@ -311,26 +313,26 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
     public function testGetAcceptMediaTypes()
     {
         $_SERVER['HTTP_ACCEPT'] = 'text/html,application/xml;q=0.9,*/*;q=0.1';
-        $expected = array(
+        $expected = [
             'text/html' => 1,
             'application/xml' => 0.9,
             '*/*' => 0.1,
-        );
+        ];
         $actual = $this->object->getAcceptMediaTypes();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testGetAcceptedLanguages()
     {
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-ca,en;q=0.8,en-us;q=0.6,de-de;q=0.4,de;q=0.2';
-        $expected = array(
+        $expected = [
             'en-ca' => 1,
             'en' => 0.8,
             'en-us' => 0.6,
             'de-de' => 0.4,
             'de' => 0.2,
-        );
+        ];
         $actual = $this->object->getAcceptedLanguages();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

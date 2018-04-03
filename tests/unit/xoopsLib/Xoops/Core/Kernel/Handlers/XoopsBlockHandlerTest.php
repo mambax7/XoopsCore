@@ -1,17 +1,19 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
+use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\Handlers\XoopsBlock;
 use Xoops\Core\Kernel\Handlers\XoopsBlockHandler;
-use Xoops\Core\Kernel\Criteria;
 
 class BlockHandlerTest extends \PHPUnit\Framework\TestCase
 {
-    protected $myClass='Xoops\Core\Kernel\Handlers\XoopsBlockHandler';
+    protected $myClass = 'Xoops\Core\Kernel\Handlers\XoopsBlockHandler';
+
     protected $conn = null;
+
     protected $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->conn = Xoops::getInstance()->db();
         $this->conn->setSafe();
@@ -41,9 +43,9 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $block->setNew();
         $value = $this->object->insertBlock($block);
         $bid = $block->bid();
-        $this->assertEquals($bid, $value);
+        $this->assertSame($bid, $value);
         $value = $this->object->get($bid);
-        $this->assertEquals($bid, $value->bid());
+        $this->assertSame($bid, $value->bid());
         $value = $this->object->deleteBlock($block);
         $this->assertSame(true, $value);
         $value = $this->object->get($bid);
@@ -77,7 +79,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->getAllBlocksByGroup(1, false);
         $this->assertTrue(is_array($value));
 
-        $value = $this->object->getAllBlocksByGroup(array(1, 1, 1), false);
+        $value = $this->object->getAllBlocksByGroup([1, 1, 1], false);
         $this->assertTrue(is_array($value));
 
         $value = $this->object->getAllBlocksByGroup(1, true, XOOPS_SIDEBLOCK_BOTH);
@@ -131,7 +133,7 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $this->object->getAllByGroupModule(1);
         $this->assertTrue(is_array($value));
 
-        $value = $this->object->getAllByGroupModule(array(1, 1, 1));
+        $value = $this->object->getAllByGroupModule([1, 1, 1]);
         $this->assertTrue(is_array($value));
 
         $value = $this->object->getAllByGroupModule(1, 1);
@@ -159,10 +161,10 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
     public function test_countSimilarBlocks()
     {
         $value = $this->object->countSimilarBlocks(1, 1);
-        $this->assertEquals(1, $value);
+        $this->assertSame(1, $value);
 
         $value = $this->object->countSimilarBlocks(1, 1, 'shows_func');
-        $this->assertEquals(0, $value);
+        $this->assertSame(0, $value);
     }
 
     public function test_buildContent()
@@ -181,11 +183,11 @@ class BlockHandlerTest extends \PHPUnit\Framework\TestCase
     {
         $title = 'original';
         $value = $this->object->buildTitle($title);
-        $this->assertEquals($title, $value);
+        $this->assertSame($title, $value);
         $title = 'original2';
         $new = 'new';
         $value = $this->object->buildTitle($title, $new);
-        $this->assertEquals($new, $value);
+        $this->assertSame($new, $value);
     }
 
     public function test_getBlockByPerm()

@@ -11,9 +11,9 @@
 
 namespace Xoops\Core\Cache;
 
-use Stash\Pool;
-use Stash\Invalidation;
 use Stash\Interfaces\PoolInterface;
+use Stash\Invalidation;
+use Stash\Pool;
 
 /**
  * Provides a standardized cache access
@@ -36,8 +36,6 @@ class Access
 
     /**
      * __construct
-     *
-     * @param type PoolInterface $pool cache pool to use for this cache instance
      */
     public function __construct(PoolInterface $pool)
     {
@@ -107,8 +105,8 @@ class Access
      */
     public function cacheRead($cacheKey, $regenFunction, $ttl = null, $args = null)
     {
-        if (is_null($args)) {
-            $varArgs = array();
+        if ($args === null) {
+            $varArgs = [];
         } else {
             $varArgs = func_get_args();
             array_shift($varArgs); // pull off $key
@@ -140,8 +138,6 @@ class Access
 
     /**
      * Garbage collection - remove all expired and deleted data
-     *
-     * @return void
      */
     public function garbageCollect()
     {

@@ -16,7 +16,7 @@
  * @version         $Id$
  */
 
-define('_MA_LOGGER_PERMISSION_FORM','Legacy Logger Usage Permissions');
-define('_MA_LOGGER_PERMISSION_GROUPS','Select groups that may use the Logger');
-define('_MA_LOGGER_FORM_SUBMIT','Save');
-define('_MA_LOGGER_FORM_PROCESSED','Permissions updated.');
+define('_MA_LOGGER_PERMISSION_FORM', 'Legacy Logger Usage Permissions');
+define('_MA_LOGGER_PERMISSION_GROUPS', 'Select groups that may use the Logger');
+define('_MA_LOGGER_FORM_SUBMIT', 'Save');
+define('_MA_LOGGER_FORM_PROCESSED', 'Permissions updated.');

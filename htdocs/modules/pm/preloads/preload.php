@@ -24,17 +24,14 @@ use Xoops\Core\Service\Provider;
  */
 class PmPreload extends PreloadItem
 {
-
     /**
      * core.pmlite.start
      *
      * @param array $args
-     *
-     * @return void
      */
     public static function eventCorePmliteStart($args)
     {
-        header("location: ./modules/pm/pmlite.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/pmlite.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
         exit();
     }
 
@@ -42,12 +39,10 @@ class PmPreload extends PreloadItem
      * core.readpmsg.start
      *
      * @param array $args
-     *
-     * @return void
      */
     public static function eventCoreReadpmsgStart($args)
     {
-        header("location: ./modules/pm/readpmsg.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/readpmsg.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
         exit();
     }
 
@@ -55,12 +50,10 @@ class PmPreload extends PreloadItem
      * core.viewpmsg.start
      *
      * @param array $args
-     *
-     * @return void
      */
     public static function eventCoreViewpmsgStart($args)
     {
-        header("location: ./modules/pm/viewpmsg.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/viewpmsg.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
         exit();
     }
 
@@ -68,8 +61,6 @@ class PmPreload extends PreloadItem
      * core.Class.smarty.xoops_plugins.xoinboxcount
      *
      * @param array $args
-     *
-     * @return void
      */
     public static function eventCoreClassSmartyXoops_pluginsXoinboxcount($args)
     {
@@ -80,8 +71,6 @@ class PmPreload extends PreloadItem
      * system.blocks.system_blocks.usershow
      *
      * @param array $args
-     *
-     * @return void
      */
     public static function eventSystemBlocksSystem_blocksUsershow($args)
     {
@@ -92,8 +81,6 @@ class PmPreload extends PreloadItem
      * listen for core.service.locate.usermessage event
      *
      * @param Provider $provider - provider object for requested service
-     *
-     * @return void
      */
     public static function eventCoreServiceLocateUserMessage(Provider $provider)
     {

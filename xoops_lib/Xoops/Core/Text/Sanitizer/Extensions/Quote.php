@@ -45,7 +45,7 @@ class Quote extends FilterAbstract
      */
     public function applyFilter($text)
     {
-        if (!$this->config['enabled']) {
+        if (! $this->config['enabled']) {
             return $text;
         }
 
@@ -55,7 +55,7 @@ class Quote extends FilterAbstract
 
         $text = preg_replace($pattern, $replacement, $text, -1, $count);
         //no more matches, return now
-        if (!$count) {
+        if (! $count) {
             return $text;
         }
         //new matches could have been created, keep doing it until we have no matches

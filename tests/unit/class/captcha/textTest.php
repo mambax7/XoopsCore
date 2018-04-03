@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../../init_new.php');
+require_once(__DIR__ . '/../../init_new.php');
 
-class TextTest extends \PHPUnit\Framework\TestCase
+class textTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsCaptchaText';
 

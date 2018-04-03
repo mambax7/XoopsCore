@@ -39,7 +39,6 @@ use Xoops\Core\Kernel\CriteriaElement;
  */
 class XoopsMemberHandler
 {
-
     /**
      * @var XoopsGroupPermHandler group handler(DAO) class
      */
@@ -58,7 +57,7 @@ class XoopsMemberHandler
     /**
      * holds temporary user objects
      */
-    private $membersWorkingList = array();
+    private $membersWorkingList = [];
 
     /**
      * Constructor
@@ -115,7 +114,7 @@ class XoopsMemberHandler
      */
     public function getUser($id)
     {
-        if (!isset($this->membersWorkingList[$id])) {
+        if (! isset($this->membersWorkingList[$id])) {
             $this->membersWorkingList[$id] = $this->userHandler->get($id);
         }
         return $this->membersWorkingList[$id];
@@ -212,7 +211,7 @@ class XoopsMemberHandler
         $realCriteria = new CriteriaCompo($criteria);
         $realCriteria->add(new Criteria('groupid', FixedGroups::REMOVED, '!='));
         $groups = $this->groupHandler->getObjects($realCriteria, true);
-        $ret = array();
+        $ret = [];
         foreach (array_keys($groups) as $i) {
             $ret[$i] = $groups[$i]->getVar('name');
         }
@@ -229,7 +228,7 @@ class XoopsMemberHandler
     public function getUserList(CriteriaElement $criteria = null)
     {
         $users = $this->userHandler->getObjects($criteria, true);
-        $ret = array();
+        $ret = [];
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
         }
@@ -260,7 +259,7 @@ class XoopsMemberHandler
      *
      * @return bool success?
      */
-    public function removeUsersFromGroup($group_id, $user_ids = array())
+    public function removeUsersFromGroup($group_id, $user_ids = [])
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('groupid', $group_id));
@@ -286,10 +285,10 @@ class XoopsMemberHandler
     public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0)
     {
         $user_ids = $this->membershipHandler->getUsersByGroup($group_id, $limit, $start);
-        if (!$asobject) {
+        if (! $asobject) {
             return $user_ids;
-        } else {
-            $ret = array();
+        }
+            $ret = [];
             foreach ($user_ids as $u_id) {
                 $user = $this->getUser($u_id);
                 if (is_object($user)) {
@@ -298,7 +297,7 @@ class XoopsMemberHandler
                 unset($user);
             }
             return $ret;
-        }
+
     }
 
     /**
@@ -311,16 +310,16 @@ class XoopsMemberHandler
      */
     public function getGroupsByUser($user_id, $asobject = false)
     {
-        $ret = array();
+        $ret = [];
         $group_ids = $this->membershipHandler->getGroupsByUser($user_id);
-        if (!$asobject) {
+        if (! $asobject) {
             return $group_ids;
-        } else {
+        }
             foreach ($group_ids as $g_id) {
                 $ret[] = $this->getGroup($g_id);
             }
             return $ret;
-        }
+
     }
 
     /**
@@ -339,21 +338,21 @@ class XoopsMemberHandler
         $criteria = new Criteria('uname', $uname);
         //$criteria->add(new Criteria('pass', md5($pwd)));
         $user = $this->userHandler->getObjects($criteria, false);
-        if (!$user || count($user) != 1) {
+        if (! $user || count($user) !== 1) {
             return false;
         }
 
         $hash = $user[0]->pass();
         $type = substr($user[0]->pass(), 0, 1);
         // see if we have a crypt like signature, old md5 hash is just hex digits
-        if ($type==='$') {
-            if (!password_verify($pwd, $hash)) {
+        if ($type === '$') {
+            if (! password_verify($pwd, $hash)) {
                 return false;
             }
             // check if hash uses the best algorithm (i.e. after a PHP upgrade)
             $rehash = password_needs_rehash($hash, PASSWORD_DEFAULT);
         } else {
-            if ($hash!=md5($pwd)) {
+            if ($hash !== md5($pwd)) {
                 return false;
             }
             $rehash = true; // automatically update old style
@@ -416,7 +415,7 @@ class XoopsMemberHandler
      */
     public function updateUsersByField($fieldName, $fieldValue, CriteriaElement $criteria = null)
     {
-        if (is_null($criteria)) {
+        if ($criteria === null) {
             $criteria = new Criteria(''); // empty criteria resolves to 'WHERE (1)'
         }
         return $this->userHandler->updateAll($fieldName, $fieldValue, $criteria);
@@ -431,7 +430,7 @@ class XoopsMemberHandler
      */
     public function activateUser(XoopsUser $user)
     {
-        if ($user->getVar('level') != 0) {
+        if ($user->getVar('level') !== 0) {
             return true;
         }
         $user->setVar('level', 1);
@@ -465,7 +464,7 @@ class XoopsMemberHandler
             ->leftJoinPrefix('u', 'system_usergroup', 'm', 'm.uid = u.uid');
 
         $where = false;
-        if (!empty($groups)) {
+        if (! empty($groups)) {
             $qb->where($eb->in('m.groupid', $groups));
             $where = true;
         }
@@ -474,9 +473,9 @@ class XoopsMemberHandler
             $sql[] = $criteria->renderQb($qb, $whereMode);
         }
 
-        $ret = array();
+        $ret = [];
 
-        if (!$result = $qb->execute()) {
+        if (! $result = $qb->execute()) {
             return $ret;
         }
 
@@ -484,7 +483,7 @@ class XoopsMemberHandler
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
-                if (!$id_as_key) {
+                if (! $id_as_key) {
                     $ret[] = $user;
                 } else {
                     $ret[$myrow['uid']] = $user;
@@ -516,7 +515,7 @@ class XoopsMemberHandler
             ->leftJoinPrefix('u', 'system_usergroup', 'm', 'm.uid = u.uid');
 
         $where = false;
-        if (!empty($groups)) {
+        if (! empty($groups)) {
             $qb->where($eb->in('m.groupid', $groups));
             $where = true;
         }

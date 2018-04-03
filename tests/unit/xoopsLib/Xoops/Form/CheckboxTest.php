@@ -1,7 +1,8 @@
 <?php
+
 namespace Xoops\Form;
 
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 class CheckboxTest extends \PHPUnit\Framework\TestCase
 {
@@ -32,7 +33,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->object->addOption('AO_value', 'AO_name');
         $this->object->addOption('AO_noname');
 
-        $options = array('AOA_value' => 'AOA_name', 'AOA_noname' => '');
+        $options = ['AOA_value' => 'AOA_name', 'AOA_noname' => ''];
         $this->object->addOptionArray($options);
 
         $options = $this->object->getOptions();
@@ -69,9 +70,9 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
             'option' => [
                 'opt1' => 'optname1',
                 'opt2' => 'optname2',
-            ]
+            ],
         ]);
-        $this->assertEquals($oldWay->render(), $newWay->render());
-        $this->assertEquals($oldWay->renderValidationJS(), $newWay->renderValidationJS());
+        $this->assertSame($oldWay->render(), $newWay->render());
+        $this->assertSame($oldWay->renderValidationJS(), $newWay->renderValidationJS());
     }
 }

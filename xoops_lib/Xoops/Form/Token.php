@@ -40,7 +40,7 @@ class Token extends Hidden
         }
         $name = $this->get('name', 'XOOPS_TOKEN');
         if (substr($name, -8) !== '_REQUEST') {
-            $this->set('name', $name.'_REQUEST');
+            $this->set('name', $name . '_REQUEST');
         }
         $this->set('value', \Xoops::getInstance()->security()->createToken($this->get(':timeout', 0), $name));
     }

@@ -24,9 +24,6 @@ include_once dirname(dirname(__DIR__)) . '/include/common.php';
 
 class PublisherFileForm extends Xoops\Form\ThemeForm
 {
-    /**
-     * @param PublisherFile $obj
-     */
     public function __construct(PublisherFile $obj)
     {
 
@@ -34,7 +31,7 @@ class PublisherFileForm extends Xoops\Form\ThemeForm
         $publisher = Publisher::getInstance();
         $publisher->loadLanguage('main');
 
-        parent::__construct(_AM_PUBLISHER_UPLOAD_FILE, "form", $xoops->getEnv('PHP_SELF'));
+        parent::__construct(_AM_PUBLISHER_UPLOAD_FILE, 'form', $xoops->getEnv('PHP_SELF'));
         $this->setExtra('enctype="multipart/form-data"');
 
         // NAME
@@ -48,7 +45,7 @@ class PublisherFileForm extends Xoops\Form\ThemeForm
         $this->addElement($description_text);
 
         // FILE TO UPLOAD
-        $file_box = new Xoops\Form\File(_CO_PUBLISHER_FILE_TO_UPLOAD, "item_upload_file");
+        $file_box = new Xoops\Form\File(_CO_PUBLISHER_FILE_TO_UPLOAD, 'item_upload_file');
         $file_box->set('size', 50);
         $this->addElement($file_box);
 
@@ -66,7 +63,7 @@ class PublisherFileForm extends Xoops\Form\ThemeForm
         $files_hidden = new Xoops\Form\Hidden('op', 'uploadfile');
         $files_button_tray->addElement($files_hidden);
 
-        if (!$obj->getVar('fileid')) {
+        if (! $obj->getVar('fileid')) {
             $files_butt_create = new Xoops\Form\Button('', '', _MD_PUBLISHER_UPLOAD, 'submit');
             $files_butt_create->setExtra('onclick="this.form.elements.op.value=\'uploadfile\'"');
             $files_button_tray->addElement($files_butt_create);

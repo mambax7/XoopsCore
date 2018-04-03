@@ -9,14 +9,14 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use Xmf\Module\Helper;
 use Xoops\Core\Service\AbstractContract;
 use Xoops\Core\Service\Contract\EmailInterface;
-use Xoops\Core\Service\Response;
-use Xoops\Core\Service\Data\Email;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use Xoops\Core\Service\Data\Email;
+use Xoops\Core\Service\Response;
 
 /**
  * phpmailer module
@@ -50,10 +50,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
     }
 
     /**
-     * @param \Xoops\Core\Service\Response     $response
      * @param \Xoops\Core\Service\Data\Message $email
-     *
-     * @return void - reports success or failure through $response->success
      */
     public function sendEmail(Response $response, Email $email)
     {
@@ -81,42 +78,42 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
         }
 
         $list = $email->getReplyToAddresses();
-        if (null !== $list) {
+        if ($list !== null) {
             foreach ($list->getEachAddress() as $address) {
-                $mailer->addReplyTo($address->getEmail(), (string)$address->getDisplayName());
+                $mailer->addReplyTo($address->getEmail(), (string) $address->getDisplayName());
             }
         }
 
         $list = $email->getCcAddresses();
-        if (null !== $list) {
+        if ($list !== null) {
             foreach ($list->getEachAddress() as $address) {
-                $mailer->addCC($address->getEmail(), (string)$address->getDisplayName());
+                $mailer->addCC($address->getEmail(), (string) $address->getDisplayName());
             }
         }
 
         $list = $email->getBccAddresses();
-        if (null !== $list) {
+        if ($list !== null) {
             foreach ($list->getEachAddress() as $address) {
-                $mailer->addBCC($address->getEmail(), (string)$address->getDisplayName());
+                $mailer->addBCC($address->getEmail(), (string) $address->getDisplayName());
             }
         }
 
         // Attachments
         $attachmentSet = $email->getAttachments();
-        if (null !== $attachmentSet) {
+        if ($attachmentSet !== null) {
             foreach ($attachmentSet->getEachAttachment() as $attachment) {
                 $file = $attachment->getFilename();
                 $body = $attachment->getStringBody();
                 $name = (string) $attachment->getName();
                 $type = (string) $attachment->getMimeType();
                 $inline = $attachment->getInlineAttribute();
-                if (null !== $file && !$inline) {
+                if ($file !== null && ! $inline) {
                     $mailer->addAttachment($file, $name, 'base64', $type);
-                } elseif (null === $file && !$inline) {
+                } elseif ($file === null && ! $inline) {
                     $mailer->addStringAttachment($body, $name, 'base64', $type);
-                } elseif (null !== $file && $inline) {
+                } elseif ($file !== null && $inline) {
                     $mailer->addEmbeddedImage($file, $name, $name, 'base64', $type);
-                } elseif (null === $file && $inline) {
+                } elseif ($file === null && $inline) {
                     $mailer->addStringEmbeddedImage($body, $name, $name, 'base64', $type);
                 }
             }
@@ -125,7 +122,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
         $mailer->CharSet = 'UTF-8';
         $mailer->Subject = $email->getSubject();
 
-        if (null !== $email->getHtmlBody()) {
+        if ($email->getHtmlBody() !== null) {
             $mailer->Body = $email->getHtmlBody();
             $mailer->AltBody = $email->getBody();
             $mailer->isHTML(true);
@@ -133,16 +130,15 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
         }
 
         $mailer->isHTML(false);
-        $mailer->Body= $email->getBody();
+        $mailer->Body = $email->getBody();
 
         return $mailer;
     }
 
     /**
      * Get a mailer instance with configured transport
-     * @return \PHPMailer\PHPMailer\PHPMailer
      */
-    protected function setupMailer() : PHPMailer
+    protected function setupMailer(): PHPMailer
     {
         $mailer = new PHPMailer(true);
         $mailer->Debugoutput = \Xoops::getInstance()->logger();

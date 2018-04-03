@@ -2,18 +2,18 @@
 
 use Xoops\Core\XoopsTpl;
 
-require_once(__DIR__.'/../init_new.php');
+require_once(__DIR__ . '/../init_new.php');
 
-class PagenavTest extends \PHPUnit\Framework\TestCase
+class pagenavTest extends \PHPUnit\Framework\TestCase
 {
     protected $myclass = 'XoopsPageNav';
 
-    public function setUp()
+    protected function setUp()
     {
-        $xoops=Xoops::getinstance();
-        $tpl=$xoops->tpl();
+        $xoops = Xoops::getinstance();
+        $tpl = $xoops->tpl();
         if (empty($tpl)) {
-            $xoops->setTpl(new XoopsTpl);
+            $xoops->setTpl(new XoopsTpl());
         }
     }
 

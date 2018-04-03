@@ -28,8 +28,8 @@ $xoops = Xoops::getInstance();
 $sample_form = new Xoops\Form\ThemeForm('', 'sample_form', 'action.php');
 $sample_form->setExtra('enctype="multipart/form-data"');
 // Not required but for user-friendly concern
-$editor = !empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
-if (!empty($editor)) {
+$editor = ! empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
+if (! empty($editor)) {
     setcookie('editor', $editor); // save to cookie
 } else {
     // Or use user pre-selected editor through profile
@@ -43,7 +43,7 @@ if (!empty($editor)) {
     // required configs
     $options['editor'] = $editor;
     $options['name'] = 'required_element';
-    $options['value'] = empty($_REQUEST['message']) ? "" : $_REQUEST['message'];
+    $options['value'] = empty($_REQUEST['message']) ? '' : $_REQUEST['message'];
     // optional configs
     $options['rows'] = 25; // default value = 5
     $options['cols'] = 60; // default value = 50

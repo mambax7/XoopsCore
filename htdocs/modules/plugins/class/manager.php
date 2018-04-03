@@ -17,7 +17,6 @@
  */
 class PluginsManager
 {
-
     /**
      * @return array returns an array of listeners in the form of listener=>caller
      */
@@ -25,14 +24,14 @@ class PluginsManager
     {
         $xoops = \Xoops::getInstance();
         $dirNames = $xoops->getActiveModules();
-        $listeners = array();
+        $listeners = [];
 
         foreach ($dirNames as $listener) {
             foreach ($dirNames as $caller) {
                 //Make sure to load the interface
                 if (\XoopsLoad::loadFile($xoops->path("modules/{$caller}/class/plugin/interface.php"))) {
                     if (\XoopsLoad::loadFile($xoops->path("modules/{$listener}/class/plugin/{$caller}.php"))) {
-                        $interfaceName = '\\' . ucfirst($caller) . "PluginInterface";
+                        $interfaceName = '\\' . ucfirst($caller) . 'PluginInterface';
                         if ($ref = new ReflectionClass($interfaceName)) {
                             if ($ref->implementsInterface($interfaceName)) {
                                 $listeners[$listener][] = $caller;
@@ -59,13 +58,13 @@ class PluginsManager
 
         $listeners = $handler->getListeners();
         foreach ($listeners as $key => $name ) {
-            if (!$xoops->isActiveModule($key)) {
+            if (! $xoops->isActiveModule($key)) {
                 $handler->deleteLC($key);
             }
         }
         $callers = $handler->getCallers();
         foreach ($callers as $key => $name) {
-            if (!$xoops->isActiveModule($key)) {
+            if (! $xoops->isActiveModule($key)) {
                 $handler->deleteLC($key);
             }
         }
@@ -74,15 +73,13 @@ class PluginsManager
         $plugins = self::getListeners();
         foreach ($plugins as $listener => $callers) {
             foreach ($callers as $caller) {
-                if (!$object = $handler->getLC($listener, $caller)) {
-                    if (!$handler->addNew($listener, $caller)) {
+                if (! $object = $handler->getLC($listener, $caller)) {
+                    if (! $handler->addNew($listener, $caller)) {
                         $ret = false;
                     };
                 }
             }
         }
-
-
 
         return $ret;
     }

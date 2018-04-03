@@ -11,7 +11,6 @@
 
 namespace Xoops\Core\Database;
 
-use Xoops\Core\Database\Connection;
 
 /**
  * Connection wrapper for Doctrine DBAL Connection
@@ -30,7 +29,6 @@ use Xoops\Core\Database\Connection;
  */
 class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
 {
-
     /**
      * @var Connection DBAL Connection
      */
@@ -160,7 +158,6 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
         $join = $this->connection->prefix($join);
         return $this->join($fromAlias, $join, $alias, $condition);
     }
-
 
     /**
      * Creates and adds a join to the query.

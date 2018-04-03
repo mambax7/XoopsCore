@@ -20,8 +20,6 @@ define('XOOPS_CPFUNC_LOADED', 1);
 
 /**
  * CP Header
- *
- * @return void
  */
 function xoops_cp_header()
 {
@@ -32,8 +30,6 @@ function xoops_cp_header()
 
 /**
  * CP Footer
- *
- * @return void
  */
 function xoops_cp_footer()
 {

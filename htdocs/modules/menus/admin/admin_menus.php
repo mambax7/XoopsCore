@@ -32,7 +32,7 @@ $admin_page->renderNavigation('admin_menus.php');
 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
 
 // Get $_GET, $_POST, ...
-$op =Request::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list');
 $id = Request::getInt('id', 0);
 $limit = Request::getInt('limit', 15);
 $start = Request::getInt('start', 0);
@@ -59,14 +59,14 @@ switch ($op) {
         break;
 
     case 'save':
-        if (!$xoops->security()->check()) {
+        if (! $xoops->security()->check()) {
             $xoops->redirect('admin_menus.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
         $msg[] = _AM_MENUS_SAVE;
 
         $id = Request::getInt('id', 0);
-        if (isset($id) && $id !=0) {
+        if (isset($id) && $id !== 0) {
             $obj = $helper->getHandlerMenus()->get($id);
         } else {
             $obj = $helper->getHandlerMenus()->create();
@@ -86,8 +86,8 @@ switch ($op) {
         $ok = Request::getInt('ok', 0);
         $obj = $helper->getHandlerMenus()->get($id);
 
-        if ($ok == 1) {
-            if (!$xoops->security()->check()) {
+        if ($ok === 1) {
+            if (! $xoops->security()->check()) {
                 $xoops->redirect('admin_menus.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($helper->getHandlerMenus()->delete($obj)) {
@@ -100,7 +100,7 @@ switch ($op) {
             }
         } else {
             echo $xoops->confirm(
-                array('ok' => 1, 'id' => $id, 'op' => 'del'),
+                ['ok' => 1, 'id' => $id, 'op' => 'del'],
                 $helper->url('admin/admin_menus.php'),
                 _AM_MENUS_MSG_SUREDEL . '<br /><strong>' . $obj->getVar('title') . '</strong>'
             );
@@ -120,7 +120,7 @@ switch ($op) {
         $xoops->tpl()->assign('query', $query);
 
         $criteria = new CriteriaCompo();
-        if ($query != '') {
+        if ($query !== '') {
             $crit = new CriteriaCompo(new Criteria('title', $query . '%', 'LIKE'));
             $criteria->add($crit);
         }

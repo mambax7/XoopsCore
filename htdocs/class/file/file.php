@@ -56,7 +56,7 @@ class XoopsFileHandler
      *
      * @var string
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Holds the file handler resource if the file is opened
@@ -84,12 +84,12 @@ class XoopsFileHandler
     public function __construct($path, $create = false, $mode = 0755)
     {
         $this->folder = XoopsFile::getHandler('folder', dirname($path), $create, $mode);
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             $this->name = basename($path);
         } else {
             return; // false;
         }
-        if (!$this->exists()) {
+        if (! $this->exists()) {
             if ($create === true) {
                 if ($this->safe($path) && $this->create() === false) {
                     return; // false;
@@ -100,7 +100,6 @@ class XoopsFileHandler
         }
         return; // true;
     }
-
 
     /**
      * Closes the current file if it is opened
@@ -118,7 +117,7 @@ class XoopsFileHandler
     public function create()
     {
         $dir = $this->folder->pwd();
-        if (is_dir($dir) && is_writable($dir) && !$this->exists()) {
+        if (is_dir($dir) && is_writable($dir) && ! $this->exists()) {
             if (touch($this->pwd())) {
                 return true;
             }
@@ -137,7 +136,7 @@ class XoopsFileHandler
      */
     public function open($mode = 'r', $force = false)
     {
-        if (!$force && is_resource($this->handle)) {
+        if (! $force && is_resource($this->handle)) {
             return true;
         }
         if ($this->exists() === false) {
@@ -177,7 +176,7 @@ class XoopsFileHandler
                     $success = fread($this->handle, $bytes);
                 } else {
                     $data = '';
-                    while (!feof($this->handle)) {
+                    while (! feof($this->handle)) {
                         $data .= fgets($this->handle, 4096);
                     }
                     $success = trim($data);
@@ -227,7 +226,7 @@ class XoopsFileHandler
         if (substr(PHP_OS, 0, 3) === 'WIN') {
             $lineBreak = "\r\n";
         }
-        return strtr($data, array("\r\n" => $lineBreak, "\n" => $lineBreak, "\r" => $lineBreak));
+        return strtr($data, ["\r\n" => $lineBreak, "\n" => $lineBreak, "\r" => $lineBreak]);
     }
 
     /**
@@ -278,7 +277,7 @@ class XoopsFileHandler
      */
     public function close()
     {
-        if (!is_resource($this->handle)) {
+        if (! is_resource($this->handle)) {
             return true;
         }
         return fclose($this->handle);
@@ -304,10 +303,10 @@ class XoopsFileHandler
      */
     public function info()
     {
-        if ($this->info == null) {
+        if ($this->info === null) {
             $this->info = pathinfo($this->pwd());
         }
-        if (!isset($this->info['filename'])) {
+        if (! isset($this->info['filename'])) {
             $this->info['filename'] = $this->name();
         }
         return $this->info;
@@ -320,7 +319,7 @@ class XoopsFileHandler
      */
     public function ext()
     {
-        if ($this->info == null) {
+        if ($this->info === null) {
             $this->info();
         }
         if (isset($this->info['extension'])) {
@@ -336,7 +335,7 @@ class XoopsFileHandler
      */
     public function name()
     {
-        if ($this->info == null) {
+        if ($this->info === null) {
             $this->info();
         }
         if (isset($this->info['extension'])) {
@@ -357,10 +356,10 @@ class XoopsFileHandler
      */
     public function safe($name = null, $ext = null)
     {
-        if (!$name) {
+        if (! $name) {
             $name = $this->name;
         }
-        if (!$ext) {
+        if (! $ext) {
             $ext = $this->ext();
         }
         return preg_replace('/[^\w\.-]+/', '_', basename($name, $ext));
@@ -377,12 +376,12 @@ class XoopsFileHandler
     {
         if ($maxsize === true) {
             return md5_file($this->pwd());
-        } else {
+        }
             $size = $this->size();
             if ($size && $size < ($maxsize * 1024) * 1024) {
                 return md5_file($this->pwd());
             }
-        }
+
         return false;
     }
 

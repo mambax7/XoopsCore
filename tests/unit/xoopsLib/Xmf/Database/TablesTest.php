@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
 use Xmf\Database\Tables;
 use Xoops\Core\Database\Factory;
@@ -30,7 +30,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->object = new Tables;
+        $this->object = new Tables();
         $this->prefix = Factory::getConnection()->prefix();
     }
 
@@ -42,11 +42,6 @@ class TablesTest extends \PHPUnit\Framework\TestCase
     {
     }
 
-    protected function prefix($table)
-    {
-        return $this->prefix . '_' . $table;
-    }
-
     public function testName()
     {
         $tableName = 'system_user';
@@ -55,7 +50,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
 
         $tables = $this->object->dumpTables();
         $this->assertArrayHasKey($tableName, $tables);
-        $this->assertEquals($this->prefix($tableName), $tables[$tableName]['name']);
+        $this->assertSame($this->prefix($tableName), $tables[$tableName]['name']);
     }
 
     public function testAddColumn()
@@ -70,7 +65,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->object->addColumn($tableName, $columnName, $columnAttr);
         $queue = $this->object->dumpQueue();
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` ADD COLUMN `{$columnName}` {$columnAttr}";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testAddPrimaryKey()
@@ -85,7 +80,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
         //var_dump($queue);
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` ADD PRIMARY KEY(`{$columnName}`)";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testAddTable()
@@ -147,7 +142,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
         //var_dump($queue);
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` CHANGE COLUMN `{$columnName}` `{$newColumnName}` {$attributes} ";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testCopyTable()
@@ -164,8 +159,8 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($actual);
 
         $tables = $this->object->dumpTables();
-        $this->assertEquals($tables[$tableName]['columns'], $tables[$copyName]['columns']);
-        $this->assertEquals($tables[$tableName]['keys'], $tables[$copyName]['keys']);
+        $this->assertSame($tables[$tableName]['columns'], $tables[$copyName]['columns']);
+        $this->assertSame($tables[$tableName]['keys'], $tables[$copyName]['keys']);
     }
 
     public function testCreateIndex()
@@ -181,7 +176,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` ADD INDEX `{$indexName}` (`{$columnName}`)";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testDropColumn()
@@ -196,7 +191,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` DROP COLUMN `{$columnName}`";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testDropIndex()
@@ -211,7 +206,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` DROP INDEX `{$indexName}`";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testDropIndexes()
@@ -232,7 +227,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` DROP PRIMARY KEY ";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testDropTable()
@@ -245,7 +240,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "DROP TABLE `{$this->prefix}_{$tableName}` ";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testRenameTable()
@@ -259,7 +254,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` RENAME TO `{$this->prefix}_{$newName}`";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testSetTableOptions()
@@ -273,7 +268,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
         $queue = $this->object->dumpQueue();
 
         $expected = "ALTER TABLE `{$this->prefix}_{$tableName}` {$options} ";
-        $this->assertEquals($expected, $queue[0]);
+        $this->assertSame($expected, $queue[0]);
     }
 
     public function testExecuteQueue()
@@ -360,12 +355,17 @@ class TablesTest extends \PHPUnit\Framework\TestCase
 
         $queue = $this->object->dumpQueue();
         $this->assertTrue(is_array($queue));
-        $this->assertTrue(1 === count($queue));
-        $this->assertEquals($expected, reset($queue));
+        $this->assertTrue(count($queue) === 1);
+        $this->assertSame($expected, reset($queue));
 
         $this->object->resetQueue();
         $queue = $this->object->dumpQueue();
         $this->assertTrue(is_array($queue));
         $this->assertTrue(empty($queue));
+    }
+
+    protected function prefix($table)
+    {
+        return $this->prefix . '_' . $table;
     }
 }

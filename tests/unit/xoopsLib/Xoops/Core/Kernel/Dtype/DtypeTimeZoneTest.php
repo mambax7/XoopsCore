@@ -1,4 +1,5 @@
 <?php
+
 namespace Xoops\Core\Kernel\Dtype;
 
 require_once __DIR__ . '/../../../../../init_new.php';
@@ -39,18 +40,18 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
         $this->xObject = new DtypeTimeZoneObject();
     }
 
-    public function testContracts()
-    {
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
-        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeTimeZone', $this->object);
-    }
-
     /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
     protected function tearDown()
     {
+    }
+
+    public function testContracts()
+    {
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeAbstract', $this->object);
+        $this->assertInstanceOf('\Xoops\Core\Kernel\Dtype\DtypeTimeZone', $this->object);
     }
 
     public function testGetVarCleanVar()
@@ -61,26 +62,25 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
         $this->xObject[$key] = $testValue;
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals($testValue, $value);
+        $this->assertSame($testValue, $value);
 
         $value1 = $this->xObject->getVar($key, Dtype::FORMAT_SHOW);
         $this->assertInstanceOf('\DateTimeZone', $value1);
-        $this->assertEquals($testValue, $value1->getName());
+        $this->assertSame($testValue, $value1->getName());
         $value2 = $this->xObject[$key];
         $this->assertInstanceOf('\DateTimeZone', $value2);
-        $this->assertEquals($testValue, $value2->getName());
+        $this->assertSame($testValue, $value2->getName());
         $this->assertNotSame($value1, $value2);
-
 
         $this->xObject[$key] = new \DateTimeZone($testValue);
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals($testValue, $value);
+        $this->assertSame($testValue, $value);
 
         $this->xObject[$key] = new \DateTime('now', new \DateTimeZone($testValue));
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals($testValue, $value);
+        $this->assertSame($testValue, $value);
     }
 
     public function testGetVarCleanVar_error()
@@ -91,10 +91,10 @@ class DtypeTimeZoneTest extends \PHPUnit\Framework\TestCase
         $this->xObject[$key] = $testValue;
         $this->xObject[$key] = $this->object->cleanVar($this->xObject, $key);
         $value = $this->xObject->getVar($key, Dtype::FORMAT_NONE);
-        $this->assertEquals('UTC', $value);
+        $this->assertSame('UTC', $value);
 
         $value1 = $this->xObject->getVar($key, Dtype::FORMAT_SHOW);
         $this->assertInstanceOf('\DateTimeZone', $value1);
-        $this->assertEquals('UTC', $value1->getName());
+        $this->assertSame('UTC', $value1->getName());
     }
 }

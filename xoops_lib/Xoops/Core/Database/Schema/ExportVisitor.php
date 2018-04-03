@@ -11,18 +11,18 @@
 
 namespace Xoops\Core\Database\Schema;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
-use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Sequence;
+use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\Visitor\Visitor;
 
 /**
  * ExportVisitor is a Schema Visitor that builds an exportable array
  * (not object) version of a schema.
- * 
+ *
  * @category  Xoops\Core\Database\Schema\ExportVisitor
  * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
@@ -34,7 +34,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  */
 class ExportVisitor implements Visitor
 {
-
     protected $schemaArray;
 
     /**
@@ -42,12 +41,12 @@ class ExportVisitor implements Visitor
      */
     public function __construct()
     {
-        $this->schemaArray = array();
+        $this->schemaArray = [];
     }
 
     /**
      * return the generated Schema
-     * 
+     *
      * @return Schema the generated schema object
      */
     public function getSchemaArray()
@@ -57,10 +56,8 @@ class ExportVisitor implements Visitor
 
     /**
      * Accept an entire schema. Do nothing in this visitor
-     * 
+     *
      * @param Schema $schema schema object
-     * 
-     * @return void
      */
     public function acceptSchema(Schema $schema)
     {
@@ -71,8 +68,6 @@ class ExportVisitor implements Visitor
      * Accept a table
      *
      * @param Table $table a table object
-     * 
-     * @return void
      */
     public function acceptTable(Table $table)
     {
@@ -84,8 +79,6 @@ class ExportVisitor implements Visitor
      *
      * @param Table  $table  a table object
      * @param Column $column a column object
-     * 
-     * @return void
      */
     public function acceptColumn(Table $table, Column $column)
     {
@@ -99,21 +92,19 @@ class ExportVisitor implements Visitor
      *
      * @param Table                $localTable   a table object
      * @param ForeignKeyConstraint $fkConstraint a constraint object
-     * 
-     * @return void
      */
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
-        if (!isset($this->schemaArray['tables'][$localTable->getName()]['constraint'])) {
-            $this->schemaArray['tables'][$localTable->getName()]['constraint']=array();
+        if (! isset($this->schemaArray['tables'][$localTable->getName()]['constraint'])) {
+            $this->schemaArray['tables'][$localTable->getName()]['constraint'] = [];
         }
-        $this->schemaArray['tables'][$localTable->getName()]['constraint'][] = array(
-                'name' => $fkConstraint->getName(),
-                'localcolumns' => $fkConstraint->getLocalColumns(),
-                'foreigntable' => $fkConstraint->getForeignTableName(),
-                'foreigncolumns' => $fkConstraint->getForeignColumns(),
-                'options' => $fkConstraint->getOptions()
-            );
+        $this->schemaArray['tables'][$localTable->getName()]['constraint'][] = [
+            'name' => $fkConstraint->getName(),
+            'localcolumns' => $fkConstraint->getLocalColumns(),
+            'foreigntable' => $fkConstraint->getForeignTableName(),
+            'foreigncolumns' => $fkConstraint->getForeignColumns(),
+            'options' => $fkConstraint->getOptions(),
+        ];
 
     }
 
@@ -122,32 +113,28 @@ class ExportVisitor implements Visitor
      *
      * @param Table $table a table object
      * @param Index $index a column object
-     * 
-     * @return void
      */
     public function acceptIndex(Table $table, Index $index)
     {
-        $this->schemaArray['tables'][$table->getName()]['indexes'][$index->getName()] = array(
-                'name' => $index->getName(),
-                'columns' => $index->getColumns(),
-                'unique' => $index->isUnique(),
-                'primary' => $index->isPrimary()
-            );
+        $this->schemaArray['tables'][$table->getName()]['indexes'][$index->getName()] = [
+            'name' => $index->getName(),
+            'columns' => $index->getColumns(),
+            'unique' => $index->isUnique(),
+            'primary' => $index->isPrimary(),
+        ];
     }
 
     /**
      * Accept an sequence
      *
      * @param Sequence $sequence a sequence object
-     * 
-     * @return void
      */
     public function acceptSequence(Sequence $sequence)
     {
-        $this->schemaArray['sequence'][$sequence->getName()] = array(
-                'name' => $sequence->getName(),
-                'allocationsize' => $sequence->getAllocationSize(),
-                'initialvalue' => $sequence->getInitialValue()
-            );
+        $this->schemaArray['sequence'][$sequence->getName()] = [
+            'name' => $sequence->getName(),
+            'allocationsize' => $sequence->getAllocationSize(),
+            'initialvalue' => $sequence->getInitialValue(),
+        ];
     }
 }

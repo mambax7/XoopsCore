@@ -37,7 +37,7 @@ class XoopsUser extends XoopsObject
     /**
      * @var array groups that user belongs to
      */
-    private $groups = array();
+    private $groups = [];
 
     /**
      * @var string user's rank
@@ -128,8 +128,8 @@ class XoopsUser extends XoopsObject
     public static function getUnameFromId($userid, $usereal = 0)
     {
         $xoops = \Xoops::getInstance();
-        $userid = (int)($userid);
-        $usereal = (int)($usereal);
+        $userid = (int) ($userid);
+        $usereal = (int) ($usereal);
         if ($userid > 0) {
             $member_handler = $xoops->getHandlerMember();
             $user = $member_handler->getUser($userid);
@@ -137,14 +137,14 @@ class XoopsUser extends XoopsObject
                 $ts = \Xoops\Core\Text\Sanitizer::getInstance();
                 if ($usereal) {
                     $name = $user->getVar('name');
-                    if ($name != '') {
+                    if ($name !== '') {
                         return $ts->htmlSpecialChars($name);
-                    } else {
-                        return $ts->htmlSpecialChars($user->getVar('uname'));
                     }
-                } else {
-                    return $ts->htmlSpecialChars($user->getVar('uname'));
+                        return $ts->htmlSpecialChars($user->getVar('uname'));
+
                 }
+                    return $ts->htmlSpecialChars($user->getVar('uname'));
+
             }
         }
         return $xoops->getConfig('anonymous');
@@ -165,8 +165,6 @@ class XoopsUser extends XoopsObject
      * set the groups for the user
      *
      * @param array $groupsArr Array of groups that user belongs to
-     *
-     * @return void
      */
     public function setGroups($groupsArr)
     {
@@ -215,9 +213,9 @@ class XoopsUser extends XoopsObject
     public function isAdmin($module_id = null)
     {
         $xoops = \Xoops::getInstance();
-        if (is_null($module_id)) {
+        if ($module_id === null) {
             $module_id = $xoops->isModule() ? $xoops->module->getVar('mid', 'n') : 1;
-        } elseif ((int)($module_id) < 1) {
+        } elseif ((int) ($module_id) < 1) {
             $module_id = 0;
         }
         $moduleperm_handler = $xoops->getHandlerGroupPermission();
@@ -232,7 +230,7 @@ class XoopsUser extends XoopsObject
     public function rank()
     {
         $xoops = \Xoops::getInstance();
-        if (!isset($this->rank)) {
+        if (! isset($this->rank)) {
             $this->rank = $xoops->service('userrank')->getUserRank($this)->getValue();
         }
         return $this->rank;
@@ -245,7 +243,7 @@ class XoopsUser extends XoopsObject
      */
     public function isActive()
     {
-        if ($this->getVar('level') == 0) {
+        if ($this->getVar('level') === 0) {
             return false;
         }
         return true;
@@ -258,7 +256,7 @@ class XoopsUser extends XoopsObject
      */
     public function isOnline()
     {
-        if (!isset($this->isOnline)) {
+        if (! isset($this->isOnline)) {
             $online_handler = \Xoops::getInstance()->getHandlerOnline();
             $this->isOnline =
                 ($online_handler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;

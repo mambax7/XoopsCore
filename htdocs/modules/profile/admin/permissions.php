@@ -43,24 +43,24 @@ switch ($op) {
     case 'edit':
     default:
         $title_of_form = _PROFILE_AM_PROF_EDITABLE;
-        $perm_name     = 'profile_edit';
-        $restriction   = 'field_edit';
-        $anonymous     = false;
+        $perm_name = 'profile_edit';
+        $restriction = 'field_edit';
+        $anonymous = false;
         break;
 
     case 'search':
         $title_of_form = _PROFILE_AM_PROF_SEARCH;
-        $perm_name     = 'profile_search';
-        $restriction   = '';
-        $anonymous     = true;
+        $perm_name = 'profile_search';
+        $restriction = '';
+        $anonymous = true;
         break;
 
     case 'access':
         $title_of_form = _PROFILE_AM_PROF_ACCESS;
-        $perm_name     = 'profile_access';
-        $perm_desc     = _PROFILE_AM_PROF_ACCESS_DESC;
-        $restriction   = '';
-        $anonymous     = true;
+        $perm_name = 'profile_access';
+        $perm_desc = _PROFILE_AM_PROF_ACCESS_DESC;
+        $restriction = '';
+        $anonymous = true;
         break;
 }
 
@@ -81,7 +81,7 @@ if ($op === 'access') {
     $member_handler = $xoops->getHandlerMember();
     $glist = $member_handler->getGroupList();
     foreach (array_keys($glist) as $i) {
-        if ($i != FixedGroups::ANONYMOUS) {
+        if ($i !== FixedGroups::ANONYMOUS) {
             $form->addItem($i, $glist[$i]);
         }
     }
@@ -92,7 +92,7 @@ if ($op === 'access') {
 
     if ($op !== 'search') {
         foreach (array_keys($fields) as $i) {
-            if ($restriction == '' || $fields[$i]->getVar($restriction)) {
+            if ($restriction === '' || $fields[$i]->getVar($restriction)) {
                 $form->addItem(
                     $fields[$i]->getVar('field_id'),
                     XoopsLocale::substr($fields[$i]->getVar('field_title'), 0, 25)
@@ -100,7 +100,7 @@ if ($op === 'access') {
             }
         }
     } else {
-        $searchable_types = array(
+        $searchable_types = [
             'textbox',
             'select',
             'radio',
@@ -108,9 +108,9 @@ if ($op === 'access') {
             'date',
             'datetime',
             'timezone',
-            'language');
+            'language', ];
         foreach (array_keys($fields) as $i) {
-            if (in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
+            if (in_array($fields[$i]->getVar('field_type'), $searchable_types, true)) {
                 $form->addItem(
                     $fields[$i]->getVar('field_id'),
                     XoopsLocale::substr($fields[$i]->getVar('field_title'), 0, 25)

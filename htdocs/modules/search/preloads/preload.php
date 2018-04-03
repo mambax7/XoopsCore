@@ -24,8 +24,6 @@ class SearchPreload extends PreloadItem
      * listen for core.header.start
      *
      * @param mixed $args not used
-     *
-     * @return void
      */
     public static function eventCoreHeaderEnd($args)
     {

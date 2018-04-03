@@ -16,15 +16,15 @@
  * @version         $Id$
  */
 
-class Xcaptcha extends XoopsCaptcha
+class xcaptcha extends XoopsCaptcha
 {
     public $captchaHandler;
 
-    public $config = array();
+    public $config = [];
 
-    public $plugin_List = array();
+    public $plugin_List = [];
 
-    public $plugin_config = array();
+    public $plugin_config = [];
 
     public $xcaptcha_path_plugin;
 
@@ -40,7 +40,7 @@ class Xcaptcha extends XoopsCaptcha
     static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (! isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -69,7 +69,7 @@ class Xcaptcha extends XoopsCaptcha
 
     public function getPluginList()
     {
-        $ret = array();
+        $ret = [];
 
         foreach (glob($this->captchaHandler->path_basic . '/config.*.php') as $filename) {
             $plugin_List = preg_replace('/(config\.)(.*)(\.php)/', '$2', basename($filename));
@@ -80,7 +80,7 @@ class Xcaptcha extends XoopsCaptcha
 
     public function loadConfigPlugin()
     {
-        $config = array();
+        $config = [];
         foreach ($this->plugin_List as $key) {
             $config = $this->loadConfig($key);
         }
@@ -90,7 +90,7 @@ class Xcaptcha extends XoopsCaptcha
     public function VerifyData()
     {
         $system = System::getInstance();
-        $config = array();
+        $config = [];
         $_POST['disabled'] = $system->cleanVars($_POST, 'disabled', false, 'boolean');
         $_POST['mode'] = $system->cleanVars($_POST, 'mode', 'image', 'string');
         $_POST['name'] = $system->cleanVars($_POST, 'name', 'xoopscaptcha', 'string');

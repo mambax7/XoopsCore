@@ -19,15 +19,15 @@ require __DIR__ . '/admin_header.php';
 
 /* --------------------------------------------------------------- */
 
+use Doctrine\DBAL\Schema\Comparator;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
 use Xmf\Debug;
 use Xmf\Request;
 use Xmf\Yaml;
 use Xoops\Core\Database\Schema\ExportVisitor;
 use Xoops\Core\Database\Schema\ImportSchema;
 use Xoops\Core\Database\Schema\RemovePrefixes;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Schema\Comparator;
-use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
 
 // from $_POST we use keys: op, mod_dirname
 $op = Request::getCmd('op', 'selectmodule', 'POST');
@@ -45,7 +45,7 @@ if ($op === 'showschema') {
     $mod_to_use = $helper->getModule();
     $mod_to_use->loadInfo($mod_dirname, false);
     $mod_ver = $mod_to_use->modinfo;
-    $table_list = array();
+    $table_list = [];
     if (isset($mod_ver['tables'])) {
         $table_list = $mod_ver['tables'];
     }
@@ -65,7 +65,7 @@ if ($op === 'showschema') {
         $schema = $schemaManager->createSchema();
 
         // invoke our RemovePrefixes visitor with list of core tables
-        $visitor = new RemovePrefixes;
+        $visitor = new RemovePrefixes();
         $visitor->setTableFilter($table_list);
         $schema->visit($visitor);
 
@@ -75,7 +75,7 @@ if ($op === 'showschema') {
 
         // Invoke an ExportVisitor that will build a clean array version
         // of our schema, so we can serialize it.
-        $export = new ExportVisitor;
+        $export = new ExportVisitor();
         $newSchema->visit($export);
 
         $schemaArray = $export->getSchemaArray();
@@ -184,7 +184,7 @@ EOT2;
     $op = 'selectmodule';
 }
 
-if ($op == 'selectmodule') {
+if ($op === 'selectmodule') {
     $activeModules = $xoops->getActiveModules();
     natcasesort($activeModules);
 

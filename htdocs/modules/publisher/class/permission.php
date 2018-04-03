@@ -9,9 +9,9 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Xoops\Core\Kernel\XoopsObjectHandler;
 use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
+use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
  *  Publisher class
@@ -59,7 +59,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
         if (isset($items[$gperm_name][$id])) {
             return $items[$gperm_name][$id];
         }
-        $groups = array();
+        $groups = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('gperm_modid', $this->publisher->getModule()->getVar('mid')));
         $criteria->add(new Criteria('gperm_name', $gperm_name));
@@ -91,7 +91,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
         if (isset($items[$gperm_name])) {
             return $items[$gperm_name];
         }
-        $ret = array();
+        $ret = [];
         //Instead of calling groupperm handler and get objects, we will save some memory and do it our way
         $criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
         $criteria->add(new Criteria('gperm_modid', $this->publisher->getModule()->getVar('mid')));
@@ -127,15 +127,15 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      */
     public function isGranted($gperm_name, $id)
     {
-        if (!$id) {
+        if (! $id) {
             return false;
         }
         $permissions = $this->getGrantedItems($gperm_name);
-        if (!empty($permissions) && isset ($permissions[$id])) {
+        if (! empty($permissions) && isset ($permissions[$id])) {
             return true;
-        } else {
-            return false;
         }
+            return false;
+
     }
 
     /**
@@ -161,7 +161,7 @@ class PublisherPermissionHandler extends XoopsObjectHandler
         // Save the new permissions
         if (count($groups) > 0) {
             foreach ($groups as $group_id) {
-                echo $group_id . "-";
+                echo $group_id . '-';
                 echo $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
             }
         }

@@ -10,10 +10,10 @@
 */
 
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Kernel\CriteriaElement;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
-use Xoops\Core\Kernel\CriteriaElement;
 
 /**
  * Extended User Profile
@@ -72,7 +72,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
             ->andWhere($eb->in('t1.user_group', $user_groups));
 
         $result = $sql->execute();
-        $field_ids = array();
+        $field_ids = [];
         while (list($field_id) = $result->fetch(PDO::FETCH_NUM)) {
             $field_ids[] = $field_ids;
         }
@@ -91,9 +91,9 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     {
         $rawRows = $this->getAll($criteria, null, false, false);
 
-        usort($rawRows, array($this, 'visibilitySort'));
+        usort($rawRows, [$this, 'visibilitySort']);
 
-        $rows = array();
+        $rows = [];
         foreach ($rawRows as $rawRow) {
             $rows[$rawRow['field_id']][] = $rawRow;
         }
@@ -116,14 +116,14 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     protected function visibilitySort($a, $b)
     {
         $fieldDiff = $a['field_id'] - $b['field_id'];
-        $userDiff  = $a['user_group'] - $b['user_group'];
-        $profDiff  = $a['profile_group'] - $b['profile_group'];
-        if (0 != $fieldDiff) {
+        $userDiff = $a['user_group'] - $b['user_group'];
+        $profDiff = $a['profile_group'] - $b['profile_group'];
+        if ($fieldDiff !== 0) {
             return $fieldDiff;
-        } elseif (0 !== $userDiff) {
+        } elseif ($userDiff !== 0) {
             return $userDiff;
-        } else {
-            return $profDiff;
         }
+            return $profDiff;
+
     }
 }

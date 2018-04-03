@@ -22,8 +22,6 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
      * @param  string  $name   template name
      * @param  string  $source template source
      * @param  integer $mtime  template modification timestamp (epoch)
-     *
-     * @return void
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -52,9 +50,9 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
      */
     private function blockTplInfo($tpl_name)
     {
-        static $cache = array();
+        static $cache = [];
         $xoops = \Xoops::getInstance();
-        $tpl_info = $xoops->getTplInfo('block:'.$tpl_name);
+        $tpl_info = $xoops->getTplInfo('block:' . $tpl_name);
         $tpl_name = $tpl_info['tpl_name'];
         $dirname = $tpl_info['module'];
         $file = $tpl_info['file'];
@@ -62,7 +60,7 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
         // why are we not checking $cache here?
 
         $theme_set = $xoops->getConfig('theme_set') ? $xoops->getConfig('theme_set') : 'default';
-        if (!file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/blocks/{$file}"))) {
+        if (! file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/blocks/{$file}"))) {
             $file_path = $xoops->path("modules/{$dirname}/templates/blocks/{$file}");
         }
         return $cache[$tpl_name] = $file_path;

@@ -26,8 +26,8 @@ include_once __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-if (!$xoops->service('htmltopdf')->isAvailable()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOPDF);
+if (! $xoops->service('htmltopdf')->isAvailable()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOPDF);
 }
 
 $publisher = Publisher::getInstance();
@@ -36,8 +36,8 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $itemid = Request::getInt('itemid');
 $item_page_id = Request::getInt('page', -1);
 
-if ($itemid == 0) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+if ($itemid === 0) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Creating the item object for the selected item
@@ -45,16 +45,16 @@ if ($itemid == 0) {
 $itemObj = $publisher->getItemHandler()->get($itemid);
 
 // if the selected item was not found, exit
-if (!$itemObj) {
-    $xoops->redirect("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+if (! $itemObj) {
+    $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Creating the category object that holds the selected item
 $categoryObj = $publisher->getCategoryHandler()->get($itemObj->getVar('categoryid'));
 
 // Check user permissions to access that category of the selected item
-if (!$itemObj->accessGranted()) {
-    $xoops->redirect("javascript:history.go(-1)", 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (! $itemObj->accessGranted()) {
+    $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $publisher->loadLanguage('main');

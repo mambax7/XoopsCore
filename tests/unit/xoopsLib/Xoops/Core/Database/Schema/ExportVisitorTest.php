@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../../../../../init_new.php');
+require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Doctrine\DBAL\Types\Type;
 
@@ -47,7 +47,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(!empty($value['tables']));
+        $this->assertTrue(! empty($value['tables']));
     }
 
     public function test_acceptColumn()
@@ -63,7 +63,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(!empty($value['tables']['system_group']['columns']['groupid']));
+        $this->assertTrue(! empty($value['tables']['system_group']['columns']['groupid']));
         $this->assertSame($col_name, $value['tables']['system_group']['columns'][$col_name]['name']);
         $this->assertSame('integer', $value['tables']['system_group']['columns'][$col_name]['type']);
     }
@@ -76,11 +76,11 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $tName = 'system_group';
         $table = new Doctrine\DBAL\Schema\Table($tName);
 
-        $columns = array('groupid');
+        $columns = ['groupid'];
         $fk_table = 'system_permission';
         $fk_name = 'fk_name';
-        $fk_options = array('o'=>'o1');
-        $fk_columns = array('system_permission');
+        $fk_options = ['o' => 'o1'];
+        $fk_columns = ['system_permission'];
         $fk_constraint = new Doctrine\DBAL\Schema\ForeignKeyConstraint(
             $columns, $fk_table, $fk_columns, $fk_name, $fk_options);
 
@@ -88,7 +88,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(!empty($value['tables'][$tName]['constraint']));
+        $this->assertTrue(! empty($value['tables'][$tName]['constraint']));
         $tmp = $value['tables'][$tName]['constraint'][0];
         $this->assertSame($fk_name, $tmp['name']);
         $this->assertSame($columns, $tmp['localcolumns']);
@@ -106,7 +106,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
         $table = new Doctrine\DBAL\Schema\Table($tName);
 
         $name = 'index_name';
-        $columns = array('name','description');
+        $columns = ['name', 'description'];
         $unique = true;
         $primary = true;
         $index = new Doctrine\DBAL\Schema\Index(
@@ -116,7 +116,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(!empty($value['tables'][$tName]['indexes'][$name]));
+        $this->assertTrue(! empty($value['tables'][$tName]['indexes'][$name]));
         $tmp = $value['tables'][$tName]['indexes'][$name];
         $this->assertSame($name, $tmp['name']);
         $this->assertSame($columns, $tmp['columns']);
@@ -139,7 +139,7 @@ class ExportVisitorTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance->getSchemaArray();
         $this->assertTrue(is_array($value));
-        $this->assertTrue(!empty($value['sequence'][$name]));
+        $this->assertTrue(! empty($value['sequence'][$name]));
         $tmp = $value['sequence'][$name];
         $this->assertSame($name, $tmp['name']);
         $this->assertSame($alloc_size, $tmp['allocationsize']);

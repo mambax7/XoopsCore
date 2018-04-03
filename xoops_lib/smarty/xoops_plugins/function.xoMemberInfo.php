@@ -53,26 +53,26 @@ function smarty_function_xoMemberInfo($params, &$smarty)
 
     $time = time();
     $member_info = $_SESSION['xoops_member_info'];
-    if (!$xoops->isUser()) {
+    if (! $xoops->isUser()) {
         $member_info['uname'] = $xoops->getConfig('anonymous');
     } else {
         if (@empty($params['infos'])) {
             $params['infos'] = 'uname|name|email|user_avatar|url|user_icq|user_aim|user_yim|user_msnm|posts|user_from|user_occ|user_intrest|bio|user_sig';
         }
-        $infos = explode("|", $params['infos']);
+        $infos = explode('|', $params['infos']);
 
-        if (!is_array($member_info)) {
-            $member_info = array();
+        if (! is_array($member_info)) {
+            $member_info = [];
         }
         foreach ($infos as $info) {
-            if (!array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info . '_expire'] < $time) {
+            if (! array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info . '_expire'] < $time) {
                 $member_info[$info] = $xoops->user->getVar($info, 'E');
                 $_SESSION['xoops_member_info'][$info] = $member_info[$info];
                 $_SESSION['xoops_member_info'][$info . '_expire'] = $time + 60;
             }
         }
     }
-    if (!@empty($params['assign'])) {
+    if (! @empty($params['assign'])) {
         $smarty->assign($params['assign'], $member_info);
     }
 }

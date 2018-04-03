@@ -21,7 +21,6 @@
  */
 class SystemExtension extends SystemModule
 {
-
     /**
      * getExtension
      *
@@ -31,15 +30,15 @@ class SystemExtension extends SystemModule
      */
     public function getExtension($mod = '')
     {
-        $ret = array();
+        $ret = [];
         $extension = self::getExtensionList();
         foreach ($extension as $list) {
             /* @var $list XoopsModule */
             if ($list->getInfo('install')) {
-                if (!is_array($list->getInfo('extension_module'))) {
+                if (! is_array($list->getInfo('extension_module'))) {
                     $ret[] = $list;
                 } else {
-                    if (array_search($mod, $list->getInfo('extension_module')) !== false) {
+                    if (array_search($mod, $list->getInfo('extension_module'), true) !== false) {
                         $ret[] = $list;
                         //echo $list->getInfo('name') . is_array( $list->getInfo('extension_module') );
                     }
@@ -63,7 +62,7 @@ class SystemExtension extends SystemModule
         $module_handler = $xoops->getHandlerModule();
         $moduleperm_handler = $xoops->getHandlerGroupPermission();
 
-        $ret = array();
+        $ret = [];
         $i = 0;
         foreach ($this->modulesList as $file) {
             $file = trim($file);
@@ -73,7 +72,7 @@ class SystemExtension extends SystemModule
                 $module = $module_handler->create();
                 $module->loadInfoAsVar($file);
                 if ($module->getInfo('extension')) {
-                    if (in_array($file, $this->modulesDirnames)) {
+                    if (in_array($file, $this->modulesDirnames, true)) {
                         $module->setInfo('install', true);
                         $extension = $module_handler->getByDirname($module->getInfo('dirname'));
                         $module->setInfo('mid', $extension->getVar('mid'));
@@ -82,10 +81,10 @@ class SystemExtension extends SystemModule
                             XoopsLocale::formatTimestamp($extension->getVar('last_update'), 's')
                         );
                         $module->setInfo('hasconfig', $module->getVar('hasconfig'));
-                        if (round($module->getInfo('version'), 2) != $extension->getVar('version')) {
+                        if (round($module->getInfo('version'), 2) !== $extension->getVar('version')) {
                             $module->setInfo('warning_update', true);
                         }
-                        $groups = array();
+                        $groups = [];
                         if (is_object($xoops->user)) {
                             $groups = $xoops->user->getGroups();
                         }
@@ -150,13 +149,13 @@ class SystemExtension extends SystemModule
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
 
-        $ret = array();
+        $ret = [];
         $i = 0;
         foreach ($this->modulesList as $file) {
             if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
                 clearstatcache();
                 $file = trim($file);
-                if (!in_array($file, $this->modulesDirnames)) {
+                if (! in_array($file, $this->modulesDirnames, true)) {
                     /* @var $module XoopsModule */
                     $module = $module_handler->create();
                     $module->loadInfo($file);

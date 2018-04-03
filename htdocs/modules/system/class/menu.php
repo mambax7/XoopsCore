@@ -22,13 +22,16 @@
 class SystemMenuHandler
 {
     /**
-     *
      * @var string
      */
-    private $_menutop = array();
-    private $_menutabs = array();
+    private $_menutop = [];
+
+    private $_menutabs = [];
+
     private $_obj;
+
     private $_header;
+
     private $_subheader;
 
     /**
@@ -48,15 +51,15 @@ class SystemMenuHandler
     /**
      * @param string $link
      */
-    public function addMenuTop($link, $name = "")
+    public function addMenuTop($link, $name = '')
     {
-        $this->_menutop[] = array('link' => $link, 'name' => $name);
+        $this->_menutop[] = ['link' => $link, 'name' => $name];
     }
 
     public function addMenuTopArray($options, $multi = true)
     {
         if (is_array($options)) {
-            if ($multi == true) {
+            if ($multi === true) {
                 foreach ($options as $k => $v) {
                     $this->addOptionTop($k, $v);
                 }
@@ -71,15 +74,15 @@ class SystemMenuHandler
     /**
      * @param string $link
      */
-    public function addMenuTabs($link, $name = "")
+    public function addMenuTabs($link, $name = '')
     {
-        $this->_menutabs[] = array('link' => $link, 'name' => $name, 'current' => 0);
+        $this->_menutabs[] = ['link' => $link, 'name' => $name, 'current' => 0];
     }
 
     public function addMenuTabsArray($options, $multi = true)
     {
         if (is_array($options)) {
-            if ($multi == true) {
+            if ($multi === true) {
                 foreach ($options as $k => $v) {
                     $this->addMenuTabsTop($k, $v);
                 }
@@ -101,11 +104,11 @@ class SystemMenuHandler
         $this->_subheader = $value;
     }
 
-    public function breadcrumb_nav($basename = "Home")
+    public function breadcrumb_nav($basename = 'Home')
     {
         global $bc_site, $bc_label;
         $site = $bc_site;
-        $return_str = "<a href=\"/\">$basename</a>";
+        $return_str = "<a href=\"/\">${basename}</a>";
         $str = substr(dirname(Xoops::getInstance()->getEnv('PHP_SELF')), 1);
 
         $arr = explode('/', $str);
@@ -117,7 +120,7 @@ class SystemMenuHandler
                 $site .= $val . '/';
             }
         } else {
-            if ($num == 1) {
+            if ($num === 1) {
                 $arr = $str;
                 $return_str .= ' &gt; <a href="' . $bc_site . $arr . '/">' . $bc_label[$arr] . '</a>';
             }
@@ -156,32 +159,32 @@ class SystemMenuHandler
         $menu .= "<table style='width: 100%; padding: 0;' cellspacing='0'>\n<tr>";
         $menu .= "<td style='font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;'>";
         foreach ($this->_menutop as $k => $v) {
-            $menu .= " <a href=\"$k\">$v</a> |";
+            $menu .= " <a href=\"${k}\">${v}</a> |";
         }
         $menu = substr($menu, 0, -1);
 
-        $menu .= "</td>";
-        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar('name') . "</strong> : " . $breadcrumb . "</td>";
+        $menu .= '</td>';
+        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar('name') . '</strong> : ' . $breadcrumb . '</td>';
         $menu .= "</tr>\n</table>\n";
         $menu .= "</div>\n";
         $menu .= "<div id='buttonbar_mod'><ul>";
         foreach ($this->_menutabs as $k => $v) {
-            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . \XoopsBaseConfig::get('url') . "/modules/" . $this->_obj->getVar('dirname') . "/" . $k . "'><span>$v</span></a></li>\n";
+            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . \XoopsBaseConfig::get('url') . '/modules/' . $this->_obj->getVar('dirname') . '/' . $k . "'><span>${v}</span></a></li>\n";
             ++$i;
         }
         $menu .= "</ul>\n</div>\n";
         if ($this->_header) {
             $menu .= "<h4 class='admin_header'>";
             if (isset($modversion['name'])) {
-                if ($modversion['image'] && $this->_obj->getVar('mid') == 1) {
+                if ($modversion['image'] && $this->_obj->getVar('mid') === 1) {
                     $system_image = \XoopsBaseConfig::get('url') . '/modules/system/images/system/' . $modversion['image'];
                 } else {
                     $system_image = \XoopsBaseConfig::get('url') . '/modules/' . $_dirname . '/images/' . $modversion['image'];
                 }
-                $menu .= "<img src='$system_image' align='middle' height='32' width='32' alt='' />";
-                $menu .= " " . $modversion['name'] . "</h4>\n";
+                $menu .= "<img src='${system_image}' align='middle' height='32' width='32' alt='' />";
+                $menu .= ' ' . $modversion['name'] . "</h4>\n";
             } else {
-                $menu .= " " . $this->_header . "</h4>\n";
+                $menu .= ' ' . $this->_header . "</h4>\n";
             }
         }
         if ($this->_subheader) {
@@ -189,7 +192,7 @@ class SystemMenuHandler
         }
         $menu .= '<div class="clear">&nbsp;</div>';
         unset($this->_obj);
-        if ($display == true) {
+        if ($display === true) {
             echo $menu;
         } else {
             return $menu;

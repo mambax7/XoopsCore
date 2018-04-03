@@ -64,7 +64,7 @@ class PagePage_relatedForm extends Xoops\Form\ThemeForm
 
         $related_links_form = new Xoops\Form\Select(PageLocale::RELATED_MAIN, 'datas', $related_links, $size = 20, $multiple = true);
         foreach ($contents as $k => $content) {
-            if (!in_array($content['content_id'], $contents_used) || in_array($content['content_id'], $related_links)) {
+            if (! in_array($content['content_id'], $contents_used, true) || in_array($content['content_id'], $related_links, true)) {
                 $related_links_form->addOption($content['content_id'], $content['content_title']);
             }
         }

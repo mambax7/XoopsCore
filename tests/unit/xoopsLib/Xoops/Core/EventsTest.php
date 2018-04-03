@@ -1,12 +1,12 @@
 <?php
-require_once(__DIR__.'/../../../init_new.php');
+require_once(__DIR__ . '/../../../init_new.php');
 
-use Xoops\Core\Events;
 
 class EventsTest extends \PHPUnit\Framework\TestCase
 {
-    protected $myclass = '\Xoops\Core\Events';
     public $dummy_result = null;
+
+    protected $myclass = '\Xoops\Core\Events';
 
     /**
      * @var Class
@@ -58,12 +58,12 @@ class EventsTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        $callback = array($this,'dummy_callback');
+        $callback = [$this, 'dummy_callback'];
         $name = 'dummy.listener';
         $instance->addListener($name, $callback);
 
-        $instance->triggerEvent('dummy.listener', array(1,2));
-        $this->assertSame(array(1,2), $this->dummy_result);
+        $instance->triggerEvent('dummy.listener', [1, 2]);
+        $this->assertSame([1, 2], $this->dummy_result);
     }
 
     public function test_hasListeners()

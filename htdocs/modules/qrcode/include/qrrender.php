@@ -9,9 +9,9 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use Xmf\Request;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
+use Xmf\Request;
 
 /**
  * @author    Richard Griffith <richard@geekwright.com>
@@ -53,7 +53,7 @@ $qrCode->setMargin($configs['qrcode_margin']);
 $qrCode->setEncoding('UTF-8');
 
 $qrCode->setErrorCorrectionLevel($ec);
-$qrCode->setSize((int)($configs['qrcode_mps']));
+$qrCode->setSize((int) ($configs['qrcode_mps']));
 //$qrCode->setPadding($configs['qrcode_margin']*$qrCode->getModuleSize());
 $qrCode->setBackgroundColor(normalizeColor($configs['qrcode_bgcolor']));
 $qrCode->setForegroundColor(normalizeColor($configs['qrcode_fgcolor']));
@@ -69,8 +69,8 @@ try {
 }
 
 $mimetype = \Xoops\Core\MimeTypes::findType('png');
-$expires = 60*60*24*15; // seconds, minutes, hours, days
-header("Cache-Control: public, max-age=" . $expires);
+$expires = 60 * 60 * 24 * 15; // seconds, minutes, hours, days
+header('Cache-Control: public, max-age=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 //header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', $mtime));
 header('Content-type: ' . $mimetype);
@@ -87,12 +87,12 @@ exit;
 function normalizeColor($color)
 {
     $color = preg_replace('/[^a-fA-F0-9]+/', '', $color); // only hex digits
-    $color = substr('000000'.$color, -6); // only 6 digits, pad with leading zeros
-    $rgb = array(
+    $color = substr('000000' . $color, -6); // only 6 digits, pad with leading zeros
+    $rgb = [
         'r' => hexdec(substr($color, 0, 2)),
         'g' => hexdec(substr($color, 2, 2)),
         'b' => hexdec(substr($color, 4, 2)),
-        'a' => 0
-    );
+        'a' => 0,
+    ];
     return $rgb;
 }

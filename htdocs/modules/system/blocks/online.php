@@ -25,7 +25,7 @@ function b_system_online_show()
 {
     $xoops = Xoops::getInstance();
     $online_handler = $xoops->getHandlerOnline();
-    mt_srand((double)microtime() * 1000000);
+    mt_srand((double) microtime() * 1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
         $online_handler->gc(300);
@@ -43,9 +43,9 @@ function b_system_online_show()
         $online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
     }
     $onlines = $online_handler->getAll(null, null, false, false);
-    if (false != $onlines) {
+    if ($onlines !== false) {
         $total = count($onlines);
-        $block = array();
+        $block = [];
         $guests = 0;
         $members = '';
         for ($i = 0; $i < $total; ++$i) {
@@ -67,7 +67,7 @@ function b_system_online_show()
         $block['online_guests'] = $guests;
         $block['lang_more'] = XoopsLocale::MORE;
         return $block;
-    } else {
-        return false;
     }
+        return false;
+
 }

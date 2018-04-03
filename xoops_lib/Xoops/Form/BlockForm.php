@@ -46,7 +46,7 @@ class BlockForm extends Form
             if ($ele->has('datalist')) {
                 $ret .= $ele->renderDatalist();
             }
-            if (!$ele->isHidden()) {
+            if (! $ele->isHidden()) {
                 $ret .= '<div class="form-group">';
                 $ret .= '<label>' . $ele->getCaption();
                 $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '') . '</label>';
@@ -55,7 +55,7 @@ class BlockForm extends Form
                 $ret .= '<p class="dsc_pattern_vertical">' . $ele->getPatternDescription() . '</p>';
                 $ret .= '</div>' . "\n";
             } else {
-                $ret .= $ele->render(). "\n";
+                $ret .= $ele->render() . "\n";
             }
         }
         $ret .= '</div>';

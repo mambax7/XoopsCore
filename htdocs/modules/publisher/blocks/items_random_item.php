@@ -24,12 +24,12 @@ include_once dirname(__DIR__) . '/include/common.php';
 
 function publisher_items_random_item_show($options)
 {
-    $block = array();
+    $block = [];
     $publisher = Publisher::getInstance();
     // creating the ITEM object
-    $itemsObj = $publisher->getItemHandler()->getRandomItem('', array(_PUBLISHER_STATUS_PUBLISHED));
+    $itemsObj = $publisher->getItemHandler()->getRandomItem('', [_PUBLISHER_STATUS_PUBLISHED]);
 
-    if (!is_object($itemsObj)) return $block;
+    if (! is_object($itemsObj)) return $block;
 
     $block['content'] = $itemsObj->getBlockSummary(300, true); //show complete summary  but truncate to 300 if only body available
     $block['id'] = $itemsObj->getVar('itemid');

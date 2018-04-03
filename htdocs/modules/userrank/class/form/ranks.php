@@ -56,7 +56,7 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         \Xoops\Core\Lists\ImageFile::setOptionsArray($imageselect_img, $xoops->path('uploads/ranks'));
         $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"" . \XoopsBaseConfig::get('uploads-url') . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new Xoops\Form\Label('', "<br /><img src='" . \XoopsBaseConfig::get('uploads-url') . "/ranks/" . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
+        $imgtray_img->addElement(new Xoops\Form\Label('', "<br /><img src='" . \XoopsBaseConfig::get('uploads-url') . '/ranks/' . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
 
         $fileseltray_img = new Xoops\Form\ElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new Xoops\Form\File(_AM_USERRANK_UPLOAD, 'rank_image'), false);
@@ -64,7 +64,7 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         $imgtray_img->addElement($fileseltray_img);
         $this->addElement($imgtray_img);
 
-        if (!$obj->isNew()) {
+        if (! $obj->isNew()) {
             $rank_special = $obj->getVar('rank_special');
         } else {
             $rank_special = 0;
@@ -74,7 +74,7 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         $special_tray->setDescription(_AM_USERRANK_SPECIAL_CAN);
         $special_tray->addElement(new Xoops\Form\RadioYesNo('', 'rank_special', $rank_special));
         $this->addElement($special_tray);
-        if (!$obj->isNew()) {
+        if (! $obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('rank_id', $obj->getVar('rank_id')));
         }
         $this->addElement(new Xoops\Form\Hidden('op', 'userrank_save'));
