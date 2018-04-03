@@ -52,7 +52,7 @@ class tinymce
     public function &instance($config)
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $instance = new self($config);
         } else {
             $instance->setConfig($config);
@@ -81,7 +81,7 @@ class tinymce
         $this->setting['theme'] = 'modern';
 
         // Load default settings
-        if (! ($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
             $this->setting = include __DIR__ . '/settings.php';
         }
 
@@ -94,14 +94,14 @@ class tinymce
         $this->setting['content_css'] = implode(',', $this->loadCss());
         $configured[] = 'content_css';
 
-        if (! empty($this->config['theme'])
+        if (!empty($this->config['theme'])
             && is_dir(\XoopsBaseConfig::get('root-path') . $this->rootpath . '/themes/' . $this->config['theme'])
         ) {
             $this->setting['theme'] = $this->config['theme'];
             $configured[] = 'theme';
         }
 
-        if (! empty($this->config['mode'])) {
+        if (!empty($this->config['mode'])) {
             $this->setting['mode'] = $this->config['mode'];
             $configured[] = 'mode';
         }
@@ -177,7 +177,7 @@ class tinymce
                 $configured[] = 'resizing';
             }
 
-            if (! empty($this->config['fonts'])) {
+            if (!empty($this->config['fonts'])) {
                 $this->setting['theme_' . $this->setting['theme'] . '_fonts'] = $this->config['fonts'];
                 $configured[] = 'fonts';
             }
@@ -208,7 +208,7 @@ class tinymce
             $this->setting[$key] = $val;
         }
 
-        if (! is_dir(\XoopsBaseConfig::get('root-path') . $this->rootpath . '/themes/' . $this->setting['theme'] . '/docs/' . $this->setting['language'] . '/')) {
+        if (!is_dir(\XoopsBaseConfig::get('root-path') . $this->rootpath . '/themes/' . $this->setting['theme'] . '/docs/' . $this->setting['language'] . '/')) {
             $this->setting['docs_language'] = 'en';
         }
 
@@ -231,10 +231,10 @@ class tinymce
         } else {
             $plugins = array_intersect(explode(',', $this->setting['plugins']), $plugins_list);
         }
-        if (! empty($this->setting['exclude_plugins'])) {
+        if (!empty($this->setting['exclude_plugins'])) {
             $plugins = array_diff($plugins, explode(',', $this->setting['exclude_plugins']));
         }
-        if (! empty($this->config['plugins'])) {
+        if (!empty($this->config['plugins'])) {
             $plugins = array_merge($plugins, $this->config['plugins']);
         }
 
@@ -250,7 +250,7 @@ class tinymce
     {
         $xoopsPlugins = [];
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $allplugins = XoopsLists::getDirListAsArray ($xoops_root_path . $this->rootpath . '/plugins');
+        $allplugins = XoopsLists::getDirListAsArray($xoops_root_path . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
             if (strpos(strtolower($plugin), 'xoops') !== false
                 && file_exists($xoops_root_path . $this->config['rootpath'] . "/include/${plugin}.php")) {
@@ -267,7 +267,7 @@ class tinymce
     {
         static $css_url, $css_path;
 
-        if (! isset($css_url)) {
+        if (!isset($css_url)) {
             $css_url = dirname(\Xoops::getInstance()->getCss($GLOBALS['xoopsConfig']['theme_set']));
             $css_path = str_replace(\XoopsBaseConfig::get('themes-url'), \XoopsBaseConfig::get('themes-path'), $css_url);
         }
@@ -302,7 +302,7 @@ class tinymce
 
         $this->init();
 
-        if (! empty($this->setting['callback'])) {
+        if (!empty($this->setting['callback'])) {
             $callback = $this->setting['callback'];
             unset($this->setting['callback']);
         } else {
@@ -332,7 +332,7 @@ class tinymce
         $chemin_scheme = $chemin_array['scheme']; // http
         $chemin_host = $chemin_array['host']; // www.example.com  or // localhost
         //$chemin_path =  $chemin_array["path"]; // /myweb1
-        if (! isset($chemin_array['path'])) {
+        if (!isset($chemin_array['path'])) {
             $chemin_path = '';
         } else {
             $chemin_path = $chemin_array['path'];

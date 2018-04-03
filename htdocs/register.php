@@ -55,7 +55,7 @@ if (Request::getMethod() === 'POST') {
     // from $_GET we use keys: op, id, actkey
     $op = 'register';
     $actkey = Request::getString('actkey', '', 'GET');
-    if (! empty($actkey)) {
+    if (!empty($actkey)) {
         $op = Request::getCmd('op', 'register', 'GET');
         $id = Request::getInt('id', 0, 'GET');
     }
@@ -66,7 +66,7 @@ switch ($op) {
         $xoops->header();
         $xoops->tpl()->assign('xoops_pagetitle', XoopsLocale::USER_REGISTRATION);
         $stop = '';
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $stop .= implode('<br />', $xoops->security()->getErrors()) . '<br />';
         }
         if ($xoopsConfigUser['reg_dispdsclmr'] !== 0 && $xoopsConfigUser['reg_disclaimer'] !== '') {
@@ -108,11 +108,11 @@ switch ($op) {
     case 'finish':
         $xoops->header();
         $stop = XoopsUserUtility::validate($uname, $email, $pass, $vpass);
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $stop .= implode('<br />', $xoops->security()->getErrors()) . '<br />';
         }
         $xoopsCaptcha = XoopsCaptcha::getInstance();
-        if (! $xoopsCaptcha->verify()) {
+        if (!$xoopsCaptcha->verify()) {
             $stop .= $xoopsCaptcha->getMessage() . '<br />';
         }
         if (empty($stop)) {
@@ -140,12 +140,12 @@ switch ($op) {
             } else {
                 $newuser->setVar('level', 0);
             }
-            if (! $member_handler->insertUser($newuser)) {
+            if (!$member_handler->insertUser($newuser)) {
                 echo XoopsLocale::E_USER_NOT_REGISTERED;
                 $xoops->footer();
             }
             $newid = $newuser->getVar('uid');
-            if (! $member_handler->addUserToGroup(FixedGroups::USERS, $newid)) {
+            if (!$member_handler->addUserToGroup(FixedGroups::USERS, $newid)) {
                 echo XoopsLocale::E_USER_NOT_REGISTERED;
                 $xoops->footer();
             }
@@ -169,7 +169,7 @@ switch ($op) {
                 $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
                 $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                 $xoopsMailer->setSubject(sprintf(XoopsLocale::F_USER_ACTIVATION_KEY_FOR, $uname));
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     echo XoopsLocale::S_YOU_ARE_NOW_REGISTERED . ' '
                     . XoopsLocale::EMAIL_HAS_NOT_BEEN_SENT_WITH_ACTIVATION_KEY;
                 } else {
@@ -195,14 +195,14 @@ switch ($op) {
                 $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
                 $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                 $xoopsMailer->setSubject(sprintf(XoopsLocale::F_USER_ACTIVATION_KEY_FOR, $uname));
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     echo XoopsLocale::S_YOU_ARE_NOW_REGISTERED . ' '
                         . XoopsLocale::EMAIL_HAS_NOT_BEEN_SENT_WITH_ACTIVATION_KEY;
                     echo XoopsLocale::S_YOU_ARE_NOW_REGISTERED . ' '
                         . XoopsLocale::PLEASE_WAIT_FOR_ACCOUNT_ACTIVATION;
                 }
             }
-            if ($xoopsConfigUser['new_user_notify'] === 1 && ! empty($xoopsConfigUser['new_user_notify_group'])) {
+            if ($xoopsConfigUser['new_user_notify'] === 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
                 $xoopsMailer = $xoops->getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
@@ -232,7 +232,7 @@ switch ($op) {
         }
         $member_handler = $xoops->getHandlerMember();
         $thisuser = $member_handler->getUser($id);
-        if (! is_object($thisuser)) {
+        if (!is_object($thisuser)) {
             exit();
         }
         if ($thisuser->getVar('actkey') !== $actkey) {
@@ -258,7 +258,7 @@ switch ($op) {
                             sprintf(XoopsLocale::F_YOUR_ACCOUNT_AT, $xoops->getConfig('sitename'))
                         );
                         $xoops->header();
-                        if (! $xoopsMailer->send()) {
+                        if (!$xoopsMailer->send()) {
                             printf(XoopsLocale::EF_NOTIFICATION_EMAIL_NOT_SENT_TO, $thisuser->getVar('uname'));
                         } else {
                             printf(XoopsLocale::SF_NOTIFICATION_EMAIL_SENT_TO, $thisuser->getVar('uname'));

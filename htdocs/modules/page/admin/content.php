@@ -80,7 +80,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('content.php', 3, implode(',', $xoops->security()->getErrors()));
         }
 
@@ -172,7 +172,7 @@ switch ($op) {
 
         $obj = $content_Handler->get($content_id);
         if ($ok === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('content.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             // Deleting the content
@@ -210,7 +210,7 @@ switch ($op) {
         if ($content_id > 0) {
             $obj = $content_Handler->get($content_id);
             $old = $obj->getVar('content_status');
-            $obj->setVar('content_status', ! $old);
+            $obj->setVar('content_status', !$old);
             if ($content_Handler->insert($obj)) {
                 exit;
             }
@@ -223,7 +223,7 @@ switch ($op) {
         if ($content_id > 0) {
             $obj = $content_Handler->get($content_id);
             $old = $obj->getVar('content_maindisplay');
-            $obj->setVar('content_maindisplay', ! $old);
+            $obj->setVar('content_maindisplay', !$old);
             if ($content_Handler->insert($obj)) {
                 exit;
             }

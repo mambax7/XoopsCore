@@ -82,9 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-
 } else {
-    if (! $xoops->getConfig('locale')) {
+    if (!$xoops->getConfig('locale')) {
         $xoops->setConfig('locale', $_COOKIE['xo_install_lang']);
     }
     $xoops->loadLocale('system');

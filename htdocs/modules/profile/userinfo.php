@@ -64,7 +64,7 @@ if ($xoops->isUser() && $uid === $xoops->user->getVar('uid')) {
     $thisUser = $member_handler->getUser($uid);
 
     // Redirect if not a user or not active and the current user is not admin
-    if (! is_object($thisUser) || (! $thisUser->isActive() && (! $xoops->user || ! $xoops->user->isAdmin()))) {
+    if (!is_object($thisUser) || (!$thisUser->isActive() && (!$xoops->user || !$xoops->user->isAdmin()))) {
         $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n'), 3, XoopsLocale::E_NO_USER_SELECTED);
     }
 
@@ -90,12 +90,12 @@ if ($xoops->isUser() && $uid === $xoops->user->getVar('uid')) {
 
     $rejected = false;
     if ($thisUser->isAdmin()) {
-        $rejected = ! in_array(FixedGroups::ADMIN, $groups_accessible, true);
+        $rejected = !in_array(FixedGroups::ADMIN, $groups_accessible, true);
     } else {
         if ($groups_thisUser_nonbasic) {
-            $rejected = ! array_intersect($groups_thisUser_nonbasic, $groups_accessible);
+            $rejected = !array_intersect($groups_thisUser_nonbasic, $groups_accessible);
         } else {
-            $rejected = ! in_array(FixedGroups::USERS, $groups_accessible, true);
+            $rejected = !in_array(FixedGroups::USERS, $groups_accessible, true);
         }
     }
 
@@ -122,7 +122,7 @@ if ($xoops->isUser() && $xoops->user->isAdmin()) {
 //$xoops->events()->triggerEvent('core.userinfo.button', array($thisUser, &$btn));
 $response = $xoops->service('Avatar')->getAvatarEditUrl($thisUser);
 $link = $response->getValue();
-if (! empty($link)) {
+if (!empty($link)) {
     $btn[] = ['link' => $link, 'title' => XoopsLocale::AVATAR, 'icon' => 'icon-user'];
     $xoops->tpl()->assign('btn', $btn);
 }
@@ -173,7 +173,7 @@ $profile = $profile_handler->getProfile($thisUser->getVar('uid'));
 foreach ($fields as $field) {
     //If field is not visible, skip
     //if ( $field_ids_visible && !in_array($field->getVar('field_id'), $field_ids_visible) ) continue;
-    if (! in_array($field->getVar('field_id'), $field_ids_visible, true)) {
+    if (!in_array($field->getVar('field_id'), $field_ids_visible, true)) {
         continue;
     }
     $cat_id = $field->getVar('cat_id');
@@ -214,7 +214,7 @@ if ($xoops->isActiveModule('search') && $xoops->getModuleConfig('profile_search'
                         } else {
                             $results[$i]['image'] = \XoopsBaseConfig::get('url') . '/images/icons/posticon2.gif';
                         }
-                        if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname', 'n') . '/' . $results[$i]['link'];
                         }
                         $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);

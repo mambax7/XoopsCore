@@ -41,4 +41,3 @@ interface UserconfigsPluginInterface
      */
     public function categories();
 }
-

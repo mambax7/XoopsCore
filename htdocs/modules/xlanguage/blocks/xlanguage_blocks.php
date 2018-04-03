@@ -33,7 +33,7 @@ function b_xlanguage_select_show($options)
     $block = [];
     $helper->getHandlerLanguage()->loadConfig();
 
-    if (! is_array($helper->getHandlerLanguage()->cached_config) || count($helper->getHandlerLanguage()->cached_config) < 1) {
+    if (!is_array($helper->getHandlerLanguage()->cached_config) || count($helper->getHandlerLanguage()->cached_config) < 1) {
         return $block;
     }
 

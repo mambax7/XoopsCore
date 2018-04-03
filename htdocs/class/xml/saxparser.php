@@ -124,8 +124,8 @@ class saxparser
      */
     public function parse()
     {
-        if (! is_resource($this->input)) {
-            if (! xml_parse($this->parser, $this->input)) {
+        if (!is_resource($this->input)) {
+            if (!xml_parse($this->parser, $this->input)) {
                 $this->setErrors($this->getXmlError());
                 return false;
             }
@@ -135,7 +135,7 @@ class saxparser
             //}
         } else {
             while ($data = fread($this->input, 4096)) {
-                if (! xml_parse($this->parser, str_replace("'", '&apos;', $data), feof($this->input))) {
+                if (!xml_parse($this->parser, str_replace("'", '&apos;', $data), feof($this->input))) {
                     $this->setErrors($this->getXmlError());
                     fclose($this->input);
                     return false;
@@ -248,22 +248,18 @@ class saxparser
 
     public function handleDefault($parser, $data)
     {
-
     }
 
     public function handleUnparsedEntityDecl($parser, $entityName, $base, $systemId, $publicId, $notationName)
     {
-
     }
 
     public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
     {
-
     }
 
     public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
     {
-
     }
 
     /**
@@ -308,16 +304,15 @@ class saxparser
      */
     public function getErrors($ashtml = true)
     {
-        if (! $ashtml) {
+        if (!$ashtml) {
             return $this->errors;
         }
-            $ret = '';
-            if (count($this->errors) > 0) {
-                foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
-                }
+        $ret = '';
+        if (count($this->errors) > 0) {
+            foreach ($this->errors as $error) {
+                $ret .= $error . '<br />';
             }
-            return $ret;
-
+        }
+        return $ret;
     }
 }

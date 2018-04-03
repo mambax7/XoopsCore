@@ -48,7 +48,7 @@ switch ($op) {
 
     case 'maintenance_save':
         // Check security
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('center.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $admin_page->addItemButton(_AM_MAINTENANCE_CENTER_RETURN, 'center.php', 'application-view-detail');
@@ -63,7 +63,7 @@ switch ($op) {
         $db = $xoopsDB;
         //Cache
         $res_cache = $system->cleanCache($cache);
-        if (! empty($cache)) {
+        if (!empty($cache)) {
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
@@ -92,7 +92,7 @@ switch ($op) {
             $xoops->tpl()->assign('session', true);
         }
         //Maintenance tables
-        if (! empty($tables) && ! empty($tables_op)) {
+        if (!empty($tables) && !empty($tables_op)) {
             $tab = [];
             for ($i = 0; $i < 4; ++$i) {
                 $tab[$i] = $i + 1;

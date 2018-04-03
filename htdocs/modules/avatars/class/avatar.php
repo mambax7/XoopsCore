@@ -222,14 +222,14 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
             ->leftJoinPrefix('l', 'avatars_user_link', 'u', 'u.avatar_id=a.avatar_id');
         $criteria->renderQb($qb);
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $avatar = new AvatarsAvatar();
             $avatar->assignVars($myrow);
             $avatar->setUserCount($myrow['count']);
-            if (! $id_as_key) {
+            if (!$id_as_key) {
                 $ret[] = $avatar;
             } else {
                 $ret[$myrow['avatar_id']] = $avatar;
@@ -298,7 +298,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
             ->where('l.avatar_id = :bid')
             ->setParameter(':bid', $avatar->getVar('avatar_id'), \PDO::PARAM_INT);
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {

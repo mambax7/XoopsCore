@@ -70,7 +70,6 @@ function publisher_editFile($showmenu = false, $fileid = 0, $itemid = 0)
     } else {
         PublisherUtils::closeCollapsableBar('addfile', 'addfileicon');
     }
-
 }
 
 $false = false;
@@ -114,7 +113,7 @@ switch ($op) {
         $fileObj->setVar('status', (int) ($_POST['file_status']));
 
         // Storing the file
-        if (! $fileObj->store()) {
+        if (!$fileObj->store()) {
             $xoops->redirect('item.php?op=mod&itemid=' . $fileObj->getVar('itemid'), 3, _AM_PUBLISHER_FILE_EDITING_ERROR . PublisherUtils::formatErrors($fileObj->getErrors()));
             exit;
         }
@@ -134,7 +133,7 @@ switch ($op) {
         $title = isset($_POST['title']) ? $_POST['title'] : '';
 
         if ($confirm) {
-            if (! $publisher->getFileHandler()->delete($fileObj)) {
+            if (!$publisher->getFileHandler()->delete($fileObj)) {
                 $xoops->redirect('item.php', 2, _AM_PUBLISHER_FILE_DELETE_ERROR);
             }
             $xoops->redirect('item.php', 2, sprintf(_AM_PUBLISHER_FILEISDELETED, $fileObj->getVar('name')));

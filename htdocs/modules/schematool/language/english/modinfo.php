@@ -1,4 +1,5 @@
 <?php
+
 define('_MI_SCHEMATOOL_NAME', 'Schema Tool');
 define('_MI_SCHEMATOOL_DESC', 'Developer tool to create schema files.');
 

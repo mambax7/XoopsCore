@@ -15,12 +15,12 @@ define('_AM_ADV_TRUSTPATHPUBLICLINK', 'Überprüfen Sie PHP Dateien innerhalb de
 
 
 // Appended by Xoops Language Checker -GIJOE- in 2007-10-18 05:36:24
-define('_AM_LABEL_COMPACTLOG', 'Komprimierter Bericht : ' );
-define('_AM_BUTTON_COMPACTLOG', 'komprimieren' );
-define('_AM_JS_COMPACTLOGCONFIRM', 'Doppelt aufgezeichnete IPs und Angriffstypen werden zusammengefasst' );
-define('_AM_LABEL_REMOVEALL', 'Aufzeichnungen löschen: ' );
-define('_AM_BUTTON_REMOVEALL', 'Löschen!' );
-define('_AM_JS_REMOVEALLCONFIRM', 'Sind Sie sicher dass alle Aufzeichungen gelöscht werden sollen?' );
+define('_AM_LABEL_COMPACTLOG', 'Komprimierter Bericht : ');
+define('_AM_BUTTON_COMPACTLOG', 'komprimieren');
+define('_AM_JS_COMPACTLOGCONFIRM', 'Doppelt aufgezeichnete IPs und Angriffstypen werden zusammengefasst');
+define('_AM_LABEL_REMOVEALL', 'Aufzeichnungen löschen: ');
+define('_AM_BUTTON_REMOVEALL', 'Löschen!');
+define('_AM_JS_REMOVEALLCONFIRM', 'Sind Sie sicher dass alle Aufzeichungen gelöscht werden sollen?');
 
 // Appended by Xoops Language Checker -GIJOE- in 2007-07-30 05:37:51
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "Der Ordner: %s braucht Schreibberechtigung (777)" ) ;
@@ -37,24 +37,24 @@ define('_AM_TH_AGENT', 'Client');
 define('_AM_TH_TYPE', 'Typ');
 define('_AM_TH_DESCRIPTION', 'Beschreibung');
 
-define('_AM_TH_BADIPS', '"Schlechte" IPs' );
+define('_AM_TH_BADIPS', '"Schlechte" IPs');
 
-define('_AM_TH_GROUP1IPS', 'Erlaubte IPs für Gruppe=1<br /><br /><span style="font-weight:normal;">Jede IP in eine Zeile.<br />192.168. bedeutet 192.168.*<br />Leer Bedeutet alle IPs sind erlaubt</span>' );
+define('_AM_TH_GROUP1IPS', 'Erlaubte IPs für Gruppe=1<br /><br /><span style="font-weight:normal;">Jede IP in eine Zeile.<br />192.168. bedeutet 192.168.*<br />Leer Bedeutet alle IPs sind erlaubt</span>');
 
-define('_AM_LABEL_REMOVE', 'Markierte Einträge loeschen:' );
-define('_AM_BUTTON_REMOVE', 'Entfernen!' );
-define('_AM_JS_REMOVECONFIRM', 'Entfernen OK?' );
-define('_AM_MSG_IPFILESUPDATED', 'Dateien für IPs wurden aktualisiert' );
-define('_AM_MSG_BADIPSCANTOPEN', 'Die Datei für schlechte IPs kann nicht geöffnet werden.' );
-define('_AM_MSG_GROUP1IPSCANTOPEN', 'The file for allowing group=1 cannot be opened' );
-define('_AM_MSG_REMOVED', 'Einträge wurden entfernt.' );
+define('_AM_LABEL_REMOVE', 'Markierte Einträge loeschen:');
+define('_AM_BUTTON_REMOVE', 'Entfernen!');
+define('_AM_JS_REMOVECONFIRM', 'Entfernen OK?');
+define('_AM_MSG_IPFILESUPDATED', 'Dateien für IPs wurden aktualisiert');
+define('_AM_MSG_BADIPSCANTOPEN', 'Die Datei für schlechte IPs kann nicht geöffnet werden.');
+define('_AM_MSG_GROUP1IPSCANTOPEN', 'The file for allowing group=1 cannot be opened');
+define('_AM_MSG_REMOVED', 'Einträge wurden entfernt.');
 
 
 // prefix_manager.php
-define('_AM_H3_PREFIXMAN', 'Prefix Manager' );
-define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!' );
-define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?' );
-define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix ändern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');" );
+define('_AM_H3_PREFIXMAN', 'Prefix Manager');
+define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!');
+define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?');
+define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix ändern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
 
 
 // advisory.php

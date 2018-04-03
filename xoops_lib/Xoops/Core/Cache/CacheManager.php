@@ -55,8 +55,8 @@ class CacheManager
     {
         $this->xoops = \Xoops::getInstance();
         $defaults = $this->getDefaults();
-		$xoops_var_path = \XoopsBaseConfig::get('var-path');
-		$cache_file = $xoops_var_path . '/configs/cache.php';
+        $xoops_var_path = \XoopsBaseConfig::get('var-path');
+        $cache_file = $xoops_var_path . '/configs/cache.php';
         $poolDefs = Yaml::readWrapped($cache_file);
         if (empty($poolDefs)) {
             Yaml::saveWrapped($defaults, $cache_file);
@@ -91,7 +91,7 @@ class CacheManager
             return;
         }
         $defaults = self::getDefaults();
-        if (! array_key_exists('SQLite', \Stash\DriverList::getAvailableDrivers())) {
+        if (!array_key_exists('SQLite', \Stash\DriverList::getAvailableDrivers())) {
             $defaults['default']['driver'] = 'FileSystem';
             $defaults['default']['options'] = [
                 'dirSplit' => 1,
@@ -160,7 +160,7 @@ class CacheManager
                 $pool->setNamespace($this->xoops->db()->prefix());
             }
         }
-        if (! $pool) {
+        if (!$pool) {
             $this->xoops->logger()->warn('Could not create cache pool ' . $name);
             return $pool;
         }
@@ -219,7 +219,6 @@ class CacheManager
      */
     private static function getDefaults()
     {
-
         $defaults = [
             'default' => [
                 'driver' => 'Sqlite',

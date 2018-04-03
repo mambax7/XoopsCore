@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 use Xmf\Request;
@@ -221,7 +222,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = '316.32.48.64';
         $default = '0.0.0.0';
         $this->assertSame($default, Request::getIP($varname, $default));
-
     }
 
     public function testGetIPv6()

@@ -4,7 +4,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
 {
     $xoops = Xoops::getInstance();
 
-    if (! $xoops->isUser()) {
+    if (!$xoops->isUser()) {
         return;
     }
     $time = time();
@@ -21,7 +21,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
         $_SESSION['xoops_inbox_count'] = $count;
         $_SESSION['xoops_inbox_count_expire'] = $time + 60;
     }
-    if (! @empty($params['assign'])) {
+    if (!@empty($params['assign'])) {
         $smarty->assign($params['assign'], $count);
     } else {
         echo $count;

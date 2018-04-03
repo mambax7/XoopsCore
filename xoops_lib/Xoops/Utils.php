@@ -116,10 +116,10 @@ class Utils
 
         while (($arg = next($args)) !== false) {
             foreach ((array) $arg as $key => $val) {
-                if (! empty($return[$key]) && is_array($return[$key]) && is_array($val)) {
+                if (!empty($return[$key]) && is_array($return[$key]) && is_array($val)) {
                     $return[$key] = self::arrayRecursiveMerge($return[$key], $val);
                 } elseif (is_int($key)) {
-                    if (! in_array($val, $return, true)) {
+                    if (!in_array($val, $return, true)) {
                         $return[] = $val;
                     } // merge only once $val
                 } else {

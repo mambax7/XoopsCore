@@ -191,7 +191,7 @@ class Debug extends \Kint
     {
         $queue = self::$timerQueue;
         self::$timerQueue = [];
-        if (! $returnOnly) {
+        if (!$returnOnly) {
             static::dump($queue);
         }
 

@@ -49,7 +49,7 @@ class TextFilter extends FilterAbstract
     public function applyFilter($text, $force = true)
     {
         $xoops = \Xoops::getInstance();
-        if (! $force && $xoops->userIsAdmin) {
+        if (!$force && $xoops->userIsAdmin) {
             return $text;
         }
 
@@ -64,7 +64,7 @@ class TextFilter extends FilterAbstract
         $search = [];
         $replace = [];
         $config = $this->config;
-        if (! empty($config['patterns'])) {
+        if (!empty($config['patterns'])) {
             foreach ($config['patterns'] as $pattern) {
                 if (empty($pattern['search'])) {
                     continue;
@@ -73,7 +73,7 @@ class TextFilter extends FilterAbstract
                 $replace[] = $pattern['replace'];
             }
         }
-        if (! empty($config['tags'])) {
+        if (!empty($config['tags'])) {
             $tags = array_map('trim', $config['tags']);
         }
 

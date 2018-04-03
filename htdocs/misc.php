@@ -13,7 +13,6 @@ use Xmf\Request;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\XoopsTpl;
 
-
 /**
  * XOOPS misc utilities
  *
@@ -44,7 +43,7 @@ if ($action === 'showpopups') {
         case 'friend':
             $op = Request::getCmd('op', 'sendform');
             $tpl = new XoopsTpl();
-            if (! $xoops->security()->check() || $op === 'sendform') {
+            if (!$xoops->security()->check() || $op === 'sendform') {
                 if ($xoops->isUser()) {
                     $yname = $xoops->user->getVar('uname', 'e');
                     $ymail = $xoops->user->getVar('email', 'e');
@@ -87,16 +86,16 @@ if ($action === 'showpopups') {
                 } else {
                     $ymail = isset($_POST['ymail']) ? trim($_POST['ymail']) : '';
                 }
-                if (! isset($_POST['yname']) || trim($_POST['yname']) === '' || $ymail === ''
-				|| ! isset($_POST['fname']) || trim($_POST['fname']) === '' || ! isset($_POST['fmail'])
-				|| trim($_POST['fmail']) === '') {
+                if (!isset($_POST['yname']) || trim($_POST['yname']) === '' || $ymail === ''
+                || !isset($_POST['fname']) || trim($_POST['fname']) === '' || !isset($_POST['fmail'])
+                || trim($_POST['fmail']) === '') {
                     $xoops->redirect($xoops_url . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, XoopsLocale::E_YOU_NEED_TO_ENTER_REQUIRED_INFO);
                     exit();
                 }
                 $yname = trim($_POST['yname']);
                 $fname = trim($_POST['fname']);
                 $fmail = trim($_POST['fmail']);
-                if (! $xoops->checkEmail($fmail) || ! $xoops->checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
+                if (!$xoops->checkEmail($fmail) || !$xoops->checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
                     $errormessage = XoopsLocale::EMAIL_PROVIDED_IS_INVALID . '<br />' . XoopsLocale::E_CHECK_EMAIL_AND_TRY_AGAIN . '';
                     $xoops->redirect($xoops_url . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
                 }
@@ -113,7 +112,7 @@ if ($action === 'showpopups') {
                 $xoopsMailer->setSubject(sprintf(XoopsLocale::F_INTERESTING_SITE, $xoops->getConfig('sitename')));
 
                 $tpl->assign('closebutton', 1);
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     $tpl->assign('message', $xoopsMailer->getErrors());
                 } else {
                     $tpl->assign('message', XoopsLocale::S_REFERENCE_TO_SITE_SENT);

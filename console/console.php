@@ -5,7 +5,7 @@ namespace XoopsConsole;
 use XoopsConsole\Library\XCApplication;
 
 if (PHP_SAPI !== 'cli') {
-    die ('CLI use only');
+    die('CLI use only');
 }
 
 spl_autoload_register(function ($class) {
@@ -21,12 +21,10 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
-
 date_default_timezone_set('UTC');
 //set_time_limit(0);
 
-$configs = (include __DIR__.'/config.php');
-
+$configs = (include __DIR__ . '/config.php');
 $mainfile = $configs->get('mainfile');
 if (file_exists($mainfile)) {
     $xoopsOption['nocommon'] = true;
@@ -52,7 +50,6 @@ if (file_exists($mainfile)) {
 
 $app = new XCApplication('XOOPS Console', '0.1.0');
 $app->XContainer = $configs;
-
 $app->addCommands([
     new \XoopsConsole\Commands\CiBootstrapCommand(),
     new \XoopsConsole\Commands\CiInstallCommand(),
@@ -63,5 +60,4 @@ $app->addCommands([
     new \XoopsConsole\Commands\RenameSystemTablesCommand(),
     new \XoopsConsole\Commands\Utf8mb4ModuleCommand(),
 ]);
-
 $app->run();

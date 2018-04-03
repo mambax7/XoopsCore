@@ -1,4 +1,5 @@
 <?php
+
 define('_MI_PUBLISHER_ADMENU1', 'Summary');
 define('_MI_PUBLISHER_ADMENU2', 'Categories');
 define('_MI_PUBLISHER_ADMENU3', 'Articles');

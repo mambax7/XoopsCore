@@ -15,7 +15,6 @@ use Xoops\Core\Kernel\CriteriaElement;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
-
 /**
  * Userconfigs
  *
@@ -101,7 +100,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      */
     public function insertConfig(UserconfigsItem $config)
     {
-        if (! $this->_iHandler->insert($config)) {
+        if (!$this->_iHandler->insert($config)) {
             return false;
         }
         $options = $config->getConfOptions();
@@ -109,13 +108,13 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         $conf_id = $config->getVar('conf_id');
         for ($i = 0; $i < $count; ++$i) {
             $options[$i]->setVar('conf_id', $conf_id);
-            if (! $this->_oHandler->insert($options[$i])) {
+            if (!$this->_oHandler->insert($options[$i])) {
                 foreach ($options[$i]->getErrors() as $msg) {
                     $config->setErrors($msg);
                 }
             }
         }
-        if (! empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
+        if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
             unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')]);
         }
         return true;
@@ -130,7 +129,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      */
     public function deleteConfig(UserconfigsItem $config)
     {
-        if (! $this->_iHandler->delete($config, true)) {
+        if (!$this->_iHandler->delete($config, true)) {
             return false;
         }
         $options = $config->getConfOptions();
@@ -144,7 +143,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
                 $this->_oHandler->delete($options[$i], true);
             }
         }
-        if (! empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
+        if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
             unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')]);
         }
         return true;
@@ -163,7 +162,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         $criteria2 = new CriteriaCompo();
         if ($criteria) {
             $criteria2->add($criteria);
-            if (! $criteria->getSort()) {
+            if (!$criteria->getSort()) {
                 $criteria2->setSort('conf_order');
                 $criteria2->setOrder('ASC');
             }
@@ -238,21 +237,20 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
     public function getConfigsByUser($uid, $moduleId)
     {
         static $_cachedConfigs;
-        if (! empty($_cachedConfigs[$moduleId][$uid])) {
+        if (!empty($_cachedConfigs[$moduleId][$uid])) {
             return $_cachedConfigs[$moduleId][$uid];
         }
-            $ret = [];
-            $criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($moduleId)));
-            $criteria->add(new Criteria('conf_uid', (int) ($uid)));
-            $configs = $this->getConfigs($criteria, true);
-            if (is_array($configs)) {
-                foreach (array_keys($configs) as $i) {
-                    $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
-                }
+        $ret = [];
+        $criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($moduleId)));
+        $criteria->add(new Criteria('conf_uid', (int) ($uid)));
+        $configs = $this->getConfigs($criteria, true);
+        if (is_array($configs)) {
+            foreach (array_keys($configs) as $i) {
+                $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }
-            $_cachedConfigs[$moduleId][$uid] = $ret;
-            return $_cachedConfigs[$moduleId][$uid];
-
+        }
+        $_cachedConfigs[$moduleId][$uid] = $ret;
+        return $_cachedConfigs[$moduleId][$uid];
     }
 
     /**
@@ -314,24 +312,23 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
      */
     public function getConfigList($conf_modid, $conf_uid = 0)
     {
-        if (! empty($this->_cachedConfigs[$conf_modid][$conf_uid])) {
+        if (!empty($this->_cachedConfigs[$conf_modid][$conf_uid])) {
             return $this->_cachedConfigs[$conf_modid][$conf_uid];
         }
-            $criteria = new CriteriaCompo(new Criteria('conf_modid', $conf_modid));
-            if (empty($conf_uid)) {
-                $criteria->add(new Criteria('conf_uid', $conf_uid));
-            }
-            $criteria->setSort('conf_order');
-            $criteria->setOrder('ASC');
-            $configs = $this->_iHandler->getObjects($criteria);
-            $confcount = count($configs);
-            $ret = [];
-            for ($i = 0; $i < $confcount; ++$i) {
-                $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
-            }
-            $this->_cachedConfigs[$conf_modid][$conf_uid] = $ret;
-            return $ret;
-
+        $criteria = new CriteriaCompo(new Criteria('conf_modid', $conf_modid));
+        if (empty($conf_uid)) {
+            $criteria->add(new Criteria('conf_uid', $conf_uid));
+        }
+        $criteria->setSort('conf_order');
+        $criteria->setOrder('ASC');
+        $configs = $this->_iHandler->getObjects($criteria);
+        $confcount = count($configs);
+        $ret = [];
+        for ($i = 0; $i < $confcount; ++$i) {
+            $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+        }
+        $this->_cachedConfigs[$conf_modid][$conf_uid] = $ret;
+        return $ret;
     }
 
     public function createDefaultUserConfigs($uid, XoopsModule $module)
@@ -340,7 +337,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         if ($plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'userconfigs')) {
             // now reinsert them with the new settings
             $configs = $plugin->configs();
-            if (! is_array($configs)) {
+            if (!is_array($configs)) {
                 $configs = [];
             }
 

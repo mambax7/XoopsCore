@@ -94,7 +94,7 @@ class GroupFormCheckbox extends Element
         $ret .= '</tr></table></td><td class="even" valign="top">';
         $option_ids = [];
         foreach (array_keys($this->optionTree) as $id) {
-            if (! empty($id)) {
+            if (!empty($id)) {
                 $option_ids[] = "'" . $ele_name . '[groups][' . $this->groupId . '][' . $id . ']' . "'";
             }
         }

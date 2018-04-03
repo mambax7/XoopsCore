@@ -82,7 +82,7 @@ class ThemeForm extends Form
         $hidden = '';
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (! $ele->isHidden()) {
+            if (!$ele->isHidden()) {
                 $input['name'] = $ele->getName();
                 $input['caption'] = $ele->getCaption();
                 $input['description'] = $ele->getDescription();
@@ -95,13 +95,11 @@ class ThemeForm extends Form
             } else {
                 $hidden .= $ele->render() . "\n";
             }
-
         }
         $xoops->tpl()->assign('hidden', $hidden);
         $xoops->tpl()->assign('validationJS', $this->renderValidationJS(true));
         $ret = $xoops->tpl()->fetch('module:system/system_form.tpl');
         $xoops->tpl()->clearAssign('xo_input');
         return $ret;
-
     }
 }

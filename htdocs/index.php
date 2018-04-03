@@ -42,19 +42,19 @@ if ($xoops->isActiveModule($xoops->getConfig('startpage'))) {
     define('XOOPS_STARTPAGE_REDIRECTED', 1);
     $module_handler = $xoops->getHandlerModule();
     $xoops->module = $xoops->getModuleByDirname($xoops->getConfig('startpage'));
-    if (! $xoops->isModule() || ! $xoops->module->getVar('isactive')) {
+    if (!$xoops->isModule() || !$xoops->module->getVar('isactive')) {
         $xoops->header();
         echo '<h4>' . XoopsLocale::E_NO_MODULE . '</h4>';
         $xoops->footer();
     }
     $moduleperm_handler = $xoops->getHandlerGroupPermission();
     if ($xoops->isUser()) {
-        if (! $moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), $xoops->user->getGroups())) {
+        if (!$moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), $xoops->user->getGroups())) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 1, XoopsLocale::E_NO_ACCESS_PERMISSION, false);
         }
         $xoops->userIsAdmin = $xoops->user->isAdmin($xoops->module->getVar('mid'));
     } else {
-        if (! $moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), FixedGroups::ANONYMOUS)) {
+        if (!$moduleperm_handler->checkRight('module_read', $xoops->module->getVar('mid'), FixedGroups::ANONYMOUS)) {
             $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
     }
@@ -86,4 +86,3 @@ if ($xoops->isActiveModule($xoops->getConfig('startpage'))) {
     $xoops->setOption('show_cblock', 1);
     $xoops->header('module:system/system_homepage.tpl');
     $xoops->footer();
-

@@ -42,920 +42,920 @@
  */
 class XoopsLocaleEn_US extends Xoops\Locale\AbstractLocale
 {
-    const ABOUT = 'About';
+    public const ABOUT = 'About';
 
-    const ACTION = 'Action';
+    public const ACTION = 'Action';
 
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
-    const ACTIVE = 'Active';
+    public const ACTIVE = 'Active';
 
-    const ADD_SELECTED_USERS = 'Add selected users';
+    public const ADD_SELECTED_USERS = 'Add selected users';
 
-    const ADMIN = 'Admin';
+    public const ADMIN = 'Admin';
 
-    const ADMINISTRATION = 'Administration';
+    public const ADMINISTRATION = 'Administration';
 
-    const ADVANCED = 'Advanced';
+    public const ADVANCED = 'Advanced';
 
-    const ADVANCED_MODE = 'Advanced mode';
+    public const ADVANCED_MODE = 'Advanced mode';
 
-    const ADVANCED_SEARCH = 'Advanced search';
+    public const ADVANCED_SEARCH = 'Advanced search';
 
-    const AFTER = 'After';
+    public const AFTER = 'After';
 
-    const AIM = 'AIM';
+    public const AIM = 'AIM';
 
-    const ALIGNMENT = 'Alignment';
+    public const ALIGNMENT = 'Alignment';
 
-    const ALL = 'All';
+    public const ALL = 'All';
 
-    const ALLOWED_MAX_CHARS_LENGTH = 'Allowed max chars length';
+    public const ALLOWED_MAX_CHARS_LENGTH = 'Allowed max chars length';
 
-    const ALLOW_OTHER_USERS_TO_VIEW_EMAIL = 'Allow other users to view my email address';
+    public const ALLOW_OTHER_USERS_TO_VIEW_EMAIL = 'Allow other users to view my email address';
 
-    const ALL_AND = 'All (AND)';
+    public const ALL_AND = 'All (AND)';
 
-    const ALL_GROUPS = 'All groups';
+    public const ALL_GROUPS = 'All groups';
 
-    const ALL_MODULES = 'All modules';
+    public const ALL_MODULES = 'All modules';
 
-    const ALL_PAGES = 'All pages';
+    public const ALL_PAGES = 'All pages';
 
-    const ALL_TYPES = 'All types';
+    public const ALL_TYPES = 'All types';
 
-    const ALL_USERS = 'All users';
+    public const ALL_USERS = 'All users';
 
-    const ALWAYS_ATTACH_MY_SIGNATURE = 'Always attach my signature';
+    public const ALWAYS_ATTACH_MY_SIGNATURE = 'Always attach my signature';
 
-    const ANONYMOUS = 'Anonymous';
+    public const ANONYMOUS = 'Anonymous';
 
-    const ANY_OR = 'Any (OR)';
+    public const ANY_OR = 'Any (OR)';
 
-    const ANY_STATUS = 'Any status';
+    public const ANY_STATUS = 'Any status';
 
-    const APPROVED = 'Approved';
+    public const APPROVED = 'Approved';
 
-    const ARCHIVE = 'Archive';
+    public const ARCHIVE = 'Archive';
 
-    const ASCENDING = 'Ascending';
+    public const ASCENDING = 'Ascending';
 
-    const ASCENDING_ORDER = 'Ascending order';
+    public const ASCENDING_ORDER = 'Ascending order';
 
-    const AUTHOR = 'Author';
+    public const AUTHOR = 'Author';
 
-    const AVATAR = 'Avatar';
+    public const AVATAR = 'Avatar';
 
-    const A_ADD = 'Add';
+    public const A_ADD = 'Add';
 
-    const A_ALIGN = 'Align';
+    public const A_ALIGN = 'Align';
 
-    const A_ANALYZE = 'Analyze';
+    public const A_ANALYZE = 'Analyze';
 
-    const A_APPEND = 'Append';
+    public const A_APPEND = 'Append';
 
-    const A_BACK = 'Back';
+    public const A_BACK = 'Back';
 
-    const A_CANCEL = 'Cancel';
+    public const A_CANCEL = 'Cancel';
 
-    const A_CHANGE = 'Change';
+    public const A_CHANGE = 'Change';
 
-    const A_CHECK = 'Check';
+    public const A_CHECK = 'Check';
 
-    const A_CLEAR = 'Clear';
+    public const A_CLEAR = 'Clear';
 
-    const A_CLONE = 'Clone';
+    public const A_CLONE = 'Clone';
 
-    const A_CLOSE = 'Close';
+    public const A_CLOSE = 'Close';
 
-    const A_COLLAPSE = 'Collapse';
+    public const A_COLLAPSE = 'Collapse';
 
-    const A_DELETE = 'Delete';
+    public const A_DELETE = 'Delete';
 
-    const A_DETAIL = 'Detail';
+    public const A_DETAIL = 'Detail';
 
-    const A_DISABLE = 'Disable';
+    public const A_DISABLE = 'Disable';
 
-    const A_DISPLAY = 'Display';
+    public const A_DISPLAY = 'Display';
 
-    const A_EDIT = 'Edit';
+    public const A_EDIT = 'Edit';
 
-    const A_ENABLE = 'Enable';
+    public const A_ENABLE = 'Enable';
 
-    const A_EXPAND = 'Expand';
+    public const A_EXPAND = 'Expand';
 
-    const A_EXPORT = 'Export';
+    public const A_EXPORT = 'Export';
 
-    const A_FINISH = 'Finish';
+    public const A_FINISH = 'Finish';
 
-    const A_GO = 'Go';
+    public const A_GO = 'Go';
 
-    const A_HIDE = 'Hide';
+    public const A_HIDE = 'Hide';
 
-    const A_IMPORT = 'Import';
+    public const A_IMPORT = 'Import';
 
-    const A_INSTALL = 'Install';
+    public const A_INSTALL = 'Install';
 
-    const A_LOGIN = 'Login';
+    public const A_LOGIN = 'Login';
 
-    const A_LOGOUT = 'Logout';
+    public const A_LOGOUT = 'Logout';
 
-    const A_MANAGE = 'Manage';
+    public const A_MANAGE = 'Manage';
 
-    const A_MODIFY = 'Modify';
+    public const A_MODIFY = 'Modify';
 
-    const A_OPTIMIZE = 'Optimize';
+    public const A_OPTIMIZE = 'Optimize';
 
-    const A_POST = 'Post';
+    public const A_POST = 'Post';
 
-    const A_PREPEND = 'Prepend';
+    public const A_PREPEND = 'Prepend';
 
-    const A_PREVIEW = 'Preview';
+    public const A_PREVIEW = 'Preview';
 
-    const A_PRINT = 'Print';
+    public const A_PRINT = 'Print';
 
-    const A_PRUNE = 'Prune';
+    public const A_PRUNE = 'Prune';
 
-    const A_PUBLISH = 'Publish';
+    public const A_PUBLISH = 'Publish';
 
-    const A_PURGE = 'Purge';
+    public const A_PURGE = 'Purge';
 
-    const A_QUOTE = 'Quote';
+    public const A_QUOTE = 'Quote';
 
-    const A_REFRESH = 'Refresh';
+    public const A_REFRESH = 'Refresh';
 
-    const A_REGISTER = 'Register';
+    public const A_REGISTER = 'Register';
 
-    const A_REMOVE = 'Remove';
+    public const A_REMOVE = 'Remove';
 
-    const A_REPAIR = 'Repair';
+    public const A_REPAIR = 'Repair';
 
-    const A_REPLY = 'Reply';
+    public const A_REPLY = 'Reply';
 
-    const A_REPORT = 'Report';
+    public const A_REPORT = 'Report';
 
-    const A_RESET = 'Reset';
+    public const A_RESET = 'Reset';
 
-    const A_RESTORE = 'Restore';
+    public const A_RESTORE = 'Restore';
 
-    const A_SAVE = 'Save';
+    public const A_SAVE = 'Save';
 
-    const A_SEARCH = 'Search';
+    public const A_SEARCH = 'Search';
 
-    const A_SELECT = 'Select';
+    public const A_SELECT = 'Select';
 
-    const A_SEND = 'Send';
+    public const A_SEND = 'Send';
 
-    const A_SHOW = 'Show';
+    public const A_SHOW = 'Show';
 
-    const A_SUBMIT = 'Submit';
+    public const A_SUBMIT = 'Submit';
 
-    const A_SYNCHRONIZE = 'Synchronize';
+    public const A_SYNCHRONIZE = 'Synchronize';
 
-    const A_TAG = 'Tag';
+    public const A_TAG = 'Tag';
 
-    const A_UNINSTALL = 'Uninstall';
+    public const A_UNINSTALL = 'Uninstall';
 
-    const A_UPDATE = 'Update';
+    public const A_UPDATE = 'Update';
 
-    const A_UPLOAD = 'Upload';
+    public const A_UPLOAD = 'Upload';
 
-    const BACK_TO_TOP = 'Back to top';
+    public const BACK_TO_TOP = 'Back to top';
 
-    const BASIC = 'Basic';
+    public const BASIC = 'Basic';
 
-    const BASIC_INFORMATION = 'Basic information';
+    public const BASIC_INFORMATION = 'Basic information';
 
-    const BEFORE = 'Before';
+    public const BEFORE = 'Before';
 
-    const BLOCKS = 'Blocks';
+    public const BLOCKS = 'Blocks';
 
-    const BODY = 'Body';
+    public const BODY = 'Body';
 
-    const BOLD = 'Bold';
+    public const BOLD = 'Bold';
 
-    const BOOKMARK = 'Bookmark';
+    public const BOOKMARK = 'Bookmark';
 
-    const BOTH = 'Both';
+    public const BOTH = 'Both';
 
-    const BOTTOM = 'Bottom';
+    public const BOTTOM = 'Bottom';
 
-    const BREADCRUMB = 'Breadcrumb';
+    public const BREADCRUMB = 'Breadcrumb';
 
-    const CACHED = 'Cached';
+    public const CACHED = 'Cached';
 
-    const CANCEL_SEND = 'Cancel send';
+    public const CANCEL_SEND = 'Cancel send';
 
-    const CAPTION = 'Caption';
+    public const CAPTION = 'Caption';
 
-    const CATEGORIES = 'Categories';
+    public const CATEGORIES = 'Categories';
 
-    const CATEGORY = 'Category';
+    public const CATEGORY = 'Category';
 
-    const CENTER = 'Center';
+    public const CENTER = 'Center';
 
-    const CF_FOLLOWING_WORDS_SHORTER_THAN_NOT_INCLUDED = 'The following words are shorter than allowed minimum length (%u chars) and were not included in your search:';
+    public const CF_FOLLOWING_WORDS_SHORTER_THAN_NOT_INCLUDED = 'The following words are shorter than allowed minimum length (%u chars) and were not included in your search:';
 
-    const CF_WROTE = '%s wrote:';
+    public const CF_WROTE = '%s wrote:';
 
-    const CHANGE_LOG = 'Change log';
+    public const CHANGE_LOG = 'Change log';
 
-    const CHANGE_STATUS = 'Change status';
+    public const CHANGE_STATUS = 'Change status';
 
-    const CHARSET = 'Charset';
+    public const CHARSET = 'Charset';
 
-    const CHARSETS = 'Charsets';
+    public const CHARSETS = 'Charsets';
 
-    const CHECK_ALL = 'Check all';
+    public const CHECK_ALL = 'Check all';
 
-    const CHECK_TEXT_LENGTH = 'Check text length';
+    public const CHECK_TEXT_LENGTH = 'Check text length';
 
-    const CLICK_A_SMILIE_TO_INSERT_INTO_MESSAGE = 'Click a smilie to insert it into your message.';
+    public const CLICK_A_SMILIE_TO_INSERT_INTO_MESSAGE = 'Click a smilie to insert it into your message.';
 
-    const CLICK_HERE_TO_REGISTER = "Click <a href='register.php'>here</a>.";
+    public const CLICK_HERE_TO_REGISTER = "Click <a href='register.php'>here</a>.";
 
-    const CLICK_HERE_TO_VIEW_YOU_PRIVATE_MESSAGES = 'You can click here to view your private messages';
+    public const CLICK_HERE_TO_VIEW_YOU_PRIVATE_MESSAGES = 'You can click here to view your private messages';
 
-    const CLICK_PREVIEW_TO_SEE_CONTENT = 'Click the <strong>Preview</strong> to see the content in action.';
+    public const CLICK_PREVIEW_TO_SEE_CONTENT = 'Click the <strong>Preview</strong> to see the content in action.';
 
-    const CLICK_TO_REFRESH_IMAGE_IF_NOT_CLEAR = 'Click to refresh the image if it is not clear enough.';
+    public const CLICK_TO_REFRESH_IMAGE_IF_NOT_CLEAR = 'Click to refresh the image if it is not clear enough.';
 
-    const CLICK_TO_SEE_ORIGINAL_IMAGE_IN_NEW_WINDOW = 'Click to see original image in a new window';
+    public const CLICK_TO_SEE_ORIGINAL_IMAGE_IN_NEW_WINDOW = 'Click to see original image in a new window';
 
-    const CLOSE_WINDOW = 'Close window';
+    public const CLOSE_WINDOW = 'Close window';
 
-    const CODE = 'Code';
+    public const CODE = 'Code';
 
-    const CODE_IS_CASE_INSENSITIVE = 'The code is case-insensitive';
+    public const CODE_IS_CASE_INSENSITIVE = 'The code is case-insensitive';
 
-    const CODE_IS_CASE_SENSITIVE = 'The code is case-sensitive';
+    public const CODE_IS_CASE_SENSITIVE = 'The code is case-sensitive';
 
-    const COLOR = 'Color';
+    public const COLOR = 'Color';
 
-    const COMMENTS = 'Comments';
+    public const COMMENTS = 'Comments';
 
-    const COMMENTS_COUNT = 'Comments count';
+    public const COMMENTS_COUNT = 'Comments count';
 
-    const COMMENTS_POSTS = 'Comments/Posts';
+    public const COMMENTS_POSTS = 'Comments/Posts';
 
-    const CONFIGURATION_CHECK = 'Configuration check';
+    public const CONFIGURATION_CHECK = 'Configuration check';
 
-    const CONFIRMATION_CODE = 'Confirmation code';
+    public const CONFIRMATION_CODE = 'Confirmation code';
 
-    const CONTAINS = 'Contains';
+    public const CONTAINS = 'Contains';
 
-    const CONTENT = 'Content';
+    public const CONTENT = 'Content';
 
-    const CREDITS = 'Credits';
+    public const CREDITS = 'Credits';
 
-    const C_AUTHOR = 'Author:';
+    public const C_AUTHOR = 'Author:';
 
-    const C_DESCRIPTION = 'Description:';
+    public const C_DESCRIPTION = 'Description:';
 
-    const C_ERRORS = 'Error(s):';
+    public const C_ERRORS = 'Error(s):';
 
-    const C_FRIEND_EMAIL = 'Friend email:';
+    public const C_FRIEND_EMAIL = 'Friend email:';
 
-    const C_FRIEND_NAME = 'Friend name:';
+    public const C_FRIEND_NAME = 'Friend name:';
 
-    const C_FROM = 'From:';
+    public const C_FROM = 'From:';
 
-    const C_LAST_UPDATE = 'Last update:';
+    public const C_LAST_UPDATE = 'Last update:';
 
-    const C_LICENSE = 'License:';
+    public const C_LICENSE = 'License:';
 
-    const C_MODULES = 'Modules:';
+    public const C_MODULES = 'Modules:';
 
-    const C_NAME = 'Name:';
+    public const C_NAME = 'Name:';
 
-    const C_PASSWORD = 'Password:';
+    public const C_PASSWORD = 'Password:';
 
-    const C_QUOTE = 'Quote:';
+    public const C_QUOTE = 'Quote:';
 
-    const C_RE = 'Re:';
+    public const C_RE = 'Re:';
 
-    const C_SENT = 'Sent:';
+    public const C_SENT = 'Sent:';
 
-    const C_TO = 'To:';
+    public const C_TO = 'To:';
 
-    const C_UPDATE_DATE = 'Update date:';
+    public const C_UPDATE_DATE = 'Update date:';
 
-    const C_USERNAME = 'Username:';
+    public const C_USERNAME = 'Username:';
 
-    const C_VALUE = 'Value:';
+    public const C_VALUE = 'Value:';
 
-    const C_VERSION = 'Version:';
+    public const C_VERSION = 'Version:';
 
-    const C_WEBSITE = 'Website:';
+    public const C_WEBSITE = 'Website:';
 
-    const C_YOUR_EMAIL = 'Your email:';
+    public const C_YOUR_EMAIL = 'Your email:';
 
-    const C_YOUR_NAME = 'Your name:';
+    public const C_YOUR_NAME = 'Your name:';
 
-    const DATE = 'Date';
+    public const DATE = 'Date';
 
-    const DATE_FORMAT = 'Date format';
+    public const DATE_FORMAT = 'Date format';
 
-    const DEBUG = 'Debug';
+    public const DEBUG = 'Debug';
 
-    const DELETE_ACCOUNT = 'Delete account';
+    public const DELETE_ACCOUNT = 'Delete account';
 
-    const DELETE_ALL = 'Delete all';
+    public const DELETE_ALL = 'Delete all';
 
-    const DESCENDING = 'Descending';
+    public const DESCENDING = 'Descending';
 
-    const DESCENDING_ORDER = 'Descending order';
+    public const DESCENDING_ORDER = 'Descending order';
 
-    const DESCRIPTION = 'Description';
+    public const DESCRIPTION = 'Description';
 
-    const DETAILS = 'Details';
+    public const DETAILS = 'Details';
 
-    const DISABLED = 'Disabled';
+    public const DISABLED = 'Disabled';
 
-    const DISABLE_HTML = 'Disable html';
+    public const DISABLE_HTML = 'Disable html';
 
-    const DISABLE_SMILIE = 'Disable smilie';
+    public const DISABLE_SMILIE = 'Disable smilie';
 
-    const DISCLAIMER = 'Disclaimer';
+    public const DISCLAIMER = 'Disclaimer';
 
-    const DISPLAY_ALL_ITEMS = 'Display all items';
+    public const DISPLAY_ALL_ITEMS = 'Display all items';
 
-    const DISPLAY_IN_FORM = 'Display in form';
+    public const DISPLAY_IN_FORM = 'Display in form';
 
-    const DISPLAY_MONDAY_FIRST = 'Display monday first';
+    public const DISPLAY_MONDAY_FIRST = 'Display monday first';
 
-    const DISPLAY_OPTIONS = 'Display options';
+    public const DISPLAY_OPTIONS = 'Display options';
 
-    const DISPLAY_ORDER = 'Display order';
+    public const DISPLAY_ORDER = 'Display order';
 
-    const DISPLAY_RANDOM_ITEMS = 'Display random items';
+    public const DISPLAY_RANDOM_ITEMS = 'Display random items';
 
-    const DISPLAY_RECENT_ITEMS = 'Display recent items';
+    public const DISPLAY_RECENT_ITEMS = 'Display recent items';
 
-    const DISPLAY_SUNDAY_FIRST = 'Display sunday first';
+    public const DISPLAY_SUNDAY_FIRST = 'Display sunday first';
 
-    const DISPLAY_THIS_ITEM = 'Display this item';
+    public const DISPLAY_THIS_ITEM = 'Display this item';
 
-    const DISPLAY_TOP_ITEMS = 'Display top items';
+    public const DISPLAY_TOP_ITEMS = 'Display top items';
 
-    const DISPLAY_TOP_RATED_ITEMS = 'Display top rated items';
+    public const DISPLAY_TOP_RATED_ITEMS = 'Display top rated items';
 
-    const DO_NOT_DISPLAY_IN_FORM = "Don't display in form";
+    public const DO_NOT_DISPLAY_IN_FORM = "Don't display in form";
 
-    const DRAG_TO_MOVE = 'Drag to move';
+    public const DRAG_TO_MOVE = 'Drag to move';
 
-    const EDITOR = 'Editor';
+    public const EDITOR = 'Editor';
 
-    const EDIT_ACCOUNT = 'Edit account';
+    public const EDIT_ACCOUNT = 'Edit account';
 
-    const EDIT_PROFILE = 'Edit profile';
+    public const EDIT_PROFILE = 'Edit profile';
 
-    const EF_CLASS_NOT_FOUND = "Class '%s' was not found!";
+    public const EF_CLASS_NOT_FOUND = "Class '%s' was not found!";
 
-    const EF_CORRESPONDING_USER_NOT_FOUND_IN_DATABASE = 'No corresponding user information has been found in the XOOPS database for connection: %s!';
+    public const EF_CORRESPONDING_USER_NOT_FOUND_IN_DATABASE = 'No corresponding user information has been found in the XOOPS database for connection: %s!';
 
-    const EF_DATABASE_ERROR = 'Database error: %s';
+    public const EF_DATABASE_ERROR = 'Database error: %s';
 
-    const EF_DATABASE_NOT_SUPPORTED = 'This module does not support the current database platform (%s)';
+    public const EF_DATABASE_NOT_SUPPORTED = 'This module does not support the current database platform (%s)';
 
-    const EF_DIRECTORY_EXISTS = "Directory '%s' exists on your server!";
+    public const EF_DIRECTORY_EXISTS = "Directory '%s' exists on your server!";
 
-    const EF_DIRECTORY_NOT_OPENED = "Directory '%s' was not opened!";
+    public const EF_DIRECTORY_NOT_OPENED = "Directory '%s' was not opened!";
 
-    const EF_DIRECTORY_WITH_WRITE_PERMISSION_NOT_OPENED = "Directory with write permission '%s' was not opened!";
+    public const EF_DIRECTORY_WITH_WRITE_PERMISSION_NOT_OPENED = "Directory with write permission '%s' was not opened!";
 
-    const EF_EMAIL_ALREADY_EXISTS = "User email '%s' already exists!";
+    public const EF_EMAIL_ALREADY_EXISTS = "User email '%s' already exists!";
 
-    const EF_EMAIL_NOT_SENT_TO = "Email was not sent to '%s'!";
+    public const EF_EMAIL_NOT_SENT_TO = "Email was not sent to '%s'!";
 
-    const EF_ENTRIES_NOT_INSERTED_TO_TABLE = "Failed inserting %d entries to table '%s'!"; // L120
+    public const EF_ENTRIES_NOT_INSERTED_TO_TABLE = "Failed inserting %d entries to table '%s'!"; // L120
 
-    const EF_ENTRY_NOT_READ = "Entry '%s' was not read!";
+    public const EF_ENTRY_NOT_READ = "Entry '%s' was not read!";
 
-    const EF_ERRORS_RETURNED_WHILE_UPLOADING_FILE = 'Errors returned while uploading file: %s';
+    public const EF_ERRORS_RETURNED_WHILE_UPLOADING_FILE = 'Errors returned while uploading file: %s';
 
-    const EF_EXTENSION_IS_NOT_INSTALLED = "The extension '%s' isn't installed!";
+    public const EF_EXTENSION_IS_NOT_INSTALLED = "The extension '%s' isn't installed!";
 
-    const EF_FILE_HEIGHT_TO_LARGE = 'File height too large (Maximum %u px): %u px!';
+    public const EF_FILE_HEIGHT_TO_LARGE = 'File height too large (Maximum %u px): %u px!';
 
-    const EF_FILE_IS_WRITABLE = "File '%s' is writable by the server!";
+    public const EF_FILE_IS_WRITABLE = "File '%s' is writable by the server!";
 
-    const EF_FILE_MIME_TYPE_NOT_ALLOWED = "File of mime type '%s' is not allowed!";
+    public const EF_FILE_MIME_TYPE_NOT_ALLOWED = "File of mime type '%s' is not allowed!";
 
-    const EF_FILE_MUST_BE_WRITABLE = "File '%s' must be writable by the server!";
+    public const EF_FILE_MUST_BE_WRITABLE = "File '%s' must be writable by the server!";
 
-    const EF_FILE_NOT_FOUND = "File '%s' was not found!";
+    public const EF_FILE_NOT_FOUND = "File '%s' was not found!";
 
-    const EF_FILE_NOT_SAVED_TO = "File not saved to '%s'!";
+    public const EF_FILE_NOT_SAVED_TO = "File not saved to '%s'!";
 
-    const EF_FILE_NOT_UPLOADED = "File '%s' was not uploaded!";
+    public const EF_FILE_NOT_UPLOADED = "File '%s' was not uploaded!";
 
-    const EF_FILE_SIZE_TO_LARGE = 'File size too large (Maximum %u bytes): %u bytes!';
+    public const EF_FILE_SIZE_TO_LARGE = 'File size too large (Maximum %u bytes): %u bytes!';
 
-    const EF_FILE_WIDTH_TO_LARGE = 'File width too large (Maximum %u px): %u px!';
+    public const EF_FILE_WIDTH_TO_LARGE = 'File width too large (Maximum %u px): %u px!';
 
-    const EF_FOLDER_DOES_NOT_EXIST = "Folder '%s' does not exist!";
+    public const EF_FOLDER_DOES_NOT_EXIST = "Folder '%s' does not exist!";
 
-    const EF_FOLDER_IS_INSIDE_DOCUMENT_ROOT = "Folder '%s' is inside DocumentRoot!";
+    public const EF_FOLDER_IS_INSIDE_DOCUMENT_ROOT = "Folder '%s' is inside DocumentRoot!";
 
-    const EF_FOLDER_MUST_BE_WITH_CHMOD = "Folder '%s' must be with a chmod '%s' (it's now set on %s)!";
+    public const EF_FOLDER_MUST_BE_WITH_CHMOD = "Folder '%s' must be with a chmod '%s' (it's now set on %s)!";
 
-    const EF_FOLDER_NOT_WRITABLE = "Folder '%s' is not writable by the server!";
+    public const EF_FOLDER_NOT_WRITABLE = "Folder '%s' is not writable by the server!";
 
-    const EF_IMAGE_SIZE_NOT_FETCHED = "'%s' image size was not fetched, skipping max dimension check...";
+    public const EF_IMAGE_SIZE_NOT_FETCHED = "'%s' image size was not fetched, skipping max dimension check...";
 
-    const EF_INVALID_SQL = "SQL '%s' is invalid!";
+    public const EF_INVALID_SQL = "SQL '%s' is invalid!";
 
-    const EF_KEYWORDS_MUST_BE_GREATER_THAN = 'Keywords must be at least <strong>%s</strong> characters long!';
+    public const EF_KEYWORDS_MUST_BE_GREATER_THAN = 'Keywords must be at least <strong>%s</strong> characters long!';
 
-    const EF_LOGGER_FILELINE = '%s in file %s line %s';
+    public const EF_LOGGER_FILELINE = '%s in file %s line %s';
 
-    const EF_MODULE_NOTFOUND = 'Please install or reactivate %1$s module. Minimum version required: %2$s';
+    public const EF_MODULE_NOTFOUND = 'Please install or reactivate %1$s module. Minimum version required: %2$s';
 
-    const EF_MODULE_VERSION = 'Minimum %1$s module version required: %2$s (your version is %3$s)';
+    public const EF_MODULE_VERSION = 'Minimum %1$s module version required: %2$s (your version is %3$s)';
 
-    const EF_NOTIFICATION_EMAIL_NOT_SENT_TO = "Notification email was not sent to '%s'!";
+    public const EF_NOTIFICATION_EMAIL_NOT_SENT_TO = "Notification email was not sent to '%s'!";
 
-    const EF_NOT_CREATED = "'%s' was not created!";
+    public const EF_NOT_CREATED = "'%s' was not created!";
 
-    const EF_NOT_DELETED = "'%s' was not deleted!";
+    public const EF_NOT_DELETED = "'%s' was not deleted!";
 
-    const EF_NOT_EXECUTED = "'%s' was not executed!";
+    public const EF_NOT_EXECUTED = "'%s' was not executed!";
 
-    const EF_NOT_INSERTED_TO_DATABASE = "'%s' was not inserted to database!";
+    public const EF_NOT_INSERTED_TO_DATABASE = "'%s' was not inserted to database!";
 
-    const EF_NOT_INSTALLED = "'%s' was not installed!";
+    public const EF_NOT_INSTALLED = "'%s' was not installed!";
 
-    const EF_NOT_UNINSTALLED = "'%s' was not uninstalled!";
+    public const EF_NOT_UNINSTALLED = "'%s' was not uninstalled!";
 
-    const EF_NOT_UPDATED = "'%s' was not updated!";
+    public const EF_NOT_UPDATED = "'%s' was not updated!";
 
-    const EF_PASSWORD_MUST_BE_GREATER_THAN = "Your password must be at least '%s' characters long!";
+    public const EF_PASSWORD_MUST_BE_GREATER_THAN = "Your password must be at least '%s' characters long!";
 
-    const EF_PRIVATE_MESSAGE_NOT_SENT_TO = "Private message was not sent to '%s'!";
+    public const EF_PRIVATE_MESSAGE_NOT_SENT_TO = "Private message was not sent to '%s'!";
 
-    const EF_SERVICE_IS_NOT_INSTALLED = "No '%s' service provider is installed!";
+    public const EF_SERVICE_IS_NOT_INSTALLED = "No '%s' service provider is installed!";
 
-    const EF_TABLE_DROP_NOT_ALLOWED = "Table '%s' is not allowed to be dropped!";
+    public const EF_TABLE_DROP_NOT_ALLOWED = "Table '%s' is not allowed to be dropped!";
 
-    const EF_TABLE_NOT_CREATED = "Table '%s' was not created!"; // L118
+    public const EF_TABLE_NOT_CREATED = "Table '%s' was not created!"; // L118
 
-    const EF_TABLE_NOT_DELETED = "Table '%s' was not deleted!"; // L164
+    public const EF_TABLE_NOT_DELETED = "Table '%s' was not deleted!"; // L164
 
-    const EF_TABLE_NOT_DROPPED = "Table '%s' was not dropped!";
+    public const EF_TABLE_NOT_DROPPED = "Table '%s' was not dropped!";
 
-    const EF_TABLE_NOT_UPDATED = "Table '%s' was not updated!"; // L134
+    public const EF_TABLE_NOT_UPDATED = "Table '%s' was not updated!"; // L134
 
-    const EF_UNEXPECTED_ERROR = 'Unexpected error: %s';
+    public const EF_UNEXPECTED_ERROR = 'Unexpected error: %s';
 
-    const EF_USERNAME_MUST_BE_LESS_THAN = "Username is too long, it must be less than '%s' characters!";
+    public const EF_USERNAME_MUST_BE_LESS_THAN = "Username is too long, it must be less than '%s' characters!";
 
-    const EF_USERNAME_MUST_BE_MORE_THAN = "Username is too short, it must be more than '%s' characters!";
+    public const EF_USERNAME_MUST_BE_MORE_THAN = "Username is too short, it must be more than '%s' characters!";
 
-    const EF_USER_NAME_ALREADY_EXISTS = "User name '%s' already exists!";
+    public const EF_USER_NAME_ALREADY_EXISTS = "User name '%s' already exists!";
 
-    const EF_USER_NOT_FOUND_IN_DIRECTORY_SERVER = "User '%s' not found in the directory server (%s) in %s!";
+    public const EF_USER_NOT_FOUND_IN_DIRECTORY_SERVER = "User '%s' not found in the directory server (%s) in %s!";
 
-    const EMAIL = 'Email';
+    public const EMAIL = 'Email';
 
-    const EMAIL_HAS_BEEN_SENT_WITH_ACTIVATION_KEY = 'An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the email to activate your account. ';
+    public const EMAIL_HAS_BEEN_SENT_WITH_ACTIVATION_KEY = 'An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the email to activate your account. ';
 
-    const EMAIL_HAS_NOT_BEEN_SENT_WITH_ACTIVATION_KEY = 'However, we were unable to send the activation email to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.';
+    public const EMAIL_HAS_NOT_BEEN_SENT_WITH_ACTIVATION_KEY = 'However, we were unable to send the activation email to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.';
 
-    const EMAIL_PROVIDED_IS_INVALID = 'The email address you provided is not a valid address.';
+    public const EMAIL_PROVIDED_IS_INVALID = 'The email address you provided is not a valid address.';
 
-    const EMOTION = 'Emotion';
+    public const EMOTION = 'Emotion';
 
-    const ENABLE_DISABLE = 'Enable/Disable';
+    public const ENABLE_DISABLE = 'Enable/Disable';
 
-    const ENABLE_HTML_TAGS = 'Enable HTML tags';
+    public const ENABLE_HTML_TAGS = 'Enable HTML tags';
 
-    const ENABLE_SMILIES_ICONS = 'Enable smilies icons';
+    public const ENABLE_SMILIES_ICONS = 'Enable smilies icons';
 
-    const ENABLE_XOOPS_CODES = 'Enable XOOPS codes';
+    public const ENABLE_XOOPS_CODES = 'Enable XOOPS codes';
 
-    const ENDS_WITH = 'Ends with';
+    public const ENDS_WITH = 'Ends with';
 
-    const ENTER_CODE = 'Enter the codes that you want to add.';
+    public const ENTER_CODE = 'Enter the codes that you want to add.';
 
-    const ENTER_EMAIL = 'Enter the email address you want to add.';
+    public const ENTER_EMAIL = 'Enter the email address you want to add.';
 
-    const ENTER_IMAGE_POSITION = 'Now, enter the position of the image.';
+    public const ENTER_IMAGE_POSITION = 'Now, enter the position of the image.';
 
-    const ENTER_IMAGE_URL = 'Enter the URL of the image you want to add';
+    public const ENTER_IMAGE_URL = 'Enter the URL of the image you want to add';
 
-    const ENTER_LINK_URL = 'Enter the URL of the link you want to add';
+    public const ENTER_LINK_URL = 'Enter the URL of the link you want to add';
 
-    const ENTER_QUOTE = 'Enter the text that you want to be quoted.';
+    public const ENTER_QUOTE = 'Enter the text that you want to be quoted.';
 
-    const ENTER_TEXT_BOX = 'Please input text into the text box.';
+    public const ENTER_TEXT_BOX = 'Please input text into the text box.';
 
-    const ENTER_VALID_EMAIL = 'Enter a valid email address';
+    public const ENTER_VALID_EMAIL = 'Enter a valid email address';
 
-    const ENTER_WEBSITE_TITLE = 'Enter the web site title';
+    public const ENTER_WEBSITE_TITLE = 'Enter the web site title';
 
-    const ENTER_YOUR_FRIEND_EMAIL = "Please enter your friend's email address";
+    public const ENTER_YOUR_FRIEND_EMAIL = "Please enter your friend's email address";
 
-    const ENTER_YOUR_FRIEND_NAME = "Please enter your friend's name";
+    public const ENTER_YOUR_FRIEND_NAME = "Please enter your friend's name";
 
-    const ENTER_YOUR_NAME = 'Please enter your name';
+    public const ENTER_YOUR_NAME = 'Please enter your name';
 
-    const ERROR = 'Error';
+    public const ERROR = 'Error';
 
-    const ERRORS = 'Errors';
+    public const ERRORS = 'Errors';
 
-    const EVENT = 'Event';
+    public const EVENT = 'Event';
 
-    const EVENTS = 'Events';
+    public const EVENTS = 'Events';
 
-    const EXACT_MATCH = 'Exact Match';
+    public const EXACT_MATCH = 'Exact Match';
 
-    const EXAMPLE = 'Example';
+    public const EXAMPLE = 'Example';
 
-    const EXTENSIONS = 'Extensions';
+    public const EXTENSIONS = 'Extensions';
 
-    const EXTRA = 'Extra';
+    public const EXTRA = 'Extra';
 
-    const EXTRA_INFO = 'Extra info';
+    public const EXTRA_INFO = 'Extra info';
 
-    const E_ACTIVATION_FAILED = 'Activation failed!';
+    public const E_ACTIVATION_FAILED = 'Activation failed!';
 
-    const E_ACTIVATION_KEY_INCORRECT = 'Activation key not correct!';
+    public const E_ACTIVATION_KEY_INCORRECT = 'Activation key not correct!';
 
-    const E_ALL_PARENT_ITEMS_MUST_BE_SELECTED = 'All parent items must be selected.';
+    public const E_ALL_PARENT_ITEMS_MUST_BE_SELECTED = 'All parent items must be selected.';
 
-    const E_CANNOT_CONNECT_TO_SERVER = "Can't connect to the server!";
+    public const E_CANNOT_CONNECT_TO_SERVER = "Can't connect to the server!";
 
-    const E_CHANGE_FILE_PERMISSIONS = 'Please change the permission of this file for security reasons. In Unix (444), in Win32 (read-only)';
+    public const E_CHANGE_FILE_PERMISSIONS = 'Please change the permission of this file for security reasons. In Unix (444), in Win32 (read-only)';
 
-    const E_CHANGE_FOLDER_PERMISSIONS = 'Please change the permission of this folder. In Unix (777), in Win32 (writable)';
+    public const E_CHANGE_FOLDER_PERMISSIONS = 'Please change the permission of this folder. In Unix (777), in Win32 (writable)';
 
-    const E_CHECK_EMAIL_AND_TRY_AGAIN = 'Please check the email address and try again!';
+    public const E_CHECK_EMAIL_AND_TRY_AGAIN = 'Please check the email address and try again!';
 
-    const E_CHECK_NAME_AND_TRY_AGAIN = 'Please check the name and try again!';
+    public const E_CHECK_NAME_AND_TRY_AGAIN = 'Please check the name and try again!';
 
-    const E_COMPLETE_SUBJECT_AND_MESSAGE = 'Please complete the subject and message fields!';
+    public const E_COMPLETE_SUBJECT_AND_MESSAGE = 'Please complete the subject and message fields!';
 
-    const E_CONTACT_THE_ADMINISTRATORS_FOR_DETAILS = 'Please contact the administrator for details!';
+    public const E_CONTACT_THE_ADMINISTRATORS_FOR_DETAILS = 'Please contact the administrator for details!';
 
-    const E_DATABASE_NOT_UPDATED = 'Database was not updated!';
+    public const E_DATABASE_NOT_UPDATED = 'Database was not updated!';
 
-    const E_EMAIL_SHOULD_NOT_CONTAIN_SPACES = 'Email address should not contain spaces!';
+    public const E_EMAIL_SHOULD_NOT_CONTAIN_SPACES = 'Email address should not contain spaces!';
 
-    const E_EMAIL_TAKEN = 'Email address is already registered!';
+    public const E_EMAIL_TAKEN = 'Email address is already registered!';
 
-    const E_ENTER_ALL_REQUIRED_DATA = 'Please enter all required data!';
+    public const E_ENTER_ALL_REQUIRED_DATA = 'Please enter all required data!';
 
-    const E_ENTER_IMAGE_POSITION = 'Enter the position of the image!';
+    public const E_ENTER_IMAGE_POSITION = 'Enter the position of the image!';
 
-    const E_EXTENSION_PHP_LDAP_NOT_LOADED = 'PHP LDAP extension not loaded (verify your PHP configuration file php.ini)';
+    public const E_EXTENSION_PHP_LDAP_NOT_LOADED = 'PHP LDAP extension not loaded (verify your PHP configuration file php.ini)';
 
-    const E_FILE_NAME_MISSING = 'Filename is missing!';
+    public const E_FILE_NAME_MISSING = 'Filename is missing!';
 
-    const E_FILE_NOT_FOUND = 'File not found!';
+    public const E_FILE_NOT_FOUND = 'File not found!';
 
-    const E_FILE_TYPE_REJECTED = "The file you're trying to upload is not supported by this site/server!";
+    public const E_FILE_TYPE_REJECTED = "The file you're trying to upload is not supported by this site/server!";
 
-    const E_FROM_EMAIL_NOT_SET = 'From email is not set!';
+    public const E_FROM_EMAIL_NOT_SET = 'From email is not set!';
 
-    const E_FROM_NAME_NOT_SET = 'From name is not set!';
+    public const E_FROM_NAME_NOT_SET = 'From name is not set!';
 
-    const E_GO_BACK_AND_TRY_AGAIN = 'Please go back and try again!';
+    public const E_GO_BACK_AND_TRY_AGAIN = 'Please go back and try again!';
 
-    const E_INCORRECT_LOGIN = 'Incorrect login!';
+    public const E_INCORRECT_LOGIN = 'Incorrect login!';
 
-    const E_INVALID_CONFIRMATION_CODE = 'Invalid confirmation code!';
+    public const E_INVALID_CONFIRMATION_CODE = 'Invalid confirmation code!';
 
-    const E_INVALID_EMAIL = 'Invalid email!';
+    public const E_INVALID_EMAIL = 'Invalid email!';
 
-    const E_INVALID_FILE_NAME = 'Invalid file name!';
+    public const E_INVALID_FILE_NAME = 'Invalid file name!';
 
-    const E_INVALID_FILE_SIZE = 'Invalid file size!';
+    public const E_INVALID_FILE_SIZE = 'Invalid file size!';
 
-    const E_INVALID_IMAGE_FILE = 'Invalid image file!';
+    public const E_INVALID_IMAGE_FILE = 'Invalid image file!';
 
-    const E_INVALID_USERNAME = 'Invalid username!';
+    public const E_INVALID_USERNAME = 'Invalid username!';
 
-    const E_LOADING_MIME_TYPES_DEFINITION = 'Error loading mime types definition!';
+    public const E_LOADING_MIME_TYPES_DEFINITION = 'Error loading mime types definition!';
 
-    const E_LOGGER_ERROR = 'Error';
+    public const E_LOGGER_ERROR = 'Error';
 
-    const E_LOGGER_NOTICE = 'Notice';
+    public const E_LOGGER_NOTICE = 'Notice';
 
-    const E_LOGGER_STRICT = 'Strict';
+    public const E_LOGGER_STRICT = 'Strict';
 
-    const E_LOGGER_UNKNOWN = 'Unknown';
+    public const E_LOGGER_UNKNOWN = 'Unknown';
 
-    const E_LOGGER_WARNING = 'Warning';
+    public const E_LOGGER_WARNING = 'Warning';
 
-    const E_MESSAGE_BODY_NOT_SET = 'Message body is not set!';
+    public const E_MESSAGE_BODY_NOT_SET = 'Message body is not set!';
 
-    const E_MESSAGE_TO_LONG = 'Your message is too long!';
+    public const E_MESSAGE_TO_LONG = 'Your message is too long!';
 
-    const E_MOVE_OUT_OF_DOCUMENT_ROOT = 'For security considerations it is highly suggested to move it out of DocumentRoot!';
+    public const E_MOVE_OUT_OF_DOCUMENT_ROOT = 'For security considerations it is highly suggested to move it out of DocumentRoot!';
 
-    const E_MUST_PROVIDE_PASSWORD = 'You must provide a password!';
+    public const E_MUST_PROVIDE_PASSWORD = 'You must provide a password!';
 
-    const E_NAME_IS_RESERVED = 'Name is reserved!';
+    public const E_NAME_IS_RESERVED = 'Name is reserved!';
 
-    const E_NOT_DONE = 'Not done!';
+    public const E_NOT_DONE = 'Not done!';
 
-    const E_NO_ACCESS_PERMISSION = "Sorry, you don't have the permission to access this area!";
+    public const E_NO_ACCESS_PERMISSION = "Sorry, you don't have the permission to access this area!";
 
-    const E_NO_ACTION_PERMISSION = 'Sorry, you do not have the permission to perform this action!';
+    public const E_NO_ACTION_PERMISSION = 'Sorry, you do not have the permission to perform this action!';
 
-    const E_NO_MODULE = 'Selected module does not exist!';
+    public const E_NO_MODULE = 'Selected module does not exist!';
 
-    const E_NO_PAGE = 'This page does not exist in our database';
+    public const E_NO_PAGE = 'This page does not exist in our database';
 
-    const E_NO_RESULT_FOUND = 'No result found!';
+    public const E_NO_RESULT_FOUND = 'No result found!';
 
-    const E_NO_USER_FOUND = 'Sorry, the user was not found!';
+    public const E_NO_USER_FOUND = 'Sorry, the user was not found!';
 
-    const E_NO_USER_SELECTED = 'No user selected!';
+    public const E_NO_USER_SELECTED = 'No user selected!';
 
-    const E_NO_VALID_ID_DETECTED = 'No valid ID detected';
+    public const E_NO_VALID_ID_DETECTED = 'No valid ID detected';
 
-    const E_PASSWORDS_MUST_MATCH = 'Both passwords are different. They must be identical.';
+    public const E_PASSWORDS_MUST_MATCH = 'Both passwords are different. They must be identical.';
 
-    const E_REGISTER_FIRST_TO_SEND_PRIVATE_MESSAGES = 'Please register first to send private messages!';
+    public const E_REGISTER_FIRST_TO_SEND_PRIVATE_MESSAGES = 'Please register first to send private messages!';
 
-    const E_REMOVE_DIRECTORY = 'Please remove this directory for security reasons';
+    public const E_REMOVE_DIRECTORY = 'Please remove this directory for security reasons';
 
-    const E_SECTION_NOT_ACTIVE = 'This section is not active!';
+    public const E_SECTION_NOT_ACTIVE = 'This section is not active!';
 
-    const E_SELECTED_ACCOUNT_IS_ALREADY_ACTIVATED = 'Selected account is already activated!';
+    public const E_SELECTED_ACCOUNT_IS_ALREADY_ACTIVATED = 'Selected account is already activated!';
 
-    const E_SELECTED_USER_DEACTIVATED_OR_NOT_ACTIVE = 'The selected user has been deactivated or has not been activated yet.';
+    public const E_SELECTED_USER_DEACTIVATED_OR_NOT_ACTIVE = 'The selected user has been deactivated or has not been activated yet.';
 
-    const E_SELECTED_USER_DOES_NOT_EXIST = "The selected user doesn't exist in the database.";
+    public const E_SELECTED_USER_DOES_NOT_EXIST = "The selected user doesn't exist in the database.";
 
-    const E_SOME_ERROR_OCCURRED = 'Some error occurred!';
+    public const E_SOME_ERROR_OCCURRED = 'Some error occurred!';
 
-    const E_SUSPICIOUS_IMAGE_UPLOAD_REFUSED = 'Suspicious image upload refused!';
+    public const E_SUSPICIOUS_IMAGE_UPLOAD_REFUSED = 'Suspicious image upload refused!';
 
-    const E_TAKING_YOU_BACK = 'Taking you back to where you were...';
+    public const E_TAKING_YOU_BACK = 'Taking you back to where you were...';
 
-    const E_TEMPLATE_FILE_NOT_OPENED = 'Template file was not opened!';
+    public const E_TEMPLATE_FILE_NOT_OPENED = 'Template file was not opened!';
 
-    const E_TLS_CONNECTION_NOT_OPENED = 'TLS connection was not opened!';
+    public const E_TLS_CONNECTION_NOT_OPENED = 'TLS connection was not opened!';
 
-    const E_TO_MANY_ATTEMPTS = 'Too many attempts!';
+    public const E_TO_MANY_ATTEMPTS = 'Too many attempts!';
 
-    const E_UPLOAD_DIRECTORY_NOT_SET = 'Upload directory not set!';
+    public const E_UPLOAD_DIRECTORY_NOT_SET = 'Upload directory not set!';
 
-    const E_USERNAME_TAKEN = 'Username already taken!';
+    public const E_USERNAME_TAKEN = 'Username already taken!';
 
-    const E_USERS_NOT_FOUND = 'No users found!';
+    public const E_USERS_NOT_FOUND = 'No users found!';
 
-    const E_USER_ID_NOT_FETCHED = 'User ID was not fetched!';
+    public const E_USER_ID_NOT_FETCHED = 'User ID was not fetched!';
 
-    const E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED = 'User in the webmasters group cannot be removed';
+    public const E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED = 'User in the webmasters group cannot be removed';
 
-    const E_USER_NOT_REGISTERED = 'User was not registered!';
+    public const E_USER_NOT_REGISTERED = 'User was not registered!';
 
-    const E_USER_NOT_UPDATED = 'User was not updated!';
+    public const E_USER_NOT_UPDATED = 'User was not updated!';
 
-    const E_VERIFY_USER_DATA_OR_SET_AUTOMATIC_PROVISIONING = 'Please verify your user data or set on the automatic provisioning';
+    public const E_VERIFY_USER_DATA_OR_SET_AUTOMATIC_PROVISIONING = 'Please verify your user data or set on the automatic provisioning';
 
-    const E_WE_ARE_CLOSED_FOR_REGISTRATION = 'Sorry, we are currently closed for new user registrations!';
+    public const E_WE_ARE_CLOSED_FOR_REGISTRATION = 'Sorry, we are currently closed for new user registrations!';
 
-    const E_YOU_ARE_NOT_REGISTERED = 'Sorry, you are not a registered user!';
+    public const E_YOU_ARE_NOT_REGISTERED = 'Sorry, you are not a registered user!';
 
-    const E_YOU_DO_NOT_HAVE_ANY_PRIVATE_MESSAGE = 'You do not have any private messages!';
+    public const E_YOU_DO_NOT_HAVE_ANY_PRIVATE_MESSAGE = 'You do not have any private messages!';
 
-    const E_YOU_HAVE_TO_AGREE_TO_DISCLAIMER = 'Sorry, you have to agree to our disclaimer to get registered!';
+    public const E_YOU_HAVE_TO_AGREE_TO_DISCLAIMER = 'Sorry, you have to agree to our disclaimer to get registered!';
 
-    const E_YOU_MUST_COMPLETE_ALL_REQUIRED_FIELDS = 'You must complete all required fields';
+    public const E_YOU_MUST_COMPLETE_ALL_REQUIRED_FIELDS = 'You must complete all required fields';
 
-    const E_YOU_NEED_A_POSITIVE_INTEGER = 'You need a positive integer!';
+    public const E_YOU_NEED_A_POSITIVE_INTEGER = 'You need a positive integer!';
 
-    const E_YOU_NEED_TO_ENTER_REQUIRED_INFO = 'You need to enter required info!';
+    public const E_YOU_NEED_TO_ENTER_REQUIRED_INFO = 'You need to enter required info!';
 
-    const FIELD = 'Field';
+    public const FIELD = 'Field';
 
-    const FIELDS = 'Fields';
+    public const FIELDS = 'Fields';
 
-    const FILE = 'File';
+    public const FILE = 'File';
 
-    const FILES = 'Files';
+    public const FILES = 'Files';
 
-    const FIND_USERS = 'Find users';
+    public const FIND_USERS = 'Find users';
 
-    const FLASH = 'Flash';
+    public const FLASH = 'Flash';
 
-    const FLASH_URL = 'Flash URL';
+    public const FLASH_URL = 'Flash URL';
 
-    const FLAT = 'Flat';
+    public const FLAT = 'Flat';
 
-    const FOLDER = 'Folder';
+    public const FOLDER = 'Folder';
 
-    const FOLDERS = 'Folders';
+    public const FOLDERS = 'Folders';
 
-    const FONT = 'Font';
+    public const FONT = 'Font';
 
-    const FROM = 'From';
+    public const FROM = 'From';
 
-    const F_ACTIVE_USERS = 'Active users: %s';
+    public const F_ACTIVE_USERS = 'Active users: %s';
 
-    const F_ALL_ABOUT = 'All about %s';
+    public const F_ALL_ABOUT = 'All about %s';
 
-    const F_AUTHORIZED_MIME_TYPES = 'Authorized mime types: %s';
+    public const F_AUTHORIZED_MIME_TYPES = 'Authorized mime types: %s';
 
-    const F_CLICK_HERE = "Click <a href='%s'>here</a>.";
+    public const F_CLICK_HERE = "Click <a href='%s'>here</a>.";
 
-    const F_CONFIRMATION_EMAIL_SENT = 'Confirmation email for %s mailed.';
+    public const F_CONFIRMATION_EMAIL_SENT = 'Confirmation email for %s mailed.';
 
-    const F_CURRENT_TEXT_LENGTH = 'Current text length: %s';
+    public const F_CURRENT_TEXT_LENGTH = 'Current text length: %s';
 
-    const F_DAYS = '%s days';
+    public const F_DAYS = '%s days';
 
-    const F_DELETED = '%s deleted';
+    public const F_DELETED = '%s deleted';
 
-    const F_DISABLE = 'Disable %s';
+    public const F_DISABLE = 'Disable %s';
 
-    const F_ENTER = 'Please enter %s';
+    public const F_ENTER = 'Please enter %s';
 
-    const F_ERROR = 'Error:<br /><br /> %s';
+    public const F_ERROR = 'Error:<br /><br /> %s';
 
-    const F_FILES = '%s files';
+    public const F_FILES = '%s files';
 
-    const F_FILE_EXISTS_IN = 'File exists in: %s';
+    public const F_FILE_EXISTS_IN = 'File exists in: %s';
 
-    const F_HAS_JUST_REGISTERED = '%s has just registered!';
+    public const F_HAS_JUST_REGISTERED = '%s has just registered!';
 
-    const F_HOURS = '%s hours';
+    public const F_HOURS = '%s hours';
 
-    const F_IF_PAGE_NOT_RELOAD_CLICK_HERE = "If the page does not automatically reload, please click <a href='%s'>here</a>";
+    public const F_IF_PAGE_NOT_RELOAD_CLICK_HERE = "If the page does not automatically reload, please click <a href='%s'>here</a>";
 
-    const F_INACTIVE_USERS = 'Inactive users: %s';
+    public const F_INACTIVE_USERS = 'Inactive users: %s';
 
-    const F_INTERESTING_SITE = 'Interesting site: %s';
+    public const F_INTERESTING_SITE = 'Interesting site: %s';
 
-    const F_IN_FILE_LINE = '%s in file %s line %s';
+    public const F_IN_FILE_LINE = '%s in file %s line %s';
 
-    const F_IS_REQUIRED = '%s is required';
+    public const F_IS_REQUIRED = '%s is required';
 
-    const F_KEYWORDS_SHORTER_THAN_WILL_BE_IGNORED = 'Keywords shorter than <strong>%s</strong> characters will be ignored';
+    public const F_KEYWORDS_SHORTER_THAN_WILL_BE_IGNORED = 'Keywords shorter than <strong>%s</strong> characters will be ignored';
 
-    const F_MAXIMUM_ATTEMPTS = 'Maximum attempts you can try: %d';
+    public const F_MAXIMUM_ATTEMPTS = 'Maximum attempts you can try: %d';
 
-    const F_MAX_PIXELS_WIDTH_HEIGHT = 'Max Pixels: %s x %s (width x height)';
+    public const F_MAX_PIXELS_WIDTH_HEIGHT = 'Max Pixels: %s x %s (width x height)';
 
-    const F_MAX_UPLOAD_FILES_SIZE_ALLOWED_KB = 'Max uploaded files size: %s [KB]';
+    public const F_MAX_UPLOAD_FILES_SIZE_ALLOWED_KB = 'Max uploaded files size: %s [KB]';
 
-    const F_MINIMUM_DATABASE_VERSION_REQUIRED = 'Minimum version required: %s (your version is %s)';
+    public const F_MINIMUM_DATABASE_VERSION_REQUIRED = 'Minimum version required: %s (your version is %s)';
 
-    const F_MINIMUM_PHP_VERSION_REQUIRED = 'Minimum PHP required: %s (your version is %s)';
+    public const F_MINIMUM_PHP_VERSION_REQUIRED = 'Minimum PHP required: %s (your version is %s)';
 
-    const F_MINIMUM_XOOPS_VERSION_REQUIRED = 'Minimum XOOPS required: %s (your version is %s)';
+    public const F_MINIMUM_XOOPS_VERSION_REQUIRED = 'Minimum XOOPS required: %s (your version is %s)';
 
-    const F_MINUTES = '%s minutes';
+    public const F_MINUTES = '%s minutes';
 
-    const F_MODULE_IS_INSTALLED = "The module '%s' is installed";
+    public const F_MODULE_IS_INSTALLED = "The module '%s' is installed";
 
-    const F_MODULE_IS_NOT_INSTALLED = "The module '%s' isn't installed";
+    public const F_MODULE_IS_NOT_INSTALLED = "The module '%s' isn't installed";
 
-    const F_MUST_BE_SHORTER_THAN = '%s must be shorter than %d characters.';
+    public const F_MUST_BE_SHORTER_THAN = '%s must be shorter than %d characters.';
 
-    const F_NEW_PASSWORD_REQUEST_AT = 'New password request at %s';
+    public const F_NEW_PASSWORD_REQUEST_AT = 'New password request at %s';
 
-    const F_NEW_USER_REGISTRATION_AT = 'New user registration at %s';
+    public const F_NEW_USER_REGISTRATION_AT = 'New user registration at %s';
 
-    const F_NO_DELETE_ONLY_THIS = 'No, delete only this %s';
+    public const F_NO_DELETE_ONLY_THIS = 'No, delete only this %s';
 
-    const F_OPTIONS = '%s options';
+    public const F_OPTIONS = '%s options';
 
-    const F_POSTED_BY = 'Posted by %s';
+    public const F_POSTED_BY = 'Posted by %s';
 
-    const F_READS = '(%s reads)';
+    public const F_READS = '(%s reads)';
 
-    const F_RULES = '%s rules';
+    public const F_RULES = '%s rules';
 
-    const F_SECONDS = '%s seconds';
+    public const F_SECONDS = '%s seconds';
 
-    const F_SEND_EMAIL_TO = 'Send email to %s';
+    public const F_SEND_EMAIL_TO = 'Send email to %s';
 
-    const F_SEND_PRIVATE_MESSAGE_TO = 'Send private message to %s';
+    public const F_SEND_PRIVATE_MESSAGE_TO = 'Send private message to %s';
 
-    const F_SHOWING_RESULTS = '(Showing %d - %d)';
+    public const F_SHOWING_RESULTS = '(Showing %d - %d)';
 
     //const F_TIME_FORMAT_DESCRIPTION = "Valid formats: 's' - %s; 'm' - %s; 'l' - %s;<br />'c' or 'custom' - format determined according to interval to present; 'e' - Elapsed; 'mysql' - Y-m-d H:i:s;<br />specified object - Refer to <a href='http://php.net/manual/en/function.date.php' rel='external'>PHP manual</a>.";
-    const F_TOOK_SECONDS_TO_LOAD = '%s took %s seconds to load.';
+    public const F_TOOK_SECONDS_TO_LOAD = '%s took %s seconds to load.';
 
-    const F_USERS_BROWSING = '<strong>%s</strong> user(s) are browsing <strong>%s</strong>';
+    public const F_USERS_BROWSING = '<strong>%s</strong> user(s) are browsing <strong>%s</strong>';
 
-    const F_USERS_FOUND = '%s user(s) found';
+    public const F_USERS_FOUND = '%s user(s) found';
 
-    const F_USERS_ONLINE = '<strong>%s</strong> user(s) are online';
+    public const F_USERS_ONLINE = '<strong>%s</strong> user(s) are online';
 
-    const F_USER_ACTIVATION_KEY_FOR = 'User activation key for %s';
+    public const F_USER_ACTIVATION_KEY_FOR = 'User activation key for %s';
 
-    const F_USING_AUTHENTICATION_METHOD = 'Using %s authentication method';
+    public const F_USING_AUTHENTICATION_METHOD = 'Using %s authentication method';
 
-    const F_WELCOME_TO = 'Welcome to %s';
+    public const F_WELCOME_TO = 'Welcome to %s';
 
-    const F_YES_DELETE_ALL = 'Yes, delete all %s';
+    public const F_YES_DELETE_ALL = 'Yes, delete all %s';
 
-    const F_YOUR_ACCOUNT_AT = 'Your account at %s';
+    public const F_YOUR_ACCOUNT_AT = 'Your account at %s';
 
-    const F_EXTENSION_PHP_NOT_LOADED = 'PHP %s extension not loaded (verify your PHP configuration file php.ini)';
+    public const F_EXTENSION_PHP_NOT_LOADED = 'PHP %s extension not loaded (verify your PHP configuration file php.ini)';
 
-    const GO_BACK = 'Go back';
+    public const GO_BACK = 'Go back';
 
-    const GO_TO = 'Go to';
+    public const GO_TO = 'Go to';
 
-    const GO_TODAY = 'Go today';
+    public const GO_TODAY = 'Go today';
 
-    const GROUP = 'Group';
+    public const GROUP = 'Group';
 
-    const GROUPS = 'Groups';
+    public const GROUPS = 'Groups';
 
-    const GUESTS = 'Guests';
+    public const GUESTS = 'Guests';
 
-    const HAS_AVATAR = 'Has avatar';
+    public const HAS_AVATAR = 'Has avatar';
 
-    const HEIGHT = 'Height';
+    public const HEIGHT = 'Height';
 
-    const HELP = 'Help';
+    public const HELP = 'Help';
 
-    const HIDDEN = 'Hidden';
+    public const HIDDEN = 'Hidden';
 
-    const HITS = 'Hits';
+    public const HITS = 'Hits';
 
-    const HOME = 'Home';
+    public const HOME = 'Home';
 
-    const HOME_PAGE = 'Home page';
+    public const HOME_PAGE = 'Home page';
 
-    const HORIZONTAL = 'Horizontal';
+    public const HORIZONTAL = 'Horizontal';
 
-    const HTML = 'HTML';
+    public const HTML = 'HTML';
 
-    const ICONS = 'Icons';
+    public const ICONS = 'Icons';
 
-    const ICQ = 'ICQ';
+    public const ICQ = 'ICQ';
 
-    const ID = 'ID';
+    public const ID = 'ID';
 
-    const IMAGE = 'Image';
+    public const IMAGE = 'Image';
 
-    const IMAGES = 'Images';
+    public const IMAGES = 'Images';
 
-    const IMAGE_FILE = 'Image file';
+    public const IMAGE_FILE = 'Image file';
 
-    const IMAGE_POSITION_DESCRIPTION = " 'R' or 'r' for right, 'L' or 'l' for left, or leave it blank.";
+    public const IMAGE_POSITION_DESCRIPTION = " 'R' or 'r' for right, 'L' or 'l' for left, or leave it blank.";
 
-    const IMAGE_URL = 'Image url';
+    public const IMAGE_URL = 'Image url';
 
-    const INACTIVE = 'Inactive';
+    public const INACTIVE = 'Inactive';
 
-    const INBOX = 'Inbox';
+    public const INBOX = 'Inbox';
 
-    const INDEX = 'Index';
+    public const INDEX = 'Index';
 
-    const INFO = 'Info';
+    public const INFO = 'Info';
 
-    const INFORMATION = 'Information';
+    public const INFORMATION = 'Information';
 
-    const INFORMATION_FOR_UPLOADS = 'Information for uploads';
+    public const INFORMATION_FOR_UPLOADS = 'Information for uploads';
 
-    const INPUT_LETTERS_IN_THE_IMAGE = 'Input letters in the image';
+    public const INPUT_LETTERS_IN_THE_IMAGE = 'Input letters in the image';
 
-    const INPUT_RESULT_FROM_EXPRESSION = 'Input the result from the expression';
+    public const INPUT_RESULT_FROM_EXPRESSION = 'Input the result from the expression';
 
-    const INSIDE_IMAGE = 'Inside images';
+    public const INSIDE_IMAGE = 'Inside images';
 
-    const INTEREST = 'Interest';
+    public const INTEREST = 'Interest';
 
-    const INTEREST_CONTAINS = 'Interest contains';
+    public const INTEREST_CONTAINS = 'Interest contains';
 
-    const IP = 'IP';
+    public const IP = 'IP';
 
-    const ITALIC = 'Italic';
+    public const ITALIC = 'Italic';
 
-    const ITEMS = 'Items';
+    public const ITEMS = 'Items';
 
-    const ITEMS_TO_DISPLAY = 'Items to display';
+    public const ITEMS_TO_DISPLAY = 'Items to display';
 
-    const ITEM_ID = 'Item ID';
+    public const ITEM_ID = 'Item ID';
 
-    const ITEM_NAME = 'Item name';
+    public const ITEM_NAME = 'Item name';
 
-    const I_AGREE_TO_THE_ABOVE = 'I agree to the above';
+    public const I_AGREE_TO_THE_ABOVE = 'I agree to the above';
 
-    const KEYWORD = 'Keyword';
+    public const KEYWORD = 'Keyword';
 
-    const KEYWORDS = 'Keywords';
+    public const KEYWORDS = 'Keywords';
 
-    const LANGUAGE = 'Language';
+    public const LANGUAGE = 'Language';
 
-    const LANGUAGES = 'Languages';
+    public const LANGUAGES = 'Languages';
 
-    const LAST_LOGIN = 'Last login';
+    public const LAST_LOGIN = 'Last login';
 
-    const LEFT = 'Left';
+    public const LEFT = 'Left';
 
-    const LEVEL = 'Level';
+    public const LEVEL = 'Level';
 
     //const LF_AGO_DAYS = "%s days ago";
     //const LF_AGO_HOURS = "%s hours ago";
@@ -967,23 +967,23 @@ class XoopsLocaleEn_US extends Xoops\Locale\AbstractLocale
     //const LF_AGO_ONE_SECOND = "1 second ago";
     //const LF_AGO_ONE_WEEK = "1 week ago";
     //const LF_AGO_SECONDS = "%s seconds ago";
-    const LICENCE = 'Licence';
+    public const LICENCE = 'Licence';
 
-    const LINE_THROUGH = 'Line through';
+    public const LINE_THROUGH = 'Line through';
 
-    const LINKS = 'Links';
+    public const LINKS = 'Links';
 
-    const LIST_ = 'List';
+    public const LIST_ = 'List';
 
-    const LOADING = 'Loading...';
+    public const LOADING = 'Loading...';
 
-    const LOCATION = 'Location';
+    public const LOCATION = 'Location';
 
-    const LOCATION_CONTAINS = 'Location contains';
+    public const LOCATION_CONTAINS = 'Location contains';
 
-    const LOGGED_IN_PAST_X_DAYS = "Logged in past <span style='color:#ff0000;'>X</span>days";
+    public const LOGGED_IN_PAST_X_DAYS = "Logged in past <span style='color:#ff0000;'>X</span>days";
 
-    const LOGIN_WITH_REGISTERED_PASSWORD = 'Please login with the registered password.';
+    public const LOGIN_WITH_REGISTERED_PASSWORD = 'Please login with the registered password.';
 
     //const L_COUNTRY_AD = "Andorra";
     //const L_COUNTRY_AE = "United Arab Emirates";
@@ -1287,582 +1287,582 @@ class XoopsLocaleEn_US extends Xoops\Locale\AbstractLocale
     //const L_TZ_GMTP8 = "(GMT+8:00) Beijing, Perth, Singapore, Hong Kong, Urumqi, Taipei";
     //const L_TZ_GMTP9 = "(GMT+9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk";
     //const L_TZ_GMTP95 = "(GMT+9:30) Adelaide, Darwin";
-    const MAIN = 'Main';
+    public const MAIN = 'Main';
 
-    const MAKE_PDF_FROM_THIS_PAGE = 'Make a PDF from this page';
+    public const MAKE_PDF_FROM_THIS_PAGE = 'Make a PDF from this page';
 
-    const MANAGE_EXTENSIONS = 'Manage extensions';
+    public const MANAGE_EXTENSIONS = 'Manage extensions';
 
-    const MANAGE_MODULES = 'Manage modules';
+    public const MANAGE_MODULES = 'Manage modules';
 
-    const MANUAL = 'Manual';
+    public const MANUAL = 'Manual';
 
-    const MATCHES = 'Matches';
+    public const MATCHES = 'Matches';
 
-    const MAXIMUM_LENGTH = 'Maximum length';
+    public const MAXIMUM_LENGTH = 'Maximum length';
 
-    const MAX_HEIGHT = 'Max height';
+    public const MAX_HEIGHT = 'Max height';
 
-    const MAX_IMAGE_SIZE_BYTES = 'Max Image Size (Bytes)';
+    public const MAX_IMAGE_SIZE_BYTES = 'Max Image Size (Bytes)';
 
-    const MAX_PIXELS = 'Max Pixels';
+    public const MAX_PIXELS = 'Max Pixels';
 
-    const MAX_SIZE = 'Max size';
+    public const MAX_SIZE = 'Max size';
 
-    const MAX_WIDTH = 'Max width';
+    public const MAX_WIDTH = 'Max width';
 
-    const MEMBERS = 'Members';
+    public const MEMBERS = 'Members';
 
-    const MEMBER_SINCE = 'Member since';
+    public const MEMBER_SINCE = 'Member since';
 
-    const MESSAGE = 'Message';
+    public const MESSAGE = 'Message';
 
-    const MESSAGE_ICON = 'Message icon';
+    public const MESSAGE_ICON = 'Message icon';
 
-    const METHOD = 'Method';
+    public const METHOD = 'Method';
 
-    const MMS = 'MMS';
+    public const MMS = 'MMS';
 
-    const MMS_URL = 'MMS URL';
+    public const MMS_URL = 'MMS URL';
 
-    const MODULE = 'Module';
+    public const MODULE = 'Module';
 
-    const MODULES = 'Modules';
+    public const MODULES = 'Modules';
 
-    const MODULE_INFORMATION = 'Module information';
+    public const MODULE_INFORMATION = 'Module information';
 
-    const MORE = 'More...';
+    public const MORE = 'More...';
 
-    const MORE_ABOUT_ME = 'More about me';
+    public const MORE_ABOUT_ME = 'More about me';
 
-    const MORE_DETAILS = 'More details';
+    public const MORE_DETAILS = 'More details';
 
-    const MP3 = 'MP3';
+    public const MP3 = 'MP3';
 
-    const MP3_URL = 'MP3 URL';
+    public const MP3_URL = 'MP3 URL';
 
-    const MSNM = 'MSNM';
+    public const MSNM = 'MSNM';
 
-    const MY_INFORMATION = 'My information';
+    public const MY_INFORMATION = 'My information';
 
-    const NAME = 'Name';
+    public const NAME = 'Name';
 
-    const NAME_NOT_AVAILABLE = 'Name not available';
+    public const NAME_NOT_AVAILABLE = 'Name not available';
 
-    const NESTED = 'Nested';
+    public const NESTED = 'Nested';
 
-    const NEWEST_FIRST = 'Newest first';
+    public const NEWEST_FIRST = 'Newest first';
 
-    const NEXT = 'Next';
+    public const NEXT = 'Next';
 
-    const NEXT_MESSAGE = 'Next message';
+    public const NEXT_MESSAGE = 'Next message';
 
-    const NEXT_MONTH = 'Next month';
+    public const NEXT_MONTH = 'Next month';
 
-    const NEXT_YEAR = 'Next year';
+    public const NEXT_YEAR = 'Next year';
 
-    const NO = 'No';
+    public const NO = 'No';
 
-    const NONE = 'None';
+    public const NONE = 'None';
 
-    const NOTIFICATIONS = 'Notifications';
+    public const NOTIFICATIONS = 'Notifications';
 
-    const NOT_CACHED = 'Not cached';
+    public const NOT_CACHED = 'Not cached';
 
-    const NOT_READ = 'Not read';
+    public const NOT_READ = 'Not read';
 
-    const NO_CACHE = 'No cache';
+    public const NO_CACHE = 'No cache';
 
-    const NO_COMMENTS = 'No comments';
+    public const NO_COMMENTS = 'No comments';
 
-    const NO_FILE_UPLOADED = 'No file uploaded';
+    public const NO_FILE_UPLOADED = 'No file uploaded';
 
-    const NO_MATCH_FOUND_FOR_QUERY = 'No match found for your query';
+    public const NO_MATCH_FOUND_FOR_QUERY = 'No match found for your query';
 
-    const NO_PROBLEM_ENTER_EMAIL_WE_HAVE_ON_FILE = 'No problem. Simply enter the e-mail address we have on file for your account.';
+    public const NO_PROBLEM_ENTER_EMAIL_WE_HAVE_ON_FILE = 'No problem. Simply enter the e-mail address we have on file for your account.';
 
-    const NO_TITLE = 'No title';
+    public const NO_TITLE = 'No title';
 
-    const NUMBER_OF_ITEMS_PER_PAGE_IN_ADMIN_SIDE = 'Number of items to display per page in admin side';
+    public const NUMBER_OF_ITEMS_PER_PAGE_IN_ADMIN_SIDE = 'Number of items to display per page in admin side';
 
-    const NUMBER_OF_ITEMS_PER_PAGE_IN_USER_SIDE = 'Number of items to display per page in user side';
+    public const NUMBER_OF_ITEMS_PER_PAGE_IN_USER_SIDE = 'Number of items to display per page in user side';
 
-    const NUMBER_OF_POSTS = 'Number of posts';
+    public const NUMBER_OF_POSTS = 'Number of posts';
 
-    const NUMBER_OF_RESULTS_PER_PAGE = 'Number of results per page';
+    public const NUMBER_OF_RESULTS_PER_PAGE = 'Number of results per page';
 
-    const OCCUPATION = 'Occupation';
+    public const OCCUPATION = 'Occupation';
 
-    const OCCUPATION_CONTAINS = 'Occupation contains';
+    public const OCCUPATION_CONTAINS = 'Occupation contains';
 
-    const OFF = 'Off';
+    public const OFF = 'Off';
 
-    const OFFLINE = 'Offline';
+    public const OFFLINE = 'Offline';
 
-    const OLDEST_FIRST = 'Oldest first';
+    public const OLDEST_FIRST = 'Oldest first';
 
-    const ON = 'On';
+    public const ON = 'On';
 
-    const ONE_DAY = '1 day';
+    public const ONE_DAY = '1 day';
 
-    const ONE_HOUR = '1 hour';
+    public const ONE_HOUR = '1 hour';
 
-    const ONE_MINUTE = '1 minute';
+    public const ONE_MINUTE = '1 minute';
 
-    const ONE_MONTH = '1 month';
+    public const ONE_MONTH = '1 month';
 
-    const ONE_SECOND = '1 second';
+    public const ONE_SECOND = '1 second';
 
-    const ONE_WEEK = '1 week';
+    public const ONE_WEEK = '1 week';
 
-    const ONLINE = 'Online';
+    public const ONLINE = 'Online';
 
-    const ONLY_USERS_THAT_ACCEPT_EMAIL = 'Only users that accept email';
+    public const ONLY_USERS_THAT_ACCEPT_EMAIL = 'Only users that accept email';
 
-    const ONLY_USERS_THAT_DO_NOT_ACCEPT_EMAIL = "Only users that don't accept email";
+    public const ONLY_USERS_THAT_DO_NOT_ACCEPT_EMAIL = "Only users that don't accept email";
 
-    const OPTIONAL = 'Optional';
+    public const OPTIONAL = 'Optional';
 
-    const OPTIONS = 'Options';
+    public const OPTIONS = 'Options';
 
-    const ORDER = 'Order';
+    public const ORDER = 'Order';
 
-    const ORDER_BY = 'Order by';
+    public const ORDER_BY = 'Order by';
 
-    const ORIGINAL_IMAGE = 'Original image';
+    public const ORIGINAL_IMAGE = 'Original image';
 
-    const OR_CLICK_HERE_TO_CLOSE_WINDOW = 'Or click here to close this window.';
+    public const OR_CLICK_HERE_TO_CLOSE_WINDOW = 'Or click here to close this window.';
 
-    const PAGE = 'Page';
+    public const PAGE = 'Page';
 
-    const PARENT = 'Parent';
+    public const PARENT = 'Parent';
 
-    const PASSWORD = 'Password';
+    public const PASSWORD = 'Password';
 
-    const PASSWORD_STRENGTH = 'Password strength';
+    public const PASSWORD_STRENGTH = 'Password strength';
 
-    const PASTE_THE_CODE_YOU_WANT_TO_INSERT = 'Paste the CODE you want to insert';
+    public const PASTE_THE_CODE_YOU_WANT_TO_INSERT = 'Paste the CODE you want to insert';
 
-    const PASTE_THE_QUOTE_YOU_WANT_TO_INSERT = 'Paste the QUOTE you want to insert';
+    public const PASTE_THE_QUOTE_YOU_WANT_TO_INSERT = 'Paste the QUOTE you want to insert';
 
-    const PENDING = 'Pending';
+    public const PENDING = 'Pending';
 
-    const PERMISSIONS = 'Permissions';
+    public const PERMISSIONS = 'Permissions';
 
-    const PLEASE_WAIT_FOR_ACCOUNT_ACTIVATION = 'Please wait for your account to be activated by the administrators. You will receive an email once you are activated. This could take a while so please be patient.';
+    public const PLEASE_WAIT_FOR_ACCOUNT_ACTIVATION = 'Please wait for your account to be activated by the administrators. You will receive an email once you are activated. This could take a while so please be patient.';
 
-    const PM = 'PM';
+    public const PM = 'PM';
 
-    const POSITION = 'Position';
+    public const POSITION = 'Position';
 
-    const POSITION_CONTAINS = 'Position contains';
+    public const POSITION_CONTAINS = 'Position contains';
 
-    const POST = 'Post';
+    public const POST = 'Post';
 
-    const POSTED_BY = 'Posted by';
+    public const POSTED_BY = 'Posted by';
 
-    const POSTS = 'Posts';
+    public const POSTS = 'Posts';
 
-    const POST_ANONYMOUSLY = 'Post anonymously';
+    public const POST_ANONYMOUSLY = 'Post anonymously';
 
-    const PREFERENCES = 'Preferences';
+    public const PREFERENCES = 'Preferences';
 
-    const PRESS_BUTTON_BELLOW_TO_LOGIN = 'Press the button below to login';
+    public const PRESS_BUTTON_BELLOW_TO_LOGIN = 'Press the button below to login';
 
-    const PREVIEW = 'Preview';
+    public const PREVIEW = 'Preview';
 
-    const PREVIOUS = 'Previous';
+    public const PREVIOUS = 'Previous';
 
-    const PREVIOUS_MESSAGE = 'Previous message';
+    public const PREVIOUS_MESSAGE = 'Previous message';
 
-    const PREVIOUS_MONTH = 'Previous month';
+    public const PREVIOUS_MONTH = 'Previous month';
 
-    const PREVIOUS_YEAR = 'Previous year';
+    public const PREVIOUS_YEAR = 'Previous year';
 
-    const PRINT_ICON = 'Print icon';
+    public const PRINT_ICON = 'Print icon';
 
-    const PRINT_THIS_PAGE = 'Print this page';
+    public const PRINT_THIS_PAGE = 'Print this page';
 
-    const PRIVATE_MESSAGE = 'Private message';
+    public const PRIVATE_MESSAGE = 'Private message';
 
-    const PRIVATE_MESSAGES = 'Private messages';
+    public const PRIVATE_MESSAGES = 'Private messages';
 
-    const PROFILE = 'Profile';
+    public const PROFILE = 'Profile';
 
-    const PUBLISHED = 'Published'; // Posted date
+    public const PUBLISHED = 'Published'; // Posted date
 
-    const QUERIES = 'Queries';
+    public const QUERIES = 'Queries';
 
-    const QUERY = 'Query';
+    public const QUERY = 'Query';
 
-    const QUERY_MODE = 'Query mode';
+    public const QUERY_MODE = 'Query mode';
 
-    const QUICK_ACCESS = 'Quick access';
+    public const QUICK_ACCESS = 'Quick access';
 
-    const QUOTE = 'Quote';
+    public const QUOTE = 'Quote';
 
-    const Q_ARE_YOU_SURE = 'Are you sure?';
+    public const Q_ARE_YOU_SURE = 'Are you sure?';
 
-    const Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT = 'Are you sure to delete your account?';
+    public const Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT = 'Are you sure to delete your account?';
 
-    const Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM = 'Are you sure you want to delete this item?';
+    public const Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM = 'Are you sure you want to delete this item?';
 
-    const Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES = 'Are you sure you want to delete these message(s)?';
+    public const Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES = 'Are you sure you want to delete these message(s)?';
 
-    const Q_DELETE_RELATED_ITEMS = 'Delete all related items?';
+    public const Q_DELETE_RELATED_ITEMS = 'Delete all related items?';
 
-    const Q_LOST_YOUR_PASSWORD = 'Lost your Password?';
+    public const Q_LOST_YOUR_PASSWORD = 'Lost your Password?';
 
-    const Q_NOT_REGISTERED = 'Not registered?';
+    public const Q_NOT_REGISTERED = 'Not registered?';
 
-    const Q_RECEIVE_OCCASIONAL_EMAIL_NOTICES_FROM_ADMINISTRATORS = 'Receive occasional email notices <br />from administrators and moderators?';
+    public const Q_RECEIVE_OCCASIONAL_EMAIL_NOTICES_FROM_ADMINISTRATORS = 'Receive occasional email notices <br />from administrators and moderators?';
 
-    const Q_USE_HTML = 'Use HTML?';
+    public const Q_USE_HTML = 'Use HTML?';
 
-    const RANDOM = 'Random';
+    public const RANDOM = 'Random';
 
-    const RANDOM_ITEMS = 'Random items';
+    public const RANDOM_ITEMS = 'Random items';
 
-    const RANK = 'Rank';
+    public const RANK = 'Rank';
 
-    const RATING = 'Rating';
+    public const RATING = 'Rating';
 
-    const RATING_AND_VOTE_COUNT = 'Rating and vote count';
+    public const RATING_AND_VOTE_COUNT = 'Rating and vote count';
 
-    const READS = 'Reads';
+    public const READS = 'Reads';
 
-    const REAL_NAME = 'Real name';
+    public const REAL_NAME = 'Real name';
 
-    const REAL_PLAYER = 'Real Player';
+    public const REAL_PLAYER = 'Real Player';
 
-    const RECENT_ITEMS = 'Recent items';
+    public const RECENT_ITEMS = 'Recent items';
 
-    const RECOMMEND_SITE_TO_FRIEND = 'Recommend this site to a friend';
+    public const RECOMMEND_SITE_TO_FRIEND = 'Recommend this site to a friend';
 
-    const REGISTERED = 'Registered';
+    public const REGISTERED = 'Registered';
 
-    const REGISTERED_IN_PAST_X_DAYS = "Registered in past <span style='color:#ff0000;'>X</span>days";
+    public const REGISTERED_IN_PAST_X_DAYS = "Registered in past <span style='color:#ff0000;'>X</span>days";
 
-    const REGISTER_NOW = 'Register now';
+    public const REGISTER_NOW = 'Register now';
 
-    const REGISTRATION_DATE = 'Registration date';
+    public const REGISTRATION_DATE = 'Registration date';
 
-    const REJECTED = 'Rejected';
+    public const REJECTED = 'Rejected';
 
-    const RELATED_ITEMS = 'Related items';
+    public const RELATED_ITEMS = 'Related items';
 
-    const REMEMBER_ME = 'Remember me';
+    public const REMEMBER_ME = 'Remember me';
 
-    const REMOVE_UNSELECTED_USERS = 'Remove unselected users';
+    public const REMOVE_UNSELECTED_USERS = 'Remove unselected users';
 
-    const REPLIES = 'Replies';
+    public const REPLIES = 'Replies';
 
-    const REPLY = 'Reply';
+    public const REPLY = 'Reply';
 
-    const REQUIRED = 'Required';
+    public const REQUIRED = 'Required';
 
-    const RESIZED_IMAGE = 'Resized image';
+    public const RESIZED_IMAGE = 'Resized image';
 
-    const RESULT = 'Result';
+    public const RESULT = 'Result';
 
-    const RETYPE_PASSWORD = 'Retype password';
+    public const RETYPE_PASSWORD = 'Retype password';
 
-    const RIGHT = 'Right';
+    public const RIGHT = 'Right';
 
-    const RTSP_URL = 'RTSP URL';
+    public const RTSP_URL = 'RTSP URL';
 
-    const SAVE_CHANGES = 'Save changes';
+    public const SAVE_CHANGES = 'Save changes';
 
-    const SEARCH = 'Search';
+    public const SEARCH = 'Search';
 
-    const SEARCH_AGAIN = 'Search again';
+    public const SEARCH_AGAIN = 'Search again';
 
-    const SEARCH_IN = 'Search in';
+    public const SEARCH_IN = 'Search in';
 
-    const SEARCH_RESULTS = 'Search results';
+    public const SEARCH_RESULTS = 'Search results';
 
-    const SEARCH_RULE = 'Search rule';
+    public const SEARCH_RULE = 'Search rule';
 
-    const SEARCH_USERS = 'Search users';
+    public const SEARCH_USERS = 'Search users';
 
-    const SECTION = 'Section';
+    public const SECTION = 'Section';
 
-    const SELECT = 'Select';
+    public const SELECT = 'Select';
 
-    const SELECT_CATEGORY = 'Select category';
+    public const SELECT_CATEGORY = 'Select category';
 
-    const SELECT_DATE = 'Select date';
+    public const SELECT_DATE = 'Select date';
 
-    const SELECT_FILE = 'Select file';
+    public const SELECT_FILE = 'Select file';
 
-    const SELECT_MODULE = 'Select module';
+    public const SELECT_MODULE = 'Select module';
 
-    const SELECT_TEMPLATES = 'Select templates';
+    public const SELECT_TEMPLATES = 'Select templates';
 
-    const SELECT_THEME = 'Select theme';
+    public const SELECT_THEME = 'Select theme';
 
-    const SEND_EMAIL = 'Send email';
+    public const SEND_EMAIL = 'Send email';
 
-    const SEND_PASSWORD = 'Send password';
+    public const SEND_PASSWORD = 'Send password';
 
-    const SENT = 'Sent';
+    public const SENT = 'Sent';
 
-    const SERVICES = 'Services';
+    public const SERVICES = 'Services';
 
-    const SETTINGS = 'Settings';
+    public const SETTINGS = 'Settings';
 
-    const SF_DATA_INSERTED_TO_TABLE = "Data inserted to table '%s'!";
+    public const SF_DATA_INSERTED_TO_TABLE = "Data inserted to table '%s'!";
 
-    const SF_EMAIL_SENT_TO = 'Email sent to %s!';
+    public const SF_EMAIL_SENT_TO = 'Email sent to %s!';
 
-    const SF_ENTRIES_INSERTED_TO_TABLE = "%d entries inserted to table '%s'!"; // L119
+    public const SF_ENTRIES_INSERTED_TO_TABLE = "%d entries inserted to table '%s'!"; // L119
 
-    const SF_EXECUTED = '%s executed successfully.';
+    public const SF_EXECUTED = '%s executed successfully.';
 
-    const SF_EXTENSION_IS_INSTALLED = "The extension '%s' is installed";
+    public const SF_EXTENSION_IS_INSTALLED = "The extension '%s' is installed";
 
-    const SF_FOLDER_EXISTS = "The folder '%s' exists!";
+    public const SF_FOLDER_EXISTS = "The folder '%s' exists!";
 
-    const SF_FOUND_MATCHES = 'Found <strong>%s</strong> match(es)';
+    public const SF_FOUND_MATCHES = 'Found <strong>%s</strong> match(es)';
 
-    const SF_INSTALLED = "'%s' was installed successfully.";
+    public const SF_INSTALLED = "'%s' was installed successfully.";
 
-    const SF_NOTIFICATION_EMAIL_SENT_TO = 'Notification email sent to %s!';
+    public const SF_NOTIFICATION_EMAIL_SENT_TO = 'Notification email sent to %s!';
 
-    const SF_PASSWORD_SENT_TO = 'Password sent to %s!';
+    public const SF_PASSWORD_SENT_TO = 'Password sent to %s!';
 
-    const SF_PRIVATE_MESSAGE_SENT_TO = 'Private message sent to %s!';
+    public const SF_PRIVATE_MESSAGE_SENT_TO = 'Private message sent to %s!';
 
-    const SF_SAVED = '%s saved';
+    public const SF_SAVED = '%s saved';
 
-    const SF_SERVICE_IS_INSTALLED = "A '%s' service provider is available.";
+    public const SF_SERVICE_IS_INSTALLED = "A '%s' service provider is available.";
 
-    const SF_TABLE_CREATED = "Table '%s' created!"; // L45
+    public const SF_TABLE_CREATED = "Table '%s' created!"; // L45
 
-    const SF_TABLE_DROPPED = "Table '%s' dropped!"; // L163
+    public const SF_TABLE_DROPPED = "Table '%s' dropped!"; // L163
 
-    const SF_TABLE_UPDATED = "Table '%s' updated!"; // L133
+    public const SF_TABLE_UPDATED = "Table '%s' updated!"; // L133
 
-    const SF_THANK_YOU_FOR_LOGGING_IN = 'Thank you for logging in, %s!';
+    public const SF_THANK_YOU_FOR_LOGGING_IN = 'Thank you for logging in, %s!';
 
-    const SF_UNINSTALLED = "'%s' was uninstalled successfully.";
+    public const SF_UNINSTALLED = "'%s' was uninstalled successfully.";
 
-    const SF_UPDATED = "'%s' was updated successfully.";
+    public const SF_UPDATED = "'%s' was updated successfully.";
 
-    const SHORT_TEXT = 'Short text';
+    public const SHORT_TEXT = 'Short text';
 
-    const SHOW_ALL = 'Show all';
+    public const SHOW_ALL = 'Show all';
 
-    const SHOW_ALL_RESULTS = 'Show all results';
+    public const SHOW_ALL_RESULTS = 'Show all results';
 
-    const SIDE = 'Side';
+    public const SIDE = 'Side';
 
-    const SIGNATURE = 'Signature';
+    public const SIGNATURE = 'Signature';
 
-    const SIMPLE_MODE = 'Simple mode';
+    public const SIMPLE_MODE = 'Simple mode';
 
-    const SIZE = 'Size';
+    public const SIZE = 'Size';
 
-    const SMILIES = 'Smilies';
+    public const SMILIES = 'Smilies';
 
-    const SMILIE_CODE = 'Smilie code';
+    public const SMILIE_CODE = 'Smilie code';
 
-    const SMILIE_DESCRIPTION = 'Smilie description';
+    public const SMILIE_DESCRIPTION = 'Smilie description';
 
-    const SOUNDCLOUD = 'SoundCloud';
+    public const SOUNDCLOUD = 'SoundCloud';
 
-    const SOUNDCLOUD_URL = 'Enter SoundCloud Profile URL';
+    public const SOUNDCLOUD_URL = 'Enter SoundCloud Profile URL';
 
-    const SORT_BY = 'Sort by';
+    public const SORT_BY = 'Sort by';
 
-    const SOURCE_CODE = 'Source code';
+    public const SOURCE_CODE = 'Source code';
 
-    const STARTING_WITH_HTTP_OR_HTTPS = 'Starting with http or https';
+    public const STARTING_WITH_HTTP_OR_HTTPS = 'Starting with http or https';
 
-    const STARTS_WITH = 'Starts with';
+    public const STARTS_WITH = 'Starts with';
 
-    const STATISTICS = 'Statistics';
+    public const STATISTICS = 'Statistics';
 
-    const STATUS = 'Status';
+    public const STATUS = 'Status';
 
-    const SUBJECT = 'Subject';
+    public const SUBJECT = 'Subject';
 
-    const SUBMITTED = 'Submitted';
+    public const SUBMITTED = 'Submitted';
 
-    const SUCCESS = 'Success';
+    public const SUCCESS = 'Success';
 
-    const SUMMARY = 'Summary';
+    public const SUMMARY = 'Summary';
 
-    const S_ACTION_EXECUTED = 'Action executed successfully!';
+    public const S_ACTION_EXECUTED = 'Action executed successfully!';
 
-    const S_DATABASE_UPDATED = 'Database updated successfully!';
+    public const S_DATABASE_UPDATED = 'Database updated successfully!';
 
-    const S_DATA_INSERTED = 'Data inserted successfully!';
+    public const S_DATA_INSERTED = 'Data inserted successfully!';
 
-    const S_DATA_UPDATED = 'Data updated!';
+    public const S_DATA_UPDATED = 'Data updated!';
 
-    const S_DONE = 'Done!';
+    public const S_DONE = 'Done!';
 
-    const S_ITEM_SAVED = 'Item saved successfully!';
+    public const S_ITEM_SAVED = 'Item saved successfully!';
 
-    const S_MESSAGED_HAS_BEEN_POSTED = 'Your message has been posted!';
+    public const S_MESSAGED_HAS_BEEN_POSTED = 'Your message has been posted!';
 
-    const S_REFERENCE_TO_SITE_SENT = 'The reference to our site has been sent to your friend. Thanks!';
+    public const S_REFERENCE_TO_SITE_SENT = 'The reference to our site has been sent to your friend. Thanks!';
 
-    const S_THANK_YOU_FOR_POSTING = 'Thanks for your posting!';
+    public const S_THANK_YOU_FOR_POSTING = 'Thanks for your posting!';
 
-    const S_THANK_YOU_FOR_VISITING_OUR_SITE = 'Thank you for visiting our site!';
+    public const S_THANK_YOU_FOR_VISITING_OUR_SITE = 'Thank you for visiting our site!';
 
-    const S_USERS_ADDED = 'Users have been added!';
+    public const S_USERS_ADDED = 'Users have been added!';
 
-    const S_YOUR_ACCOUNT_ACTIVATED = 'Your account has been activated!';
+    public const S_YOUR_ACCOUNT_ACTIVATED = 'Your account has been activated!';
 
-    const S_YOUR_ACCOUNT_DELETED = 'Your account has been deleted!';
+    public const S_YOUR_ACCOUNT_DELETED = 'Your account has been deleted!';
 
-    const S_YOUR_MESSAGES_DELETED = 'Your message(s) has been deleted!';
+    public const S_YOUR_MESSAGES_DELETED = 'Your message(s) has been deleted!';
 
-    const S_YOUR_PROFILE_UPDATED = 'Your profile has been updated!';
+    public const S_YOUR_PROFILE_UPDATED = 'Your profile has been updated!';
 
-    const S_YOU_ARE_NOW_LOGGED_OUT = 'You are now logged out';
+    public const S_YOU_ARE_NOW_LOGGED_OUT = 'You are now logged out';
 
-    const S_YOU_ARE_NOW_REGISTERED = 'You are now registered.';
+    public const S_YOU_ARE_NOW_REGISTERED = 'You are now registered.';
 
-    const TABLE = 'Table';
+    public const TABLE = 'Table';
 
-    const TABLES = 'Tables';
+    public const TABLES = 'Tables';
 
-    const TAG = 'Tag';
+    public const TAG = 'Tag';
 
-    const TAGS = 'Tags';
+    public const TAGS = 'Tags';
 
-    const TEMPLATES = 'Templates';
+    public const TEMPLATES = 'Templates';
 
-    const TEXT = 'Text';
+    public const TEXT = 'Text';
 
-    const THEMES = 'Themes';
+    public const THEMES = 'Themes';
 
-    const THIS_WILL_REMOVE_ALL_YOUR_INFO = 'This will remove all your info from our database!';
+    public const THIS_WILL_REMOVE_ALL_YOUR_INFO = 'This will remove all your info from our database!';
 
-    const THREAD = 'Thread';
+    public const THREAD = 'Thread';
 
-    const THREADED = 'Threaded';
+    public const THREADED = 'Threaded';
 
-    const TIMERS = 'Timers';
+    public const TIMERS = 'Timers';
 
-    const TIME_FORMAT = 'Time format';
+    public const TIME_FORMAT = 'Time format';
 
-    const TIME_ZONE = 'Time zone';
+    public const TIME_ZONE = 'Time zone';
 
-    const TIPS = 'Tips';
+    public const TIPS = 'Tips';
 
-    const TITLE = 'Title';
+    public const TITLE = 'Title';
 
-    const TITLE_LENGTH = 'Title length';
+    public const TITLE_LENGTH = 'Title length';
 
-    const TO = 'To';
+    public const TO = 'To';
 
-    const TODAY = 'Today';
+    public const TODAY = 'Today';
 
-    const TOGGLE_FIRST_DAY_OF_WEEK = 'Toggle first day of week';
+    public const TOGGLE_FIRST_DAY_OF_WEEK = 'Toggle first day of week';
 
-    const TOP = 'Top';
+    public const TOP = 'Top';
 
-    const TOP_ITEMS = 'Top items';
+    public const TOP_ITEMS = 'Top items';
 
-    const TOP_PAGE = 'Top page';
+    public const TOP_PAGE = 'Top page';
 
-    const TOP_RATED_ITEMS = 'Top rated items';
+    public const TOP_RATED_ITEMS = 'Top rated items';
 
-    const TOTAL = 'Total';
+    public const TOTAL = 'Total';
 
-    const TOTALS = 'Totals';
+    public const TOTALS = 'Totals';
 
-    const TYPE = 'Type';
+    public const TYPE = 'Type';
 
-    const TYPES = 'Types';
+    public const TYPES = 'Types';
 
-    const TYPE_NEW_PASSWORD_TWICE_TO_CHANGE_IT = '(type a new password twice to change it)';
+    public const TYPE_NEW_PASSWORD_TWICE_TO_CHANGE_IT = '(type a new password twice to change it)';
 
-    const TYPE_OF_USERS_TO_SHOW = 'Type of users to show';
+    public const TYPE_OF_USERS_TO_SHOW = 'Type of users to show';
 
-    const UNASSIGNED = 'Unassigned';
+    public const UNASSIGNED = 'Unassigned';
 
-    const UNDERLINE = 'Underline';
+    public const UNDERLINE = 'Underline';
 
-    const UNKNOWN = 'Unknown';
+    public const UNKNOWN = 'Unknown';
 
-    const UPDATED = 'Updated';
+    public const UPDATED = 'Updated';
 
-    const UPDATE_DATE = 'Update the date';
+    public const UPDATE_DATE = 'Update the date';
 
-    const UPDATE_NOW = 'Update now';
+    public const UPDATE_NOW = 'Update now';
 
-    const UPDATE_OPTIONS = 'Update options';
+    public const UPDATE_OPTIONS = 'Update options';
 
-    const URL = 'URL';
+    public const URL = 'URL';
 
-    const URL_CONTAINS = 'URL contains';
+    public const URL_CONTAINS = 'URL contains';
 
-    const USER = 'User';
+    public const USER = 'User';
 
-    const USERNAME = 'Username';
+    public const USERNAME = 'Username';
 
-    const USERS = 'Users';
+    public const USERS = 'Users';
 
-    const USER_GROUPS = "User's groups";
+    public const USER_GROUPS = "User's groups";
 
-    const USER_LOGIN = 'User login';
+    public const USER_LOGIN = 'User login';
 
-    const USER_NAME = 'User name';
+    public const USER_NAME = 'User name';
 
-    const USER_REGISTRATION = 'User registration';
+    public const USER_REGISTRATION = 'User registration';
 
-    const VERIFY_PASSWORD = 'Verify password';
+    public const VERIFY_PASSWORD = 'Verify password';
 
-    const VERSION = 'Version';
+    public const VERSION = 'Version';
 
-    const VERTICAL = 'Vertical';
+    public const VERTICAL = 'Vertical';
 
-    const VIEW_ACCOUNT = 'View account';
+    public const VIEW_ACCOUNT = 'View account';
 
-    const VISIBLE = 'Visible';
+    public const VISIBLE = 'Visible';
 
-    const VISIBLE_IN = 'Visible in';
+    public const VISIBLE_IN = 'Visible in';
 
-    const VISIT_WEBSITE = 'Visit website';
+    public const VISIT_WEBSITE = 'Visit website';
 
-    const VOTE = 'Vote';
+    public const VOTE = 'Vote';
 
-    const VOTES = 'Votes';
+    public const VOTES = 'Votes';
 
-    const WARNING = 'Warning';
+    public const WARNING = 'Warning';
 
     //const WEBMASTERS = "Webmasters";
-    const WEBSITE = 'Website';
+    public const WEBSITE = 'Website';
 
-    const WEB_URL = 'Web URL';
+    public const WEB_URL = 'Web URL';
 
-    const WEIGHT = 'Weight';
+    public const WEIGHT = 'Weight';
 
-    const WELCOME = 'Welcome';
+    public const WELCOME = 'Welcome';
 
-    const WHO_IS_ONLINE = "Who's online";
+    public const WHO_IS_ONLINE = "Who's online";
 
-    const WIDTH = 'Width';
+    public const WIDTH = 'Width';
 
-    const WIKI = 'WIKI link';
+    public const WIKI = 'WIKI link';
 
-    const WIKI_WORD_TO_LINK = 'The word to be linked to Wiki';
+    public const WIKI_WORD_TO_LINK = 'The word to be linked to Wiki';
 
-    const WMP = 'WMP';
+    public const WMP = 'WMP';
 
-    const WMP_URL = 'WMP URL';
+    public const WMP_URL = 'WMP URL';
 
-    const YES = 'Yes';
+    public const YES = 'Yes';
 
-    const YIM = 'YIM';
+    public const YIM = 'YIM';
 
-    const YOUTUBE = 'Youtube';
+    public const YOUTUBE = 'Youtube';
 
-    const YOUTUBE_URL = 'Youtube URL';
+    public const YOUTUBE_URL = 'Youtube URL';
 }

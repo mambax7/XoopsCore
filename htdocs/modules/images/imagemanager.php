@@ -99,7 +99,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('imagemanager.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -127,7 +127,7 @@ switch ($op) {
         );
         if ($uploader->fetchMedia($xoops_upload_file[0])) {
             $uploader->setPrefix('img');
-            if (! $uploader->upload()) {
+            if (!$uploader->upload()) {
                 $msg[] = $uploader->getErrors();
                 $obj->setVar('image_name', 'blank.gif');
                 $obj->setVar('image_mimetype', 'image/gif');
@@ -147,7 +147,7 @@ switch ($op) {
         if ($image_id = $helper->getHandlerImages()->insert($obj)) {
             if ($category->getVar('imgcat_storetype') === 'db') {
                 $imagebody = $helper->getHandlerImagesBody()->get($image_id);
-                if (! is_object($imagebody)) {
+                if (!is_object($imagebody)) {
                     $imagebody = $helper->getHandlerImagesBody()->create();
                     $imagebody->setVar('image_id', $image_id);
                 }

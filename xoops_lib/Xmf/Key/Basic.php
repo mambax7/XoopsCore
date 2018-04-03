@@ -54,7 +54,7 @@ class Basic extends KeyAbstract
      */
     public function create()
     {
-        if (! $this->storage->exists($this->name)) {
+        if (!$this->storage->exists($this->name)) {
             return $this->storage->save($this->name, Random::generateKey());
         }
         return false;

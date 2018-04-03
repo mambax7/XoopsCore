@@ -58,13 +58,14 @@ class GroupFormCheckboxTest extends \PHPUnit\Framework\TestCase
 
     protected function loadAllChildItemIds($itemId, &$childIds)
     {
-        if (! empty($this->optionTree[$itemId]['children'])) {
+        if (!empty($this->optionTree[$itemId]['children'])) {
             $children = $this->optionTree[$itemId]['children'];
-            if (is_array($children))
+            if (is_array($children)) {
                 foreach ($children as $fcid) {
                     array_push($childIds, $fcid);
                     $this->loadAllChildItemIds($fcid, $childIds);
                 }
+            }
         }
     }
 }

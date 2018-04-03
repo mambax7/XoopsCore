@@ -69,7 +69,7 @@ class Censor extends FilterAbstract
 
         foreach ($censorWords as $bad) {
             $bad = trim($bad);
-            if (! empty($bad)) {
+            if (!empty($bad)) {
                 if (stripos($text, $bad) === false) {
                     continue;
                 }

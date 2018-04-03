@@ -2,14 +2,14 @@
 
 namespace XoopsConsole\Commands;
 
-use SystemModule;
-use XoopsLoad;
-use Xoops;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use SystemModule;
+use Xoops;
 use Xoops\Core\XoopsTpl;
+use XoopsLoad;
 
 class UninstallModuleCommand extends Command
 {
@@ -19,7 +19,8 @@ class UninstallModuleCommand extends Command
             ->setDescription('Uninstall a module')
             ->setDefinition([
                 new InputArgument('module', InputArgument::REQUIRED, 'Module directory name'),
-            ])->setHelp(<<<EOT
+            ])->setHelp(
+                <<<EOT
 The <info>uninstall-module</info> command uninstalls a currently installed module.
 EOT
             );
@@ -41,7 +42,7 @@ EOT
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {
                 foreach ($message as $subMessage) {
-                    if (! is_array($subMessage)) {
+                    if (!is_array($subMessage)) {
                         $output->writeln(strip_tags($subMessage));
                     }
                 }

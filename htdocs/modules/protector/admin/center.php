@@ -43,10 +43,10 @@ $conf = $protector->getConf();
 // transaction stage
 //
 
-if (! empty($_POST['action'])) {
+if (!empty($_POST['action'])) {
 
     // Ticket check
-    if (! $xoopsGTicket->check(true, 'protector_admin')) {
+    if (!$xoopsGTicket->check(true, 'protector_admin')) {
         $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 3, $xoopsGTicket->getErrors());
     }
 
@@ -59,7 +59,7 @@ if (! empty($_POST['action'])) {
             @list($bad_ip, $jailed_time) = explode(':', $line, 2);
             $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) ($jailed_time);
         }
-        if (! $protector->write_file_badips($bad_ips)) {
+        if (!$protector->write_file_badips($bad_ips)) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
         }
 

@@ -34,7 +34,6 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
             $fp = fopen($tpl, 'r');
             $source = ($filesize > 0) ? fread($fp, $filesize) : '';
             fclose($fp);
-
         } else {
             $source = null;
             $mtime = null;
@@ -60,7 +59,7 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
         // why are we not checking $cache here?
 
         $theme_set = $xoops->getConfig('theme_set') ? $xoops->getConfig('theme_set') : 'default';
-        if (! file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/blocks/{$file}"))) {
+        if (!file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/blocks/{$file}"))) {
             $file_path = $xoops->path("modules/{$dirname}/templates/blocks/{$file}");
         }
         return $cache[$tpl_name] = $file_path;

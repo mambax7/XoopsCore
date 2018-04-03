@@ -14,7 +14,6 @@ use Xoops\Core\PreloadItem;
 use Xoops\Module\Plugin;
 use Xoops\Module\Plugin\ConfigCollector;
 
-
 /**
  * Comments core preloads
  *

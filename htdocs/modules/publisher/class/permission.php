@@ -127,15 +127,14 @@ class PublisherPermissionHandler extends XoopsObjectHandler
      */
     public function isGranted($gperm_name, $id)
     {
-        if (! $id) {
+        if (!$id) {
             return false;
         }
         $permissions = $this->getGrantedItems($gperm_name);
-        if (! empty($permissions) && isset ($permissions[$id])) {
+        if (!empty($permissions) && isset($permissions[$id])) {
             return true;
         }
-            return false;
-
+        return false;
     }
 
     /**

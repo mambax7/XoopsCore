@@ -72,7 +72,6 @@ if ((PublisherUtils::getPathStatus('root', true) < 0) ||
     (PublisherUtils::getPathStatus('images/category', true) < 0) ||
     (PublisherUtils::getPathStatus('images/item', true) < 0) ||
     (PublisherUtils::getPathStatus('content', true) < 0)) {
-
     createDir();
 }
 
@@ -223,7 +222,6 @@ $totalItemsOnPage = count($itemsObj);
 buildTable();
 
 if ($numrows > 0) {
-
     for ($i = 0; $i < $totalItemsOnPage; ++$i) {
         // Creating the category object to which this item is linked
         $categoryObj = $itemsObj[$i]->category();

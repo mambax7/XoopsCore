@@ -21,7 +21,7 @@ include __DIR__ . '/header.php';
 switch ($op) {
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
         }
 
@@ -53,7 +53,7 @@ switch ($op) {
             if ($lang = $helper->getHandlerLanguage()->get($xlanguage_id)) {
                 $form = $helper->getForm($lang, 'language');
                 $form->display();
-                //$admin_page->addInfoBox(_MI_XLANGUAGE_MODIFY);
+            //$admin_page->addInfoBox(_MI_XLANGUAGE_MODIFY);
                 //$admin_page->addInfoBoxLine($form->render());
             } else {
                 $xoops->redirect('index.php', 2);
@@ -69,7 +69,7 @@ switch ($op) {
             if ($lang = $helper->getHandlerLanguage()->get($xlanguage_id)) {
                 $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
                 if ($delete === 1) {
-                    if (! $xoops->security()->check()) {
+                    if (!$xoops->security()->check()) {
                         $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
                     }
                     $helper->getHandlerLanguage()->delete($lang);

@@ -79,7 +79,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
         // If we'using the default tplset, get the template from the filesystem
         $tplobj = $tplfile_handler->find('default', null, null, null, $tpl_name, true);
 
-        if (! count($tplobj)) {
+        if (!count($tplobj)) {
             return $cache[$tpl_name] = $tpl_name;
         }
         /* @var $tplobj XoopsTplFile */
@@ -104,10 +104,10 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
         }
         // First, check for an overloaded version within the theme folder
         $filepath = $directory . "/{$theme}/modules/{$module}/{$path}{$tpl_name}";
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             // If no custom version exists, get the tpl from its default location
             $filepath = \XoopsBaseConfig::get('root-path') . "/modules/{$module}/templates/{$path}{$tpl_name}";
-            if (! file_exists($filepath)) {
+            if (!file_exists($filepath)) {
                 return $cache[$tpl_name] = $tplobj;
             }
         }

@@ -44,10 +44,10 @@ function b_mainmenu_mainmenu_show()
             foreach ($results as $res) {
                 if (is_array($res) && isset($res['name']) && isset($res['link'])) {
                     $res['image'] = false;
-                    if (! isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
+                    if (!isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
                         $res['image'] = $helper->url('icons/logo_small.png');
                         $res['icon'] = "${dirName}-icon";
-                    } elseif (! isset($res['icon'])) {
+                    } elseif (!isset($res['icon'])) {
                         $res['icon'] = 'glyphicon-time';
                     }
 

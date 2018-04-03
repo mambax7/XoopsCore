@@ -42,7 +42,7 @@ $tpl->caching = 2;
 $tpl->cache_lifetime = 0;
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-if (! $tpl->isCached('module:publisher/publisher_rss.tpl')) {
+if (!$tpl->isCached('module:publisher/publisher_rss.tpl')) {
     $channel_category = $publisher->getModule()->getVar('name');
     $tpl->assign('channel_charset', XoopsLocale::getCharset());
     $tpl->assign('channel_title', htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES));
@@ -76,12 +76,14 @@ if (! $tpl->isCached('module:publisher/publisher_rss.tpl')) {
         $count = $sarray;
         /* @var $item PublisherItem */
         foreach ($sarray as $item) {
-            $tpl->append('items',
+            $tpl->append(
+                'items',
                          ['title' => htmlspecialchars($item->title(), ENT_QUOTES),
                              'link' => $item->getItemUrl(),
                              'guid' => $item->getItemUrl(),
                              'pubdate' => XoopsLocale::formatTimestamp($item->getVar('datesub'), 'rss'),
-                             'description' => htmlspecialchars($item->getBlockSummary(300, true), ENT_QUOTES), ]);
+                             'description' => htmlspecialchars($item->getBlockSummary(300, true), ENT_QUOTES), ]
+            );
         }
     }
 }

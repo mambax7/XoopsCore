@@ -25,7 +25,7 @@ namespace Xoops\Core\Service\Contract;
  */
 interface HtmlToPdfInterface
 {
-    const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
+    public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
      * startPdf - start a new pdf

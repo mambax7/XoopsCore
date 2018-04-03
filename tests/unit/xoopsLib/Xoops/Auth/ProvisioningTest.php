@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 use Xoops\Auth\AuthAbstract;
@@ -7,7 +8,9 @@ use Xoops\Core\Database\Factory;
 
 class Xoops_Auth_ProvisioningTest_AuthAbstractInstance extends AuthAbstract
 {
-    function authenticate($uname, $pwd = null) {}
+    public function authenticate($uname, $pwd = null)
+    {
+    }
 }
 
 class Xoops_Auth_ProvisioningTest extends \PHPUnit\Framework\TestCase

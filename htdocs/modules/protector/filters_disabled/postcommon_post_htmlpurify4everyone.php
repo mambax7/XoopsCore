@@ -21,15 +21,11 @@
 
 class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract
 {
-    var
+    public $purifier;
 
- $purifier;
+    public $method;
 
-    var
-
- $method;
-
-    function execute()
+    public function execute()
     {
         $xoops = Xoops::getInstance();
         // use HTMLPurifier inside Protector
@@ -43,12 +39,11 @@ class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
         $_POST = $this->purify_recursive($_POST);
     }
 
-    function purify_recursive($data)
+    public function purify_recursive($data)
     {
         if (is_array($data)) {
             return array_map([$this, 'purify_recursive'], $data);
         }
-            return strlen($data) > 32 ? call_user_func([$this->purifier, $this->method], $data) : $data;
-
+        return strlen($data) > 32 ? call_user_func([$this->purifier, $this->method], $data) : $data;
     }
 }

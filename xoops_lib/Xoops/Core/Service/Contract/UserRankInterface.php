@@ -28,7 +28,7 @@ use Xoops\Core\Service\Response;
  */
 interface UserRankInterface
 {
-    const MODE = Manager::MODE_EXCLUSIVE;
+    public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
      * getUserRank - given user info return array of rank information for the user

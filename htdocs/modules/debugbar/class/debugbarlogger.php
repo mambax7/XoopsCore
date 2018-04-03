@@ -67,7 +67,7 @@ class debugbarlogger implements LoggerInterface
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -108,20 +108,20 @@ class debugbarlogger implements LoggerInterface
 
         $this->enableRendering();
 
-        if (! $this->debugbar) {
-                $this->debugbar = new StandardDebugBar();
-                $this->renderer = $this->debugbar->getJavascriptRenderer();
+        if (!$this->debugbar) {
+            $this->debugbar = new StandardDebugBar();
+            $this->renderer = $this->debugbar->getJavascriptRenderer();
 
-                //$this->debugbar->addCollector(new MessagesCollector('Errors'));
-                $this->debugbar->addCollector(new MessagesCollector('Deprecated'));
-                $this->debugbar->addCollector(new MessagesCollector('Blocks'));
-                $this->debugbar->addCollector(new MessagesCollector('Extra'));
-                //$this->debugbar->addCollector(new MessagesCollector('Queries'));
+            //$this->debugbar->addCollector(new MessagesCollector('Errors'));
+            $this->debugbar->addCollector(new MessagesCollector('Deprecated'));
+            $this->debugbar->addCollector(new MessagesCollector('Blocks'));
+            $this->debugbar->addCollector(new MessagesCollector('Extra'));
+            //$this->debugbar->addCollector(new MessagesCollector('Queries'));
 
-                $xoops = Xoops::getInstance();
-                $debugStack = $xoops->db()->getConfiguration()->getSQLLogger();
-                $this->debugbar->addCollector(new DebugBar\Bridge\DoctrineCollector($debugStack));
-                //$this->debugbar->setStorage(new DebugBar\Storage\FileStorage(\XoopsBaseConfig::get('var-path').'/debugbar'));
+            $xoops = Xoops::getInstance();
+            $debugStack = $xoops->db()->getConfiguration()->getSQLLogger();
+            $this->debugbar->addCollector(new DebugBar\Bridge\DoctrineCollector($debugStack));
+            //$this->debugbar->setStorage(new DebugBar\Storage\FileStorage(\XoopsBaseConfig::get('var-path').'/debugbar'));
         }
         $this->addToTheme();
     }
@@ -192,7 +192,7 @@ class debugbarlogger implements LoggerInterface
     {
         if ($this->activated) {
             $level = LogLevel::INFO;
-            if (! empty($error)) {
+            if (!empty($error)) {
                 $level = LogLevel::ERROR;
             }
             $context = [
@@ -326,7 +326,7 @@ class debugbarlogger implements LoggerInterface
      */
     public function render($output)
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return $output;
         }
 
@@ -342,8 +342,7 @@ class debugbarlogger implements LoggerInterface
         if ($pos !== false) {
             return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
         }
-            return $output . $log;
-
+        return $output . $log;
     }
 
     /**
@@ -354,7 +353,7 @@ class debugbarlogger implements LoggerInterface
         if ($this->activated) {
             // include any queued time data from Xmf\Debug
             $queue = \Xmf\Debug::dumpQueuedTimers(true);
-            if (! empty($queue)) {
+            if (!empty($queue)) {
                 foreach ($queue as $q) {
                     $this->debugbar['time']->addMeasure($q['label'], $q['start'], $q['start'] + $q['elapsed']);
                 }
@@ -513,7 +512,7 @@ class debugbarlogger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return;
         }
 
@@ -598,7 +597,7 @@ class debugbarlogger implements LoggerInterface
     {
         static $addedResource = false;
 
-        if ($this->activated && ! $addedResource) {
+        if ($this->activated && !$addedResource) {
             if (isset($GLOBALS['xoTheme'])) {
                 // get asset information provided by debugbar
                 // don't include vendors - jquery already available, need workaround for font-awesome

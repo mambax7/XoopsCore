@@ -88,7 +88,7 @@ class XoopsModule extends XoopsObject
     public function loadInfoAsVar($dirname, $verbose = true)
     {
         $dirname = basename($dirname);
-        if (! isset($this->modinfo)) {
+        if (!isset($this->modinfo)) {
             $this->loadInfo($dirname, $verbose);
         }
         $this->setVar('name', $this->modinfo['name']);
@@ -103,7 +103,7 @@ class XoopsModule extends XoopsObject
         $hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] === 1) ? 1 : 0;
         $hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] === 1) ? 1 : 0;
         $hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config']))
-            || ! empty($this->modinfo['hasComments'])) ? 1 : 0;
+            || !empty($this->modinfo['hasComments'])) ? 1 : 0;
         $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] === 1) ? 1 : 0;
         // RMV-NOTIFY
         $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] === 1) ? 1 : 0;
@@ -163,7 +163,7 @@ class XoopsModule extends XoopsObject
      */
     public function getInfo($name = null)
     {
-        if (! isset($this->modinfo)) {
+        if (!isset($this->modinfo)) {
             $this->loadInfo($this->getVar('dirname'));
         }
         if (isset($name)) {
@@ -229,7 +229,7 @@ class XoopsModule extends XoopsObject
      */
     public function getAdminMenu()
     {
-        if (! isset($this->adminmenu)) {
+        if (!isset($this->adminmenu)) {
             $this->loadAdminMenu();
         }
         return $this->adminmenu;
@@ -261,7 +261,7 @@ class XoopsModule extends XoopsObject
         $xoops->loadLanguage('modinfo', $dirname);
         $xoops->loadLocale($dirname);
 
-        if (! \XoopsLoad::fileExists($file = $xoops->path('modules/' . $dirname . '/xoops_version.php'))) {
+        if (!\XoopsLoad::fileExists($file = $xoops->path('modules/' . $dirname . '/xoops_version.php'))) {
             if ($verbose !== false) {
                 echo "Module File for ${dirname} Not Found!";
             }

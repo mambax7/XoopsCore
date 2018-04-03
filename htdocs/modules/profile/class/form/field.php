@@ -34,7 +34,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Text(_PROFILE_AM_TITLE, 'field_title', 5, 255, $obj->getVar('field_title', 'e')), true);
         $this->addElement(new Xoops\Form\TextArea(_PROFILE_AM_DESCRIPTION, 'field_description', $obj->getVar('field_description', 'e'), 5, 5));
 
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $fieldcat_id = $obj->getVar('cat_id');
         } else {
             $fieldcat_id = 0;
@@ -48,7 +48,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
         $weight->setPattern('^\d+$', _PROFILE_AM_ERROR_WEIGHT);
         $this->addElement($weight, true);
         if ($obj->getVar('field_config') || $obj->isNew()) {
-            if (! $obj->isNew()) {
+            if (!$obj->isNew()) {
                 $this->addElement(new Xoops\Form\Label(_PROFILE_AM_NAME, $obj->getVar('field_name')));
                 $this->addElement(new Xoops\Form\Hidden('id', $obj->getVar('field_id')));
             } else {
@@ -151,7 +151,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
                     $options = $obj->getVar('field_options');
                     asort($options);
                     // If options do not include an empty element, then add a blank option to prevent any default selection
-                    if (! in_array('', array_keys($options), true)) {
+                    if (!in_array('', array_keys($options), true)) {
                         $element->addOption('', XoopsLocale::NONE);
                     }
                     $element->addOptionArray($options);
@@ -165,7 +165,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
                     $options = $obj->getVar('field_options');
                     asort($options);
                     // If options do not include an empty element, then add a blank option to prevent any default selection
-                    if (! in_array('', array_keys($options), true)) {
+                    if (!in_array('', array_keys($options), true)) {
                         $element->addOption('', XoopsLocale::NONE);
                     }
                     $element->addOptionArray($options);
@@ -223,7 +223,7 @@ class ProfileFieldForm extends Xoops\Form\ThemeForm
             $this->addElement(new Xoops\Form\SelectGroup(_PROFILE_AM_PROF_SEARCH, 'profile_search', true, $search_groups, 5, true));
         }
         if ($obj->getVar('field_edit') || $obj->isNew()) {
-            if (! $obj->isNew()) {
+            if (!$obj->isNew()) {
                 //Load groups
                 $editable_groups = $groupperm_handler->getGroupIds('profile_edit', $obj->getVar('field_id'), $xoops->module->getVar('mid'));
             } else {

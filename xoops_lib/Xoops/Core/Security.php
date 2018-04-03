@@ -60,7 +60,7 @@ class Security
         $timeout = ($timeout <= 0) ? 300 : $timeout;
         $token_id = Random::generateOneTimeToken();
         // save token data on the server
-        if (! isset($_SESSION[$name . '_SESSION'])) {
+        if (!isset($_SESSION[$name . '_SESSION'])) {
             $_SESSION[$name . '_SESSION'] = [];
         }
         $token_data = [
@@ -91,7 +91,7 @@ class Security
             $this->setErrors($str);
             $log[] = ['Token Validation', $str];
         } else {
-            $token_data = & $_SESSION[$name . '_SESSION'];
+            $token_data = &$_SESSION[$name . '_SESSION'];
             if (is_array($token_data)) {
                 foreach (array_keys($token_data) as $i) {
                     if ($token === $token_data[$i]['id']) {
@@ -110,7 +110,7 @@ class Security
                     }
                 }
             }
-            if (! $ret) {
+            if (!$ret) {
                 $log[] = ['Token Validation', 'No valid token found'];
             }
             $this->garbageCollection($name);
@@ -138,7 +138,7 @@ class Security
      */
     public function filterToken($token)
     {
-        return ! empty($token['expire']) && $token['expire'] >= time();
+        return !empty($token['expire']) && $token['expire'] >= time();
     }
 
     /**
@@ -149,7 +149,7 @@ class Security
     public function garbageCollection($name = 'XOOPS_TOKEN')
     {
         $sessionName = $name . '_SESSION';
-        if (! empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
+        if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
             $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], [$this, 'filterToken']);
         }
     }
@@ -188,7 +188,7 @@ class Security
             && $_SERVER['REMOTE_ADDR'] !== ''
         ) {
             foreach ($xoops->getConfig('bad_ips') as $bi) {
-                if (! empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
+                if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
                     exit();
                 }
             }
@@ -228,14 +228,13 @@ class Security
      */
     public function getErrors($ashtml = false)
     {
-        if (! $ashtml) {
+        if (!$ashtml) {
             return $this->errors;
         }
-            $ret = '';
-            if (is_array($this->errors)) {
-                $ret = implode('<br />', $this->errors) . '<br />';
-            }
-            return $ret;
-
+        $ret = '';
+        if (is_array($this->errors)) {
+            $ret = implode('<br />', $this->errors) . '<br />';
+        }
+        return $ret;
     }
 }

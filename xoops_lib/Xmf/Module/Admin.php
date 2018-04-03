@@ -58,7 +58,6 @@ class Admin
      */
     public static function getInstance()
     {
-
         static $instance;
 
         if ($instance === null) {
@@ -99,13 +98,12 @@ class Admin
             if (xoops_isActiveModule($mod)) {
                 return $this->addConfigAccept(sprintf(_AM_XMF_MODULE_INSTALLED, $mod));
             }
-                $nomod = (is_array($value)) ? $value[1] : 'error';
-                $line = sprintf(_AM_XMF_MODULE_NOT_INSTALLED, $mod);
-                if ($nomod === 'warning') {
-                    return $this->addConfigWarning($line);
-                }
-                    return $this->addConfigError($line);
-
+            $nomod = (is_array($value)) ? $value[1] : 'error';
+            $line = sprintf(_AM_XMF_MODULE_NOT_INSTALLED, $mod);
+            if ($nomod === 'warning') {
+                return $this->addConfigWarning($line);
+            }
+            return $this->addConfigError($line);
         }
         return static::$ModuleAdmin->addConfigBoxLine($value, $type);
     }
@@ -376,10 +374,9 @@ class Admin
         if (static::isXng()) {
             return $image;
         }
-            $path = '../../Frameworks/moduleclasses/icons/32/';
+        $path = '../../Frameworks/moduleclasses/icons/32/';
 
-            return $path . $image;
-
+        return $path . $image;
     }
 
     /**

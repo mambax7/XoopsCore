@@ -20,51 +20,49 @@ require_once 'dbmanager.php';
 
 class upgrade_250 extends xoopsUpgrade
 {
-    var
-
- $tasks = ['config', 'templates'];
+    public $tasks = ['config', 'templates'];
 
     /**
      * Check if cpanel config already exists
      */
-    function check_config()
+    public function check_config()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
         $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
-        if (! $result = $db->queryF($sql)) {
+        if (!$result = $db->queryF($sql)) {
             return false;
         }
         list($count) = $db->fetchRow($result);
         return ($count === 0) ? false : true;
     }
 
-    function check_templates()
+    public function check_templates()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
         $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html') AND `tpl_type` = 'admin'";
-        if (! $result = $db->queryF($sql)) {
+        if (!$result = $db->queryF($sql)) {
             return false;
         }
         list($count) = $db->fetchRow($result);
         return ($count === 0) ? false : true;
     }
 
-    function apply_config()
+    public function apply_config()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
         $dbm = new db_manager();
 
         $sql = 'SELECT conf_id FROM `' . $db->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
-        if (! $result = $db->queryF($sql)) {
+        if (!$result = $db->queryF($sql)) {
             return false;
         }
         $count = $db->fetchRow($result);
 
         $sql = 'UPDATE `' . $db->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
-        if (! $result = $db->queryF($sql)) {
+        if (!$result = $db->queryF($sql)) {
             return false;
         }
 
@@ -134,9 +132,8 @@ class upgrade_250 extends xoopsUpgrade
         return true;
     }
 
-    function apply_templates()
+    public function apply_templates()
     {
-
         include_once '../modules/system/xoops_version.php';
 
         $dbm = new db_manager();
@@ -153,7 +150,7 @@ class upgrade_250 extends xoopsUpgrade
         return true;
     }
 
-    function upgrade_250()
+    public function upgrade_250()
     {
         $this->xoopsUpgrade(basename(dirname(__FILE__)));
     }

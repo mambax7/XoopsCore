@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../init_new.php';
 
 class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
@@ -14,7 +15,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->save_SERVER = $_SERVER;
         $this->save_ENV = $_ENV;
         $this->markTestSkipped('side effects');
-        if (! function_exists('ini_get') || ini_get('safe_mode') === '1') {
+        if (!function_exists('ini_get') || ini_get('safe_mode') === '1') {
             $this->markTestSkipped('safe mode is on');
         }
     }
@@ -38,9 +39,9 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         ob_start();
         $x = $class::dumpVar($var, true, false);
         $buf = ob_get_clean();
-        $this->assertTrue(! empty($x));
+        $this->assertTrue(!empty($x));
         $this->assertTrue(is_string($x));
-        $this->assertTrue(! empty($buf));
+        $this->assertTrue(!empty($buf));
         $this->assertTrue(is_string($buf));
     }
 
@@ -57,9 +58,9 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         ob_start();
         $x = $class::dumpFile($file, true, false);
         $buf = ob_get_clean();
-        $this->assertTrue(! empty($x));
+        $this->assertTrue(!empty($x));
         $this->assertTrue(is_string($x));
-        $this->assertTrue(! empty($buf));
+        $this->assertTrue(!empty($buf));
         $this->assertTrue(is_string($buf));
     }
 

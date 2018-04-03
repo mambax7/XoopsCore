@@ -144,7 +144,7 @@ class Assets
             }
         }
 
-        if (! is_array($filters)) {
+        if (!is_array($filters)) {
             if (empty($filters)) {
                 $filters = [];
             } else {
@@ -224,7 +224,7 @@ class Assets
                 if (preg_match('/^\\/|^\\\\|^[a-zA-Z]:|^@/', $v) === 0) {
                     $v = $xoops->path($v);
                 }
-                if (! in_array($v, $translated_assets, true)) {
+                if (!in_array($v, $translated_assets, true)) {
                     $translated_assets[] = $v;
                 }
             }
@@ -235,7 +235,7 @@ class Assets
                 $filters
             );
             $asset_path = $asset->getTargetPath();
-            if (! is_readable($target_path . $asset_path)) {
+            if (!is_readable($target_path . $asset_path)) {
                 $assetKey = 'Asset ' . $asset_path;
                 $xoops->events()->triggerEvent('debug.timer.start', $assetKey);
                 $oldumask = umask(0002);
@@ -245,7 +245,6 @@ class Assets
             }
 
             return $xoops->url('assets/' . $asset_path);
-
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
             return null;
@@ -298,7 +297,7 @@ class Assets
                 }
             }
 
-            if (! is_array($filters)) {
+            if (!is_array($filters)) {
                 if (empty($filters)) {
                     $filters = [];
                 } else {
@@ -379,7 +378,7 @@ class Assets
         $toPath = $xoops->path('assets') . '/' . $output . '/';
         $from = glob($fromPath . '/' . $pattern);
 
-        if (! is_dir($toPath)) {
+        if (!is_dir($toPath)) {
             $oldUmask = umask(0);
             mkdir($toPath, 0775, true);
             umask($oldUmask);
@@ -403,9 +402,8 @@ class Assets
             umask($oldUmask);
             return $count;
         }
-            $xoops->logger()->warning('Asset directory is not writable. ' . $output);
-            return false;
-
+        $xoops->logger()->warning('Asset directory is not writable. ' . $output);
+        return false;
     }
 
     /**
@@ -421,11 +419,11 @@ class Assets
             $assetsPrefs = $xoops->cache()->read($this->assetsPrefsCacheKey);
             $file = $xoops->path($this->assetsPrefsFilename);
             $mtime = filemtime($file);
-            if ($assetsPrefs === false || ! isset($assetsPrefs['mtime']) || ! $mtime
+            if ($assetsPrefs === false || !isset($assetsPrefs['mtime']) || !$mtime
                 || (isset($assetsPrefs['mtime']) && $assetsPrefs['mtime'] < $mtime)) {
                 if ($mtime) {
                     $assetsPrefs = Yaml::read($file);
-                    if (! is_array($assetsPrefs)) {
+                    if (!is_array($assetsPrefs)) {
                         $xoops->logger()->error('Invalid config in system_assets_prefs.yml');
                         $assetsPrefs = [];
                     } else {
@@ -445,13 +443,13 @@ class Assets
                     $this->copyBaseFileAssets();
                 }
             }
-            if (! empty($assetsPrefs['default_filters']) && is_array($assetsPrefs['default_filters'])) {
+            if (!empty($assetsPrefs['default_filters']) && is_array($assetsPrefs['default_filters'])) {
                 $this->default_filters = $assetsPrefs['default_filters'];
             }
-            if (! empty($assetsPrefs['default_asset_refs']) && is_array($assetsPrefs['default_asset_refs'])) {
+            if (!empty($assetsPrefs['default_asset_refs']) && is_array($assetsPrefs['default_asset_refs'])) {
                 $this->default_asset_refs = $assetsPrefs['default_asset_refs'];
             }
-            if (! empty($assetsPrefs['default_file_assets']) && is_array($assetsPrefs['default_file_assets'])) {
+            if (!empty($assetsPrefs['default_file_assets']) && is_array($assetsPrefs['default_file_assets'])) {
                 $this->default_file_assets = $assetsPrefs['default_file_assets'];
             }
         } catch (\Exception $e) {

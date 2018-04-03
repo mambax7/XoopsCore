@@ -38,7 +38,7 @@ class Plugin
             $inactiveModules = [$dirname];
         }
         $available = self::getPlugins($pluginName, $inactiveModules);
-        if (! in_array($dirname, array_keys($available), true)) {
+        if (!in_array($dirname, array_keys($available), true)) {
             return false;
         }
         return $available[$dirname];
@@ -52,12 +52,12 @@ class Plugin
      */
     public static function getPlugins($pluginName = 'system', $inactiveModules = false)
     {
-        if (! isset(static::$plugins[$pluginName])) {
+        if (!isset(static::$plugins[$pluginName])) {
             static::$plugins[$pluginName] = [];
             $xoops = \Xoops::getInstance();
 
             //Load interface for this plugin
-            if (! \XoopsLoad::loadFile($xoops->path("modules/{$pluginName}/class/plugin/interface.php"))) {
+            if (!\XoopsLoad::loadFile($xoops->path("modules/{$pluginName}/class/plugin/interface.php"))) {
                 return static::$plugins[$pluginName];
             }
 

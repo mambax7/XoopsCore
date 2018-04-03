@@ -107,9 +107,9 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
                 $name = (string) $attachment->getName();
                 $type = (string) $attachment->getMimeType();
                 $inline = $attachment->getInlineAttribute();
-                if ($file !== null && ! $inline) {
+                if ($file !== null && !$inline) {
                     $mailer->addAttachment($file, $name, 'base64', $type);
-                } elseif ($file === null && ! $inline) {
+                } elseif ($file === null && !$inline) {
                     $mailer->addStringAttachment($body, $name, 'base64', $type);
                 } elseif ($file !== null && $inline) {
                     $mailer->addEmbeddedImage($file, $name, $name, 'base64', $type);
@@ -156,6 +156,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
                 $mailer->Username = $helper->getConfig('smtp_user', '');
                 $mailer->Password = $helper->getConfig('smtp_pass', '');
             // fallthrough
+            // no break
             case 'smtp':
                 $mailer->isSMTP();
                 $mailer->Host = $helper->getConfig('smtp_host', $mailer->Host);

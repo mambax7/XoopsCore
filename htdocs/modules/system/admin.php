@@ -44,7 +44,7 @@ if ($system->checkRight()) {
             // Get System permission handler
             $sysperm_handler = $xoops->getHandlerGroupPermission();
 
-            $category = ! empty($modversion['category']) ? (int) ($modversion['category']) : 0;
+            $category = !empty($modversion['category']) ? (int) ($modversion['category']) : 0;
             unset($modversion);
 
             if ($category > 0) {
@@ -89,7 +89,7 @@ if ($error !== false) {
         foreach ($configs as $conf) {
             /* @var $conf XoopsConfigItem */
             if ($conf->getVar('conf_name') === 'active_' . $part) {
-                $conf->setVar('conf_value', ! $conf->getVar('conf_value'));
+                $conf->setVar('conf_value', !$conf->getVar('conf_value'));
                 $config_handler->insertConfig($conf);
             }
         }
@@ -111,7 +111,7 @@ if ($error !== false) {
     $admin_page->renderTips();
     $groups = $xoopsUser->getGroups();
     $all_ok = false;
-    if (! in_array(FixedGroups::ADMIN, $groups, true)) {
+    if (!in_array(FixedGroups::ADMIN, $groups, true)) {
         $sysperm_handler = $xoops->getHandlerGroupPermission();
         $ok_syscats = $sysperm_handler->getItemIds('system_admin', $groups);
     } else {
@@ -146,7 +146,7 @@ if ($error !== false) {
                         $menu['status'] = false;
                     }
                 }
-                if (! in_array($directory, $inactive_section, true)) {
+                if (!in_array($directory, $inactive_section, true)) {
                     $menu['used'] = true;
                 }
                 switch ($directory) {

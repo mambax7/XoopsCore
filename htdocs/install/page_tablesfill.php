@@ -114,7 +114,7 @@ if ($process) {
 }
 
 setcookie('xo_install_user', '', null, null, null);
-if (isset( $settings['authorized'] ) && ! empty($adminname) && ! empty($adminpass)) {
+if (isset($settings['authorized']) && !empty($adminname) && !empty($adminpass)) {
     setcookie(
         'xo_install_user',
         addslashes($adminname) . '-' . md5($temp . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX),

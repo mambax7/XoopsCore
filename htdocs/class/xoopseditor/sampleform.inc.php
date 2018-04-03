@@ -28,13 +28,13 @@ $xoops = Xoops::getInstance();
 $sample_form = new Xoops\Form\ThemeForm('', 'sample_form', 'action.php');
 $sample_form->setExtra('enctype="multipart/form-data"');
 // Not required but for user-friendly concern
-$editor = ! empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
-if (! empty($editor)) {
+$editor = !empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
+if (!empty($editor)) {
     setcookie('editor', $editor); // save to cookie
 } else {
     // Or use user pre-selected editor through profile
     if ($xoops->isUser()) {
-        $editor = @ $xoops->user->getVar('editor'); // Need set through user profile
+        $editor = @$xoops->user->getVar('editor'); // Need set through user profile
     }
     // Add the editor selection box
     // If dohtml is disabled, set $noHtml = true

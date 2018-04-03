@@ -48,7 +48,7 @@ echo '<dl>';
 foreach ($keys as $key) {
     echo "<dt>{$key}</dt>";
     $value = '<em>Not Found</em>';
-    if (! $value = $cache->read($key)) {
+    if (!$value = $cache->read($key)) {
         $value = '<em>Not Found</em>';
     }
     echo "<dd>{$value}</dd>";
@@ -60,7 +60,7 @@ echo '<h4>Manual read() and write()</h4>';
 // We can do things manually
 $key = 'module/codex/firstkey';
 echo $key . ' ';
-if (! $readData = $cache->read($key)) {
+if (!$readData = $cache->read($key)) {
     echo 'Had to rebuild: ';
     $content = 'This is my content';
     $cache->write($key, $content);

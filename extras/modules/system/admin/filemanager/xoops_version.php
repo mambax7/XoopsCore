@@ -20,7 +20,6 @@
  */
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
-
 $modversion['name'] = _AM_SYSTEM_FILEMANAGER;
 $modversion['version'] = '1.0';
 $modversion['description'] = _AM_SYSTEM_FILEMANAGER_DESC;
@@ -30,7 +29,6 @@ $modversion['help'] = 'page=filemanager';
 $modversion['license'] = 'http://www.fsf.org/copyleft/gpl.html';
 $modversion['official'] = 1;
 $modversion['image'] = 'filemanager.png';
-
 $modversion['hasAdmin'] = 1;
 $modversion['adminpath'] = 'admin.php?fct=filemanager';
 $modversion['category'] = XOOPS_SYSTEM_FILEMANAGER;

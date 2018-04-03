@@ -124,7 +124,7 @@ switch ($op) {
         break;
 
     case 'reorder':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('field.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         if (isset($_POST['field_ids']) && count($_POST['field_ids']) > 0) {
@@ -149,7 +149,7 @@ switch ($op) {
                 foreach ($ids as $i) {
                     $fields[$i]->setVar('field_weight', (int) ($weight[$i]));
                     $fields[$i]->setVar('cat_id', (int) ($category[$i]));
-                    if (! $field_handler->insertFields($fields[$i])) {
+                    if (!$field_handler->insertFields($fields[$i])) {
                         $errors = array_merge($errors, $fields[$i]->getErrors());
                     }
                 }
@@ -164,7 +164,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('field.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $redirect_to_edit = false;
@@ -172,8 +172,8 @@ switch ($op) {
         /*  @var $obj ProfileField */
         if ($id > 0) {
             $obj = $field_handler->get($id);
-            if (! $obj->getVar('field_config') && ! $obj->getVar('field_show')
-                && ! $obj->getVar('field_edit')
+            if (!$obj->getVar('field_config') && !$obj->getVar('field_show')
+                && !$obj->getVar('field_edit')
             ) { //If no configs exist
                 $xoops->redirect('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
             }
@@ -202,7 +202,7 @@ switch ($op) {
                 $redirect_to_edit = true;
             }
 
-            if (! empty($_REQUEST['addOption'])) {
+            if (!empty($_REQUEST['addOption'])) {
                 foreach ($_REQUEST['addOption'] as $option) {
                     if (empty($option['value'])) {
                         continue;
@@ -268,7 +268,7 @@ switch ($op) {
                         }
                         foreach ($_REQUEST[$perm] as $groupid) {
                             $groupid = (int) ($groupid);
-                            if (! isset($groups[$groupid])) {
+                            if (!isset($groups[$groupid])) {
                                 $perm_obj = $groupperm_handler->create();
                                 $perm_obj->setVar('gperm_name', $perm);
                                 $perm_obj->setVar('gperm_itemid', (int) ($obj->getVar('field_id')));
@@ -308,7 +308,7 @@ switch ($op) {
         if ($id > 0) {
             $obj = $field_handler->get($id);
             if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('field.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($field_handler->deleteFields($obj)) {

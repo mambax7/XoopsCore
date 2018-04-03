@@ -50,7 +50,7 @@ class Ads extends Ldap
     public function authenticate($uname, $pwd = null)
     {
         $authenticated = false;
-        if (! extension_loaded('ldap')) {
+        if (!extension_loaded('ldap')) {
             $this->setErrors(0, \XoopsLocale::E_EXTENSION_PHP_LDAP_NOT_LOADED);
             return $authenticated;
         }
@@ -59,7 +59,7 @@ class Ads extends Ldap
             ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, $this->ldap_version);
             ldap_set_option($this->ds, LDAP_OPT_REFERRALS, 0);
             if ($this->ldap_use_TLS) { // We use TLS secure connection
-                if (! ldap_start_tls($this->ds)) {
+                if (!ldap_start_tls($this->ds)) {
                     $this->setErrors(0, \XoopsLocale::E_TLS_CONNECTION_NOT_OPENED);
                 }
             }
@@ -69,7 +69,7 @@ class Ads extends Ldap
             // If the uid is not in the DN we proceed to a search
             // The uid is not always in the dn
             $userUPN = $this->getUPN($uname);
-            if (! $userUPN) {
+            if (!$userUPN) {
                 return false;
             }
             // We bind as user to test the credentials
@@ -80,11 +80,9 @@ class Ads extends Ldap
                 if ($dn) {
                     return $this->loadXoopsUser($dn, $uname, $pwd);
                 }
-                    return false;
-
+                return false;
             }
-                $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userUPN . ')');
-
+            $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userUPN . ')');
         } else {
             $this->setErrors(0, \XoopsLocale::E_CANNOT_CONNECT_TO_SERVER);
         }

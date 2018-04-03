@@ -25,7 +25,7 @@ echo $xoops->service('qrcode')
     ->getImgTag('https://www.xoops.org/', ['alt' => 'QR code', 'title' => 'Xoops.org'])
     ->getValue();
 
-if (! $xoops->service('qrcode')->isAvailable()) {
+if (!$xoops->service('qrcode')->isAvailable()) {
     echo 'Please install a qrcode provider to view this demonstration.';
 }
 

@@ -24,7 +24,7 @@ include dirname(dirname(__DIR__)) . '/header.php';
 $xoops = Xoops::getInstance();
 $system = System::getInstance();
 
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 

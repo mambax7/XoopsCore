@@ -59,7 +59,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin_menus.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -87,7 +87,7 @@ switch ($op) {
         $obj = $helper->getHandlerMenus()->get($id);
 
         if ($ok === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('admin_menus.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($helper->getHandlerMenus()->delete($obj)) {

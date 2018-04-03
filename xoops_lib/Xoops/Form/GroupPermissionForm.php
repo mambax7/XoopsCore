@@ -117,7 +117,7 @@ class GroupPermissionForm extends Form
         $member_handler = $xoops->getHandlerMember();
         $glist = $member_handler->getGroupList();
         foreach (array_keys($glist) as $i) {
-            if ($i === FixedGroups::ANONYMOUS && ! $this->showAnonymous) {
+            if ($i === FixedGroups::ANONYMOUS && !$this->showAnonymous) {
                 continue;
             }
             // get selected item id(s) for each group
@@ -145,7 +145,7 @@ class GroupPermissionForm extends Form
         foreach (array_keys($elements) as $i) {
             if ($elements[$i] instanceof Raw) {
                 $ret .= $elements[$i]->render();
-            } elseif (! $elements[$i]->isHidden()) {
+            } elseif (!$elements[$i]->isHidden()) {
                 $ret .= '<tr valign="top" align="left"><td class="head">' . $elements[$i]->getCaption();
                 if ($elements[$i]->getDescription() !== '') {
                     $ret .= "<br /><br /><span style='font-weight: normal;'>"
@@ -169,7 +169,7 @@ class GroupPermissionForm extends Form
      */
     private function loadAllChildItemIds($itemId, &$childIds)
     {
-        if (! empty($this->itemTree[$itemId]['children'])) {
+        if (!empty($this->itemTree[$itemId]['children'])) {
             $children = $this->itemTree[$itemId]['children'];
             foreach ($children as $fcid) {
                 array_push($childIds, $fcid);

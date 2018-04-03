@@ -79,7 +79,6 @@ EOH;
      */
     public function registerExtensionProcessing()
     {
-
         $this->shortcodes->addShortcode(
             'rtsp',
             function ($attributes, $content, $tagName) {

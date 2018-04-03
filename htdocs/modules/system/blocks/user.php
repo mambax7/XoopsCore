@@ -25,7 +25,7 @@ use Xoops\Core\Kernel\CriteriaCompo;
 function b_system_user_show()
 {
     $xoops = Xoops::getInstance();
-    if (! $xoops->isUser()) {
+    if (!$xoops->isUser()) {
         return false;
     }
 
@@ -38,7 +38,7 @@ function b_system_user_show()
     foreach ($plugins as $dirname => $plugin) {
         $menu = $plugin->userMenus();
 
-        if (is_array($menu) && ! empty($menu)) {
+        if (is_array($menu) && !empty($menu)) {
             $block['modules'][$i]['name'] = $menu['name'];
             $block['modules'][$i]['link'] = $xoops->url('modules/' . $dirname . '/' . $menu['link']);
             $block['modules'][$i]['image'] = $menu['image'];
@@ -61,7 +61,6 @@ function b_system_user_show()
             }
             ++$i;
         }
-
     }
 
     // View Account

@@ -98,7 +98,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchRow($result)
     {
         $this->deprecated();
-        if (! is_object($result)) {
+        if (!is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_NUM);
@@ -116,7 +116,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (! is_object($result)) {
+        if (!is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_ASSOC);
@@ -134,7 +134,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (! is_object($result)) {
+        if (!is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_BOTH);
@@ -152,7 +152,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (! is_object($result)) {
+        if (!is_object($result)) {
             return null;
         }
         return $result->fetch(\PDO::FETCH_OBJ);
@@ -314,7 +314,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     {
         $this->deprecated();
 
-        if (! empty($limit)) {
+        if (!empty($limit)) {
             if (empty($start)) {
                 $start = 0;
             }
@@ -334,9 +334,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $events->triggerEvent('core.database.query.success', ([$sql]));
             return $result;
         }
-            $events->triggerEvent('core.database.query.failure', ([$sql, $this]));
-            return false;
-
+        $events->triggerEvent('core.database.query.failure', ([$sql, $this]));
+        return false;
     }
 
     /**
@@ -405,7 +404,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
         } catch (PDOException $e) {
             return null;
         }
-
     }
 
     /**
@@ -426,19 +424,19 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $t = $temp['native_type'];
 
             $temp = (string) (
-                ((($t === 'STRING') || ($t === 'VAR_STRING') ) ? 'string' : '' ) .
-                ( (in_array($t, ['TINY', 'SHORT', 'LONG', 'LONGLONG', 'INT24'], true)) ? 'int' : '' ) .
-                ( (in_array($t, ['FLOAT', 'DOUBLE', 'DECIMAL', 'NEWDECIMAL'], true)) ? 'real' : '' ) .
-                ( ($t === 'TIMESTAMP') ? 'timestamp' : '' ) .
-                ( ($t === 'YEAR') ? 'year' : '') .
-                ( (($t === 'DATE') || ($t === 'NEWDATE') ) ? 'date' : '' ) .
-                ( ($t === 'TIME') ? 'time' : '' ) .
-                ( ($t === 'SET') ? 'set' : '' ) .
-                ( ($t === 'ENUM') ? 'enum' : '' ) .
-                ( ($t === 'GEOMETRY') ? 'geometry' : '' ) .
-                ( ($t === 'DATETIME') ? 'datetime' : '' ) .
-                ( (in_array($t, ['TINY_BLOB', 'BLOB', 'MEDIUM_BLOB', 'LONG_BLOB'], true)) ? 'blob' : '' ) .
-                ( ($t === 'NULL') ? 'null' : '' )
+                ((($t === 'STRING') || ($t === 'VAR_STRING')) ? 'string' : '') .
+                ((in_array($t, ['TINY', 'SHORT', 'LONG', 'LONGLONG', 'INT24'], true)) ? 'int' : '') .
+                ((in_array($t, ['FLOAT', 'DOUBLE', 'DECIMAL', 'NEWDECIMAL'], true)) ? 'real' : '') .
+                (($t === 'TIMESTAMP') ? 'timestamp' : '') .
+                (($t === 'YEAR') ? 'year' : '') .
+                ((($t === 'DATE') || ($t === 'NEWDATE')) ? 'date' : '') .
+                (($t === 'TIME') ? 'time' : '') .
+                (($t === 'SET') ? 'set' : '') .
+                (($t === 'ENUM') ? 'enum' : '') .
+                (($t === 'GEOMETRY') ? 'geometry' : '') .
+                (($t === 'DATETIME') ? 'datetime' : '') .
+                ((in_array($t, ['TINY_BLOB', 'BLOB', 'MEDIUM_BLOB', 'LONG_BLOB'], true)) ? 'blob' : '') .
+                (($t === 'NULL') ? 'null' : '')
             );
             return $temp;
         } catch (PDOException $e) {
@@ -482,7 +480,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     protected function deprecated()
     {
         static $warning_issued = false;
-        if (! $warning_issued) {
+        if (!$warning_issued) {
             $warning_issued = true;
             $stack = debug_backtrace();
             $frame = $stack[1];

@@ -94,7 +94,7 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\RadioYesNo(_AM_BANNERS_BANNERS_USEHTML, 'htmlbanner', $html_banner));
 
         $this->addElement(new Xoops\Form\TextArea(_AM_BANNERS_BANNERS_CODEHTML, 'htmlcode', $obj->getVar('banner_htmlcode'), 5, 5), false);
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('bid', $obj->getVar('banner_bid')));
         }
         $this->addElement(new Xoops\Form\Hidden('op', 'save'));

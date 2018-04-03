@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../init_new.php');
 
 class themeFactoryTest extends \PHPUnit\Framework\TestCase
@@ -50,8 +51,8 @@ class themeFactoryTest extends \PHPUnit\Framework\TestCase
         $value = $this->createInstance_check_level($themefactory, ['titi' => 'toto']);
         $this->assertInstanceOf('\Xoops\Core\Theme\XoopsTheme', $value);
         $this->assertSame('toto', $value->titi);
-        $this->assertTrue(! empty($value->path));
-        $this->assertTrue(! empty($value->folderName));
+        $this->assertTrue(!empty($value->path));
+        $this->assertTrue(!empty($value->folderName));
     }
 
     public function test_isThemeAllowed()

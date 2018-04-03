@@ -14,7 +14,6 @@ use Xoops\Core\Exception\NoHandlerException;
 use Xoops\Core\Handler\FactorySpec;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
-
 /**
  * Kernel - build
  *
@@ -57,7 +56,7 @@ class Kernel implements SchemeInterface
     {
         $handler = null;
         $specName = strtolower($spec->getName());
-        if (! isset($this->lookupTable[$specName])) {
+        if (!isset($this->lookupTable[$specName])) {
             if ($spec->getOptional() === false) {
                 throw new NoHandlerException(sprintf('Unknown handler %s', $specName));
             }

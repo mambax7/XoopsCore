@@ -403,16 +403,16 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
                     is_array($this->pdfKeywords) ? implode(', ', $this->pdfKeywords) : (string) $this->pdfKeywords;
                 $this->pdfEngine->SetKeywords($keywords);
             }
-            if (! empty($this->pdfCreator)) {
+            if (!empty($this->pdfCreator)) {
                 $this->pdfEngine->SetCreator($this->pdfCreator);
             }
-            if (! empty($this->fontFamily)) {
+            if (!empty($this->fontFamily)) {
                 $this->pdfEngine->SetFont($this->fontFamily, $this->fontStyle, $this->fontSize);
             }
-            if (! empty($this->monoFontFamily)) {
+            if (!empty($this->monoFontFamily)) {
                 $this->pdfEngine->SetDefaultMonospacedFont($this->monoFontFamily);
             }
-            if (! empty($this->leftMargin)) {
+            if (!empty($this->leftMargin)) {
                 $this->pdfEngine->SetMargins($this->leftMargin, $this->topMargin, $this->rightMargin);
             }
             if (empty($this->bottomMargin)) {

@@ -1,4 +1,5 @@
 <?php
+
 //  Author: Trabis
 //  URL: http://www.xuups.com
 //  E-Mail: lusopoemas@gmail.com
@@ -26,4 +27,3 @@ define('_MI_MENUS_CONF_ASSIGN_METHOD_XOTHEME', 'XoTheme');
 
 //1.4
 define('_MI_MENUS_ADMMENU0', 'Home');
-

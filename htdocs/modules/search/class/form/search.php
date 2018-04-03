@@ -39,7 +39,7 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
             'AND' => _MD_SEARCH_ALL, 'OR' => _MD_SEARCH_ANY, //, 'exact' => _MD_SEARCH_EXACT
         ]);
         $this->addElement($type_select);
-        if (! empty($mids)) {
+        if (!empty($mids)) {
             $mods_checkbox = new Xoops\Form\Checkbox(_MD_SEARCH_SEARCHIN, 'mids[]', $mids);
         } else {
             $mods_checkbox = new Xoops\Form\Checkbox(_MD_SEARCH_SEARCHIN, 'mids[]', $mid);
@@ -52,7 +52,7 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
             //todo, would be nice to have the module ids availabe also
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
-            if (isset($available_modules) && ! empty($available_modules)) {
+            if (isset($available_modules) && !empty($available_modules)) {
                 $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
             }
             $module_handler = $xoops->getHandlerModule();

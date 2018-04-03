@@ -35,7 +35,7 @@ class SystemExtension extends SystemModule
         foreach ($extension as $list) {
             /* @var $list XoopsModule */
             if ($list->getInfo('install')) {
-                if (! is_array($list->getInfo('extension_module'))) {
+                if (!is_array($list->getInfo('extension_module'))) {
                     $ret[] = $list;
                 } else {
                     if (array_search($mod, $list->getInfo('extension_module'), true) !== false) {
@@ -155,7 +155,7 @@ class SystemExtension extends SystemModule
             if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
                 clearstatcache();
                 $file = trim($file);
-                if (! in_array($file, $this->modulesDirnames, true)) {
+                if (!in_array($file, $this->modulesDirnames, true)) {
                     /* @var $module XoopsModule */
                     $module = $module_handler->create();
                     $module->loadInfo($file);

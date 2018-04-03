@@ -32,13 +32,13 @@ if ($xoops->isUser()) {
         }
     }
 } else {
-    if (! empty($_POST['xoops_login'])) {
+    if (!empty($_POST['xoops_login'])) {
         include_once $xoops->path('include/checklogin.php');
         exit();
     }
 }
 
-if (! $allowed) {
+if (!$allowed) {
     $xoopsThemeFactory = null;
     $xoopsThemeFactory = new \Xoops\Core\Theme\Factory();
     $xoopsThemeFactory->allowedThemes = $xoops->getConfig('theme_set_allowed');

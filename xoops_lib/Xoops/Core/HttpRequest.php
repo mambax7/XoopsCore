@@ -206,7 +206,7 @@ class HttpRequest
         // Apache
         if (function_exists('apache_request_headers')) {
             $headers = apache_request_headers();
-            if (! empty($headers[$name])) {
+            if (!empty($headers[$name])) {
                 return $headers[$name];
             }
         }
@@ -243,7 +243,7 @@ class HttpRequest
         if (empty($_SERVER['PHP_SELF']) || empty($_SERVER['REQUEST_URI'])) {
             // IIS
             $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-            if (! empty($_SERVER['QUERY_STRING'])) {
+            if (!empty($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }
             return $_SERVER['REQUEST_URI'];
@@ -316,7 +316,7 @@ class HttpRequest
     {
         $default = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
 
-        if (! $considerProxy) {
+        if (!$considerProxy) {
             return $default;
         }
 
@@ -380,18 +380,18 @@ class HttpRequest
     {
         if ($name === 'HTTPS') {
             if (isset($_SERVER['HTTPS'])) {
-                return ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+                return !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
             }
             return strpos($this->getEnv('SCRIPT_URI'), 'https://') === 0;
         }
 
-        if ($name === 'SCRIPT_NAME' && ! isset($_SERVER[$name])) {
+        if ($name === 'SCRIPT_NAME' && !isset($_SERVER[$name])) {
             if ($this->getEnv('CGI_MODE') && isset($_ENV['SCRIPT_URL'])) {
                 return $_ENV['SCRIPT_URL'];
             }
         }
 
-        if ($name === 'REMOTE_ADDR' && ! isset($_SERVER[$name])) {
+        if ($name === 'REMOTE_ADDR' && !isset($_SERVER[$name])) {
             $address = $this->getEnv('HTTP_PC_REMOTE_ADDR');
             if ($address !== null) {
                 return $address;
@@ -418,7 +418,7 @@ class HttpRequest
                 $name = $this->getEnv('SCRIPT_NAME');
                 $filename = $this->getEnv('SCRIPT_FILENAME');
                 $offset = 0;
-                if (! strpos($name, '.php')) {
+                if (!strpos($name, '.php')) {
                     $offset = 4;
                 }
                 return substr($filename, 0, -(strlen($name) + $offset));
@@ -487,7 +487,7 @@ class HttpRequest
     public function is($type)
     {
         $type = strtolower($type);
-        if (! isset($this->detectors[$type])) {
+        if (!isset($this->detectors[$type])) {
             return false;
         }
         $detect = $this->detectors[$type];
@@ -570,11 +570,11 @@ class HttpRequest
         $types = [];
         $accept = $this->getHeader('ACCEPT');
 
-        if (! empty($accept)) {
+        if (!empty($accept)) {
             $entries = explode(',', $accept);
             foreach ($entries as $e) {
                 $mt = explode(';q=', $e);
-                if (! isset($mt[1])) {
+                if (!isset($mt[1])) {
                     $mt[1] = 1.0;
                 }
                 $types[trim($mt[0])] = (float) $mt[1];
@@ -599,11 +599,11 @@ class HttpRequest
         $languages = [];
         $accept = $this->getHeader('ACCEPT_LANGUAGE');
 
-        if (! empty($accept)) {
+        if (!empty($accept)) {
             $entries = explode(',', $accept);
             foreach ($entries as $e) {
                 $l = explode(';q=', $e);
-                if (! isset($l[1])) {
+                if (!isset($l[1])) {
                     $l[1] = 1.0;
                 }
                 $languages[trim($l[0])] = (float) $l[1];

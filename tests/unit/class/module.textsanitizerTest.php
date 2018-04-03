@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../init_new.php');
 
 class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
@@ -55,17 +56,17 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     {
         $this->markTestSkipped('now protected - move to extension test');
         $path = \XoopsBaseConfig::get('root-path');
-        if (! class_exists('Comments', false)) {
+        if (!class_exists('Comments', false)) {
             \XoopsLoad::addMap([
                 'comments' => $path . '/modules/comments/class/helper.php',
             ]);
         }
-        if (! class_exists('MenusDecorator', false)) {
+        if (!class_exists('MenusDecorator', false)) {
             \XoopsLoad::addMap([
                 'menusdecorator' => $path . '/modules/menus/class/decorator.php',
             ]);
         }
-        if (! class_exists('MenusBuilder', false)) {
+        if (!class_exists('MenusBuilder', false)) {
             \XoopsLoad::addMap([
                 'menusbuilder' => $path . '/modules/menus/class/builder.php',
             ]);

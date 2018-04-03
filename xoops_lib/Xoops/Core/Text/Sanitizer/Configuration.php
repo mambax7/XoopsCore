@@ -62,13 +62,13 @@ class Configuration extends ConfigurationAbstract
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
         }
-        if (! is_array($sanitizerPrefs)) {
+        if (!is_array($sanitizerPrefs)) {
             $sanitizerPrefs = [];
         }
         $changed = false;
         $defaultPrefs = new DefaultConfiguration();
         foreach ($defaultPrefs as $name => $value) {
-            if (! array_key_exists($name, $sanitizerPrefs)) {
+            if (!array_key_exists($name, $sanitizerPrefs)) {
                 $sanitizerPrefs[$name] = $defaultPrefs[$name];
                 $changed = true;
             }

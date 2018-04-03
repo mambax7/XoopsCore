@@ -62,7 +62,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, Request::getInt($varname));
 
         $this->assertSame(0, Request::getInt($varname . 'no-such-key'));
-
     }
 
     public function testGetFloat()

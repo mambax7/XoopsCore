@@ -20,15 +20,17 @@ class ModuleadminTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test___construct()
-	{
+    {
         $level = ob_get_level();
         $instance = new $this->myClass();
-        while (ob_get_level() > $level) @ob_end_flush();
+        while (ob_get_level() > $level) {
+            @ob_end_flush();
+        }
         $this->assertInstanceOf($this->myClass, $instance);
     }
 
     public function test_addBreadcrumbLink()
-	{
+    {
         $level = ob_get_level();
         $xoops = Xoops::getInstance();
         $theme_factory = new \Xoops\Core\Theme\Factory();
@@ -39,8 +41,10 @@ class ModuleadminTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myClass();
         $instance->addBreadcrumbLink();
         $x = $instance->renderBreadcrumb();
-        while (ob_get_level() > $level) @ob_end_flush();
+        while (ob_get_level() > $level) {
+            @ob_end_flush();
+        }
         $x = str_replace("\r\n", "\n", $x);
-		$this->assertSame("<ul class=\"breadcrumb\">\n    </ul>", $x);
+        $this->assertSame("<ul class=\"breadcrumb\">\n    </ul>", $x);
     }
 }

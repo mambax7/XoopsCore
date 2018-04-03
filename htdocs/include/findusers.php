@@ -31,7 +31,7 @@ $xoops->simpleHeader(false);
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
 $denied = true;
-if (! empty($_REQUEST['token'])) {
+if (!empty($_REQUEST['token'])) {
     if ($xoops->security()->validateToken($_REQUEST['token'], false)) {
         $denied = false;
     }
@@ -47,8 +47,8 @@ if ($denied) {
 
 $token = isset($_REQUEST['token']) ? $_REQUEST['token'] : '';
 $name_form = 'memberslist';
-$name_userid = 'uid' . (! empty($_REQUEST['multiple']) ? '[]' : '');
-$name_username = 'uname' . (! empty($_REQUEST['multiple']) ? '[]' : '');
+$name_userid = 'uid' . (!empty($_REQUEST['multiple']) ? '[]' : '');
+$name_username = 'uname' . (!empty($_REQUEST['multiple']) ? '[]' : '');
 
 $user_handler = $xoops->getHandlerUser();
 
@@ -201,11 +201,11 @@ if (empty($_POST['user_submit'])) {
 } else {
     $limit = empty($_POST['limit']) ? 50 : (int) ($_POST['limit']);
     $start = (int) (@$_POST['start']);
-    if (! isset($_POST['query'])) {
+    if (!isset($_POST['query'])) {
         $criteria = new CriteriaCompo();
         foreach (array_keys($items_match) as $var) {
-            if (! empty($_POST[$var])) {
-                $match = (! empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
+            if (!empty($_POST[$var])) {
+                $match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
                 $value = str_replace('_', "\\\_", trim($_POST[$var]));
                 switch ($match) {
                     case XOOPS_MATCH_START:
@@ -223,43 +223,43 @@ if (empty($_POST['user_submit'])) {
                 }
             }
         }
-        if (! empty($_POST['url'])) {
+        if (!empty($_POST['url'])) {
             $url = $xoops->formatURL(trim($_POST['url']));
             $criteria->add(new Criteria('url', $url . '%', 'LIKE'));
         }
-        if (! empty($_POST['user_from'])) {
+        if (!empty($_POST['user_from'])) {
             $criteria->add(new Criteria('user_from', '%' . trim($_POST['user_from']) . '%', 'LIKE'));
         }
-        if (! empty($_POST['user_intrest'])) {
+        if (!empty($_POST['user_intrest'])) {
             $criteria->add(new Criteria('user_intrest', '%' . trim($_POST['user_intrest']) . '%', 'LIKE'));
         }
-        if (! empty($_POST['user_occ'])) {
+        if (!empty($_POST['user_occ'])) {
             $criteria->add(new Criteria('user_occ', '%' . trim($_POST['user_occ']) . '%', 'LIKE'));
         }
         foreach ([
             'last_login',
             'user_regdate',
         ] as $var) {
-            if (! empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
+            if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
                 $time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_more"])));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '<='));
                 }
             }
-            if (! empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
+            if (!empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
                 $time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_less"])));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '>='));
                 }
             }
         }
-        if (! empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
+        if (!empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
             $criteria->add(new Criteria('posts', (int) ($_POST['posts_more']), '<='));
         }
-        if (! empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
+        if (!empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
             $criteria->add(new Criteria('posts', (int) ($_POST['posts_less']), '>='));
         }
-        if (! empty($_POST['user_mailok'])) {
+        if (!empty($_POST['user_mailok'])) {
             if ($_POST['user_mailok'] === 'mailng') {
                 $criteria->add(new Criteria('user_mailok', 0));
             } else {
@@ -268,7 +268,7 @@ if (empty($_POST['user_submit'])) {
                 }
             }
         }
-        if (! empty($_POST['user_avatar'])) {
+        if (!empty($_POST['user_avatar'])) {
             if ($_POST['user_avatar'] === 'y') {
                 $criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'NOT IN'));
             } else {
@@ -277,7 +277,7 @@ if (empty($_POST['user_submit'])) {
                 }
             }
         }
-        if (! empty($_POST['level'])) {
+        if (!empty($_POST['level'])) {
             $level_value = [
                 1 => 1,
                 2 => 0,
@@ -286,7 +286,7 @@ if (empty($_POST['user_submit'])) {
             $level = isset($level_value[(int) ($_POST['level'])]) ? $level_value[(int) ($_POST['level'])] : 1;
             $criteria->add(new Criteria('level', $level));
         }
-        if (! empty($_POST['rank'])) {
+        if (!empty($_POST['rank'])) {
             $criteria->add(new Criteria('rank', (int) ($_POST['rank'])));
         }
         // @todo this used to accept a second criteria, an array of groups. (@$_POST["groups"])
@@ -299,7 +299,7 @@ if (empty($_POST['user_submit'])) {
             'user_regdate',
             'posts',
         ];
-        $sort = (! in_array($_POST['user_sort'], $validsort, true)) ? 'uname' : $_POST['user_sort'];
+        $sort = (!in_array($_POST['user_sort'], $validsort, true)) ? 'uname' : $_POST['user_sort'];
         $order = 'ASC';
         if (isset($_POST['user_order']) && $_POST['user_order'] === 'DESC') {
             $order = 'DESC';
@@ -359,10 +359,10 @@ if (empty($_POST['user_submit'])) {
                 $hiddenform .= "<input type='hidden' name='" . $myts->htmlSpecialChars($k) . "' value='" . $myts->htmlSpecialChars($v) . "' />\n";
             }
         }
-        if (! isset($_POST['limit'])) {
+        if (!isset($_POST['limit'])) {
             $hiddenform .= "<input type='hidden' name='limit' value='{$limit}' />\n";
         }
-        if (! isset($_POST['start'])) {
+        if (!isset($_POST['start'])) {
             $hiddenform .= "<input type='hidden' name='start' value='{$start}' />\n";
         }
         $hiddenform .= "<input type='hidden' name='token' value='" . $myts->htmlSpecialChars($token) . "' />\n";
@@ -373,15 +373,15 @@ if (empty($_POST['user_submit'])) {
         echo '</div>';
     } else {
         if ($start < $total) {
-            if (! empty($total)) {
+            if (!empty($total)) {
                 echo sprintf(XoopsLocale::F_USERS_FOUND, $total) . '<br />';
             }
-            if (! empty($foundusers)) {
+            if (!empty($foundusers)) {
                 echo "<form action='findusers.php' method='post' name='{$name_form}' id='{$name_form}'>
             <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'>
             <tr>
             <th align='center' width='5px'>";
-                if (! empty($_POST['multiple'])) {
+                if (!empty($_POST['multiple'])) {
                     echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
                 }
                 echo "</th>
@@ -402,7 +402,7 @@ if (empty($_POST['user_submit'])) {
                     $fuser_name = $foundusers[$j]->getVar('name') ? $foundusers[$j]->getVar('name') : '&nbsp;';
                     echo "<tr class='${class}'>
                     <td align='center'>";
-                    if (! empty($_POST['multiple'])) {
+                    if (!empty($_POST['multiple'])) {
                         echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar('uid') . "' />";
                         echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar('uname') . "' />";
                     } else {
@@ -424,7 +424,7 @@ if (empty($_POST['user_submit'])) {
                     echo "<select name='fct'><option value='users'>" . XoopsLocale::A_DELETE . "</option><option value='mailusers'>" . XoopsLocale::SEND_EMAIL . '</option>';
                     echo '</select>&nbsp;';
                     echo $xoops->security()->getTokenHTML() . "<input type='submit' value='" . XoopsLocale::A_SUBMIT . "' />";
-                    // Add selected users
+                // Add selected users
                 } else {
                     echo "<input type='button' value='" . XoopsLocale::ADD_SELECTED_USERS . "' onclick='addusers();' />";
                 }
@@ -441,21 +441,21 @@ if (empty($_POST['user_submit'])) {
                     $hiddenform .= "<input type='hidden' name='" . $myts->htmlSpecialChars($k) . "' value='" . $myts->htmlSpecialChars($v) . "' />\n";
                 }
             }
-            if (! isset($_POST['limit'])) {
+            if (!isset($_POST['limit'])) {
                 $hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
             }
-            if (! isset($_POST['start'])) {
+            if (!isset($_POST['start'])) {
                 $hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
             }
             $hiddenform .= "<input type='hidden' name='token' value='" . $myts->htmlSpecialChars($token) . "' />\n";
-            if (! isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
+            if (!isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
                 $prev = $start - $limit;
                 if ($start - $limit >= 0) {
                     $hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . XoopsLocale::PREVIOUS . "</a>&nbsp;\n";
                 }
                 $counter = 1;
                 $currentpage = ($start + $limit) / $limit;
-                if (! isset($total)) {
+                if (!isset($total)) {
                     while ($counter <= $currentpage) {
                         if ($counter === $currentpage) {
                             $hiddenform .= '<strong>' . $counter . '</strong> ';
@@ -489,7 +489,7 @@ if (empty($_POST['user_submit'])) {
                 }
 
                 $next = $start + $limit;
-                if ((isset($total) && $total > $next) || (! isset($total) && count($foundusers) >= $limit)) {
+                if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
                     $hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . XoopsLocale::NEXT . "</a>\n";
                 }
             }

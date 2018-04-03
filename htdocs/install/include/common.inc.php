@@ -44,7 +44,7 @@ $mainfile = dirname(dirname(__DIR__)) . '/mainfile.php';
 if (file_exists($mainfile)) {
     include $mainfile;
 }
-if (! defined('XOOPS_ROOT_PATH')) {
+if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace('\\', '/', realpath('../')));
     define('XOOPS_PATH', isset($_SESSION['settings']['PATH']) ? $_SESSION['settings']['PATH'] : '');
     define('XOOPS_VAR_PATH', isset($_SESSION['settings']['VAR_PATH']) ? $_SESSION['settings']['VAR_PATH'] : '');
@@ -55,7 +55,7 @@ include XOOPS_INSTALL_PATH . '/class/installwizard.php';
 include_once XOOPS_ROOT_PATH . '/include/version.php';
 include_once XOOPS_INSTALL_PATH . '/include/functions.php';
 //include_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
-if (! class_exists('XoopsBaseConfig', false)) {
+if (!class_exists('XoopsBaseConfig', false)) {
     include_once XOOPS_ROOT_PATH . '/class/XoopsBaseConfig.php';
     XoopsBaseConfig::bootstrapTransition();
 }
@@ -66,10 +66,10 @@ $_SESSION['pageHasForm'] = false;
 $wizard = new XoopsInstallWizard();
 $_SESSION['wizard'] = $wizard;
 
-if (! $wizard->xoInit()) {
+if (!$wizard->xoInit()) {
     exit('Init Error');
 }
 
-if (! isset($_SESSION['settings']) || ! is_array($_SESSION['settings'])) {
+if (!isset($_SESSION['settings']) || !is_array($_SESSION['settings'])) {
     $_SESSION['settings'] = [];
 }

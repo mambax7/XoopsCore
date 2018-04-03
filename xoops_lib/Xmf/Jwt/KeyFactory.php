@@ -40,7 +40,7 @@ class KeyFactory
      */
     public static function build($keyName, StorageInterface $storage = null)
     {
-        if (empty($keyName) || ! is_string($keyName)) {
+        if (empty($keyName) || !is_string($keyName)) {
             throw new \InvalidArgumentException('keyName must be a non-empty string');
         }
         $storage = ($storage === null) ? new FileStorage() : $storage;

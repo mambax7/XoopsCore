@@ -73,7 +73,7 @@ class XoopsTplSetHandler extends XoopsPersistableObjectHandler
                 ->where($eb->eq('tplset_name', ':tplsetname'))
                 ->setParameter(':tplsetname', $tplset_name, \PDO::PARAM_STR);
             $result = $qb->execute();
-            if (! $result) {
+            if (!$result) {
                 return false;
             }
             $allrows = $result->fetchAll();

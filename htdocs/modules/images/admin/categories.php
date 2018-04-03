@@ -31,7 +31,7 @@ $admin_page->renderNavigation('categories.php');
 
 switch ($op) {
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('categories.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -54,7 +54,7 @@ switch ($op) {
 
         if ($imgcat_id = $helper->getHandlerCategories()->insert($obj)) {
             // delete permissions
-            if (! $isnew) {
+            if (!$isnew) {
                 $criteria = new CriteriaCompo(new Criteria('gperm_itemid', $imgcat_id));
                 $criteria->add(new Criteria('gperm_modid', $xoops->module->getVar('mid')));
                 $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'imgcat_write'));
@@ -66,7 +66,7 @@ switch ($op) {
             $permissions = ['readgroup' => 'imgcat_read', 'writegroup' => 'imgcat_write'];
             foreach ($permissions as $k => $permission) {
                 $groups = Request::getArray($k, [FixedGroups::ADMIN]);
-                if (! in_array(FixedGroups::ADMIN, $groups, true)) {
+                if (!in_array(FixedGroups::ADMIN, $groups, true)) {
                     array_push($groups, FixedGroups::ADMIN);
                 }
                 foreach ($groups as $group) {
@@ -106,7 +106,7 @@ switch ($op) {
             $obj = $helper->getHandlerCategories()->get($imgcat_id);
 
             if ($ok === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('categories.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($helper->getHandlerCategories()->delete($obj)) {
@@ -147,8 +147,8 @@ switch ($op) {
         if ($imgcat_id > 0) {
             $imgcat = $helper->getHandlerCategories()->get($imgcat_id);
             $old = $imgcat->getVar('imgcat_display');
-            $imgcat->setVar('imgcat_display', ! $old);
-            if (! $helper->getHandlerCategories()->insert($imgcat)) {
+            $imgcat->setVar('imgcat_display', !$old);
+            if (!$helper->getHandlerCategories()->insert($imgcat)) {
                 $error = true;
             }
         }

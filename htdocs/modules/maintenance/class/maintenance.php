@@ -59,8 +59,7 @@ class maintenance
         if ($array) {
             return $tables;
         }
-            return implode(',', $tables);
-
+        return implode(',', $tables);
     }
 
     /**

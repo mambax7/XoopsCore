@@ -49,8 +49,8 @@ class SimpleForm extends Form
             . $this->getMethod() . '"' . $this->getExtra() . ">\n";
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (! $ele->isHidden()) {
-                if (! $ele instanceof Raw) {
+            if (!$ele->isHidden()) {
+                if (!$ele instanceof Raw) {
                     $ret .= '<strong>' . $ele->getCaption() . '</strong><br />' . $ele->render() . "<br />\n";
                 } else {
                     $ret .= $ele->render();

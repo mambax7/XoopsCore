@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsBlockHandler;
@@ -33,9 +34,9 @@ class XoopsModelFactoryTest extends \PHPUnit\Framework\TestCase
         $hdl = $instance->loadHandler($handler, 'read', $vars);
         $this->assertTrue(is_a($hdl, 'Xoops\Core\Kernel\Model\Read'));
         $this->assertTrue(is_a($hdl, 'Xoops\Core\Kernel\XoopsModelAbstract'));
-        $this->assertTrue(! empty($hdl->one));
+        $this->assertTrue(!empty($hdl->one));
         $this->assertTrue($hdl->one === 1);
-        $this->assertTrue(! empty($hdl->two));
+        $this->assertTrue(!empty($hdl->two));
         $this->assertTrue($hdl->two === 2);
     }
 }

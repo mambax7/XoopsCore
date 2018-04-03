@@ -42,35 +42,35 @@ abstract class XoopsDownloader
      */
     protected $archiver;
 
-     /**
-      * @abstract
-      * @param bool|string $newfilename
-      */
-     abstract function addFile($filepath, $newfilename = null);
+    /**
+     * @abstract
+     * @param bool|string $newfilename
+     */
+    abstract public function addFile($filepath, $newfilename = null);
 
     /**
      * @abstract
      * @param null $newfilename
      */
-    abstract function addBinaryFile($filepath, $newfilename = null);
+    abstract public function addBinaryFile($filepath, $newfilename = null);
 
     /**
      * @abstract
      * @param int $time
      */
-    abstract function addFileData(&$data, $filename, $time = 0);
+    abstract public function addFileData(&$data, $filename, $time = 0);
 
     /**
      * @abstract
      * @param int $time
      */
-    abstract function addBinaryFileData(&$data, $filename, $time = 0);
+    abstract public function addBinaryFileData(&$data, $filename, $time = 0);
 
     /**
      * @abstract
      * @param bool $gzip
      */
-    abstract function download($name, $gzip = true);
+    abstract public function download($name, $gzip = true);
 
     /**
      * Send the HTTP header

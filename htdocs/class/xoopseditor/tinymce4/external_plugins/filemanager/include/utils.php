@@ -1,91 +1,113 @@
 <?php
 
-if($_SESSION['RF']['verify'] !== 'RESPONSIVEfilemanager') die('forbiden');
+if ($_SESSION['RF']['verify'] !== 'RESPONSIVEfilemanager') {
+    die('forbiden');
+}
 
-function deleteDir($dir) {
-    if (! file_exists($dir)) return true;
-    if (! is_dir($dir)) return unlink($dir);
+function deleteDir($dir)
+{
+    if (!file_exists($dir)) {
+        return true;
+    }
+    if (!is_dir($dir)) {
+        return unlink($dir);
+    }
     foreach (scandir($dir) as $item) {
-        if ($item === '.' || $item === '..') continue;
-        if (! deleteDir($dir . DIRECTORY_SEPARATOR . $item)) return false;
+        if ($item === '.' || $item === '..') {
+            continue;
+        }
+        if (!deleteDir($dir . DIRECTORY_SEPARATOR . $item)) {
+            return false;
+        }
     }
     return rmdir($dir);
 }
 
-function duplicate_file($old_path, $name){
-    if(file_exists($old_path)){
-	$info = pathinfo($old_path);
-	$new_path = $info['dirname'] . '/' . $name . '.' . $info['extension'];
-	if(file_exists($new_path)) return false;
-	return copy($old_path, $new_path);
+function duplicate_file($old_path, $name)
+{
+    if (file_exists($old_path)) {
+        $info = pathinfo($old_path);
+        $new_path = $info['dirname'] . '/' . $name . '.' . $info['extension'];
+        if (file_exists($new_path)) {
+            return false;
+        }
+        return copy($old_path, $new_path);
     }
 }
 
-function rename_file($old_path, $name, $transliteration){
+function rename_file($old_path, $name, $transliteration)
+{
     $name = fix_filename($name, $transliteration);
-    if(file_exists($old_path)){
-	$info = pathinfo($old_path);
-	$new_path = $info['dirname'] . '/' . $name . '.' . $info['extension'];
-	if(file_exists($new_path)) return false;
-	return rename($old_path, $new_path);
+    if (file_exists($old_path)) {
+        $info = pathinfo($old_path);
+        $new_path = $info['dirname'] . '/' . $name . '.' . $info['extension'];
+        if (file_exists($new_path)) {
+            return false;
+        }
+        return rename($old_path, $new_path);
     }
 }
 
-function rename_folder($old_path, $name, $transliteration){
+function rename_folder($old_path, $name, $transliteration)
+{
     $name = fix_filename($name, $transliteration);
-    if(file_exists($old_path)){
-	$new_path = fix_dirname($old_path) . '/' . $name;
-	if(file_exists($new_path)) return false;
-	return rename($old_path, $new_path);
+    if (file_exists($old_path)) {
+        $new_path = fix_dirname($old_path) . '/' . $name;
+        if (file_exists($new_path)) {
+            return false;
+        }
+        return rename($old_path, $new_path);
     }
 }
 
-function create_img_gd($imgfile, $imgthumb, $newwidth, $newheight = '') {
-    if(image_check_memory_usage($imgfile, $newwidth, $newheight)){
-	require_once('php_image_magician.php');
-	$magicianObj = new imageLib($imgfile);
-	$magicianObj -> resizeImage($newwidth, $newheight, 'crop');
-	$magicianObj -> saveImage($imgthumb, 80);
-	return true;
+function create_img_gd($imgfile, $imgthumb, $newwidth, $newheight = '')
+{
+    if (image_check_memory_usage($imgfile, $newwidth, $newheight)) {
+        require_once('php_image_magician.php');
+        $magicianObj = new imageLib($imgfile);
+        $magicianObj -> resizeImage($newwidth, $newheight, 'crop');
+        $magicianObj -> saveImage($imgthumb, 80);
+        return true;
     }
     return false;
 }
 
-function create_img($imgfile, $imgthumb, $newwidth, $newheight = '') {
-    if(image_check_memory_usage($imgfile, $newwidth, $newheight)){
-	require_once('php_image_magician.php');
-	$magicianObj = new imageLib($imgfile);
-	$magicianObj -> resizeImage($newwidth, $newheight, 'auto');
-	$magicianObj -> saveImage($imgthumb, 80);
-	return true;
+function create_img($imgfile, $imgthumb, $newwidth, $newheight = '')
+{
+    if (image_check_memory_usage($imgfile, $newwidth, $newheight)) {
+        require_once('php_image_magician.php');
+        $magicianObj = new imageLib($imgfile);
+        $magicianObj -> resizeImage($newwidth, $newheight, 'auto');
+        $magicianObj -> saveImage($imgthumb, 80);
+        return true;
     }
-	return false;
-
+    return false;
 }
 
-function makeSize($size) {
-   $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-   $u = 0;
-   while ( (round($size / 1024) > 0) && ($u < 4) ) {
-     $size = $size / 1024;
-     $u++;
-   }
-   return number_format($size, 0) . ' ' . $units[$u];
+function makeSize($size)
+{
+    $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    $u = 0;
+    while ((round($size / 1024) > 0) && ($u < 4)) {
+        $size = $size / 1024;
+        $u++;
+    }
+    return number_format($size, 0) . ' ' . $units[$u];
 }
 
-function foldersize($path) {
+function foldersize($path)
+{
     $total_size = 0;
     $files = scandir($path);
     $cleanPath = rtrim($path, '/') . '/';
 
-    foreach($files as $t) {
+    foreach ($files as $t) {
         if ($t !== '.' && $t !== '..') {
             $currentFile = $cleanPath . $t;
             if (is_dir($currentFile)) {
                 $size = foldersize($currentFile);
                 $total_size += $size;
-            }
-            else {
+            } else {
                 $size = filesize($currentFile);
                 $total_size += $size;
             }
@@ -95,19 +117,19 @@ function foldersize($path) {
     return $total_size;
 }
 
-function filescount($path) {
+function filescount($path)
+{
     $total_count = 0;
     $files = scandir($path);
     $cleanPath = rtrim($path, '/') . '/';
 
-    foreach($files as $t) {
+    foreach ($files as $t) {
         if ($t !== '.' && $t !== '..') {
             $currentFile = $cleanPath . $t;
             if (is_dir($currentFile)) {
                 $size = filescount($currentFile);
                 $total_count += $size;
-            }
-            else {
+            } else {
                 ++$total_count;
             }
         }
@@ -116,62 +138,62 @@ function filescount($path) {
     return $total_count;
 }
 
-function create_folder($path = false, $path_thumbs = false){
+function create_folder($path = false, $path_thumbs = false)
+{
     $oldumask = umask(0);
-    if ($path && ! file_exists($path))
-        mkdir($path, 0777, true); // or even 01777 so you get the sticky bit set
-    if($path_thumbs && ! file_exists($path_thumbs))
-        mkdir($path_thumbs, 0777, true) or die("${path_thumbs} cannot be found"); // or even 01777 so you get the sticky bit set
+    if ($path && !file_exists($path)) {
+        mkdir($path, 0777, true);
+    } // or even 01777 so you get the sticky bit set
+    if ($path_thumbs && !file_exists($path_thumbs)) {
+        mkdir($path_thumbs, 0777, true) or die("${path_thumbs} cannot be found");
+    } // or even 01777 so you get the sticky bit set
     umask($oldumask);
 }
 
-function check_files_extensions_on_path($path, $ext){
-    if(! is_dir($path)){
-	$fileinfo = pathinfo($path);
-	if(! in_array(mb_strtolower($fileinfo['extension']), $ext, true))
-	    unlink($path);
-    }else{
-	$files = scandir($path);
-	foreach($files as $file){
-	    check_files_extensions_on_path(trim($path, '/') . '/' . $file, $ext);
-	}
+function check_files_extensions_on_path($path, $ext)
+{
+    if (!is_dir($path)) {
+        $fileinfo = pathinfo($path);
+        if (!in_array(mb_strtolower($fileinfo['extension']), $ext, true)) {
+            unlink($path);
+        }
+    } else {
+        $files = scandir($path);
+        foreach ($files as $file) {
+            check_files_extensions_on_path(trim($path, '/') . '/' . $file, $ext);
+        }
     }
 }
 
-function check_files_extensions_on_phar( $phar, &$files, $basepath, $ext ) {
-    foreach( $phar as $file )
-    {
-        if( $file->isFile() )
-        {
-            if(in_array(mb_strtolower($file->getExtension()), $ext, true))
-            {
-                $files[] = $basepath . $file->getFileName( );
+function check_files_extensions_on_phar($phar, &$files, $basepath, $ext)
+{
+    foreach ($phar as $file) {
+        if ($file->isFile()) {
+            if (in_array(mb_strtolower($file->getExtension()), $ext, true)) {
+                $files[] = $basepath . $file->getFileName();
             }
-        }
-        else if( $file->isDir() )
-        {
-            $iterator = new DirectoryIterator( $file );
+        } elseif ($file->isDir()) {
+            $iterator = new DirectoryIterator($file);
             check_files_extensions_on_phar($iterator, $files, $basepath . $file->getFileName() . '/', $ext);
         }
     }
 }
 
-function fix_get_params($str){
-    return strip_tags(preg_replace( "/[^a-zA-Z0-9\.\[\]_| -]/", '', $str));
+function fix_get_params($str)
+{
+    return strip_tags(preg_replace("/[^a-zA-Z0-9\.\[\]_| -]/", '', $str));
 }
 
-function fix_filename($str, $transliteration){
-    if($transliteration){
-    	if( function_exists( 'transliterator_transliterate' ) )
-    	{
-    	   $str = transliterator_transliterate( 'Accents-Any', $str );
-    	}
-    	else
-    	{
-    	   $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
-    	}
+function fix_filename($str, $transliteration)
+{
+    if ($transliteration) {
+        if (function_exists('transliterator_transliterate')) {
+            $str = transliterator_transliterate('Accents-Any', $str);
+        } else {
+            $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
+        }
 
-	$str = preg_replace( "/[^a-zA-Z0-9\.\[\]_| -]/", '', $str );
+        $str = preg_replace("/[^a-zA-Z0-9\.\[\]_| -]/", '', $str);
     }
 
     $str = str_replace(['"', "'", '/', '\\'], '', $str);
@@ -180,91 +202,97 @@ function fix_filename($str, $transliteration){
     // Empty or incorrectly transliterated filename.
     // Here is a point: a good file UNKNOWN_LANGUAGE.jpg could become .jpg in previous code.
     // So we add that default 'file' name to fix that issue.
-    if( strpos( $str, '.' ) === 0 )
-    {
-       $str = 'file' . $str;
+    if (strpos($str, '.') === 0) {
+        $str = 'file' . $str;
     }
 
-    return trim( $str );
+    return trim($str);
 }
 
-function fix_dirname($str){
+function fix_dirname($str)
+{
     return str_replace('~', ' ', dirname(str_replace(' ', '~', $str)));
 }
 
-function fix_strtoupper($str){
-    if( function_exists( 'mb_strtoupper' ) )
-	return mb_strtoupper($str);
+function fix_strtoupper($str)
+{
+    if (function_exists('mb_strtoupper')) {
+        return mb_strtoupper($str);
+    }
 
-	return strtoupper($str);
+    return strtoupper($str);
 }
 
 
-function fix_strtolower($str){
-    if( function_exists( 'mb_strtoupper' ) )
-	return mb_strtolower($str);
+function fix_strtolower($str)
+{
+    if (function_exists('mb_strtoupper')) {
+        return mb_strtolower($str);
+    }
 
-	return strtolower($str);
+    return strtolower($str);
 }
 
-function fix_path($path, $transliteration){
+function fix_path($path, $transliteration)
+{
     $info = pathinfo($path);
     $tmp_path = $info['dirname'];
-	$str = fix_filename($info['filename'], $transliteration);
-    if($tmp_path !== '')
-		return $tmp_path . DIRECTORY_SEPARATOR . $str;
+    $str = fix_filename($info['filename'], $transliteration);
+    if ($tmp_path !== '') {
+        return $tmp_path . DIRECTORY_SEPARATOR . $str;
+    }
 
-		return $str;
+    return $str;
 }
 
-function base_url(){
-  return sprintf(
+function base_url()
+{
+    return sprintf(
     '%s://%s',
     isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http',
     $_SERVER['HTTP_HOST']
   );
 }
 
-function config_loading($current_path, $fld){
-    if(file_exists($current_path . $fld . '.config')){
-	require_once($current_path . $fld . '.config');
-	return true;
+function config_loading($current_path, $fld)
+{
+    if (file_exists($current_path . $fld . '.config')) {
+        require_once($current_path . $fld . '.config');
+        return true;
     }
     echo '!!!!' . $parent = fix_dirname($fld);
-    if($parent !== '.' && ! empty($parent)){
-	config_loading($current_path, $parent);
+    if ($parent !== '.' && !empty($parent)) {
+        config_loading($current_path, $parent);
     }
 
     return false;
 }
 
 
-function image_check_memory_usage($img, $max_breedte, $max_hoogte){
-    if(file_exists($img)){
-	$K64 = 65536;    // number of bytes in 64K
-	$memory_usage = memory_get_usage();
-	$memory_limit = abs((int) (str_replace('M', '', ini_get('memory_limit')) * 1024 * 1024));
-	$image_properties = getimagesize($img);
-	$image_width = $image_properties[0];
-	$image_height = $image_properties[1];
-	$image_bits = $image_properties['bits'];
-	$image_memory_usage = $K64 + ($image_width * $image_height * ($image_bits ) * 2);
-	$thumb_memory_usage = $K64 + ($max_breedte * $max_hoogte * ($image_bits ) * 2);
-	$memory_needed = (int) ($memory_usage + $image_memory_usage + $thumb_memory_usage);
+function image_check_memory_usage($img, $max_breedte, $max_hoogte)
+{
+    if (file_exists($img)) {
+        $K64 = 65536;    // number of bytes in 64K
+        $memory_usage = memory_get_usage();
+        $memory_limit = abs((int) (str_replace('M', '', ini_get('memory_limit')) * 1024 * 1024));
+        $image_properties = getimagesize($img);
+        $image_width = $image_properties[0];
+        $image_height = $image_properties[1];
+        $image_bits = $image_properties['bits'];
+        $image_memory_usage = $K64 + ($image_width * $image_height * ($image_bits) * 2);
+        $thumb_memory_usage = $K64 + ($max_breedte * $max_hoogte * ($image_bits) * 2);
+        $memory_needed = (int) ($memory_usage + $image_memory_usage + $thumb_memory_usage);
 
-        if($memory_needed > $memory_limit){
-                ini_set('memory_limit', ((int) ($memory_needed / 1024 / 1024) + 5) . 'M');
-                if(ini_get('memory_limit') === ((int) ($memory_needed / 1024 / 1024) + 5) . 'M'){
+        if ($memory_needed > $memory_limit) {
+            ini_set('memory_limit', ((int) ($memory_needed / 1024 / 1024) + 5) . 'M');
+            if (ini_get('memory_limit') === ((int) ($memory_needed / 1024 / 1024) + 5) . 'M') {
                 return true;
             }
-                return false;
-
+            return false;
         }
-            return true;
-
-	    }
-	    return false;
-
+        return true;
+    }
+    return false;
 }
 
 function endsWith($haystack, $needle)
@@ -272,41 +300,54 @@ function endsWith($haystack, $needle)
     return $needle === '' || substr($haystack, -strlen($needle)) === $needle;
 }
 
-function new_thumbnails_creation($targetPath, $targetFile, $name, $current_path, $relative_image_creation, $relative_path_from_current_pos, $relative_image_creation_name_to_prepend, $relative_image_creation_name_to_append, $relative_image_creation_width, $relative_image_creation_height, $fixed_image_creation, $fixed_path_from_filemanager, $fixed_image_creation_name_to_prepend, $fixed_image_creation_to_append, $fixed_image_creation_width, $fixed_image_creation_height){
+function new_thumbnails_creation($targetPath, $targetFile, $name, $current_path, $relative_image_creation, $relative_path_from_current_pos, $relative_image_creation_name_to_prepend, $relative_image_creation_name_to_append, $relative_image_creation_width, $relative_image_creation_height, $fixed_image_creation, $fixed_path_from_filemanager, $fixed_image_creation_name_to_prepend, $fixed_image_creation_to_append, $fixed_image_creation_width, $fixed_image_creation_height)
+{
     //create relative thumbs
     $all_ok = true;
-    if($relative_image_creation){
-	foreach($relative_path_from_current_pos as $k => $path){
-	    if($path !== '' && $path[strlen($path) - 1] !== '/') $path .= '/';
-	    if (! file_exists($targetPath . $path)) create_folder($targetPath . $path, false);
-	    $info = pathinfo($name);
-	    if(! endsWith($targetPath, $path))
-		if(! create_img($targetFile, $targetPath . $path . $relative_image_creation_name_to_prepend[$k] . $info['filename'] . $relative_image_creation_name_to_append[$k] . '.' . $info['extension'], $relative_image_creation_width[$k], $relative_image_creation_height[$k]))
-		    $all_ok = false;
-	}
+    if ($relative_image_creation) {
+        foreach ($relative_path_from_current_pos as $k => $path) {
+            if ($path !== '' && $path[strlen($path) - 1] !== '/') {
+                $path .= '/';
+            }
+            if (!file_exists($targetPath . $path)) {
+                create_folder($targetPath . $path, false);
+            }
+            $info = pathinfo($name);
+            if (!endsWith($targetPath, $path)) {
+                if (!create_img($targetFile, $targetPath . $path . $relative_image_creation_name_to_prepend[$k] . $info['filename'] . $relative_image_creation_name_to_append[$k] . '.' . $info['extension'], $relative_image_creation_width[$k], $relative_image_creation_height[$k])) {
+                    $all_ok = false;
+                }
+            }
+        }
     }
 
     //create fixed thumbs
-    if($fixed_image_creation){
-	foreach($fixed_path_from_filemanager as $k => $path){
-	    if($path !== '' && $path[strlen($path) - 1] !== '/') $path .= '/';
-	    $base_dir = $path . substr_replace($targetPath, '', 0, strlen($current_path));
-	    if (! file_exists($base_dir)) create_folder($base_dir, false);
-	    $info = pathinfo($name);
-	    if(! create_img($targetFile, $base_dir . $fixed_image_creation_name_to_prepend[$k] . $info['filename'] . $fixed_image_creation_to_append[$k] . '.' . $info['extension'], $fixed_image_creation_width[$k], $fixed_image_creation_height[$k]))
-		$all_ok = false;
-	}
+    if ($fixed_image_creation) {
+        foreach ($fixed_path_from_filemanager as $k => $path) {
+            if ($path !== '' && $path[strlen($path) - 1] !== '/') {
+                $path .= '/';
+            }
+            $base_dir = $path . substr_replace($targetPath, '', 0, strlen($current_path));
+            if (!file_exists($base_dir)) {
+                create_folder($base_dir, false);
+            }
+            $info = pathinfo($name);
+            if (!create_img($targetFile, $base_dir . $fixed_image_creation_name_to_prepend[$k] . $info['filename'] . $fixed_image_creation_to_append[$k] . '.' . $info['extension'], $fixed_image_creation_width[$k], $fixed_image_creation_height[$k])) {
+                $all_ok = false;
+            }
+        }
     }
     return $all_ok;
 }
 
 
 // Get a remote file, using whichever mechanism is enabled
-function get_file_by_url($url) {
+function get_file_by_url($url)
+{
     if (ini_get('allow_url_fopen')) {
         return file_get_contents($url);
     }
-    if (! function_exists('curl_version')) {
+    if (!function_exists('curl_version')) {
         return false;
     }
 
@@ -323,32 +364,32 @@ function get_file_by_url($url) {
 }
 
 // test for dir/file writability properly
-function is_really_writable($dir){
+function is_really_writable($dir)
+{
     $dir = rtrim($dir, '/');
     // linux, safe off
-    if (DIRECTORY_SEPARATOR === '/' && @ini_get('safe_mode') === FALSE){
+    if (DIRECTORY_SEPARATOR === '/' && @ini_get('safe_mode') === false) {
         return is_writable($dir);
     }
 
     // Windows, safe ON. (have to write a file :S)
-    if (is_dir($dir)){
+    if (is_dir($dir)) {
         $dir = $dir . '/' . md5(mt_rand(1, 1000) . mt_rand(1, 1000));
 
-        if (($fp = @fopen($dir, 'ab')) === FALSE){
-            return FALSE;
+        if (($fp = @fopen($dir, 'ab')) === false) {
+            return false;
         }
 
         fclose($fp);
         @chmod($dir, 0777);
         @unlink($dir);
-        return TRUE;
-    }
-    elseif ( ! is_file($dir) || ($fp = @fopen($dir, 'ab')) === FALSE){
-        return FALSE;
+        return true;
+    } elseif (!is_file($dir) || ($fp = @fopen($dir, 'ab')) === false) {
+        return false;
     }
 
     fclose($fp);
-    return TRUE;
+    return true;
 }
 
 /**
@@ -358,37 +399,39 @@ function is_really_writable($dir){
  * Returns TRUE if callable and everything is OK
  * Otherwise returns FALSE
  */
-function is_function_callable($name){
-    if (function_exists($name) === FALSE) return FALSE;
+function is_function_callable($name)
+{
+    if (function_exists($name) === false) {
+        return false;
+    }
     $disabled = explode(',', ini_get('disable_functions'));
-    return ! in_array($name, $disabled, true);
+    return !in_array($name, $disabled, true);
 }
 
 // recursivly copies everything
-function rcopy($source, $destination, $is_rec = FALSE) {
+function rcopy($source, $destination, $is_rec = false)
+{
     if (is_dir($source)) {
-        if ($is_rec === FALSE){
+        if ($is_rec === false) {
             $pinfo = pathinfo($source);
             $destination = rtrim($destination, '/') . DIRECTORY_SEPARATOR . $pinfo['basename'];
         }
-        if (is_dir($destination) === FALSE){
+        if (is_dir($destination) === false) {
             mkdir($destination, 0777, true);
         }
 
         $files = scandir($source);
-        foreach ($files as $file){
+        foreach ($files as $file) {
             if ($file !== '.' && $file !== '..') {
-                rcopy($source . DIRECTORY_SEPARATOR . $file, rtrim($destination, '/') . DIRECTORY_SEPARATOR . $file, TRUE);
+                rcopy($source . DIRECTORY_SEPARATOR . $file, rtrim($destination, '/') . DIRECTORY_SEPARATOR . $file, true);
             }
         }
-    }
-    else {
-        if (file_exists($source)){
-            if (is_dir($destination) === TRUE){
+    } else {
+        if (file_exists($source)) {
+            if (is_dir($destination) === true) {
                 $pinfo = pathinfo($source);
                 $dest2 = rtrim($destination, '/') . DIRECTORY_SEPARATOR . $pinfo['basename'];
-            }
-            else {
+            } else {
                 $dest2 = $destination;
             }
 
@@ -401,30 +444,29 @@ function rcopy($source, $destination, $is_rec = FALSE) {
 // I know copy and rename could be done with just one function
 // but i split the 2 because sometimes rename fails on windows
 // Need more feedback from users and refactor if needed
-function rrename($source, $destination, $is_rec = FALSE) {
+function rrename($source, $destination, $is_rec = false)
+{
     if (is_dir($source)) {
-        if ($is_rec === FALSE){
+        if ($is_rec === false) {
             $pinfo = pathinfo($source);
             $destination = rtrim($destination, '/') . DIRECTORY_SEPARATOR . $pinfo['basename'];
         }
-        if (is_dir($destination) === FALSE){
+        if (is_dir($destination) === false) {
             mkdir($destination, 0777, true);
         }
 
         $files = scandir($source);
-        foreach ($files as $file){
+        foreach ($files as $file) {
             if ($file !== '.' && $file !== '..') {
-                rrename($source . DIRECTORY_SEPARATOR . $file, rtrim($destination, '/') . DIRECTORY_SEPARATOR . $file, TRUE);
+                rrename($source . DIRECTORY_SEPARATOR . $file, rtrim($destination, '/') . DIRECTORY_SEPARATOR . $file, true);
             }
         }
-    }
-    else {
-        if (file_exists($source)){
-            if (is_dir($destination) === TRUE){
+    } else {
+        if (file_exists($source)) {
+            if (is_dir($destination) === true) {
                 $pinfo = pathinfo($source);
                 $dest2 = rtrim($destination, '/') . DIRECTORY_SEPARATOR . $pinfo['basename'];
-            }
-            else {
+            } else {
                 $dest2 = $destination;
             }
 
@@ -436,15 +478,15 @@ function rrename($source, $destination, $is_rec = FALSE) {
 // On windows rename leaves folders sometime
 // This will clear leftover folders
 // After more feedback will merge it with rrename
-function rrename_after_cleaner($source) {
+function rrename_after_cleaner($source)
+{
     $files = scandir($source);
 
     foreach ($files as $file) {
         if ($file !== '.' && $file !== '..') {
-            if (is_dir($source . DIRECTORY_SEPARATOR . $file)){
+            if (is_dir($source . DIRECTORY_SEPARATOR . $file)) {
                 rrename_after_cleaner($source . DIRECTORY_SEPARATOR . $file);
-            }
-            else {
+            } else {
                 unlink($source . DIRECTORY_SEPARATOR . $file);
             }
         }
@@ -453,12 +495,13 @@ function rrename_after_cleaner($source) {
     return rmdir($source);
 }
 
-function debugger($input, $trace = false, $halt = fale){
+function debugger($input, $trace = false, $halt = fale)
+{
     \Xmf\Debug::dump($input);
-    if ($trace){
-         \Xmf\Debug::backtrace();
+    if ($trace) {
+        \Xmf\Debug::backtrace();
     }
-    if ($halt){
+    if ($halt) {
         exit();
     }
 }

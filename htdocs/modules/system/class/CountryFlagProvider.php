@@ -93,7 +93,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
         $size = 'large'
     ) {
         $url = $this->getFlagUrl($countryCode, $size);
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [];
         }
 
@@ -130,7 +130,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
 
         $file = $xoops->path($flagFile);
         // switch to unknown if file is not readable
-        if (! is_readable($file)) {
+        if (!is_readable($file)) {
             $flagFile = $flagDir . '_unknown.png';
         }
         $url = $xoops->url($flagFile);

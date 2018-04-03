@@ -32,7 +32,7 @@ $mimetypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/pn
 
 switch ($op) {
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('images.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -66,7 +66,7 @@ switch ($op) {
             $uploader = new XoopsMediaUploader($xoops_upload_path, $mimetypes, $category->getVar('imgcat_maxsize'), $category->getVar('imgcat_maxwidth'), $category->getVar('imgcat_maxheight'));
             if ($uploader->fetchMedia($xoops_upload_file[0])) {
                 $uploader->setPrefix('img');
-                if (! $uploader->upload()) {
+                if (!$uploader->upload()) {
                     $error_message .= $uploader->getErrors();
                     $obj->setVar('image_name', 'blank.gif');
                     $obj->setVar('image_mimetype', 'image/gif');
@@ -90,7 +90,7 @@ switch ($op) {
             if ($image_id = $helper->getHandlerImages()->insert($obj)) {
                 if ($category->getVar('imgcat_storetype') === 'db' && $isnew) {
                     $imagebody = $helper->getHandlerImagesBody()->get($image_id);
-                    if (! is_object($imagebody)) {
+                    if (!is_object($imagebody)) {
                         $imagebody = $helper->getHandlerImagesBody()->create();
                         $imagebody->setVar('image_id', $image_id);
                     }
@@ -130,7 +130,7 @@ switch ($op) {
             $obj = $helper->getHandlerImages()->get($image_id);
 
             if ($ok === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('images.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
                 }
                 $category = $helper->getHandlerCategories()->get($obj->getVar('imgcat_id'));
@@ -165,8 +165,8 @@ switch ($op) {
         if ($image_id > 0) {
             $obj = $helper->getHandlerImages()->get($image_id);
             $old = $obj->getVar('image_display');
-            $obj->setVar('image_display', ! $old);
-            if (! $helper->getHandlerImages()->insert($obj)) {
+            $obj->setVar('image_display', !$old);
+            if (!$helper->getHandlerImages()->insert($obj)) {
                 $error = true;
             }
         }

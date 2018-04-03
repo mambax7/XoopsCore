@@ -24,11 +24,11 @@
 
 class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
 {
-    function execute()
+    public function execute()
     {
         $xoops = Xoops::getInstance();
 
-        if (! function_exists('mb_strlen')) {
+        if (!function_exists('mb_strlen')) {
             return true;
         }
 
@@ -46,7 +46,7 @@ class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
 
         foreach ($_POST as $key => $data) {
             // dare to ignore arrays/objects
-            if (! is_string($data)) {
+            if (!is_string($data)) {
                 continue;
             }
 

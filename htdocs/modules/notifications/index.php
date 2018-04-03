@@ -24,7 +24,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $helper = Notifications::getInstance();
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect($xoops->url('www/index.php'), 3, _MD_NOTIFICATIONS_NOACCESS);
 }
 
@@ -173,7 +173,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $helper->redirect('index.php', 2, implode('<br />', $xoops->security()->getErrors()));
         }
         if (empty($_POST['del_not'])) {

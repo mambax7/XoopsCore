@@ -13,7 +13,7 @@ class GenericHelperTestHelper extends GenericHelper
     }
 }
 
-if (! function_exists('xoops_getHandler')) {
+if (!function_exists('xoops_getHandler')) {
     function xoops_getHandler($name, $optional = false)
     {
         $handler = \Xoops\Core\Handler\Factory::newSpec()->scheme('kernel')->name($name)->optional((bool) $optional)->build();

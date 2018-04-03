@@ -111,7 +111,7 @@ switch ($op) {
     // Save
     case 'save':
         // Check security
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('avatar_custom.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $uploader_avatars_img =
@@ -135,7 +135,7 @@ switch ($op) {
         if ($uploader_avatars_img->fetchMedia('avatar_file')) {
             $uploader_avatars_img->setPrefix('savt');
             $uploader_avatars_img->fetchMedia('avatar_file');
-            if (! $uploader_avatars_img->upload()) {
+            if (!$uploader_avatars_img->upload()) {
                 $error_msg .= $uploader_avatars_img->getErrors();
                 $obj->setVar('avatar_file', 'avatars/blank.gif');
             } else {
@@ -165,14 +165,14 @@ switch ($op) {
         $avatar_id = Request::getInt('avatar_id', 0);
         $obj = $avatar_Handler->get($avatar_id);
         if (Request::getBool('ok', false, 'POST')) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('avatar_custom.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($avatar_Handler->delete($obj)) {
                 // Delete file
                 $file = $obj->getVar('avatar_file');
                 if ($file !== 'avatars/blank.gif') {
-					$fullname = $xoops_upload_path . '/' . $file;
+                    $fullname = $xoops_upload_path . '/' . $file;
                     if (is_file($fullname)) {
                         chmod($fullname, 0777);
                         unlink($fullname);
@@ -216,7 +216,7 @@ switch ($op) {
         if ($avatar_id > 0) {
             $obj = $avatar_Handler->get($avatar_id);
             $old = $obj->getVar('avatar_display');
-            $obj->setVar('avatar_display', ! $old);
+            $obj->setVar('avatar_display', !$old);
             if ($avatar_Handler->insert($obj)) {
                 exit;
             }

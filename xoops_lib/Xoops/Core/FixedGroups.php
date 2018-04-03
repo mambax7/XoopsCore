@@ -23,11 +23,11 @@ namespace Xoops\Core;
  */
 class FixedGroups
 {
-    const ADMIN = 1;
+    public const ADMIN = 1;
 
-    const USERS = 2;
+    public const USERS = 2;
 
-    const ANONYMOUS = 3;
+    public const ANONYMOUS = 3;
 
-    const REMOVED = 4;
+    public const REMOVED = 4;
 }

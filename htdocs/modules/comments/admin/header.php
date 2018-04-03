@@ -31,4 +31,3 @@ $xoops->theme()->addScript('modules/system/js/admin.js');
 // Add Stylesheet
 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
 $xoops->theme()->addStylesheet('modules/images/css/admin.css');
-

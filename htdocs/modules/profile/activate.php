@@ -26,7 +26,7 @@ include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 
 $xoops->header();
-if (! empty($_GET['id']) && ! empty($_GET['actkey'])) {
+if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $id = (int) ($_GET['id']);
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
@@ -35,7 +35,7 @@ if (! empty($_GET['id']) && ! empty($_GET['actkey'])) {
     }
     $member_handler = $xoops->getHandlerMember();
     $thisuser = $member_handler->getUser($id);
-    if (! is_object($thisuser)) {
+    if (!is_object($thisuser)) {
         $xoops->redirect($xoops->url('/'), 1, '');
     }
     if ($thisuser->getVar('actkey') !== $actkey) {
@@ -64,7 +64,7 @@ if (! empty($_GET['id']) && ! empty($_GET['actkey'])) {
                     $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                     $xoopsMailer->setSubject(sprintf(XoopsLocale::F_YOUR_ACCOUNT_AT, $xoops->getConfig('sitename')));
                     $xoops->footer();
-                    if (! $xoopsMailer->send()) {
+                    if (!$xoopsMailer->send()) {
                         printf(XoopsLocale::EF_NOTIFICATION_EMAIL_NOT_SENT_TO, $thisuser->getVar('uname'));
                     } else {
                         printf(XoopsLocale::SF_NOTIFICATION_EMAIL_SENT_TO, $thisuser->getVar('uname'));
@@ -83,8 +83,8 @@ if (! empty($_GET['id']) && ! empty($_GET['actkey'])) {
             }
         }
     }
-// Not implemented yet: re-send activiation code
-} elseif (! empty($_REQUEST['email']) && $xoops->getConfig('activation_type') !== 0) {
+    // Not implemented yet: re-send activiation code
+} elseif (!empty($_REQUEST['email']) && $xoops->getConfig('activation_type') !== 0) {
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
     $member_handler = $xoops->getHandlerMember();
     $getuser = $member_handler->getUsers(new Criteria('email', trim($_REQUEST['email'])));
@@ -106,7 +106,7 @@ if (! empty($_GET['id']) && ! empty($_GET['actkey'])) {
     $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
     $xoopsMailer->setFromName($xoops->getConfig('sitename'));
     $xoopsMailer->setSubject(sprintf(XoopsLocale::F_USER_ACTIVATION_KEY_FOR, $getuser->getVar('uname')));
-    if (! $xoopsMailer->send()) {
+    if (!$xoopsMailer->send()) {
         echo XoopsLocale::S_YOU_ARE_NOW_REGISTERED . ' ' . XoopsLocale::EMAIL_HAS_NOT_BEEN_SENT_WITH_ACTIVATION_KEY;
     } else {
         echo XoopsLocale::S_YOU_ARE_NOW_REGISTERED . ' ' . XoopsLocale::EMAIL_HAS_BEEN_SENT_WITH_ACTIVATION_KEY;

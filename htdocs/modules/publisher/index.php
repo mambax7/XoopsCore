@@ -83,7 +83,6 @@ if ($idxcat_show_subcats === 'nomain') {
 $categories = [];
 /* @var $category PublisherCategory */
 foreach ($categoriesObj as $cat_id => $category) {
-
     $total = 0;
     // Do we display sub categories ?
     if ($idxcat_show_subcats !== 'no') {
@@ -126,7 +125,7 @@ foreach ($categoriesObj as $cat_id => $category) {
     }
     $category->setVar('itemcount', $total);
 
-    if (! isset($categories[$cat_id])) {
+    if (!isset($categories[$cat_id])) {
         $categories[$cat_id] = [];
     }
 
@@ -174,7 +173,6 @@ if ($publisher->getConfig('index_display_last_items')) {
         unset($allcategories);
     }
     unset($itemsObj);
-
 }
 
 // Language constants

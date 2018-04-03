@@ -74,12 +74,12 @@ class XoopsXmlRpcApi
 
         $member_handler = $xoops->getHandlerMember();
         $this->user = $member_handler->loginUser(addslashes($username), addslashes($password));
-        if (! is_object($this->user)) {
+        if (!is_object($this->user)) {
             $this->user = null;
             return false;
         }
         $moduleperm_handler = $xoops->getHandlerGroupPermission();
-        if (! $moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
+        if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
             $this->user = null;
             return false;
         }
@@ -94,10 +94,10 @@ class XoopsXmlRpcApi
         if ($this->isadmin) {
             return true;
         }
-        if (! is_object($this->user)) {
+        if (!is_object($this->user)) {
             return false;
         }
-        if (! $this->user->isAdmin($this->module->getVar('mid'))) {
+        if (!$this->user->isAdmin($this->module->getVar('mid'))) {
             return false;
         }
         $this->isadmin = true;
@@ -190,7 +190,6 @@ class XoopsXmlRpcApi
             require_once($xoops_root_path . '/class/xml/rpc/xoopsapi.php');
             return new XoopsApi($params, $this->response, $this->module);
         }
-            return $this;
-
+        return $this;
     }
 }

@@ -60,7 +60,7 @@ function b_comments_show($options)
     foreach (array_keys($comments) as $i) {
         $mid = $comments[$i]->getVar('modid');
         $com['module'] = '<a href="' . \XoopsBaseConfig::get('url') . '/modules/' . $modules[$mid]->getVar('dirname') . '/">' . $modules[$mid]->getVar('name') . '</a>';
-        if (! isset($comment_config[$mid])) {
+        if (!isset($comment_config[$mid])) {
             $comment_config[$mid] = \Xoops\Module\Plugin::getPlugin($modules[$mid]->getVar('dirname'), 'comments');
         }
         $com['id'] = $i;

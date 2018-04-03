@@ -77,14 +77,14 @@ class Image extends ExtensionAbstract
                     $width .= 'px';
                 }
 
-                if (! $config['allowimage']) {
+                if (!$config['allowimage']) {
                     $template = '<a href="%1$s" rel="external">%2$s</a>';
                     $alt = $this->ts->htmlSpecialChars($url);
-                } elseif ($config['resize'] && ! $config['clickable']) {
+                } elseif ($config['resize'] && !$config['clickable']) {
                     $alt = $this->ts->htmlSpecialChars(\XoopsLocale::RESIZED_IMAGE);
                     $template = '<img src="%1$s" alt="%2$s"%3$s style="max-width: %4$s;" />';
                 } elseif ($config['resize'] && $config['clickable']) {
-                    if (! self::$jsLoaded) {
+                    if (!self::$jsLoaded) {
                         self::$jsLoaded = true;
                         $xoops->theme()->addScript(
                             'media/xoops/image.js',

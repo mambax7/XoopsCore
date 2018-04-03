@@ -27,13 +27,13 @@ class Metagen
     /**
      * mbstring encoding
      */
-    const ENCODING = 'UTF-8';
+    public const ENCODING = 'UTF-8';
 
     /**
      * horizontal ellipsis
      * This will be used to replace omitted text.
      */
-    const ELLIPSIS = '…'; // unicode horizontal ellipsis U+2026
+    public const ELLIPSIS = '…'; // unicode horizontal ellipsis U+2026
 
     /**
      * assignTitle set the page title
@@ -54,7 +54,7 @@ class Metagen
      */
     public static function assignKeywords($keywords)
     {
-        if (! empty($keywords) && is_array($keywords)) {
+        if (!empty($keywords) && is_array($keywords)) {
             $keyword_tag = implode(', ', $keywords);
             static::assignThemeMeta('keywords', $keyword_tag);
         }
@@ -68,7 +68,7 @@ class Metagen
     public static function assignDescription($description)
     {
         $description = trim($description);
-        if (! empty($description)) {
+        if (!empty($description)) {
             static::assignThemeMeta('description', $description);
         }
     }
@@ -90,7 +90,7 @@ class Metagen
         $forceKeys = null
     ) {
         $keyCount = [];
-        if (! is_array($forceKeys)) {
+        if (!is_array($forceKeys)) {
             $forceKeys = [];
         }
 
@@ -122,7 +122,7 @@ class Metagen
             }
         }
 
-        while (! empty($forceKeys)) {
+        while (!empty($forceKeys)) {
             $tempKey = strtolower(array_pop($forceKeys));
             $keyCount[$tempKey] = 999999;
         }
@@ -258,7 +258,7 @@ class Metagen
                 $haystack = mb_substr($haystack, $start, mb_strlen($haystack), static::ENCODING);
             }
 
-            $post = ! (mb_strlen($haystack, static::ENCODING) < $length); // need an ellipsis in back?
+            $post = !(mb_strlen($haystack, static::ENCODING) < $length); // need an ellipsis in back?
             if ($post) {
                 $haystack = mb_substr($haystack, 0, $length, static::ENCODING);
                 $end = mb_strrpos($haystack, ' ', 0, static::ENCODING);
@@ -274,7 +274,7 @@ class Metagen
                 $haystack = substr($haystack, $start);
             }
 
-            $post = ! (strlen($haystack) < $length); // need an ellipsis in back?
+            $post = !(strlen($haystack) < $length); // need an ellipsis in back?
             if ($post) {
                 $haystack = substr($haystack, 0, $length);
                 $end = strrpos($haystack, ' ', 0);

@@ -75,7 +75,7 @@ switch ($op) {
         }
 
         foreach (array_keys($fields) as $i) {
-            if (! in_array($fields[$i]->getVar('field_id'), $searchable_fields, true) || ! in_array($fields[$i]->getVar('field_type'), $searchable_types, true)) {
+            if (!in_array($fields[$i]->getVar('field_id'), $searchable_fields, true) || !in_array($fields[$i]->getVar('field_type'), $searchable_types, true)) {
                 continue;
             }
             $sortby_arr[$i] = $fields[$i]->getVar('field_title');
@@ -230,7 +230,7 @@ switch ($op) {
         //$search_url = array();
         foreach (array_keys($fields) as $i) {
             //Radio and Select fields
-            if (! in_array($fields[$i]->getVar('field_id'), $searchable_fields, true) || ! in_array($fields[$i]->getVar('field_type'), $searchable_types, true)) {
+            if (!in_array($fields[$i]->getVar('field_id'), $searchable_fields, true) || !in_array($fields[$i]->getVar('field_type'), $searchable_types, true)) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
@@ -268,7 +268,7 @@ switch ($op) {
                             case 'datetime':
                                 if (isset($_REQUEST[$fieldname . '_larger'])) {
                                     $value = $_REQUEST[$fieldname . '_larger'];
-                                    if (! ($value = strtotime($_REQUEST[$fieldname . '_larger']))) {
+                                    if (!($value = strtotime($_REQUEST[$fieldname . '_larger']))) {
                                         $value = (int) ($_REQUEST[$fieldname . '_larger']);
                                     }
                                     if ($value > 0) {
@@ -280,7 +280,7 @@ switch ($op) {
 
                                 if (isset($_REQUEST[$fieldname . '_smaller'])) {
                                     $value = $_REQUEST[$fieldname . '_smaller'];
-                                    if (! ($value = strtotime($_REQUEST[$fieldname . '_smaller']))) {
+                                    if (!($value = strtotime($_REQUEST[$fieldname . '_smaller']))) {
                                         $value = (int) ($_REQUEST[$fieldname . '_smaller']);
                                     }
                                     if ($value > 0) {
@@ -309,8 +309,8 @@ switch ($op) {
                                 break;
                         }
 
-                        if (isset($_REQUEST[$fieldname]) && ! isset($_REQUEST[$fieldname . '_smaller']) && ! isset($_REQUEST[$fieldname . '_larger'])) {
-                            if (! is_array($_REQUEST[$fieldname])) {
+                        if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname . '_smaller']) && !isset($_REQUEST[$fieldname . '_larger'])) {
+                            if (!is_array($_REQUEST[$fieldname])) {
                                 $value = (int) ($_REQUEST[$fieldname]);
                                 $search_url[] = $fieldname . '=' . $value;
                                 $criteria->add(new Criteria($fieldname, $value, '='));
@@ -369,7 +369,7 @@ switch ($op) {
         }
 
         $sortby = 'uname';
-        if (! empty($_REQUEST['sortby'])) {
+        if (!empty($_REQUEST['sortby'])) {
             switch ($_REQUEST['sortby']) {
                 case 'name':
                 case 'email':

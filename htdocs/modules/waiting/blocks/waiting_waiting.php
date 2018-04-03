@@ -31,7 +31,7 @@ function b_waiting_waiting_show()
 
         //No permissions, no links
         $helper = \Xoops::getModuleHelper($dirName);
-        if (! $helper->isUserAdmin()) {
+        if (!$helper->isUserAdmin()) {
             continue;
         }
 

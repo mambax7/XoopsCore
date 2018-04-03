@@ -242,7 +242,6 @@ class MonologPreload extends PreloadItem
         $isCached = $args[1];
         $context = ['channel' => 'Blocks', 'cached' => $isCached, 'cachetime' => $block->getVar('bcachetime')];
         MonologLogger::getInstance()->log(LogLevel::INFO, $block->getVar('name'), $context);
-
     }
 
     /**
@@ -350,7 +349,6 @@ class MonologPreload extends PreloadItem
     {
         $context = ['channel' => 'Extra', 'name' => $args[0]];
         MonologLogger::getInstance()->log(LogLevel::DEBUG, $args[1], $context);
-
     }
 
     /**
@@ -380,7 +378,6 @@ class MonologPreload extends PreloadItem
 
             $cache->write($key, $configs);
         }
-
     }
 
     /**

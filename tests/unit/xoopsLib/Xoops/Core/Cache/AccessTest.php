@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../../../init_new.php';
 
 use Xoops\Core\Cache\Access;
@@ -93,7 +94,6 @@ class AccessTest extends \PHPUnit\Framework\TestCase
 
         $ret = $this->object->read($key);
         $this->assertFalse($ret);
-
     }
 
     public function testClear()

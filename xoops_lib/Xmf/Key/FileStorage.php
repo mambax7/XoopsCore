@@ -57,7 +57,7 @@ class FileStorage implements StorageInterface
      */
     public function save($name, $data)
     {
-        if (empty($data) || ! is_string($data)) {
+        if (empty($data) || !is_string($data)) {
             throw new \DomainException('Invalid key data');
         }
         $fileContents = "<?php\n//**Warning** modifying this file will break things!\n"

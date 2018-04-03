@@ -22,7 +22,7 @@ function smarty_function_addBaseScript($params, Smarty_Internal_Template $smarty
     if (isset($params['assets'])) {
         $assets = explode(',', $params['assets']);
     }
-    if (! empty($assets)) {
+    if (!empty($assets)) {
         $xoops->theme()->addBaseScriptAssets($assets);
     }
     return '';

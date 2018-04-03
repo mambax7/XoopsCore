@@ -71,7 +71,7 @@ class monologlogger implements LoggerInterface
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -97,7 +97,7 @@ class monologlogger implements LoggerInterface
 
         $this->activated = true;
 
-        if (! $this->monolog) {
+        if (!$this->monolog) {
             // Create the logger
             $this->monolog = new \Monolog\Logger('app');
             $proc = new WebProcessor();
@@ -221,7 +221,7 @@ class monologlogger implements LoggerInterface
     {
         if ($this->activated) {
             $level = LogLevel::INFO;
-            if (! empty($error)) {
+            if (!empty($error)) {
                 $level = LogLevel::ERROR;
             }
             $context = [
@@ -436,7 +436,7 @@ class monologlogger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return;
         }
 
@@ -451,7 +451,7 @@ class monologlogger implements LoggerInterface
             $chan = strtolower($context['channel']);
             switch ($chan) {
                 case 'blocks':
-                    if (! $this->configs['include_blocks']) {
+                    if (!$this->configs['include_blocks']) {
                         return;
                     }
                     //$channel = 'Blocks';
@@ -463,7 +463,7 @@ class monologlogger implements LoggerInterface
                     }
                     break;
                 case 'deprecated':
-                    if (! $this->configs['include_deprecated']) {
+                    if (!$this->configs['include_deprecated']) {
                         return;
                     }
                     //$channel = 'Deprecated';
@@ -471,14 +471,14 @@ class monologlogger implements LoggerInterface
                     //$msg = _MD_MONOLOG_DEPRECATED . ' : ' . $message;
                     break;
                 case 'extra':
-                    if (! $this->configs['include_extra']) {
+                    if (!$this->configs['include_extra']) {
                         return;
                     }
                     //$channel = 'Extra';
                     $msg = _MD_MONOLOG_EXTRA . ' : ' . $context['name'] . ': ' . $message;
                     break;
                 case 'queries':
-                    if (! $this->configs['include_queries']) {
+                    if (!$this->configs['include_queries']) {
                         return;
                     }
                     //$channel = 'Queries';
@@ -497,7 +497,7 @@ class monologlogger implements LoggerInterface
                     $msg = $this->messageTag('_MD_MONOLOG_QUERIES', 'Queries*') . ' : ' . $qt . $msg;
                     break;
                 case 'timers':
-                    if (! $this->configs['include_timers']) {
+                    if (!$this->configs['include_timers']) {
                         return;
                     }
                     $msg = $this->messageTag('_MD_MONOLOG_TIMERS', 'Timers*') . ' : ' . $message;

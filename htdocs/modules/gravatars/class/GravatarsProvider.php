@@ -65,7 +65,7 @@ class GravatarsProvider extends AbstractContract implements AvatarInterface
                 $noInfo = false;
             }
         } elseif (is_array($userinfo)) {
-            if (! empty($userinfo['email'])) {
+            if (!empty($userinfo['email'])) {
                 $response->setValue(self::getGravatar($userinfo['email']));
                 $noInfo = false;
             }

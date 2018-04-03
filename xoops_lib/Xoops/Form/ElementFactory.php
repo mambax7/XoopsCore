@@ -22,9 +22,9 @@ namespace Xoops\Form;
  */
 class ElementFactory
 {
-    const CLASS_KEY = ':class';
+    public const CLASS_KEY = ':class';
 
-    const FORM_KEY = ':form';
+    public const FORM_KEY = ':form';
 
     /** @var ContainerInterface */
     protected $container = null;
@@ -65,7 +65,7 @@ class ElementFactory
      */
     protected function validateSpec(&$specification)
     {
-        if (! array_key_exists(self::CLASS_KEY, $specification)) {
+        if (!array_key_exists(self::CLASS_KEY, $specification)) {
             throw new \DomainException('Specification CLASS_KEY required.');
         }
         $elementClass = $specification[self::CLASS_KEY];
@@ -73,16 +73,16 @@ class ElementFactory
             $elementClass = '\Xoops\Form\\' . $elementClass;
         }
 
-        if (! class_exists($elementClass)) {
+        if (!class_exists($elementClass)) {
             throw new \DomainException('Unknown element class: ' . $specification[self::CLASS_KEY]);
         }
 
-        if (! is_a($elementClass, '\Xoops\Form\Element', true)) {
+        if (!is_a($elementClass, '\Xoops\Form\Element', true)) {
             throw new \DomainException('Not an Element subclass: ' . $specification[self::CLASS_KEY]);
         }
 
         $specification[self::CLASS_KEY] = $elementClass;
-        if (! (array_key_exists(self::FORM_KEY, $specification)) && isset($this->container)) {
+        if (!(array_key_exists(self::FORM_KEY, $specification)) && isset($this->container)) {
             $specification[self::FORM_KEY] = $this->container;
         }
     }

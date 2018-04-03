@@ -42,7 +42,7 @@ class Helper extends GenericHelper
 
         //$dirname = strtolower($dirname);
 
-        if (! isset($instance[$dirname])) {
+        if (!isset($instance[$dirname])) {
             $instance[$dirname] = false;
 
             // if this is a 2.6 system turn everything over to the core

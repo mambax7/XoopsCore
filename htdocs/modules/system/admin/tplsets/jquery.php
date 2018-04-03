@@ -25,7 +25,7 @@ include dirname(dirname(__DIR__)) . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();
 
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -49,19 +49,18 @@ switch ($op) {
                 echo '<ul class="jqueryFileTree" style="display: none;">';
                 // All dirs
                 foreach ($files as $file) {
-
                     if (XoopsLoad::fileExists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
                         //retirer .svn
                         $file_no_valid = ['.svn', 'icons', 'img', 'images', 'language', 'locale'];
 
-                        if (! in_array($file, $file_no_valid, true)) {
+                        if (!in_array($file, $file_no_valid, true)) {
                             echo '<li class="directory collapsed"><a href="#" rel="' . htmlentities($_REQUEST['dir'] . $file) . '/">' . htmlentities($file) . '</a></li>';
                         }
                     }
                 }
                 // All files
                 foreach ($files as $file) {
-                    if (XoopsLoad::fileExists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && ! is_dir($root . $_REQUEST['dir'] . $file) && $file !== 'index.html') {
+                    if (XoopsLoad::fileExists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && !is_dir($root . $_REQUEST['dir'] . $file) && $file !== 'index.html') {
                         $ext = preg_replace('/^.*\./', '', $file);
 
                         $extensions = ['.tpl', '.html', '.htm', '.css'];
@@ -70,8 +69,7 @@ switch ($op) {
                         if (in_array($extension_verif, $extensions, true)) {
                             echo "<li class=\"file ext_${ext}\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . '</a></li>';
                         }
-                            //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
-
+                        //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                     }
                 }
                 echo '</ul>';

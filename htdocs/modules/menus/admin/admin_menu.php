@@ -87,7 +87,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin_menu.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -111,7 +111,7 @@ switch ($op) {
             $weight = $menus[0]->getVar('weight') + 1;
         }
 
-        if (! isset($_POST['hooks'])) {
+        if (!isset($_POST['hooks'])) {
             $_POST['hooks'] = [];
         }
         $obj->setVars($_POST);
@@ -131,7 +131,7 @@ switch ($op) {
         $obj = $helper->getHandlerMenu()->get($id);
 
         if ($ok === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('admin_menu.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($helper->getHandlerMenu()->delete($obj)) {
@@ -191,7 +191,7 @@ switch ($op) {
             $menusArray = $builder->render();
             $xoops->tpl()->assign('menus', $menusArray);
         } else {
-             $xoops->tpl()->assign('error_message', _AM_MENUS_MSG_NOTFOUND);
+            $xoops->tpl()->assign('error_message', _AM_MENUS_MSG_NOTFOUND);
         }
         break;
 }

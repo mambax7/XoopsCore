@@ -263,13 +263,13 @@ class XoopsTheme
         //$this->addScript('include/xoops.js');
         //$this->loadLocalization();
         list($cssAssets, $jsAssets) = $this->getLocalizationAssets();
-        if (! empty($cssAssets)) {
+        if (!empty($cssAssets)) {
             $this->addBaseStylesheetAssets($cssAssets);
         }
         $this->addBaseScriptAssets('include/xoops.js');
         $this->addBaseScriptAssets('@jquery');
         $this->addBaseStylesheetAssets('@fontawesome');
-        if (! empty($jsAssets)) {
+        if (!empty($jsAssets)) {
             $this->addBaseScriptAssets($jsAssets);
         }
 
@@ -292,7 +292,7 @@ class XoopsTheme
 
         // Instantiate and initialize all the theme plugins
         foreach ($this->plugins as $k => $bundleId) {
-            if (! is_object($bundleId)) {
+            if (!is_object($bundleId)) {
                 /* @var $plugin PluginAbstract */
                 $plugin = new $bundleId();
                 $plugin->theme = $this;
@@ -319,7 +319,7 @@ class XoopsTheme
     {
         $xoops = \Xoops::getInstance();
         static $extra_string;
-        if (! $this->use_extra_cache_id) {
+        if (!$this->use_extra_cache_id) {
             return $cache_id;
         }
 
@@ -328,7 +328,7 @@ class XoopsTheme
                 // Generate language section
                 $extra_string = $xoops->getConfig('locale');
                 // Generate group section
-                if (! $xoops->isUser()) {
+                if (!$xoops->isUser()) {
                     $extra_string .= '-' . FixedGroups::ANONYMOUS;
                 } else {
                     $groups = $xoops->user->getGroups();
@@ -411,12 +411,12 @@ class XoopsTheme
         if ($xoops->getOption('xoops_pagetitle')) {
             $this->template->assign('xoops_pagetitle', $xoops->getOption('xoops_pagetitle'));
         }
-        $header = ! $xoops->getOption('xoops_module_header')
+        $header = !$xoops->getOption('xoops_module_header')
             ? $this->template->getTemplateVars('xoops_module_header')
             : $xoops->getOption('xoops_module_header');
 
         //save meta information of cached pages
-        if ($this->contentCacheLifetime && $this->contentCacheId && ! $contentTpl) {
+        if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
             $content['htmlHeadStrings'] = (array) $this->htmlHeadStrings;
             $content['metas'] = (array) $this->metas;
             $content['xoops_pagetitle'] = $this->template->getTemplateVars('xoops_pagetitle');
@@ -443,7 +443,7 @@ class XoopsTheme
         if ($contentTpl) {
             $this->contentTemplate = $contentTpl;
         }
-        if (! empty($vars)) {
+        if (!empty($vars)) {
             $this->template->assign($vars);
         }
         if ($this->contentTemplate) {
@@ -559,14 +559,14 @@ class XoopsTheme
         if (empty($attributes)) {
             $attributes = [];
         }
-        if (! empty($src)) {
+        if (!empty($src)) {
             $src = $xoops->url($this->resourcePath($src));
             $attributes['src'] = $src;
         }
-        if (! empty($content)) {
+        if (!empty($content)) {
             $attributes['_'] = $content;
         }
-        if (! isset($attributes['type'])) {
+        if (!isset($attributes['type'])) {
             $attributes['type'] = 'text/javascript';
         }
         $this->addMeta('script', $src, $attributes);
@@ -585,14 +585,14 @@ class XoopsTheme
         if (empty($attributes)) {
             $attributes = [];
         }
-        if (! empty($src)) {
+        if (!empty($src)) {
             $src = $xoops->url($this->resourcePath($src));
             $attributes['href'] = $src;
         }
-        if (! isset($attributes['type'])) {
+        if (!isset($attributes['type'])) {
             $attributes['type'] = 'text/css';
         }
-        if (! empty($content)) {
+        if (!empty($content)) {
             $attributes['_'] = $content;
         }
         $this->addMeta('stylesheet', $src, $attributes);
@@ -697,7 +697,7 @@ class XoopsTheme
         if (empty($attributes)) {
             $attributes = [];
         }
-        if (! empty($href)) {
+        if (!empty($href)) {
             $attributes['href'] = $href;
         }
         $attributes['rel'] = $rel;
@@ -732,10 +732,10 @@ class XoopsTheme
      */
     public function addMeta($type = 'meta', $name = '', $value = '')
     {
-        if (! isset($this->metas[$type])) {
+        if (!isset($this->metas[$type])) {
             $this->metas[$type] = [];
         }
-        if (! empty($name)) {
+        if (!empty($name)) {
             $this->metas[$type][$name] = $value;
         } else {
             $this->metas[$type][md5(serialize([$value]))] = $value;
@@ -753,7 +753,7 @@ class XoopsTheme
      */
     public function headContent($params, $content, &$smarty, &$repeat)
     {
-        if (! $repeat) {
+        if (!$repeat) {
             $this->htmlHeadStrings[] = $content;
         }
     }
@@ -790,16 +790,16 @@ class XoopsTheme
     {
         $str = '';
 
-        if (! empty($this->baseAssets['js'])) {
+        if (!empty($this->baseAssets['js'])) {
             $url = $this->assets->getUrlToAssets('js', $this->baseAssets['js']);
-            if (! empty($url)) {
+            if (!empty($url)) {
                 $str .= '<script src="' . $url . '" type="text/javascript"></script>' . "\n";
             }
         }
 
-        if (! empty($this->baseAssets['css'])) {
+        if (!empty($this->baseAssets['css'])) {
             $url = $this->assets->getUrlToAssets('css', $this->baseAssets['css']);
-            if (! empty($url)) {
+            if (!empty($url)) {
                 $str .= '<link rel="stylesheet" href="' . $url . '" type="text/css" />' . "\n";
             }
         }
@@ -815,7 +815,7 @@ class XoopsTheme
      */
     public function renderMetasByType($type)
     {
-        if (! isset($type)) {
+        if (!isset($type)) {
             return '';
         }
 
@@ -874,7 +874,7 @@ class XoopsTheme
     public function genElementId($tagName = 'xos')
     {
         static $cache = [];
-        if (! isset($cache[$tagName])) {
+        if (!isset($cache[$tagName])) {
             $cache[$tagName] = 1;
         }
         return $tagName . '-' . $cache[$tagName]++;
@@ -911,17 +911,17 @@ class XoopsTheme
             $path = substr($path, 1);
         }
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-//\Xoops::getInstance()->events()->triggerEvent('debug.log', $this);
+        //\Xoops::getInstance()->events()->triggerEvent('debug.log', $this);
         if (\XoopsLoad::fileExists($xoops_root_path . "/{$this->themesPath}/{$this->folderName}/{$path}")) {
-//\Xoops::getInstance()->events()->triggerEvent('debug.log', "custom theme path {$this->themesPath}/{$this->folderName}/{$path}");
+            //\Xoops::getInstance()->events()->triggerEvent('debug.log', "custom theme path {$this->themesPath}/{$this->folderName}/{$path}");
             return "{$this->themesPath}/{$this->folderName}/{$path}";
         }
 
         if (\XoopsLoad::fileExists($xoops_root_path . "/themes/{$this->folderName}/{$path}")) {
-//\Xoops::getInstance()->events()->triggerEvent('debug.log', "main theme folder themes/{$this->folderName}/{$path}");
+            //\Xoops::getInstance()->events()->triggerEvent('debug.log', "main theme folder themes/{$this->folderName}/{$path}");
             return "themes/{$this->folderName}/{$path}";
         }
-//\Xoops::getInstance()->events()->triggerEvent('debug.log', "drop thru {$path}");
+        //\Xoops::getInstance()->events()->triggerEvent('debug.log', "drop thru {$path}");
         return $path;
     }
 }

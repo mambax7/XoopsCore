@@ -29,7 +29,7 @@ use Xoops\Core\Service\Response;
  */
 interface UserMessageInterface
 {
-    const MODE = Manager::MODE_EXCLUSIVE;
+    public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
      * sendMessage - given user info return absolute URL to avatar image

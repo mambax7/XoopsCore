@@ -36,8 +36,7 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
         }
-            return $default;
-
+        return $default;
     }
 
     /**

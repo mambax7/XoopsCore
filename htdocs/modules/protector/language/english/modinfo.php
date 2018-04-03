@@ -1,6 +1,6 @@
 <?php
-if (defined('FOR_XOOPS_LANG_CHECKER') || ! defined('_MI_PROTECTOR_LOADED')) {
 
+if (defined('FOR_XOOPS_LANG_CHECKER') || !defined('_MI_PROTECTOR_LOADED')) {
     define('_MI_PROTECTOR_LOADED', 1);
 
     // The name of this module

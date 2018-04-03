@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../init_new.php');
 
 class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
@@ -53,12 +54,12 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
     public function test_translateTheme()
     {
         $path = \XoopsBaseConfig::get('root-path');
-        if (! class_exists('Comments', false)) {
+        if (!class_exists('Comments', false)) {
             \XoopsLoad::addMap([
                 'comments' => $path . '/modules/comments/class/helper.php',
             ]);
         }
-        if (! class_exists('MenusDecorator', false)) {
+        if (!class_exists('MenusDecorator', false)) {
             \XoopsLoad::addMap([
                 'menusdecorator' => $path . '/modules/menus/class/decorator.php',
             ]);

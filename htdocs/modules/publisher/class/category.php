@@ -100,8 +100,7 @@ class PublisherCategory extends XoopsObject
         if ($this->getVar('image') !== '') {
             return $this->getVar('image', $format);
         }
-            return 'blank.png';
-
+        return 'blank.png';
     }
 
     /**
@@ -121,7 +120,7 @@ class PublisherCategory extends XoopsObject
      */
     public function getCategoryPath($withAllLink = true)
     {
-        if (! $this->_categoryPath) {
+        if (!$this->_categoryPath) {
             if ($withAllLink) {
                 $ret = $this->getCategoryLink();
             } else {
@@ -200,8 +199,7 @@ class PublisherCategory extends XoopsObject
         if ($class) {
             return "<a class='${class}' href='" . $this->getCategoryUrl() . "'>" . $this->getVar('name') . '</a>';
         }
-            return "<a href='" . $this->getCategoryUrl() . "'>" . $this->getVar('name') . '</a>';
-
+        return "<a href='" . $this->getCategoryUrl() . "'>" . $this->getVar('name') . '</a>';
     }
 
     /**
@@ -349,17 +347,17 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
     public function insert(XoopsObject $category, $force = true)
     {
         // Auto create meta tags if empty
-        if (! $category->getVar('meta_keywords') || ! $category->getVar('meta_description')) {
+        if (!$category->getVar('meta_keywords') || !$category->getVar('meta_description')) {
             $publisher_metagen = new PublisherMetagen($category->getVar('name'), $category->getVar('meta_keywords'), $category->getVar('description'));
-            if (! $category->getVar('meta_keywords')) {
+            if (!$category->getVar('meta_keywords')) {
                 $category->setVar('meta_keywords', $publisher_metagen->_keywords);
             }
-            if (! $category->getVar('meta_description')) {
+            if (!$category->getVar('meta_description')) {
                 $category->setVar('meta_description', $publisher_metagen->_description);
             }
         }
         // Auto create short_url if empty
-        if (! $category->getVar('short_url')) {
+        if (!$category->getVar('short_url')) {
             $category->setVar('short_url', PublisherMetagen::generateSeoTitle($category->getVar('name', 'n'), false));
         }
         $ret = parent::insert($category, $force);
@@ -386,7 +384,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         foreach ($subcats as $subcat) {
             $this->delete($subcat);
         }
-        if (! parent::delete($category, $force)) {
+        if (!parent::delete($category, $force)) {
             $category->setErrors('An error while deleting.');
             return false;
         }
@@ -418,7 +416,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         if ($parentid !== -1) {
             $criteria->add(new Criteria('parentid', $parentid));
         }
-        if (! PublisherUtils::IsUserAdmin()) {
+        if (!PublisherUtils::IsUserAdmin()) {
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
             if (count($categoriesGranted) > 0) {
                 $criteria->add(new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN'));
@@ -467,7 +465,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         $criteria = new CriteriaCompo();
         $criteria->setSort('name');
         $criteria->setOrder('ASC');
-        if (! PublisherUtils::IsUserAdmin()) {
+        if (!PublisherUtils::IsUserAdmin()) {
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('item_submit');
             if (count($categoriesGranted) > 0) {
                 $criteria->add(new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN'));
@@ -487,7 +485,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
             $cat_array[$cat['parentid']][$cat['categoryid']] = $cat;
         }
         // Needs to have permission on at least 1 top level category
-        if (! isset($cat_array[0])) {
+        if (!isset($cat_array[0])) {
             return $ret;
         }
         $cat_result = [];
@@ -509,7 +507,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         $criteria = new CriteriaCompo();
         $criteria->setSort('name');
         $criteria->setOrder('ASC');
-        if (! PublisherUtils::IsUserAdmin()) {
+        if (!PublisherUtils::IsUserAdmin()) {
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
             if (count($categoriesGranted) > 0) {
                 $criteria->add(new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN'));
@@ -529,7 +527,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
             $cat_array[$cat['parentid']][$cat['categoryid']] = $cat;
         }
         // Needs to have permission on at least 1 top level category
-        if (! isset($cat_array[0])) {
+        if (!isset($cat_array[0])) {
             return $ret;
         }
         $cat_result = [];
@@ -554,7 +552,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         $criteria = new CriteriaCompo();
         if (isset($parentid) && ($parentid !== -1)) {
             $criteria->add(new criteria('parentid', $parentid));
-            if (! PublisherUtils::IsUserAdmin()) {
+            if (!PublisherUtils::IsUserAdmin()) {
                 $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
                 if (count($categoriesGranted) > 0) {
                     $criteria->add(new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN'));
@@ -581,7 +579,7 @@ class PublisherCategoryHandler extends XoopsPersistableObjectHandler
         $xoops = Xoops::getInstance();
         $criteria = new CriteriaCompo(new Criteria('parentid', '(' . implode(',', array_keys($categories)) . ')', 'IN'));
         $ret = [];
-        if (! PublisherUtils::IsUserAdmin()) {
+        if (!PublisherUtils::IsUserAdmin()) {
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
             if (count($categoriesGranted) > 0) {
                 $criteria->add(new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN'));

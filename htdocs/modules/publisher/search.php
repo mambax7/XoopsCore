@@ -40,8 +40,8 @@ $gperm_handler = $publisher->getGrouppermHandler();
 $module_id = $publisher->getModule()->mid();
 
 //Checking permissions
-if (! $publisher->getConfig('perm_search')
-    || ! $gperm_handler->checkRight('global', _PUBLISHER_SEARCH, $groups, $module_id)
+if (!$publisher->getConfig('perm_search')
+    || !$gperm_handler->checkRight('global', _PUBLISHER_SEARCH, $groups, $module_id)
 ) {
     $xoops->redirect(PUBLISHER_URL, 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
@@ -67,7 +67,7 @@ $term = Request::getString('term');
 if (empty($category) || (is_array($category) && in_array('all', $category, true))) {
     $category = [];
 } else {
-    $category = ! is_array($category) ? explode(',', $category) : $category;
+    $category = !is_array($category) ? explode(',', $category) : $category;
     $category = array_map('intval', $category);
 }
 
@@ -75,8 +75,7 @@ $andor = (in_array(strtoupper($andor), ['OR', 'AND', 'EXACT'], true)) ? strtoupp
 $sortby = (in_array(strtolower($sortby), ['itemid', 'datesub', 'title', 'categoryid'], true))
             ? strtolower($sortby) : 'itemid';
 
-if (! (empty($_POST['submit']) && empty($term))) {
-
+if (!(empty($_POST['submit']) && empty($term))) {
     $next_search['category'] = implode(',', $category);
     $next_search['andor'] = $andor;
     $next_search['term'] = $term;
@@ -116,10 +115,10 @@ if (! (empty($_POST['submit']) && empty($term))) {
     $uname_required = false;
     $search_username = trim($username);
     $next_search['uname'] = $search_username;
-    if (! empty($search_username)) {
+    if (!empty($search_username)) {
         $uname_required = true;
         $search_username = $search_username;
-        if (! $result = $xoopsDB->query(
+        if (!$result = $xoopsDB->query(
             'SELECT uid FROM ' . $xoopsDB->prefix('users') .
             ' WHERE uname LIKE ' . $xoopsDB->quoteString("%${search_username}%")
         )) {
@@ -137,13 +136,13 @@ if (! (empty($_POST['submit']) && empty($term))) {
     $next_search['sortby'] = $sortby;
     $next_search['searchin'] = implode('|', $searchin);
 
-    if (! empty($time)) {
+    if (!empty($time)) {
         $extra = '';
     } else {
         $extra = '';
     }
 
-    if ($uname_required && (! $uid || count($uid) < 1)) {
+    if ($uname_required && (!$uid || count($uid) < 1)) {
         $results = [];
     } else {
         $results =
@@ -159,7 +158,7 @@ if (! (empty($_POST['submit']) && empty($term))) {
     if (count($next_search) > 0) {
         $items = [];
         foreach ($next_search as $para => $val) {
-            if (! empty($val)) {
+            if (!empty($val)) {
                 $items[] = "{$para}={$val}";
             }
         }

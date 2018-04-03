@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class MediaUploaderTest extends \PHPUnit\Framework\TestCase
@@ -46,7 +47,8 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($imageExtensions, $theme->imageExtensions);
     }
 
-    public function test___construct100() {
+    public function test___construct100()
+    {
         $upload_dir = 'upload_dir';
         $allowed_mime_types = ['toto'];
         $maxFileSize = 71;

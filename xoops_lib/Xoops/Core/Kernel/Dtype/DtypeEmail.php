@@ -41,7 +41,7 @@ class DtypeEmail extends DtypeAbstract
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
             return $value;
         }
-        if ($value !== '' && ! preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $value)) {
+        if ($value !== '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $value)) {
             $obj->setErrors('Invalid Email');
             return $value;
         }

@@ -26,9 +26,9 @@ use Xoops\Core\XoopsArray;
  */
 abstract class Item extends XoopsArray
 {
-    const TYPE_LINK = 'link';
+    public const TYPE_LINK = 'link';
 
-    const TYPE_LIST = 'list';
+    public const TYPE_LIST = 'list';
 
-    const TYPE_DIVIDER = 'divider';
+    public const TYPE_DIVIDER = 'divider';
 }

@@ -24,7 +24,7 @@ $xoops = Xoops::getInstance();
 $system = System::getInstance();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -39,7 +39,7 @@ $op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
 $module = $system->cleanVars($_REQUEST, 'module', '', 'string');
 
 if (in_array($op, ['install', 'update', 'uninstall'], true)) {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $op = 'list';
     }
 }
@@ -100,7 +100,6 @@ switch ($op) {
             $module->setVar('name', $value);
             if ($module_handler->insertModule($module)) {
                 echo $value;
-
             }
         }
         break;
@@ -116,7 +115,7 @@ switch ($op) {
                     //Change order only for visible modules
                     if ($module->getVar('weight') !== 0) {
                         $module->setVar('weight', $i);
-                        if (! $module_handler->insertModule($module)) {
+                        if (!$module_handler->insertModule($module)) {
                             $error = true;
                         }
                         ++$i;
@@ -138,14 +137,14 @@ switch ($op) {
             $module = $module_handler->getById($module_id);
             $old = $module->getVar('isactive');
             // Set value
-            $module->setVar('isactive', ! $old);
-            if (! $module_handler->insertModule($module)) {
+            $module->setVar('isactive', !$old);
+            if (!$module_handler->insertModule($module)) {
                 $error = true;
             }
             $blocks = $block_handler->getByModule($module_id);
             /* @var $block XoopsBlock */
             foreach ($blocks as $block) {
-                $block->setVar('isactive', ! $old);
+                $block->setVar('isactive', !$old);
                 $block_handler->insertBlock($block);
             }
             //Set active modules in cache folder
@@ -165,11 +164,11 @@ switch ($op) {
             $module = $module_handler->getById($module_id);
             $old = $module->getVar('weight');
             // Set value
-            $module->setVar('weight', ! $old);
-            if (! $module_handler->insertModule($module)) {
+            $module->setVar('weight', !$old);
+            if (!$module_handler->insertModule($module)) {
                 $error = true;
             } else {
-                echo ! $old;
+                echo !$old;
             }
         }
         break;

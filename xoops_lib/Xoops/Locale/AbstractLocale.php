@@ -11,10 +11,10 @@
 
 namespace Xoops\Locale;
 
-use \Xoops\Core\Locale\Time;
 use Patchwork\Utf8;
 use Punic\Misc;
 use Xoops\Core\Locale\Punic\Calendar;
+use Xoops\Core\Locale\Time;
 
 /**
  * XOOPS localization abstract

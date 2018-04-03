@@ -24,6 +24,7 @@
  * @deprecated
  */
 use Xoops\Core\Cache\Legacy;
+
 class xoopscache extends Legacy
 {
 }

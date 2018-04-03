@@ -57,7 +57,7 @@ switch ($op) {
             $handler->updateStatus((int) $id, (int) $status);
         }
         $xoops->tpl()->assign('infoMsg', $xoops->alert('success', XoopsLocale::S_DATA_UPDATED));
-        //No break;
+        //no break;
     case 'list':
     default:
         $admin_page->addTips(t::TIPS_PLUGINS);
@@ -65,14 +65,14 @@ switch ($op) {
 
         if ($listener) {
             $objects = $handler->getByListener($listener);
-        } else if ($caller) {
+        } elseif ($caller) {
             $objects = $handler->getByCaller($caller);
         } else {
             $objects = $handler->getThemAll();
         }
 
         //In the impossible case no plugins were found, we alert the user
-        if (! $objects) {
+        if (!$objects) {
             $xoops->tpl()->assign('errorMsg', $xoops->alert('info', t::NO_PLUGINS_FOUND));
             break;
         }

@@ -20,13 +20,13 @@
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $op = '';
-if ( isset( $_POST ) ){
-    foreach ( $_POST as $k => $v )  {
+if (isset($_POST)) {
+    foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-if ( isset( $_GET ) ){
-    foreach ( $_GET as $k => $v )  {
+if (isset($_GET)) {
+    foreach ($_GET as $k => $v) {
         ${$k} = $v;
     }
 }

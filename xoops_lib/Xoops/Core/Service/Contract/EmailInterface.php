@@ -29,7 +29,7 @@ use Xoops\Core\Service\Response;
  */
 interface EmailInterface
 {
-    const MODE = Manager::MODE_EXCLUSIVE;
+    public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
      * sendEmail - send an email

@@ -40,7 +40,6 @@ class PluginsManager
                     }
                 }
             }
-
         }
         return $listeners;
     }
@@ -57,14 +56,14 @@ class PluginsManager
         $xoops = \Xoops::getInstance();
 
         $listeners = $handler->getListeners();
-        foreach ($listeners as $key => $name ) {
-            if (! $xoops->isActiveModule($key)) {
+        foreach ($listeners as $key => $name) {
+            if (!$xoops->isActiveModule($key)) {
                 $handler->deleteLC($key);
             }
         }
         $callers = $handler->getCallers();
         foreach ($callers as $key => $name) {
-            if (! $xoops->isActiveModule($key)) {
+            if (!$xoops->isActiveModule($key)) {
                 $handler->deleteLC($key);
             }
         }
@@ -73,8 +72,8 @@ class PluginsManager
         $plugins = self::getListeners();
         foreach ($plugins as $listener => $callers) {
             foreach ($callers as $caller) {
-                if (! $object = $handler->getLC($listener, $caller)) {
-                    if (! $handler->addNew($listener, $caller)) {
+                if (!$object = $handler->getLC($listener, $caller)) {
+                    if (!$handler->addNew($listener, $caller)) {
                         $ret = false;
                     }
                 }

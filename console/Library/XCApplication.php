@@ -3,6 +3,7 @@
 namespace XoopsConsole\Library;
 
 use Symfony\Component\Console\Application;
+
 /**
  * A really simple container
  *

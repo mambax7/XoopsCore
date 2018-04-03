@@ -64,12 +64,12 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
         $path = '';
         if ($skin_from_theme) {
             $path = 'themes/' . $this->xoops()->getConfig('theme_set') . '/menu';
-            if (! XoopsLoad::fileExists($this->xoops()->path("{$path}/skin_version.php"))) {
+            if (!XoopsLoad::fileExists($this->xoops()->path("{$path}/skin_version.php"))) {
                 $error = true;
             }
         }
 
-        if ($error || ! $skin_from_theme) {
+        if ($error || !$skin_from_theme) {
             $path = "modules/menus/skins/{$skin}";
         }
 
@@ -78,19 +78,19 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
 
         if (XoopsLoad::fileExists($file)) {
             include $file;
-            $info = & $skinversion;
+            $info = &$skinversion;
         }
 
         $info['path'] = $this->xoops()->path($path);
         $info['url'] = $this->xoops()->url($path);
 
-        if (! isset($info['template'])) {
+        if (!isset($info['template'])) {
             $info['template'] = $this->xoops()->path('modules/menus/templates/block.tpl');
         } else {
             $info['template'] = $this->xoops()->path("{$path}/" . $info['template']);
         }
 
-        if (! isset($info['prefix'])) {
+        if (!isset($info['prefix'])) {
             $info['prefix'] = $skin;
         }
 
@@ -108,7 +108,7 @@ class Menus extends Xoops\Module\Helper\HelperAbstract
             }
         }
 
-        if (! isset($info['config'])) {
+        if (!isset($info['config'])) {
             $info['config'] = [];
         }
 

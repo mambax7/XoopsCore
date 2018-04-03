@@ -78,7 +78,7 @@ $criteria->setOrder('DESC');
 $items = $publisher->getItemHandler()->getAll($criteria, ['datesub'], false);
 $itemsCount = count($items);
 
-if (! ($itemsCount > 0)) {
+if (!($itemsCount > 0)) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 2, _MD_PUBLISHER_NO_TOP_PERMISSIONS);
 } else {
     $this_year = 0;

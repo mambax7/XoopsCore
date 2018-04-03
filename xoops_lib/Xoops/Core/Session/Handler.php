@@ -89,7 +89,7 @@ class Handler implements \SessionHandlerInterface
         $session_data = '';
         if ($result = $qb->execute()) {
             if ($row = $result->fetch(\PDO::FETCH_NUM)) {
-                list ($session_data) = $row;
+                list($session_data) = $row;
             }
         }
 
@@ -146,7 +146,7 @@ class Handler implements \SessionHandlerInterface
         //$this->db->commit();
         //$this->db->setTransactionIsolation($oldIsolation);
 
-        return (boolean) ($result > 0);
+        return (bool) ($result > 0);
     }
 
     /**
@@ -186,6 +186,6 @@ class Handler implements \SessionHandlerInterface
             ->setParameter(':expires', $mintime, \PDO::PARAM_INT);
         $this->db->setForce(true);
         $result = $qb->execute();
-        return (boolean) ($result > 0);
+        return (bool) ($result > 0);
     }
 }

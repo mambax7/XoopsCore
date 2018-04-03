@@ -97,9 +97,8 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
         $buttonTray = new Xoops\Form\ElementTray('', '');
 
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $buttonTray->addElement(new Xoops\Form\Button('', 'additem', XoopsLocale::A_SUBMIT, 'submit')); //orclone
-
         } else {
             $buttonTray->addElement(new Xoops\Form\Button('', 'additem', _CO_PUBLISHER_CREATE, 'submit'));
             $buttonTray->addElement(new Xoops\Form\Button('', '', _CO_PUBLISHER_CLEAR, 'reset'));
@@ -251,7 +250,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $notify_radio = new Xoops\Form\RadioYesNo(_CO_PUBLISHER_NOTIFY, 'notify', $obj->getVar('notifypub'));
             $mainTab->addElement($notify_radio);
         }
-
     }
 
     /**
@@ -274,7 +272,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         } else {
             if (count($allowed_editors) > 0) {
                 $editor = @$_POST['editor'];
-                if (! empty($editor)) {
+                if (!empty($editor)) {
                     PublisherUtils::setCookieVar('publisher_editor', $editor);
                 } else {
                     $editor = PublisherUtils::getCookieVar('publisher_editor');
@@ -282,7 +280,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                         $editor = $xoops->user->getVar('publisher_editor'); // Need set through user profile
                     }
                 }
-                $editor = (empty($editor) || ! in_array($editor, $allowed_editors, true))
+                $editor = (empty($editor) || !in_array($editor, $allowed_editors, true))
                     ? $publisher->getConfig('submit_editor') : $editor;
 
                 $form_editor = new Xoops\Form\SelectEditor($this, 'editor', $editor, $nohtml, $allowed_editors);
@@ -293,13 +291,13 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         }
 
         $editor_configs = [];
-        $editor_configs['rows'] = ! $publisher->getConfig('submit_editor_rows')
+        $editor_configs['rows'] = !$publisher->getConfig('submit_editor_rows')
             ? 35 : $publisher->getConfig('submit_editor_rows');
-        $editor_configs['cols'] = ! $publisher->getConfig('submit_editor_cols')
+        $editor_configs['cols'] = !$publisher->getConfig('submit_editor_cols')
             ? 60 : $publisher->getConfig('submit_editor_cols');
-        $editor_configs['width'] = ! $publisher->getConfig('submit_editor_width')
+        $editor_configs['width'] = !$publisher->getConfig('submit_editor_width')
             ? '100%' : $publisher->getConfig('submit_editor_width');
-        $editor_configs['height'] = ! $publisher->getConfig('submit_editor_height')
+        $editor_configs['height'] = !$publisher->getConfig('submit_editor_height')
             ? '400px' : $publisher->getConfig('submit_editor_height');
 
         // SUMMARY
@@ -319,7 +317,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         $body_text = new Xoops\Form\Editor(_CO_PUBLISHER_BODY, $editor, $editor_configs, $nohtml, $onfailure = null);
         $body_text->setDescription(_CO_PUBLISHER_BODY_DSC);
         $mainTab->addElement($body_text);
-
     }
 
     /**
@@ -391,7 +388,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $filesTab->addElement($file_box);
             unset($file_box);
 
-            if (! $obj->isNew()) {
+            if (!$obj->isNew()) {
                 $filesObj = $publisher->getFileHandler()->getAllFiles($obj->getVar('itemid'));
                 if (count($filesObj) > 0) {
                     $table = '';
@@ -440,7 +437,6 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                 }
             }
         }
-
     }
 
     /**
@@ -472,7 +468,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $catids = array_keys($catlist);
 
             $imageObjs = [];
-            if (! empty($catids)) {
+            if (!empty($catids)) {
                 $criteria = new CriteriaCompo(new Criteria('imgcat_id', '(' . implode(',', $catids) . ')', 'IN'));
                 $criteria->add(new Criteria('image_display', 1));
                 $criteria->setSort('image_nicename');
@@ -701,7 +697,7 @@ $(document).ready(function(){
     {
         $publisher = Publisher::getInstance();
         $ret = false;
-        if (! $this->checkperm || $publisher->getPermissionHandler()->isGranted('form_view', $item)) {
+        if (!$this->checkperm || $publisher->getPermissionHandler()->isGranted('form_view', $item)) {
             $ret = true;
         }
         return $ret;
@@ -716,7 +712,7 @@ $(document).ready(function(){
      */
     private function hasTab($tab)
     {
-        if (! isset($tab) || ! isset($this->tabs[$tab])) {
+        if (!isset($tab) || !isset($this->tabs[$tab])) {
             return false;
         }
 

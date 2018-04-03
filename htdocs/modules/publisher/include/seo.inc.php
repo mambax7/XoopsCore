@@ -40,7 +40,6 @@ if (empty($seoOp) && @$_SERVER['PATH_INFO']) {
     $seoArg = $seoParts[1];
     // for multi-argument modules, where itemid and catid both are required.
     // $seoArg = substr($data[1], strlen($seoOp) + 1);
-
 }
 
 $seoMap = [
@@ -49,7 +48,7 @@ $seoMap = [
     'print' => 'print.php',
 ];
 
-if (! empty($seoOp) && isset($seoMap[$seoOp])) {
+if (!empty($seoOp) && isset($seoMap[$seoOp])) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
 

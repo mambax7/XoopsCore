@@ -41,7 +41,7 @@ function createConfigform($config)
 
     for ($i = 0; $i < $confcount; ++$i) {
         $conf_catid = $config[$i]->getVar('conf_catid');
-        if (! isset($ret[$conf_catid])) {
+        if (!isset($ret[$conf_catid])) {
             $ret[$conf_catid] = new Xoops\Form\ThemeForm('', 'configs', 'index.php', 'post');
         }
 
@@ -62,7 +62,7 @@ function createConfigform($config)
 
             case 'select':
                 $ele = new Xoops\Form\Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $options = & $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = &$config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = \Xoops\Locale::translate($options[$j]->getVar('confop_value'), 'system');
@@ -73,7 +73,7 @@ function createConfigform($config)
 
             case 'select_multi':
                 $ele = new Xoops\Form\Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
-                $options = & $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = &$config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = \Xoops\Locale::translate($options[$j]->getVar('confop_value'), 'system');
@@ -92,7 +92,7 @@ function createConfigform($config)
                     ? new Xoops\Form\Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput())
                     : new Xoops\Form\Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
                 $dirlist = XoopsLists::getThemesList();
-                if (! empty($dirlist)) {
+                if (!empty($dirlist)) {
                     asort($dirlist);
                     $ele->addOptionArray($dirlist);
                 }
@@ -125,7 +125,7 @@ function createConfigform($config)
                 $module_handler = $xoops->getHandlerModule();
                 $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
-                $moduleslist = & $module_handler->getNameList($criteria, true);
+                $moduleslist = &$module_handler->getNameList($criteria, true);
                 $moduleslist['--'] = XoopsLocale::NONE;
                 $ele->addOptionArray($moduleslist);
                 break;
@@ -235,7 +235,7 @@ function createThemeform(XoopsConfigItem $config)
     $title = $config->getVar('conf_desc') === '' ? \Xoops\Locale::translate($config->getVar('conf_title'), 'system') : \Xoops\Locale::translate($config->getVar('conf_title'), 'system') . '<br /><br /><span>' . \Xoops\Locale::translate($config->getVar('conf_desc'), 'system') . '</span>';
     $form_theme_set = new Xoops\Form\Select('', $config->getVar('conf_name'), $config->getConfValueForOutput(), 1, false);
     $dirlist = XoopsLists::getThemesList();
-    if (! empty($dirlist)) {
+    if (!empty($dirlist)) {
         asort($dirlist);
         $form_theme_set->addOptionArray($dirlist);
     }

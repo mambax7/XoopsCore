@@ -24,7 +24,7 @@ $xoops = Xoops::getInstance();
 $system = System::getInstance();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -39,7 +39,7 @@ $op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
 $module = $system->cleanVars($_REQUEST, 'module', '', 'string');
 
 if (in_array($op, ['install', 'update', 'uninstall'], true)) {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $op = 'list';
     }
 }

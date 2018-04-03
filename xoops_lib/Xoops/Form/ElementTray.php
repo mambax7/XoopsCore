@@ -108,26 +108,25 @@ class ElementTray extends Element implements ContainerInterface
      */
     public function getElements($recurse = false)
     {
-        if (! $recurse) {
+        if (!$recurse) {
             return $this->elements;
         }
-            $ret = [];
-            foreach ($this->elements as $ele) {
-                if ($ele instanceof ContainerInterface) {
-                    /* @var ContainerInterface $ele */
-                    $elements = $ele->getElements(true);
-                    foreach ($elements as $ele2) {
-                        $ret[] = $ele2;
-                    }
-                    unset($elements);
-                    unset($ele2);
-                } else {
-                    $ret[] = $ele;
+        $ret = [];
+        foreach ($this->elements as $ele) {
+            if ($ele instanceof ContainerInterface) {
+                /* @var ContainerInterface $ele */
+                $elements = $ele->getElements(true);
+                foreach ($elements as $ele2) {
+                    $ret[] = $ele2;
                 }
-                unset($ele);
+                unset($elements);
+                unset($ele2);
+            } else {
+                $ret[] = $ele;
             }
-            return $ret;
-
+            unset($ele);
+        }
+        return $ret;
     }
 
     /**
@@ -150,7 +149,7 @@ class ElementTray extends Element implements ContainerInterface
                 $ret .= '</div>';
             }
             $ret .= $ele->render() . "\n";
-            if (! $ele->isHidden()) {
+            if (!$ele->isHidden()) {
                 ++$count;
             }
         }

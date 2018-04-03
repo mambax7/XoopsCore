@@ -18,11 +18,9 @@
 
 class upgrade_220 extends xoopsUpgrade
 {
-    var
+    public $tasks = ['config', 'profile', 'block' /*, 'pm', 'module'*/];
 
- $tasks = ['config', 'profile', 'block' /*, 'pm', 'module'*/];
-
-    function upgrade_220()
+    public function upgrade_220()
     {
         $this->xoopsUpgrade(basename(dirname(__FILE__)));
     }
@@ -30,12 +28,12 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * Check if config category already removed
      */
-    function check_config()
+    public function check_config()
     {
         $xoops = Xoops::getInstance();
         $sql = 'SHOW COLUMNS FROM `' . $xoops->db()->prefix('configcategory') . "` LIKE 'confcat_modid'";
         $result = $xoops->db()->queryF($sql);
-        if (! $result) {
+        if (!$result) {
             return true;
         }
         if ($xoops->db()->getRowsNum($result) > 0) {
@@ -47,16 +45,16 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * Check if user profile table already converted
      */
-    function check_profile()
+    public function check_profile()
     {
         $xoops = Xoops::getInstance();
         $module_handler = $xoops->getHandlerModule();
-        if (! $profile_module = $module_handler->getByDirname('profile')) {
+        if (!$profile_module = $module_handler->getByDirname('profile')) {
             return true;
         }
         $sql = 'SHOW COLUMNS FROM ' . $xoops->db()->prefix('users') . " LIKE 'posts'";
         $result = $xoops->db()->queryF($sql);
-        if (! $result) {
+        if (!$result) {
             return false;
         }
         if ($xoops->db()->getRowsNum($result) === 0) {
@@ -68,12 +66,12 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * Check if block table already converted
      */
-    function check_block()
+    public function check_block()
     {
         $xoops = Xoops::getInstance();
         $sql = "SHOW TABLES LIKE '" . $xoops->db()->prefix('block_instance') . "'";
         $result = $xoops->db()->queryF($sql);
-        if (! $result) {
+        if (!$result) {
             return true;
         }
         if ($xoops->db()->getRowsNum($result) > 0) {
@@ -82,7 +80,7 @@ class upgrade_220 extends xoopsUpgrade
         return true;
     }
 
-    function apply()
+    public function apply()
     {
         if (empty($_GET['upd220'])) {
             $this->logs[] = _CONFIRM_UPGRADE_220;
@@ -93,7 +91,7 @@ class upgrade_220 extends xoopsUpgrade
         return $res;
     }
 
-    function apply_config()
+    public function apply_config()
     {
         $xoops = Xoops::getInstance();
 
@@ -201,7 +199,7 @@ class upgrade_220 extends xoopsUpgrade
         return $result;
     }
 
-    function apply_profile()
+    public function apply_profile()
     {
         $xoops = Xoops::getInstance();
         $xoops->db();
@@ -255,7 +253,7 @@ class upgrade_220 extends xoopsUpgrade
         return true;
     }
 
-    function _block_lookup($block, $blocks)
+    public function _block_lookup($block, $blocks)
     {
         if ($block['show_func'] === 'b_system_custom_show') {
             return 0;
@@ -270,7 +268,7 @@ class upgrade_220 extends xoopsUpgrade
         return null;
     }
 
-    function apply_block()
+    public function apply_block()
     {
         $xoops = Xoops::getInstance();
         $xoops->db()->queryF('UPDATE ' .
@@ -355,7 +353,7 @@ class upgrade_220 extends xoopsUpgrade
             if ($row['dirname'] !== $dirname) {
                 $dirname = $row['dirname'];
                 $modversion = [];
-                if (! @include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
+                if (!@include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
                     continue;
                 }
             }
@@ -417,7 +415,7 @@ class upgrade_220 extends xoopsUpgrade
             if ($row['dirname'] !== $dirname) {
                 $dirname = $row['dirname'];
                 $modversion = [];
-                if (! @include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
+                if (!@include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') {
                     continue;
                 }
             }
@@ -473,7 +471,7 @@ class upgrade_220 extends xoopsUpgrade
         $result = $xoops->db()->query($sql);
         while (false !== (list($bid, $_options) = $xoops->db()->fetchRow($result))) {
             $options = unserialize($_options);
-            if (empty($options) || ! is_array($options)) {
+            if (empty($options) || !is_array($options)) {
                 $options = [];
             }
             $count = count($options);
@@ -495,5 +493,3 @@ class upgrade_220 extends xoopsUpgrade
 
 $upg = new upgrade_220();
 return $upg;
-
-?>

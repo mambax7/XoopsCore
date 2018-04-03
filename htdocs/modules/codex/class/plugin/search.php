@@ -26,7 +26,7 @@ class CodexSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements Se
         $res = [];
         $i = 0;
         foreach ($files as $file) {
-            if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
+            if (!in_array($file, ['xoops_version.php', 'index.php'], true)) {
                 $fileName = ucfirst(str_replace('.php', '', $file));
                 if (stripos($fileName, $queries) !== false) {
                     $res[$i]['link'] = $file;

@@ -23,15 +23,12 @@ use Xoops\Core\XoopsTpl;
  */
 
 
-require __DIR__ . '/mainfile.php';
 
+require __DIR__ . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
-
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-
 $xoops_url = \XoopsBaseConfig::get('url');
-
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }
@@ -40,7 +37,7 @@ $dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
 $tpl = new XoopsTpl();
 $tpl->caching = 2;
 $tpl->cache_lifetime = 3600;
-if (! $tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
+if (!$tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
     $tpl->assign('channel_title', $myts->htmlSpecialChars($xoops->getConfig('sitename')));
     $tpl->assign('channel_link', $xoops_url . '/');
     $tpl->assign('channel_desc', $myts->htmlSpecialChars($xoops->getConfig('slogan')));
@@ -50,16 +47,13 @@ if (! $tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
     $tpl->assign('channel_category', 'News');
     $tpl->assign('channel_generator', 'XOOPS');
     $tpl->assign('channel_language', XoopsLocale::getLangCode());
-
     $xoTheme = $xoops->theme();
     $imgPath = $xoTheme->resourcePath('/images/logo.png');
     $tpl->assign('image_url', $xoops->url($imgPath));
     $dimension = getimagesize($xoops->path($imgPath));
     $tpl->assign('image_width', $dimension[0]);
     $tpl->assign('image_height', $dimension[1]);
-
     $items = [];
-
     if ($xoops->isModule()) {
         /* @var $plugin SystemPluginInterface */
         $plugin = Xoops\Module\Plugin::getPlugin($dirname, 'system');
@@ -97,6 +91,5 @@ if (! $tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
     }
     array_multisort($date, SORT_DESC, $items);
     $tpl->assign('items', $items);
-
 }
 $tpl->display('module:' . $dirname . '/system_rss.tpl');

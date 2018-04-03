@@ -10,6 +10,7 @@
  */
 
 namespace Xoops\Module;
+
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -29,7 +30,7 @@ class Helper
         static $modules = [];
 
         $dirname = strtolower($dirname);
-        if (! isset($modules[$dirname])) {
+        if (!isset($modules[$dirname])) {
             $modules[$dirname] = false;
             $xoops = \Xoops::getInstance();
             if ($xoops->isActiveModule($dirname)) {

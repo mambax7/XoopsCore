@@ -11,8 +11,8 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-use \DateTime;
-use \DateTimeZone;
+use DateTime;
+use DateTimeZone;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 

@@ -22,7 +22,7 @@ function smarty_function_addBaseStylesheet($params, Smarty_Internal_Template $sm
     if (isset($params['assets'])) {
         $assets = explode(',', $params['assets']);
     }
-    if (! empty($assets)) {
+    if (!empty($assets)) {
         $xoops->theme()->addBaseStylesheetAssets($assets);
     }
     return '';

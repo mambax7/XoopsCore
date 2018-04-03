@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 // _LANGCODE: en
 // _CHARSET : UTF-8
@@ -11,5 +12,3 @@ Once the upgrade process is fully completed please <stong>go to module administr
 To cancel the upgrade, <a href='index.php'>click here</a>.<br /><br />
 Or to <a style='color:green; font-size:1.3em;' href='index.php?action=next&upd220=ok'>proceed</a>.
 ");
-
-?>

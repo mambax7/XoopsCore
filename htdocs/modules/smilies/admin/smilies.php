@@ -88,7 +88,7 @@ switch ($op) {
 
     // Save smilie
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('smilies.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
@@ -110,7 +110,7 @@ switch ($op) {
             $uploader = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path') . '/smilies', $mimetypes, $upload_size, null, null);
             if ($uploader->fetchMedia($xoops_upload_file[0])) {
                 $uploader->setPrefix('smil');
-                if (! $uploader->upload()) {
+                if (!$uploader->upload()) {
                     $error_msg .= $uploader->getErrors();
                     $obj->setVar('smiley_url', 'blank.gif');
                 } else {
@@ -139,7 +139,7 @@ switch ($op) {
         $obj = $helper->getHandlerSmilies()->get($smiley_id);
 
         if ($ok === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('smilies.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             $path_file = \XoopsBaseConfig::get('uploads-path') . '/' . $obj->getVar('smile_url');
@@ -166,7 +166,7 @@ switch ($op) {
         if ($smiley_id > 0) {
             $obj = $helper->getHandlerSmilies()->get($smiley_id);
             $old = $obj->getVar('smiley_display');
-            $obj->setVar('smiley_display', ! $old);
+            $obj->setVar('smiley_display', !$old);
             if ($helper->getHandlerSmilies()->insert($obj)) {
                 exit;
             }

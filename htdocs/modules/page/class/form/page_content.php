@@ -42,8 +42,8 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
 
         //Author
 //        if ($helper->isUserAdmin()) {
-            $content_author = $obj->isNew() ? $xoops->user->getVar('uid') : $obj->getVar('content_author');
-            $tab1->addElement(new Xoops\Form\SelectUser(XoopsLocale::AUTHOR, 'content_author', true, $content_author, 1, false), true);
+        $content_author = $obj->isNew() ? $xoops->user->getVar('uid') : $obj->getVar('content_author');
+        $tab1->addElement(new Xoops\Form\SelectUser(XoopsLocale::AUTHOR, 'content_author', true, $content_author, 1, false), true);
 //        }
         //date
         $tab1->addElement(new Xoops\Form\DateTimeSelect(XoopsLocale::DATE, 'content_create', $obj->getVar('content_create')));
@@ -112,7 +112,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
             //permissions
             $group_list = $xoops->getHandlerMember()->getGroupList();
             $full_list = array_keys($group_list);
-            if (! $obj->isNew()) {
+            if (!$obj->isNew()) {
                 $module_id = $helper->getModule()->getVar('mid', 'n');
                 $groups_ids_view = $helper->getGrouppermHandler()->getGroupIds('page_view_item', $obj->getVar('content_id'), $module_id);
                 $groups_ids_view = array_values($groups_ids_view);

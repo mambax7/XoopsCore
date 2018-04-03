@@ -34,7 +34,7 @@ if (is_object($xoops->user)) {
     $groups = $xoops->user->getGroups();
 }
 $all_ok = false;
-if (! in_array(FixedGroups::ADMIN, $groups, true)) {
+if (!in_array(FixedGroups::ADMIN, $groups, true)) {
     $sysperm_handler = $xoops->getHandlerGroupPermission();
     $ok_syscats = $sysperm_handler->getItemIds('system_admin', $groups);
 } else {

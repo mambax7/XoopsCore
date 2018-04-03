@@ -51,7 +51,7 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
             ->orderBy('content_create', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit);
-        if (is_array($queryArray) && ! empty($queryArray)) {
+        if (is_array($queryArray) && !empty($queryArray)) {
             $queryParts = [];
             foreach ($queryArray as $i => $q) {
                 $qterm = ':qterm' . $i;

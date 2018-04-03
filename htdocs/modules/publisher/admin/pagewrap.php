@@ -29,7 +29,7 @@ PublisherUtils::openCollapsableBar('pagewraptable', 'pagewrapicon', _AM_PUBLISHE
 
 $dir = PublisherUtils::getUploadDir(true, 'content');
 
-if (! preg_match('/777/i', decoct(fileperms($dir)))) {
+if (!preg_match('/777/i', decoct(fileperms($dir)))) {
     echo "<font color='FF0000'><h4>" . _AM_PUBLISHER_PERMERROR . '</h4></font>';
 }
 

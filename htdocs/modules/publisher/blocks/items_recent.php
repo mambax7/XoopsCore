@@ -55,7 +55,6 @@ function publisher_items_recent_show($options)
 
     if ($itemsObj) {
         for ($i = 0; $i < $totalItems; ++$i) {
-
             $newItems['itemid'] = $itemsObj[$i]->getVar('itemid');
             $newItems['title'] = $itemsObj[$i]->title();
             $newItems['categoryname'] = $itemsObj[$i]->getCategoryName();

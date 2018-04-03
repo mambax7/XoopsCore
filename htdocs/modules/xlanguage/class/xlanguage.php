@@ -160,7 +160,7 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
         $name = empty($name) ? $xoops->getConfig('locale') : strtolower($name);
 
         $file_config = $xoops->registry()->get('XLANGUAGE_CONFIG_FILE');
-        if (! XoopsLoad::fileExists($file_config) || ! isset($this->cached_config)) {
+        if (!XoopsLoad::fileExists($file_config) || !isset($this->cached_config)) {
             $this->loadConfig();
         }
 
@@ -210,14 +210,13 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
         $paths = explode('/', $pathname);
 
         foreach ($paths as $path) {
-            if (! empty($path)) {
+            if (!empty($path)) {
                 $dest = $dest . '/' . $path;
-                if (! is_dir($dest)) {
-                    if (! mkdir($dest, 0755)) {
+                if (!is_dir($dest)) {
+                    if (!mkdir($dest, 0755)) {
                         return false;
                     }
-                        $this->writeIndex($xoops->path('uploads'), 'index.html', $dest);
-
+                    $this->writeIndex($xoops->path('uploads'), 'index.html', $dest);
                 }
             }
         }
@@ -229,8 +228,8 @@ class XlanguageXlanguageHandler extends XoopsPersistableObjectHandler
      */
     private function writeIndex($folder_in, $source_file, $folder_out)
     {
-        if (! is_dir($folder_out)) {
-            if (! $this->createPath($folder_out)) {
+        if (!is_dir($folder_out)) {
+            if (!$this->createPath($folder_out)) {
                 return false;
             }
         }

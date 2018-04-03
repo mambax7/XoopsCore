@@ -61,7 +61,7 @@ class XoopsInstallWizard
         }
 
         // Load the main language file
-        $this->initLanguage(! empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'en_US');
+        $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'en_US');
         // Setup pages
         $pages = [];
         include_once dirname(__DIR__) . '/include/page.php';
@@ -72,7 +72,7 @@ class XoopsInstallWizard
         include_once dirname(__DIR__) . '/include/config.php';
         $this->configs = $configs;
 
-        if (! $this->checkAccess()) {
+        if (!$this->checkAccess()) {
             return false;
         }
 
@@ -92,7 +92,7 @@ class XoopsInstallWizard
     {
         global $xoopsOption;
         if (INSTALL_USER !== '' && INSTALL_PASSWORD !== '') {
-            if (! isset($_SERVER['PHP_AUTH_USER'])) {
+            if (!isset($_SERVER['PHP_AUTH_USER'])) {
                 header('WWW-Authenticate: Basic realm="XOOPS Installer"');
                 header('HTTP/1.0 401 Unauthorized');
                 echo 'You can not access this XOOPS installer.';
@@ -110,19 +110,19 @@ class XoopsInstallWizard
             }
         }
 
-        if (! isset($xoopsOption['checkadmin']) || ! $xoopsOption['checkadmin']) {
+        if (!isset($xoopsOption['checkadmin']) || !$xoopsOption['checkadmin']) {
             return true;
         }
 
         $xoops = Xoops::getInstance();
-        if (! $xoops->isUser() && ! empty($_COOKIE['xo_install_user'])) {
+        if (!$xoops->isUser() && !empty($_COOKIE['xo_install_user'])) {
             install_acceptUser($_COOKIE['xo_install_user']);
         }
 
-        if (! $xoops->isUser()) {
+        if (!$xoops->isUser()) {
             $xoops->redirect($xoops->url('user.php'));
         }
-        if (! $xoops->isAdmin()) {
+        if (!$xoops->isAdmin()) {
             return false;
         }
         return true;
@@ -147,7 +147,7 @@ class XoopsInstallWizard
     public function initLanguage($language)
     {
         $language = preg_replace("/[^a-z0-9_\-]/i", '', $language);
-        if (! file_exists(XOOPS_INSTALL_PATH . "/locale/{$language}/install.php")) {
+        if (!file_exists(XOOPS_INSTALL_PATH . "/locale/{$language}/install.php")) {
             $language = 'en_US';
         }
         $this->language = $language;
@@ -174,7 +174,7 @@ class XoopsInstallWizard
             }
         }
 
-        if ($this->pageIndex > 0 && ! isset($_COOKIE['xo_install_lang'])) {
+        if ($this->pageIndex > 0 && !isset($_COOKIE['xo_install_lang'])) {
             header('Location: index.php');
         }
 
@@ -199,7 +199,7 @@ class XoopsInstallWizard
     {
         $pages = array_keys($this->pages);
         $pageIndex = $this->pageIndex;
-        if (! (int) $page{0}) {
+        if (!(int) $page{0}) {
             if ($page{0} === '+') {
                 $pageIndex += substr($page, 1);
             } else {
@@ -210,12 +210,11 @@ class XoopsInstallWizard
                 }
             }
         }
-        if (! isset($pages[$pageIndex])) {
+        if (!isset($pages[$pageIndex])) {
             if (defined('XOOPS_URL')) {
                 return XOOPS_URL . '/';
             }
-                return $this->baseLocation();
-
+            return $this->baseLocation();
         }
         $page = $pages[$pageIndex];
         return $this->baseLocation() . "/page_{$page}.php";
@@ -229,7 +228,7 @@ class XoopsInstallWizard
     public function redirectToPage($page, $status = 303, $message = 'See other')
     {
         $location = $this->pageURI($page);
-        $proto = ! @empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+        $proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
         header("{$proto} {$status} {$message}");
         //header( "Status: $status $message" );
         header("Location: {$location}");
@@ -251,7 +250,7 @@ class XoopsInstallWizard
             foreach ($form->getElements() as $ele) {
                 //todo, ain't this always a object on 2.6?
                 if ($ele instanceof Xoops\Form\Element) {
-                    if (! $ele->isHidden()) {
+                    if (!$ele->isHidden()) {
                         if (($caption = $ele->getCaption()) !== '') {
                             $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . '</label>';
                             if (($desc = $ele->getDescription()) !== '') {
@@ -271,9 +270,10 @@ class XoopsInstallWizard
         return $ret;
     }
 
-    function cleanCache($cacheFolder) {
+    public function cleanCache($cacheFolder)
+    {
         $cache = [1, 2, 3];
-        if (! empty($cache)) {
+        if (!empty($cache)) {
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
@@ -306,7 +306,6 @@ class XoopsInstallWizard
             }
             return true;
         }
-            return false;
-
+        return false;
     }
 }

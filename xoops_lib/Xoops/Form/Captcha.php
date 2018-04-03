@@ -74,7 +74,7 @@ class Captcha extends Element
         $configs = $this->captchaHandler->loadConfig();
 
         $this->captchaHandler->setConfigs($configs);
-        if (! $this->captchaHandler->isActive()) {
+        if (!$this->captchaHandler->isActive()) {
             $this->setHidden();
         }
     }

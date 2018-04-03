@@ -38,7 +38,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
     public function __construct($attributes = [])
     {
         parent::__construct([]);
-        if (! empty($attributes)) {
+        if (!empty($attributes)) {
             $this->setAll($attributes);
         }
     }
@@ -59,7 +59,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
             $values = (array) $values;
         }
         foreach ($value as $v) {
-            if (! in_array($v, $values, true)) {
+            if (!in_array($v, $values, true)) {
                 $values[] = $v;
             }
         }
@@ -75,7 +75,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
     {
         $rendered = '';
         foreach ($this as $name => $value) {
-            if (! $this->doRender($name)) {
+            if (!$this->doRender($name)) {
                 continue;
             }
             if ($name === 'name'
@@ -237,7 +237,7 @@ class Attributes extends \ArrayObject implements AttributeInterface
         $newValue = [];
         if ($this->offsetExists($stem)) {
             $newValue = $this->offsetGet($stem);
-            if (! is_array($newValue)) {
+            if (!is_array($newValue)) {
                 $newValue = [];
             }
         }

@@ -79,7 +79,7 @@ class XoopsXmlRss2Parser extends SaxParser
      */
     public function setChannelData($name, &$value)
     {
-        if (! isset($this->_channelData[$name])) {
+        if (!isset($this->_channelData[$name])) {
             $this->_channelData[$name] = $value;
         } else {
             $this->_channelData[$name] .= $value;
@@ -149,7 +149,7 @@ class XoopsXmlRss2Parser extends SaxParser
      */
     public function setTempArr($name, &$value, $delim = '')
     {
-        if (! isset($this->_tempArr[$name])) {
+        if (!isset($this->_tempArr[$name])) {
             $this->_tempArr[$name] = $value;
         } else {
             $this->_tempArr[$name] .= $delim . $value;

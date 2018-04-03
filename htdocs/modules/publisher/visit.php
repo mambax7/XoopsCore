@@ -40,7 +40,7 @@ if ($fileObj->getVar('status') !== _PUBLISHER_STATUS_FILE_ACTIVE) {
 $itemObj = $publisher->getItemHandler()->get($fileObj->getVar('itemid'));
 
 // Check user permissions to access this file
-if (! $itemObj->accessGranted()) {
+if (!$itemObj->accessGranted()) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 // Creating the category object that holds the selected ITEM
@@ -48,7 +48,7 @@ $categoryObj = $itemObj->category();
 
 $fileObj->updateCounter();
 
-if (! preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {
+if (!preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {
     header('Location: ' . $fileObj->getFileUrl());
 }
 

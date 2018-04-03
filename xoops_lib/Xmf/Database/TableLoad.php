@@ -128,7 +128,7 @@ class TableLoad
         $result = $qb->execute();
         $rows = $result->fetchAll();
 
-        if (! empty($skipColumns)) {
+        if (!empty($skipColumns)) {
             foreach ($rows as $index => $row) {
                 foreach ($skipColumns as $column) {
                     unset($rows[$index][$column]);

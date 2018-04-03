@@ -71,7 +71,7 @@ class LoggerPreload extends PreloadItem
      */
     public static function eventCoreDatabaseNoconn($args)
     {
-        if (! class_exists('LegacyLogger')) {
+        if (!class_exists('LegacyLogger')) {
             return;
         }
         /* @var $db Xoops\Core\Database\Connection */
@@ -86,7 +86,7 @@ class LoggerPreload extends PreloadItem
      */
     public static function eventCoreDatabaseNodb($args)
     {
-        if (! class_exists('LegacyLogger')) {
+        if (!class_exists('LegacyLogger')) {
             return;
         }
         /* @var $db Xoops\Core\Database\Connection */
@@ -170,7 +170,7 @@ class LoggerPreload extends PreloadItem
             $tpl->debugging_ctrl = 'URL';
         }
         if ($configs['debug_smarty_enable']) {
-                $tpl->debugging = true;
+            $tpl->debugging = true;
         }
     }
 

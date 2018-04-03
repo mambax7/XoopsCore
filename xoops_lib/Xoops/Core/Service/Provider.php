@@ -171,8 +171,7 @@ class Provider
             if ($a->getPriority() !== $b->getPriority()) {
                 return ($a->getPriority() > $b->getPriority()) ? 1 : -1;
             }
-                return 0;
-
+            return 0;
         });
         $this->providers = $sortable;
     }

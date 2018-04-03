@@ -34,7 +34,6 @@ if (publisher_pagewrap_upload($errors)) {
 
 function publisher_pagewrap_upload(&$errors)
 {
-
     $publisher = Publisher::getInstance();
     $post_field = 'fileupload';
 
@@ -42,7 +41,7 @@ function publisher_pagewrap_upload(&$errors)
     $max_imgwidth = $publisher->getConfig('maximum_image_width');
     $max_imgheight = $publisher->getConfig('maximum_image_height');
 
-    if (! is_dir(PublisherUtils::getUploadDir(true, 'content'))) {
+    if (!is_dir(PublisherUtils::getUploadDir(true, 'content'))) {
         mkdir(PublisherUtils::getUploadDir(true, 'content'), 0757);
     }
     $allowed_mimetypes = ['text/html', 'text/plain', 'application/xhtml+xml'];
@@ -52,11 +51,9 @@ function publisher_pagewrap_upload(&$errors)
         if ($uploader->upload()) {
             return true;
         }
-            $errors = array_merge($errors, $uploader->getErrors(false));
-            return false;
-
-    }
         $errors = array_merge($errors, $uploader->getErrors(false));
         return false;
-
+    }
+    $errors = array_merge($errors, $uploader->getErrors(false));
+    return false;
 }

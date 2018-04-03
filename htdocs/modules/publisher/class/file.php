@@ -75,7 +75,7 @@ class PublisherFile extends XoopsObject
     public function checkUpload($post_field, $allowed_mimetypes = [], &$errors)
     {
         $errors = [];
-        if (! $this->publisher->getMimetypeHandler()->checkMimeTypes($post_field)) {
+        if (!$this->publisher->getMimetypeHandler()->checkMimeTypes($post_field)) {
             $errors[] = _CO_PUBLISHER_MESSAGE_WRONG_MIMETYPE;
             return false;
         }
@@ -89,9 +89,8 @@ class PublisherFile extends XoopsObject
         if ($uploader->fetchMedia($post_field)) {
             return true;
         }
-            $errors = array_merge($errors, $uploader->getErrors(false));
-            return false;
-
+        $errors = array_merge($errors, $uploader->getErrors(false));
+        return false;
     }
 
     /**
@@ -110,7 +109,7 @@ class PublisherFile extends XoopsObject
         $maxfilesize = $this->publisher->getConfig('maximum_filesize');
         $maxfilewidth = $this->publisher->getConfig('maximum_image_width');
         $maxfileheight = $this->publisher->getConfig('maximum_image_height');
-        if (! is_dir(PublisherUtils::getUploadDir())) {
+        if (!is_dir(PublisherUtils::getUploadDir())) {
             mkdir(PublisherUtils::getUploadDir(), 0757);
         }
         $uploader = new XoopsMediaUploader(PublisherUtils::getUploadDir() . '/', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
@@ -124,13 +123,11 @@ class PublisherFile extends XoopsObject
                 $this->setVar('mimetype', $uploader->getMediaType());
                 return true;
             }
-                $errors = array_merge($errors, $uploader->getErrors(false));
-                return false;
-
-        }
             $errors = array_merge($errors, $uploader->getErrors(false));
             return false;
-
+        }
+        $errors = array_merge($errors, $uploader->getErrors(false));
+        return false;
     }
 
     /**
@@ -149,7 +146,7 @@ class PublisherFile extends XoopsObject
             } else {
                 $ret = true;
             }
-            if (! $ret) {
+            if (!$ret) {
                 foreach ($errors as $error) {
                     $this->setErrors($error);
                 }
@@ -290,7 +287,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
         $files = $this->getAllFiles($itemObj->getVar('itemid'));
         $result = true;
         foreach ($files as $file) {
-            if (! $this->delete($file)) {
+            if (!$this->delete($file)) {
                 $result = false;
             }
         }

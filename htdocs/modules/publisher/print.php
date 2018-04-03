@@ -41,7 +41,7 @@ if ($itemObj->notLoaded()) {
 }
 
 // Check user permissions to access that category of the selected ITEM
-if (! $itemObj->accessGranted()) {
+if (!$itemObj->accessGranted()) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 

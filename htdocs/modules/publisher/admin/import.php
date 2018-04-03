@@ -98,7 +98,6 @@ switch ($op) {
 
 
         if (isset($importfile_select_array) && count($importfile_select_array) > 0) {
-
             $sform = new Xoops\Form\ThemeForm(_AM_PUBLISHER_IMPORT_SELECTION, 'op', xoops_getenv('PHP_SELF'));
             $sform->setExtra('enctype="multipart/form-data"');
 

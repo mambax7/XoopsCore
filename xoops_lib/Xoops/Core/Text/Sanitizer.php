@@ -243,7 +243,7 @@ class Sanitizer extends SanitizerConfigurable
             $text = $this->executeFilter($filter, $text);
         }
 
-        if (! (bool) $html) {
+        if (!(bool) $html) {
             // html not allowed, so escape any special chars
             // don't mess with quotes or shortcodes will fail
             $text = htmlspecialchars($text, ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
@@ -442,7 +442,7 @@ class Sanitizer extends SanitizerConfigurable
     {
         if ($this->config->has($name)) {
             $this->config[$name]['enabled'] = true;
-            if($this->extensionsLoaded) {
+            if ($this->extensionsLoaded) {
                 $this->extensionsLoaded = false;
             }
             $this->registerExtensions();
@@ -534,7 +534,7 @@ class Sanitizer extends SanitizerConfigurable
      */
     protected function registerExtensions()
     {
-        if (! $this->extensionsLoaded) {
+        if (!$this->extensionsLoaded) {
             $this->extensionsLoaded = true;
             $extensions = $this->listExtensions();
 
@@ -590,7 +590,7 @@ class Sanitizer extends SanitizerConfigurable
     protected function loadExtension($name)
     {
         $extension = $this->loadComponent($name);
-        if (! ($extension instanceof Sanitizer\ExtensionAbstract)) {
+        if (!($extension instanceof Sanitizer\ExtensionAbstract)) {
             $extension = new Sanitizer\NullExtension($this);
         }
         return $extension;
@@ -606,7 +606,7 @@ class Sanitizer extends SanitizerConfigurable
     protected function loadFilter($name)
     {
         $filter = $this->loadComponent($name);
-        if (! ($filter instanceof Sanitizer\FilterAbstract)) {
+        if (!($filter instanceof Sanitizer\FilterAbstract)) {
             $filter = new Sanitizer\NullFilter($this);
         }
         return $filter;

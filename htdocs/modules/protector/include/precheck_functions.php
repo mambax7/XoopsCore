@@ -25,7 +25,7 @@
 function protector_precheck()
 {
     // check the access is from install/index.php
-    if (defined('_INSTALL_CHARSET') && ! is_writable(\XoopsBaseConfig::get('root-path') . '/mainfile.php')) {
+    if (defined('_INSTALL_CHARSET') && !is_writable(\XoopsBaseConfig::get('root-path') . '/mainfile.php')) {
         die('To use installer, remove protector\'s lines from mainfile.php first.');
     }
 
@@ -53,50 +53,50 @@ function protector_precheck()
     }
 
     // global enabled or disabled
-    if (! empty($conf['global_disabled'])) {
+    if (!empty($conf['global_disabled'])) {
         return true;
     }
 
     // reliable ips
     $reliable_ips = @unserialize(@$conf['reliable_ips']);
-    if (! is_array($reliable_ips)) {
+    if (!is_array($reliable_ips)) {
         // for the environment of (buggy core version && magic_quotes_gpc)
         $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']));
-        if (! is_array($reliable_ips)) {
+        if (!is_array($reliable_ips)) {
             $reliable_ips = [];
         }
     }
     $is_reliable = false;
     foreach ($reliable_ips as $reliable_ip) {
-        if (! empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+        if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
             $is_reliable = true;
         }
     }
 
     // "Big Umbrella" subset version
-    if (! empty($conf['enable_bigumbrella'])) {
+    if (!empty($conf['enable_bigumbrella'])) {
         @define('PROTECTOR_ENABLED_ANTI_XSS', 1);
         $protector->bigumbrella_init();
     }
 
     // force intval variables whose name is *id
-    if (! empty($conf['id_forceintval'])) {
+    if (!empty($conf['id_forceintval'])) {
         $protector->intval_allrequestsendid();
     }
 
     // eliminate '..' from requests looks like file specifications
-    if (! $is_reliable && ! empty($conf['file_dotdot'])) {
+    if (!$is_reliable && !empty($conf['file_dotdot'])) {
         $protector->eliminate_dotdot();
     }
 
     // Check uploaded files
-    if (! $is_reliable && ! empty($_FILES) && ! empty($conf['die_badext']) && ! defined('PROTECTOR_SKIP_FILESCHECKER') && ! $protector->check_uploaded_files()) {
+    if (!$is_reliable && !empty($_FILES) && !empty($conf['die_badext']) && !defined('PROTECTOR_SKIP_FILESCHECKER') && !$protector->check_uploaded_files()) {
         $protector->output_log($protector->last_error_type);
         $protector->purge();
     }
 
     // Variables contamination
-    if (! $protector->check_contami_systemglobals()) {
+    if (!$protector->check_contami_systemglobals()) {
         if (@$conf['contami_action'] & 4) {
             if (@$conf['contami_action'] & 8) {
                 $protector->_should_be_banned = true;
@@ -117,7 +117,7 @@ function protector_precheck()
     //  $protector->output_log( $protector->last_error_type , 0 , true ) ;
     //}
 
-    if (! empty($conf['disable_features'])) {
+    if (!empty($conf['disable_features'])) {
         $protector->disable_features();
     }
     return true;

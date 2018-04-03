@@ -21,15 +21,11 @@
 
 class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 {
-    var
+    public $purifier;
 
- $purifier;
+    public $method;
 
-    var
-
- $method;
-
-    function execute()
+    public function execute()
     {
         $xoops = Xoops::getInstance();
 
@@ -50,12 +46,11 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
         return true;
     }
 
-    function purify_recursive($data)
+    public function purify_recursive($data)
     {
         if (is_array($data)) {
             return array_map([$this, 'purify_recursive'], $data);
         }
-            return strlen($data) > 32 ? call_user_func([$this->purifier, $this->method], $data) : $data;
-
+        return strlen($data) > 32 ? call_user_func([$this->purifier, $this->method], $data) : $data;
     }
 }

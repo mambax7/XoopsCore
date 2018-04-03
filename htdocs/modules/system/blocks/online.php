@@ -25,7 +25,7 @@ function b_system_online_show()
 {
     $xoops = Xoops::getInstance();
     $online_handler = $xoops->getHandlerOnline();
-    mt_srand((double) microtime() * 1000000);
+    mt_srand((float) microtime() * 1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
         $online_handler->gc(300);
@@ -68,6 +68,5 @@ function b_system_online_show()
         $block['lang_more'] = XoopsLocale::MORE;
         return $block;
     }
-        return false;
-
+    return false;
 }

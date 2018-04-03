@@ -52,7 +52,7 @@ if ($op === 'login') {
 }
 
 if ($op === 'main') {
-    if (! $xoops->isUser()) {
+    if (!$xoops->isUser()) {
         $xoops->header('module:system/system_userform.tpl');
         $xoops->tpl()->assign('xoops_pagetitle', XoopsLocale::A_LOGIN);
         $xoops->theme()->addMeta(
@@ -67,7 +67,7 @@ if ($op === 'main') {
         );
         $xoops->tpl()->assign('lang_login', XoopsLocale::A_LOGIN);
         $xoops->tpl()->assign('lang_username', XoopsLocale::C_USERNAME);
-        if (! empty($xoops_redirect)) {
+        if (!empty($xoops_redirect)) {
             $xoops->tpl()->assign('redirect_page', htmlspecialchars($xoops_redirect, ENT_QUOTES));
         }
         if ($xoops->getConfig('usercookie')) {
@@ -81,7 +81,7 @@ if ($op === 'main') {
         $xoops->tpl()->assign('mailpasswd_token', $xoops->security()->createToken());
         $xoops->footer();
     }
-    if (! empty($xoops_redirect)) {
+    if (!empty($xoops_redirect)) {
         $redirect = $xoops_redirect;
         $isExternal = false;
         if ($pos = strpos($redirect, '://')) {
@@ -90,7 +90,7 @@ if ($op === 'main') {
                 $isExternal = true;
             }
         }
-        if (! $isExternal) {
+        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
@@ -112,7 +112,7 @@ if ($op === 'logout') {
 
 if ($op === 'delete') {
     $xoopsConfigUser = $xoops->getConfigs();
-    if (! $xoops->isUser() || $xoopsConfigUser['self_delete'] !== 1) {
+    if (!$xoops->isUser() || $xoopsConfigUser['self_delete'] !== 1) {
         $xoops->redirect('index.php', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
     } else {
         $groups = $xoops->user->getGroups();
@@ -120,7 +120,7 @@ if ($op === 'delete') {
             // users in the webmasters group may not be deleted
             $xoops->redirect('user.php', 5, XoopsLocale::E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED);
         }
-        if (! (bool) $ok) {
+        if (!(bool) $ok) {
             $xoops->header();
             echo $xoops->confirm(
                 ['op' => 'delete', 'ok' => 1],

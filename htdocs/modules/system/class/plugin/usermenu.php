@@ -23,7 +23,7 @@ class SystemUsermenuPlugin implements UsermenuPluginInterface
     {
         $xoops = \Xoops::getInstance();
         $ret = [];
-        if (! $xoops->isActiveModule('profile')) {
+        if (!$xoops->isActiveModule('profile')) {
             // View Account
             $ret[] = [
                 'name' => XoopsLocale::VIEW_ACCOUNT,
@@ -49,7 +49,7 @@ class SystemUsermenuPlugin implements UsermenuPluginInterface
         }
 
         // Inbox
-        if (! $xoops->isActiveModule('pm')) {
+        if (!$xoops->isActiveModule('pm')) {
             $criteria = new CriteriaCompo(new Criteria('read_msg', 0));
             $criteria->add(new Criteria('to_userid', $xoops->user->getVar('uid')));
             $pm_handler = $xoops->getHandlerPrivateMessage();

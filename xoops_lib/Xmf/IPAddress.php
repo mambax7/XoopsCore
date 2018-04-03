@@ -32,7 +32,7 @@ class IPAddress
      */
     public function __construct($ip)
     {
-        if (! filter_var((string) $ip, FILTER_VALIDATE_IP)) {
+        if (!filter_var((string) $ip, FILTER_VALIDATE_IP)) {
             $this->ip = false;
         } else {
             $this->ip = $this->normalize($ip);

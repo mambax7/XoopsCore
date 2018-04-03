@@ -47,7 +47,7 @@ abstract class SanitizerConfigurable
         } elseif (is_a($defaults['configured_class'], 'Xoops\Core\Text\Sanitizer', true)) {
             $defaults['type'] = 'sanitizer';
         }
-        if (! array_key_exists('enabled', $defaults)) {
+        if (!array_key_exists('enabled', $defaults)) {
             $defaults['enabled'] = false;
         }
         $return[strtolower($shortName)] = $defaults;

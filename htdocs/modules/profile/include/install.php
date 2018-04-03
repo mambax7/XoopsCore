@@ -29,7 +29,6 @@ use Xoops\Core\Kernel\Dtype;
  */
 function xoops_module_install_profile($module)
 {
-
     $xoops = Xoops::getInstance();
     $xoops->registry()->set('profile_id', $module->getVar('mid'));
 
@@ -82,7 +81,6 @@ function profile_install_initializeProfiles()
 
     $sql = 'INSERT INTO ' . $xoopsDB->prefix('system_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) ' . ' VALUES ' . ' (' . FixedGroups::ADMIN . ', ' . FixedGroups::ADMIN . ", {$module_id}, 'profile_access'), " . ' (' . FixedGroups::ADMIN . ', ' . FixedGroups::USERS . ", {$module_id}, 'profile_access'), " . ' (' . FixedGroups::USERS . ', ' . FixedGroups::USERS . ", {$module_id}, 'profile_access'), " . ' (' . FixedGroups::ANONYMOUS . ', ' . FixedGroups::USERS . ", {$module_id}, 'profile_access') " . ' ';
     $xoopsDB->queryF($sql);
-
 }
 
 // canedit: 0 - no; 1 - admin; 2 - admin & owner

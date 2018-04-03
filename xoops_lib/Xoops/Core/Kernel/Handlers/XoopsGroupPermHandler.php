@@ -111,20 +111,20 @@ class XoopsGroupPermHandler extends XoopsPersistableObjectHandler
         if (empty($gperm_groupid)) {
             return false;
         }
-            if (is_array($gperm_groupid)) {
-                if (in_array(FixedGroups::ADMIN, $gperm_groupid, true) && $trueifadmin) {
-                    return true;
-                }
-                $criteria_group = new CriteriaCompo();
-                foreach ($gperm_groupid as $gid) {
-                    $criteria_group->add(new Criteria('gperm_groupid', (int) ($gid)), 'OR');
-                }
-            } else {
-                if ($gperm_groupid === FixedGroups::ADMIN && $trueifadmin) {
-                    return true;
-                }
-                $criteria_group = new CriteriaCompo(new Criteria('gperm_groupid', (int) ($gperm_groupid)));
+        if (is_array($gperm_groupid)) {
+            if (in_array(FixedGroups::ADMIN, $gperm_groupid, true) && $trueifadmin) {
+                return true;
             }
+            $criteria_group = new CriteriaCompo();
+            foreach ($gperm_groupid as $gid) {
+                $criteria_group->add(new Criteria('gperm_groupid', (int) ($gid)), 'OR');
+            }
+        } else {
+            if ($gperm_groupid === FixedGroups::ADMIN && $trueifadmin) {
+                return true;
+            }
+            $criteria_group = new CriteriaCompo(new Criteria('gperm_groupid', (int) ($gperm_groupid)));
+        }
 
         $criteria = new CriteriaCompo(new Criteria('gperm_modid', (int) ($gperm_modid)));
         $criteria->add($criteria_group);

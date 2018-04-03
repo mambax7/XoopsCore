@@ -24,7 +24,6 @@
  */
 function protector_postcheck()
 {
-
     $xoops = Xoops::getInstance();
     $xoops->db();
     global $xoopsDB;
@@ -39,7 +38,7 @@ function protector_postcheck()
     }
 
     // configs writable check
-    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && ! is_writable(dirname(__DIR__) . '/configs')) {
+    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
 
@@ -64,7 +63,7 @@ function protector_postcheck()
     }
 
     // global enabled or disabled
-    if (! empty($conf['global_disabled'])) {
+    if (!empty($conf['global_disabled'])) {
         return true;
     }
 
@@ -83,7 +82,7 @@ function protector_postcheck()
     $reliable_ips = @unserialize(@$conf['reliable_ips']);
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
-            if (! empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+            if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
                 return true;
             }
         }
@@ -95,7 +94,7 @@ function protector_postcheck()
         $can_ban = count(@array_intersect($xoops->user->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
     } else {
         // login failed check
-        if ((! empty($_POST['uname']) && ! empty($_POST['pass'])) || (! empty($_COOKIE['autologin_uname']) && ! empty($_COOKIE['autologin_pass']))) {
+        if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
             $protector->check_brute_force();
         }
         $uid = 0;
@@ -118,7 +117,7 @@ function protector_postcheck()
     // DOS/CRAWLER skipping based on 'dirname' or getcwd()
     $dos_skipping = false;
     $skip_dirnames = explode('|', @$conf['dos_skipmodules']);
-    if (! is_array($skip_dirnames)) {
+    if (!is_array($skip_dirnames)) {
         $skip_dirnames = [];
     }
     if ($xoops->isModule()) {
@@ -140,7 +139,7 @@ function protector_postcheck()
     }
 
     // DoS Attack
-    if (empty($dos_skipping) && ! $protector->check_dos_attack($uid, $can_ban)) {
+    if (empty($dos_skipping) && !$protector->check_dos_attack($uid, $can_ban)) {
         $protector->output_log($protector->last_error_type, $uid, true, 16);
     }
 
@@ -150,7 +149,7 @@ function protector_postcheck()
     $ips = explode('.', $_SERVER['REMOTE_ADDR']);
     $remote_numip = @$ips[0] * 0x1000000 + @$ips[1] * 0x10000 + @$ips[2] * 0x100 + @$ips[3];
     $shift = 32 - @$conf['session_fixed_topbit'];
-    if ($shift < 32 && $shift >= 0 && ! empty($_SESSION['protector_last_ip']) && $protector_last_numip >> $shift !== $remote_numip >> $shift) {
+    if ($shift < 32 && $shift >= 0 && !empty($_SESSION['protector_last_ip']) && $protector_last_numip >> $shift !== $remote_numip >> $shift) {
         if ($xoops->isUser() && count(array_intersect($xoops->user->getGroups(), unserialize($conf['groups_denyipmove'])))) {
             $protector->purge(true);
         }
@@ -158,7 +157,7 @@ function protector_postcheck()
     $_SESSION['protector_last_ip'] = $_SERVER['REMOTE_ADDR'];
 
     // SQL Injection "Isolated /*"
-    if (! $protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
+    if (!$protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
         if (($conf['isocom_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } else {
@@ -173,7 +172,7 @@ function protector_postcheck()
     }
 
     // SQL Injection "UNION"
-    if (! $protector->check_sql_union(@$conf['union_action'] & 1)) {
+    if (!$protector->check_sql_union(@$conf['union_action'] & 1)) {
         if (($conf['union_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } else {
@@ -187,15 +186,14 @@ function protector_postcheck()
         }
     }
 
-    if (! empty($_POST)) {
+    if (!empty($_POST)) {
         // SPAM Check
         if ($xoops->isUser()) {
-            if (! $xoops->user->isAdmin() && $conf['spamcount_uri4user']) {
+            if (!$xoops->user->isAdmin() && $conf['spamcount_uri4user']) {
                 $protector->spam_check((int) ($conf['spamcount_uri4user']), $xoops->user->getVar('uid'));
             }
         } else {
             if ($conf['spamcount_uri4guest']) {
-
                 $protector->spam_check((int) ($conf['spamcount_uri4guest']), 0);
             }
         }

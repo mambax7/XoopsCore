@@ -28,7 +28,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $search = $xoops->getModuleHelper('search');
-if (! $search->getConfig('enable_search')) {
+if (!$search->getConfig('enable_search')) {
     header('Location: ' . XOOPS_URL . '/index.php');
     exit();
 }
@@ -115,7 +115,7 @@ switch ($action) {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
         $modules = $module_handler->getObjectsArray($criteria, true);
-        if (empty($mids) || ! is_array($mids)) {
+        if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
         }
@@ -148,18 +148,18 @@ switch ($action) {
                 }
                 $res = [];
                 for ($i = 0; $i < $count; ++$i) {
-                    if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $res[$i]['link'] = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']);
                     } else {
                         $res[$i]['link'] = $results[$i]['link'];
                     }
                     $res[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
                     $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlSpecialChars($results[$i]['title']));
-                    if (! empty($results[$i]['uid'])) {
+                    if (!empty($results[$i]['uid'])) {
                         $res[$i]['uid'] = (int) ($results[$i]['uid']);
                         $res[$i]['uname'] = XoopsUser::getUnameFromId($results[$i]['uid'], true);
                     }
-                    $res[$i]['time'] = ! empty($results[$i]['time']) ? XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) : '';
+                    $res[$i]['time'] = !empty($results[$i]['time']) ? XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) : '';
                     $res[$i]['content'] = empty($results[$i]['content']) ? '' : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
                 }
                 if ($count >= 5) {
@@ -216,7 +216,7 @@ switch ($action) {
                 } else {
                     $res[$i]['image'] = $xoops->url('images/icons/posticon2.gif');
                 }
-                if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $res[$i]['link'] = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']);
                 } else {
                     $res[$i]['link'] = $results[$i]['link'];
@@ -227,11 +227,11 @@ switch ($action) {
                 } else {
                     $res[$i]['title_highligh'] = $myts->htmlSpecialChars($results[$i]['title']);
                 }
-                if (! empty($results[$i]['uid'])) {
+                if (!empty($results[$i]['uid'])) {
                     $res[$i]['uid'] = @(int) ($results[$i]['uid']);
                     $res[$i]['uname'] = XoopsUser::getUnameFromId($results[$i]['uid'], true);
                 }
-                $res[$i]['time'] = ! empty($results[$i]['time']) ? ' (' . XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) . ')' : '';
+                $res[$i]['time'] = !empty($results[$i]['time']) ? ' (' . XoopsLocale::formatTimestamp((int) ($results[$i]['time'])) . ')' : '';
                 $res[$i]['content'] = empty($results[$i]['content']) ? '' : preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $results[$i]['content']);
             }
             if (count($res) > 0) {

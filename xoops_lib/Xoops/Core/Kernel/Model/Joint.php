@@ -61,19 +61,19 @@ class Joint extends XoopsModelAbstract
         $field_link = null,
         $field_object = null
     ) {
-        if (! empty($field_link)) {
+        if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
-        if (! empty($field_object)) {
+        if (!empty($field_object)) {
             $this->handler->field_object = $field_object;
         }
-        if (! $this->validateLinks()) {
+        if (!$this->validateLinks()) {
             return false;
         }
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         if (is_array($fields) && count($fields)) {
-            if (! in_array('o.' . $this->handler->keyName, $fields, true)) {
+            if (!in_array('o.' . $this->handler->keyName, $fields, true)) {
                 $fields[] = 'o.' . $this->handler->keyName;
             }
             $first = true;
@@ -128,7 +128,7 @@ class Joint extends XoopsModelAbstract
      */
     public function getCountByLink(CriteriaElement $criteria = null)
     {
-        if (! $this->validateLinks()) {
+        if (!$this->validateLinks()) {
             return false;
         }
 
@@ -160,7 +160,7 @@ class Joint extends XoopsModelAbstract
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
     {
-        if (! $this->validateLinks()) {
+        if (!$this->validateLinks()) {
             return false;
         }
 
@@ -204,7 +204,7 @@ class Joint extends XoopsModelAbstract
      */
     public function updateByLink(array $data, CriteriaElement $criteria = null)
     {
-        if (! $this->validateLinks()) {
+        if (!$this->validateLinks()) {
             return false;
         }
         if (empty($data) || empty($criteria)) { // avoid update all records
@@ -237,7 +237,7 @@ class Joint extends XoopsModelAbstract
      */
     public function deleteByLink(CriteriaElement $criteria = null)
     {
-        if (! $this->validateLinks()) {
+        if (!$this->validateLinks()) {
             return false;
         }
         if (empty($criteria)) { //avoid delete all records

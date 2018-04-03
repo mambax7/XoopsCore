@@ -117,7 +117,7 @@ class Migrate
      */
     public function getTargetDefinitions()
     {
-        if (! isset($this->targetDefinitions)) {
+        if (!isset($this->targetDefinitions)) {
             $this->targetDefinitions = Yaml::read($this->tableDefinitionFile);
             if ($this->targetDefinitions === null) {
                 throw new \RuntimeException('No schema definition ' . $this->tableDefinitionFile);
@@ -238,7 +238,7 @@ class Migrate
         $tableDef = $this->tableHandler->dumpTables();
         if (isset($tableDef[$tableName])) {
             foreach ($tableDef[$tableName]['columns'] as $columnData) {
-                if (! $this->targetHasColumn($tableName, $columnData['name'])) {
+                if (!$this->targetHasColumn($tableName, $columnData['name'])) {
                     $this->tableHandler->dropColumn($tableName, $columnData['name']);
                 }
             }
@@ -248,14 +248,14 @@ class Migrate
         if (isset($this->targetDefinitions[$tableName]['keys'])) {
             foreach ($this->targetDefinitions[$tableName]['keys'] as $key => $keyData) {
                 if ($key === 'PRIMARY') {
-                    if (! isset($existingIndexes[$key])) {
+                    if (!isset($existingIndexes[$key])) {
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
                     } elseif ($keyData['columns'] !== $existingIndexes[$key]['columns']) {
                         $this->tableHandler->dropPrimaryKey($tableName);
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
                     }
                 } else {
-                    if (! isset($existingIndexes[$key])) {
+                    if (!isset($existingIndexes[$key])) {
                         $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
                     } elseif ($keyData['unique'] !== $existingIndexes[$key]['unique']
                         || $keyData['columns'] !== $existingIndexes[$key]['columns']
@@ -268,7 +268,7 @@ class Migrate
         }
         if ($existingIndexes !== false) {
             foreach ($existingIndexes as $key => $keyData) {
-                if (! isset($this->targetDefinitions[$tableName]['keys'][$key])) {
+                if (!isset($this->targetDefinitions[$tableName]['keys'][$key])) {
                     $this->tableHandler->dropIndex($key, $tableName);
                 }
             }

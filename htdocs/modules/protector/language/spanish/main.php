@@ -1,4 +1,5 @@
 <?php
+
 // Traducción al español por Colossus, www.zonadepruebas.com
 
 

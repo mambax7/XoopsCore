@@ -74,12 +74,10 @@ abstract class AbstractXoopsDatabase
      */
     public function prefix($tablename = '')
     {
-
         if ($tablename !== '') {
             return $this->prefix . '_' . $tablename;
         }
-            return $this->prefix;
-
+        return $this->prefix;
     }
 
     /**

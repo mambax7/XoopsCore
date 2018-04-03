@@ -5,7 +5,6 @@ namespace Xmf\Test\Jwt;
 use Xmf\Jwt\KeyFactory;
 use Xmf\Key\ArrayStorage;
 
-
 class KeyFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**

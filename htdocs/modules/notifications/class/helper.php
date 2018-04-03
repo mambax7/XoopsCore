@@ -70,11 +70,11 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         $xoops = Xoops::getInstance();
         if ($status = $xoops->getModuleConfig('notifications_enabled')) {
         } else {
-            if (! isset($module_dirname)) {
+            if (!isset($module_dirname)) {
                 return false;
             }
 
-            if (! $status = $xoops->getModuleConfig('notifications_enabled', $module_dirname)) {
+            if (!$status = $xoops->getModuleConfig('notifications_enabled', $module_dirname)) {
                 return false;
             }
         }
@@ -98,7 +98,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     public function getItem($category, $item_id, $dirname = null)
     {
         $xoops = Xoops::getInstance();
-        if (! isset($dirname)) {
+        if (!isset($dirname)) {
             $dirname = $xoops->module->getVar('dirname');
         }
 
@@ -120,7 +120,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     public function getTags($category, $item_id, $event, $dirname = null)
     {
         $xoops = Xoops::getInstance();
-        if (! isset($dirname)) {
+        if (!isset($dirname)) {
             $dirname = $xoops->module->getVar('dirname');
         }
 
@@ -144,7 +144,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     public function getCategory($category_name = '', $dirname = null)
     {
         $xoops = Xoops::getInstance();
-        if (! isset($dirname)) {
+        if (!isset($dirname)) {
             $dirname = $xoops->module->getVar('dirname');
         }
 
@@ -212,12 +212,11 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         $helper = self::getInstance();
         $commentHelper = $xoops->getModuleHelper('comments');
 
-        if (! isset($dirname)) {
+        if (!isset($dirname)) {
             $dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : '';
         }
         /* @var $plugin NotificationsPluginInterface */
         if ($plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'notifications')) {
-
             $events = $plugin->events();
 
             $category = $this->getCategory($category_name, $dirname);
@@ -230,11 +229,11 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
 
             foreach ($events as $event) {
                 if ($event['category'] === $category_name) {
-                    if (! is_dir($dir = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
+                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
                         $dir = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/locale/en_US/templates/';
                     }
                     $event['mail_template_dir'] = $dir;
-                    if (! $enabled_only || $this->eventEnabled($category, $event, $dirname)) {
+                    if (!$enabled_only || $this->eventEnabled($category, $event, $dirname)) {
                         $event_array[] = $event;
                     }
                     if ($event['name'] === 'comment') {
@@ -255,14 +254,14 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
             /* @var $commentsPlugin CommentsPluginInterface */
             if ($commentHelper !== false && $commentsPlugin = \Xoops\Module\Plugin::getPlugin($dirname, 'comments')) {
                 //todo replace this
-                if (! empty($category['item_name']) && $category['item_name'] === $commentsPlugin->itemName()) {
-                    if (! is_dir($dir = \XoopsBaseConfig::get('root-path') . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
+                if (!empty($category['item_name']) && $category['item_name'] === $commentsPlugin->itemName()) {
+                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path') . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
                         $dir = \XoopsBaseConfig::get('root-path') . '/locale/en_US/templates/';
                     }
                     $mail_template_dir = $dir;
 
                     $com_config = $xoops->getModuleConfigs($dirname);
-                    if (! $enabled_only) {
+                    if (!$enabled_only) {
                         $insert_comment = true;
                         $insert_submit = true;
                     } else {
@@ -274,17 +273,17 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                                 break;
                             case Comments::APPROVE_ALL:
                                 // all comments are automatically approved, no 'submit'
-                                if (! $override_comment) {
+                                if (!$override_comment) {
                                     $insert_comment = true;
                                 }
                                 break;
                             case Comments::APPROVE_USER:
                             case Comments::APPROVE_ADMIN:
                                 // comments first submitted, require later approval
-                                if (! $override_comment) {
+                                if (!$override_comment) {
                                     $insert_comment = true;
                                 }
-                                if (! $override_commentsubmit) {
+                                if (!$override_commentsubmit) {
                                     $insert_submit = true;
                                 }
                                 break;
@@ -301,7 +300,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                             'mail_template' => 'comment_notify',
                             'mail_subject' => _MD_NOTIFICATIONS_COMMENT_NOTIFYSBJ,
                         ];
-                        if (! $enabled_only || $this->eventEnabled($category, $event, $dirname)) {
+                        if (!$enabled_only || $this->eventEnabled($category, $event, $dirname)) {
                             $event_array[] = $event;
                         }
                     }
@@ -317,7 +316,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                             'mail_subject' => _MD_NOTIFICATIONS_COMMENTSUBMIT_NOTIFYSBJ,
                             'admin_only' => 1,
                         ];
-                        if (! $enabled_only || $this->eventEnabled($category, $event, $dirname)) {
+                        if (!$enabled_only || $this->eventEnabled($category, $event, $dirname)) {
                             $event_array[] = $event;
                         }
                     }
@@ -326,8 +325,8 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
 
             // Insert bookmark info if appropriate
 
-            if (! empty($category['allow_bookmark'])) {
-                if (! $override_bookmark) {
+            if (!empty($category['allow_bookmark'])) {
+                if (!$override_bookmark) {
                     $event = [
                         'name' => 'bookmark',
                         'category' => $category['name'],
@@ -335,7 +334,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                         'caption' => _MD_NOTIFICATIONS_BOOKMARK_NOTIFYCAP,
                         'description' => _MD_NOTIFICATIONS_BOOKMARK_NOTIFYDSC,
                     ];
-                    if (! $enabled_only || $this->eventEnabled($category, $event, $dirname)) {
+                    if (!$enabled_only || $this->eventEnabled($category, $event, $dirname)) {
                         $event_array[] = $event;
                     }
                 }
@@ -415,19 +414,19 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         foreach ($all_categories as $category) {
             // Check the script name
             $subscribe_from = $category['subscribe_from'];
-            if (! is_array($subscribe_from)) {
+            if (!is_array($subscribe_from)) {
                 if ($subscribe_from === '*') {
                     $subscribe_from = [
                         $script_name,
                     ];
-                    // FIXME: this is just a hack: force a match
+                // FIXME: this is just a hack: force a match
                 } else {
                     $subscribe_from = [
                         $subscribe_from,
                     ];
                 }
             }
-            if (! in_array($script_name, $subscribe_from, true)) {
+            if (!in_array($script_name, $subscribe_from, true)) {
                 continue;
             }
             // If 'item_name' is missing, automatic match.  Otherwise
@@ -490,7 +489,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         );
         //$order = count($existingConfigs);
         foreach ($configs as $config) {
-            if (! isset($existingConfigs[$config['name']])) {
+            if (!isset($existingConfigs[$config['name']])) {
                 $confobj = $config_handler->createConfig();
                 $confobj->setVar('conf_modid', $module->getVar('mid'));
                 $confobj->setVar('conf_catid', 0);
@@ -562,7 +561,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         foreach ($categories as $category) {
             $events = $this->getEvents($category['name'], false, $module->getVar('dirname'));
             foreach ($events as $event) {
-                if (! empty($event['invisible'])) {
+                if (!empty($event['invisible'])) {
                     continue;
                 }
                 $option_name = $category['title'] . ' : ' . $event['title'];

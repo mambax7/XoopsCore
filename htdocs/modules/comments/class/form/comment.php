@@ -26,7 +26,7 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
         $xoops = Xoops::getInstance();
         $helper = $xoops->getModuleHelper('comments');
         $module = $xoops->getModuleById($obj->getVar('modid'));
-        if (! is_object($module)) {
+        if (!is_object($module)) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
         $dirname = $module->getVar('dirname');
@@ -78,10 +78,10 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
 
         if ($xoops->isUser()) {
             if ($xoops->getModuleConfig('com_anonpost', $dirname)) {
-                    $noname = $obj->getVar('noname', 'e') ? 1 : 0;
-                    $noname_checkbox = new Xoops\Form\Checkbox('', 'com_noname', $noname);
-                    $noname_checkbox->addOption(1, XoopsLocale::POST_ANONYMOUSLY);
-                    $option_tray->addElement($noname_checkbox);
+                $noname = $obj->getVar('noname', 'e') ? 1 : 0;
+                $noname_checkbox = new Xoops\Form\Checkbox('', 'com_noname', $noname);
+                $noname_checkbox->addOption(1, XoopsLocale::POST_ANONYMOUSLY);
+                $option_tray->addElement($noname_checkbox);
             }
             if ($xoops->user->isAdmin($obj->getVar('modid')) !== false) {
                 // show status change box when editing (comment id is not empty)
@@ -120,7 +120,7 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
             $this->addElement(new Xoops\Form\Hidden('com_dobr', 0));
         }
         $this->addElement($option_tray);
-        if (! $xoops->isUser()) {
+        if (!$xoops->isUser()) {
             $this->addElement(new Xoops\Form\Captcha());
         }
         $this->addElement(new Xoops\Form\Hidden('com_modid', $obj->getVar('modid', 'e')));
@@ -132,7 +132,7 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('com_mode', Request::getString('com_mode', $helper->getUserConfig('com_mode'))));
 
         // add module specific extra params
-        if (! $xoops->isAdminSide) {
+        if (!$xoops->isAdminSide) {
             /* @var $plugin CommentsPluginInterface */
             $plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'comments');
             if (is_array($extraParams = $plugin->extraParams())) {

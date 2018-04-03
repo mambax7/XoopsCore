@@ -1,4 +1,5 @@
 <?php
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,7 +37,7 @@ use Xoops\Core\Kernel\CriteriaCompo;
 $xoops = Xoops::getInstance();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->userIsAdmin) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->userIsAdmin) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -100,14 +101,14 @@ switch ($op) {
         $system_breadcrumb->render();
         $user = $member_handler->getUser($uid);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('admin.php?fct=users', 3, implode('<br />', $xoops->security()->getErrors()));
             }
 
             $groups = $user->getGroups();
             if (in_array(FixedGroups::ADMIN, $groups, true)) {
                 echo $xoops->alert('error', sprintf(SystemLocale::EF_CAN_NOT_DELETE_ADMIN_USER, $user->getVar('uname')));
-            } elseif (! $member_handler->deleteUser($user)) {
+            } elseif (!$member_handler->deleteUser($user)) {
                 echo $xoops->alert('error', sprintf(SystemLocale::EF_COULD_NOT_DELETE_USER, $user->getVar('uname')));
             } else {
                 $xoops->getHandlerOnline()->destroy($uid);
@@ -139,7 +140,7 @@ switch ($op) {
                 if (in_array(FixedGroups::ADMIN, $groups, true)) {
                     $error .= sprintf(SystemLocale::EF_CAN_NOT_DELETE_ADMIN_USER, $user->getVar('uname'));
                     $error .= '<br />';
-                } elseif (! $member_handler->deleteUser($user)) {
+                } elseif (!$member_handler->deleteUser($user)) {
                     $error .= sprintf(SystemLocale::EF_COULD_NOT_DELETE_USER, $user->getVar('uname'));
                     $error .= '<br />';
                 } else {
@@ -162,15 +163,15 @@ switch ($op) {
     case 'users_save':
         if (isset($_REQUEST['uid'])) {
             //Update user
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('admin.php?fct=users', 3, implode('<br />', $xoops->security()->getErrors()));
             }
             // RMV-NOTIFY
             $user_avatar = $theme = null;
-            if (! isset($_REQUEST['attachsig'])) {
+            if (!isset($_REQUEST['attachsig'])) {
                 $attachsig = null;
             }
-            if (! isset($_REQUEST['user_viewemail'])) {
+            if (!isset($_REQUEST['user_viewemail'])) {
                 $user_viewemail = null;
             }
 
@@ -220,7 +221,7 @@ switch ($op) {
                     }
                     $edituser->setVar('pass', password_hash($_REQUEST['password'], PASSWORD_DEFAULT));
                 }
-                if (! $member_handler->insertUser($edituser)) {
+                if (!$member_handler->insertUser($edituser)) {
                     $xoops->header();
                     echo $edituser->getHtmlErrors();
                     $xoops->footer();
@@ -228,7 +229,7 @@ switch ($op) {
                     if ($_REQUEST['groups'] !== []) {
                         $oldgroups = $edituser->getGroups();
                         //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-                        if ($edituser->getVar('uid') === $xoops->user->getVar('uid') && (in_array(FixedGroups::ADMIN, $oldgroups, true)) && ! (in_array(FixedGroups::ADMIN, $_REQUEST['groups'], true))) {
+                        if ($edituser->getVar('uid') === $xoops->user->getVar('uid') && (in_array(FixedGroups::ADMIN, $oldgroups, true)) && !(in_array(FixedGroups::ADMIN, $_REQUEST['groups'], true))) {
                             //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                             array_push($_REQUEST['groups'], FixedGroups::ADMIN);
                         }
@@ -246,10 +247,10 @@ switch ($op) {
             exit();
         }
             //Add user
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('admin.php?fct=users', 3, implode('<br />', $xoops->security()->getErrors()));
             }
-            if (! $_REQUEST['username'] || ! $_REQUEST['email'] || ! $_REQUEST['password']) {
+            if (!$_REQUEST['username'] || !$_REQUEST['email'] || !$_REQUEST['password']) {
                 $adduser_errormsg = XoopsLocale::E_YOU_MUST_COMPLETE_ALL_REQUIRED_FIELDS;
             } else {
                 $member_handler = $xoops->getHandlerMember();
@@ -297,17 +298,17 @@ switch ($op) {
                     $newuser->setVar('user_occ', $_REQUEST['user_occ']);
                     $newuser->setVar('user_intrest', $_REQUEST['user_intrest']);
                     $newuser->setVar('user_mailok', $_REQUEST['user_mailok']);
-                    if (! $member_handler->insertUser($newuser)) {
+                    if (!$member_handler->insertUser($newuser)) {
                         $adduser_errormsg = XoopsLocale::E_USER_NOT_REGISTERED;
                     } else {
                         $groups_failed = [];
                         foreach ($_REQUEST['groups'] as $group) {
                             $group = (int) ($group);
-                            if (! $member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+                            if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
                                 $groups_failed[] = $group;
                             }
                         }
-                        if (! empty($groups_failed)) {
+                        if (!empty($groups_failed)) {
                             $group_names = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
                             $adduser_errormsg = sprintf(SystemLocale::EF_COULD_NOT_ADD_USER_TO_GROUPS, implode(', ', $group_names));
                         } else {
@@ -467,7 +468,7 @@ switch ($op) {
             $form->addElement($limit_text);
 
             // if this is to find users for a specific group
-            if (! empty($_GET['group']) && (int) ($_GET['group']) > 0) {
+            if (!empty($_GET['group']) && (int) ($_GET['group']) > 0) {
                 $group_hidden = new Xoops\Form\Hidden('group', (int) ($_GET['group']));
                 $form->addElement($group_hidden);
             }
@@ -493,7 +494,7 @@ switch ($op) {
             $criteria = new CriteriaCompo();
 
             $value = Request::getString('user_uname', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_uname_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'uname', $value, $match);
                 $requete_pagenav .= '&amp;user_uname=' . $myts->htmlSpecialChars($value) . '&amp;user_uname_match=' . $match;
@@ -501,7 +502,7 @@ switch ($op) {
             }
 
             $value = Request::getString('user_name', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_name_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'name', $value, $match);
                 $requete_pagenav .= '&amp;user_name=' . $myts->htmlSpecialChars($value) . '&amp;user_name_match=' . $match;
@@ -509,7 +510,7 @@ switch ($op) {
             }
 
             $value = Request::getString('user_email', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_email_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'email', $value, $match);
                 $requete_pagenav .= '&amp;user_email=' . $myts->htmlSpecialChars($value) . '&amp;user_email_match=' . $match;
@@ -517,14 +518,14 @@ switch ($op) {
             }
 
             $value = Request::getString('user_url', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 //$url = $xoops->formatURL(trim($_REQUEST['user_url']));
                 $criteria->add(new Criteria('url', '%' . $value . '%', 'LIKE'));
                 $requete_search .= 'url : ' . $value . '<br />';
             }
 
             $value = Request::getInt('user_icq', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_icq_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'user_icq', (string) $value, $match);
                 $requete_pagenav .= '&amp;user_icq=' . $value . '&amp;user_icq_match=' . $match;
@@ -532,7 +533,7 @@ switch ($op) {
             }
 
             $value = Request::getString('user_aim', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_aim_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'user_aim', $value, $match);
                 $requete_pagenav .= '&amp;user_aim=' . $myts->htmlSpecialChars($value) . '&amp;user_aim_match=' . $match;
@@ -540,7 +541,7 @@ switch ($op) {
             }
 
             $value = Request::getString('user_yim', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_yim_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'user_yim', $value, $match);
                 $requete_pagenav .= '&amp;user_yim=' . $myts->htmlSpecialChars($value) . '&amp;user_yim_match=' . $match;
@@ -548,7 +549,7 @@ switch ($op) {
             }
 
             $value = Request::getString('user_msnm', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $match = Request::getInt('user_msnm_match', XOOPS_MATCH_START);
                 addCriteria($criteria, 'user_msnm', $value, $match);
                 $requete_pagenav .= '&amp;user_msnm=' . $myts->htmlSpecialChars($value) . '&amp;user_msnm_match=' . $match;
@@ -556,28 +557,28 @@ switch ($op) {
             }
 
             $value = Request::getString('user_from', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $criteria->add(new Criteria('user_from', '%' . $value . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_from=' . $myts->htmlSpecialChars($value);
                 $requete_search .= 'from : ' . $value . '<br />';
             }
 
             $value = Request::getString('user_intrest', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $criteria->add(new Criteria('user_intrest', '%' . $value . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_intrest=' . $myts->htmlSpecialChars($value);
                 $requete_search .= 'interet : ' . $value . '<br />';
             }
 
             $value = Request::getString('user_occ', '');
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $criteria->add(new Criteria('user_occ', '%' . $value . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_occ=' . $myts->htmlSpecialChars($value);
                 $requete_search .= 'location : ' . $value . '<br />';
             }
 
             $value = Request::getInt('user_lastlog_more', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $time = time() - (60 * 60 * 24 * $value);
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
@@ -587,7 +588,7 @@ switch ($op) {
             }
 
             $value = Request::getInt('user_lastlog_less', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $time = time() - (60 * 60 * 24 * $value);
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '>'));
@@ -597,7 +598,7 @@ switch ($op) {
             }
 
             $value = Request::getInt('user_reg_more', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $time = time() - (60 * 60 * 24 * $value);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
@@ -607,7 +608,7 @@ switch ($op) {
             }
 
             $value = Request::getInt('user_reg_less', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $time = time() - (60 * 60 * 24 * $value);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '>'));
@@ -617,21 +618,21 @@ switch ($op) {
             }
 
             $value = Request::getInt('user_posts_more', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $criteria->add(new Criteria('posts', $value, '>'));
                 $requete_pagenav .= '&amp;user_posts_more=' . $value;
                 $requete_search .= 'posts plus de : ' . $value . '<br />';
             }
 
             $value = Request::getInt('user_posts_less', 0);
-            if (! empty($value)) {
+            if (!empty($value)) {
                 $criteria->add(new Criteria('posts', $value, '<'));
                 $requete_pagenav .= '&amp;user_posts_less=' . $value;
                 $requete_search .= 'post moins de : ' . $value . '<br />';
             }
 
             $value = Request::getWord('user_mailok', '');
-            if (! empty($value) && ($value !== 'both')) {
+            if (!empty($value) && ($value !== 'both')) {
                 $ok = ($value === 'mailok') ? 1 : 0;
                 $criteria->add(new Criteria('user_mailok', $ok));
                 $requete_pagenav .= '&amp;user_mailok=' . $value;
@@ -639,7 +640,7 @@ switch ($op) {
             }
 
             $user_type = Request::getWord('user_type', '');
-            if (! empty($user_type) && ($user_type !== 'both')) {
+            if (!empty($user_type) && ($user_type !== 'both')) {
                 if ($user_type === 'inactv') {
                     $criteria->add(new Criteria('level', 0, '='));
                 } elseif ($user_type === 'actv') {
@@ -652,7 +653,7 @@ switch ($op) {
             //$groups = empty($_REQUEST['selgroups']) ? array() : array_map("intval", $_REQUEST['selgroups']);
             $validsort = ['uname', 'email', 'last_login', 'user_regdate', 'posts'];
             $sort = Request::getWord('user_sort', 'user_regdate');
-            $sort = (! in_array($sort, $validsort, true)) ? 'user_regdate' : $sort;
+            $sort = (!in_array($sort, $validsort, true)) ? 'user_regdate' : $sort;
             $requete_pagenav .= '&amp;user_sort=' . $sort;
             $requete_search .= 'order by : ' . $sort . '<br />';
             $criteria->setSort($sort);
@@ -672,7 +673,7 @@ switch ($op) {
                 $requete_search .= 'limit : ' . $user_limit . '<br />';
             }
 
-            $start = (! empty($_REQUEST['start'])) ? (int) ($_REQUEST['start']) : 0;
+            $start = (!empty($_REQUEST['start'])) ? (int) ($_REQUEST['start']) : 0;
 
             if (isset($_REQUEST['selgroups'])) {
                 if ($_REQUEST['selgroups'] !== 0) {
@@ -711,9 +712,9 @@ switch ($op) {
             //User type
             //$user_type = (!isset($_REQUEST['user_type'])) ? '' : $_REQUEST['user_type'];
             //selgroups
-            $selgroups = (! isset($_REQUEST['selgroups'])) ? '' : $_REQUEST['selgroups'];
+            $selgroups = (!isset($_REQUEST['selgroups'])) ? '' : $_REQUEST['selgroups'];
 
-            $user_uname = (! isset($_REQUEST['user_uname'])) ? '' : $_REQUEST['user_uname'];
+            $user_uname = (!isset($_REQUEST['user_uname'])) ? '' : $_REQUEST['user_uname'];
             //Form tris
             $form = '<form action="admin.php?fct=users" method="post">
                     ' . SystemLocale::C_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">

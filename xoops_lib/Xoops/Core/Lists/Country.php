@@ -11,7 +11,7 @@
 
 namespace Xoops\Core\Lists;
 
-use \Punic\Territory;
+use Punic\Territory;
 use Xoops\Form\OptionElement;
 
 /**

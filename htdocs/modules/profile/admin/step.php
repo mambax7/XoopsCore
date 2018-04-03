@@ -68,7 +68,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('step.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -97,7 +97,7 @@ switch ($op) {
         if ($id > 0) {
             $obj = $regstep_Handler->get($id);
             if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('step.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($regstep_Handler->deleteRegstep($obj)) {
@@ -125,7 +125,7 @@ switch ($op) {
         if ($id > 0) {
             $obj = $regstep_Handler->get($id);
             $old = $obj->getVar('step_save');
-            $obj->setVar('step_save', ! $old);
+            $obj->setVar('step_save', !$old);
             if ($regstep_Handler->insert($obj)) {
                 exit;
             }

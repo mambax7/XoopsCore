@@ -22,13 +22,13 @@
 class UsermenuLocaleEn_US
 {
     // Module
-    const MODULE_NAME = 'User Menu';
+    public const MODULE_NAME = 'User Menu';
 
-    const MODULE_DESC = 'Provides an extensible User Menu block';
+    public const MODULE_DESC = 'Provides an extensible User Menu block';
 
-    const DONATION_DESC = 'Donation for module User Menu';
+    public const DONATION_DESC = 'Donation for module User Menu';
 
-    const BLOCK_NAME = 'User menu';
+    public const BLOCK_NAME = 'User menu';
 
-    const BLOCK_DESC = 'Shows an User Menu Block';
+    public const BLOCK_DESC = 'Shows an User Menu Block';
 }

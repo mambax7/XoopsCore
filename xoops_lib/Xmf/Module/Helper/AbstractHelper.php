@@ -118,7 +118,7 @@ abstract class AbstractHelper
         if (is_resource($value) || @get_resource_type($value) !== null) {
             $value = '(resource)';
         }
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             $value = json_encode($value);
         }
         return (string) $value;

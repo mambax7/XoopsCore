@@ -15,8 +15,10 @@
 abstract use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\CriteriaElement;
+
 class AbstractCriteriaElement extends CriteriaElement
 {
+
 }
 
 /**
@@ -24,6 +26,7 @@ class AbstractCriteriaElement extends CriteriaElement
  */
 class CriteriaCompo extends CriteriaCompo
 {
+
 }
 
 /**
@@ -31,4 +34,5 @@ class CriteriaCompo extends CriteriaCompo
  */
 class Criteria extends Criteria
 {
+
 }

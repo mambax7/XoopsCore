@@ -25,7 +25,7 @@ use Xoops\Core\Service\Response;
  */
 interface CountryflagInterface
 {
-    const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
+    public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
      * getImgTag - get a full HTML tag or string to display a flag based on county code

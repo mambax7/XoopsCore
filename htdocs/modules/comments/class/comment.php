@@ -219,7 +219,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
      * @param int $item_id
      * @return bool
      */
-    function deleteByItemId($module_id, $item_id)
+    public function deleteByItemId($module_id, $item_id)
     {
         $module_id = (int) ($module_id);
         $item_id = (int) ($item_id);
@@ -233,7 +233,7 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
                         // store poster ID and deleted post number into array for later use
                         $poster_id = $comments[$i]->getVar('uid');
                         if ($poster_id !== 0) {
-                            $deleted_num[$poster_id] = ! isset($deleted_num[$poster_id]) ? 1
+                            $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1
                                 : ($deleted_num[$poster_id] + 1);
                         }
                     }

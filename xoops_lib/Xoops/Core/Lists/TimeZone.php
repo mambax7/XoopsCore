@@ -51,7 +51,7 @@ class TimeZone extends ListAbstract
                         foreach ($allZones as $zone) {
                             $maxLen = max(strlen($zone), $maxLen);
                             $name = Calendar::getTimezoneExemplarCity($zone);
-                            if (! isset($timeZones[$zone]) && ! empty($name)) {
+                            if (!isset($timeZones[$zone]) && !empty($name)) {
                                 $timeZones[$zone] = $cName['name'] . '/' . $name;
                             }
                         }

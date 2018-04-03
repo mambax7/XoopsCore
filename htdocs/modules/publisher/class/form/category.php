@@ -65,7 +65,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
         $nohtml = false;
         if (count($allowed_editors) > 0) {
             $editor = @$_POST['editor'];
-            if (! empty($editor)) {
+            if (!empty($editor)) {
                 PublisherUtils::setCookieVar('publisher_editor', $editor);
             } else {
                 $editor = PublisherUtils::getCookieVar('publisher_editor');
@@ -73,7 +73,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
                     $editor = $xoops->user->getVar('publisher_editor'); // Need set through user profile
                 }
             }
-            $editor = (empty($editor) || ! in_array($editor, $allowed_editors, true)) ? $publisher->getConfig('submit_editor') : $editor;
+            $editor = (empty($editor) || !in_array($editor, $allowed_editors, true)) ? $publisher->getConfig('submit_editor') : $editor;
             $form_editor = new Xoops\Form\SelectEditor($this, 'editor', $editor, $nohtml, $allowed_editors);
             $this->addElement($form_editor);
         } else {
@@ -172,7 +172,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
         $l = new Xoops\Form\Label('', sprintf(_AM_PUBLISHER_ADD_OPT, $t->render()));
         $b = new Xoops\Form\Button('', 'submit_subcats', _AM_PUBLISHER_ADD_OPT_SUBMIT, 'submit');
 
-        if (! $obj->getVar('categoryid')) {
+        if (!$obj->getVar('categoryid')) {
             $b->setExtra('onclick="this.form.elements.op.value=\'addsubcats\'"');
         } else {
             $b->setExtra('onclick="this.form.elements.op.value=\'mod\'"');
@@ -191,7 +191,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
         $buttonTray = new Xoops\Form\ElementTray('', '');
 
         // No ID for category -- then it's new category, button says 'Create'
-        if (! $obj->getVar('categoryid')) {
+        if (!$obj->getVar('categoryid')) {
             $buttonTray->addElement(new Xoops\Form\Button('', 'addcategory', _AM_PUBLISHER_CREATE, 'submit'));
 
             $buttonClear = new Xoops\Form\Button('', '', _AM_PUBLISHER_CLEAR, 'reset');

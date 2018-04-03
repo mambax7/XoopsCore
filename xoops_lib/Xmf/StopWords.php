@@ -28,7 +28,7 @@ class StopWords
     /**
      * mbstring encoding
      */
-    const ENCODING = 'UTF-8';
+    public const ENCODING = 'UTF-8';
 
     /** @var string[] */
     protected $stopwordList = [];
@@ -40,7 +40,7 @@ class StopWords
      */
     public function __construct()
     {
-        if (! defined('_XMF_STOPWORDS')) {
+        if (!defined('_XMF_STOPWORDS')) {
             Language::load('stopwords');
         }
         if (defined('_XMF_STOPWORDS')) {
@@ -62,6 +62,6 @@ class StopWords
         $key = function_exists('mb_strtolower')
             ? mb_strtolower($key, static::ENCODING)
             : strtolower($key);
-        return ! isset($this->stopwordList[$key]);
+        return !isset($this->stopwordList[$key]);
     }
 }

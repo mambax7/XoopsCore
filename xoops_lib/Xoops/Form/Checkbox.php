@@ -67,7 +67,7 @@ class Checkbox extends OptionElement
         $required = $this->has('required');
         $elementOptions = $this->getOptions();
         $elementValue = $this->getValue();
-        if (! is_array($elementValue)) {
+        if (!is_array($elementValue)) {
             $elementValue = (array) $elementValue;
         }
         $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
@@ -92,7 +92,7 @@ class Checkbox extends OptionElement
         $idCount = 0;
         foreach ($elementOptions as $value => $name) {
             $this->remove('checked');
-            if (! empty($elementValue) && in_array($value, $elementValue, true)) {
+            if (!empty($elementValue) && in_array($value, $elementValue, true)) {
                 $this->set('checked');
             }
             $this->set('value', $value);
@@ -107,7 +107,6 @@ class Checkbox extends OptionElement
                 $ret .= '<input ' . $this->renderAttributeString() . $extra . '>' . $name . "\n";
                 $ret .= "</label>\n</div>\n";
             }
-
         }
         if ($required) {
             $this->set('required');
@@ -126,9 +125,9 @@ class Checkbox extends OptionElement
     public function renderValidationJS()
     {
         // render custom validation code if any
-        if (! empty($this->customValidationCode)) {
+        if (!empty($this->customValidationCode)) {
             return implode("\n", $this->customValidationCode);
-            // generate validation code if required
+        // generate validation code if required
         } elseif ($this->isRequired()) {
             $eltname = $this->getName();
             $eltcaption = $this->getCaption();

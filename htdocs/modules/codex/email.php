@@ -27,7 +27,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
-if (! $xoops->service('email')->isAvailable()) {
+if (!$xoops->service('email')->isAvailable()) {
     echo 'Please install and configure an email provider to view this demonstration.';
 }
 

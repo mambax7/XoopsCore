@@ -2,17 +2,15 @@
 
 class upgrade_2014 extends xoopsUpgrade
 {
-    var
+    public $usedFiles = ['mainfile.php'];
 
- $usedFiles = ['mainfile.php'];
-
-    function isApplied()
+    public function isApplied()
     {
         return  /*$this->check_0523patch() &&*/
         $this->check_auth_db();
     }
 
-    function apply()
+    public function apply()
     {
         return $this->apply_auth_db();
         /*
@@ -23,7 +21,7 @@ class upgrade_2014 extends xoopsUpgrade
         */
     }
 
-    function check_0523patch()
+    public function check_0523patch()
     {
         $lines = file('../mainfile.php');
         foreach ($lines as $line) {
@@ -35,7 +33,7 @@ class upgrade_2014 extends xoopsUpgrade
         return false;
     }
 
-    function apply_0523patch()
+    public function apply_0523patch()
     {
         $patchCode = "
     foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as \$bad_global ) {
@@ -73,33 +71,32 @@ class upgrade_2014 extends xoopsUpgrade
             echo $manual;
             return false;
         } elseif ($insert !== -2) {
-            if (! is_writable('../mainfile.php')) {
+            if (!is_writable('../mainfile.php')) {
                 echo 'mainfile.php is read-only. Please allow the server to write to this file, or apply the patch manually';
                 echo $manual;
                 return false;
             }
-                $fp = fopen('../mainfile.php', 'wt');
-                if (! $fp) {
-                    echo 'Error opening mainfile.php, please apply the patch manually.';
-                    echo $manual;
-                    return false;
-                }
-                    $newline = defined(PHP_EOL) ? PHP_EOL : (strpos(php_uname(), 'Windows') ? "\r\n" : "\n");
-                    $prepend = implode('', array_slice($lines, 0, $insert));
-                    $append = implode('', array_slice($lines, $insert));
+            $fp = fopen('../mainfile.php', 'wt');
+            if (!$fp) {
+                echo 'Error opening mainfile.php, please apply the patch manually.';
+                echo $manual;
+                return false;
+            }
+            $newline = defined(PHP_EOL) ? PHP_EOL : (strpos(php_uname(), 'Windows') ? "\r\n" : "\n");
+            $prepend = implode('', array_slice($lines, 0, $insert));
+            $append = implode('', array_slice($lines, $insert));
 
-                    $content = $prepend . $patchCode . $append;
-                    $content = str_replace(["\r\n", "\n"], $newline, $content);
+            $content = $prepend . $patchCode . $append;
+            $content = str_replace(["\r\n", "\n"], $newline, $content);
 
-                    fwrite($fp, $content);
-                    fclose($fp);
-                    echo 'Patch successfully applied';
-
+            fwrite($fp, $content);
+            fclose($fp);
+            echo 'Patch successfully applied';
         }
         return true;
     }
 
-    function check_auth_db()
+    public function check_auth_db()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
@@ -107,16 +104,16 @@ class upgrade_2014 extends xoopsUpgrade
         return (bool) $value;
     }
 
-    function query($sql)
+    public function query($sql)
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        if (! ($ret = $db->queryF($sql))) {
+        if (!($ret = $db->queryF($sql))) {
             echo $db->error();
         }
     }
 
-    function apply_auth_db()
+    public function apply_auth_db()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
@@ -153,7 +150,7 @@ class upgrade_2014 extends xoopsUpgrade
             'ldap_surname_attr' => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17",
         ];
         foreach ($data as $name => $values) {
-            if (! getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='${name}'")) {
+            if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='${name}'")) {
                 $this->query("INSERT INTO `${table}` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'${name}',${values})");
             }
         }

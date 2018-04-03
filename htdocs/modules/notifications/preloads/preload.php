@@ -15,7 +15,6 @@ use Xoops\Core\PreloadItem;
 use Xoops\Module\Plugin;
 use Xoops\Module\Plugin\ConfigCollector;
 
-
 /**
  * Notifications core preloads
  *
@@ -50,7 +49,7 @@ class NotificationsPreload extends PreloadItem
             $helper->loadLanguage('main');
             $categories = $helper->getSubscribableCategories();
             $event_count = 0;
-            if (! empty($categories)) {
+            if (!empty($categories)) {
                 $notification_handler = $helper->getHandlerNotification();
                 foreach ($categories as $category) {
                     $section['name'] = $category['name'];
@@ -60,10 +59,10 @@ class NotificationsPreload extends PreloadItem
                     $section['events'] = [];
                     $subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $xoops->module->getVar('mid'), $xoops->user->getVar('uid'));
                     foreach ($helper->getEvents($category['name'], true, $xoops->module->getVar('dirname')) as $event) {
-                        if (! empty($event['admin_only']) && ! $xoops->user->isAdmin($xoops->module->getVar('mid'))) {
+                        if (!empty($event['admin_only']) && !$xoops->user->isAdmin($xoops->module->getVar('mid'))) {
                             continue;
                         }
-                        if (! empty($event['invisible'])) {
+                        if (!empty($event['invisible'])) {
                             continue;
                         }
                         $subscribed = in_array($event['name'], $subscribed_events, true) ? 1 : 0;

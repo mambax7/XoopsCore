@@ -80,7 +80,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
         $attributes = []
     ) {
         $url = $this->getThumbnailUrl($imgPath, $width, $height);
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [];
         }
 

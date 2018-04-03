@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../init_new.php');
 
 class recaptchaTest extends \PHPUnit\Framework\TestCase

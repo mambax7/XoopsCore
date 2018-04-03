@@ -27,11 +27,11 @@ $xoops->loadLocale('system');
 $modid = isset($_POST['modid']) ? (int) ($_POST['modid']) : 0;
 
 // we dont want system module permissions to be changed here
-if ($modid <= 1 || ! $xoops->isUser() || ! $xoops->user->isAdmin($modid)) {
+if ($modid <= 1 || !$xoops->isUser() || !$xoops->user->isAdmin($modid)) {
     $xoops->redirect($xoops->url('index.php'), 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 $module = $xoops->getModuleById($modid);
-if (! is_object($module) || ! $module->getVar('isactive')) {
+if (!is_object($module) || !$module->getVar('isactive')) {
     $xoops->redirect($xoops->url('admin.php'), 1, XoopsLocale::E_NO_MODULE);
 }
 
@@ -39,18 +39,18 @@ $msg = [];
 
 $member_handler = $xoops->getHandlerMember();
 $group_list = $member_handler->getGroupList();
-if (is_array($_POST['perms']) && ! empty($_POST['perms'])) {
+if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
     $gperm_handler = $xoops->getHandlerGroupPermission();
     foreach ($_POST['perms'] as $perm_name => $perm_data) {
-        if (! $xoops->security()->check(true, false, $perm_name)) {
+        if (!$xoops->security()->check(true, false, $perm_name)) {
             continue;
         }
         if ($gperm_handler->deleteByModule($modid, $perm_name) === false) {
             $msg[] = sprintf(SystemLocale::EF_COULD_NOT_RESET_GROUP_PERMISSION_FOR_MODULE, $module->getVar('name') . '(' . $perm_name . ')');
         }
-        if (! array_key_exists('groups', $perm_data)){
+        if (!array_key_exists('groups', $perm_data)) {
             $msg[] = sprintf(SystemLocale::SF_ADDED_PERMISSION_FOR_GROUP, $module->getVar('name'), $perm_name, ' /');
-        }else{
+        } else {
             foreach ($perm_data['groups'] as $group_id => $item_ids) {
                 foreach ($item_ids as $item_id => $selected) {
                     if ($selected === 1) {
@@ -58,7 +58,7 @@ if (is_array($_POST['perms']) && ! empty($_POST['perms'])) {
                         if ($perm_data['parents'][$item_id] !== '') {
                             $parent_ids = explode(':', $perm_data['parents'][$item_id]);
                             foreach ($parent_ids as $pid) {
-                                if ($pid !== 0 && ! in_array($pid, array_keys($item_ids), true)) {
+                                if ($pid !== 0 && !in_array($pid, array_keys($item_ids), true)) {
                                     // one of the parent items were not selected, so skip this item
                                     $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>') . ' (' . XoopsLocale::E_ALL_PARENT_ITEMS_MUST_BE_SELECTED . ')';
                                     continue 2;
@@ -70,7 +70,7 @@ if (is_array($_POST['perms']) && ! empty($_POST['perms'])) {
                         $gperm->setVar('gperm_name', $perm_name);
                         $gperm->setVar('gperm_modid', $modid);
                         $gperm->setVar('gperm_itemid', $item_id);
-                        if (! $gperm_handler->insert($gperm)) {
+                        if (!$gperm_handler->insert($gperm)) {
                             $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');
                         } else {
                             $msg[] = sprintf(SystemLocale::SF_ADDED_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');

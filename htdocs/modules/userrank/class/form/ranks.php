@@ -64,7 +64,7 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         $imgtray_img->addElement($fileseltray_img);
         $this->addElement($imgtray_img);
 
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $rank_special = $obj->getVar('rank_special');
         } else {
             $rank_special = 0;
@@ -74,7 +74,7 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         $special_tray->setDescription(_AM_USERRANK_SPECIAL_CAN);
         $special_tray->addElement(new Xoops\Form\RadioYesNo('', 'rank_special', $rank_special));
         $this->addElement($special_tray);
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('rank_id', $obj->getVar('rank_id')));
         }
         $this->addElement(new Xoops\Form\Hidden('op', 'userrank_save'));

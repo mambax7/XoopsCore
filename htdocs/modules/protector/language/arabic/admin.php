@@ -13,31 +13,31 @@ define('_AM_TH_AGENT', 'العميل');
 define('_AM_TH_TYPE', 'نوع العملية');
 define('_AM_TH_DESCRIPTION', 'الوصف');
 
-define('_AM_TH_BADIPS', 'الايبيهات السئية<br /><br /><span style="font-weight:normal;">اكتب كل ايبي في سطر جديد<br />اترك الصندوق فارغ ان لم ترغب بمنع اي شخص</span>' );
+define('_AM_TH_BADIPS', 'الايبيهات السئية<br /><br /><span style="font-weight:normal;">اكتب كل ايبي في سطر جديد<br />اترك الصندوق فارغ ان لم ترغب بمنع اي شخص</span>');
 
-define('_AM_TH_GROUP1IPS', 'منع اعضاء الادارة<br /><br /><span style="font-weight:normal;">اكتب كل ايبي في سطر<br />192.168. يعني 192.168.*<br />اترك الجدول فارغا ان لم ترغب بمنع اي من اعضاء الادارة</span>' );
+define('_AM_TH_GROUP1IPS', 'منع اعضاء الادارة<br /><br /><span style="font-weight:normal;">اكتب كل ايبي في سطر<br />192.168. يعني 192.168.*<br />اترك الجدول فارغا ان لم ترغب بمنع اي من اعضاء الادارة</span>');
 
-define('_AM_LABEL_COMPACTLOG', 'سجل المتكرر' );
-define('_AM_BUTTON_COMPACTLOG', 'حذف المتكرر' );
-define('_AM_JS_COMPACTLOGCONFIRM', 'سيتم حذف الايبيهات المتكررة باكثر من موضع' );
-define('_AM_LABEL_REMOVEALL', 'حذف كل السجلات' );
-define('_AM_BUTTON_REMOVEALL', 'احذف الكل' );
-define('_AM_JS_REMOVEALLCONFIRM', 'سيتم حذف كل السجلات نهائيا' );
-define('_AM_LABEL_REMOVE', 'حف المحدد من القائمة' );
-define('_AM_BUTTON_REMOVE', 'حذف' );
-define('_AM_JS_REMOVECONFIRM', 'سيتم حذف المحدد' );
-define('_AM_MSG_IPFILESUPDATED', 'تم تحديث  حقل الايبيهات' );
-define('_AM_MSG_BADIPSCANTOPEN', 'لم نتمكن من فتح ملف الايبيهات السيئة' );
-define('_AM_MSG_GROUP1IPSCANTOPEN', 'لم نتمكن فتح ملفات الايبيهات للادارة' );
-define('_AM_MSG_REMOVED', 'تم حذف السجلات' );
+define('_AM_LABEL_COMPACTLOG', 'سجل المتكرر');
+define('_AM_BUTTON_COMPACTLOG', 'حذف المتكرر');
+define('_AM_JS_COMPACTLOGCONFIRM', 'سيتم حذف الايبيهات المتكررة باكثر من موضع');
+define('_AM_LABEL_REMOVEALL', 'حذف كل السجلات');
+define('_AM_BUTTON_REMOVEALL', 'احذف الكل');
+define('_AM_JS_REMOVEALLCONFIRM', 'سيتم حذف كل السجلات نهائيا');
+define('_AM_LABEL_REMOVE', 'حف المحدد من القائمة');
+define('_AM_BUTTON_REMOVE', 'حذف');
+define('_AM_JS_REMOVECONFIRM', 'سيتم حذف المحدد');
+define('_AM_MSG_IPFILESUPDATED', 'تم تحديث  حقل الايبيهات');
+define('_AM_MSG_BADIPSCANTOPEN', 'لم نتمكن من فتح ملف الايبيهات السيئة');
+define('_AM_MSG_GROUP1IPSCANTOPEN', 'لم نتمكن فتح ملفات الايبيهات للادارة');
+define('_AM_MSG_REMOVED', 'تم حذف السجلات');
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "اعطي التصرح 777 لمجلد الكونفيج في: %s" ) ;
 
 
 // prefix_manager.php
-define('_AM_H3_PREFIXMAN', 'ادارة حقل القاعدة' );
-define('_AM_MSG_DBUPDATED', 'تم تحديث قاعدة البيانات' );
-define('_AM_CONFIRM_DELETE', 'سيتم حذف كل البيانات' );
-define('_AM_TXT_HOWTOCHANGEDB', "اذ رغبت بتغير اسم جدول قاعدة البيانات,<br /> عدل ملف  %s/mainfile.php <br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');" );
+define('_AM_H3_PREFIXMAN', 'ادارة حقل القاعدة');
+define('_AM_MSG_DBUPDATED', 'تم تحديث قاعدة البيانات');
+define('_AM_CONFIRM_DELETE', 'سيتم حذف كل البيانات');
+define('_AM_TXT_HOWTOCHANGEDB', "اذ رغبت بتغير اسم جدول قاعدة البيانات,<br /> عدل ملف  %s/mainfile.php <br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
 
 
 // advisory.php

@@ -14,7 +14,6 @@ use Xoops\Core\Exception\NoHandlerException;
 use Xoops\Core\Handler\FactorySpec;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
-
 /**
  * LegacyModule - build a handler using legacy module rules
  *

@@ -40,7 +40,7 @@ abstract class XoopsObjectHandler
      */
     protected function __construct(Connection $db = null)
     {
-        if (! ($db instanceof Connection)) {
+        if (!($db instanceof Connection)) {
             $db = \Xoops::getInstance()->db();
         }
         $this->db2 = $db;

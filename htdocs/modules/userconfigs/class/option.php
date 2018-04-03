@@ -35,7 +35,7 @@ class UserconfigsOption extends XoopsObject
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         $this->initVar('confop_id', XOBJ_DTYPE_INT, null);
         $this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);

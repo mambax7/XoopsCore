@@ -22,7 +22,7 @@ $xoops = Xoops::getInstance();
 
 switch ($op) {
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
         }
         if ($type === 'config') {

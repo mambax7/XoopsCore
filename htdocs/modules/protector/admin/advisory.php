@@ -52,7 +52,7 @@ $security_arr[$i]['text'] = _AM_ADV_TRUSTPATHPUBLIC;
 ++$i;
 
 // register_globals
-$safe = ! ini_get('register_globals');
+$safe = !ini_get('register_globals');
 $security_arr[$i]['id'] = $i + 1;
 $security_arr[$i]['type'] = 'register_globals';
 if ($safe) {
@@ -66,7 +66,7 @@ $security_arr[$i]['text'] = _AM_ADV_REGISTERGLOBALS . '<br /><br />' . \XoopsBas
 ++$i;
 
 // allow_url_fopen
-$safe = ! ini_get('allow_url_fopen');
+$safe = !ini_get('allow_url_fopen');
 $security_arr[$i]['id'] = $i + 1;
 $security_arr[$i]['type'] = 'allow_url_fopen';
 if ($safe) {
@@ -80,7 +80,7 @@ $security_arr[$i]['text'] = _AM_ADV_ALLOWURLFOPEN;
 ++$i;
 
 // session.use_trans_sid
-$safe = ! ini_get('session.use_trans_sid');
+$safe = !ini_get('session.use_trans_sid');
 $security_arr[$i]['id'] = $i + 1;
 $security_arr[$i]['type'] = 'session.use_trans_sid';
 if ($safe) {
@@ -110,18 +110,17 @@ $security_arr[$i]['text'] = _AM_ADV_DBPREFIX;
 // patch to mainfile.php
 $security_arr[$i]['id'] = $i + 1;
 $security_arr[$i]['type'] = 'mainfile.php';
-if (! defined('PROTECTOR_PRECHECK_INCLUDED')) {
+if (!defined('PROTECTOR_PRECHECK_INCLUDED')) {
     $security_arr[$i]['status'] = '0';
     $security_arr[$i]['info'] = "<span style='color:red;font-weight:bold;'>missing precheck</span>";
 } else {
-    if (! defined('PROTECTOR_POSTCHECK_INCLUDED')) {
+    if (!defined('PROTECTOR_POSTCHECK_INCLUDED')) {
         $security_arr[$i]['status'] = '0';
         $security_arr[$i]['info'] = "<span style='color:red;font-weight:bold;'>missing postcheck</span>";
     } else {
         $security_arr[$i]['status'] = '1';
         $security_arr[$i]['info'] = "<span style='color:green;font-weight:bold;'>patched</span>";
     }
-
 }
 $security_arr[$i]['text'] = _AM_ADV_MAINUNPATCHED;
 ++$i;

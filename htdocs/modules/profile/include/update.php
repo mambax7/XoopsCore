@@ -63,10 +63,10 @@ function xoops_module_update_profile(&$module, $oldversion = null)
             $object = $field_handler->create();
             $object->setVars($myrow);
             $object->setVar('cat_id', 1);
-            if (! empty($myrow['field_register'])) {
+            if (!empty($myrow['field_register'])) {
                 $object->setVar('step_id', 2);
             }
-            if (! empty($myrow['field_options'])) {
+            if (!empty($myrow['field_options'])) {
                 $object->setVar('field_options', unserialize($myrow['field_options']));
             }
             $field_handler->insert($object, true);

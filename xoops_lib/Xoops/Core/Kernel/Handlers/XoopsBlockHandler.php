@@ -62,7 +62,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      */
     public function deleteBlock(XoopsBlock $obj)
     {
-        if (! parent::delete($obj)) {
+        if (!parent::delete($obj)) {
             return false;
         }
         $qb = $this->db2->createXoopsQueryBuilder();
@@ -104,13 +104,13 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         }
 
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $block = new XoopsBlock();
             $block->assignVars($myrow);
-            if (! $id_as_key) {
+            if (!$id_as_key) {
                 $ret[] = $block;
             } else {
                 $ret[$myrow['bid']] = $block;
@@ -118,7 +118,6 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             unset($block);
         }
         return $ret;
-
     }
 
     /**
@@ -133,7 +132,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $blocks = $this->getObjects($criteria, true);
         $ret = [];
         foreach (array_keys($blocks) as $i) {
-            $name = (! $blocks[$i]->isCustom()) ? $blocks[$i]->getVar('name') : $blocks[$i]->getVar('title');
+            $name = (!$blocks[$i]->isCustom()) ? $blocks[$i]->getVar('name') : $blocks[$i]->getVar('title');
             $ret[$i] = $name;
         }
         return $ret;
@@ -208,8 +207,8 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $result = $qb->execute();
         $added = [];
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
-            if (! in_array($myrow['bid'], $added, true)) {
-                if (! $asobject) {
+            if (!in_array($myrow['bid'], $added, true)) {
+                if (!$asobject) {
                     $ret[] = $myrow['bid'];
                 } else {
                     $ret[] = new XoopsBlock($myrow);
@@ -353,7 +352,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 ->where($eb->eq('gperm_name', $eb->literal('block_read')))
                 ->andWhere('gperm_modid=1');
 
-            if (is_array($groupid) && ! empty($groupid)) {
+            if (is_array($groupid) && !empty($groupid)) {
                 $qb->andWhere($eb->in('gperm_groupid', $groupid));
             } else {
                 if ((int) ($groupid) > 0) {
@@ -375,7 +374,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         if (isset($module_id)) {
             $qb ->fromPrefix('system_blockmodule', 'm')
                 ->andWhere($eb->eq('m.block_id', 'b.bid'));
-            if (! empty($module_id)) {
+            if (!empty($module_id)) {
                 $in = [];
                 $in[] = 0;
                 $in[] = (int) ($module_id);
@@ -395,7 +394,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 $qb->andWhere($eb->eq('m.module_id', $in));
             }
         }
-        if (! empty($blockids)) {
+        if (!empty($blockids)) {
             $qb->andWhere($eb->in('b.bid', $blockids));
         }
         $qb->orderBy($orderby);
@@ -448,7 +447,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
 
         $non_grouped = array_diff($bids, $grouped);
 
-        if (! empty($non_grouped)) {
+        if (!empty($non_grouped)) {
             $qb->resetQueryParts();
 
             $qb ->select('b.*')
@@ -461,7 +460,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             if (isset($module_id)) {
                 $qb ->fromPrefix('system_blockmodule', 'm')
                     ->andWhere($eb->eq('m.block_id', 'b.bid'));
-                if (! empty($module_id)) {
+                if (!empty($module_id)) {
                     $in = [];
                     $in[] = 0;
                     $in[] = (int) ($module_id);
@@ -523,10 +522,10 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             // showFunc is set for more strict comparison
             $qb->andWhere($eb->eq('show_func', $qb->createNamedParameter($showFunc, \PDO::PARAM_STR)));
         }
-        if (! $result = $qb->execute()) {
+        if (!$result = $qb->execute()) {
             return 0;
         }
-        list ($count) = $result->fetch(\PDO::FETCH_NUM);
+        list($count) = $result->fetch(\PDO::FETCH_NUM);
         return $count;
     }
 

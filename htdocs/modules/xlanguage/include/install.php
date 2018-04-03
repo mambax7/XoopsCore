@@ -53,14 +53,13 @@ function xlanguage_mkdirs($pathname, $pathout = null)
     $paths = explode('/', $pathname);
 
     foreach ($paths as $path) {
-        if (! empty($path)) {
+        if (!empty($path)) {
             $dest = $dest . '/' . $path;
-            if (! is_dir($dest)) {
-                if (! mkdir($dest, 0755)) {
+            if (!is_dir($dest)) {
+                if (!mkdir($dest, 0755)) {
                     return false;
                 }
-                    xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
-
+                xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
             }
         }
     }
@@ -73,8 +72,8 @@ function xlanguage_mkdirs($pathname, $pathout = null)
  */
 function xlanguage_copyfile($folder_in, $source_file, $folder_out)
 {
-    if (! is_dir($folder_out)) {
-        if (! xlanguage_mkdirs($folder_out)) {
+    if (!is_dir($folder_out)) {
+        if (!xlanguage_mkdirs($folder_out)) {
             return false;
         }
     }

@@ -41,7 +41,6 @@ class ComposerUtility
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -69,7 +68,7 @@ class ComposerUtility
             }
         }
 
-        if (! chdir(\XoopsBaseConfig::get('lib-path'))) {
+        if (!chdir(\XoopsBaseConfig::get('lib-path'))) {
             $this->errors[] = 'Cannot change directory to lib-path';
             return false;
         }
@@ -98,8 +97,8 @@ class ComposerUtility
             array_unshift($this->output, $process->getErrorOutput());
             return true;
         }
-            $this->errors[] = 'Failed: ' . $command;
-            $this->errors[] = sprintf(
+        $this->errors[] = 'Failed: ' . $command;
+        $this->errors[] = sprintf(
                 "Process exit code: %s, '%s'",
                 $process->getExitCode(),
                 $process->getExitCodeText()

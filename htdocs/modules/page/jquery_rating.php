@@ -31,7 +31,7 @@ if ($xoops->security()->check()) {
     $time = time();
     $content_id = Request::getInt('content_id', 0);
     $option = Request::getInt('option', 0);
-    if (! isset($_SESSION['page_rating' . $content_id]) || $_SESSION['page_rating' . $content_id] < $time) {
+    if (!isset($_SESSION['page_rating' . $content_id]) || $_SESSION['page_rating' . $content_id] < $time) {
         $_SESSION['page_rating' . $content_id] = $time + $interval;
 
         // Test if the page exist
@@ -49,17 +49,17 @@ if ($xoops->security()->check()) {
         // Permission to vote
         $perm_vote = $gperm_Handler->checkRight('page_global', 0, $groups, $module_id, false);
 
-        if (! $perm_view || ! $perm_vote) {
+        if (!$perm_view || !$perm_vote) {
             echo json_encode($ret);
             exit();
         }
 
         // Check if uid has voted
-/*        if ($rating_Handler->hasVoted($content_id)) {
-            echo json_encode($ret);
-            exit();
-        }
-*/
+        /*        if ($rating_Handler->hasVoted($content_id)) {
+                    echo json_encode($ret);
+                    exit();
+                }
+        */
         // Set vote
         $ratingObj = $rating_Handler->create();
         $ratingObj->setVar('rating_content_id', $content_id);
@@ -75,7 +75,7 @@ if ($xoops->security()->check()) {
             $ret['vote'] = $option;
             $ret['average'] = number_format($ret['average'], 2);
             $contentObj->setVar('content_rating', $ret['average']);
-            if (! $content_Handler->insert($contentObj)) {
+            if (!$content_Handler->insert($contentObj)) {
             }
         }
     }

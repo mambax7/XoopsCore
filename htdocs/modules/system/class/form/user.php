@@ -124,7 +124,7 @@ class SystemUserForm extends Xoops\Form\ThemeForm
             $this->addElement(new Xoops\Form\Hidden('rank', $rank_value));
         }
         // adding a new user requires password fields
-        if (! $form_isedit) {
+        if (!$form_isedit) {
             $this->addElement(new Xoops\Form\Password(XoopsLocale::PASSWORD, 'password'), true);
             $this->addElement(new Xoops\Form\Password(XoopsLocale::RETYPE_PASSWORD, 'pass2'), true);
         } else {
@@ -157,7 +157,7 @@ class SystemUserForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('op', 'users_save'));
         $this->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
 
-        if (! empty($uid_value)) {
+        if (!empty($uid_value)) {
             $this->addElement(new Xoops\Form\Hidden('uid', $uid_value));
         }
     }

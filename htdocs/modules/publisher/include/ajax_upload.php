@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -32,7 +33,7 @@ include_once __DIR__ . '/common.php';
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
-if (! $xoops->isActiveModule('images')) {
+if (!$xoops->isActiveModule('images')) {
     $arr = ['error', '!!!'];
     echo json_encode($arr);
     exit();
@@ -55,16 +56,16 @@ $imgcat_handler = Images::getInstance()->getHandlerCategories();
 $imgcat = $imgcat_handler->get($imgcat_id);
 
 $error = false;
-if (! is_object($imgcat)) {
+if (!is_object($imgcat)) {
     $error = _CO_PUBLISHER_IMAGE_CAT_NONE;
 } else {
     $imgcatperm_handler = $xoops->getHandlerGroupPermission();
     if ($xoops->isUser()) {
-        if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoops->user->getGroups())) {
+        if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoops->user->getGroups())) {
             $error = _CO_PUBLISHER_IMAGE_CAT_NONE;
         }
     } else {
-        if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, FixedGroups::ANONYMOUS)) {
+        if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, FixedGroups::ANONYMOUS)) {
             $error = _CO_PUBLISHER_IMAGE_CAT_NOPERM;
         }
     }
@@ -77,7 +78,7 @@ if ($error === false) {
     ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia('publisher_upload_file')) {
-        if (! $uploader->upload()) {
+        if (!$uploader->upload()) {
             $error = implode('<br>', $uploader->getErrors(false));
         } else {
             $image_handler = Images::getInstance()->getHandlerImages();
@@ -96,7 +97,7 @@ if ($error === false) {
                 $image->setVar('image_body', $fbinary);
                 @unlink($uploader->getSavedDestination());
             }
-            if (! $image_handler->insert($image)) {
+            if (!$image_handler->insert($image)) {
                 $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $image->getVar('image_nicename'));
             }
         }

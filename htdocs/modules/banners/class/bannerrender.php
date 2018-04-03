@@ -51,8 +51,8 @@ class bannerrender
             $criteria->add(new Criteria('banner_status', 0, '!='));
             $sort = (\XoopsBaseConfig::get('db-type') === 'sqlite') ? 'RANDOM()' : 'RAND()';
             $criteria->setSort($sort);
-            if (! empty($client)) {
-                if (! in_array(0, $client, true)) {
+            if (!empty($client)) {
+                if (!in_array(0, $client, true)) {
                     $criteria->add(new Criteria('banner_cid', '(' . implode(',', $client) . ')', 'IN'));
                 }
             }

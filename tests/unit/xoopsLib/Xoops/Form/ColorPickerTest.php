@@ -34,7 +34,9 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
     {
         $level = ob_get_level();
         $value = $this->object->render();
-        while (ob_get_level() > $level) ob_end_flush();
+        while (ob_get_level() > $level) {
+            ob_end_flush();
+        }
         $this->assertTrue(is_string($value));
     }
 

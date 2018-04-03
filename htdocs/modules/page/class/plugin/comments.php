@@ -92,10 +92,10 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
         if (count($view_content) === 0 || $view_content->getVar('content_status') === 0) {
             return $ret;
         }
-            $ret['title'] = $view_content->getVar('content_title');
-            $ret['text'] = $view_content->getVar('content_shorttext') . $view_content->getVar('content_text');
-            $ret['uid'] = $view_content->getVar('content_author');
-            $ret['timestamp'] = $view_content->getVar('content_create');
+        $ret['title'] = $view_content->getVar('content_title');
+        $ret['text'] = $view_content->getVar('content_shorttext') . $view_content->getVar('content_text');
+        $ret['uid'] = $view_content->getVar('content_author');
+        $ret['timestamp'] = $view_content->getVar('content_create');
 
         return $ret;
     }

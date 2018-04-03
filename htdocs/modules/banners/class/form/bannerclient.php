@@ -50,7 +50,7 @@ class BannersBannerclientForm extends Xoops\Form\ThemeForm
         $uname->addElement(new Xoops\Form\SelectUser('', 'uid', false, $obj->getVar('bannerclient_uid'), 1, false));
         $this->addElement($uname);
         $this->addElement(new Xoops\Form\TextArea(_AM_BANNERS_CLIENTS_EXTRAINFO, 'extrainfo', $obj->getVar('bannerclient_extrainfo'), 5, 5), false);
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('cid', $obj->getVar('bannerclient_cid')));
         }
         $this->addElement(new Xoops\Form\Hidden('op', 'save'));

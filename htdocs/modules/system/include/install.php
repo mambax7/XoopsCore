@@ -71,7 +71,7 @@ function xoops_module_install_system(XoopsModule $module)
         $obj->setVar('gperm_itemid', '1');
         $obj->setVar('gperm_modid', '1');
         $obj->setVar('gperm_name', 'module_read');
-        if (! $groupperm_handler->insert($obj)) {
+        if (!$groupperm_handler->insert($obj)) {
             echo $xoops->alert('error', $obj->getHtmlErrors());
         }
     }
@@ -101,7 +101,7 @@ function xoops_module_install_system(XoopsModule $module)
                 $obj->setVar('gperm_itemid', $block->id());
                 $obj->setVar('gperm_modid', '1');
                 $obj->setVar('gperm_name', 'block_read');
-                if (! $groupperm_handler->insert($obj)) {
+                if (!$groupperm_handler->insert($obj)) {
                     echo $xoops->alert('error', $obj->getHtmlErrors());
                 }
             }
@@ -114,7 +114,7 @@ function xoops_module_install_system(XoopsModule $module)
     $obj->setVar('tplset_desc', 'XOOPS Default Template Set');
     $obj->setVar('tplset_credits', '');
     $obj->setVar('tplset_created', time());
-    if (! $tplset_handler->insert($obj)) {
+    if (!$tplset_handler->insert($obj)) {
         echo $xoops->alert('error', $obj->getHtmlErrors());
     }
     // user admin

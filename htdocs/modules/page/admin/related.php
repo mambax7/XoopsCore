@@ -79,7 +79,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('related.php', 3, implode(',', $xoops->security()->getErrors()));
         }
 
@@ -108,7 +108,7 @@ switch ($op) {
                 $criteria->add(new Criteria('link_related_id', $related_id));
                 $criteria->add(new Criteria('link_content_id', '(' . implode(', ', $datas_delete) . ')', 'IN'));
                 $links_ids = $link_Handler->getIds($criteria);
-                if (! $link_Handler->DeleteByIds($links_ids)) {
+                if (!$link_Handler->DeleteByIds($links_ids)) {
                 }
             }
             // Add
@@ -118,7 +118,7 @@ switch ($op) {
                     $obj->setVar('link_related_id', $related_id);
                     $obj->setVar('link_content_id', $content_id);
                     $obj->setVar('link_weight', $weight);
-                    if (! $link_Handler->insert($obj)) {
+                    if (!$link_Handler->insert($obj)) {
                     }
                 }
             }
@@ -132,7 +132,7 @@ switch ($op) {
 
                     $obj = $link_Handler->get($links_ids[0]);
                     $obj->setVar('link_weight', $weight);
-                    if (! $link_Handler->insert($obj)) {
+                    if (!$link_Handler->insert($obj)) {
                     }
                 }
             }
@@ -155,7 +155,7 @@ switch ($op) {
 
         $obj = $related_Handler->get($related_id);
         if ($ok === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('related.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             // Deleting the related
@@ -182,7 +182,7 @@ switch ($op) {
         if ($related_id > 0) {
             $obj = $related_Handler->get($related_id);
             $old = $obj->getVar('related_domenu');
-            $obj->setVar('related_domenu', ! $old);
+            $obj->setVar('related_domenu', !$old);
             if ($related_Handler->insert($obj)) {
                 exit;
             }
@@ -195,7 +195,7 @@ switch ($op) {
         if ($related_id > 0) {
             $obj = $related_Handler->get($related_id);
             $old = $obj->getVar('related_domenu');
-            $obj->setVar('related_domenu', ! $old);
+            $obj->setVar('related_domenu', !$old);
             if ($related_Handler->insert($obj)) {
                 exit;
             }

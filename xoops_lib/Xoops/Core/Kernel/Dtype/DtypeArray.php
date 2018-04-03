@@ -43,7 +43,7 @@ class DtypeArray extends DtypeAbstract
             case Dtype::FORMAT_NONE:
                 return $value;
             default:
-                if (! is_array($value)) {
+                if (!is_array($value)) {
                     if ($value !== '') {
                         $value = unserialize($value);
                     }

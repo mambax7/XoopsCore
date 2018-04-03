@@ -35,7 +35,7 @@ class CodexMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements Men
         $files = \Xoops\Core\Lists\File::getList($xoops->path('modules/codex/'));
         $i = 0;
         foreach ($files as $file) {
-            if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
+            if (!in_array($file, ['xoops_version.php', 'index.php'], true)) {
                 $fileName = ucfirst(str_replace('.php', '', $file));
                 $ret[$i]['name'] = $fileName;
                 $ret[$i]['url'] = $file;

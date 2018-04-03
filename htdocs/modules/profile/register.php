@@ -32,25 +32,25 @@ if ($xoops->isUser()) {
     exit();
 }
 
-if (! empty($_GET['op']) && in_array($_GET['op'], ['actv', 'activate'], true)) {
+if (!empty($_GET['op']) && in_array($_GET['op'], ['actv', 'activate'], true)) {
     header('location: ./activate.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     exit();
 }
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $xoops->getConfigs();
-if (! $xoops->getConfig('allow_register')) {
+if (!$xoops->getConfig('allow_register')) {
     $xoops->redirect('index.php', 6, XoopsLocale::E_WE_ARE_CLOSED_FOR_REGISTRATION);
 }
 
-$op = ! isset($_POST['op']) ? 'register' : $_POST['op'];
+$op = !isset($_POST['op']) ? 'register' : $_POST['op'];
 $current_step = isset($_POST['step']) ? (int) ($_POST['step']) : 0;
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
-$uid = ! empty($_SESSION['profile_register_uid']) ? (int) ($_SESSION['profile_register_uid']) : 0;
+$uid = !empty($_SESSION['profile_register_uid']) ? (int) ($_SESSION['profile_register_uid']) : 0;
 
 // First step is already secured by with the captcha Token so lets check the others
-if ($current_step > 0 && ! $xoops->security()->check()) {
+if ($current_step > 0 && !$xoops->security()->check()) {
     $xoops->redirect('user.php', 5, _PROFILE_MA_EXPIRED);
 }
 
@@ -58,7 +58,7 @@ $criteria = new CriteriaCompo();
 $criteria->setSort('step_order');
 $regstep_handler = \Xoops::getModuleHelper('profile')->getHandler('regstep');
 
-if (! $steps = $regstep_handler->getAll($criteria, null, false, false)) {
+if (!$steps = $regstep_handler->getAll($criteria, null, false, false)) {
     $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 6, _PROFILE_MA_NOSTEPSAVAILABLE);
 }
 
@@ -142,7 +142,7 @@ if ($current_step === 0) {
 
 // Set vars from $_POST/$_SESSION['profile_post']
 foreach ($fields as $fieldname => $field) {
-    if (! isset($_POST[$fieldname])) {
+    if (!isset($_POST[$fieldname])) {
         continue;
     }
 
@@ -159,7 +159,7 @@ $stop = '';
 //Client side validation
 if (isset($_POST['step']) && isset($_SESSION['profile_required'])) {
     foreach ($_SESSION['profile_required'] as $name => $title) {
-        if (! isset($_POST[$name]) || empty($_POST[$name])) {
+        if (!isset($_POST[$name]) || empty($_POST[$name])) {
             $stop .= sprintf(XoopsLocale::F_ENTER, $title) . '<br />';
         }
     }
@@ -187,14 +187,13 @@ if ($current_step === 1) {
     $stop .= XoopsUserUtility::validate($newuser, $pass, $vpass);
 
     $xoopsCaptcha = XoopsCaptcha::getInstance();
-    if (! $xoopsCaptcha->verify()) {
+    if (!$xoopsCaptcha->verify()) {
         $stop .= $xoopsCaptcha->getMessage();
     }
 }
 
 // If the last step required SAVE or if we're on the last step then we will insert/update user on database
-if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['step_save']) || ! isset($steps[$current_step]))) {
-
+if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step_save']) || !isset($steps[$current_step]))) {
     $isNew = $newuser->isNew();
 
     //Did created an user already? If not then let us set some extra info
@@ -222,7 +221,7 @@ if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['ste
     }
 
     // Insert/update user and check if we have succeded
-    if (! $member_handler->insertUser($newuser)) {
+    if (!$member_handler->insertUser($newuser)) {
         $stop .= XoopsLocale::E_USER_NOT_REGISTERED . '<br />';
         $stop .= implode('<br />', $newuser->getErrors());
     } else {
@@ -245,7 +244,7 @@ if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['ste
             }
 
             $message = '';
-            if (! $member_handler->addUserToGroup(FixedGroups::USERS, $newuser->getVar('uid'))) {
+            if (!$member_handler->addUserToGroup(FixedGroups::USERS, $newuser->getVar('uid'))) {
                 $message = _PROFILE_MA_REGISTER_NOTGROUP . '<br />';
             } else {
                 if ($xoops->getConfig('activation_type') === 1) {
@@ -264,7 +263,7 @@ if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['ste
                         $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
                         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                         $xoopsMailer->setSubject(sprintf(XoopsLocale::F_USER_ACTIVATION_KEY_FOR, $newuser->getVar('uname')));
-                        if (! $xoopsMailer->send(true)) {
+                        if (!$xoopsMailer->send(true)) {
                             $_SESSION['profile_post']['_message_'] = 0;
                         } else {
                             $_SESSION['profile_post']['_message_'] = 1;
@@ -285,7 +284,7 @@ if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['ste
                             $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
                             $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                             $xoopsMailer->setSubject(sprintf(XoopsLocale::F_USER_ACTIVATION_KEY_FOR, $newuser->getVar('uname')));
-                            if (! $xoopsMailer->send()) {
+                            if (!$xoopsMailer->send()) {
                                 $_SESSION['profile_post']['_message_'] = 2;
                             } else {
                                 $_SESSION['profile_post']['_message_'] = 3;
@@ -302,7 +301,7 @@ if ($current_step > 0 && empty($stop) && (! empty($steps[$current_step - 1]['ste
     }
 }
 
-if (! empty($stop) || isset($steps[$current_step])) {
+if (!empty($stop) || isset($steps[$current_step])) {
     include_once __DIR__ . '/include/forms.php';
     $current_step = empty($stop) ? $current_step : $current_step - 1;
     $reg_form = profile_getRegisterForm($newuser, $profile, $steps[$current_step]);
@@ -313,7 +312,7 @@ if (! empty($stop) || isset($steps[$current_step])) {
     // No errors and no more steps, finish
     $xoops->tpl()->assign('finish', _PROFILE_MA_REGISTER_FINISH);
     $xoops->tpl()->assign('current_step', -1);
-    if ($xoops->getConfig('activation_type') === 1 && ! empty($_SESSION['profile_post']['pass'])) {
+    if ($xoops->getConfig('activation_type') === 1 && !empty($_SESSION['profile_post']['pass'])) {
         $xoops->tpl()->assign('finish_login', _PROFILE_MA_FINISH_LOGIN);
         $xoops->tpl()->assign('finish_uname', $newuser->getVar('uname'));
         $xoops->tpl()->assign('finish_pass', htmlspecialchars($_SESSION['profile_post']['pass']));

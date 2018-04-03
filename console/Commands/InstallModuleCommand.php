@@ -1,7 +1,6 @@
 <?php
 
 namespace XoopsConsole\Commands;
-
 use SystemModule;
 use XoopsLoad;
 use Xoops;
@@ -11,20 +10,24 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xoops\Core\XoopsTpl;
 
+
 class InstallModuleCommand extends Command
 {
     /**
      * establish the command configuration
      */
-    protected function configure()
-    {
+protected function configure()
+    
+{
+
         $this->setName('install-module')
             ->setDescription('Install a module')
             ->setDefinition([
                 new InputArgument('module', InputArgument::REQUIRED, 'Module directory name'),
             ])->setHelp(<<<EOT
-The <info>install-module</info> command installs a module.
-EOT);
+    The <info>install-module</info> command installs a module.
+
+    EOT);
     }
 
     /**
@@ -37,7 +40,8 @@ EOT);
     {
         $xoops = Xoops::getInstance();
         $module = $input->getArgument('module');
-        if (XoopsLoad::fileExists($xoops->path("modules/${module}/xoops_version.php")) === false) {
+        if (XoopsLoad::fileExists($xoops->path("modules/${module
+}/xoops_version.php")) === false) {
             $output->writeln(sprintf('<error>No module named %s found!</error>', $module));
             return;
         }

@@ -95,4 +95,3 @@ interface NotificationsPluginInterface
      */
     public function tags($category, $item_id, $event);
 }
-

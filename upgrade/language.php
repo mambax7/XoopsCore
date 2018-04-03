@@ -113,7 +113,7 @@ function xoops_analyzeLanguage($str = '', $envType = '')
         // $envType =  1 for the 'HTTP_ACCEPT_LANGUAGE' environment variable,
         //             2 for the 'HTTP_USER_AGENT' one
         $expr = $value[0];
-        if (strpos($expr, '[-_]') === FALSE) {
+        if (strpos($expr, '[-_]') === false) {
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
         if (($envType === 1 && eregi('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$', $str))
@@ -129,11 +129,11 @@ function xoops_detectLanguage()
 {
     global $available_languages;
 
-    if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+    if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $HTTP_ACCEPT_LANGUAGE = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     }
 
-    if (! empty($_SERVER['HTTP_USER_AGENT'])) {
+    if (!empty($_SERVER['HTTP_USER_AGENT'])) {
         $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
     }
 
@@ -141,26 +141,24 @@ function xoops_detectLanguage()
     $xoops_lang = '';
     // 1. try to findout user's language by checking its HTTP_ACCEPT_LANGUAGE
     // variable
-    if (empty($lang) && ! empty($HTTP_ACCEPT_LANGUAGE)) {
+    if (empty($lang) && !empty($HTTP_ACCEPT_LANGUAGE)) {
         $accepted = explode(',', $HTTP_ACCEPT_LANGUAGE);
         $acceptedCnt = count($accepted);
         reset($accepted);
         for ($i = 0; $i < $acceptedCnt; $i++) {
             $lang = xoops_analyzeLanguage($accepted[$i], 1);
-            if(strncasecmp($lang, 'en', 2)){
+            if (strncasecmp($lang, 'en', 2)) {
                 break;
             }
         }
     }
     // 2. try to findout user's language by checking its HTTP_USER_AGENT variable
-    if (empty($lang) && ! empty($HTTP_USER_AGENT)) {
+    if (empty($lang) && !empty($HTTP_USER_AGENT)) {
         $lang = xoops_analyzeLanguage($HTTP_USER_AGENT, 2);
     }
     // 3. If we catch a valid language, configure it
-    if (! empty($lang)) {
+    if (!empty($lang)) {
         $xoops_lang = $available_languages[$lang][1];
     }
     return $xoops_lang;
 }
-
-?>

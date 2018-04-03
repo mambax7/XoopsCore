@@ -26,7 +26,7 @@ class ProfileCategoryForm extends Xoops\Form\ThemeForm
 
         parent::__construct($title, 'form', false, 'post', true);
         $this->addElement(new Xoops\Form\Text(_PROFILE_AM_TITLE, 'cat_title', 5, 255, $obj->getVar('cat_title')), true);
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             //Load groups
             $this->addElement(new Xoops\Form\Hidden('id', $obj->getVar('cat_id')));
         }

@@ -98,13 +98,13 @@ class XoopsPathController
             // Firstly, locate XOOPS lib folder out of XOOPS root folder
             $this->xoopsPath['lib'] = dirname($path) . '/' . ($this->xoopsPathDefault['lib']);
             // If the folder is not created, re-locate XOOPS lib folder inside XOOPS root folder
-            if (! is_dir($this->xoopsPath['lib'] . '/')) {
+            if (!is_dir($this->xoopsPath['lib'] . '/')) {
                 $this->xoopsPath['lib'] = $path . '/' . ($this->xoopsPathDefault['lib']);
             }
             // Firstly, locate XOOPS data folder out of XOOPS root folder
             $this->xoopsPath['data'] = dirname($path) . '/' . ($this->xoopsPathDefault['data']);
             // If the folder is not created, re-locate XOOPS data folder inside XOOPS root folder
-            if (! is_dir($this->xoopsPath['data'] . '/')) {
+            if (!is_dir($this->xoopsPath['data'] . '/')) {
                 $this->xoopsPath['data'] = $path . '/' . ($this->xoopsPathDefault['data']);
             }
         }
@@ -168,7 +168,7 @@ class XoopsPathController
                 $this->checkPermissions($path);
             }
         }
-        $this->validUrl = ! empty($this->xoopsUrl);
+        $this->validUrl = !empty($this->xoopsUrl);
         $validPaths = (array_sum(array_values($this->validPath)) === count(array_keys($this->validPath))) ? 1 : 0;
         $validPerms = true;
         foreach ($this->permErrors as $errs) {
@@ -250,10 +250,10 @@ class XoopsPathController
             'root' => null, 'data' => null,
         ];
 
-        if (! isset($this->xoopsPath[$path])) {
+        if (!isset($this->xoopsPath[$path])) {
             return false;
         }
-        if (! isset($errors[$path])) {
+        if (!isset($errors[$path])) {
             return true;
         }
         $this->setPermission($this->xoopsPath[$path], $paths[$path], $errors[$path]);
@@ -273,14 +273,13 @@ class XoopsPathController
     public function makeWritable($path, $create = true)
     {
         $mode = intval('0777', 8);
-        if (! file_exists($path)) {
-            if (! $create) {
+        if (!file_exists($path)) {
+            if (!$create) {
                 return false;
             }
-                mkdir($path, $mode);
-
+            mkdir($path, $mode);
         }
-        if (! is_writable($path)) {
+        if (!is_writable($path)) {
             chmod($path, $mode);
         }
         clearstatcache();

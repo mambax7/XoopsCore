@@ -19,7 +19,6 @@ class FormTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->object = $this->getMockForAbstractClass('\Xoops\Form\Form', ['title', 'name', 'action']);
-
     }
 
     /**
@@ -107,7 +106,6 @@ class FormTest extends \PHPUnit\Framework\TestCase
 
         $result = $instance->getElementValue($name);
         $this->assertSame($value, $result);
-
     }
 
     public function testGetElementValues()

@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 use Xoops\Core\Security;
@@ -49,9 +50,11 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
     {
         $instance = $this->object;
 
-        if(isset($_SESSION)) unset($_SESSION['XOOPS_TOKEN_SESSION']);
+        if (isset($_SESSION)) {
+            unset($_SESSION['XOOPS_TOKEN_SESSION']);
+        }
         $token = $instance->createToken();
-        $this->assertTrue(! empty($token));
+        $this->assertTrue(!empty($token));
 
         $value = $instance->check(true, $token);
         $this->assertTrue($value);
@@ -69,7 +72,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
-        $this->assertTrue(! empty($token));
+        $this->assertTrue(!empty($token));
         sleep(2);
         $value = $instance->check(true, $token);
         $this->assertFalse($value);
@@ -108,7 +111,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken();
-        $this->assertTrue(! empty($token));
+        $this->assertTrue(!empty($token));
 
         $value = $instance->validateToken($token);
         $this->assertTrue($value);
@@ -126,7 +129,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken(1);
-        $this->assertTrue(! empty($token));
+        $this->assertTrue(!empty($token));
         sleep(2);
         $value = $instance->validateToken($token);
         $this->assertFalse($value);
@@ -141,7 +144,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token = $instance->createToken();
-        $this->assertTrue(! empty($token));
+        $this->assertTrue(!empty($token));
 
         $instance->clearTokens();
         $this->assertTrue(empty($_SESSION['XOOPS_TOKEN_SESSION']));
@@ -153,10 +156,10 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
 
         unset($_SESSION['XOOPS_TOKEN_SESSION']);
         $token1 = $instance->createToken(1);
-        $this->assertTrue(! empty($token1));
+        $this->assertTrue(!empty($token1));
 
         $token2 = $instance->createToken(10);
-        $this->assertTrue(! empty($token2));
+        $this->assertTrue(!empty($token2));
 
         $this->assertTrue(count($_SESSION['XOOPS_TOKEN_SESSION']) === 2);
 
@@ -173,7 +176,7 @@ class SecurityTest extends \PHPUnit\Framework\TestCase
         $value = $instance->checkReferer(0);
         $this->assertTrue($value);
 
-        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url'); 
+        $_SERVER['HTTP_REFERER'] = \XoopsBaseConfig::get('url');
         $value = $instance->checkReferer();
         $this->assertTrue($value);
 

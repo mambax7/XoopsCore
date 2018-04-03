@@ -58,7 +58,7 @@ class Events
     {
         static $instance = false;
 
-        if (! $instance) {
+        if (!$instance) {
             $instance = new self();
             $instance->initializeListeners();
         }
@@ -147,7 +147,7 @@ class Events
     {
         $cache = \Xoops::getInstance()->cache();
         $key = 'system/modules/preloads';
-        if (! $this->preloadList = $cache->read($key)) {
+        if (!$this->preloadList = $cache->read($key)) {
             // get active modules from the xoops instance
             $modules_list = \Xoops::getInstance()->getActiveModules();
             if (empty($modules_list)) {
@@ -202,9 +202,9 @@ class Events
             $path = $xoops->path('modules/' . $preload['module'] . '/preloads/' . $preload['file'] . '.php');
             include_once $path;
             $class_name = ucfirst($preload['module'])
-                . ($preload['file'] === 'preload' ? '' : ucfirst($preload['file']) )
+                . ($preload['file'] === 'preload' ? '' : ucfirst($preload['file']))
                 . 'Preload';
-            if (! class_exists($class_name)) {
+            if (!class_exists($class_name)) {
                 continue;
             }
             $class_methods = get_class_methods($class_name);

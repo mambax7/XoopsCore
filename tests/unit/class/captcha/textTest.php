@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../init_new.php');
 
 class textTest extends \PHPUnit\Framework\TestCase

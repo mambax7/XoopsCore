@@ -59,27 +59,27 @@ function xoops_module_install_avatars(&$module)
     $dbManager->copyFields($map, 'avatar_user_link', 'avatars_user_link', false);
     */
 
-	$xoops_root_path = \XoopsBaseConfig::get('root-path');
+    $xoops_root_path = \XoopsBaseConfig::get('root-path');
 
     // create folder "avatars"
     $dir = $xoops_root_path . '/uploads/avatars';
-    if (! is_dir($dir)) {
+    if (!is_dir($dir)) {
         mkdir($dir, 0777);
         chmod($dir, 0777);
     }
     //Copy index.html
     $file = $xoops_root_path . '/uploads/avatars/index.html';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/modules/avatars/images/index.html', $file);
     }
     //Copy blank.gif
     $file = $xoops_root_path . '/uploads/avatars/blank.gif';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/modules/avatars/images/blank.gif', $file);
     }
     //Copy .htaccess
     $file = $xoops_root_path . '/uploads/avatars/.htaccess';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/uploads/.htaccess', $file);
     }
     return true;

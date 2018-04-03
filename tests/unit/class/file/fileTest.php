@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../init_new.php');
 
 class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
@@ -89,7 +90,7 @@ class XoopsFileHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $instance->offset(0);
         $this->assertTrue($value);
         $data = '';
-        while (! feof($instance->handle)) {
+        while (!feof($instance->handle)) {
             $data .= fgets($instance->handle, 4096);
         }
         $data = trim($data);

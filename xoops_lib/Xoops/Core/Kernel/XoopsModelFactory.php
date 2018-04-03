@@ -27,7 +27,7 @@ class XoopsModelFactory
     /**
      * static private
      */
-    static private $handlers = [];
+    private static $handlers = [];
 
     /**
      * Get singleton instance
@@ -38,7 +38,7 @@ class XoopsModelFactory
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -56,11 +56,11 @@ class XoopsModelFactory
      */
     public function loadHandler(XoopsPersistableObjectHandler $oHandler, $name, $args = null)
     {
-        if (! isset(self::$handlers[$name])) {
+        if (!isset(self::$handlers[$name])) {
             $handler = null;
             $className = '\Xoops\Core\Kernel\Model\\' . ucfirst($name);
             @$handler = new $className();
-            if (! is_object($handler)) {
+            if (!is_object($handler)) {
                 trigger_error('Handler ' . $className . ' not found in file ' . __FILE__, E_USER_WARNING);
                 return null;
             }
@@ -69,7 +69,7 @@ class XoopsModelFactory
         /* @var $handler XoopsModelAbstract */
         $handler = clone self::$handlers[$name];
         $handler->setHandler($oHandler);
-        if (! empty($args) && is_array($args) && is_a($handler, 'Xoops\Core\Kernel\XoopsModelAbstract')) {
+        if (!empty($args) && is_array($args) && is_a($handler, 'Xoops\Core\Kernel\XoopsModelAbstract')) {
             $handler->setVars($args);
         }
         return $handler;

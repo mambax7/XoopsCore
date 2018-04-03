@@ -97,11 +97,11 @@ function xlanguage_detectLang()
 {
     $xoops = Xoops::getInstance();
 
-    if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+    if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $HTTP_ACCEPT_LANGUAGE = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     }
 
-    if (! empty($_SERVER['HTTP_USER_AGENT'])) {
+    if (!empty($_SERVER['HTTP_USER_AGENT'])) {
         $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
     }
 
@@ -109,7 +109,7 @@ function xlanguage_detectLang()
     $xoops_lang = '';
     // 1. try to findout user's language by checking its HTTP_ACCEPT_LANGUAGE
     // variable
-    if (empty($lang) && ! empty($HTTP_ACCEPT_LANGUAGE)) {
+    if (empty($lang) && !empty($HTTP_ACCEPT_LANGUAGE)) {
         $accepted = explode(',', $HTTP_ACCEPT_LANGUAGE);
         $acceptedCnt = count($accepted);
         reset($accepted);
@@ -121,11 +121,11 @@ function xlanguage_detectLang()
         }
     }
     // 2. try to findout user's language by checking its HTTP_USER_AGENT variable
-    if (empty($lang) && ! empty($HTTP_USER_AGENT)) {
+    if (empty($lang) && !empty($HTTP_USER_AGENT)) {
         $lang = xlanguage_lang_detect($HTTP_USER_AGENT, 2);
     }
     // 3. If we catch a valid language, configure it
-    if (! empty($lang)) {
+    if (!empty($lang)) {
         $available = $xoops->registry()->get('XLANGUAGE_AVAILABLE_LANGUAGES');
         $xoops_lang = $available[$lang][1];
     }
@@ -164,12 +164,12 @@ function xlanguage_ml($s)
     $xoops = Xoops::getInstance();
     $xlanguage_handler = $xoops->registry()->get('XLANGUAGE_HANDLER');
 
-    if (! is_object($xoops)) {
+    if (!is_object($xoops)) {
         $xoops = Xoops::getInstance();
     }
     $xoopsConfigLanguage = $xoops->getConfig('locale');
 
-    if (! isset($xlanguage_langs)) {
+    if (!isset($xlanguage_langs)) {
         $langs = $xlanguage_handler->cached_config;
         foreach (array_keys($langs) as $_lang) {
             $xlanguage_langs[$_lang] = $langs[$_lang]['xlanguage_code'];
@@ -213,7 +213,7 @@ function xlanguage_ml($s)
         $patterns[] = '/(\[([^\]]*\|)?' . preg_quote($name) . '(\|[^\]]*)?\])(' . $mid_pattern . ')(\[\/([^\]]*\|)?' . preg_quote($name) . '(\|[^\]]*)?(\]\<br[\s]?[\/]?\>|\]))/isU';
         $replaces[] = '';
     }
-    if (! empty($xoopsConfigLanguage)) {
+    if (!empty($xoopsConfigLanguage)) {
         $s = preg_replace('/\[[\/]?[\|]?' . preg_quote($xoopsConfigLanguage) . '[\|]?\](\<br \/\>)?/i', '', $s);
     }
     if (count($replaces) > 0) {
@@ -234,7 +234,7 @@ function xlanguage_ml_escape_bracket($matches)
     $xlanguage_langs = $xoops->registry()->get('XLANGUAGE_LANGS');
 
     $ret = $matches[1];
-    if (! empty($xlanguage_langs)) {
+    if (!empty($xlanguage_langs)) {
         $pattern = '/(\[([\/])?(' . implode('|', array_map('preg_quote', array_values($xlanguage_langs))) . ')([\|\]]))/isU';
         $ret = preg_replace($pattern, '&#91;\\2\\3\\4', $ret);
     }
@@ -249,7 +249,7 @@ function xlanguage_ml_escape_bracket($matches)
 function xlanguage_select_show($options = null)
 {
     $xoops = Xoops::getInstance();
-    if (! $xoops->registry()->get('XLANGUAGE_THEME_ENABLE')) {
+    if (!$xoops->registry()->get('XLANGUAGE_THEME_ENABLE')) {
         return false;
     }
     include_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/blocks/xlanguage_blocks.php';

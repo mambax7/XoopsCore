@@ -42,7 +42,7 @@ function publisher_category_items_sel_show($options)
     $block['categories'] = [];
     /* @var $catObj PublisherCategory */
     foreach ($categories as $catID => $catObj) {
-        if (! in_array(0, $selectedcatids, true) && ! in_array($catID, $selectedcatids, true)) {
+        if (!in_array(0, $selectedcatids, true) && !in_array($catID, $selectedcatids, true)) {
             continue;
         }
 

@@ -46,15 +46,15 @@ $start = 0;
 $status_array[0] = _AM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = [];
-$status = (! isset($_REQUEST['status']) || ! in_array((int) ($_REQUEST['status']), array_keys($status_array), true)) ? 0
+$status = (!isset($_REQUEST['status']) || !in_array((int) ($_REQUEST['status']), array_keys($status_array), true)) ? 0
     : (int) ($_REQUEST['status']);
 
-$module = ! isset($_REQUEST['module']) ? 0 : (int) ($_REQUEST['module']);
+$module = !isset($_REQUEST['module']) ? 0 : (int) ($_REQUEST['module']);
 
 $modules_array = [];
 $module_handler = $xoops->getHandlerModule();
 $available_plugins = \Xoops\Module\Plugin::getPlugins('comments');
-if (! empty($available_plugins)) {
+if (!empty($available_plugins)) {
     $criteria = new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN');
     $module_array = $module_handler->getNameList($criteria);
 }
@@ -159,7 +159,7 @@ switch ($op) {
             $verif = true;
         }
         if (isset($_POST['commentslist_id'])) {
-            $commentslist_count = (! empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id']))
+            $commentslist_count = (!empty($_POST['commentslist_id']) && is_array($_POST['commentslist_id']))
                 ? count($_POST['commentslist_id']) : 0;
             if ($commentslist_count > 0) {
                 for ($i = 0; $i < $commentslist_count; ++$i) {
@@ -211,7 +211,7 @@ switch ($op) {
         if ($comments_count > 0) {
             $comments_start = $system->cleanVars($_REQUEST, 'comments_start', 0, 'int');
             $comments_limit = $system->cleanVars($_REQUEST, 'comments_limit', 0, 'int');
-            if (! in_array($comments_limit, $limit_array, true)) {
+            if (!in_array($comments_limit, $limit_array, true)) {
                 $comments_limit = $helper->getConfig('com_pager');
             }
             $criteria->setLimit($comments_limit);

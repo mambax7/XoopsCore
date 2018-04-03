@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../init_new.php');
 
 class xoopslistsTest extends \PHPUnit\Framework\TestCase
@@ -97,7 +98,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         $d_subject = $xoops_root_path . '/images/subject/';
         $is_dir = is_dir($d_subject);
-        if (! $is_dir) {
+        if (!$is_dir) {
             mkdir($d_subject);
         }
         $value = $class::getSubjectsList();
@@ -105,7 +106,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(count($value) > 0);
         $sdir = 'test_getSubjectsList';
         $is_sdir = is_dir($d_subject . $sdir);
-        if (! $is_dir) {
+        if (!$is_dir) {
             mkdir($d_subject . $sdir);
         }
         $value = $class::getSubjectsList($sdir);

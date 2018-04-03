@@ -107,7 +107,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public function getProfile($uid, $createOnFailure = true)
     {
         $obj = parent::get($uid);
-        if (! is_object($obj) && $createOnFailure) {
+        if (!is_object($obj) && $createOnFailure) {
             $obj = $this->create();
         }
         return $obj;
@@ -282,10 +282,10 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $searchvars_user = array_intersect($searchvars, $uservars);
         $searchvars_profile = array_diff($searchvars, $uservars);
         $sv = ['u.uid, u.uname, u.email, u.user_viewemail'];
-        if (! empty($searchvars_user)) {
+        if (!empty($searchvars_user)) {
             $sv[0] .= ',u.' . implode(', u.', $searchvars_user);
         }
-        if (! empty($searchvars_profile)) {
+        if (!empty($searchvars_profile)) {
             $sv[] = 'p.' . implode(', p.', $searchvars_profile);
         }
 
@@ -295,13 +295,13 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             ->fromPrefix('system_user', 'u')
             ->leftJoin('u', $this->table, 'p', 'u.uid=p.profile_id');
 
-        if (! empty($groups)) {
+        if (!empty($groups)) {
             $qb->leftJoinPrefix('u', 'system_usergroup', 'g', 'u.uid=g.uid');
         }
 
         $criteria->renderQb($qb);
 
-        if (! empty($groups)) {
+        if (!empty($groups)) {
             $qb->andWhere('g.groupid IN (:grps)')->setParameter('grps', $groups);
         }
 

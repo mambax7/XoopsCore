@@ -27,7 +27,7 @@ function b_system_topposters_show($options)
     $xoops = Xoops::getInstance();
     $block = [];
     $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
-    $limit = (! empty($options[0])) ? $options[0] : 10;
+    $limit = (!empty($options[0])) ? $options[0] : 10;
     $size = count($options);
     for ($i = 2; $i < $size; ++$i) {
         $criteria->add(new Criteria('rank', $options[$i], '<>'));

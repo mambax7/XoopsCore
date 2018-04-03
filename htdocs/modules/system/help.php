@@ -46,13 +46,11 @@ if ($mid > 0) {
     $system_breadcrumb->render();
 
     if ($module->getVar('dirname', 'e') === 'system') {
-
         $admin_dir = \XoopsBaseConfig::get('root-path') . '/modules/system/admin';
         $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 
         foreach ($dirlist as $directory) {
             if (XoopsLoad::fileExists($file = $admin_dir . '/' . $directory . '/xoops_version.php')) {
-
                 require $file;
                 unset($file);
 
@@ -83,8 +81,8 @@ if ($mid > 0) {
             $listed_mods[0]['help_page'] = $list_help;
             $xoopsTpl->assign('list_mods', $listed_mods);
         }
-        unset ($helplist);
-        if (( $module->getInfo('help') !== '' ) && ($j === 0)) {
+        unset($helplist);
+        if (($module->getInfo('help') !== '') && ($j === 0)) {
             $help['name'] = $module->getInfo('name');
             $help['link'] = 'help.php?mid=' . $mid . '&amp;' . $module->getInfo('help');
             $xoopsTpl->appendByRef('help', $help);
@@ -173,7 +171,6 @@ if ($mid > 0) {
 
             foreach ($dirlist as $directory) {
                 if (XoopsLoad::fileExists($file = $admin_dir . '/' . $directory . '/xoops_version.php')) {
-
                     require $file;
                     unset($file);
 
@@ -206,7 +203,7 @@ if ($mid > 0) {
             unset($helplist);
 
             // If there is no help section ($k=0), and a lone help parameter has been defined.
-            if (( $module->getInfo('help') !== '' ) && ($k === 0)) {
+            if (($module->getInfo('help') !== '') && ($k === 0)) {
                 $list_help[$j]['name'] = $module->getInfo('name');
                 $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
                     . '&amp;' . $module->getInfo('help');

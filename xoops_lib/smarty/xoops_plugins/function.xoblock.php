@@ -41,7 +41,7 @@ use Xoops\Core\XoopsTpl;
  */
 function smarty_function_xoblock($params, &$smarty)
 {
-    if (! isset($params['id'])) {
+    if (!isset($params['id'])) {
         return false;
     }
 
@@ -57,9 +57,9 @@ function smarty_function_xoblock($params, &$smarty)
 
     $block_handler = $xoops->getHandlerBlock();
     static $block_objs;
-    if (! isset($block_objs[$block_id])) {
+    if (!isset($block_objs[$block_id])) {
         $blockObj = $block_handler->get($block_id);
-        if (! is_object($blockObj)) {
+        if (!is_object($blockObj)) {
             return false;
         }
         $block_objs[$block_id] = $blockObj;
@@ -74,11 +74,11 @@ function smarty_function_xoblock($params, &$smarty)
     }
 
     if ($groups) {
-        if (! array_intersect($user_groups, $groups)) {
+        if (!array_intersect($user_groups, $groups)) {
             return false;
         }
     } else {
-        if (! in_array($block_id, $allowed_blocks, true)) {
+        if (!in_array($block_id, $allowed_blocks, true)) {
             return false;
         }
     }
@@ -99,7 +99,7 @@ function smarty_function_xoblock($params, &$smarty)
     $block_renderer = new \Xoops\Core\Theme\Plugins\Blocks();
     $block_renderer->theme = $xoops->theme();
     $block = $block_renderer->buildBlock($blockObj, $tpl);
-    if (! $display_none) {
+    if (!$display_none) {
         return $block['content'];
     }
     return '';

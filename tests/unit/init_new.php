@@ -1,6 +1,8 @@
 <?php
 
-if (defined('XOOPS_TU_ROOT_PATH')) return;
+if (defined('XOOPS_TU_ROOT_PATH')) {
+    return;
+}
 
 if (version_compare(PHP_VERSION, '7.1.0', '<')) {
     die('XOOP check: PHP version require 7.1.0 or more');

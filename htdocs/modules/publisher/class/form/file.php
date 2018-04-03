@@ -26,7 +26,6 @@ class PublisherFileForm extends Xoops\Form\ThemeForm
 {
     public function __construct(PublisherFile $obj)
     {
-
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
         $publisher->loadLanguage('main');
@@ -63,7 +62,7 @@ class PublisherFileForm extends Xoops\Form\ThemeForm
         $files_hidden = new Xoops\Form\Hidden('op', 'uploadfile');
         $files_button_tray->addElement($files_hidden);
 
-        if (! $obj->getVar('fileid')) {
+        if (!$obj->getVar('fileid')) {
             $files_butt_create = new Xoops\Form\Button('', '', _MD_PUBLISHER_UPLOAD, 'submit');
             $files_butt_create->setExtra('onclick="this.form.elements.op.value=\'uploadfile\'"');
             $files_button_tray->addElement($files_butt_create);

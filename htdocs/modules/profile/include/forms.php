@@ -138,7 +138,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
     /* @var $profile_handler ProfileProfileHandler */
     $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
     // Dynamic fields
-    if (! $profile) {
+    if (!$profile) {
         $profile = $profile_handler->getProfile($user->getVar('uid'));
     }
     // Get fields

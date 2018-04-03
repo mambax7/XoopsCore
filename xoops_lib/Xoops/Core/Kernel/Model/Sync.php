@@ -54,13 +54,13 @@ class Sync extends XoopsModelAbstract
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
     {
-        if (! empty($table_link)) {
+        if (!empty($table_link)) {
             $this->handler->table_link = $table_link;
         }
-        if (! empty($field_link)) {
+        if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
-        if (! empty($field_object)) {
+        if (!empty($field_object)) {
             $this->handler->field_object = $field_object;
         }
 

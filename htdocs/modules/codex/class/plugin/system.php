@@ -74,7 +74,7 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
 
         $files = \Xoops\Core\Lists\File::getList($xoops->path('modules/codex/'));
         foreach ($files as $file) {
-            if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
+            if (!in_array($file, ['xoops_version.php', 'index.php'], true)) {
                 $ret[$i]['title'] = ucfirst(str_replace('.php', '', $file));
                 $ret[$i]['link'] = $xoops->url('modules/codex/' . $file);
                 $ret[$i]['content'] = 'Codex module : ' . ucfirst(str_replace('.php', '', $file));

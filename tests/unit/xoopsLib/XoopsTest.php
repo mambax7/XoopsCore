@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsModule;
@@ -16,7 +17,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($instance, $instance2);
 
         // First initialization in first test
-        if (! class_exists('\Xoops\Locale', false)) {
+        if (!class_exists('\Xoops\Locale', false)) {
             $value = $instance->loadLocale();
             $this->assertSame(true, $value);
         }
@@ -297,7 +298,6 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($_SESSION['xoopsUserTheme'], $value);
         $_SESSION['xoopsUserTheme'] = $save1;
         $_POST['xoops_theme_select'] = $save2;
-
     }
 
     public function test_getTplInfo()
@@ -557,7 +557,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(false, $value);
 
         $value = $instance->loadLanguage('_errors', null, 'english');
-        $this->assertTrue(! empty($value));
+        $this->assertTrue(!empty($value));
     }
 
     public function test_loadLocale()

@@ -58,7 +58,7 @@ if ($xoops->isUser()) {
     } else {
         $member_handler = $xoops->getHandlerMember();
         $thisUser = $member_handler->getUser($uid);
-        if (! is_object($thisUser) || ! $thisUser->isActive()) {
+        if (!is_object($thisUser) || !$thisUser->isActive()) {
             $xoops->redirect('index.php', 3, XoopsLocale::E_NO_USER_SELECTED);
         }
         $xoops->header('module:system/system_userinfo.tpl');
@@ -67,7 +67,7 @@ if ($xoops->isUser()) {
 } else {
     $member_handler = $xoops->getHandlerMember();
     $thisUser = $member_handler->getUser($uid);
-    if (! is_object($thisUser) || ! $thisUser->isActive()) {
+    if (!is_object($thisUser) || !$thisUser->isActive()) {
         $xoops->redirect('index.php', 3, XoopsLocale::E_NO_USER_SELECTED);
     }
     $xoops->header('module:system/system_userinfo.tpl');
@@ -84,7 +84,7 @@ if ($xoops->isUser() && $isAdmin) {
 //$xoops->events()->triggerEvent('core.userinfo.button', array($thisUser, &$btn));
 $response = $xoops->service('Avatar')->getAvatarEditUrl($thisUser);
 $link = $response->getValue();
-if (! empty($link)) {
+if (!empty($link)) {
     $btn[] = ['link' => $link, 'title' => XoopsLocale::AVATAR, 'icon' => 'glyphicon glyphicon-user'];
     $xoops->tpl()->assign('btn', $btn);
 }
@@ -174,7 +174,7 @@ if ($xoops->isActiveModule('userrank')) {
     $xoops->tpl()->assign('user_ranktitle', $userrank['title']);
 }
 $date = $thisUser->getVar('last_login');
-if (! empty($date)) {
+if (!empty($date)) {
     $xoops->tpl()->assign('user_lastlogin', $date);
 }
 
@@ -205,17 +205,17 @@ foreach (array_keys($modules) as $i) {
                         $results[$k]['image'] = $xoops->url('images/icons/posticon2.gif');
                     }
 
-                    if (! preg_match("/^http[s]*:\/\//i", $result['link'])) {
+                    if (!preg_match("/^http[s]*:\/\//i", $result['link'])) {
                         $results[$k]['link']
                             = $xoops->url('modules/' . $modules[$i]->getVar('dirname') . '/' . $result['link']);
                     }
 
                     $results[$k]['title'] = $myts->htmlSpecialChars($result['title']);
                     $results[$k]['title_highligh'] = $myts->htmlSpecialChars($result['title']);
-                    if (! empty($result['time'])) {
+                    if (!empty($result['time'])) {
                         $results[$k]['time'] = $result['time'] ? XoopsLocale::formatTimestamp($result['time']) : '';
                     }
-                    if (! empty($results[$k]['uid'])) {
+                    if (!empty($results[$k]['uid'])) {
                         $results[$k]['uid'] = @(int) ($results[$k]['uid']);
                         $results[$k]['uname'] = XoopsUser::getUnameFromId($results[$k]['uid'], true);
                     }
@@ -236,7 +236,6 @@ foreach (array_keys($modules) as $i) {
                         'showall_link' => $showall_link,
                     ]
                 );
-
             }
         }
     }

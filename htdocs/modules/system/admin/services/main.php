@@ -27,7 +27,7 @@ $xoops = Xoops::getInstance();
 $security = $xoops->security();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     http_response_code(401);
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
@@ -108,7 +108,7 @@ if (empty($filteredList)) {
     $xoops->tpl()->assign('message', $xoops->alert('error', 'No service providers are installed.', 'No Services'));
 }
 
-if (! empty($selected_service) && in_array($selected_service, $filteredList, true)) {
+if (!empty($selected_service) && in_array($selected_service, $filteredList, true)) {
     $providers = $xoops->service($selected_service)->getRegistered();
     $service = ucfirst($selected_service);
     $mode = reset($providers)->getMode();
@@ -139,7 +139,6 @@ if (! empty($selected_service) && in_array($selected_service, $filteredList, tru
     }
     $xoops->tpl()->assign('provider_list', $provider_list);
     $xoops->tpl()->assign('token', $security->createToken(901));
-
 }
 
 $xoops->footer();

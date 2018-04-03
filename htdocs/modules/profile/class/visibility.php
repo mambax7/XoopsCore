@@ -123,7 +123,6 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         } elseif ($userDiff !== 0) {
             return $userDiff;
         }
-            return $profDiff;
-
+        return $profDiff;
     }
 }

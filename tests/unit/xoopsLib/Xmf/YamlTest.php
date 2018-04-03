@@ -27,7 +27,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $string = Yaml::dump($inputArray);
-        $this->assertTrue(! empty($string));
+        $this->assertTrue(!empty($string));
         $this->assertTrue(is_string($string));
 
         $outputArray = Yaml::load((string) $string);
@@ -56,7 +56,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $string = Yaml::dumpWrapped($inputArray);
-        $this->assertTrue(! empty($string));
+        $this->assertTrue(!empty($string));
         $this->assertTrue(is_string($string));
 
         $outputArray = Yaml::loadWrapped((string) $string);
@@ -69,7 +69,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['start' => '---', 'end' => '...', 'misc' => 'stuff'];
 
         $string = Yaml::dumpWrapped($inputArray);
-        $this->assertTrue(! empty($string));
+        $this->assertTrue(!empty($string));
         $this->assertTrue(is_string($string));
 
         $outputArray = Yaml::loadWrapped((string) $string);
@@ -82,7 +82,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['start' => '---', 'end' => '...', 'misc' => 'stuff'];
 
         $string = Yaml::dump($inputArray);
-        $this->assertTrue(! empty($string));
+        $this->assertTrue(!empty($string));
         $this->assertTrue(is_string($string));
 
         $outputArray = Yaml::loadWrapped((string) $string);

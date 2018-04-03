@@ -70,7 +70,7 @@ class Factory
                 if (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
                     $options['folderName'] = $_SESSION[$this->xoBundleIdentifier]['defaultTheme'];
                 } else {
-                    if (empty($options['folderName']) || ! $this->isThemeAllowed($options['folderName'])) {
+                    if (empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
                         $options['folderName'] = $this->defaultTheme;
                     }
                 }

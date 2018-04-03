@@ -24,7 +24,7 @@ function b_notification_show()
 
     $helper->loadLanguage('main');
     // Notification must be enabled, and user must be logged in
-    if (! $xoops->isUser() || ! notificationEnabled('block')) {
+    if (!$xoops->isUser() || !notificationEnabled('block')) {
         return false; // do not display block
     }
     $notification_handler = $helper->getHandlerNotification();
@@ -43,7 +43,7 @@ function b_notification_show()
         $section['events'] = [];
         $subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $xoops->module->getVar('mid'), $xoops->user->getVar('uid'));
         foreach (notificationEvents($category['name'], true) as $event) {
-            if (! empty($event['admin_only']) && ! $xoops->user->isAdmin($xoops->module->getVar('mid'))) {
+            if (!empty($event['admin_only']) && !$xoops->user->isAdmin($xoops->module->getVar('mid'))) {
                 continue;
             }
             $subscribed = in_array($event['name'], $subscribed_events, true) ? 1 : 0;

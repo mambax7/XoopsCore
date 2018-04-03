@@ -35,7 +35,7 @@ function getDirList($dirname)
     $dirlist = [];
     if (is_dir($dirname) && $handle = opendir($dirname)) {
         while (($file = readdir($handle)) !== false) {
-            if (substr( $file, 0, 1 ) !== '.' && strtolower($file) !== 'cvs') {
+            if (substr($file, 0, 1) !== '.' && strtolower($file) !== 'cvs') {
                 if (is_dir("{$dirname}/{$file}")) {
                     $dirlist[] = $file;
                 }
@@ -51,7 +51,7 @@ function getDirList($dirname)
 function getDbValue($db, $table, $field, $condition = '')
 {
     $xoops = Xoops::getInstance();
-    $table = $db->prefix( $table );
+    $table = $db->prefix($table);
     $sql = "SELECT `{$field}` FROM `{$table}`";
     if ($condition) {
         $sql .= " WHERE {$condition}";
@@ -75,10 +75,10 @@ if (empty($upgrade_language)) {
 
 if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     include_once "./language/{$upgrade_language}/upgrade.php";
-} else if (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
+} elseif (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
     include_once "./language/{$upgrade_language}_utf8/upgrade.php";
     $upgrade_language .= '_utf8';
-} else if (file_exists('./language/english/upgrade.php')) {
+} elseif (file_exists('./language/english/upgrade.php')) {
     include_once './language/english/upgrade.php';
     $upgrade_language = 'english';
 } else {
@@ -88,11 +88,11 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
 
 
 ob_start();
-if (! $xoops->isUser() || ! $xoops->user->isAdmin()) {
+if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
     include_once 'login.php';
 } else {
     $op = @$_REQUEST['action'];
-    if (empty( $_SESSION['xoops_upgrade']['steps'])) {
+    if (empty($_SESSION['xoops_upgrade']['steps'])) {
         $op = '';
     }
     if (empty($op)) {
@@ -106,15 +106,15 @@ if (! $xoops->isUser() || ! $xoops->user->isAdmin()) {
             echo '<p>' . $message . '</p>';
         }
 
-        if (! $res) {
-            array_unshift( $_SESSION['xoops_upgrade']['steps'], $next );
+        if (!$res) {
+            array_unshift($_SESSION['xoops_upgrade']['steps'], $next);
             echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
         } else {
-            if (empty( $_SESSION['xoops_upgrade']['steps'])) {
-                 $text = _FINISH;
+            if (empty($_SESSION['xoops_upgrade']['steps'])) {
+                $text = _FINISH;
             } else {
-                list($key, $val) = each( $_SESSION['xoops_upgrade']['steps'] );
-                $text = sprintf( _APPLY_NEXT, $val );
+                list($key, $val) = each($_SESSION['xoops_upgrade']['steps']);
+                $text = sprintf(_APPLY_NEXT, $val);
             }
             echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
         }

@@ -72,7 +72,7 @@ class NotificationsNotification extends XoopsObject
         // Check the user's notification preference.
         $member_handler = $xoops->getHandlerMember();
         $user = $member_handler->getUser($this->getVar('uid'));
-        if (! is_object($user)) {
+        if (!is_object($user)) {
             return true;
         }
         //todo, remove this from user profile
@@ -165,13 +165,13 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         }
         $result = $qb->execute();
         $ret = [];
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $notification = new NotificationsNotification();
             $notification->assignVars($myrow);
-            if (! $id_as_key) {
+            if (!$id_as_key) {
                 $ret[] = $notification;
             } else {
                 $ret[$myrow['id']] = $notification;
@@ -254,25 +254,24 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
     public function subscribe($category, $item_id, $events, $mode = null, $module_id = null, $user_id = null)
     {
         $xoops = Xoops::getInstance();
-        if (! isset($user_id)) {
-            if (! $xoops->isUser()) {
+        if (!isset($user_id)) {
+            if (!$xoops->isUser()) {
                 return false; // anonymous cannot subscribe
             }
-                $user_id = $xoops->user->getVar('uid');
-
+            $user_id = $xoops->user->getVar('uid');
         }
 
-        if (! isset($module_id)) {
+        if (!isset($module_id)) {
             $module_id = $xoops->module->getVar('mid');
         }
 
         //todo, remove this from user profile
-        if (! isset($mode)) {
+        if (!isset($mode)) {
             $user = new XoopsUser($user_id);
             $mode = $user->getVar('notify_mode');
         }
 
-        if (! is_array($events)) {
+        if (!is_array($events)) {
             $events = [$events];
         }
         foreach ($events as $event) {
@@ -397,7 +396,7 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         $module_id = null,
         $omit_user_id = null
     ) {
-        if (! is_array($events)) {
+        if (!is_array($events)) {
             $events = [$events];
         }
         foreach ($events as $event) {
@@ -430,7 +429,7 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         $xoops = xoops::getInstance();
         $helper = Notifications::getInstance();
 
-        if (! isset($module_id)) {
+        if (!isset($module_id)) {
             $module = $xoops->module;
             $module_id = $xoops->isModule() ? $xoops->module->getVar('mid') : 0;
         } else {
@@ -444,14 +443,15 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         }
         $category_info = $helper->getCategory($category, $module->getVar('dirname'));
         $event_info = $helper->getEvent($category, $event, $module->getVar('dirname'));
-        if (! in_array(
+        if (!in_array(
             $helper->generateConfig($category_info, $event_info, 'option_name'),
-            $mod_config['notification_events'], true
+            $mod_config['notification_events'],
+            true
         ) && empty($event_info['invisible'])) {
             return false;
         }
 
-        if (! isset($omit_user_id)) {
+        if (!isset($omit_user_id)) {
             if ($xoops->isUser()) {
                 $omit_user_id = $xoops->user->getVar('uid');
             } else {
@@ -468,7 +468,7 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         $mode_criteria->add(new Criteria('mode', NOTIFICATIONS_MODE_SENDONCETHENDELETE), 'OR');
         $mode_criteria->add(new Criteria('mode', NOTIFICATIONS_MODE_SENDONCETHENWAIT), 'OR');
         $criteria->add($mode_criteria);
-        if (! empty($user_list)) {
+        if (!empty($user_list)) {
             $user_criteria = new CriteriaCompo();
             foreach ($user_list as $user) {
                 $user_criteria->add(new Criteria('uid', (int) ($user)), 'OR');
@@ -486,11 +486,11 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         $tags = $helper->getTags($category, $item_id, $event, $module->getVar('dirname'));
 
         $tags['X_ITEM_NAME']
-            = ! empty($item_info['name']) ? $item_info['name'] : '[' . _MD_NOTIFICATIONS_ITEMNAMENOTAVAILABLE . ']';
+            = !empty($item_info['name']) ? $item_info['name'] : '[' . _MD_NOTIFICATIONS_ITEMNAMENOTAVAILABLE . ']';
         $tags['X_ITEM_URL']
-            = ! empty($item_info['url']) ? $item_info['url'] : '[' . _MD_NOTIFICATIONS_ITEMURLNOTAVAILABLE . ']';
+            = !empty($item_info['url']) ? $item_info['url'] : '[' . _MD_NOTIFICATIONS_ITEMURLNOTAVAILABLE . ']';
         $tags['X_ITEM_TYPE']
-            = ! empty($category_info['item_name']) ? $category_info['title'] : '['
+            = !empty($category_info['item_name']) ? $category_info['title'] : '['
             . _MD_NOTIFICATIONS_ITEMTYPENOTAVAILABLE . ']';
         $tags['X_MODULE'] = $module->getVar('name');
         $tags['X_MODULE_URL'] = \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname') . '/';
@@ -544,14 +544,13 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
     public function unsubscribe($category, $item_id, $events, $module_id = null, $user_id = null)
     {
         $xoops = Xoops::getInstance();
-        if (! isset($user_id)) {
-            if (! $xoops->isUser()) {
+        if (!isset($user_id)) {
+            if (!$xoops->isUser()) {
                 return false; // anonymous cannot subscribe
             }
-                $user_id = $xoops->user->getVar('uid');
-
+            $user_id = $xoops->user->getVar('uid');
         }
-        if (! isset($module_id)) {
+        if (!isset($module_id)) {
             $module_id = $xoops->module->getVar('mid');
         }
         $criteria = new CriteriaCompo();
@@ -559,7 +558,7 @@ class NotificationsNotificationHandler extends XoopsPersistableObjectHandler
         $criteria->add(new Criteria('category', $category));
         $criteria->add(new Criteria('itemid', (int) ($item_id)));
         $criteria->add(new Criteria('uid', (int) ($user_id)));
-        if (! is_array($events)) {
+        if (!is_array($events)) {
             $events = [$events];
         }
         $event_criteria = new CriteriaCompo();

@@ -52,28 +52,27 @@ class sqlutility
             if ($in_string) {
                 while (true) {
                     $i = strpos($sql, $string_start, $i);
-                    if (! $i) {
+                    if (!$i) {
                         $ret[] = $sql;
                         return true;
                     }
-                        if ($string_start === '`' || $sql[$i - 1] !== '\\') {
-                            $string_start = '';
-                            $in_string = false;
-                            break;
-                        }
-                            $j = 2;
-                            $escaped_backslash = false;
-                            while ($i - $j > 0 && $sql[$i - $j] === '\\') {
-                                $escaped_backslash = ! $escaped_backslash;
-                                ++$j;
-                            }
-                            if ($escaped_backslash) {
-                                $string_start = '';
-                                $in_string = false;
-                                break;
-                            }
-                                ++$i;
-
+                    if ($string_start === '`' || $sql[$i - 1] !== '\\') {
+                        $string_start = '';
+                        $in_string = false;
+                        break;
+                    }
+                    $j = 2;
+                    $escaped_backslash = false;
+                    while ($i - $j > 0 && $sql[$i - $j] === '\\') {
+                        $escaped_backslash = !$escaped_backslash;
+                        ++$j;
+                    }
+                    if ($escaped_backslash) {
+                        $string_start = '';
+                        $in_string = false;
+                        break;
+                    }
+                    ++$i;
                 }
             } else {
                 if ($char === ';') {
@@ -94,20 +93,19 @@ class sqlutility
                             $start_of_comment = (($sql[$i] === '#') ? $i : $i - 2);
                             $end_of_comment = (strpos(' ' . $sql, "\012", $i + 2)) ? strpos(' ' . $sql, "\012", $i + 2)
                                 : strpos(' ' . $sql, "\015", $i + 2);
-                            if (! $end_of_comment) {
+                            if (!$end_of_comment) {
                                 return true;
                             }
-                                $sql = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
-                                $sql_len = strlen($sql);
-                                $i--;
-
+                            $sql = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
+                            $sql_len = strlen($sql);
+                            $i--;
                         }
                     }
                 }
             }
         }
 
-        if (! empty($sql) && trim($sql) !== '') {
+        if (!empty($sql) && trim($sql) !== '') {
             $ret[] = $sql;
         }
         return true;

@@ -47,7 +47,7 @@ class XoopsXmlRpcResponse extends XoopsXmlRpcDocument
         $payload = '';
         foreach ($this->_tags as $tag) {
             /* @var $tag XoopsXmlRpcTag */
-            if (! $tag->isFault()) {
+            if (!$tag->isFault()) {
                 $payload .= $tag->render();
             } else {
                 return '<?xml version="1.0"?><methodResponse>' . $tag->render() . '</methodResponse>';
@@ -274,7 +274,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (! empty($value) && $value !== false) ? 1 : 0;
+        $this->_value = (!empty($value) && $value !== false) ? 1 : 0;
     }
 
     /**
@@ -328,7 +328,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        if (! is_numeric($value)) {
+        if (!is_numeric($value)) {
             $this->_value = strtotime($value);
         } else {
             $this->_value = (int) ($value);

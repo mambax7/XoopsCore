@@ -1,4 +1,5 @@
 <?php
+
 $configs = [
     'autoloader' => dirname(__DIR__) . '/xoops_lib/vendor/autoload.php',
     'configfile' => getcwd() . '/xoopsCIconfigs.php',

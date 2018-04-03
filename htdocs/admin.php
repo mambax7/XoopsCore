@@ -20,19 +20,17 @@ use Xmf\Request;
  * @version     $Id$
  */
 
-include __DIR__ . '/mainfile.php';
 
+include __DIR__ . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->isAdminSide = true;
 include_once $xoops->path('include/cp_functions.php');
-
 $xbc = \XoopsBaseConfig::getInstance();
-
 /**
  * Admin Authentication
  */
 if ($xoops->isUser()) {
-    if (! $xoops->user->isAdmin(-1)) {
+    if (!$xoops->user->isAdmin(-1)) {
         $xoops->redirect('index.php', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         exit();
     }
@@ -48,7 +46,6 @@ $xoops->header();
  */
 if ($xoops->getConfig('admin_warnings_enable')) {
     $error_msg = [];
-
     $install_dir = $xoops->path('install');
     if (is_dir($install_dir)) {
         $error_msg[] = sprintf(XoopsLocale::EF_DIRECTORY_EXISTS, $install_dir);
@@ -60,15 +57,15 @@ if ($xoops->getConfig('admin_warnings_enable')) {
     }
     // ###### Output warn messages for correct functionality  ######
     $cache_path = $xoops->path('var/caches');
-    if (! is_writable($cache_path)) {
+    if (!is_writable($cache_path)) {
         $error_msg[] = sprintf(XoopsLocale::EF_FOLDER_NOT_WRITABLE, $cache_path);
     }
     $upload_path = $xoops->path('uploads');
-    if (! is_writable($upload_path)) {
+    if (!is_writable($upload_path)) {
         $error_msg[] = sprintf(XoopsLocale::EF_FOLDER_NOT_WRITABLE, $upload_path);
     }
     $compile_path = $xbc->get('smarty-compile');
-    if (! is_writable($compile_path)) {
+    if (!is_writable($compile_path)) {
         $error_msg[] = sprintf(XoopsLocale::EF_FOLDER_NOT_WRITABLE, $compile_path);
     }
 
@@ -87,7 +84,7 @@ if ($xoops->getConfig('admin_warnings_enable')) {
 }
 
 $xoopsorgnews = Request::getString('xoopsorgnews', null, 'GET');
-if (! empty($xoopsorgnews)) {
+if (!empty($xoopsorgnews)) {
     // Multiple feeds
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
     $rssurl = [];
@@ -101,22 +98,16 @@ if (! empty($xoopsorgnews)) {
         $ret = '<table class="outer width100">';
         foreach (array_keys($items) as $i) {
             $ret .= '<tr class="head"><td><a href="' . htmlspecialchars($items[$i]['link']) . '" rel="external">';
-            $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars(
-                $items[$i]['pubdate']
-            ) . ')</td></tr>';
+            $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars($items[$i]['pubdate']) . ')</td></tr>';
             if ($items[$i]['description'] !== '') {
                 $ret .= '<tr><td class="odd">' . $items[$i]['description'];
-                if (! empty($items[$i]['guid'])) {
-                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars(
-                        $items[$i]['guid']
-                    ) . '" rel="external" title="">' . XoopsLocale::MORE . '</a>';
+                if (!empty($items[$i]['guid'])) {
+                    $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external" title="">' . XoopsLocale::MORE . '</a>';
                 }
                 $ret .= '</td></tr>';
             } else {
                 if ($items[$i]['guid'] !== '') {
-                    $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars(
-                        $items[$i]['guid']
-                    ) . '" rel="external">' . _MORE . '</a></td></tr>';
+                    $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external">' . _MORE . '</a></td></tr>';
                 }
             }
         }
@@ -125,7 +116,6 @@ if (! empty($xoopsorgnews)) {
     }
 }
 $xoops->footer();
-
 function buildRssFeedCache($rssurl)
 {
     $snoopy = new Snoopy();
@@ -135,12 +125,12 @@ function buildRssFeedCache($rssurl)
         if ($snoopy->fetch($url)) {
             $rssdata = $snoopy->results;
             $rss2parser = new XoopsXmlRss2Parser($rssdata);
-
             $parseResult = $rss2parser->parse();
             if ($parseResult !== false) {
                 $_items = $rss2parser->getItems();
                 $count = count($_items);
-                for ($i = 0; $i < $count; $i++) {
+                for ($i = 0; $i < $count;
+$i++) {
                     // $_items[$i]['title'] = XoopsLocale::convert_encoding($_items[$i]['title'], XoopsLocale::getCharset(), 'UTF-8');
                     // $_items[$i]['description'] = XoopsLocale::convert_encoding($_items[$i]['description'], XoopsLocale::getCharset(), 'UTF-8');
                     $items[(string) (strtotime($_items[$i]['pubdate'])) . '-' . (string) (++$cnt)] = $_items[$i];

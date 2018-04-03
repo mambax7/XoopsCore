@@ -91,7 +91,7 @@ class PublisherItem extends XoopsObject
      */
     public function category()
     {
-        if (! isset($this->_category)) {
+        if (!isset($this->_category)) {
             $this->_category = $this->publisher->getCategoryHandler()->get($this->getVar('categoryid'));
         }
         return $this->_category;
@@ -107,7 +107,7 @@ class PublisherItem extends XoopsObject
     {
         $ret = $this->getVar('title', $format);
         if ($maxLength !== 0) {
-            if (! XoopsLocale::isMultiByte()) {
+            if (!XoopsLocale::isMultiByte()) {
                 if (strlen($ret) >= $maxLength) {
                     $ret = PublisherUtils::substr($ret, 0, $maxLength);
                 }
@@ -126,7 +126,7 @@ class PublisherItem extends XoopsObject
     {
         $ret = $this->getVar('subtitle', $format);
         if ($maxLength !== 0) {
-            if (! XoopsLocale::isMultiByte()) {
+            if (!XoopsLocale::isMultiByte()) {
                 if (strlen($ret) >= $maxLength) {
                     $ret = PublisherUtils::substr($ret, 0, $maxLength);
                 }
@@ -145,11 +145,11 @@ class PublisherItem extends XoopsObject
     public function summary($maxLength = 0, $format = 'S', $stripTags = '')
     {
         $ret = $this->getVar('summary', $format);
-        if (! empty($stripTags)) {
+        if (!empty($stripTags)) {
             $ret = strip_tags($ret, $stripTags);
         }
         if ($maxLength !== 0) {
-            if (! XoopsLocale::isMultiByte()) {
+            if (!XoopsLocale::isMultiByte()) {
                 if (strlen($ret) >= $maxLength) {
                     //$ret = PublisherUtils::substr($ret , 0, $maxLength);
                     $ret = PublisherUtils::truncateTagSafe($ret, $maxLength, $etc = '...', $break_words = false);
@@ -222,10 +222,10 @@ class PublisherItem extends XoopsObject
     {
         $ret = $this->getVar('body', $format);
         $wrap_pos = strpos($ret, '[pagewrap=');
-        if (! ($wrap_pos === false)) {
+        if (!($wrap_pos === false)) {
             $wrap_pages = [];
             $wrap_code_length = strlen('[pagewrap=');
-            while (! ($wrap_pos === false)) {
+            while (!($wrap_pos === false)) {
                 $end_wrap_pos = strpos($ret, ']', $wrap_pos);
                 if ($end_wrap_pos) {
                     $wrap_page_name = substr($ret, $wrap_pos + $wrap_code_length, $end_wrap_pos - $wrap_code_length - $wrap_pos);
@@ -244,11 +244,11 @@ class PublisherItem extends XoopsObject
                 $ret = $this->summary() . '<br /><br />' . $ret;
             }
         }
-        if (! empty($stripTags)) {
+        if (!empty($stripTags)) {
             $ret = strip_tags($ret, $stripTags);
         }
         if ($maxLength !== 0) {
-            if (! XoopsLocale::isMultiByte()) {
+            if (!XoopsLocale::isMultiByte()) {
                 if (strlen($ret) >= $maxLength) {
                     //$ret = PublisherUtils::substr($ret , 0, $maxLength);
                     $ret = PublisherUtils::truncateTagSafe($ret, $maxLength, $etc = '...', $break_words = false);
@@ -333,7 +333,7 @@ class PublisherItem extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         $isNew = $this->isNew();
-        if (! $this->publisher->getItemHandler()->insert($this, $force)) {
+        if (!$this->publisher->getItemHandler()->insert($this, $force)) {
             return false;
         }
         if ($isNew && $this->getVar('status') === _PUBLISHER_STATUS_PUBLISHED) {
@@ -341,9 +341,9 @@ class PublisherItem extends XoopsObject
             $user_handler = $xoops->getHandlerUser();
             $member_handler = $xoops->getHandlerMember();
             $poster = $user_handler->get($this->getVar('uid'));
-            if (is_object($poster) && ! $poster->isNew()) {
+            if (is_object($poster) && !$poster->isNew()) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
-                if (! $member_handler->insertUser($poster, true)) {
+                if (!$member_handler->insertUser($poster, true)) {
                     $this->setErrors('Article created but could not increment user posts.');
                     return false;
                 }
@@ -454,7 +454,6 @@ class PublisherItem extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
-
             $notification_handler = Notifications::getInstance()->getHandlerNotification();
             $tags = [];
             $tags['MODULE_NAME'] = $this->publisher->getModule()->getVar('name');
@@ -465,21 +464,21 @@ class PublisherItem extends XoopsObject
             $tags['DATESUB'] = $this->datesub();
             foreach ($notifications as $notification) {
                 switch ($notification) {
-                    case _PUBLISHER_NOT_ITEM_PUBLISHED :
+                    case _PUBLISHER_NOT_ITEM_PUBLISHED:
                         $tags['ITEM_URL'] = PUBLISHER_URL . '/item.php?itemid=' . $this->getVar('itemid');
                         $notification_handler->triggerEvent('global', 0, 'published', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         $notification_handler->triggerEvent('category', $this->getVar('categoryid'), 'published', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         $notification_handler->triggerEvent('item', $this->getVar('itemid'), 'approved', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         break;
-                    case _PUBLISHER_NOT_ITEM_SUBMITTED :
+                    case _PUBLISHER_NOT_ITEM_SUBMITTED:
                         $tags['WAITINGFILES_URL'] = PUBLISHER_URL . '/admin/item.php?itemid=' . $this->getVar('itemid');
                         $notification_handler->triggerEvent('global', 0, 'submitted', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         $notification_handler->triggerEvent('category', $this->getVar('categoryid'), 'submitted', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         break;
-                    case _PUBLISHER_NOT_ITEM_REJECTED :
+                    case _PUBLISHER_NOT_ITEM_REJECTED:
                         $notification_handler->triggerEvent('item', $this->getVar('itemid'), 'rejected', $tags, [], $this->publisher->getModule()->getVar('mid'));
                         break;
-                    case -1 :
+                    case -1:
                     default:
                         break;
                 }
@@ -514,8 +513,7 @@ class PublisherItem extends XoopsObject
         if ($class) {
             return '<a class=' . $class . ' href="' . $this->getItemUrl() . '">' . $this->title($maxsize) . '</a>';
         }
-            return '<a href="' . $this->getItemUrl() . '">' . $this->title($maxsize) . '</a>';
-
+        return '<a href="' . $this->getItemUrl() . '">' . $this->title($maxsize) . '</a>';
     }
 
     /**
@@ -536,7 +534,7 @@ class PublisherItem extends XoopsObject
     public function plain_maintext($body = null)
     {
         $ret = '';
-        if (! $body) {
+        if (!$body) {
             $body = $this->body();
         }
         $ret .= str_replace('[pagebreak]', '<br /><br />', $body);
@@ -551,7 +549,7 @@ class PublisherItem extends XoopsObject
      */
     public function buildmaintext($item_page_id = -1, $body = null)
     {
-        if (! $body) {
+        if (!$body) {
             $body = $this->body();
         }
         $body_parts = explode('[pagebreak]', $body);
@@ -579,11 +577,11 @@ class PublisherItem extends XoopsObject
         static $ret;
 
         $xoops = Xoops::getInstance();
-        if (! $xoops->isActiveModule('images')) {
+        if (!$xoops->isActiveModule('images')) {
             return [];
         }
         $itemid = $this->getVar('itemid');
-        if (! isset($ret[$itemid])) {
+        if (!isset($ret[$itemid])) {
             $ret[$itemid]['main'] = '';
             $ret[$itemid]['others'] = [];
             $images_ids = [];
@@ -644,7 +642,7 @@ class PublisherItem extends XoopsObject
             case 'wfsection':
             case 'default':
                 $summary = $this->summary($max_char_summary);
-                if (! $summary) {
+                if (!$summary) {
                     $summary = $this->body($max_char_summary);
                 }
                 $item['summary'] = $summary;
@@ -791,7 +789,7 @@ class PublisherItem extends XoopsObject
     {
         global $xoopsConfig;
         // no action, if not flag
-        if (! defined('_PUBLISHER_FLAG_JP_CONVERT')) {
+        if (!defined('_PUBLISHER_FLAG_JP_CONVERT')) {
             return $str;
         }
         // no action, if not Japanese
@@ -995,21 +993,21 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     public function insert(XoopsObject $item, $force = true)
     {
         $xoops = Xoops::getInstance();
-        if (! $item->getVar('meta_keywords') || ! $item->getVar('meta_description') || ! $item->getVar('short_url')) {
+        if (!$item->getVar('meta_keywords') || !$item->getVar('meta_description') || !$item->getVar('short_url')) {
             $publisher_metagen = new PublisherMetagen($item->title(), $item->getVar('meta_keywords'), $item->getVar('summary'));
             // Auto create meta tags if empty
-            if (! $item->getVar('meta_keywords')) {
+            if (!$item->getVar('meta_keywords')) {
                 $item->setVar('meta_keywords', $publisher_metagen->_keywords);
             }
-            if (! $item->getVar('meta_description')) {
+            if (!$item->getVar('meta_description')) {
                 $item->setVar('meta_description', $publisher_metagen->_description);
             }
             // Auto create short_url if empty
-            if (! $item->getVar('short_url')) {
+            if (!$item->getVar('short_url')) {
                 $item->setVar('short_url', $publisher_metagen->generateSeoTitle($item->getVar('title', 'n'), false));
             }
         }
-        if (! parent::insert($item, $force)) {
+        if (!parent::insert($item, $force)) {
             return false;
         }
         if ($xoops->isActiveModule('tag')) {
@@ -1032,10 +1030,10 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     {
         $xoops = Xoops::getInstance();
         // Deleting the files
-        if (! $this->publisher->getFileHandler()->deleteItemFiles($item)) {
+        if (!$this->publisher->getFileHandler()->deleteItemFiles($item)) {
             $item->setErrors('An error while deleting a file.');
         }
-        if (! parent::delete($item, $force)) {
+        if (!parent::delete($item, $force)) {
             $item->setErrors('An error while deleting.');
             return false;
         }
@@ -1114,7 +1112,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $this->addNotNullFieldClause($qb, $notNullFields, $whereMode);
         $result = $qb->execute();
 
-        if (! $result) {
+        if (!$result) {
             return 0;
         }
         list($count) = $result->fetch(PDO::FETCH_NUM);
@@ -1130,11 +1128,11 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     public function getItemsCount($categoryid = -1, $status = '', $notNullFields = '')
     {
         global $publisher_isAdmin;
-        if (! $publisher_isAdmin) {
+        if (!$publisher_isAdmin) {
             $criteriaPermissions = new CriteriaCompo();
             // Categories for which user has access
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
-            if (! empty($categoriesGranted)) {
+            if (!empty($categoriesGranted)) {
                 $grantedCategories = new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN');
                 $criteriaPermissions->add($grantedCategories, 'AND');
             } else {
@@ -1145,21 +1143,21 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
             $criteriaCategory = new criteria('categoryid', $categoryid);
         }
         $criteriaStatus = new CriteriaCompo();
-        if (! empty($status) && is_array($status)) {
+        if (!empty($status) && is_array($status)) {
             foreach ($status as $v) {
                 $criteriaStatus->add(new Criteria('status', $v), 'OR');
             }
-        } elseif (! empty($status) && $status !== -1) {
+        } elseif (!empty($status) && $status !== -1) {
             $criteriaStatus->add(new Criteria('status', $status), 'OR');
         }
         $criteria = new CriteriaCompo();
-        if (! empty($criteriaCategory)) {
+        if (!empty($criteriaCategory)) {
             $criteria->add($criteriaCategory);
         }
-        if (! empty($criteriaPermissions)) {
+        if (!empty($criteriaPermissions)) {
             $criteria->add($criteriaPermissions);
         }
-        if (! empty($criteriaStatus)) {
+        if (!empty($criteriaStatus)) {
             $criteria->add($criteriaStatus);
         }
         return $this->getItemCount($criteria, $notNullFields);
@@ -1286,11 +1284,11 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     public function getItems($limit = 0, $start = 0, $status = '', $categoryid = -1, $sort = 'datesub', $order = 'DESC', $notNullFields = '', $asobject = true, $otherCriteria = null, $id_key = 'none')
     {
         global $publisher_isAdmin;
-        if (! $publisher_isAdmin) {
+        if (!$publisher_isAdmin) {
             $criteriaPermissions = new CriteriaCompo();
             // Categories for which user has access
             $categoriesGranted = $this->publisher->getPermissionHandler()->getGrantedItems('category_read');
-            if (! empty($categoriesGranted)) {
+            if (!empty($categoriesGranted)) {
                 $grantedCategories = new Criteria('categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN');
                 $criteriaPermissions->add($grantedCategories, 'AND');
             } else {
@@ -1300,26 +1298,26 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         if (isset($categoryid) && ($categoryid !== -1)) {
             $criteriaCategory = new criteria('categoryid', $categoryid);
         }
-        if (! empty($status) && is_array($status)) {
+        if (!empty($status) && is_array($status)) {
             $criteriaStatus = new CriteriaCompo();
             foreach ($status as $v) {
                 $criteriaStatus->add(new Criteria('status', $v), 'OR');
             }
-        } elseif (! empty($status) && $status !== -1) {
+        } elseif (!empty($status) && $status !== -1) {
             $criteriaStatus = new CriteriaCompo();
             $criteriaStatus->add(new Criteria('status', $status), 'OR');
         }
         $criteria = new CriteriaCompo();
-        if (! empty($criteriaCategory)) {
+        if (!empty($criteriaCategory)) {
             $criteria->add($criteriaCategory);
         }
-        if (! empty($criteriaPermissions)) {
+        if (!empty($criteriaPermissions)) {
             $criteria->add($criteriaPermissions);
         }
-        if (! empty($criteriaStatus)) {
+        if (!empty($criteriaStatus)) {
             $criteria->add($criteriaStatus);
         }
-        if (! empty($otherCriteria)) {
+        if (!empty($otherCriteria)) {
             $criteria->add($otherCriteria);
         }
         $criteria->setLimit($limit);
@@ -1345,7 +1343,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $totalItems = $this->getItemsCount($categoryId, $status, $notNullFields);
         if ($totalItems > 0) {
             $totalItems = $totalItems - 1;
-            mt_srand((double) microtime() * 1000000);
+            mt_srand((float) microtime() * 1000000);
             $entrynumber = mt_rand(0, $totalItems);
             $item = $this->getItems(1, $entrynumber, $status, $categoryId, $sort = 'datesub', $order = 'DESC', $notNullFields);
             if ($item) {
@@ -1369,8 +1367,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         if ($result) {
             return true;
         }
-            return false;
-
+        return false;
     }
 
     /**
@@ -1432,7 +1429,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
                 unset($criteriaKeyword);
             }
         }
-        if (! PublisherUtils::IsUserAdmin() && (count($categories) > 0)) {
+        if (!PublisherUtils::IsUserAdmin() && (count($categories) > 0)) {
             $criteriaPermissions = new CriteriaCompo();
             // Categories for which user has access
             $categoriesGranted = $gperm_handler->getItemIds('category_read', $groups, $this->publisher->getModule()->getVar('mid'));
@@ -1452,16 +1449,16 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $criteriaItemsStatus = new CriteriaCompo();
         $criteriaItemsStatus->add(new Criteria('status', _PUBLISHER_STATUS_PUBLISHED));
         $criteria = new CriteriaCompo();
-        if (! empty($criteriaUser)) {
+        if (!empty($criteriaUser)) {
             $criteria->add($criteriaUser, 'AND');
         }
-        if (! empty($criteriaKeywords)) {
+        if (!empty($criteriaKeywords)) {
             $criteria->add($criteriaKeywords, 'AND');
         }
-        if (! empty($criteriaPermissions)) {
+        if (!empty($criteriaPermissions)) {
             $criteria->add($criteriaPermissions);
         }
-        if (! empty($criteriaItemsStatus)) {
+        if (!empty($criteriaItemsStatus)) {
             $criteria->add($criteriaItemsStatus, 'AND');
         }
         $criteria->setLimit($limit);
@@ -1591,10 +1588,10 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
 
         $result = $qb->execute();
 
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
-        if (! $inSubCat) {
+        if (!$inSubCat) {
             while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
                 $catsCount[$row['categoryid']] = $row['count'];
             }
@@ -1625,8 +1622,8 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     protected function addNotNullFieldClause(\Xoops\Core\Database\QueryBuilder $qb, $notNullFields = [], $whereMode = '')
     {
         $eb = $qb->expr();
-        if (! empty($notNullFields)) {
-            if (! is_array($notNullFields)) {
+        if (!empty($notNullFields)) {
+            if (!is_array($notNullFields)) {
                 $notNullFields = (array) $notNullFields;
             }
             foreach ($notNullFields as $v) {

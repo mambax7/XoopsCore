@@ -18,21 +18,21 @@
 
 class DefaultThemeLocaleEn_US /*extends XoopsLocaleEn_US*/
 {
-    const CONTROL_AND_MANAGE_YOUR_SITE = 'Control and manage your site';
+    public const CONTROL_AND_MANAGE_YOUR_SITE = 'Control and manage your site';
 
-    const DASHBOARD = 'Dashboard';
+    public const DASHBOARD = 'Dashboard';
 
-    const INSTALLED_EXTENSIONS = 'Installed extensions';
+    public const INSTALLED_EXTENSIONS = 'Installed extensions';
 
-    const INSTALLED_MODULES = 'Installed modules';
+    public const INSTALLED_MODULES = 'Installed modules';
 
-    const SYSTEM_EXTENSIONS = 'System extensions';
+    public const SYSTEM_EXTENSIONS = 'System extensions';
 
-    const SYSTEM_TOOLS = 'System tools';
+    public const SYSTEM_TOOLS = 'System tools';
 
-    const SYSTEM_OPTIONS = 'System options';
+    public const SYSTEM_OPTIONS = 'System options';
 
-    const THERE_ARE_NO_MODULES_INSTALLED = 'There are no modules installed currently';
+    public const THERE_ARE_NO_MODULES_INSTALLED = 'There are no modules installed currently';
 
-    const XOOPS_NEWS = 'Xoops news';
+    public const XOOPS_NEWS = 'Xoops news';
 }

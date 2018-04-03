@@ -341,7 +341,7 @@ class xoopsload
         if (is_array($data)) {
             $configs = $data;
         } else {
-            if (! empty($data)) {
+            if (!empty($data)) {
                 $dirname = $data;
             } elseif ($xoops->isModule()) {
                 $dirname = $xoops->module->getVar('dirname', 'n');
@@ -349,7 +349,7 @@ class xoopsload
                 return false;
             }
             if (self::fileExists($file = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/include/autoload.php')) {
-                if (! $configs = include $file) {
+                if (!$configs = include $file) {
                     return false;
                 }
             }
@@ -396,11 +396,11 @@ class xoopsload
         }
 
         $file = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-        if (! self::loadFile(\XoopsBaseConfig::get('lib-path') . DIRECTORY_SEPARATOR . $file)) {
+        if (!self::loadFile(\XoopsBaseConfig::get('lib-path') . DIRECTORY_SEPARATOR . $file)) {
             return false;
         }
 
-        if (! class_exists($class, false) && ! interface_exists($class, false)) {
+        if (!class_exists($class, false) && !interface_exists($class, false)) {
             return false;
         }
 
@@ -421,7 +421,7 @@ class xoopsload
     public static function fileExists($file)
     {
         static $included = [];
-        if (! isset($included[$file])) {
+        if (!isset($included[$file])) {
             $included[$file] = file_exists($file);
         }
 
@@ -489,11 +489,10 @@ class xoopsload
             if (class_exists($class)) {
                 return $class;
             }
-                trigger_error(
+            trigger_error(
                     'Class ' . $name . ' not found in file ' . __FILE__ . 'at line ' . __LINE__,
                     E_USER_WARNING
                 );
-
         }
 
         return false;
@@ -508,7 +507,7 @@ class xoopsload
      */
     private static function loadFramework($name)
     {
-        if (! self::fileExists($file = \XoopsBaseConfig::get('root-path') . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
+        if (!self::fileExists($file = \XoopsBaseConfig::get('root-path') . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
             /*
             trigger_error(
                 'File ' . str_replace(\XoopsBaseConfig::get('root-path'), '', $file)

@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../init_new.php');
 
 class Xoops_Module_Helper_AbstractTestInstance extends Xoops\Module\Helper\HelperAbstract
@@ -110,7 +111,7 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance->setDirname('system');
         $x = $instance->getConfig($name);
         $this->assertTrue(is_string($x));
-        $this->assertTrue(! empty($x));
+        $this->assertTrue(!empty($x));
     }
 
     public function test_getConfigs()
@@ -148,7 +149,6 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $x = $instance->xoops()->getModuleConfig('module_cache', 'avatars');
         $this->assertSame([$instance->getModule()->getVar('mid') => 0], $x);
-
     }
 
     public function test_isCurrentModule()
@@ -171,7 +171,6 @@ class Xoops_Module_Helper_AbstractTest extends \PHPUnit\Framework\TestCase
         $value = $instance->isCurrentModule();
         $instance->xoops()->moduleDirname = $save;
         $this->assertFalse($value);
-
     }
 
     public function test_isUserAdmin()

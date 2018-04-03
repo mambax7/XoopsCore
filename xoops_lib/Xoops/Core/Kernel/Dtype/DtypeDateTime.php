@@ -11,7 +11,7 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-use \DateTime;
+use DateTime;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Locale\Time;

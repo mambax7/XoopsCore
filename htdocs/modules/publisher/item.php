@@ -39,7 +39,7 @@ if ($itemid === 0) {
 $itemObj = $publisher->getItemHandler()->get($itemid);
 
 // if the selected item was not found, exit
-if (! $itemObj) {
+if (!$itemObj) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
@@ -57,12 +57,12 @@ XoopsLoad::loadFile($publisher->path('footer.php'));
 $categoryObj = $publisher->getCategoryHandler()->get($itemObj->getVar('categoryid'));
 
 // Check user permissions to access that category of the selected item
-if (! $itemObj->accessGranted()) {
+if (!$itemObj->accessGranted()) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 // Update the read counter of the selected item
-if (! $xoops->isUser() || (PublisherUtils::IsUserAdmin() && $publisher->getConfig('item_admin_hits') === 1) || ($xoops->isUser() && ! PublisherUtils::IsUserAdmin())) {
+if (!$xoops->isUser() || (PublisherUtils::IsUserAdmin() && $publisher->getConfig('item_admin_hits') === 1) || ($xoops->isUser() && !PublisherUtils::IsUserAdmin())) {
     $itemObj->updateCounter();
 }
 
@@ -148,7 +148,7 @@ $filesObj = $itemObj->getFiles();
 
 // check if user has permission to modify files
 $hasFilePermissions = true;
-if (! (PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj))) {
+if (!(PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj))) {
     $hasFilePermissions = false;
 }
 
@@ -156,7 +156,7 @@ if (! (PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj
 foreach ($filesObj as $fileObj) {
     $file = [];
     $file['mod'] = false;
-    if ($hasFilePermissions || ($xoops->isUser() && $fileObj->getVar('uid') === $xoops->user->getVar('uid') )) {
+    if ($hasFilePermissions || ($xoops->isUser() && $fileObj->getVar('uid') === $xoops->user->getVar('uid'))) {
         $file['mod'] = true;
     }
 
@@ -209,7 +209,7 @@ $publisher_metagen = new PublisherMetagen($itemObj->getVar('title'), $itemObj->g
 $publisher_metagen->createMetaTags();
 
 // Include the comments if the selected ITEM supports comments
-if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') === 1) || ! $publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') !== 0)) {
+if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') === 1) || !$publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') !== 0)) {
     $xoopsTpl->assign('canComment', true);
     //Comments::getInstance()->renderView();
     // Problem with url_rewrite and posting comments :

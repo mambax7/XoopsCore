@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 
 /**
@@ -212,7 +213,7 @@ class tar
                 // Increment number of files
                 $this->numFiles++;
                 // Create us a new file in our array
-                $activeFile = & $this->files[];
+                $activeFile = &$this->files[];
                 // Asign Values
                 $activeFile['name'] = $file_name;
                 $activeFile['mode'] = $file_mode;
@@ -228,7 +229,7 @@ class tar
                 // Increment number of directories
                 $this->numDirectories++;
                 // Create a new directory in our array
-                $activeDir = & $this->directories[];
+                $activeDir = &$this->directories[];
                 // Assign values
                 $activeDir['name'] = $file_name;
                 $activeDir['mode'] = $file_mode;
@@ -256,7 +257,7 @@ class tar
     private function __readTar($filename = '')
     {
         // Set the filename to load
-        if (! $filename) {
+        if (!$filename) {
             $filename = $this->filename;
         }
         // Read in the TAR file
@@ -265,7 +266,7 @@ class tar
         fclose($fp);
 
         if ($this->tar_file[0] === chr(31) && $this->tar_file[1] === chr(139) && $this->tar_file[2] === chr(8)) {
-            if (! function_exists('gzinflate')) {
+            if (!function_exists('gzinflate')) {
                 return false;
             }
             $this->isGzipped = true;
@@ -384,7 +385,7 @@ class tar
         unset($this->numFiles);
         unset($this->numDirectories);
         // If the tar file doesn't exist...
-        if (! XoopsLoad::fileExists($filename)) {
+        if (!XoopsLoad::fileExists($filename)) {
             return false;
         }
 
@@ -403,7 +404,7 @@ class tar
     public function appendTar($filename)
     {
         // If the tar file doesn't exist...
-        if (! XoopsLoad::fileExists($filename)) {
+        if (!XoopsLoad::fileExists($filename)) {
             return false;
         }
         $this->__readTar($filename);
@@ -490,14 +491,14 @@ class tar
      */
     public function addDirectory($dirname)
     {
-        if (! XoopsLoad::fileExists($dirname)) {
+        if (!XoopsLoad::fileExists($dirname)) {
             return false;
         }
         // Get directory information
         $file_information = stat($dirname);
         // Add directory to processed data
         $this->numDirectories++;
-        $activeDir = & $this->directories[];
+        $activeDir = &$this->directories[];
         $activeDir['name'] = $dirname;
         $activeDir['mode'] = $file_information['mode'];
         $activeDir['time'] = $file_information['time'];
@@ -518,7 +519,7 @@ class tar
     public function addFile($filename, $binary = false)
     {
         // Make sure the file we are adding exists!
-        if (! XoopsLoad::fileExists($filename)) {
+        if (!XoopsLoad::fileExists($filename)) {
             return false;
         }
         // Make sure there are no other files in the archive that have this same filename
@@ -528,7 +529,7 @@ class tar
         // Get file information
         $file_information = stat($filename);
         // Read in the file's contents
-        if (! $binary) {
+        if (!$binary) {
             $fp = fopen($filename, 'r');
         } else {
             $fp = fopen($filename, 'rb');
@@ -537,7 +538,7 @@ class tar
         fclose($fp);
         // Add file to processed data
         $this->numFiles++;
-        $activeFile = & $this->files[];
+        $activeFile = &$this->files[];
         $activeFile['name'] = $filename;
         $activeFile['mode'] = $file_information['mode'];
         $activeFile['user_id'] = $file_information['uid'];
@@ -598,7 +599,7 @@ class tar
      */
     public function saveTar()
     {
-        if (! $this->filename) {
+        if (!$this->filename) {
             return false;
         }
         // Write tar to current file using specified gzip compression
@@ -615,7 +616,7 @@ class tar
      */
     public function toTar($filename, $useGzip)
     {
-        if (! $filename) {
+        if (!$filename) {
             return false;
         }
         // Encode processed files into TAR file format
@@ -623,7 +624,7 @@ class tar
         // GZ Compress the data if we need to
         if ($useGzip) {
             // Make sure we have gzip support
-            if (! function_exists('gzencode')) {
+            if (!function_exists('gzencode')) {
                 return false;
             }
             $file = gzencode($this->tar_file);
@@ -646,7 +647,7 @@ class tar
      */
     public function toTarOutput($filename, $useGzip)
     {
-        if (! $filename) {
+        if (!$filename) {
             return false;
         }
         // Encode processed files into TAR file format
@@ -654,7 +655,7 @@ class tar
         // GZ Compress the data if we need to
         if ($useGzip) {
             // Make sure we have gzip support
-            if (! function_exists('gzencode')) {
+            if (!function_exists('gzencode')) {
                 return false;
             }
             $file = gzencode($this->tar_file);

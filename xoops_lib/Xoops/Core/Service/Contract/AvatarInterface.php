@@ -27,7 +27,7 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
  */
 interface AvatarInterface
 {
-    const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
+    public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
      * getAvatarUrl - given user info return absolute URL to avatar image

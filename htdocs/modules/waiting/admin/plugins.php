@@ -37,7 +37,7 @@ foreach ($plugins as $dirName => $plugin) {
 
     //No permissions, no links
     $helper = \Xoops::getModuleHelper($dirName);
-    if (! $helper->isUserAdmin()) {
+    if (!$helper->isUserAdmin()) {
         continue;
     }
 

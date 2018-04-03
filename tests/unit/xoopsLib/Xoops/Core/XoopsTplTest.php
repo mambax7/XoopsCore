@@ -49,16 +49,24 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('}', $this->object->right_delimiter);
         $this->assertTrue(in_array(
                             $this->normalize_path(\XoopsBaseConfig::get('themes-path')) . '/',
-                            array_map([$this, 'normalize_path'], $this->object->getTemplateDir()), true));
-        $this->assertSame($this->normalize_path(\XoopsBaseConfig::get('var-path')) . '/caches/smarty_cache/',
-            $this->normalize_path($this->object->getCacheDir()));
-        $this->assertSame($this->normalize_path(\XoopsBaseConfig::get('var-path')) . '/caches/smarty_compile/',
-            $this->normalize_path($this->object->getCompileDir()));
+                            array_map([$this, 'normalize_path'], $this->object->getTemplateDir()),
+            true
+        ));
+        $this->assertSame(
+            $this->normalize_path(\XoopsBaseConfig::get('var-path')) . '/caches/smarty_cache/',
+            $this->normalize_path($this->object->getCacheDir())
+        );
+        $this->assertSame(
+            $this->normalize_path(\XoopsBaseConfig::get('var-path')) . '/caches/smarty_compile/',
+            $this->normalize_path($this->object->getCompileDir())
+        );
         $this->assertSame($xoops->getConfig('theme_fromfile') === 1, $this->object->compile_check);
-        $this->assertSame([
+        $this->assertSame(
+            [
             $this->normalize_path(\XoopsBaseConfig::get('lib-path')) . '/smarty/xoops_plugins/',
             $this->normalize_path(SMARTY_DIR) . 'plugins/', ],
-                          array_map([$this, 'normalize_path'], $this->object->plugins_dir));
+                          array_map([$this, 'normalize_path'], $this->object->plugins_dir)
+        );
         $this->assertSame(\XoopsBaseConfig::get('url'), $this->object->getTemplateVars('xoops_url'));
         $this->assertSame(\XoopsBaseConfig::get('root-path'), $this->object->getTemplateVars('xoops_rootpath'));
         $this->assertSame(\XoopsLocale::getLangCode(), $this->object->getTemplateVars('xoops_langcode'));
@@ -69,7 +77,7 @@ class XoopsTplTest extends \PHPUnit\Framework\TestCase
 
     public function test_convertLegacyDelimiters()
     {
-        if (! method_exists($this, 'createMock')) {
+        if (!method_exists($this, 'createMock')) {
             $this->markTestSkipped('Old PHPUnit');
         }
         $stub = $this->createMock(\Smarty_Internal_Template::class);

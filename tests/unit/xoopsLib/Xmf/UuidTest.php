@@ -43,4 +43,3 @@ class UuidTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame($result, $anotherResult);
     }
 }
-

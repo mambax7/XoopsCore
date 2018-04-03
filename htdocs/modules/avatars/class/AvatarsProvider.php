@@ -26,14 +26,14 @@ use Xoops\Core\Service\Contract\AvatarInterface;
  */
 class AvatarsProvider extends AbstractContract implements AvatarInterface
 {
-	protected $xoops_url;
+    protected $xoops_url;
 
-	protected $xoops_upload_url;
+    protected $xoops_upload_url;
 
     public function __construct()
     {
-		$this->xoops_url = \XoopsBaseConfig::get('url');
-		$this->xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
+        $this->xoops_url = \XoopsBaseConfig::get('url');
+        $this->xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
     }
 
     /**
@@ -77,7 +77,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
                 $noInfo = false;
             }
         } elseif (is_array($userinfo)) {
-            if (! empty($userinfo['user_avatar']) && $userinfo['user_avatar'] !== 'blank.gif') {
+            if (!empty($userinfo['user_avatar']) && $userinfo['user_avatar'] !== 'blank.gif') {
                 $response->setValue($this->xoops_upload_url . '/' . $userinfo['user_avatar']);
                 $noInfo = false;
             }

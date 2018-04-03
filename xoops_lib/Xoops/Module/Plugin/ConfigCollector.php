@@ -44,7 +44,7 @@ class ConfigCollector
 
     public function add($pluginConfigs)
     {
-        if (is_array($pluginConfigs) && ! empty($pluginConfigs)) {
+        if (is_array($pluginConfigs) && !empty($pluginConfigs)) {
             foreach ($pluginConfigs as $config) {
                 $this->configs[] = $config;
             }

@@ -25,12 +25,12 @@ include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
-if (! isset($_REQUEST['uid'])) {
+if (!isset($_REQUEST['uid'])) {
     $xoops->redirect('index.php', 2, _PROFILE_AM_NOSELECTION);
 }
 $member_handler = $xoops->getHandlerMember();
 $user = $member_handler->getUser($_REQUEST['uid']);
-if (! $user || $user->isNew()) {
+if (!$user || $user->isNew()) {
     $xoops->redirect('index.php', 2, _PROFILE_AM_USERDONEXIT);
 }
 

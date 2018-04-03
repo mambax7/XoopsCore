@@ -87,7 +87,7 @@ class CommentsCommentRenderer
     public static function getInstance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class($tpl, $use_icons, $do_iconcheck);
         }
@@ -104,7 +104,7 @@ class CommentsCommentRenderer
         if (isset($this->comments)) {
             unset($this->comments);
         }
-        $this->comments = & $comments_arr;
+        $this->comments = &$comments_arr;
     }
 
     /**
@@ -130,8 +130,7 @@ class CommentsCommentRenderer
                 if ($comment->getVar('status') !== Comments::STATUS_ACTIVE) {
                     continue;
                 }
-                    $text = $comment->getVar('text');
-
+                $text = $comment->getVar('text');
             }
             $this->comments[$i] = $comment;
             $this->tpl->append('comments', [
@@ -180,15 +179,14 @@ class CommentsCommentRenderer
             // hide comments that are not active
             if (Comments::STATUS_ACTIVE !== $tree[$comment_id]['obj']->getVar('status')) {
                 // if there are any child comments, display them as root comments
-                if (isset($tree[$comment_id]['child']) && ! empty($tree[$comment_id]['child'])) {
+                if (isset($tree[$comment_id]['child']) && !empty($tree[$comment_id]['child'])) {
                     foreach ($tree[$comment_id]['child'] as $child_id) {
                         $this->renderThreadView($child_id, $admin_view, false);
                     }
                 }
                 return;
             }
-                $text = $tree[$comment_id]['obj']->getVar('text');
-
+            $text = $tree[$comment_id]['obj']->getVar('text');
         }
         $replies = [];
         $this->renderThreadReplies($tree, $comment_id, $replies, '&nbsp;&nbsp;', $admin_view);
@@ -232,15 +230,14 @@ class CommentsCommentRenderer
             // skip this comment if it is not active and continue on processing its child comments instead
             if (Comments::STATUS_ACTIVE !== $tree[$comment_id]['obj']->getVar('status')) {
                 // if there are any child comments, display them as root comments
-                if (isset($tree[$comment_id]['child']) && ! empty($tree[$comment_id]['child'])) {
+                if (isset($tree[$comment_id]['child']) && !empty($tree[$comment_id]['child'])) {
                     foreach ($tree[$comment_id]['child'] as $child_id) {
                         $this->renderNestView($child_id, $admin_view);
                     }
                 }
                 return;
             }
-                $text = $tree[$comment_id]['obj']->getVar('text');
-
+            $text = $tree[$comment_id]['obj']->getVar('text');
         }
         $replies = [];
         $this->renderNestReplies($tree, $comment_id, $replies, 25, $admin_view);
@@ -296,12 +293,12 @@ class CommentsCommentRenderer
             ];
             $current_prefix .= $prefix;
         }
-        if (isset($thread[$key]['child']) && ! empty($thread[$key]['child'])) {
+        if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
             ++$depth;
             foreach ($thread[$key]['child'] as $childkey) {
-                if (! $admin_view && $thread[$childkey]['obj']->getVar('status') !== Comments::STATUS_ACTIVE) {
+                if (!$admin_view && $thread[$childkey]['obj']->getVar('status') !== Comments::STATUS_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead
-                    if (isset($thread[$childkey]['child']) && ! empty($thread[$childkey]['child'])) {
+                    if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
                         foreach ($thread[$childkey]['child'] as $childchildkey) {
                             $this->renderThreadReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
                         }
@@ -350,12 +347,12 @@ class CommentsCommentRenderer
 
             $prefix = $prefix + 25;
         }
-        if (isset($thread[$key]['child']) && ! empty($thread[$key]['child'])) {
+        if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
             ++$depth;
             foreach ($thread[$key]['child'] as $childkey) {
-                if (! $admin_view && $thread[$childkey]['obj']->getVar('status') !== Comments::STATUS_ACTIVE) {
+                if (!$admin_view && $thread[$childkey]['obj']->getVar('status') !== Comments::STATUS_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead
-                    if (isset($thread[$childkey]['child']) && ! empty($thread[$childkey]['child'])) {
+                    if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
                         foreach ($thread[$childkey]['child'] as $childchildkey) {
                             $this->renderNestReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
                         }
@@ -380,7 +377,7 @@ class CommentsCommentRenderer
         $poster['id'] = (int) ($poster_id);
         if ($poster['id'] > 0) {
             $user = Xoops::getInstance()->getHandlerMember()->getUser($poster['id']);
-            if (! is_object($user)) {
+            if (!is_object($user)) {
                 $poster['id'] = 0;
             }
         }
@@ -418,8 +415,7 @@ class CommentsCommentRenderer
                 $poster['status'] = $user->isOnline() ? _MD_COMMENTS_ONLINE : '';
                 return $poster;
             }
-                $poster['id'] = 0;
-
+            $poster['id'] = 0;
         }
 
         $poster['uname'] = XoopsUserUtility::getUnameFromId($poster['id'], false, true);
@@ -445,17 +441,15 @@ class CommentsCommentRenderer
         $icon_image = htmlspecialchars(trim($icon_image));
         if ($icon_image !== '') {
             if ($this->doIconCheck !== false) {
-                if (! XoopsLoad::fileExists(Xoops::getInstance()->path('images/subject/' . $icon_image))) {
+                if (!XoopsLoad::fileExists(Xoops::getInstance()->path('images/subject/' . $icon_image))) {
                     return '<img src="' . \XoopsBaseConfig::get('url')
                         . '/images/icons/no_posticon.gif" alt="" />&nbsp;';
                 }
-                    return '<img src="' . \XoopsBaseConfig::get('url') . '/images/subject/' . $icon_image
-                        . '" alt="" />&nbsp;';
-
-            }
                 return '<img src="' . \XoopsBaseConfig::get('url') . '/images/subject/' . $icon_image
+                        . '" alt="" />&nbsp;';
+            }
+            return '<img src="' . \XoopsBaseConfig::get('url') . '/images/subject/' . $icon_image
                     . '" alt="" />&nbsp;';
-
         }
         return '<img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" />&nbsp;';
     }

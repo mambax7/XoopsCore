@@ -27,7 +27,7 @@ use Xoops\Core\Service\Response;
  */
 interface ThumbnailInterface
 {
-    const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
+    public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
      * getImgUrl - get URL to a thumbnail of the supplied image

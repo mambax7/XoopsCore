@@ -27,7 +27,7 @@ class movabletypeapi extends XoopsXmlRpcApi
 
     public function getCategoryList()
     {
-        if (! $this->_checkUser($this->params[1], $this->params[2])) {
+        if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             $xoopsapi = $this->_getXoopsApi($this->params);

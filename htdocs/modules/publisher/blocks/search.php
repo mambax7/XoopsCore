@@ -28,7 +28,9 @@ function publisher_search_show($options)
     $xoops = Xoops::getInstance();
     $publisher = Publisher::getInstance();
     $categories = $publisher->getCategoryHandler()->getCategoriesForSearch();
-    if (count($categories) === 0) return $block;
+    if (count($categories) === 0) {
+        return $block;
+    }
 
     $andor = isset($_POST['andor']) ? $_POST['andor'] : (isset($_GET['andor']) ? $_GET['andor'] : '');
 
@@ -41,7 +43,7 @@ function publisher_search_show($options)
     if (empty($category) || (is_array($category) && in_array('all', $category, true))) {
         $category = [];
     } else {
-        $category = (! is_array($category)) ? explode(',', $category) : $category;
+        $category = (!is_array($category)) ? explode(',', $category) : $category;
         $category = array_map('intval', $category);
     }
 
@@ -51,13 +53,19 @@ function publisher_search_show($options)
     /* type */
     $type_select = '<select name="andor">';
     $type_select .= '<option value="OR"';
-    if ($andor === 'OR') $type_select .= ' selected="selected"';
+    if ($andor === 'OR') {
+        $type_select .= ' selected="selected"';
+    }
     $type_select .= '>' . XoopsLocale::ANY_OR . '</option>';
     $type_select .= '<option value="AND"';
-    if ($andor === 'AND') $type_select .= ' selected="selected"';
+    if ($andor === 'AND') {
+        $type_select .= ' selected="selected"';
+    }
     $type_select .= '>' . XoopsLocale::ALL . '</option>';
     $type_select .= '<option value="EXACT"';
-    if ($andor === 'exact') $type_select .= ' selected="selected"';
+    if ($andor === 'exact') {
+        $type_select .= ' selected="selected"';
+    }
     $type_select .= '>' . XoopsLocale::EXACT_MATCH . '</option>';
     $type_select .= '</select>';
 
@@ -65,11 +73,15 @@ function publisher_search_show($options)
 
     $select_category = '<select name="category[]" size="5" multiple="multiple" width="150" style="width:150px;">';
     $select_category .= '<option value="all"';
-    if (empty($category) || count($category) === 0) $select_category .= 'selected="selected"';
+    if (empty($category) || count($category) === 0) {
+        $select_category .= 'selected="selected"';
+    }
     $select_category .= '>' . XoopsLocale::ALL . '</option>';
     foreach ($categories as $id => $cat) {
         $select_category .= '<option value="' . $id . '"';
-        if (in_array($id, $category, true)) $select_category .= 'selected="selected"';
+        if (in_array($id, $category, true)) {
+            $select_category .= 'selected="selected"';
+        }
         $select_category .= '>' . $cat . '</option>';
     }
     $select_category .= '</select>';
@@ -77,37 +89,57 @@ function publisher_search_show($options)
     /* scope */
     $searchin_select = '';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="title"';
-    if (in_array('title', $searchin, true)) $searchin_select .= ' checked';
+    if (in_array('title', $searchin, true)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . _CO_PUBLISHER_TITLE . '&nbsp;&nbsp;';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="subtitle"';
-    if (in_array('subtitle', $searchin, true)) $searchin_select .= ' checked';
+    if (in_array('subtitle', $searchin, true)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . _CO_PUBLISHER_SUBTITLE . '&nbsp;&nbsp;';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="summary"';
-    if (in_array('summary', $searchin, true)) $searchin_select .= ' checked';
+    if (in_array('summary', $searchin, true)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . _CO_PUBLISHER_SUMMARY . '&nbsp;&nbsp;';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="text"';
-    if (in_array('body', $searchin, true)) $searchin_select .= ' checked';
+    if (in_array('body', $searchin, true)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . _CO_PUBLISHER_BODY . '&nbsp;&nbsp;';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="keywords"';
-    if (in_array('meta_keywords', $searchin, true)) $searchin_select .= ' checked';
+    if (in_array('meta_keywords', $searchin, true)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . _CO_PUBLISHER_ITEM_META_KEYWORDS . '&nbsp;&nbsp;';
     $searchin_select .= '<input type="checkbox" name="searchin[]" value="all"';
-    if (in_array('all', $searchin, true) || empty($searchin)) $searchin_select .= ' checked';
+    if (in_array('all', $searchin, true) || empty($searchin)) {
+        $searchin_select .= ' checked';
+    }
     $searchin_select .= ' />' . XoopsLocale::ALL . '&nbsp;&nbsp;';
 
     /* sortby */
     $sortby_select = '<select name="sortby">';
     $sortby_select .= '<option value="itemid"';
-    if ($sortby === 'itemid' || empty($sortby)) $sortby_select .= ' selected="selected"';
+    if ($sortby === 'itemid' || empty($sortby)) {
+        $sortby_select .= ' selected="selected"';
+    }
     $sortby_select .= '>' . XoopsLocale::NONE . '</option>';
     $sortby_select .= '<option value="datesub"';
-    if ($sortby === 'datesub') $sortby_select .= ' selected="selected"';
+    if ($sortby === 'datesub') {
+        $sortby_select .= ' selected="selected"';
+    }
     $sortby_select .= '>' . _CO_PUBLISHER_DATESUB . '</option>';
     $sortby_select .= '<option value="title"';
-    if ($sortby === 'title') $sortby_select .= ' selected="selected"';
+    if ($sortby === 'title') {
+        $sortby_select .= ' selected="selected"';
+    }
     $sortby_select .= '>' . _CO_PUBLISHER_TITLE . '</option>';
     $sortby_select .= '<option value="categoryid"';
-    if ($sortby === 'categoryid') $sortby_select .= ' selected="selected"';
+    if ($sortby === 'categoryid') {
+        $sortby_select .= ' selected="selected"';
+    }
     $sortby_select .= '>' . _CO_PUBLISHER_CATEGORY . '</option>';
     $sortby_select .= '</select>';
 

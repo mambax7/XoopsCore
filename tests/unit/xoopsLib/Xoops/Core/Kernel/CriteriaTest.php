@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../init_new.php');
 
 class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
@@ -6,7 +7,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     protected $myclass = 'Xoops\Core\Kernel\Criteria';
 
     public function test___construct()
-	{
+    {
         $column = 'column';
         $value = 'value';
         $operator = 'operator';
@@ -22,7 +23,8 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($function, $criteria->function);
     }
 
-    public function test___construct100() {
+    public function test___construct100()
+    {
         $column = 'column';
         $value = '';
         $operator = '=';
@@ -37,7 +39,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render()
-	{
+    {
         $column = 'column';
         $value = '';
         $operator = '=';
@@ -49,7 +51,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render100()
-	{
+    {
         $column = 'column';
         $value = 'value';
         $operator = 'operator';
@@ -61,7 +63,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render200()
-	{
+    {
         $column = 'column';
         $value = 'value';
         $operator = 'is null';
@@ -73,7 +75,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render300()
-	{
+    {
         $column = 'column';
         $value = 'value';
         $operator = 'is NOT null';
@@ -85,7 +87,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render400()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'in';
@@ -97,7 +99,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_render500()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'NOT in';
@@ -109,7 +111,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_renderLdap()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'NOT in';
@@ -121,7 +123,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_renderWhere()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'NOT in';
@@ -133,7 +135,7 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_renderQb()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'NOT in';
@@ -145,15 +147,15 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
     }
 
     public function test_buildExpressionQb()
-	{
+    {
         $column = 'column';
         $value = '(0,10)';
         $operator = 'NOT in';
         $prefix = 'prefix';
         $function = '';
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
-		$qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
-		$x = $criteria->buildExpressionQb($qb);
-		$this->assertSame("${prefix}.${column} " . strtoupper($operator) . " ${value}", $x);
+        $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
+        $x = $criteria->buildExpressionQb($qb);
+        $this->assertSame("${prefix}.${column} " . strtoupper($operator) . " ${value}", $x);
     }
 }

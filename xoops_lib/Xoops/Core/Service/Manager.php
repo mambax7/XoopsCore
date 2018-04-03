@@ -31,38 +31,38 @@ class Manager
      * Service Mode constant - Exclusive mode where only one located service
      * will be used.
      */
-    const MODE_EXCLUSIVE = 1;
+    public const MODE_EXCLUSIVE = 1;
 
     /**
      * Service Mode constant - Choice mode where one service from potentially
      * many located services will be used. The service dispatched will be selected
      * by system default.
      */
-    const MODE_CHOICE = 2;
+    public const MODE_CHOICE = 2;
 
     /**
      * Service Mode constant - Choice mode where one service from potentially many
      * located services will be used. The service dispatched will be selected by user
      * preference, or system default if no user valid preference is available.
      */
-    const MODE_PREFERENCE = 4;
+    public const MODE_PREFERENCE = 4;
 
     /**
      * Service Mode constant - Multiple mode where all located services will be
      * dispatched in priority order.
      */
-    const MODE_MULTIPLE = 8;
+    public const MODE_MULTIPLE = 8;
 
     /**
      * Provider priorities
      */
-    const PRIORITY_SELECTED = 0;
+    public const PRIORITY_SELECTED = 0;
 
-    const PRIORITY_HIGH = 1;
+    public const PRIORITY_HIGH = 1;
 
-    const PRIORITY_MEDIUM = 5;
+    public const PRIORITY_MEDIUM = 5;
 
-    const PRIORITY_LOW = 9;
+    public const PRIORITY_LOW = 9;
 
     /**
      * Services registry - array keyed on service name, with provider object as value
@@ -106,7 +106,7 @@ class Manager
     {
         static $instance = false;
 
-        if (! $instance) {
+        if (!$instance) {
             $instance = new self();
         }
 

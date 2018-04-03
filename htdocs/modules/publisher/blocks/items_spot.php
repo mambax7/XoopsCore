@@ -75,7 +75,7 @@ function publisher_items_spot_show($options)
         foreach ($sel_items as $item_id) {
             /* @var $itemObj PublisherItem */
             $itemObj = $publisher->getItemHandler()->get($item_id);
-            if (! $itemObj->notLoaded()) {
+            if (!$itemObj->notLoaded()) {
                 $item = $itemObj->toArray();
                 $item['who_when'] = sprintf(_MB_PUBLISHER_WHO_WHEN, $itemObj->posterName(), $itemObj->datesub());
                 if ($i < $itemsCount) {
@@ -92,7 +92,7 @@ function publisher_items_spot_show($options)
             }
         }
     }
-    if (! isset($block['items']) || count($block['items']) === 0) {
+    if (!isset($block['items']) || count($block['items']) === 0) {
         return false;
     }
     $block['publisher_url'] = PUBLISHER_URL;

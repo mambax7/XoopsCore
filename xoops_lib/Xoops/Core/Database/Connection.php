@@ -131,8 +131,7 @@ class Connection extends \Doctrine\DBAL\Connection
         if ($tablename !== '') {
             return $prefix . '_' . $tablename;
         }
-            return $prefix;
-
+        return $prefix;
     }
 
     /**
@@ -236,7 +235,7 @@ class Connection extends \Doctrine\DBAL\Connection
     {
         $events = \Xoops::getInstance()->events();
         if ($this->safe || $this->force) {
-            if (! $this->transactionActive) {
+            if (!$this->transactionActive) {
                 $this->force = false;
             }
             $events->triggerEvent('core.database.query.start');
@@ -255,9 +254,8 @@ class Connection extends \Doctrine\DBAL\Connection
             //$events->triggerEvent('core.database.query.success', (array($query)));
             return (int) $result;
         }
-            //$events->triggerEvent('core.database.query.failure', (array($query)));
-            return (int) 0;
-
+        //$events->triggerEvent('core.database.query.failure', (array($query)));
+        return (int) 0;
     }
 
     /**
@@ -303,9 +301,9 @@ class Connection extends \Doctrine\DBAL\Connection
     public function query()
     {
         $events = \Xoops::getInstance()->events();
-        if (! $this->safe && ! $this->force) {
+        if (!$this->safe && !$this->force) {
             $sql = ltrim(func_get_arg(0));
-            if (! $this->safe && strtolower(substr($sql, 0, 6)) !== 'select') {
+            if (!$this->safe && strtolower(substr($sql, 0, 6)) !== 'select') {
                 // $events->triggerEvent('core.database.query.failure', (array('Not safe:')));
                 return null;
             }
@@ -323,9 +321,8 @@ class Connection extends \Doctrine\DBAL\Connection
             //$events->triggerEvent('core.database.query.success', (array('')));
             return $result;
         }
-            //$events->triggerEvent('core.database.query.failure', (array('')));
-            return null;
-
+        //$events->triggerEvent('core.database.query.failure', (array('')));
+        return null;
     }
 
     /**

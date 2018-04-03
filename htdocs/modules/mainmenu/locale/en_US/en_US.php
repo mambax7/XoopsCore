@@ -22,13 +22,13 @@
 class MainmenuLocaleEn_US
 {
     // Module
-    const MODULE_NAME = 'Main Menu';
+    public const MODULE_NAME = 'Main Menu';
 
-    const MODULE_DESC = 'Provides an extensible Main Menu block';
+    public const MODULE_DESC = 'Provides an extensible Main Menu block';
 
-    const DONATION_DESC = 'Donation for module Main Menu';
+    public const DONATION_DESC = 'Donation for module Main Menu';
 
-    const BLOCK_NAME = 'Main menu';
+    public const BLOCK_NAME = 'Main menu';
 
-    const BLOCK_DESC = 'Shows a Main Menu Block';
+    public const BLOCK_DESC = 'Shows a Main Menu Block';
 }

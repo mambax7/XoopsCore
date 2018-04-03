@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class XoopsXmlRpcRequestTest extends \PHPUnit\Framework\TestCase
@@ -27,6 +28,6 @@ class XoopsXmlRpcRequestTest extends \PHPUnit\Framework\TestCase
 
         $x = $instance->render();
         $this->assertTrue(is_string($x));
-        $this->assertTrue(! empty($x));
+        $this->assertTrue(!empty($x));
     }
 }

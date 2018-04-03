@@ -104,7 +104,7 @@ class Permission extends AbstractHelper
             $this->mid,
             (bool) $trueifadmin
         );
-        if (! $permission) {
+        if (!$permission) {
             $helper = Helper::getHelper($this->dirname);
             $helper->redirect($url, $time, $message);
         }
@@ -171,7 +171,7 @@ class Permission extends AbstractHelper
     public function deletePermissionForItem($gperm_name, $gperm_itemid)
     {
         $gperm_itemid = (int) $gperm_itemid;
-        if (! is_array($gperm_name)) {
+        if (!is_array($gperm_name)) {
             $gperm_name = (array) $gperm_name;
         }
         $return = true;

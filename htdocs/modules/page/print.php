@@ -32,7 +32,7 @@ $content_id = Request::getInt('id', 0);
 
 // Permission to view
 $perm_view = $gperm_Handler->checkRight('page_view_item', $content_id, $groups, $module_id, false);
-if (! $perm_view) {
+if (!$perm_view) {
     $xoops->redirect('javascript:history.go(-1)', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
     exit();
 }

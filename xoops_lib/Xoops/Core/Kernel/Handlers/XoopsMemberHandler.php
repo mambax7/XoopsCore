@@ -114,7 +114,7 @@ class XoopsMemberHandler
      */
     public function getUser($id)
     {
-        if (! isset($this->membersWorkingList[$id])) {
+        if (!isset($this->membersWorkingList[$id])) {
             $this->membersWorkingList[$id] = $this->userHandler->get($id);
         }
         return $this->membersWorkingList[$id];
@@ -285,19 +285,18 @@ class XoopsMemberHandler
     public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0)
     {
         $user_ids = $this->membershipHandler->getUsersByGroup($group_id, $limit, $start);
-        if (! $asobject) {
+        if (!$asobject) {
             return $user_ids;
         }
-            $ret = [];
-            foreach ($user_ids as $u_id) {
-                $user = $this->getUser($u_id);
-                if (is_object($user)) {
-                    $ret[] = $user;
-                }
-                unset($user);
+        $ret = [];
+        foreach ($user_ids as $u_id) {
+            $user = $this->getUser($u_id);
+            if (is_object($user)) {
+                $ret[] = $user;
             }
-            return $ret;
-
+            unset($user);
+        }
+        return $ret;
     }
 
     /**
@@ -312,14 +311,13 @@ class XoopsMemberHandler
     {
         $ret = [];
         $group_ids = $this->membershipHandler->getGroupsByUser($user_id);
-        if (! $asobject) {
+        if (!$asobject) {
             return $group_ids;
         }
-            foreach ($group_ids as $g_id) {
-                $ret[] = $this->getGroup($g_id);
-            }
-            return $ret;
-
+        foreach ($group_ids as $g_id) {
+            $ret[] = $this->getGroup($g_id);
+        }
+        return $ret;
     }
 
     /**
@@ -338,7 +336,7 @@ class XoopsMemberHandler
         $criteria = new Criteria('uname', $uname);
         //$criteria->add(new Criteria('pass', md5($pwd)));
         $user = $this->userHandler->getObjects($criteria, false);
-        if (! $user || count($user) !== 1) {
+        if (!$user || count($user) !== 1) {
             return false;
         }
 
@@ -346,7 +344,7 @@ class XoopsMemberHandler
         $type = substr($user[0]->pass(), 0, 1);
         // see if we have a crypt like signature, old md5 hash is just hex digits
         if ($type === '$') {
-            if (! password_verify($pwd, $hash)) {
+            if (!password_verify($pwd, $hash)) {
                 return false;
             }
             // check if hash uses the best algorithm (i.e. after a PHP upgrade)
@@ -455,7 +453,6 @@ class XoopsMemberHandler
         $asobject = false,
         $id_as_key = false
     ) {
-
         $qb = $this->userHandler->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
@@ -464,7 +461,7 @@ class XoopsMemberHandler
             ->leftJoinPrefix('u', 'system_usergroup', 'm', 'm.uid = u.uid');
 
         $where = false;
-        if (! empty($groups)) {
+        if (!empty($groups)) {
             $qb->where($eb->in('m.groupid', $groups));
             $where = true;
         }
@@ -475,7 +472,7 @@ class XoopsMemberHandler
 
         $ret = [];
 
-        if (! $result = $qb->execute()) {
+        if (!$result = $qb->execute()) {
             return $ret;
         }
 
@@ -483,7 +480,7 @@ class XoopsMemberHandler
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
-                if (! $id_as_key) {
+                if (!$id_as_key) {
                     $ret[] = $user;
                 } else {
                     $ret[$myrow['uid']] = $user;
@@ -515,7 +512,7 @@ class XoopsMemberHandler
             ->leftJoinPrefix('u', 'system_usergroup', 'm', 'm.uid = u.uid');
 
         $where = false;
-        if (! empty($groups)) {
+        if (!empty($groups)) {
             $qb->where($eb->in('m.groupid', $groups));
             $where = true;
         }

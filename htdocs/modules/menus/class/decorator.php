@@ -25,10 +25,10 @@ class MenusDecorator
      *
      * @return bool
      */
-    static function getDecorators($dirname)
+    public static function getDecorators($dirname)
     {
         $available = self::getAvailableDecorators();
-        if (! in_array($dirname, array_keys($available), true)) {
+        if (!in_array($dirname, array_keys($available), true)) {
             return false;
         }
         return $available[$dirname];
@@ -37,10 +37,10 @@ class MenusDecorator
     /**
      * @return array
      */
-    static function getAvailableDecorators()
+    public static function getAvailableDecorators()
     {
         static $decorators = false;
-        if (! is_array($decorators)) {
+        if (!is_array($decorators)) {
             $decorators = [];
             $helper = Menus::getInstance();
 
@@ -78,7 +78,7 @@ class MenusDecoratorAbstract
 
         $language = XoopsLocale::getLegacyLanguage();
         $path = $helper->path("decorators/{$name}/language");
-        if (! $ret = XoopsLoad::loadFile("{$path}/{$language}/decorator.php")) {
+        if (!$ret = XoopsLoad::loadFile("{$path}/{$language}/decorator.php")) {
             $ret = XoopsLoad::loadFile("{$path}/english/decorator.php");
         }
         return $ret;
@@ -87,13 +87,13 @@ class MenusDecoratorAbstract
 
 interface MenusDecoratorInterface
 {
-    function start();
+    public function start();
 
-    function end(&$menus);
+    public function end(&$menus);
 
-    function decorateMenu(&$menu);
+    public function decorateMenu(&$menu);
 
-    function hasAccess($menu, &$hasAccess);
+    public function hasAccess($menu, &$hasAccess);
 
-    function accessFilter(&$accessFilter);
+    public function accessFilter(&$accessFilter);
 }

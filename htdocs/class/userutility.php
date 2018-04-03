@@ -33,15 +33,15 @@ class XoopsUserUtility
     {
         $xoops = Xoops::getInstance();
 
-        if (! $xoops->getConfig('welcome_type')) {
+        if (!$xoops->getConfig('welcome_type')) {
             return true;
         }
 
-        if (! empty($user) && ! is_object($user)) {
+        if (!empty($user) && !is_object($user)) {
             $member_handler = $xoops->getHandlerMember();
             $user = $member_handler->getUser($user);
         }
-        if (! is_object($user)) {
+        if (!is_object($user)) {
             return false;
         }
 
@@ -86,13 +86,13 @@ class XoopsUserUtility
                 $user = $args[0];
                 break;
             case 2:
-                list ($uname, $email) = $args;
+                list($uname, $email) = $args;
                 break;
             case 3:
-                list ($user, $pass, $vpass) = $args;
+                list($user, $pass, $vpass) = $args;
                 break;
             case 4:
-                list ($uname, $email, $pass, $vpass) = $args;
+                list($uname, $email, $pass, $vpass) = $args;
                 break;
             default:
                 return false;
@@ -112,18 +112,18 @@ class XoopsUserUtility
 
         $stop = '';
         // Invalid email address
-        if (! $xoops->checkEmail($email)) {
+        if (!$xoops->checkEmail($email)) {
             $stop .= XoopsLocale::E_INVALID_EMAIL . '<br />';
         }
         if (strrpos($email, ' ') > 0) {
             $stop .= XoopsLocale::E_EMAIL_SHOULD_NOT_CONTAIN_SPACES . '<br />';
         }
         // Check forbidden email address if current operator is not an administrator
-        if (! $xoops->userIsAdmin) {
+        if (!$xoops->userIsAdmin) {
             $bad_emails = $xoops->getConfig('bad_emails');
-            if (! empty($bad_emails)) {
+            if (!empty($bad_emails)) {
                 foreach ($bad_emails as $be) {
-                    if (! empty($be) && preg_match('/' . $be . '/i', $email)) {
+                    if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
                         $stop .= XoopsLocale::E_INVALID_EMAIL . '<br />';
                         break;
                     }
@@ -132,23 +132,23 @@ class XoopsUserUtility
         }
         // $uname = XoopsLocale::trim($uname);
         // no controls, puctuation, symbols, spaces or invisible separators
-        if (! preg_match('/^[^\p{C}\p{P}\p{S}\p{Z}]+$/u', $uname)) {
+        if (!preg_match('/^[^\p{C}\p{P}\p{S}\p{Z}]+$/u', $uname)) {
             $stop .= XoopsLocale::E_INVALID_USERNAME . '<br />';
         }
         // Check uname settings if current operator is not an administrator
-        if (! $xoops->userIsAdmin) {
+        if (!$xoops->userIsAdmin) {
             $maxuname = $xoops->getConfig('maxuname');
-            if (! empty($maxuname) && mb_strlen($uname) > $maxuname) {
+            if (!empty($maxuname) && mb_strlen($uname) > $maxuname) {
                 $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_LESS_THAN, $maxuname) . '<br />';
             }
             $minuname = $xoops->getConfig('minuname');
-            if (! empty($minuname) && mb_strlen($uname) < $minuname) {
+            if (!empty($minuname) && mb_strlen($uname) < $minuname) {
                 $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_MORE_THAN, $minuname) . '<br />';
             }
             $bad_unames = $xoops->getConfig('bad_unames');
-            if (! empty($bad_unames)) {
+            if (!empty($bad_unames)) {
                 foreach ($bad_unames as $bu) {
-                    if (! empty($bu) && preg_match('/' . $bu . '/i', $uname)) {
+                    if (!empty($bu) && preg_match('/' . $bu . '/i', $uname)) {
                         $stop .= XoopsLocale::E_NAME_IS_RESERVED . '<br />';
                         break;
                     }
@@ -190,7 +190,7 @@ class XoopsUserUtility
             $stop .= XoopsLocale::E_PASSWORDS_MUST_MATCH . '<br />';
         } else {
             $minpass = $xoops->getConfig('minpass');
-            if (($pass !== '') && (! empty($minpass)) && (mb_strlen($pass) < $minpass)) {
+            if (($pass !== '') && (!empty($minpass)) && (mb_strlen($pass) < $minpass)) {
                 $stop .= sprintf(XoopsLocale::EF_PASSWORD_MUST_BE_GREATER_THAN, $minpass) . '<br />';
             }
         }
@@ -210,25 +210,25 @@ class XoopsUserUtility
     {
         // Gets the proxy ip sent by the user
         $proxy_ip = '';
-        if (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
-            if (! empty($_SERVER['HTTP_X_FORWARDED'])) {
+            if (!empty($_SERVER['HTTP_X_FORWARDED'])) {
                 $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
             } else {
-                if (! empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+                if (!empty($_SERVER['HTTP_FORWARDED_FOR'])) {
                     $proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
                 } else {
-                    if (! empty($_SERVER['HTTP_FORWARDED'])) {
+                    if (!empty($_SERVER['HTTP_FORWARDED'])) {
                         $proxy_ip = $_SERVER['HTTP_FORWARDED'];
                     } else {
-                        if (! empty($_SERVER['HTTP_VIA'])) {
+                        if (!empty($_SERVER['HTTP_VIA'])) {
                             $proxy_ip = $_SERVER['HTTP_VIA'];
                         } else {
-                            if (! empty($_SERVER['HTTP_X_COMING_FROM'])) {
+                            if (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
                                 $proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
                             } else {
-                                if (! empty($_SERVER['HTTP_COMING_FROM'])) {
+                                if (!empty($_SERVER['HTTP_COMING_FROM'])) {
                                     $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
                                 }
                             }
@@ -237,7 +237,7 @@ class XoopsUserUtility
                 }
             }
         }
-        if (! empty($proxy_ip) && preg_match('/^([0-9]{1,3}\.){3,3}[0-9]{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {
+        if (!empty($proxy_ip) && preg_match('/^([0-9]{1,3}\.){3,3}[0-9]{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {
             $the_IP = $regs[0];
         } else {
             $the_IP = $_SERVER['REMOTE_ADDR'];
@@ -260,7 +260,7 @@ class XoopsUserUtility
     public static function getUnameFromIds($uids, $usereal = false, $linked = false)
     {
         $xoops = Xoops::getInstance();
-        if (! is_array($uids)) {
+        if (!is_array($uids)) {
             $uids = [$uids];
         }
         $userids = array_map('intval', array_filter($uids));
@@ -272,7 +272,7 @@ class XoopsUserUtility
             $criteria->add(new Criteria('uid', "('" . implode(',', array_unique($userids)) . "')", 'IN'));
 
             $user_handler = $xoops->getHandlerUser();
-            if (! $rows = $user_handler->getAll($criteria, ['uid', 'uname', 'name'], false, true)) {
+            if (!$rows = $user_handler->getAll($criteria, ['uid', 'uname', 'name'], false, true)) {
                 return $users;
             }
             foreach ($rows as $uid => $row) {
@@ -317,7 +317,7 @@ class XoopsUserUtility
                 } else {
                     $username = $user->getVar('uname');
                 }
-                if (! empty($linked)) {
+                if (!empty($linked)) {
                     $username = '<a href="' . \XoopsBaseConfig::get('url') . '/userinfo.php?uid='
                         . $userid . '" title="' . $username . '">' . $username . '</a>';
                 }

@@ -36,7 +36,7 @@ class DtypeEnumeration extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        if (! in_array($value, $obj->vars[$key]['enumeration'], true)) {
+        if (!in_array($value, $obj->vars[$key]['enumeration'], true)) {
             $obj->setErrors('Invalid Enumeration');
             return $value;
         }

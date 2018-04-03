@@ -1,7 +1,8 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
-use \Xoops\Core\MimeTypes;
+use Xoops\Core\MimeTypes;
 
 class MimeTypesTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,7 +34,7 @@ class MimeTypesTest extends \PHPUnit\Framework\TestCase
         $matches = MimeTypes::findExtensions('image/jpeg');
         $this->assertTrue(in_array('jpg', $matches, true), 'match .jpg extension');
         $this->assertTrue(in_array('jpeg', $matches, true), 'match .jpeg extension');
-		$x = MimeTypes::findExtensions('failme-no-such-type/no-such-subtype');
+        $x = MimeTypes::findExtensions('failme-no-such-type/no-such-subtype');
         $this->assertTrue(empty($x), 'match garbage mimetype');
     }
 

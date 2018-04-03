@@ -67,8 +67,7 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
         if ($objects = $this->getObjects($criteria)) {
             return $objects[0];
         }
-            return false;
-
+        return false;
     }
 
     /**
@@ -150,11 +149,10 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
      */
     public function getModuleName(string $dirname)
     {
-         if ($module = \Xoops::getInstance()->getModuleByDirname((string) $dirname)) {
-             return $module->getVar('name');
-         }
-             return $dirname;
-
+        if ($module = \Xoops::getInstance()->getModuleByDirname((string) $dirname)) {
+            return $module->getVar('name');
+        }
+        return $dirname;
     }
 
     /**
@@ -213,7 +211,6 @@ class PluginsPluginHandler extends XoopsPersistableObjectHandler
             }
         }
         return $ret;
-
     }
 
     /**

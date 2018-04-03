@@ -92,7 +92,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
     {
         $xoops = Xoops::getInstance();
         $criteria = new CriteriaCompo();
-        if (is_array($groups) && ! empty($groups)) {
+        if (is_array($groups) && !empty($groups)) {
             $criteriaTray = new CriteriaCompo();
             foreach ($groups as $gid) {
                 $criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');

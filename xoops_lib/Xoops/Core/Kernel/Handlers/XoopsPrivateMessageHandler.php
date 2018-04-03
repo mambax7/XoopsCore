@@ -70,7 +70,7 @@ class XoopsPrivateMessageHandler extends XoopsPersistableObjectHandler
             ->setParameter(':msgid', (int) $pm->getVar('msg_id'), \PDO::PARAM_INT);
         $result = $qb->execute();
 
-        if (! $result) {
+        if (!$result) {
             return false;
         }
         return true;

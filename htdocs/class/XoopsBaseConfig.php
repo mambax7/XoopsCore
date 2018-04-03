@@ -10,8 +10,8 @@
  */
 
 use Exception;
-use XoopsLoad;
 use Xmf\Yaml;
+use XoopsLoad;
 
 /**
  * XoopsBaseConfig holds the base XOOPS configs needed to locate key paths and
@@ -24,22 +24,22 @@ use Xmf\Yaml;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
+
 class XoopsBaseConfig
 {
     /**
      * @var string[]
      */
     private static $configs = [];
-
     /**
-     * __construct
-     * @param string|string[] $config fully qualified name of configuration file
-     *                                or configuration array
-     * @throws Exception
-     */
+         * __construct
+         * @param string|string[] $config fully qualified name of configuration file
+         *                                or configuration array
+         * @throws Exception
+         */
     final private function __construct($config)
     {
-        if (! class_exists('XoopsLoad', false)) {
+        if (!class_exists('XoopsLoad', false)) {
             include __DIR__ . '/xoopsload.php';
         }
         if (is_string($config)) {
@@ -57,7 +57,7 @@ class XoopsBaseConfig
             self::$configs = $config;
             XoopsLoad::startAutoloader(self::$configs['lib-path']);
         }
-        if (! isset(self::$configs['lib-path'])) {
+        if (!isset(self::$configs['lib-path'])) {
             throw new Exception('XoopsBaseConfig lib-path not defined.');
             return;
         }
@@ -76,8 +76,7 @@ class XoopsBaseConfig
     final public static function getInstance($config = '')
     {
         static $instance = false;
-
-        if (! $instance && ! empty($config)) {
+        if (!$instance && !empty($config)) {
             $instance = new \XoopsBaseConfig($config);
         }
 
@@ -136,7 +135,6 @@ class XoopsBaseConfig
 
         // Physical path to the XOOPS documents (served) directory WITHOUT trailing slash
         define('XOOPS_ROOT_PATH', self::get('root-path'));
-
         // For forward compatibility
         // Physical path to the XOOPS library directory WITHOUT trailing slash
         define('XOOPS_PATH', self::get('lib-path'));
@@ -144,52 +142,40 @@ class XoopsBaseConfig
         define('XOOPS_VAR_PATH', self::get('var-path'));
         // Alias of XOOPS_PATH, for compatibility, temporary solution
         define('XOOPS_TRUST_PATH', self::get('trust-path'));
-
         // URL Association for SSL and Protocol Compatibility
         define('XOOPS_PROT', self::get('prot'));
-
         // XOOPS Virtual Path (URL)
         // Virtual path to your main XOOPS directory WITHOUT trailing slash
         // Example: define('XOOPS_URL', 'http://localhost/xoopscore');
         define('XOOPS_URL', self::get('url'));
-
         // Secure file
         // require XOOPS_VAR_PATH . '/data/secure.php';
 
         // Database
         // Choose the database to be used
         define('XOOPS_DB_TYPE', self::get('db-type'));
-
         // Set the database charset if applicable
         define('XOOPS_DB_CHARSET', self::get('db-charset'));
-
         // Table Prefix
         // This prefix will be added to all new tables created to avoid name conflict in the database.
         define('XOOPS_DB_PREFIX', self::get('db-prefix'));
-
         // Database Hostname
         // Hostname of the database server. If you are unsure, "localhost" works in most cases.
         define('XOOPS_DB_HOST', self::get('db-host'));
-
         // Database Username
         // Your database user account on the host
         define('XOOPS_DB_USER', self::get('db-user'));
-
         // Database Password
         // Password for your database user account
         define('XOOPS_DB_PASS', self::get('db-pass'));
-
         // Database Name
         // The name of database on the host.
         define('XOOPS_DB_NAME', self::get('db-name'));
-
         // persistent connection is no longer supported
         define('XOOPS_DB_PCONNECT', self::get('db-pconnect'));
-
         // Serialized connection parameter
         // This is built by the installer and includes all connection parameters
         define('XOOPS_DB_PARAMETERS', serialize(self::get('db-parameters')));
-
         define('XOOPS_UPLOAD_PATH', self::get('uploads-path'));
         define('XOOPS_UPLOAD_URL', self::get('uploads-url'));
     }
@@ -208,15 +194,12 @@ class XoopsBaseConfig
             ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://')
             . $_SERVER['SERVER_NAME']
             . (($_SERVER['SERVER_PORT'] !== '80') ? ':' . $_SERVER['SERVER_PORT'] : '');
-
         $parts = parse_url($url . '/');
         $host = isset($parts['host']) ? $parts['host'] : $_SERVER['SERVER_NAME'];
         $host = ($host === 'localhost') ? '' : $host;
         $urlpath = isset($parts['path']) ? $parts['path'] : '/';
-
         $libpath = self::defineDefault('XOOPS_PATH');
         $varpath = self::defineDefault('XOOPS_VAR_PATH');
-
         $configs = [
             'root-path' => $path,
             'lib-path' => $libpath,
@@ -270,7 +253,6 @@ class XoopsBaseConfig
     {
         $match = [];
         $matched = preg_match('/[.\v]*^lib-path\h*\:\h*[\']?([^\'\v]*)[\']?\h*$[.\v]*/m', $filecontents, $match);
-
         return $matched ? trim($match[1]) : '';
     }
 

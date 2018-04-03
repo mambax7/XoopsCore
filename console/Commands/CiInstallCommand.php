@@ -2,13 +2,13 @@
 
 namespace XoopsConsole\Commands;
 
-use SystemModule;
-use XoopsLoad;
-use Xoops;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use SystemModule;
+use Xoops;
 use Xoops\Core\XoopsTpl;
+use XoopsLoad;
 
 class CiInstallCommand extends Command
 {
@@ -38,6 +38,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         // install the 'system' module
         $xoops = Xoops::getInstance();
         $module = 'system';
@@ -53,7 +54,7 @@ EOT
         foreach ($sysmod->trace as $message) {
             if (is_array($message)) {
                 foreach ($message as $subMessage) {
-                    if (! is_array($subMessage)) {
+                    if (!is_array($subMessage)) {
                         $output->writeln(strip_tags($subMessage));
                     }
                 }
@@ -67,14 +68,12 @@ EOT
             $output->writeln(sprintf('<info>Install of %s module completed.</info>', $module));
         }
         $xoops->cache()->delete('system');
-
         // add an admin user
         $adminname = 'admin';
-        $adminpass = password_hash($adminname, PASSWORD_DEFAULT); // user: admin pass: admin
+        $adminpass = password_hash($adminname, PASSWORD_DEFAULT);
+        // user: admin pass: admin
         $regdate = time();
-        $result = $xoops->db()->insertPrefix(
-            'system_user',
-            [
+        $result = $xoops->db()->insertPrefix('system_user', [
                 //  'uid'             => 1,             // mediumint(8) unsigned NOT NULL auto_increment,
                 'uname' => $adminname,    // varchar(25) NOT NULL default '',
                 'email' => 'nobody@localhost',    // varchar(60) NOT NULL default '',
@@ -84,8 +83,7 @@ EOT
                 'rank' => 7,             // smallint(5) unsigned NOT NULL default '0',
                 'level' => 5,             // tinyint(3) unsigned NOT NULL default '1',
                 'last_login' => $regdate,      // int(10) unsigned NOT NULL default '0',
-            ]
-        );
+            ]);
         $output->writeln(sprintf('<info>Inserted %d user.</info>', $result));
     }
 }

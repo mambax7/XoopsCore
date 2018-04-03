@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Doctrine\DBAL\Types\Type;
@@ -73,7 +74,12 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $fk_options = ['o' => 'o1'];
         $fk_columns = ['system_permission'];
         $fk_constraint = new Doctrine\DBAL\Schema\ForeignKeyConstraint(
-            $columns, $fk_table, $fk_columns, $fk_name, $fk_options);
+            $columns,
+            $fk_table,
+            $fk_columns,
+            $fk_name,
+            $fk_options
+        );
 
         $value = $instance->acceptForeignKey($table, $fk_constraint);
         $this->assertSame(null, $value);
@@ -90,7 +96,11 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $unique = true;
         $primary = true;
         $index = new Doctrine\DBAL\Schema\Index(
-            $name, $columns, $unique, $primary);
+            $name,
+            $columns,
+            $unique,
+            $primary
+        );
 
         $value = $instance->acceptIndex($table, $index);
         $this->assertSame(null, $value);
@@ -106,7 +116,10 @@ class RemovePrefixesTest extends \PHPUnit\Framework\TestCase
         $alloc_size = 10;
         $initial_value = 11;
         $sequence = new Doctrine\DBAL\Schema\Sequence(
-            $name, $alloc_size, $initial_value);
+            $name,
+            $alloc_size,
+            $initial_value
+        );
 
         $value = $instance->acceptSequence($sequence);
         $this->assertSame(null, $value);

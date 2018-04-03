@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Xoops\Core\Kernel\Criteria;
@@ -56,7 +57,7 @@ class XoopsTplFileHandlerTest extends \PHPUnit\Framework\TestCase
         $value = $instance->loadSource($source);
         $this->assertSame(true, $value);
         $tmp = $source->tpl_source();
-        $this->assertTrue(! empty($tmp));
+        $this->assertTrue(!empty($tmp));
     }
 
     public function test_insertTpl()

@@ -36,6 +36,3 @@ $theme_version['release_date'] = '2012/05/13';
 $theme_version['theme_website_url'] = 'http://www.xoops.org/';
 $theme_version['theme_website_name'] = 'XOOPS';
 $theme_version['theme_status'] = 'ALPHA';
-
-
-

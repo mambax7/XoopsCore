@@ -43,7 +43,7 @@ class Embed extends FilterAbstract
      */
     public function applyFilter($text)
     {
-        if (! $this->config['enabled']) {
+        if (!$this->config['enabled']) {
             return $text;
         }
 
@@ -65,7 +65,8 @@ class Embed extends FilterAbstract
      *
      * @return string
      */
-    protected function decorateUrl($match) {
+    protected function decorateUrl($match)
+    {
         $url = $match[1];
         $decorated = null;
         $xoops = \Xoops::getInstance();
@@ -89,7 +90,7 @@ class Embed extends FilterAbstract
                     }
                     $height = $info->getHeight();
                     $width = $info->getWidth();
-                    if ($this->enableResponsive($return) && ! empty($height) && ! empty($width)) {
+                    if ($this->enableResponsive($return) && !empty($height) && !empty($width)) {
                         $ratio = (($width / $height) < 1.5) ? '4by3' : '16by9';
                         $return = '<div class="embed-responsive embed-responsive-' . $ratio . '">' . $return . '</div>';
                     }
@@ -119,7 +120,7 @@ class Embed extends FilterAbstract
 </div>
 EOT;
 
-        if(empty($imageSrc)) {
+        if (empty($imageSrc)) {
             $imageSrc = \Xoops::getInstance()->url('media/xoops/images/icons/link-ext.svg');
         }
         $box = sprintf($htmlTemplate, $link, $imageSrc, $title, $description);

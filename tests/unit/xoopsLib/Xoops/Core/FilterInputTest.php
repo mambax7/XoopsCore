@@ -94,6 +94,5 @@ class FilterInputTest extends \PHPUnit\Framework\TestCase
         unset($_POST['op']);
         unset($_POST['ok']);
         unset($_POST['str']);
-
     }
 }

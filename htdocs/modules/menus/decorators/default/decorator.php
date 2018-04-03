@@ -29,12 +29,12 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
 
     protected $get_uid;
 
-    function start()
+    public function start()
     {
         $xoops = Xoops::getInstance();
         $member_handler = $xoops->getHandlerMember();
 
-        if (! $xoops->isUser()) {
+        if (!$xoops->isUser()) {
             $user = $member_handler->createUser();
             $user->setVar('uid', 0);
             $user->setVar('uname', $GLOBALS['xoopsConfig']['anonymous']);
@@ -45,7 +45,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $ownerid = isset($_GET['uid']) ? (int) ($_GET['uid']) : null;
         $owner = $member_handler->getUser($ownerid);
         //if uid > 0 but user does not exists
-        if (! is_object($owner)) {
+        if (!is_object($owner)) {
             //create new user
             $owner = $member_handler->createUser();
             $owner->setVar('uid', 0);
@@ -58,7 +58,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $this->get_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : 0;
     }
 
-    function accessFilter(&$access_filter)
+    public function accessFilter(&$access_filter)
     {
         $access_filter['is_owner']['name'] = _PL_MENUS_MENUS_ISOWNER;
         $access_filter['is_owner']['method'] = 'isOwner';
@@ -66,7 +66,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $access_filter['is_not_owner']['method'] = 'isNotOwner';
     }
 
-    function decorateMenu(&$menu)
+    public function decorateMenu(&$menu)
     {
         $decorations = ['link', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
@@ -75,22 +75,22 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
             }
             $menu[$decoration] = self::_doDecoration($menu[$decoration]);
             if ($decoration === 'link') {
-                if (! preg_match('/mailto:/i', $menu['link']) && ! preg_match('#://#i', $menu['link'])) {
+                if (!preg_match('/mailto:/i', $menu['link']) && !preg_match('#://#i', $menu['link'])) {
                     $menu['link'] = \XoopsBaseConfig::get('url') . '/' . $menu['link']; //Do not do this in other decorators
                 }
             }
         }
     }
 
-    function end(&$menus)
+    public function end(&$menus)
     {
         // TODO: Implement end() method.
     }
 
-    function hasAccess($menu, &$hasAccess)
+    public function hasAccess($menu, &$hasAccess)
     {
         $groups = $this->user_groups;
-        if ($menu['visible'] === 0 || ! array_intersect($menu['groups'], $groups)) {
+        if ($menu['visible'] === 0 || !array_intersect($menu['groups'], $groups)) {
             $hasAccess = false;
             return;
         }
@@ -98,16 +98,16 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $hooks = array_intersect($menu['hooks'], get_class_methods(__CLASS__));
 
         foreach ($hooks as $method) {
-            if (! self::$method()) {
+            if (!self::$method()) {
                 $hasAccess = false;
                 return;
             }
         }
     }
 
-    function _doDecoration($string)
+    public function _doDecoration($string)
     {
-        if (! preg_match('/{(.*\|.*)}/i', $string, $reg)) {
+        if (!preg_match('/{(.*\|.*)}/i', $string, $reg)) {
             return $string;
         }
 
@@ -137,22 +137,22 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         return $string;
     }
 
-    function isOwner()
+    public function isOwner()
     {
         return ($this->user_uid !== 0 && ($this->user_uid === $this->get_uid)) ? true : false;
     }
 
-    function isNotOwner()
+    public function isNotOwner()
     {
-        return ! self::isOwner();
+        return !self::isOwner();
     }
 
-    function getExtraValue($type = 'user', $value)
+    public function getExtraValue($type = 'user', $value)
     {
         $xoops = Xoops::getInstance();
         $ret = 0;
         $values = ['pm_new', 'pm_readed', 'pm_total'];
-        if (! in_array($value, $values, true)) {
+        if (!in_array($value, $values, true)) {
             return $ret;
         }
 

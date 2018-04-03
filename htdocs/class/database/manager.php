@@ -25,6 +25,7 @@
  */
 
 use XoopsBaseConfig;
+
 class XoopsDatabaseManager
 {
     /**
@@ -120,7 +121,7 @@ class XoopsDatabaseManager
      */
     public function queryFromFile($sql_file_path, $force = false)
     {
-        if (! XoopsLoad::fileExists($sql_file_path)) {
+        if (!XoopsLoad::fileExists($sql_file_path)) {
             return false;
         }
         $queryFunc = (bool) $force ? 'queryF' : 'query';
@@ -136,24 +137,24 @@ class XoopsDatabaseManager
                 $table = $this->xoopsDatabase->prefix($prefixed_query[4]);
                 if ($prefixed_query[1] === 'CREATE TABLE') {
                     if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
-                        if (! isset($this->s_tables['create'][$table])) {
+                        if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
                     } else {
-                        if (! isset($this->f_tables['create'][$table])) {
+                        if (!isset($this->f_tables['create'][$table])) {
                             $this->f_tables['create'][$table] = 1;
                         }
                     }
                 } else {
                     if ($prefixed_query[1] === 'INSERT INTO') {
                         if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
-                            if (! isset($this->s_tables['insert'][$table])) {
+                            if (!isset($this->s_tables['insert'][$table])) {
                                 $this->s_tables['insert'][$table] = 1;
                             } else {
                                 $this->s_tables['insert'][$table]++;
                             }
                         } else {
-                            if (! isset($this->f_tables['insert'][$table])) {
+                            if (!isset($this->f_tables['insert'][$table])) {
                                 $this->f_tables['insert'][$table] = 1;
                             } else {
                                 $this->f_tables['insert'][$table]++;
@@ -162,22 +163,22 @@ class XoopsDatabaseManager
                     } else {
                         if ($prefixed_query[1] === 'ALTER TABLE') {
                             if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
-                                if (! isset($this->s_tables['alter'][$table])) {
+                                if (!isset($this->s_tables['alter'][$table])) {
                                     $this->s_tables['alter'][$table] = 1;
                                 }
                             } else {
-                                if (! isset($this->s_tables['alter'][$table])) {
+                                if (!isset($this->s_tables['alter'][$table])) {
                                     $this->f_tables['alter'][$table] = 1;
                                 }
                             }
                         } else {
                             if ($prefixed_query[1] === 'DROP TABLE') {
                                 if ($this->xoopsDatabase->{$queryFunc}('DROP TABLE ' . $table) !== false) {
-                                    if (! isset($this->s_tables['drop'][$table])) {
+                                    if (!isset($this->s_tables['drop'][$table])) {
                                         $this->s_tables['drop'][$table] = 1;
                                     }
                                 } else {
-                                    if (! isset($this->s_tables['drop'][$table])) {
+                                    if (!isset($this->s_tables['drop'][$table])) {
                                         $this->f_tables['drop'][$table] = 1;
                                     }
                                 }
@@ -200,7 +201,7 @@ class XoopsDatabaseManager
         $commands = ['create', 'insert', 'alter', 'drop'];
         $content = '<ul class="log">';
         foreach ($commands as $cmd) {
-            if (! @empty($this->s_tables[$cmd])) {
+            if (!@empty($this->s_tables[$cmd])) {
                 foreach ($this->s_tables[$cmd] as $key => $val) {
                     $content .= '<li class="success">';
                     $content .= ($cmd !== 'insert')
@@ -211,7 +212,7 @@ class XoopsDatabaseManager
             }
         }
         foreach ($commands as $cmd) {
-            if (! @empty($this->f_tables[$cmd])) {
+            if (!@empty($this->f_tables[$cmd])) {
                 foreach ($this->f_tables[$cmd] as $key => $val) {
                     $content .= '<li class="failure">';
                     $content .= ($cmd !== 'insert')
@@ -277,21 +278,20 @@ class XoopsDatabaseManager
         $this->xoopsDatabase->connect();
         $table = $this->xoopsDatabase->prefix($table);
         $query = 'INSERT INTO ' . $table . ' ' . $query;
-        if (! $this->xoopsDatabase->queryF($query)) {
-            if (! isset($this->f_tables['insert'][$table])) {
+        if (!$this->xoopsDatabase->queryF($query)) {
+            if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
             } else {
                 $this->f_tables['insert'][$table]++;
             }
             return false;
         }
-            if (! isset($this->s_tables['insert'][$table])) {
-                $this->s_tables['insert'][$table] = 1;
-            } else {
-                $this->s_tables['insert'][$table]++;
-            }
-            return $this->xoopsDatabase->getInsertId();
-
+        if (!isset($this->s_tables['insert'][$table])) {
+            $this->s_tables['insert'][$table] = 1;
+        } else {
+            $this->s_tables['insert'][$table]++;
+        }
+        return $this->xoopsDatabase->getInsertId();
     }
 
     /**
@@ -320,7 +320,7 @@ class XoopsDatabaseManager
         $this->xoopsDatabase->connect();
         foreach ($tables as $key => $val) {
             //was: if (!$this->db->query("DROP TABLE " . $this->db->prefix($key))) {
-            if (! $this->xoopsDatabase->query('DROP TABLE ' . $this->xoopsDatabase->prefix($val))) {
+            if (!$this->xoopsDatabase->query('DROP TABLE ' . $this->xoopsDatabase->prefix($val))) {
                 $deleted[] = $val;
             }
         }
@@ -357,7 +357,8 @@ class XoopsDatabaseManager
      *
      * @return $this does not return anything
      */
-    public function copyFields($fieldsMap, $oTableName, $nTableName, $dropTable = false) {
+    public function copyFields($fieldsMap, $oTableName, $nTableName, $dropTable = false)
+    {
         $sql = 'SHOW COLUMNS FROM ' . $this->xoopsDatabase->prefix($oTableName);
         $result = $this->xoopsDatabase->queryF($sql);
         if (($rows = $this->xoopsDatabase->getRowsNum($result)) === count($fieldsMap)) {

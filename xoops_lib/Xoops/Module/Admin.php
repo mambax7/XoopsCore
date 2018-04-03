@@ -132,7 +132,7 @@ class Admin
                 break;
 
             case 'folder':
-                if (! is_dir($value)) {
+                if (!is_dir($value)) {
                     $this->itemConfigBoxLine[] = [
                         'type' => 'error', 'text' => sprintf(\XoopsLocale::EF_FOLDER_DOES_NOT_EXIST, $value),
                     ];
@@ -483,7 +483,7 @@ class Admin
 
         // If you use a config label
         if ($this->module->getInfo('min_php') || $this->module->getInfo('min_xoops')
-            || $this->module->getInfo('min_db') || ! empty($this->itemConfigBoxLine)
+            || $this->module->getInfo('min_db') || !empty($this->itemConfigBoxLine)
         ) {
             // PHP version
             if ($this->module->getInfo('min_php')) {
@@ -553,7 +553,7 @@ class Admin
                         );
                     }
                 } else {
-                        $this->addConfigBoxLine(
+                    $this->addConfigBoxLine(
                             sprintf(\XoopsLocale::EF_DATABASE_NOT_SUPPORTED, $dbCurrentPlatform),
                             'error'
                         );
@@ -686,7 +686,7 @@ class Admin
         }
         $changelog = '';
         $language = $xoops->getConfig('locale');
-        if (! is_file(
+        if (!is_file(
             \XoopsBaseConfig::get('root-path') . '/modules/' . $this->module->getVar('dirname')
             . '/locale/' . $language . '/changelog.txt'
         )) {

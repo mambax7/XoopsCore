@@ -21,13 +21,13 @@
 
 require_once __DIR__ . '/postcheck_functions.php';
 
-if (! defined('PROTECTOR_PRECHECK_INCLUDED')) {
+if (!defined('PROTECTOR_PRECHECK_INCLUDED')) {
     require __DIR__ . '/precheck.inc.php';
     return;
 }
 
 define('PROTECTOR_POSTCHECK_INCLUDED', 1);
-if (! class_exists('\\Xoops\\Core\\Database\\Connection', false)) {
+if (!class_exists('\\Xoops\\Core\\Database\\Connection', false)) {
     return;
 }
 protector_postcheck();

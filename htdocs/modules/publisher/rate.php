@@ -34,8 +34,8 @@ $hModConfig = $xoops->getHandlerConfig();
 $module_id = $publisher->getModule()->getVar('mid');
 
 //Checking permissions
-if (! $publisher->getConfig('perm_rating')
-    || ! $gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)
+if (!$publisher->getConfig('perm_rating')
+    || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)
 ) {
     $xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }

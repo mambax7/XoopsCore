@@ -26,35 +26,35 @@ include __DIR__ . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->events()->triggerEvent('core.viewpmsg.start');
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $errormessage = XoopsLocale::E_YOU_ARE_NOT_REGISTERED . '<br />'
         . XoopsLocale::E_REGISTER_FIRST_TO_SEND_PRIVATE_MESSAGES . '';
     $xoops->redirect('user.php', 2, $errormessage);
 } else {
     $pm_handler = $xoops->getHandlerPrivateMessage();
     if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             echo implode('<br />', $xoops->security()->getErrors());
             exit();
         }
-            if (empty($_REQUEST['ok'])) {
-                $xoops->header('module:system/system_viewpmsg.tpl');
-                // Define Stylesheet
-                $xoops->theme()->addStylesheet('modules/system/css/admin.css');
-                echo $xoops->confirm([
+        if (empty($_REQUEST['ok'])) {
+            $xoops->header('module:system/system_viewpmsg.tpl');
+            // Define Stylesheet
+            $xoops->theme()->addStylesheet('modules/system/css/admin.css');
+            echo $xoops->confirm([
                     'ok' => 1, 'delete_messages' => 1,
                     'msg_ids' => json_encode(array_map('intval', $_POST['msg_id'])),
                 ], $_SERVER['REQUEST_URI'], XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES);
-                $xoops->footer();
-            }
+            $xoops->footer();
+        }
 
 
         $clean_msg_id = json_decode($_POST['msg_ids'], true, 2);
-        if (! empty($clean_msg_id)) {
+        if (!empty($clean_msg_id)) {
             $clean_msg_id = array_map('intval', $clean_msg_id);
         }
         $size = count($clean_msg_id);
-        $msg = & $clean_msg_id;
+        $msg = &$clean_msg_id;
         for ($i = 0; $i < $size; ++$i) {
             $pm = $pm_handler->get((int) ($msg[$i]));
             if ($pm->getVar('to_userid') === $xoops->user->getVar('uid')) {

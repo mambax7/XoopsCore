@@ -55,10 +55,10 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         $configs = $mod->getInfo('config');
         $configNames = [];
         foreach (array_keys($configs) as $i) {
-            $configNames[$configs[$i]['name']] = & $configs[$i];
+            $configNames[$configs[$i]['name']] = &$configs[$i];
         }
         $configCats = $mod->getInfo('configcat');
-        if (! $configCats) {
+        if (!$configCats) {
             $configCats = [
                 'default' => [
                     'name' => SystemLocale::OTHER_SETTINGS,
@@ -67,7 +67,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
             ];
         }
 
-        if (! in_array('default', array_keys($configCats), true)) {
+        if (!in_array('default', array_keys($configCats), true)) {
             $configCats['default'] = [
                 'name' => SystemLocale::OTHER_SETTINGS,
                 'description' => '',
@@ -75,7 +75,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         }
 
         foreach (array_keys($configNames) as $name) {
-            if (! isset($configNames[$name]['category'])) {
+            if (!isset($configNames[$name]['category'])) {
                 $configNames[$name]['category'] = 'default';
             }
         }
@@ -91,7 +91,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
 
         $xoops->events()->triggerEvent('system.preferences.form', $mod);
 
-        if (! empty($_REQUEST['redirect'])) {
+        if (!empty($_REQUEST['redirect'])) {
             $myts = \Xoops\Core\Text\Sanitizer::getInstance();
             $this->addElement(new Xoops\Form\Hidden('redirect', $myts->htmlSpecialChars($_REQUEST['redirect'])));
         } elseif ($mod->getInfo('adminindex')) {
@@ -174,7 +174,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                 case 'theme_multi':
                     $ele = ($obj[$i]->getVar('conf_formtype') !== 'theme_multi') ? new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput()) : new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput(), 5, true);
                     $dirlist = XoopsLists::getThemesList();
-                    if (! empty($dirlist)) {
+                    if (!empty($dirlist)) {
                         asort($dirlist);
                         $ele->addOptionArray($dirlist);
                     }

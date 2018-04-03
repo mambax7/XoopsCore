@@ -29,7 +29,7 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -45,7 +45,7 @@ $start = empty($_REQUEST['start']) ? 0 : (int) ($_REQUEST['start']);
 $pm_handler = $xoops->getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $xoops->tpl()->assign('errormsg', implode('<br />', $xoops->security()->getErrors()));
     } else {
         if (empty($_REQUEST['ok'])) {
@@ -56,11 +56,11 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
             $xoops->footer();
         } else {
             $clean_msg_id = json_decode($_POST['msg_ids'], true, 2);
-            if (! empty($clean_msg_id)) {
+            if (!empty($clean_msg_id)) {
                 $clean_msg_id = array_map('intval', $clean_msg_id);
             }
             $size = count($clean_msg_id);
-            $msg = & $clean_msg_id;
+            $msg = &$clean_msg_id;
             for ($i = 0; $i < $size; ++$i) {
                 $pm = $pm_handler->get($msg[$i]);
                 if ($pm->getVar('to_userid') === $xoops->user->getVar('uid')) {
@@ -77,7 +77,7 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
     }
 }
 if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $xoops->tpl()->assign('errormsg', implode('<br />', $xoops->security()->getErrors()));
     } else {
         $size = count($_POST['msg_id']);
@@ -95,7 +95,7 @@ if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
                 unset($pm);
             }
         } else {
-            if (! $xoops->user->isAdmin()) {
+            if (!$xoops->user->isAdmin()) {
                 $total_save = $pm_handler->getSavecount();
                 $size = min($size, $xoops->getModuleConfig('max_save') - $total_save);
             }
@@ -114,7 +114,7 @@ if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
         if ($_POST['op'] === 'save') {
             $xoops->tpl()->assign('msg', _PM_UNSAVED);
         } else {
-            if (isset($total_save) && ! $xoops->user->isAdmin()) {
+            if (isset($total_save) && !$xoops->user->isAdmin()) {
                 $xoops->tpl()->assign('msg', sprintf(_PM_SAVED_PART, $xoops->getModuleConfig('max_save'), $i));
             } else {
                 $xoops->tpl()->assign('msg', _PM_SAVED_ALL);
@@ -123,7 +123,7 @@ if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
     }
 }
 if (isset($_REQUEST['empty_messages'])) {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $xoops->tpl()->assign('errormsg', implode('<br />', $xoops->security()->getErrors()));
     } else {
         if (empty($_REQUEST['ok'])) {

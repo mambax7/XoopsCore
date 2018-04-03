@@ -53,7 +53,7 @@ class Tab extends ElementTray
             if ($ele->has('datalist')) {
                 $ret .= $ele->renderDatalist();
             }
-            if (! $ele->isHidden()) {
+            if (!$ele->isHidden()) {
                 $ret .= '<div class="form-group">';
                 $ret .= '<label>' . $ele->getCaption();
                 $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '') . '</label>';

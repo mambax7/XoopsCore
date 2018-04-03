@@ -84,11 +84,11 @@ abstract class Element extends Attributes
         $this->suppressRender($this->suppressList);
 
         // title attribute needs to be generated if not already set
-        if (! $this->has('title')) {
+        if (!$this->has('title')) {
             $this->set('title', $this->getTitle());
         }
         // generate id from name if not already set
-        if (! $this->has('id')) {
+        if (!$this->has('id')) {
             $id = $this->get('name');
             if (substr($id, -2) === '[]') {
                 $id = substr($id, 0, strlen($id) - 2);
@@ -178,7 +178,7 @@ abstract class Element extends Attributes
     public function getAccessString($str)
     {
         $access = $this->getAccessKey();
-        if (! empty($access) && (($pos = strpos($str, $access)) !== false)) {
+        if (!empty($access) && (($pos = strpos($str, $access)) !== false)) {
             return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES)
                 . '<span style="text-decoration: underline;">'
                 . htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES) . '</span>'
@@ -260,7 +260,7 @@ abstract class Element extends Attributes
      */
     public function renderDatalist()
     {
-        if (! $this->isDatalist()) {
+        if (!$this->isDatalist()) {
             return '';
         }
         $ret = "\n" . '<datalist id="list_' . $this->getName() . '">' . "\n";
@@ -322,14 +322,13 @@ abstract class Element extends Attributes
         if ($this->has('title')) {
             return $this->get('title');
         }
-            if ($this->has(':pattern_description')) {
-                return htmlspecialchars(
+        if ($this->has(':pattern_description')) {
+            return htmlspecialchars(
                     strip_tags($this->get('caption') . ' - ' . $this->get(':pattern_description')),
                     ENT_QUOTES
                 );
-            }
-                return htmlspecialchars(strip_tags($this->get('caption')), ENT_QUOTES);
-
+        }
+        return htmlspecialchars(strip_tags($this->get('caption')), ENT_QUOTES);
     }
 
     /**
@@ -430,7 +429,7 @@ abstract class Element extends Attributes
      */
     public function getExtra($encode = false)
     {
-        if (! $encode) {
+        if (!$encode) {
             return implode(' ', $this->extra);
         }
         $value = [];
@@ -467,23 +466,23 @@ abstract class Element extends Attributes
     public function renderValidationJS()
     {
         // render custom validation code if any
-        if (! empty($this->customValidationCode)) {
+        if (!empty($this->customValidationCode)) {
             return implode("\n", $this->customValidationCode);
             // generate validation code if required
         }
-            if ($this->isRequired() && $eltname = $this->getName()) {
-                // $eltname    = $this->getName();
-                $eltcaption = $this->getCaption();
-                $eltmsg = empty($eltcaption)
+        if ($this->isRequired() && $eltname = $this->getName()) {
+            // $eltname    = $this->getName();
+            $eltcaption = $this->getCaption();
+            $eltmsg = empty($eltcaption)
                     ? sprintf(\XoopsLocale::F_ENTER, $eltname)
                     : sprintf(\XoopsLocale::F_ENTER, $eltcaption);
-                $eltmsg = str_replace([':', '?', '%'], '', $eltmsg);
-                $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-                $eltmsg = strip_tags($eltmsg);
-                return "\n"
+            $eltmsg = str_replace([':', '?', '%'], '', $eltmsg);
+            $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+            $eltmsg = strip_tags($eltmsg);
+            return "\n"
                     . "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\");"
                     . " myform.{$eltname}.focus(); return false; }\n";
-            }
+        }
 
         return false;
     }
@@ -573,7 +572,7 @@ abstract class Element extends Attributes
     {
         if (empty($value)) {
             $value = $default;
-        } elseif ($enum !== null && ! in_array($value, $enum, true)) {
+        } elseif ($enum !== null && !in_array($value, $enum, true)) {
             $value = $default;
         }
         $this->set($name, $value);
@@ -591,7 +590,7 @@ abstract class Element extends Attributes
     public function setIfNotEmpty($name, $value)
     {
         // don't overwrite
-        if (! $this->has($name) && ! empty($value)) {
+        if (!$this->has($name) && !empty($value)) {
             $this->set($name, $value);
         }
     }
@@ -608,7 +607,7 @@ abstract class Element extends Attributes
     public function setIfNotSet($name, $value)
     {
         // don't overwrite
-        if (! $this->has($name)) {
+        if (!$this->has($name)) {
             $this->set($name, $value);
         }
     }

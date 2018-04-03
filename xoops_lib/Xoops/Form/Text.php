@@ -89,7 +89,7 @@ class Text extends Element
     {
         $this->themeDecorateElement();
         $dataList = $this->isDatalist();
-        if (! empty($dataList)) {
+        if (!empty($dataList)) {
             $this->add('list', 'list_' . $this->getName());
         }
 

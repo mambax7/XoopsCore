@@ -23,7 +23,7 @@ class XoopsEditor extends Xoops\Form\TextArea
     /**
      *  make cache key available as XoopsEditor::CACHE_KEY_EDITOR_LIST
      */
-    const CACHE_KEY_EDITOR_LIST = 'system/editorlist';
+    public const CACHE_KEY_EDITOR_LIST = 'system/editorlist';
 
     /**
      * @var bool
@@ -67,8 +67,8 @@ class XoopsEditor extends Xoops\Form\TextArea
         $args = func_get_args();
         $configs = [];
         // For backward compatibility
-        if (! empty($args)) {
-            if (! is_array($args[0])) {
+        if (!empty($args)) {
+            if (!is_array($args[0])) {
                 $i = 0;
                 foreach (['caption', 'name', 'value', 'rows', 'cols', 'hiddentext'] as $key) {
                     if (isset($args[$i])) {
@@ -163,10 +163,10 @@ class XoopsEditorHandler
      * @static
      * @staticvar XoopsEditorHandler
      */
-    static function getInstance()
+    public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -188,7 +188,7 @@ class XoopsEditorHandler
             return $editor;
         }
         $list = array_keys($this->getList($noHtml));
-        if (empty($OnFailure) || ! in_array($OnFailure, $list, true)) {
+        if (empty($OnFailure) || !in_array($OnFailure, $list, true)) {
             $OnFailure = $list[0];
         }
         $editor = $this->_loadEditor($OnFailure, $options);
@@ -237,12 +237,12 @@ class XoopsEditorHandler
             [$this, 'buildEditorList']
         );
         $editors = array_keys($list);
-        if (! empty($this->allowed_editors)) {
+        if (!empty($this->allowed_editors)) {
             $editors = array_intersect($editors, $this->allowed_editors);
         }
         $returnList = [];
         foreach ($editors as $name) {
-            if (! empty($noHtml) && empty($list[$name]['nohtml'])) {
+            if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
                 continue;
             }
             $returnList[$name] = $list[$name]['title'];
@@ -253,7 +253,7 @@ class XoopsEditorHandler
     /**
      * @param array $options
      */
-    function setConfig(XoopsEditor $editor, $options)
+    public function setConfig(XoopsEditor $editor, $options)
     {
         $editor->setConfig($options);
     }
@@ -269,7 +269,7 @@ class XoopsEditorHandler
     {
         $xoops = Xoops::getInstance();
         $editor = null;
-        if (empty($name) || ! array_key_exists($name, $this->getList())) {
+        if (empty($name) || !array_key_exists($name, $this->getList())) {
             return $editor;
         }
         $editor_path = $this->root_path . '/' . $name;

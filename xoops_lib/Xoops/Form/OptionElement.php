@@ -68,7 +68,7 @@ abstract class OptionElement extends Element
     public function getOptions($encode = 0)
     {
         $options = $this->get('option', []);
-        if (! $encode) {
+        if (!$encode) {
             return $options;
         }
         $myts = Sanitizer::getInstance();

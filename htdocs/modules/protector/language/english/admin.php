@@ -1,4 +1,5 @@
 <?php
+
 // index.php
 define('_AM_TH_DATETIME', 'Time');
 define('_AM_TH_USER', 'User');

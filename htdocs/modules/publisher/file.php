@@ -37,14 +37,14 @@ if ($fileid === 0) {
 $fileObj = $publisher->getFileHandler()->get($fileid);
 
 // if the selected item was not found, exit
-if (! $fileObj) {
+if (!$fileObj) {
     $xoops->redirect('index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $itemObj = $publisher->getItemHandler()->get($fileObj->getVar('itemid'));
 
 // if the user does not have permission to modify this file, exit
-if (! (PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj) || ($xoops->isUser() && $fileObj->getVar('uid') === $xoops->user->getVar('uid')))) {
+if (!(PublisherUtils::IsUserAdmin() || PublisherUtils::IsUserModerator($itemObj) || ($xoops->isUser() && $fileObj->getVar('uid') === $xoops->user->getVar('uid')))) {
     $xoops->redirect('index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -91,7 +91,7 @@ switch ($op) {
             }
         }
 
-        if (! $publisher->getFileHandler()->insert($fileObj)) {
+        if (!$publisher->getFileHandler()->insert($fileObj)) {
             $xoops->redirect('item.php?itemid=' . $fileObj->getVar('itemid'), 3, _AM_PUBLISHER_FILE_EDITING_ERROR . PublisherUtils::formatErrors($fileObj->getErrors()));
         }
         $xoops->redirect('item.php?itemid=' . $fileObj->getVar('itemid'), 2, _AM_PUBLISHER_FILE_EDITING_SUCCESS);
@@ -101,7 +101,7 @@ switch ($op) {
         $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
 
         if ($confirm) {
-            if (! $publisher->getFileHandler()->delete($fileObj)) {
+            if (!$publisher->getFileHandler()->delete($fileObj)) {
                 $xoops->redirect('item.php?itemid=' . $fileObj->getVar('itemid'), 2, _AM_PUBLISHER_FILE_DELETE_ERROR);
             }
             $xoops->redirect('item.php?itemid=' . $fileObj->getVar('itemid'), 2, sprintf(_AM_PUBLISHER_FILEISDELETED, $fileObj->getVar('name')));

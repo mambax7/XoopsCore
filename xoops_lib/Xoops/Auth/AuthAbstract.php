@@ -90,7 +90,7 @@ abstract class AuthAbstract
         $xoops = \Xoops::getInstance();
         $ret = '<br />';
         if ($xoops->getConfig('debug_mode') === 1 || $xoops->getConfig('debug_mode') === 2) {
-            if (! empty($this->errors)) {
+            if (!empty($this->errors)) {
                 foreach ($this->errors as $errstr) {
                     $ret .= $errstr . '<br/>';
                 }

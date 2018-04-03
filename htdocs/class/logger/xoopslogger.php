@@ -75,7 +75,7 @@ class xoopslogger
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }

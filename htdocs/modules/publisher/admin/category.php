@@ -43,7 +43,7 @@ switch ($op) {
         $confirm = (isset($_POST['confirm'])) ? $_POST['confirm'] : 0;
         $name = (isset($_POST['name'])) ? $_POST['name'] : '';
         if ($confirm) {
-            if (! $publisher->getCategoryHandler()->delete($categoryObj)) {
+            if (!$publisher->getCategoryHandler()->delete($categoryObj)) {
                 $xoops->redirect('category.php', 1, _AM_PUBLISHER_DELETE_CAT_ERROR);
             }
             $xoops->redirect('category.php', 1, sprintf(_AM_PUBLISHER_COLISDELETED, $name));
@@ -79,14 +79,14 @@ switch ($op) {
         // Retreive the filename to be uploaded
         if (isset($_FILES['image_file']['name']) && $_FILES['image_file']['name'] !== '') {
             $filename = $_POST['xoops_upload_file'][0];
-            if (! empty($filename) || $filename !== '') {
+            if (!empty($filename) || $filename !== '') {
                 // TODO : implement publisher mimetype management
                 $max_size = $publisher->getConfig('maximum_filesize');
                 $max_imgwidth = $publisher->getConfig('maximum_image_width');
                 $max_imgheight = $publisher->getConfig('maximum_image_height');
                 $allowed_mimetypes = PublisherUtils::getAllowedImagesTypes();
 
-                if ($_FILES[$filename]['tmp_name'] === '' || ! is_readable($_FILES[$filename]['tmp_name'])) {
+                if ($_FILES[$filename]['tmp_name'] === '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     $xoops->redirect('javascript:history.go(-1)', 2, _AM_PUBLISHER_FILEUPLOAD_ERROR);
                 }
 
@@ -144,7 +144,7 @@ switch ($op) {
             $redirect_to = 'category.php';
         }
 
-        if (! $categoryObj->store()) {
+        if (!$categoryObj->store()) {
             $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_CATEGORY_SAVE_ERROR . PublisherUtils::formatErrors($categoryObj->getErrors()));
         }
         // TODO : put this function in the category class
@@ -162,7 +162,7 @@ switch ($op) {
                 $categoryObj->setVar('name', $_POST['scname'][$i]);
                 $categoryObj->setVar('parentid', $parentCat);
 
-                if (! $categoryObj->store()) {
+                if (!$categoryObj->store()) {
                     $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_SUBCATEGORY_SAVE_ERROR . PublisherUtils::formatErrors($categoryObj->getErrors()));
                 }
                 // TODO : put this function in the category class
@@ -249,7 +249,7 @@ function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0)
     $publisher = Publisher::getInstance();
 
     $description = $categoryObj->getVar('description');
-    if (! XoopsLocale::isMultiByte()) {
+    if (!XoopsLocale::isMultiByte()) {
         if (strlen($description) >= 100) {
             $description = substr($description, 0, (100 - 1)) . '...';
         }
@@ -291,7 +291,7 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
             $xoops->redirect('category.php', 1, _AM_PUBLISHER_NOCOLTOEDIT);
         }
     } else {
-        if (! $categoryObj) {
+        if (!$categoryObj) {
             $categoryObj = $publisher->getCategoryHandler()->create();
         }
     }
@@ -314,7 +314,7 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
     $sform->setSubCatsCount($nb_subcats);
     $sform->display();
 
-    if (! $categoryid) {
+    if (!$categoryid) {
         PublisherUtils::closeCollapsableBar('createtable', 'createtableicon');
     } else {
         PublisherUtils::closeCollapsableBar('edittable', 'edittableicon');

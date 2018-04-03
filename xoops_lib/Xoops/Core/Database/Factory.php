@@ -49,12 +49,12 @@ class Factory
     public static function getConnection($options = null)
     {
         static $instance;
-        if (! isset($instance)) {
-			$xoops = \Xoops::getInstance();
+        if (!isset($instance)) {
+            $xoops = \Xoops::getInstance();
             $config = new \Doctrine\DBAL\Configuration();
             $config->setSQLLogger(new XoopsDebugStack());
             $parameters = \XoopsBaseConfig::get('db-parameters');
-            if (! empty($parameters) && is_array($parameters)) {
+            if (!empty($parameters) && is_array($parameters)) {
                 $connectionParams = $parameters;
                 $connectionParams['wrapperClass'] = '\Xoops\Core\Database\Connection';
             } else {
@@ -69,12 +69,12 @@ class Factory
                     'wrapperClass' => '\Xoops\Core\Database\Connection',
                 ];
                 // Support for other doctrine databases
-				$xoops_db_port = \XoopsBaseConfig::get('db-port');
-                if (! empty($xoops_db_port)) {
+                $xoops_db_port = \XoopsBaseConfig::get('db-port');
+                if (!empty($xoops_db_port)) {
                     $connectionParams['port'] = $xoops_db_port;
                 }
-				$xoops_db_socket = \XoopsBaseConfig::get('db-socket');
-                if (! empty($xoops_db_socket)) {
+                $xoops_db_socket = \XoopsBaseConfig::get('db-socket');
+                if (!empty($xoops_db_socket)) {
                     $connectionParams['unix_socket'] = $xoops_db_socket;
                 }
                 if ($options !== null && is_array($options)) {
@@ -86,7 +86,7 @@ class Factory
                 $connectionParams,
                 $config
             );
-            if (! defined('XOOPS_DB_PROXY') || (\Xmf\Request::getMethod() !== 'GET') || (PHP_SAPI === 'cli')) {
+            if (!defined('XOOPS_DB_PROXY') || (\Xmf\Request::getMethod() !== 'GET') || (PHP_SAPI === 'cli')) {
                 $instance->setSafe(true);
             }
         }

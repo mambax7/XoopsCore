@@ -34,13 +34,12 @@ if (isset($_POST['op']) && ($_POST['op'] === 'go')) {
 }
 
 if ($op === 'start') {
-
     PublisherUtils::cpHeader();
     //publisher_adminMenu(-1, _AM_PUBLISHER_IMPORT);
     PublisherUtils::openCollapsableBar('wfsectionimport', 'wfsectionimporticon', sprintf(_AM_PUBLISHER_IMPORT_FROM, $importFromModuleName), _AM_PUBLISHER_IMPORT_INFO);
 
     $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wfs_category'));
-    list ($totalCat) = $xoopsDB->fetchRow($result);
+    list($totalCat) = $xoopsDB->fetchRow($result);
 
     if ($totalCat === 0) {
         echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . _AM_PUBLISHER_IMPORT_NOCATSELECTED . '</span>';
@@ -48,7 +47,7 @@ if ($op === 'start') {
         include_once \XoopsBaseConfig::get('root-path') . '/class/xoopstree.php';
 
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wfs_article'));
-        list ($totalArticles) = $xoopsDB->fetchRow($result);
+        list($totalArticles) = $xoopsDB->fetchRow($result);
 
         if ($totalArticles === 0) {
             echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . sprintf(_AM_PUBLISHER_IMPORT_MODULE_FOUND_NO_ITEMS, $importFromModuleName, $totalArticles) . '</span>';
@@ -62,7 +61,7 @@ if ($op === 'start') {
             $result = $xoopsDB->query($sql);
             $cat_cbox_values = [];
             $cat_cbox_options = [];
-            while (false !== (list ($cid, $pid, $cat_title, $art_count) = $xoopsDB->fetchRow($result))) {
+            while (false !== (list($cid, $pid, $cat_title, $art_count) = $xoopsDB->fetchRow($result))) {
                 $cat_title = $myts->displayTarea($cat_title);
                 $cat_cbox_options[$cid] = "${cat_title} (${art_count})";
             }
@@ -139,7 +138,7 @@ if ($op === 'go') {
             }
         }
 
-        if (! $categoryObj->store(false)) {
+        if (!$categoryObj->store(false)) {
             echo sprintf(_AM_PUBLISHER_IMPORT_CATEGORY_ERROR, $arrCat['title']) . '<br/>';
             continue;
         }
@@ -166,8 +165,8 @@ if ($op === 'go') {
             $itemObj->setVar('body', $arrArticle['maintext']);
             $itemObj->setVar('counter', $arrArticle['counter']);
             $itemObj->setVar('datesub', $arrArticle['created']);
-            $itemObj->setVar('dohtml', ! $arrArticle['nohtml']);
-            $itemObj->setVar('dosmiley', ! $arrArticle['nosmiley']);
+            $itemObj->setVar('dohtml', !$arrArticle['nohtml']);
+            $itemObj->setVar('dosmiley', !$arrArticle['nosmiley']);
             $itemObj->setVar('dobr', $arrArticle['nobreaks']);
             $itemObj->setVar('weight', $arrArticle['weight']);
             $itemObj->setVar('status', _PUBLISHER_STATUS_PUBLISHED);
@@ -184,41 +183,40 @@ if ($op === 'go') {
                 }
             }
 
-            if (! $itemObj->store()) {
+            if (!$itemObj->store()) {
                 echo sprintf('  ' . _AM_PUBLISHER_IMPORT_ARTICLE_ERROR, $arrArticle['title']) . '<br/>';
                 continue;
             }
-                // Linkes files
+            // Linkes files
 
-                $sql = 'SELECT * FROM ' . $xoopsDB->prefix('wfs_files') . ' WHERE articleid=' . $arrArticle['articleid'];
-                $resultFiles = $xoopsDB->query($sql);
-                $allowed_mimetypes = '';
-                while (($arrFile = $xoopsDB->fetchArray($resultFiles)) !== false) {
-                    $filename = \XoopsBaseConfig::get('root-path') . '/modules/wfsection/cache/uploaded/' . $arrFile['filerealname'];
-                    if (XoopsLoad::fileExists($filename)) {
-                        if (copy($filename, PUBLISHER_UPLOADS_PATH . '/' . $arrFile['filerealname'])) {
-                            $fileObj = $publisher->getFileHandler()->create();
-                            $fileObj->setVar('name', $arrFile['fileshowname']);
-                            $fileObj->setVar('description', $arrFile['filedescript']);
-                            $fileObj->setVar('status', _PUBLISHER_STATUS_FILE_ACTIVE);
-                            $fileObj->setVar('uid', $arrArticle['uid']);
-                            $fileObj->setVar('itemid', $itemObj->getVar('itemid'));
-                            $fileObj->setVar('mimetype', $arrFile['minetype']);
-                            $fileObj->setVar('datesub', $arrFile['date']);
-                            $fileObj->setVar('counter', $arrFile['counter']);
-                            $fileObj->setVar('filename', $arrFile['filerealname']);
+            $sql = 'SELECT * FROM ' . $xoopsDB->prefix('wfs_files') . ' WHERE articleid=' . $arrArticle['articleid'];
+            $resultFiles = $xoopsDB->query($sql);
+            $allowed_mimetypes = '';
+            while (($arrFile = $xoopsDB->fetchArray($resultFiles)) !== false) {
+                $filename = \XoopsBaseConfig::get('root-path') . '/modules/wfsection/cache/uploaded/' . $arrFile['filerealname'];
+                if (XoopsLoad::fileExists($filename)) {
+                    if (copy($filename, PUBLISHER_UPLOADS_PATH . '/' . $arrFile['filerealname'])) {
+                        $fileObj = $publisher->getFileHandler()->create();
+                        $fileObj->setVar('name', $arrFile['fileshowname']);
+                        $fileObj->setVar('description', $arrFile['filedescript']);
+                        $fileObj->setVar('status', _PUBLISHER_STATUS_FILE_ACTIVE);
+                        $fileObj->setVar('uid', $arrArticle['uid']);
+                        $fileObj->setVar('itemid', $itemObj->getVar('itemid'));
+                        $fileObj->setVar('mimetype', $arrFile['minetype']);
+                        $fileObj->setVar('datesub', $arrFile['date']);
+                        $fileObj->setVar('counter', $arrFile['counter']);
+                        $fileObj->setVar('filename', $arrFile['filerealname']);
 
-                            if ($fileObj->store($allowed_mimetypes, true, false)) {
-                                echo '&nbsp;&nbsp;&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_ARTICLE_FILE, $arrFile['filerealname']) . '<br />';
-                            }
+                        if ($fileObj->store($allowed_mimetypes, true, false)) {
+                            echo '&nbsp;&nbsp;&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_ARTICLE_FILE, $arrFile['filerealname']) . '<br />';
                         }
                     }
                 }
+            }
 
-                $newArticleArray[$arrArticle['articleid']] = $itemObj->getVar('itemid');
-                echo '&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_ARTICLE, $itemObj->title()) . '<br />';
-                ++$cnt_imported_articles;
-
+            $newArticleArray[$arrArticle['articleid']] = $itemObj->getVar('itemid');
+            echo '&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_ARTICLE, $itemObj->title()) . '<br />';
+            ++$cnt_imported_articles;
         }
         $newCatArray[$newCat['oldid']] = $newCat;
         unset($newCat);
@@ -255,12 +253,11 @@ if ($op === 'go') {
         $comment->setVar('com_itemid', $newArticleArray[$comment->getVar('com_itemid')]);
         $comment->setVar('com_modid', $publisher_module_id);
         $comment->setNew();
-        if (! $comment_handler->insert($comment)) {
+        if (!$comment_handler->insert($comment)) {
             echo '&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_COMMENT_ERROR, $comment->getVar('com_title')) . '<br />';
         } else {
             echo '&nbsp;&nbsp;' . sprintf(_AM_PUBLISHER_IMPORTED_COMMENT, $comment->getVar('com_title')) . '<br />';
         }
-
     }
 
     echo '<br/><br/>Done.<br/>';

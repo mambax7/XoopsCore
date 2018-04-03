@@ -50,7 +50,6 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
 
         $handler = $this->object->create('avatar', 'avatars');
         $this->assertInstanceOf('\AvatarsAvatarHandler', $handler);
-
     }
 
     public function testRegisterScheme()

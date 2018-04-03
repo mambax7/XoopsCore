@@ -25,14 +25,12 @@
 
 class upgrade_240 extends xoopsUpgrade
 {
-    var
-
- $tasks = ['keys'];
+    public $tasks = ['keys'];
 
     /**
      * Check if keys already exist
      */
-    function check_keys()
+    public function check_keys()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
@@ -44,7 +42,7 @@ class upgrade_240 extends xoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
-            if (! $result = $xoops->db()->queryF($sql)) {
+            if (!$result = $xoops->db()->queryF($sql)) {
                 continue;
             }
             $existing_keys = [];
@@ -52,7 +50,7 @@ class upgrade_240 extends xoopsUpgrade
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
-                if (! in_array($key, $existing_keys, true)) {
+                if (!in_array($key, $existing_keys, true)) {
                     return false;
                 }
             }
@@ -63,7 +61,7 @@ class upgrade_240 extends xoopsUpgrade
     /**
      * Apply keys that are missing
      */
-    function apply_keys()
+    public function apply_keys()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
@@ -75,7 +73,7 @@ class upgrade_240 extends xoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
-            if (! $result = $xoops->db()->queryF($sql)) {
+            if (!$result = $xoops->db()->queryF($sql)) {
                 continue;
             }
             $existing_keys = [];
@@ -83,9 +81,9 @@ class upgrade_240 extends xoopsUpgrade
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
-                if (! in_array($key, $existing_keys, true)) {
+                if (!in_array($key, $existing_keys, true)) {
                     $sql = 'ALTER TABLE `' . $xoops->db()->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
-                    if (! $result = $xoops->db()->queryF($sql)) {
+                    if (!$result = $xoops->db()->queryF($sql)) {
                         return false;
                     }
                 }
@@ -94,7 +92,7 @@ class upgrade_240 extends xoopsUpgrade
         return true;
     }
 
-    function upgrade_240()
+    public function upgrade_240()
     {
         $this->xoopsUpgrade(basename(dirname(__FILE__)));
     }

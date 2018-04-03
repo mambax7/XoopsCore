@@ -64,6 +64,7 @@ $localePicker->display();
 
 // Using placeholders
 use Xoops\Form\ThemeForm;
+
 $xoops = \Xoops::getInstance();
 echo '<br>'; echo t::MY_DOG_NAME_AND_AGE;
 echo '<br>'; echo $xoops->translate('MY_DOG_NAME_AND_AGE', 'codex', ['name' => 'Pluto', 'years' => 0]);

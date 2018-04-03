@@ -30,7 +30,7 @@ function smarty_function_xoPageNav($params, &$smarty)
 
     //TODO Remove this hardocded strings
     if ($currentPage > 1) {
-        $str .= '<a href="' . $xoops->url(str_replace( '%s', $offset - $pageSize, $url)) . '">Previous</a>';
+        $str .= '<a href="' . $xoops->url(str_replace('%s', $offset - $pageSize, $url)) . '">Previous</a>';
     }
     for ($i = $minPage; $i <= $maxPage; ++$i) {
         $tgt = htmlspecialchars($xoops->url(str_replace('%s', ($i - 1) * $pageSize, $url)), ENT_QUOTES);
@@ -39,9 +39,8 @@ function smarty_function_xoPageNav($params, &$smarty)
     if ($currentPage < $lastPage) {
         $str .= '<a href="' . $xoops->url(str_replace('%s', $offset + $pageSize, $url)) . '">Next</a>';
     }
-    $class = @! empty($class) ? htmlspecialchars($class, ENT_QUOTES) : 'pagenav';
+    $class = @!empty($class) ? htmlspecialchars($class, ENT_QUOTES) : 'pagenav';
 
     $str = "<div class='{$class}'>{$str}</div>";
     return $str;
-
 }

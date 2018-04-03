@@ -60,7 +60,7 @@ include_once $root . '/modules/system/class/system.php';
 $system_module = new SystemModule();
 $system = System::getInstance();
 $status = $system_module->install('system', true);
-if (! $status) {
+if (!$status) {
     $_SESSION['error'] = $system_module->error;
     //$sql = $xoops->db()->getConfiguration()->getSQLLogger()->queries;
 }
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($siteconfig['adminpass'])) {
         $error['pass'][] = ERR_REQUIRED;
     }
-    if (! preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $siteconfig['adminmail'])) {
+    if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $siteconfig['adminmail'])) {
         $error['email'][] = ERR_INVALID_EMAIL;
     }
     if ($siteconfig['adminpass'] !== $siteconfig['adminpass2']) {
@@ -99,15 +99,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $wizard->redirectToPage('+0');
         return 200;
     }
-        $_SESSION['error'] = $error;
-        $_SESSION['siteconfig'] = $siteconfig;
-        $wizard->redirectToPage('+1');
-        return 302;
-
+    $_SESSION['error'] = $error;
+    $_SESSION['siteconfig'] = $siteconfig;
+    $wizard->redirectToPage('+1');
+    return 302;
 }
     $dbm = new XoopsDatabaseManager();
 
-    if (! $dbm->isConnectable()) {
+    if (!$dbm->isConnectable()) {
         $_SESSION['error'] = $error;
         $_SESSION['siteconfig'] = $siteconfig;
         $wizard->redirectToPage('dbsettings');
@@ -115,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('system_user'));
-    list ($isadmin) = $dbm->db->fetchRow($res);
+    list($isadmin) = $dbm->db->fetchRow($res);
 
 
 ob_start();
@@ -142,7 +141,7 @@ if ($isadmin) {
         </script>';
 
     echo xoFormField('adminname', $siteconfig['adminname'], ADMIN_LOGIN_LABEL);
-    if (! empty($error['name'])) {
+    if (!empty($error['name'])) {
         echo '<ul class="diags1">';
         foreach ($error['name'] as $errmsg) {
             echo '<li class="failure">' . $errmsg . '</li>';
@@ -151,28 +150,26 @@ if ($isadmin) {
     }
 
     echo xoFormField('adminmail', $siteconfig['adminmail'], ADMIN_EMAIL_LABEL);
-    if (! empty($error['email'])) {
+    if (!empty($error['email'])) {
         echo '<ul class="diags1">';
         foreach ($error['email'] as $errmsg) {
             echo '<li class="failure">' . $errmsg . '</li>';
         }
         echo '</ul>';
-    }
-    ?>
+    } ?>
 
     <div id="password">
         <div id="passwordinput">
     <?php
         echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
-        echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
-        if (! empty($error['pass'])) {
-            echo '<ul class="diags1">';
-            foreach ($error['pass'] as $errmsg) {
-                echo '<li class="failure">' . $errmsg . '</li>';
-            }
-            echo '</ul>';
+    echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
+    if (!empty($error['pass'])) {
+        echo '<ul class="diags1">';
+        foreach ($error['pass'] as $errmsg) {
+            echo '<li class="failure">' . $errmsg . '</li>';
         }
-        ?>
+        echo '</ul>';
+    } ?>
         </div>
 
         <div id="passwordmetter" class="xoform-help">
@@ -200,7 +197,6 @@ if ($isadmin) {
     showHideHelp(this);
 </script>
     <?php
-
 }
 $content = ob_get_contents();
 ob_end_clean();

@@ -38,7 +38,6 @@ class Smarty_Resource_Admin extends Smarty_Resource_Custom
             $fp = fopen($tpl, 'r');
             $source = ($filesize > 0) ? fread($fp, $filesize) : '';
             fclose($fp);
-
         } else {
             $source = null;
             $mtime = null;
@@ -62,7 +61,7 @@ class Smarty_Resource_Admin extends Smarty_Resource_Custom
         $file = $tpl_info['file'];
 
         $theme_set = $xoops->getConfig('theme_set') ? $xoops->getConfig('theme_set') : 'default';
-        if (! file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/admin/{$file}"))) {
+        if (!file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/admin/{$file}"))) {
             $file_path = $xoops->path("modules/{$dirname}/templates/admin/{$file}");
         }
         return $cache[$tpl_name] = $file_path;

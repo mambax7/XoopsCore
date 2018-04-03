@@ -135,7 +135,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('clients.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $cid = Request::getInt('cid', 0);
@@ -164,7 +164,7 @@ switch ($op) {
         if ($cid > 0) {
             $obj = $client_Handler->get($cid);
             if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('clients.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($client_Handler->delete($obj)) {

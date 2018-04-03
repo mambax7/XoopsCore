@@ -23,7 +23,7 @@ use Xoops\Core\XoopsTpl;
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-if (! defined('XOOPS_MAINFILE_INCLUDED')) {
+if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 } else {
     chdir(\XoopsBaseConfig::get('root-path') . '/modules/pm/');
@@ -31,10 +31,10 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
 $xoops = Xoops::getInstance();
 $xoops->loadLanguage('main', 'pm');
 
-$reply = ! empty($_GET['reply']) ? 1 : 0;
-$send = ! empty($_GET['send']) ? 1 : 0;
-$send2 = ! empty($_GET['send2']) ? 1 : 0;
-$sendmod = ! empty($_POST['sendmod']) ? 1 : 0; // send from other modules with post data
+$reply = !empty($_GET['reply']) ? 1 : 0;
+$send = !empty($_GET['send']) ? 1 : 0;
+$send2 = !empty($_GET['send2']) ? 1 : 0;
+$sendmod = !empty($_POST['sendmod']) ? 1 : 0; // send from other modules with post data
 $to_userid = isset($_GET['to_userid']) ? (int) ($_GET['to_userid']) : 0;
 $msg_id = isset($_GET['msg_id']) ? (int) ($_GET['msg_id']) : 0;
 
@@ -49,14 +49,13 @@ if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] !== 'submit')
             if ($reply === 1) {
                 $jump .= "&amp;reply={$reply}&amp;msg_id={$msg_id}";
             }
-
         }
     }
     header('location: ' . $jump);
     exit();
 }
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 $xoops->simpleHeader();
@@ -88,7 +87,7 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
                 //PMs are by default not saved in outbox
                 $pm->setVar('from_delete', 0);
             }
-            if (! $pm_handler->insert($pm)) {
+            if (!$pm_handler->insert($pm)) {
                 $error_message = $pm->getHtmlErrors();
                 $error_message .= "<br /><a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a>';
                 $tpl->assign('error_message', $error_message);
@@ -107,7 +106,6 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
         }
     }
     $tpl->display('module:pm/pm_pmlite.tpl');
-
 } else {
     $message = '';
     $pm_uname = '';
@@ -131,7 +129,7 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
 
         if ($reply === 1) {
             $subject = $pm->getVar('subject', 'E');
-            if (! preg_match('/^' . XoopsLocale::C_RE . '/i', $subject)) {
+            if (!preg_match('/^' . XoopsLocale::C_RE . '/i', $subject)) {
                 $subject = XoopsLocale::C_RE . ' ' . $subject;
             }
             $form->addElement(new Xoops\Form\Label(_PM_TO, $pm_uname));

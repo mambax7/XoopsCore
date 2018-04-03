@@ -27,7 +27,7 @@ $xoops->events()->triggerEvent('core.edituser.start');
 $xoops->loadLanguage('user');
 
 // If not a user, redirect
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect('index.php', 3, XoopsLocale::E_NO_ACTION_PERMISSION);
     exit();
 }
@@ -37,7 +37,7 @@ $op = Request::getCmd('op', 'editprofile');
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 if ($op === 'saveuser') {
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $xoops->redirect(
             'index.php',
             3,
@@ -54,7 +54,7 @@ if ($op === 'saveuser') {
     $email = '';
     if ($xoops->getConfig('allow_chgmail') === 1) {
         $email = Request::getString('email', '');
-        if ($email === '' || ! $xoops->checkEmail($email)) {
+        if ($email === '' || !$xoops->checkEmail($email)) {
             $errors[] = XoopsLocale::E_INVALID_EMAIL;
         }
     }
@@ -105,7 +105,7 @@ if ($op === 'saveuser') {
         $edituser->setVar('user_occ', Request::getString('user_occ', ''));
         $edituser->setVar('user_intrest', Request::getString('user_intrest', ''));
         $edituser->setVar('user_mailok', Request::getBool('user_mailok', 0));
-        if (! $member_handler->insertUser($edituser)) {
+        if (!$member_handler->insertUser($edituser)) {
             $xoops->header();
             echo $edituser->getHtmlErrors();
             $xoops->footer();

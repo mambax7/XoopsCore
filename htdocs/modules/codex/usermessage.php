@@ -26,7 +26,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
-if (! $xoops->service('usermessage')->isAvailable()) {
+if (!$xoops->service('usermessage')->isAvailable()) {
     echo 'Please install a usermessage provider to view this demonstration.';
 }
 

@@ -26,7 +26,7 @@ include_once __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-if (! $xoops->service('htmltopdf')->isAvailable()) {
+if (!$xoops->service('htmltopdf')->isAvailable()) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOPDF);
 }
 
@@ -45,7 +45,7 @@ if ($itemid === 0) {
 $itemObj = $publisher->getItemHandler()->get($itemid);
 
 // if the selected item was not found, exit
-if (! $itemObj) {
+if (!$itemObj) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
@@ -53,7 +53,7 @@ if (! $itemObj) {
 $categoryObj = $publisher->getCategoryHandler()->get($itemObj->getVar('categoryid'));
 
 // Check user permissions to access that category of the selected item
-if (! $itemObj->accessGranted()) {
+if (!$itemObj->accessGranted()) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 

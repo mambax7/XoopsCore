@@ -27,10 +27,10 @@ $xoops = Xoops::getInstance();
 $xoops_url = \XoopsBaseConfig::get('url');
 $xoops->events()->triggerEvent('core.pmlite.start');
 
-$reply = ! empty($_GET['reply']) ? 1 : 0;
-$send = ! empty($_GET['send']) ? 1 : 0;
-$send2 = ! empty($_GET['send2']) ? 1 : 0;
-$sendmod = ! empty($_POST['sendmod']) ? 1 : 0; // send from other modules with post data
+$reply = !empty($_GET['reply']) ? 1 : 0;
+$send = !empty($_GET['send']) ? 1 : 0;
+$send2 = !empty($_GET['send2']) ? 1 : 0;
+$sendmod = !empty($_POST['sendmod']) ? 1 : 0; // send from other modules with post data
 $to_userid = isset($_GET['to_userid']) ? (int) ($_GET['to_userid']) : 0;
 $msg_id = isset($_GET['msg_id']) ? (int) ($_GET['msg_id']) : 0;
 
@@ -45,14 +45,13 @@ if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] !== 'submit')
             if ($reply === 1) {
                 $jump .= "&amp;reply={$reply}&amp;msg_id={$msg_id}";
             }
-
         }
     }
     header('location: ' . $jump);
     exit();
 }
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect($xoops_url, 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 $xoops->simpleHeader();
@@ -79,7 +78,7 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
             $pm->setVar('msg_text', $_POST['message']);
             $pm->setVar('to_userid', $_POST['to_userid']);
             $pm->setVar('from_userid', $xoops->user->getVar('uid'));
-            if (! $pm_handler->insert($pm)) {
+            if (!$pm_handler->insert($pm)) {
                 $error_message = $pm->getHtmlErrors();
                 $error_message .= "<br /><a href='javascript:history.go(-1)'>" . XoopsLocale::GO_BACK . '</a>';
                 $tpl->assign('error_message', $error_message);
@@ -98,7 +97,6 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
         }
     }
     $tpl->display('module:system/system_pmlite.tpl');
-
 } else {
     $message = '';
     $pm_uname = '';
@@ -123,7 +121,7 @@ if (isset($_POST['op']) && $_POST['op'] === 'submit') {
 
         if ($reply === 1) {
             $subject = $pm->getVar('subject', 'E');
-            if (! preg_match('/^' . XoopsLocale::C_RE . '/i', $subject)) {
+            if (!preg_match('/^' . XoopsLocale::C_RE . '/i', $subject)) {
                 $subject = XoopsLocale::C_RE . ' ' . $subject;
             }
             $form->addElement(new Xoops\Form\Label(XoopsLocale::C_TO, $pm_uname));

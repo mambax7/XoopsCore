@@ -54,7 +54,7 @@ class PublisherSearchPlugin extends PluginAbstract implements SearchPluginInterf
         foreach ($itemsObjs as $obj) {
             $item['image'] = 'images/item_icon.gif';
             $item['link'] = $obj->getItemUrl();
-            $item['link'] .= (! empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? '?' . ltrim($hightlight_key, '&amp;') : $hightlight_key;
+            $item['link'] .= (!empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? '?' . ltrim($hightlight_key, '&amp;') : $hightlight_key;
             if ($withCategoryPath) {
                 $item['title'] = $obj->getCategoryPath(false) . ' > ' . $obj->title();
             } else {

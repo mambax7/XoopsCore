@@ -66,8 +66,7 @@ class Session extends AbstractHelper
         if (isset($_SESSION[$prefixedName])) {
             return unserialize($_SESSION[$prefixedName]);
         }
-            return $default;
-
+        return $default;
     }
 
     /**

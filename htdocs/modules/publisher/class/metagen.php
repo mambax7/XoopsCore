@@ -186,7 +186,7 @@ class PublisherMetagen
             $secondRoundKeywords = explode("'", $originalKeyword);
             foreach ($secondRoundKeywords as $secondRoundKeyword) {
                 if (strlen($secondRoundKeyword) >= $minChar) {
-                    if (! in_array($secondRoundKeyword, $keywords, true)) {
+                    if (!in_array($secondRoundKeyword, $keywords, true)) {
                         $keywords[] = trim($secondRoundKeyword);
                     }
                 }
@@ -251,7 +251,7 @@ class PublisherMetagen
      * @var string Chaine de caractère
      * @return boolean
      */
-    static public function emptyString($var)
+    public static function emptyString($var)
     {
         return strlen($var) > 0;
     }
@@ -266,7 +266,7 @@ class PublisherMetagen
      *
      * @return string short url for article
      */
-    static  function generateSeoTitle($title = '', $withExt = true)
+    public static function generateSeoTitle($title = '', $withExt = true)
     {
         // Transformation de la chaine en minuscule
         // Codage de la chaine afin d'éviter les erreurs 500 en cas de caractères imprévus

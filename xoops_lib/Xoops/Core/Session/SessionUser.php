@@ -114,7 +114,7 @@ class SessionUser
                 // make sure all primary user data is consistent
                 $session->set('xoopsUserId', $user->getVar('uid'));
                 $session->set('xoopsUserGroups', $user->getGroups());
-                if (! $session->has('SESSION_AUTHSTATUS')) {
+                if (!$session->has('SESSION_AUTHSTATUS')) {
                     $this->setNeedsConfirmed();
                 }
                 // all is good, leave the existing info

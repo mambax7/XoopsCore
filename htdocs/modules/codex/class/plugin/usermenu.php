@@ -29,7 +29,7 @@ class CodexUsermenuPlugin implements UsermenuPluginInterface
             $files = \Xoops\Core\Lists\File::getList($helper->path('/'));
             $i = 0;
             foreach ($files as $file) {
-                if (! in_array($file, ['xoops_version.php', 'index.php'], true)) {
+                if (!in_array($file, ['xoops_version.php', 'index.php'], true)) {
                     $fileName = ucfirst(str_replace('.php', '', $file));
                     $subMenu[] = [
                         'name' => $fileName,

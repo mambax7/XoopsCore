@@ -25,4 +25,3 @@ $skinversion['css'] = [];
 $skinversion['js'] = [];
 
 $skinversion['header'] = '';
-

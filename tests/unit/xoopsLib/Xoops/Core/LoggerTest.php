@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 use Psr\Log\LogLevel;
@@ -9,19 +10,21 @@ class MY_Logger
     public function log($level, $message, array $context = [], $echo = true)
     {
         $str = $level . ':' . $message . ':' . var_export($context, true);
-        if ($echo)
+        if ($echo) {
             echo $str;
-        else
+        } else {
             return $str;
+        }
     }
 
     public function quiet($echo = true)
     {
         $str = 'method Quiet called';
-        if ($echo)
+        if ($echo) {
             echo $str;
-        else
+        } else {
             return $str;
+        }
     }
 }
 
@@ -53,17 +56,17 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
     }
 
-	public function test_getInstance()
-	{
-		$instance = Logger::getInstance();
-		$this->assertInstanceOf('\Xoops\Core\Logger', $instance);
+    public function test_getInstance()
+    {
+        $instance = Logger::getInstance();
+        $this->assertInstanceOf('\Xoops\Core\Logger', $instance);
 
-		$instance1 = Logger::getInstance();
-		$this->assertSame($instance1, $instance);
-	}
+        $instance1 = Logger::getInstance();
+        $this->assertSame($instance1, $instance);
+    }
 
-	public function test_handleError100()
-	{
+    public function test_handleError100()
+    {
         $instance = $this->object;
 
         $errno = E_USER_NOTICE;
@@ -79,10 +82,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($result, 'errstr') !== false);
         $this->assertTrue(strpos($result, 'errfile') !== false);
         $this->assertTrue(strpos($result, 'errline') !== false);
-	}
+    }
 
-	public function test_handleError120()
-	{
+    public function test_handleError120()
+    {
         $instance = $this->object;
 
         $errno = E_NOTICE;
@@ -98,10 +101,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($result, 'errstr') !== false);
         $this->assertTrue(strpos($result, 'errfile') !== false);
         $this->assertTrue(strpos($result, 'errline') !== false);
-	}
+    }
 
-	public function test_handleError140()
-	{
+    public function test_handleError140()
+    {
         $instance = $this->object;
 
         $errno = E_WARNING;
@@ -117,11 +120,11 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($result, 'errstr') !== false);
         $this->assertTrue(strpos($result, 'errfile') !== false);
         $this->assertTrue(strpos($result, 'errline') !== false);
-	}
+    }
 
-	public function test_handleError160()
-	{
-        if (! (E_STRICT & error_reporting())) {
+    public function test_handleError160()
+    {
+        if (!(E_STRICT & error_reporting())) {
             $this->markTestSkipped('E_STRICT reporting is off');
         }
         $instance = $this->object;
@@ -139,10 +142,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($result, 'errstr') !== false);
         $this->assertTrue(strpos($result, 'errfile') !== false);
         $this->assertTrue(strpos($result, 'errline') !== false);
-	}
+    }
 
-	public function test_handleError200()
-	{
+    public function test_handleError200()
+    {
         $instance = $this->object;
 
         $errno = -1;
@@ -158,15 +161,15 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($result, 'errstr') !== false);
         $this->assertTrue(strpos($result, 'errfile') !== false);
         $this->assertTrue(strpos($result, 'errline') !== false);
-	}
+    }
 
-	public function test_handleException()
-	{
+    public function test_handleException()
+    {
         $this->markTestIncomplete('to do');
-	}
+    }
 
-	public function test_sanitizePath()
-	{
+    public function test_sanitizePath()
+    {
         $instance = $this->object;
 
         $path = '\\path\\';
@@ -196,10 +199,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $path = realpath(\XoopsBaseConfig::get('root-path'));
         $result = $instance->sanitizePath($path);
         $this->assertSame('ROOT', $result);
-	}
+    }
 
-	public function test_emergency()
-	{
+    public function test_emergency()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -210,10 +213,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::EMERGENCY, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_alert()
-	{
+    public function test_alert()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -224,10 +227,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::ALERT, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_critical()
-	{
+    public function test_critical()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -238,10 +241,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::CRITICAL, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_error()
-	{
+    public function test_error()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -252,10 +255,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::ERROR, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_warning()
-	{
+    public function test_warning()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -266,10 +269,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::WARNING, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_notice()
-	{
+    public function test_notice()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -280,10 +283,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::NOTICE, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_info()
-	{
+    public function test_info()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -294,10 +297,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::INFO, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_debug()
-	{
+    public function test_debug()
+    {
         $instance = $this->object;
 
         $message = 'message';
@@ -308,10 +311,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->log(LogLevel::DEBUG, $message, $context, false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test_quiet()
-	{
+    public function test_quiet()
+    {
         $instance = $this->object;
 
         ob_start();
@@ -320,11 +323,11 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->quiet(false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-	public function test___set()
-	{
-        if (! class_exists('', false)) {
+    public function test___set()
+    {
+        if (!class_exists('', false)) {
             $path = \XoopsBaseConfig::get('root-path');
             XoopsLoad::addMap([
                 'debugbarlogger' => $path . '/modules/debugbar/class/debugbarlogger.php',
@@ -339,21 +342,21 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->logger->quiet(false);
         $this->assertSame($expected, $result);
-	}
+    }
 
-/*
-	public function test___get()
-	{
-        $instance = $this->object;
-
-        $instance->dummy_var;
-	}
-
-	public function test___call()
-	{
-        $instance = $this->object;
-
-        $instance->dummy_method();
-	}
-*/
+    /*
+        public function test___get()
+        {
+            $instance = $this->object;
+    
+            $instance->dummy_var;
+        }
+    
+        public function test___call()
+        {
+            $instance = $this->object;
+    
+            $instance->dummy_method();
+        }
+    */
 }

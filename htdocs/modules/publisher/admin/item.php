@@ -49,7 +49,6 @@ switch ($op) {
             $totalcategories = $publisher->getCategoryHandler()->getCategoriesCount(-1);
             if ($totalcategories === 0) {
                 $xoops->redirect('category.php?op=mod', 3, _AM_PUBLISHER_NEED_CATEGORY_ITEM);
-
             }
         }
         PublisherUtils::cpHeader();
@@ -126,7 +125,7 @@ switch ($op) {
         $itemObj->setVar('status', $new_status);
 
         // Storing the item
-        if (! $itemObj->store()) {
+        if (!$itemObj->store()) {
             $xoops->redirect('javascript:history.go(-1)', 3, $error_msg . PublisherUtils::formatErrors($itemObj->getErrors()));
         }
 
@@ -140,7 +139,7 @@ switch ($op) {
         }
 
         // Send notifications
-        if (! empty($notifToDo)) {
+        if (!empty($notifToDo)) {
             $itemObj->sendNotifications($notifToDo);
         }
         $xoops->redirect('item.php', 2, $redirect_msg);
@@ -152,7 +151,7 @@ switch ($op) {
         $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
 
         if ($confirm) {
-            if (! $publisher->getItemHandler()->delete($itemObj)) {
+            if (!$publisher->getItemHandler()->delete($itemObj)) {
                 $xoops->redirect('item.php', 2, _AM_PUBLISHER_ITEM_DELETE_ERROR . PublisherUtils::formatErrors($itemObj->getErrors()));
                 exit();
             }
@@ -396,7 +395,7 @@ function publisher_editItem($showmenu = false, $itemid = 0, $clone = false)
         /* @var $itemObj PublisherItem */
         $itemObj = $publisher->getItemHandler()->get($itemid);
 
-        if (! $itemObj) {
+        if (!$itemObj) {
             $xoops->redirect('item.php', 1, _AM_PUBLISHER_NOITEMSELECTED);
         }
 
@@ -444,7 +443,7 @@ function publisher_editItem($showmenu = false, $itemid = 0, $clone = false)
         echo "<br />\n";
         PublisherUtils::openCollapsableBar('edititemtable', 'edititemicon', $page_title, $page_info);
 
-        if (! $clone) {
+        if (!$clone) {
             echo '<form><div style="margin-bottom: 10px;">';
             echo "<input type='button' name='button' onclick=\"location='item.php?op=clone&itemid=" . $itemObj->getVar('itemid') . "'\" value='" . _AM_PUBLISHER_CLONE_ITEM . "'>&nbsp;&nbsp;";
             echo '</div></form>';
@@ -475,7 +474,7 @@ function publisher_editItem($showmenu = false, $itemid = 0, $clone = false)
 
     $dir = PublisherUtils::getUploadDir(true, 'content');
 
-    if (! preg_match('/777/i', decoct(fileperms($dir)))) {
+    if (!preg_match('/777/i', decoct(fileperms($dir)))) {
         echo "<font color='FF0000'><h4>" . _AM_PUBLISHER_PERMERROR . '</h4></font>';
     }
 

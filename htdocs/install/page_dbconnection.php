@@ -43,7 +43,7 @@ $settings['DB_TYPE'] = $driver_info['type'];
 // get settings name and value (post, session or default) for each parameter
 foreach ($driver_params as $param) {
     $name = false;
-    if (! empty($wizard->configs['db_param_names'][$param])) {
+    if (!empty($wizard->configs['db_param_names'][$param])) {
         $name = $wizard->configs['db_param_names'][$param];
         $default = null;
         switch ($param) {
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ob_start();
 ?>
-<?php if (! empty($error)) {
+<?php if (!empty($error)) {
     echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
 } ?>
 <fieldset>

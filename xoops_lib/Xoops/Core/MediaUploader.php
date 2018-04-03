@@ -217,27 +217,27 @@ class MediaUploader
      */
     public function fetchMedia($media_name, $index = null)
     {
-        if (! isset($_FILES[$media_name])) {
+        if (!isset($_FILES[$media_name])) {
             $this->setErrors(\XoopsLocale::E_FILE_NOT_FOUND);
             return false;
         }
-            if (is_array($_FILES[$media_name]['name']) && isset($index)) {
-                $index = (int) ($index);
-                $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index])
+        if (is_array($_FILES[$media_name]['name']) && isset($index)) {
+            $index = (int) ($index);
+            $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index])
                     : $_FILES[$media_name]['name'][$index];
-                $this->mediaType = $_FILES[$media_name]['type'][$index];
-                $this->mediaSize = $_FILES[$media_name]['size'][$index];
-                $this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
-                $this->mediaError = ! empty($_FILES[$media_name]['error'][$index])
+            $this->mediaType = $_FILES[$media_name]['type'][$index];
+            $this->mediaSize = $_FILES[$media_name]['size'][$index];
+            $this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
+            $this->mediaError = !empty($_FILES[$media_name]['error'][$index])
                     ? $_FILES[$media_name]['error'][$index] : 0;
-            } else {
-                $media_name = $_FILES[$media_name];
-                $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
-                $this->mediaType = $media_name['type'];
-                $this->mediaSize = $media_name['size'];
-                $this->mediaTmpName = $media_name['tmp_name'];
-                $this->mediaError = ! empty($media_name['error']) ? $media_name['error'] : 0;
-            }
+        } else {
+            $media_name = $_FILES[$media_name];
+            $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
+            $this->mediaType = $media_name['type'];
+            $this->mediaSize = $media_name['size'];
+            $this->mediaTmpName = $media_name['tmp_name'];
+            $this->mediaError = !empty($media_name['error']) ? $media_name['error'] : 0;
+        }
 
         $path_parts = pathinfo($this->mediaName);
         $ext = (isset($path_parts['extension'])) ? $path_parts['extension'] : '';
@@ -252,7 +252,7 @@ class MediaUploader
             $this->setErrors(\XoopsLocale::E_FILE_NAME_MISSING);
             return false;
         }
-        if ($this->mediaTmpName === 'none' || ! is_uploaded_file($this->mediaTmpName)) {
+        if ($this->mediaTmpName === 'none' || !is_uploaded_file($this->mediaTmpName)) {
             $this->setErrors(\XoopsLocale::NO_FILE_UPLOADED);
             return false;
         }
@@ -356,29 +356,29 @@ class MediaUploader
             $this->setErrors(\XoopsLocale::E_UPLOAD_DIRECTORY_NOT_SET);
             return false;
         }
-        if (! is_dir($this->uploadDir)) {
+        if (!is_dir($this->uploadDir)) {
             $this->setErrors(sprintf(\XoopsLocale::EF_DIRECTORY_NOT_OPENED, $this->uploadDir));
             return false;
         }
-        if (! is_writeable($this->uploadDir)) {
+        if (!is_writeable($this->uploadDir)) {
             $this->setErrors(sprintf(\XoopsLocale::EF_DIRECTORY_WITH_WRITE_PERMISSION_NOT_OPENED, $this->uploadDir));
             return false;
         }
         $this->sanitizeMultipleExtensions();
 
-        if (! $this->checkMaxFileSize()) {
+        if (!$this->checkMaxFileSize()) {
             return false;
         }
-        if (! $this->checkMaxWidth()) {
+        if (!$this->checkMaxWidth()) {
             return false;
         }
-        if (! $this->checkMaxHeight()) {
+        if (!$this->checkMaxHeight()) {
             return false;
         }
-        if (! $this->checkMimeType()) {
+        if (!$this->checkMimeType()) {
             return false;
         }
-        if (! $this->checkImageType()) {
+        if (!$this->checkImageType()) {
             return false;
         }
         if (count($this->errors) > 0) {
@@ -394,7 +394,7 @@ class MediaUploader
      */
     public function checkMaxFileSize()
     {
-        if (! isset($this->maxFileSize)) {
+        if (!isset($this->maxFileSize)) {
             return true;
         }
         if ($this->mediaSize > $this->maxFileSize) {
@@ -411,7 +411,7 @@ class MediaUploader
      */
     public function checkMaxWidth()
     {
-        if (! isset($this->maxWidth)) {
+        if (!isset($this->maxWidth)) {
             return true;
         }
         if (false !== $dimension = getimagesize($this->mediaTmpName)) {
@@ -432,7 +432,7 @@ class MediaUploader
      */
     public function checkMaxHeight()
     {
-        if (! isset($this->maxHeight)) {
+        if (!isset($this->maxHeight)) {
             return true;
         }
         if (false !== $dimension = getimagesize($this->mediaTmpName)) {
@@ -458,9 +458,9 @@ class MediaUploader
             return false;
         }
 
-        if ((! empty($this->allowedMimeTypes)
-            && ! in_array($this->mediaRealType, $this->allowedMimeTypes, true))
-            || (! empty($this->deniedMimeTypes)
+        if ((!empty($this->allowedMimeTypes)
+            && !in_array($this->mediaRealType, $this->allowedMimeTypes, true))
+            || (!empty($this->deniedMimeTypes)
             && in_array($this->mediaRealType, $this->deniedMimeTypes, true))
         ) {
             $this->setErrors(sprintf(\XoopsLocale::EF_FILE_MIME_TYPE_NOT_ALLOWED, $this->mediaType));
@@ -481,10 +481,10 @@ class MediaUploader
         }
 
         if ((substr($this->mediaType, 0, strpos($this->mediaType, '/')) === 'image')
-            || (! empty($this->mediaRealType)
+            || (!empty($this->mediaRealType)
             && substr($this->mediaRealType, 0, strpos($this->mediaRealType, '/')) === 'image')
         ) {
-            if (! @getimagesize($this->mediaTmpName)) {
+            if (!@getimagesize($this->mediaTmpName)) {
                 $this->setErrors(\XoopsLocale::E_INVALID_IMAGE_FILE);
                 return false;
             }
@@ -529,19 +529,18 @@ class MediaUploader
      */
     public function getErrors($ashtml = true)
     {
-        if (! $ashtml) {
+        if (!$ashtml) {
             return $this->errors;
         }
-            $ret = '';
-            if (count($this->errors) > 0) {
-                $ret = '<h4>'
+        $ret = '';
+        if (count($this->errors) > 0) {
+            $ret = '<h4>'
                 . sprintf(\XoopsLocale::EF_ERRORS_RETURNED_WHILE_UPLOADING_FILE, $this->mediaName) . '</h4>';
-                foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
-                }
+            foreach ($this->errors as $error) {
+                $ret .= $error . '<br />';
             }
-            return $ret;
-
+        }
+        return $ret;
     }
 
     /**
@@ -554,7 +553,7 @@ class MediaUploader
     protected function copyFile($chmod)
     {
         $matched = [];
-        if (! preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
+        if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
             $this->setErrors(\XoopsLocale::E_INVALID_FILE_NAME);
             return false;
         }
@@ -569,7 +568,7 @@ class MediaUploader
         }
 
         $this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
-        if (! move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
+        if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
             $this->setErrors(sprintf(\XoopsLocale::EF_FILE_NOT_SAVED_TO, $this->savedDestination));
             return false;
         }

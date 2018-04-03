@@ -53,7 +53,7 @@ function publisher_items_columns_show($options)
     $categories_obj = $publisher->getCategoryHandler()->getCategories(0, 0, -1);
 
     //if not selected 'all', let's get the selected ones
-    if (! in_array(0, $sel_categories, true)) {
+    if (!in_array(0, $sel_categories, true)) {
         foreach ($categories_obj as $key => $value) {
             if (in_array($key, $sel_categories, true)) {
                 $sel_categories_obj[$key] = $value;
@@ -93,7 +93,7 @@ function publisher_items_columns_show($options)
             $mainImage = $thisitem->getMainImage();
 
             $mainitem['item_image'] = $mainImage['image_path'];
-            if (! empty($mainImage['image_path'])) {
+            if (!empty($mainImage['image_path'])) {
                 $mainitem['item_image'] = \Xoops::getInstance()
                     ->service('thumbnail')
                     ->getImgUrl($mainImage['image_vpath'], 100, 0)

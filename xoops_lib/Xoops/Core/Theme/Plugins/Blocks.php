@@ -48,13 +48,13 @@ class Blocks extends PluginAbstract
         $this->retrieveBlocks();
         if ($this->theme) {
             $this->theme->template->assignByRef('xoBlocks', $this->blocks);
-            $this->theme->template->assign('xoops_showlblock', ! empty($this->blocks['canvas_left']));
-            $this->theme->template->assign('xoops_showrblock', ! empty($this->blocks['canvas_right']));
+            $this->theme->template->assign('xoops_showlblock', !empty($this->blocks['canvas_left']));
+            $this->theme->template->assign('xoops_showrblock', !empty($this->blocks['canvas_right']));
             $this->theme->template->assign(
                 'xoops_showcblock',
-                ! empty($this->blocks['page_topcenter'])
-                || ! empty($this->blocks['page_topleft'])
-                || ! empty($this->blocks['page_topright'])
+                !empty($this->blocks['page_topcenter'])
+                || !empty($this->blocks['page_topleft'])
+                || !empty($this->blocks['page_topright'])
             );
         }
         return true;
@@ -130,7 +130,7 @@ class Blocks extends PluginAbstract
             }
         }
         if ($this->theme) {
-            list ($template->caching, $template->cache_lifetime) = $backup;
+            list($template->caching, $template->cache_lifetime) = $backup;
         }
     }
 
@@ -188,7 +188,7 @@ class Blocks extends PluginAbstract
             [$xobject, $template->isCached($tplName, $cacheid)]
         );
 
-        if (! $bcachetime || ! $template->isCached($tplName, $cacheid)) {
+        if (!$bcachetime || !$template->isCached($tplName, $cacheid)) {
 
             //Get theme metas
             $old = [];

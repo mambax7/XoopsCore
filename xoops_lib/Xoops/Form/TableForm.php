@@ -48,8 +48,8 @@ class TableForm extends Form
         $hidden = '';
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
-            if (! $ele->isHidden()) {
-                if (! $ele instanceof Raw) {
+            if (!$ele->isHidden()) {
+                if (!$ele instanceof Raw) {
                     $ret .= '<tr valign="top" align="left"><td>' . $ele->getCaption();
                     if ($ele_desc = $ele->getDescription()) {
                         $ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';

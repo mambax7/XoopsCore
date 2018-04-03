@@ -25,7 +25,7 @@ use Xoops\Html\Menu\Link;
 include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -82,7 +82,7 @@ EOT;
 
 $xoops->header('module:profile/profile_changepass.tpl');
 
-if (! isset($_POST['submit'])) {
+if (!isset($_POST['submit'])) {
     $xoops->theme()->addScript(null, ['type' => 'application/x-javascript'], $zxcvbn);
     //show change password form
     $form = new Xoops\Form\ThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
@@ -97,7 +97,6 @@ if (! isset($_POST['submit'])) {
     $xoops->registry()->get('profile_breadcrumbs')->addItem(
         new Link(['caption' => _PROFILE_MA_CHANGEPASSWORD])
     );
-
 } else {
     $xoops->getConfigs();
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -105,7 +104,7 @@ if (! isset($_POST['submit'])) {
     $password = trim($_POST['newpass']);
     $vpass = trim($_POST['vpass']);
     $errors = [];
-    if (! password_verify($oldpass, $xoops->user->getVar('pass', 'n'))) {
+    if (!password_verify($oldpass, $xoops->user->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
     if (mb_strlen($password) < $xoops->getConfig('minpass')) {

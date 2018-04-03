@@ -39,7 +39,7 @@ class ItemList extends Item
     {
         parent::__construct($attributes);
         $this->set('type', Item::TYPE_LIST);
-        if (! $this->has('items')) {
+        if (!$this->has('items')) {
             $this->set('items', []);
         }
     }

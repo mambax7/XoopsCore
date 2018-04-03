@@ -23,11 +23,11 @@ namespace Xoops\Form;
  */
 class DateTimeSelect extends ElementTray
 {
-    const SHOW_BOTH = 1;
+    public const SHOW_BOTH = 1;
 
-    const SHOW_DATE = 0;
+    public const SHOW_DATE = 0;
 
-    const SHOW_TIME = 2;
+    public const SHOW_TIME = 2;
 
     /**
      * __construct

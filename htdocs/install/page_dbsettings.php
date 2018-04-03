@@ -49,7 +49,7 @@ $connection = null;
 $connection = getDbConnection($error);
 // if we specified the dbname and failed, try again without it
 // we will try and create it later
-if (! $connection && ! empty($settings['DB_NAME'])) {
+if (!$connection && !empty($settings['DB_NAME'])) {
     $hold_name = $settings['DB_NAME'];
     unset($settings['DB_NAME']);
     $_SESSION['settings'] = $settings;
@@ -60,7 +60,7 @@ if (! $connection && ! empty($settings['DB_NAME'])) {
     $_SESSION['settings'] = $settings;
     if ($connection) {
         // we have a database name and did not connect
-        if (! empty($settings['DB_NAME']) && ! $tried_create) {
+        if (!empty($settings['DB_NAME']) && !$tried_create) {
             $platform = $connection->getDatabasePlatform();
             $canCreate = $platform->supportsCreateDropDatabase();
             if ($canCreate) {
@@ -97,7 +97,7 @@ if (! $connection && ! empty($settings['DB_NAME'])) {
 // leave if we are already connected to a database from earlier input
 if ($connection && empty($error)) {
     $currentDb = $connection->getDatabase();
-    if (! empty($currentDb)) {
+    if (!empty($currentDb)) {
         $settings['DB_PARAMETERS'] = serialize(getDbConnectionParams());
         $_SESSION['settings'] = $settings;
         $wizard->redirectToPage('+1');
@@ -122,7 +122,7 @@ if ($connection) {
             } else {
                 $dbase = $dbrow;
             }
-            if (! in_array($dbase, $dbIgnored, true)) {
+            if (!in_array($dbase, $dbIgnored, true)) {
                 $availableDatabases[] = $dbase;
             }
         }
@@ -140,7 +140,7 @@ $_SESSION['settings'] = $settings;
 ob_start();
 ?>
 <?php
-if (! empty($error)) {
+if (!empty($error)) {
     echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
 }
 ?>
@@ -154,7 +154,7 @@ document.getElementById("DB_NAME").value=dbSelected;
 </script>
 <fieldset>
 <?php
-if (! empty($availableDatabases)) {
+if (!empty($availableDatabases)) {
     echo '<legend>' . LEGEND_DATABASE . '</legend>';
     echo '<div class="xoform-help">' . DB_AVAILABLE_HELP . '</div>';
     echo '<label class="xolabel" for="DB_DATABASE_LABEL" class="center">';

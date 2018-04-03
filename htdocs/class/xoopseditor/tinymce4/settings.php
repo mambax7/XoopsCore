@@ -64,11 +64,11 @@ return [
 
     // load plugins
     'plugins' => 'advlist,autolink,lists,link,image,preview,hr,anchor,' .
-    			 'searchreplace,wordcount,visualblocks,visualchars,code,fullscreen,' .
-    			 'insertdatetime,media,nonbreaking,save,table,contextmenu,directionality,' .
-    			 'emoticons,template,paste,textcolor,' .
-    			 'xoops_quote,xoops_code,xoops_tagextgal,' .
-    			 'filemanager,responsivefilemanager,youtube,qrcode,alignbtn,chartextbtn',
+                 'searchreplace,wordcount,visualblocks,visualchars,code,fullscreen,' .
+                 'insertdatetime,media,nonbreaking,save,table,contextmenu,directionality,' .
+                 'emoticons,template,paste,textcolor,' .
+                 'xoops_quote,xoops_code,xoops_tagextgal,' .
+                 'filemanager,responsivefilemanager,youtube,qrcode,alignbtn,chartextbtn',
 
 
     //	"exclude_plugins" => "autosave,bbcode,example,fullpage",

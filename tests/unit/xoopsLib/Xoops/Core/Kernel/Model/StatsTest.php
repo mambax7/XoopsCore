@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../../init_new.php');
 
 use Xoops\Core\Kernel\Handlers\XoopsGroupHandler;
@@ -49,7 +50,7 @@ class StatsTest extends \PHPUnit\Framework\TestCase
         $values = $instance->getCounts();
         $this->assertTrue(is_array($values));
         $this->assertTrue(count($values) >= 0);
-        if (! empty($values[1])) {
+        if (!empty($values[1])) {
             $this->assertTrue(is_string($values[1]));
             $this->assertTrue(intval($values[1]) >= 0);
         }

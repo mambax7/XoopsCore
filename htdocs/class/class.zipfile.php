@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 
 /**
@@ -79,7 +80,7 @@ class zipfile
         return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) | ($timearray['mday'] << 16) | ($timearray['hours'] << 11) | ($timearray['minutes'] << 5) | ($timearray['seconds'] >> 1);
     }
 
- // end of the 'unix2DosTime()' method
+    // end of the 'unix2DosTime()' method
 
     /**
      * Adds "file" to archive
@@ -148,7 +149,7 @@ class zipfile
         $this->ctrl_dir[] = $cdrec;
     }
 
- // end of the 'addFile()' method
+    // end of the 'addFile()' method
 
     /**
      * Dumps out file
@@ -171,5 +172,5 @@ class zipfile
                "\x00\x00"; // .zip file comment length
     }
 
- // end of the 'file()' method
+    // end of the 'file()' method
 } // end of the 'zipfile' class

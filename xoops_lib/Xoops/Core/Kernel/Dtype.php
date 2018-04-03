@@ -30,15 +30,15 @@ class Dtype
     /**
      * format constants used for getVar()
      */
-    const FORMAT_SHOW = 'show';        // shorthand 's'
+    public const FORMAT_SHOW = 'show';        // shorthand 's'
 
-    const FORMAT_EDIT = 'edit';        // shorthand 'e'
+    public const FORMAT_EDIT = 'edit';        // shorthand 'e'
 
-    const FORMAT_PREVIEW = 'preview';     // shorthand 'p'
+    public const FORMAT_PREVIEW = 'preview';     // shorthand 'p'
 
-    const FORMAT_FORM_PREVIEW = 'formpreview'; // shorthand 'f'
+    public const FORMAT_FORM_PREVIEW = 'formpreview'; // shorthand 'f'
 
-    const FORMAT_NONE = 'none';        // shorthand 'n'
+    public const FORMAT_NONE = 'none';        // shorthand 'n'
 
     /**
      * Xoops object datatype
@@ -48,41 +48,41 @@ class Dtype
      * never notice. Some modules may use the numbers, such a profile custom fields. Those
      * will need to be identified and updated.
      */
-    const TYPE_TEXT_BOX = 1;
+    public const TYPE_TEXT_BOX = 1;
 
-    const TYPE_TEXT_AREA = 2;
+    public const TYPE_TEXT_AREA = 2;
 
-    const TYPE_INTEGER = 3;
+    public const TYPE_INTEGER = 3;
 
-    const TYPE_URL = 4;
+    public const TYPE_URL = 4;
 
-    const TYPE_EMAIL = 5;
+    public const TYPE_EMAIL = 5;
 
-    const TYPE_ARRAY = 6;
+    public const TYPE_ARRAY = 6;
 
-    const TYPE_OTHER = 7;
+    public const TYPE_OTHER = 7;
 
-    const TYPE_SOURCE = 8;
+    public const TYPE_SOURCE = 8;
 
-    const TYPE_SHORT_TIME = 9;
+    public const TYPE_SHORT_TIME = 9;
 
-    const TYPE_MEDIUM_TIME = 10;
+    public const TYPE_MEDIUM_TIME = 10;
 
-    const TYPE_LONG_TIME = 11;
+    public const TYPE_LONG_TIME = 11;
 
-    const TYPE_FLOAT = 13;
+    public const TYPE_FLOAT = 13;
 
-    const TYPE_DECIMAL = 14;
+    public const TYPE_DECIMAL = 14;
 
-    const TYPE_ENUM = 15;
+    public const TYPE_ENUM = 15;
 
-    const TYPE_JSON = 30;
+    public const TYPE_JSON = 30;
 
-    const TYPE_DATETIME = 31;
+    public const TYPE_DATETIME = 31;
 
-    const TYPE_TIMEZONE = 32;
+    public const TYPE_TIMEZONE = 32;
 
-    const TYPE_MONEY = 33;
+    public const TYPE_MONEY = 33;
 
     /**
      * cleanVar
@@ -124,10 +124,10 @@ class Dtype
         static $dtypes;
 
         $dtype = null;
-        if (! isset($dtypes[$name])) {
+        if (!isset($dtypes[$name])) {
             $className = 'Xoops\Core\Kernel\Dtype\\' . $name;
             $dtype = new $className();
-            if (! $dtype instanceof DtypeAbstract) {
+            if (!$dtype instanceof DtypeAbstract) {
                 trigger_error("Dtype '{$name}' not found", E_USER_WARNING);
                 $name = 'other';
                 $dtype = new DtypeOther();

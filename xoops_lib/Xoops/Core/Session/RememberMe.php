@@ -359,7 +359,7 @@ class RememberMe
         if ($cookieData !== $notFound) {
             $temp = explode('-', $cookieData);
             if (count($temp) === 3) {
-                $temp[0] = (integer) $temp[0];
+                $temp[0] = (int) $temp[0];
                 return $temp;
             }
             $this->clearUserCookie(); // clean up garbage cookie

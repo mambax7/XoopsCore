@@ -22,7 +22,7 @@
 function b_system_login_show()
 {
     $xoops = Xoops::getInstance();
-    if (! $xoops->isUser()) {
+    if (!$xoops->isUser()) {
         $block = [];
         $block['lang_username'] = XoopsLocale::C_USERNAME;
         $block['unamevalue'] = '';

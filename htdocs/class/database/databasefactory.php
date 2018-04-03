@@ -9,9 +9,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-use XoopsBaseConfig;
 use Xoops;
 use Xoops\Core\Database\Factory;
+use XoopsBaseConfig;
 
 /**
  * XoopsDatabaseFactory class
@@ -48,9 +48,9 @@ class XoopsDatabaseFactory extends Factory
         static $legacy;
 
         $file = XoopsBaseConfig::get('root-path') . '/class/database/mysqldatabase.php';
-        if (! isset($legacy) && file_exists($file)) {
+        if (!isset($legacy) && file_exists($file)) {
             require_once $file;
-            if (! defined('XOOPS_DB_PROXY')) {
+            if (!defined('XOOPS_DB_PROXY')) {
                 $class = 'XoopsMysqlDatabaseSafe';
             } else {
                 $class = 'XoopsMysqlDatabaseProxy';

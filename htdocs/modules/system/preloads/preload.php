@@ -24,11 +24,11 @@ class SystemPreload extends PreloadItem
         $xoops = Xoops::getInstance();
         $url = $args[0];
         if (preg_match('/[\\0-\\31]|about:|script:/i', $url)) {
-            if (! preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
                 $url = \XoopsBaseConfig::get('url');
             }
         }
-        if (! headers_sent() && $xoops->getConfig('redirect_message_ajax')
+        if (!headers_sent() && $xoops->getConfig('redirect_message_ajax')
             && $xoops->getConfig('redirect_message_ajax')
         ) {
             $_SESSION['redirect_message'] = $args[2];
@@ -39,7 +39,7 @@ class SystemPreload extends PreloadItem
 
     public static function eventCoreHeaderCheckcache($args)
     {
-        if (! empty($_SESSION['redirect_message'])) {
+        if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->contentCacheLifetime = 0;
             unset($_SESSION['redirect_message']);
@@ -48,7 +48,7 @@ class SystemPreload extends PreloadItem
 
     public static function eventCoreHeaderAddmeta($args)
     {
-        if (! empty($_SESSION['redirect_message'])) {
+        if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->addBaseStylesheetAssets('xoops.css');
             $xoops->theme()->addBaseStylesheetAssets('@fontawesome');
@@ -66,7 +66,7 @@ class SystemPreload extends PreloadItem
 
     public static function eventSystemClassGuiHeader($args)
     {
-        if (! empty($_SESSION['redirect_message'])) {
+        if (!empty($_SESSION['redirect_message'])) {
             $xoops = Xoops::getInstance();
             $xoops->theme()->addBaseStylesheetAssets('xoops.css');
             $xoops->theme()->addBaseStylesheetAssets('@fontawesome');

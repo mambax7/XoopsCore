@@ -37,10 +37,10 @@ class xcaptcha extends XoopsCaptcha
         $this->xcaptcha_path_plugin = \XoopsBaseConfig::get('root-path') . '/modules/xcaptcha/plugins';
     }
 
-    static function getInstance()
+    public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }

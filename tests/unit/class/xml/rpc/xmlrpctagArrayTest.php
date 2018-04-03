@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 $xoops_root_path = \XoopsBaseConfig::get('root-path');

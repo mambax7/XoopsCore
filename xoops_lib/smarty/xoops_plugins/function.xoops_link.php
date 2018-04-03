@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -79,14 +80,14 @@ function smarty_function_xoops_link($params, &$smarty)
 
     // Get default module/page from current ones if necessary
     $module = '';
-    if (! isset($params['module'])) {
+    if (!isset($params['module'])) {
         if ($xoops->isModule()) {
             $module = $xoops->module->getVar('dirname');
         }
     } else {
         $module = $params['module'];
     }
-    if (! isset($params['page'])) {
+    if (!isset($params['page'])) {
         $cur = $_SERVER['PHP_SELF'];
         $page = substr($cur, strrpos($cur, '/') + 1);
     } else {

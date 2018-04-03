@@ -44,11 +44,13 @@ define('_AM_MAINTENANCE_CENTER_RESULT_XOOPS_CACHE', 'Cleaning the Xoops cache su
 define('_AM_MAINTENANCE_CENTER_RETURN', 'Return to maintenance center');
 define('_AM_MAINTENANCE_CENTER_TABLES', 'Tables maintenance');
 define('_AM_MAINTENANCE_CENTER_TABLES1', 'Tables');
-define('_AM_MAINTENANCE_CENTER_TABLES_DESC',
+define(
+    '_AM_MAINTENANCE_CENTER_TABLES_DESC',
 'ANALYZE TABLE analyzes and stores the key distribution for a table. During the analysis, the table is locked with a read lock.<br />
 CHECK TABLE checks a table or tables for errors.<br />
 OPTIMIZE TABLE reclaims the unused space and to defragment the data file.<br />
-REPAIR TABLE repairs a possibly corrupted table.');
+REPAIR TABLE repairs a possibly corrupted table.'
+);
 define('_AM_MAINTENANCE_CENTER_REPAIR', 'Repair');
 define('_AM_MAINTENANCE_CENTER_SESSION', 'Empty the sessions table');
 define('_AM_MAINTENANCE_CENTER_SIZE', 'Size');
@@ -78,7 +80,9 @@ define('_AM_MAINTENANCE_DUMP_TABLES_OR_MODULES', 'Select tables or modules');
 define('_AM_MAINTENANCE_DUMP_RECORDS', 'record(s)');
 
 // Tips
-define('_AM_MAINTENANCE_CENTER_TIPS',
+define(
+    '_AM_MAINTENANCE_CENTER_TIPS',
 '<ul>
 <li>You can do a simple maintenance of your XOOPS Installation: clear your cache and session table, and do maintenance of your tables</li>
-</ul>');
+</ul>'
+);

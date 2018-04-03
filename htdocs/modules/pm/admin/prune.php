@@ -55,7 +55,7 @@ switch ($op) {
         if (isset($_REQUEST['onlyread']) && $_REQUEST['onlyread'] === 1) {
             $criteria->add(new Criteria('read_msg', 1));
         }
-        if ((! isset($_REQUEST['includesave']) || $_REQUEST['includesave'] === 0)) {
+        if ((!isset($_REQUEST['includesave']) || $_REQUEST['includesave'] === 0)) {
             $savecriteria = new CriteriaCompo(new Criteria('to_save', 0));
             $savecriteria->add(new Criteria('from_save', 0));
             $criteria->add($savecriteria);
@@ -81,7 +81,7 @@ switch ($op) {
                 $pm->setVar('to_userid', $uid);
                 $pm->setVar('from_userid', $xoops->user->getVar('uid'));
                 $pm->setVar('msg_time', time());
-                if (! $pmHandler->insert($pm)) {
+                if (!$pmHandler->insert($pm)) {
                     $errors = true;
                     $errormsg[] = $pm->getHtmlErrors();
                 }

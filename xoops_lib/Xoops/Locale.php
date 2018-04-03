@@ -27,7 +27,7 @@ use Xoops\Locale\MessageFormatter;
  */
 class Locale
 {
-    const FALLBACK_LOCALE = 'en_US';
+    public const FALLBACK_LOCALE = 'en_US';
 
     protected static $currentLocale = null;
 
@@ -155,7 +155,7 @@ class Locale
         }
         $xoops = \Xoops::getInstance();
         $fullPath = $xoops->path("{$path}/language/{$language}/{$name}.php");
-        if (! $ret = \XoopsLoad::loadFile($fullPath)) {
+        if (!$ret = \XoopsLoad::loadFile($fullPath)) {
             $fullPath2 = $xoops->path("{$path}/language/english/{$name}.php");
             $ret = \XoopsLoad::loadFile($fullPath2);
         }
@@ -305,7 +305,7 @@ class Locale
 
             // 2nd highest priority: GET parameter 'lang'
             $requestLocale = self::normalizeLocale(Request::getString('lang', ''));
-            if (! empty($requestLocale)) {
+            if (!empty($requestLocale)) {
                 $userLocales[] = $requestLocale;
             }
 
@@ -322,7 +322,7 @@ class Locale
             }
 
             $configLocale = \Xoops::getInstance()->getConfig('locale');
-            if (! empty($configLocale)) {
+            if (!empty($configLocale)) {
                 $userLocales[] = $configLocale;
             }
 
@@ -408,7 +408,7 @@ class Locale
      */
     protected static function getThemeClassFromDirname($dirname = '')
     {
-        if (! $dirname) {
+        if (!$dirname) {
             $dirname = \Xoops::getInstance()->theme()->folderName;
         }
         return ucfirst($dirname) . 'ThemeLocale';
@@ -421,7 +421,8 @@ class Locale
      * @param string $key
      * @return string
      */
-    private static function getMessage($class, $key) {
+    private static function getMessage($class, $key)
+    {
         if (defined("${class}::${key}")) {
             return constant("${class}::${key}");
         } elseif (defined($key)) {
@@ -455,8 +456,7 @@ class Locale
                 \Xoops::getInstance()->logger()->warning("Formatting message for language '${language}' failed with error: ${errorMessage}. The message being formatted was: ${message}.", [__METHOD__]);
                 return $message;
             }
-                return $result;
-
+            return $result;
         }
 
         $p = [];

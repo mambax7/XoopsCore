@@ -13,31 +13,31 @@ define('_AM_TH_AGENT', 'Klient');
 define('_AM_TH_TYPE', 'Angriffstyp');
 define('_AM_TH_DESCRIPTION', 'Beschreibung');
 
-define('_AM_TH_BADIPS', '"Schlechte" IP-Adresse(n)<br /><br /><span style="font-weight:normal;">Schreiben Sie jede IP in einer Zeile<br />Leer bedeutet, dass alle IPs sind erlaubt</span>' );
+define('_AM_TH_BADIPS', '"Schlechte" IP-Adresse(n)<br /><br /><span style="font-weight:normal;">Schreiben Sie jede IP in einer Zeile<br />Leer bedeutet, dass alle IPs sind erlaubt</span>');
 
-define('_AM_TH_GROUP1IPS', 'Erlaubte IPs fur Gruppe=1<br /><br /><span style="font-weight:normal;">Jede IP in eine Zeile.<br />192.168. bedeutet 192.168.*<br />Leer bedeutet alle IPs sind erlaubt</span>' );
+define('_AM_TH_GROUP1IPS', 'Erlaubte IPs fur Gruppe=1<br /><br /><span style="font-weight:normal;">Jede IP in eine Zeile.<br />192.168. bedeutet 192.168.*<br />Leer bedeutet alle IPs sind erlaubt</span>');
 
-define('_AM_LABEL_COMPACTLOG', 'Komprimierter Bericht : ' );
-define('_AM_BUTTON_COMPACTLOG', 'komprimieren' );
-define('_AM_JS_COMPACTLOGCONFIRM', 'Doppelt aufgezeichnete IPs und Angriffstypen werden zusammengefasst' );
-define('_AM_LABEL_REMOVEALL', 'Aufzeichnungen löschen: ' );
-define('_AM_BUTTON_REMOVEALL', 'Löschen!' );
-define('_AM_JS_REMOVEALLCONFIRM', 'Sicher das alle Aufzeichungen gelöscht werden sollen?' );
-define('_AM_LABEL_REMOVE', 'Lösche alle gewählten Aufzeichnungen : ' );
-define('_AM_BUTTON_REMOVE', 'Löschen' );
-define('_AM_JS_REMOVECONFIRM', 'Sollen alle ausgewählten Eintrage gelöscht werden?' );
-define('_AM_MSG_IPFILESUPDATED', 'Die Datein fur die IP Listen wurden aktualisiert' );
-define('_AM_MSG_BADIPSCANTOPEN', 'Die IP-Ausschlusdatei kann nicht geöffnet werden' );
-define('_AM_MSG_GROUP1IPSCANTOPEN', 'Die IP-Einschlussdatei fur Administrationsgruppe can nicht geöffnet werden' );
-define('_AM_MSG_REMOVED', 'Aufzeichnungen wurden komprimiert / gelöscht' );
+define('_AM_LABEL_COMPACTLOG', 'Komprimierter Bericht : ');
+define('_AM_BUTTON_COMPACTLOG', 'komprimieren');
+define('_AM_JS_COMPACTLOGCONFIRM', 'Doppelt aufgezeichnete IPs und Angriffstypen werden zusammengefasst');
+define('_AM_LABEL_REMOVEALL', 'Aufzeichnungen löschen: ');
+define('_AM_BUTTON_REMOVEALL', 'Löschen!');
+define('_AM_JS_REMOVEALLCONFIRM', 'Sicher das alle Aufzeichungen gelöscht werden sollen?');
+define('_AM_LABEL_REMOVE', 'Lösche alle gewählten Aufzeichnungen : ');
+define('_AM_BUTTON_REMOVE', 'Löschen');
+define('_AM_JS_REMOVECONFIRM', 'Sollen alle ausgewählten Eintrage gelöscht werden?');
+define('_AM_MSG_IPFILESUPDATED', 'Die Datein fur die IP Listen wurden aktualisiert');
+define('_AM_MSG_BADIPSCANTOPEN', 'Die IP-Ausschlusdatei kann nicht geöffnet werden');
+define('_AM_MSG_GROUP1IPSCANTOPEN', 'Die IP-Einschlussdatei fur Administrationsgruppe can nicht geöffnet werden');
+define('_AM_MSG_REMOVED', 'Aufzeichnungen wurden komprimiert / gelöscht');
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "Der Ordner: %s braucht Schreibberechtigung (777)" ) ;
 
 
 // prefix_manager.php
-define('_AM_H3_PREFIXMAN', 'Präfix Manager' );
-define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!' );
-define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?' );
-define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix andern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');" );
+define('_AM_H3_PREFIXMAN', 'Präfix Manager');
+define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!');
+define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?');
+define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix andern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
 
 
 // advisory.php

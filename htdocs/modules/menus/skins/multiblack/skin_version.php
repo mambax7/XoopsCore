@@ -22,4 +22,3 @@ $skinversion['template'] = 'templates/template.tpl';
 $skinversion['css'] = ['pro_dropdown_3.css'];
 $skinversion['js'] = ['stuHover.js'];
 $skinversion['prefix'] = 'sf';
-

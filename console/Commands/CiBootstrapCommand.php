@@ -2,12 +2,12 @@
 
 namespace XoopsConsole\Commands;
 
-use Xoops\Core\Cache\CacheManager;
-use XoopsBaseConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xmf\Yaml;
+use Xoops\Core\Cache\CacheManager;
+use XoopsBaseConfig;
 
 class CiBootstrapCommand extends Command
 {
@@ -50,7 +50,6 @@ if (!class_exists('XoopsBaseConfig', false)) {
 }
 EOT;
         $lines = str_replace('<{$xoopsbaseconfigs}>', $configFile, $lines);
-
         return file_put_contents($mainfile, $lines);
     }
 
@@ -118,11 +117,10 @@ EOT;
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $XContainer = $this->getApplication()->XContainer;
-
         $configFile = $XContainer->get('configfile');
         $mainfile = $XContainer->get('mainfile');
         $baseDir = dirname($mainfile, 2);
-        if (! file_exists($configFile)) {
+        if (!file_exists($configFile)) {
             if ($this->createConfigFile($configFile, $baseDir) === false) {
                 $output->writeln(sprintf('<error>Could not write file %s!</error>', $configFile));
                 return;
@@ -132,7 +130,7 @@ EOT;
             $output->writeln(sprintf('<info>Using existing config file %s.</info>', $configFile));
         }
 
-        if (! file_exists($mainfile)) {
+        if (!file_exists($mainfile)) {
             if ($this->createMainfile($configFile, $mainfile) === false) {
                 $output->writeln(sprintf('<error>Could not write %s!</error>', $mainfile));
                 return;
@@ -142,7 +140,7 @@ EOT;
             $output->writeln(sprintf('<info>Using existing mainfile %s</info>', $mainfile));
         }
 
-        if (! class_exists('\XoopsBaseConfig', false)) {
+        if (!class_exists('\XoopsBaseConfig', false)) {
             include $baseDir . '/htdocs/class/XoopsBaseConfig.php';
             XoopsBaseConfig::getInstance($configFile);
         }

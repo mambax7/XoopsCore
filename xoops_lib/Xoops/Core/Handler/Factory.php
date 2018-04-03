@@ -196,7 +196,7 @@ class Factory
             $scheme = new $schemeName();
         }
 
-        if (! ($scheme instanceof SchemeInterface)) {
+        if (!($scheme instanceof SchemeInterface)) {
             throw new InvalidHandlerSpecException(sprintf('Unknown scheme %s', $schemeName));
         }
         return $scheme;

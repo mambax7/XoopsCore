@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($settings['DB_DRIVER'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($settings['DB_DRIVER'])) {
     $_SESSION['settings'] = $settings;
     $wizard->redirectToPage('+1');
     exit();
@@ -64,7 +64,7 @@ if (@empty($settings['DB_DRIVER'])) {
 ob_start();
 ?>
 <?php
-if (! empty($error)) {
+if (!empty($error)) {
     echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
 }
 ?>

@@ -71,4 +71,3 @@ interface CommentsPluginInterface
      */
     public function itemInfo($item_id);
 }
-

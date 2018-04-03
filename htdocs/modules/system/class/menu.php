@@ -135,10 +135,10 @@ class SystemMenuHandler
         $xoops->tpl()->assign('xo_module_menu_top', $this->_menutop);
         $this->_menutabs[$currentoption]['current'] = 1;
         $xoops->tpl()->assign('xo_module_menu_tab', $this->_menutabs);
-         //$xoops->tpl()->assign('xo_admin_help', $this->_help);
-         //if ($xoops->tpl()_name == '') {
-         //    $xoops->tpl()->display('admin:system/admin_tabs.tpl');
-         //}
+        //$xoops->tpl()->assign('xo_admin_help', $this->_help);
+        //if ($xoops->tpl()_name == '') {
+        //    $xoops->tpl()->display('admin:system/admin_tabs.tpl');
+        //}
         return;
 
         global $modversion;

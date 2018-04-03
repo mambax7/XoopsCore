@@ -79,14 +79,14 @@ class CriteriaCompo extends CriteriaElement
     {
         $ret = '';
         foreach ($this->criteriaElements as $i => $element) {
-            if (! is_object($element)) {
+            if (!is_object($element)) {
                 continue;
             }
             /* @var $element CriteriaElement */
             if ($i === 0) {
                 $ret = $element->render();
             } else {
-                if (! $render = $element->render()) {
+                if (!$render = $element->render()) {
                     continue;
                 }
                 $ret .= ' ' . $this->conditions[$i] . ' (' . $render . ')';
@@ -159,7 +159,7 @@ class CriteriaCompo extends CriteriaElement
             }
         }
 
-        if (! empty($expr)) {
+        if (!empty($expr)) {
             $expr = '(' . $expr . ')'; // group all conditions in this compo
 
             switch (strtolower($whereMode)) {
@@ -180,11 +180,11 @@ class CriteriaCompo extends CriteriaElement
                 ->setMaxResults($this->limit);
         }
 
-        if (! empty($this->groupBy)) {
+        if (!empty($this->groupBy)) {
             $qb->groupBy($this->groupBy);
         }
 
-        if (! empty($this->sort)) {
+        if (!empty($this->sort)) {
             $qb->orderBy($this->sort, $this->order);
         }
         return $qb;
@@ -216,7 +216,7 @@ class CriteriaCompo extends CriteriaElement
             }
         }
 
-        if (! empty($expr)) {
+        if (!empty($expr)) {
             $expr = '(' . $expr . ')'; // group all conditions in this compo
         }
         return $expr;

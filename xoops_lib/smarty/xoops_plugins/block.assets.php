@@ -52,7 +52,7 @@ function smarty_block_assets($params, $content, $template, &$repeat)
 
         $output = strtolower($params['output']);
 
-        $debug = isset($params['debug']) ? (boolean) $params['debug'] : false;
+        $debug = isset($params['debug']) ? (bool) $params['debug'] : false;
         if ($debug) {
             $xoops->assets()->setDebug();
         }

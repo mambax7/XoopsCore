@@ -298,7 +298,7 @@ class xoopsmailer
             return false;
         } elseif ($this->template !== '') {
             $path = $this->getTemplatePath();
-            if (! ($fd = @fopen($path, 'r'))) {
+            if (!($fd = @fopen($path, 'r'))) {
                 if ($debug) {
                     $this->errors[] = XoopsLocale::E_TEMPLATE_FILE_NOT_OPENED;
                 }
@@ -308,8 +308,8 @@ class xoopsmailer
         }
         $headers = '';
         // for sending mail only
-        if ($this->isMail || ! empty($this->toEmails)) {
-            if (! empty($this->priority)) {
+        if ($this->isMail || !empty($this->toEmails)) {
+            if (!empty($this->priority)) {
                 $this->headers[] = 'X-Priority: ' . $this->priority;
             }
             // $this->headers[] = "X-Mailer: PHP/".phpversion();
@@ -338,7 +338,7 @@ class xoopsmailer
         $this->body = str_replace("\n", $this->LE, $this->body);
         // send mail to specified mail addresses, if any
         foreach ($this->toEmails as $mailaddr) {
-            if (! $this->sendMail($mailaddr, $this->subject, $this->body, $headers)) {
+            if (!$this->sendMail($mailaddr, $this->subject, $this->body, $headers)) {
                 if ($debug) {
                     $this->errors[] = sprintf(XoopsLocale::EF_EMAIL_NOT_SENT_TO, $mailaddr);
                 }
@@ -362,7 +362,7 @@ class xoopsmailer
             $text = str_replace('{X_UACTLINK}', \XoopsBaseConfig::get('url') . '/register.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey'), $text);
             // send mail
             if ($this->isMail) {
-                if (! $this->sendMail($user->getVar('email'), $subject, $text, $headers)) {
+                if (!$this->sendMail($user->getVar('email'), $subject, $text, $headers)) {
                     if ($debug) {
                         $this->errors[] = sprintf(XoopsLocale::EF_EMAIL_NOT_SENT_TO, $user->getVar('uname'));
                     }
@@ -374,7 +374,7 @@ class xoopsmailer
             }
             // send private message
             if ($this->isPM) {
-                if (! $this->sendPM($user->getVar('uid'), $subject, $text)) {
+                if (!$this->sendPM($user->getVar('uid'), $subject, $text)) {
                     if ($debug) {
                         $this->errors[] = sprintf(XoopsLocale::EF_PRIVATE_MESSAGE_NOT_SENT_TO, $user->getVar('uname'));
                     }
@@ -398,34 +398,32 @@ class xoopsmailer
      */
     public function getErrors($ashtml = true)
     {
-        if (! $ashtml) {
+        if (!$ashtml) {
             return $this->errors;
         }
-            $ret = '';
-            if (! empty($this->errors)) {
-                $ret = '<h4>' . XoopsLocale::ERRORS . '</h4>';
-                foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
-                }
+        $ret = '';
+        if (!empty($this->errors)) {
+            $ret = '<h4>' . XoopsLocale::ERRORS . '</h4>';
+            foreach ($this->errors as $error) {
+                $ret .= $error . '<br />';
             }
-            return $ret;
-
+        }
+        return $ret;
     }
 
     // public
-    function getSuccess($ashtml = true)
+    public function getSuccess($ashtml = true)
     {
-        if (! $ashtml) {
+        if (!$ashtml) {
             return $this->success;
         }
-            $ret = '';
-            if (! empty($this->success)) {
-                foreach ($this->success as $suc) {
-                    $ret .= $suc . '<br />';
-                }
+        $ret = '';
+        if (!empty($this->success)) {
+            foreach ($this->success as $suc) {
+                $ret .= $suc . '<br />';
             }
-            return $ret;
-
+        }
+        return $ret;
     }
 
     /**
@@ -439,7 +437,7 @@ class xoopsmailer
                 $this->assign($k, $v);
             }
         } else {
-            if (! empty($tag) && isset($value)) {
+            if (!empty($tag) && isset($value)) {
                 $tag = strtoupper(trim($tag));
                 // RMV-NOTIFY
                 // TEMPORARY FIXME: until the X_tags are all in here
@@ -460,7 +458,7 @@ class xoopsmailer
 
     public function setToEmails($email)
     {
-        if (! is_array($email)) {
+        if (!is_array($email)) {
             $xoops = Xoops::getInstance();
             if ($xoops->checkEmail($email)) {
                 array_push($this->toEmails, $email);
@@ -489,7 +487,6 @@ class xoopsmailer
             $this->setToUsers(Xoops::getInstance()
                 ->getHandlerMember()
                 ->getUsersByGroup($groups->getVar('groupid'), true));
-
         } elseif (is_array($groups)) {
             foreach ($groups as $g) {
                 $this->setToGroups($g);
@@ -531,7 +528,7 @@ class xoopsmailer
     private function getTemplatePath()
     {
         $xoops = Xoops::getInstance();
-        if (! $path = $this->templatedir) {
+        if (!$path = $this->templatedir) {
             $path = \XoopsBaseConfig::get('root-path') . '/locale/';
         } elseif (strpos($path, '/') === false) {
             $path = \XoopsBaseConfig::get('root-path') . '/modules/' . $path . '/locale/';
@@ -545,8 +542,7 @@ class xoopsmailer
         } elseif (XoopsLoad::fileExists($path . $this->template)) {
             return $path . $this->template;
         }
-            return false;
-
+        return false;
     }
 
     /**
@@ -562,12 +558,12 @@ class xoopsmailer
         $pm = $pm_handler->create();
         $pm->setVar('subject', $subject);
         // RMV-NOTIFY
-        $pm->setVar('from_userid', ! empty($this->fromUser) ? $this->fromUser->getVar('uid') : (! $xoops->isUser() ? 1
+        $pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : (!$xoops->isUser() ? 1
                 : $xoops->user->getVar('uid')));
         $pm->setVar('msg_text', $body);
         $pm->setVar('to_userid', $uid);
         $pm->setVar('msg_time', time());
-        if (! $pm_handler->insert($pm)) {
+        if (!$pm_handler->insert($pm)) {
             return false;
         }
         return true;
@@ -594,10 +590,10 @@ class xoopsmailer
         $this->multimailer->Body = $body;
         $this->multimailer->CharSet = $this->charSet;
         $this->multimailer->Encoding = $this->encoding;
-        if (! empty($this->fromName)) {
+        if (!empty($this->fromName)) {
             $this->multimailer->FromName = $this->encodeFromName($this->fromName);
         }
-        if (! empty($this->fromEmail)) {
+        if (!empty($this->fromEmail)) {
             $this->multimailer->Sender = $this->multimailer->From = $this->fromEmail;
         }
 
@@ -605,7 +601,7 @@ class xoopsmailer
         foreach ($this->headers as $header) {
             $this->multimailer->AddCustomHeader($header);
         }
-        if (! $this->multimailer->Send()) {
+        if (!$this->multimailer->Send()) {
             $this->errors[] = $this->multimailer->ErrorInfo;
             return false;
         }

@@ -101,7 +101,7 @@ class legacylogger implements LoggerInterface
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -290,7 +290,7 @@ class legacylogger implements LoggerInterface
      */
     public function enableRendering()
     {
-        if (! $this->renderingEnabled) {
+        if (!$this->renderingEnabled) {
             ob_start([&$this, 'render']);
             $this->renderingEnabled = true;
         }
@@ -305,7 +305,7 @@ class legacylogger implements LoggerInterface
      */
     public function render($output)
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return $output;
         }
 
@@ -317,8 +317,7 @@ class legacylogger implements LoggerInterface
         if ($pos !== false) {
             return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
         }
-            return $output . $log;
-
+        return $output . $log;
     }
 
     /**
@@ -331,7 +330,7 @@ class legacylogger implements LoggerInterface
     public function dump($mode = '')
     {
         $ret = '';
-// -------------------------------------------------------------
+        // -------------------------------------------------------------
         $xoops = Xoops::getInstance();
         /* @var $this LoggerLegacy */
         $ret = '';
@@ -537,7 +536,7 @@ class legacylogger implements LoggerInterface
 
 EOT;
         }
-// -------------------------------------------------------------
+        // -------------------------------------------------------------
         return $ret;
     }
 
@@ -551,11 +550,11 @@ EOT;
      */
     public function dumpTime($name = 'XOOPS', $unset = false)
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return null;
         }
 
-        if (! isset($this->logstart[$name])) {
+        if (!isset($this->logstart[$name])) {
             return 0;
         }
         $stop = isset($this->logend[$name]) ? $this->logend[$name] : microtime(true);
@@ -693,7 +692,7 @@ EOT;
      */
     public function log($level, $message, array $context = [])
     {
-        if (! $this->activated) {
+        if (!$this->activated) {
             return;
         }
 
@@ -707,7 +706,7 @@ EOT;
     {
         static $addedResource = false;
 
-        if ($this->activated && ! $addedResource) {
+        if ($this->activated && !$addedResource) {
             if (isset($GLOBALS['xoTheme'])) {
                 /*
                 $xoops = Xoops::getInstance();

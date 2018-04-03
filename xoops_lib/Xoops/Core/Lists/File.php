@@ -37,7 +37,7 @@ class File extends ListAbstract
         $path = rtrim($path, '/');
         if (is_dir($path) && $handle = opendir($path)) {
             while (($file = readdir($handle)) !== false) {
-                if (! preg_match('/^[\.]{1,2}$/', $file) && is_file($path . '/' . $file)) {
+                if (!preg_match('/^[\.]{1,2}$/', $file) && is_file($path . '/' . $file)) {
                     $file = $prefix . $file;
                     $fileList[$file] = $file;
                 }

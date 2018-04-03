@@ -64,7 +64,7 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
         }
         // Relay to Email Service
         $emailResponse = \Xoops::getInstance()->service('email')->sendEmail($email);
-        if (! $emailResponse->isSuccess()) {
+        if (!$emailResponse->isSuccess()) {
             $response->setSuccess(false);
             $response->addErrorMessage($emailResponse->getErrorMessage());
         }

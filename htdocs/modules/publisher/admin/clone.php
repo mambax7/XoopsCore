@@ -26,8 +26,7 @@ PublisherUtils::cpHeader();
 PublisherUtils::openCollapsableBar('clone', 'cloneicon', _AM_PUBLISHER_CLONE, _AM_PUBLISHER_CLONE_DSC);
 
 if (@$_POST['op'] === 'submit') {
-
-    if (! $xoops->security()->check()) {
+    if (!$xoops->security()->check()) {
         $xoops->redirect('clone.php', 3, implode('<br />', $xoops->security()->getErrors()));
     }
 
@@ -58,14 +57,13 @@ if (@$_POST['op'] === 'submit') {
     $msg = '';
     if (is_dir(\XoopsBaseConfig::get('root-path') . '/modules/' . strtolower($clone))) {
         $msg .= sprintf(_AM_PUBLISHER_CLONE_CONGRAT, "<a href='" . \XoopsBaseConfig::get('url') . "/modules/system/admin.php?fct=modulesadmin'>" . ucfirst(strtolower($clone)) . '</a>') . "<br />\n";
-        if (! $logocreated) {
+        if (!$logocreated) {
             $msg .= _AM_PUBLISHER_CLONE_IMAGEFAIL;
         }
     } else {
         $msg .= _AM_PUBLISHER_CLONE_FAIL;
     }
     echo $msg;
-
 } else {
     $form = new Xoops\Form\ThemeForm(sprintf(_AM_PUBLISHER_CLONE_TITLE, $publisher->getModule()->getVar('name', 'E')), 'clone', 'clone.php', 'post', true);
     $clone = new Xoops\Form\Text(_AM_PUBLISHER_CLONE_NAME, 'clone', 20, 20, '');
@@ -81,10 +79,10 @@ PublisherUtils::closeCollapsableBar('clone', 'cloneicon');
 $xoops->footer();
 
 // work around for PHP < 5.0.x
-if (! function_exists('file_put_contents')) {
+if (!function_exists('file_put_contents')) {
     function file_put_contents($filename, $data, $file_append = false)
     {
-        if ($fp = fopen($filename, (! $file_append ? 'w+' : 'a+'))) {
+        if ($fp = fopen($filename, (!$file_append ? 'w+' : 'a+'))) {
             fputs($fp, $data);
             fclose($fp);
         }
@@ -113,7 +111,6 @@ function publisher_cloneFileFolder($path)
             closedir($handle);
         }
     } else {
-
         if (preg_match('/(.jpg|.gif|.png|.zip)$/i', $path)) {
             // image
             copy($path, $newPath);
@@ -128,17 +125,17 @@ function publisher_cloneFileFolder($path)
 
 function publisher_createLogo($dirname)
 {
-    if (! extension_loaded('gd')) {
+    if (!extension_loaded('gd')) {
         return false;
     }
-        $required_functions = ['imagecreatetruecolor', 'imagecolorallocate', 'imagefilledrectangle', 'imagejpeg', 'imagedestroy', 'imageftbbox'];
-        foreach ($required_functions as $func) {
-            if (! function_exists($func)) {
-                return false;
-            }
+    $required_functions = ['imagecreatetruecolor', 'imagecolorallocate', 'imagefilledrectangle', 'imagejpeg', 'imagedestroy', 'imageftbbox'];
+    foreach ($required_functions as $func) {
+        if (!function_exists($func)) {
+            return false;
         }
+    }
 
-    if (! XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png') || ! XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/VeraBd.ttf')) {
+    if (!XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png') || !XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/VeraBd.ttf')) {
         return false;
     }
 

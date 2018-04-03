@@ -79,7 +79,7 @@ class Provisioning
     public static function getInstance(AuthAbstract $auth_instance)
     {
         static $provis_instance;
-        if (! isset($provis_instance)) {
+        if (!isset($provis_instance)) {
             $provis_instance = new self($auth_instance);
         }
 
@@ -102,8 +102,7 @@ class Provisioning
         if (count($getuser) === 1) {
             return $getuser[0];
         }
-            return false;
-
+        return false;
     }
 
     /**
@@ -118,7 +117,7 @@ class Provisioning
     public function sync($data, $uname, $pwd = null)
     {
         $xoopsUser = $this->getXoopsUser($uname);
-        if (! $xoopsUser) { // Xoops User Database not exists
+        if (!$xoopsUser) { // Xoops User Database not exists
             if ($this->ldap_provisioning) {
                 $xoopsUser = $this->add($data, $uname, $pwd);
             } else {
@@ -172,7 +171,7 @@ class Provisioning
 
             return $newuser;
         }
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $newuser->getHtmlErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $newuser->getHtmlErrors());
 
         return $ret;
     }
@@ -199,7 +198,7 @@ class Provisioning
         if ($member_handler->insertUser($xoopsUser)) {
             return $xoopsUser;
         }
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $xoopsUser->getHtmlErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $xoopsUser->getHtmlErrors());
 
         return $ret;
     }
@@ -254,7 +253,7 @@ class Provisioning
             if (isset($fields[0]) && ($field0 = trim($fields[0]))) {
                 $str = '';
                 if (isset($fields[1]) && ($field1 = trim($fields[1]))) {
-                    if (! empty($data[$field1][0])) {
+                    if (!empty($data[$field1][0])) {
                         $str = $data[$field1][0];
                     }
                 }

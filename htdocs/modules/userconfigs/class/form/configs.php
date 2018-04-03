@@ -41,7 +41,6 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
         $config_handler = $helper->getHandlerConfig();
         /* @var $plugin UserconfigsPluginInterface */
         if ($plugin = \Xoops\Module\Plugin::getPlugin($mod->getVar('dirname'), 'userconfigs')) {
-
             parent::__construct('', 'pref_form', 'index.php', 'post', true);
             if ($mod->getVar('dirname') !== 'system') {
                 $xoops->loadLanguage('modinfo', $mod->getVar('dirname'));
@@ -50,10 +49,10 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
             $configs = $plugin->configs();
             $configNames = [];
             foreach (array_keys($configs) as $i) {
-                $configNames[$configs[$i]['name']] = & $configs[$i];
+                $configNames[$configs[$i]['name']] = &$configs[$i];
             }
             $configCats = $plugin->categories();
-            if (! $configCats) {
+            if (!$configCats) {
                 $configCats = [
                     'default' => [
                         'name' => _MD_USERCONFIGS_CONFIGS,
@@ -62,7 +61,7 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
                 ];
             }
 
-            if (! in_array('default', array_keys($configCats), true)) {
+            if (!in_array('default', array_keys($configCats), true)) {
                 $configCats['default'] = [
                     'name' => _MD_USERCONFIGS_CONFIGS,
                     'description' => '',
@@ -70,7 +69,7 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
             }
 
             foreach (array_keys($configNames) as $name) {
-                if (! isset($configNames[$name]['category'])) {
+                if (!isset($configNames[$name]['category'])) {
                     $configNames[$name]['category'] = 'default';
                 }
             }
@@ -129,7 +128,7 @@ class UserconfigsConfigsForm extends Xoops\Form\SimpleForm
                     case 'theme_multi':
                         $ele = ($obj[$i]->getVar('conf_formtype') !== 'theme_multi') ? new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput()) : new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput(), 5, true);
                         $dirlist = XoopsLists::getThemesList();
-                        if (! empty($dirlist)) {
+                        if (!empty($dirlist)) {
                             asort($dirlist);
                             $ele->addOptionArray($dirlist);
                         }

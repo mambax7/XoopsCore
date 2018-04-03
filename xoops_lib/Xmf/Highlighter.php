@@ -26,7 +26,7 @@ class Highlighter
     /**
      * mbstring encoding
      */
-    const ENCODING = 'UTF-8';
+    public const ENCODING = 'UTF-8';
 
     /**
      * Apply highlight to words in body text
@@ -43,7 +43,7 @@ class Highlighter
      */
     public static function apply($words, $body, $pre = '<mark>', $post = '</mark>')
     {
-        if (! is_array($words)) {
+        if (!is_array($words)) {
             $words = preg_replace('/[\s]+/', ' ', $words);
             $words = explode(' ', $words);
         }

@@ -133,7 +133,7 @@ class FilterInput
 
         $sig = md5(serialize([$className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto]));
 
-        if (! isset($instances)) {
+        if (!isset($instances)) {
             $instances = [];
         }
 
@@ -167,9 +167,8 @@ class FilterInput
             // clean this string
             return $this->remove($this->decode($source));
         }
-            // return parameter as given
-            return $source;
-
+        // return parameter as given
+        return $source;
     }
 
     /**
@@ -190,7 +189,7 @@ class FilterInput
 
         // need an instance for methods, since this is supposed to be static
         // we must instantiate the class - this will take defaults
-        if (! is_object($filter)) {
+        if (!is_object($filter)) {
             $filter = static::getInstance();
         }
 
@@ -218,14 +217,14 @@ class FilterInput
             case 'INTEGER':
                 // Only use the first integer value
                 preg_match('/-?\d+/', (string) $source, $matches);
-                $result = @ (int) $matches[0];
+                $result = @(int) $matches[0];
                 break;
 
             case 'FLOAT':
             case 'DOUBLE':
                 // Only use the first floating point value
                 preg_match('/-?\d+(\.\d+)?/', (string) $source, $matches);
-                $result = @ (float) $matches[0];
+                $result = @(float) $matches[0];
                 break;
 
             case 'BOOL':
@@ -263,7 +262,7 @@ class FilterInput
                 $source = trim((string) $source);
                 $pattern = '/^([-_\.\/A-Z0-9=&%?~]+)(.*)$/i';
                 preg_match($pattern, $source, $matches);
-                $result = @ (string) $matches[1];
+                $result = @(string) $matches[1];
                 break;
 
             case 'USERNAME':
@@ -274,20 +273,20 @@ class FilterInput
                 $result = (string) $this->process($source);
                 // allow only relative, http or https
                 $urlparts = parse_url($result);
-                if (! empty($urlparts['scheme'])
-                    && ! ($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')
+                if (!empty($urlparts['scheme'])
+                    && !($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')
                 ) {
                     $result = '';
                 }
                 // do not allow quotes, tag brackets or controls
-                if (! preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
+                if (!preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
                     $result = '';
                 }
                 break;
 
             case 'EMAIL':
                 $result = (string) $source;
-                if (! filter_var((string) $source, FILTER_VALIDATE_EMAIL)) {
+                if (!filter_var((string) $source, FILTER_VALIDATE_EMAIL)) {
                     $result = '';
                 }
                 break;
@@ -296,7 +295,7 @@ class FilterInput
                 $result = (string) $source;
                 // this may be too restrictive.
                 // Should the FILTER_FLAG_NO_PRIV_RANGE flag be excluded?
-                if (! filter_var((string) $source, FILTER_VALIDATE_IP)) {
+                if (!filter_var((string) $source, FILTER_VALIDATE_IP)) {
                     $result = '';
                 }
                 break;
@@ -335,7 +334,7 @@ class FilterInput
     {
         $output = [];
 
-        if (! empty($source)) {
+        if (!empty($source)) {
             $source = strtolower($source);
             foreach ($input_map as $input) {
                 // set defaults
@@ -445,7 +444,7 @@ class FilterInput
             }
             $currentTag = substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength = strlen($currentTag);
-            if (! $tagOpen_end) {
+            if (!$tagOpen_end) {
                 $preTag .= $postTag;
             }
             // iterate through tag finding attribute pairs - setup
@@ -463,8 +462,8 @@ class FilterInput
                 list($tagName) = explode(' ', $currentTag);
             }
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((! preg_match('/^[a-z][a-z0-9]*$/i', $tagName))
-                || (! $tagName)
+            if ((!preg_match('/^[a-z][a-z0-9]*$/i', $tagName))
+                || (!$tagName)
                 || ((in_array(strtolower($tagName), $this->tagBlacklist, true))
                     && ($this->xssAuto))
             ) {
@@ -495,7 +494,7 @@ class FilterInput
                     $attr = substr($fromSpace, 0, $nextSpace);
                 }
                 // last attr pair
-                if (! $attr) {
+                if (!$attr) {
                     $attr = $fromSpace;
                 }
                 // add to attribute pairs array
@@ -507,9 +506,9 @@ class FilterInput
             // appears in array specified by user
             $tagFound = in_array(strtolower($tagName), $this->tagsArray, true);
             // remove this tag on condition
-            if ((! $tagFound && $this->tagsMethod) || ($tagFound && ! $this->tagsMethod)) {
+            if ((!$tagFound && $this->tagsMethod) || ($tagFound && !$this->tagsMethod)) {
                 // reconstruct tag with allowed attributes
-                if (! $isCloseTag) {
+                if (!$isCloseTag) {
                     $attrSet = $this->filterAttr($attrSet);
                     $preTag .= '<' . $tagName;
                     $attrSetCount = count($attrSet);
@@ -551,14 +550,14 @@ class FilterInput
         $attrSetCount = count($attrSet);
         for ($i = 0; $i < $attrSetCount; ++$i) {
             // skip blank spaces in tag
-            if (! $attrSet[$i]) {
+            if (!$attrSet[$i]) {
                 continue;
             }
             // split into attr name and value
             $attrSubSet = explode('=', trim($attrSet[$i]));
             list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
             // removes all "non-regular" attr names AND also attr blacklisted
-            if ((! preg_match('/[a-z]*$/i', $attrSubSet[0]))
+            if ((!preg_match('/[a-z]*$/i', $attrSubSet[0]))
                 || (($this->xssAuto)
                     && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist, true))
                         || (substr($attrSubSet[0], 0, 2) === 'on')))
@@ -598,7 +597,7 @@ class FilterInput
             // if matches user defined array
             $attrFound = in_array(strtolower($attrSubSet[0]), $this->attrArray, true);
             // keep this attr on condition
-            if ((! $attrFound && $this->attrMethod) || ($attrFound && ! $this->attrMethod)) {
+            if ((!$attrFound && $this->attrMethod) || ($attrFound && !$this->attrMethod)) {
                 if ($attrSubSet[1]) {
                     // attr has value
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';

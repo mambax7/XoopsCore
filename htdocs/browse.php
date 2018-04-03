@@ -21,7 +21,6 @@
 
 $xoopsOption['nocommon'] = true;
 require_once __DIR__ . '/mainfile.php';
-
 //error_reporting(0);
 
 //require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
@@ -30,8 +29,8 @@ $xoops = Xoops::getInstance();
 //$xoops->pathTranslation(); // alread run in Xoops __construct
 
 // Fetch path from query string if path is not set, i.e. through a direct request
-if (! isset($path)) {
-    if (! empty($_SERVER['QUERY_STRING'])) {
+if (!isset($path)) {
+    if (!empty($_SERVER['QUERY_STRING'])) {
         $path = $_SERVER['QUERY_STRING'];
         $path = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
     } else {
@@ -41,7 +40,7 @@ if (! isset($path)) {
 }
 
 $path_type = substr($path, 0, strpos($path, '/'));
-if (! isset($xoops->paths[$path_type])) {
+if (!isset($xoops->paths[$path_type])) {
     $path = 'XOOPS/' . $path;
     $path_type = 'XOOPS';
 }
@@ -54,9 +53,8 @@ if ($path_type === 'var') {
 
 $file = realpath($xoops->path($path));
 $dir = realpath($xoops->paths[$path_type][0]);
-
 //We are not allowing directory traversal either
-if ($file === false || $dir === false || ! strstr($file, $dir)) {
+if ($file === false || $dir === false || !strstr($file, $dir)) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
@@ -69,7 +67,6 @@ if (empty($file) || strpos($file, '.php') !== false) {
 
 //$file = $xoops->path($path);
 $mtime = filemtime($file);
-
 // Is there really a file to output?
 if ($mtime === false) {
     header('HTTP/1.0 404 Not Found');

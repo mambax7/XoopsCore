@@ -41,7 +41,6 @@ function publisher_date_to_date_show($options)
 
     if ($itemsObj) {
         for ($i = 0; $i < $totalItems; ++$i) {
-
             $newItems['itemid'] = $itemsObj[$i]->getVar('itemid');
             $newItems['title'] = $itemsObj[$i]->title();
             $newItems['categoryname'] = $itemsObj[$i]->getCategoryName();

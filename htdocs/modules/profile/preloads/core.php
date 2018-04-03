@@ -33,12 +33,12 @@ class ProfileCorePreload extends PreloadItem
     /**
      * @param array $args
      */
-    static public function eventCoreUserStart($args)
+    public static function eventCoreUserStart($args)
     {
         $op = 'main';
         if (isset($_POST['op'])) {
             $op = trim($_POST['op']);
-        } else if (isset($_GET['op'])) {
+        } elseif (isset($_GET['op'])) {
             $op = trim($_GET['op']);
         }
         if ($op !== 'login' && (empty($_GET['from']) || $_GET['from'] !== 'profile')) {
@@ -50,7 +50,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    static public function eventCoreEdituserStart($args)
+    public static function eventCoreEdituserStart($args)
     {
         \Xoops::simpleRedirect('./modules/profile/edituser.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     }
@@ -59,7 +59,7 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    static function eventCoreLostpassStart($args)
+    public static function eventCoreLostpassStart($args)
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
@@ -70,17 +70,17 @@ class ProfileCorePreload extends PreloadItem
      * @static
      * @param array $args
      */
-    static function eventCoreRegisterStart($args)
+    public static function eventCoreRegisterStart($args)
     {
-        \Xoops::simpleRedirect('./modules/profile/register.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']) );
+        \Xoops::simpleRedirect('./modules/profile/register.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     }
 
     /**
      * @static
      * @param array $args
      */
-    static function eventCoreUserinfoStart($args)
+    public static function eventCoreUserinfoStart($args)
     {
-        \Xoops::simpleRedirect('./modules/profile/userinfo.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']) );
+        \Xoops::simpleRedirect('./modules/profile/userinfo.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     }
 }

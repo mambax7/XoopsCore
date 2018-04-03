@@ -88,7 +88,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
             $op = 'save';
         }
         parent::__construct($title, 'blockform', 'admin.php', 'post', true);
-        if (! $this->obj->isNew()) {
+        if (!$this->obj->isNew()) {
             $this->addElement(new Xoops\Form\Label(XoopsLocale::NAME, $this->obj->getVar('name')));
         }
         // Side position

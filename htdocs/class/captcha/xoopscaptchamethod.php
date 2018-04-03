@@ -75,12 +75,13 @@ abstract class Abstractxoopscaptchamethod
      */
     public function loadConfig($name = '')
     {
-        if (! is_object($this->xoopsCaptcha))
+        if (!is_object($this->xoopsCaptcha)) {
             $this->config = [];
-        else
+        } else {
             $this->config = empty($name)
                 ? $this->xoopsCaptcha->config
                 : array_merge($this->xoopsCaptcha->config, $this->xoopsCaptcha->loadConfig($name));
+        }
     }
 
     /**
@@ -121,9 +122,9 @@ abstract class Abstractxoopscaptchamethod
     public function verify($sessionName = null)
     {
         $is_valid = false;
-        if (! empty($_SESSION["{$sessionName}_code"])) {
-            $func = ! empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
-            $is_valid = ! $func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
+        if (!empty($_SESSION["{$sessionName}_code"])) {
+            $func = !empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
+            $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
         }
         return $is_valid;
     }

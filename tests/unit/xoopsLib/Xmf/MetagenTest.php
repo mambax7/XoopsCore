@@ -9,7 +9,7 @@ require_once(__DIR__ . '/../../init_new.php');
 class MetagenTest extends \PHPUnit\Framework\TestCase
 {
     // a known block of text used in some tests
-    const DOI_TEXT = <<<EOT
+    public const DOI_TEXT = <<<EOT
 When in the Course of human events, it becomes necessary for one people to dissolve
 the political bands which have connected them with another, and to assume among the
 powers of the earth, the separate and equal station to which the Laws of Nature and

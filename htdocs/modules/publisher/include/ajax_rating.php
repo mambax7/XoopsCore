@@ -53,7 +53,7 @@ $hModConfig = $xoops->getHandlerConfig();
 $module_id = $publisher->getModule()->getVar('mid');
 
 //Checking permissions
-if (! $publisher->getConfig('perm_rating') || ! $gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)) {
+if (!$publisher->getConfig('perm_rating') || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)) {
     $output = "unit_long${itemid}|" . XoopsLocale::E_NO_ACCESS_PERMISSION . "\n";
     echo $output;
     exit();

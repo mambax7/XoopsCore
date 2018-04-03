@@ -33,12 +33,12 @@ $categoryid = Request::getInt('categoryid');
 $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
 
 // if the selected category was not found, exit
-if (! is_object($categoryObj) || $categoryObj->notLoaded()) {
+if (!is_object($categoryObj) || $categoryObj->notLoaded()) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOCATEGORYSELECTED);
 }
 
 // Check user permissions to access this category
-if (! $categoryObj->checkPermission()) {
+if (!$categoryObj->checkPermission()) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -51,13 +51,13 @@ $totalItems = $publisher->getCategoryHandler()->publishedItemsCount();
 
 // if there is no Item under this categories or the sub-categories, exit
 // why?
-if (! isset($totalItems[$categoryid]) || $totalItems[$categoryid] === 0) {
+if (!isset($totalItems[$categoryid]) || $totalItems[$categoryid] === 0) {
     //$xoops->redirect("index.php", 1, _MD_PUBLISHER_MAINNOFAQS);
     //exit;
 }
 
 // Added by skalpa: custom template support
-if (! $template = $categoryObj->template()) {
+if (!$template = $categoryObj->template()) {
     $template = 'module:publisher/publisher_display_' . $publisher->getConfig('idxcat_items_display_type') . '.tpl';
 }
 

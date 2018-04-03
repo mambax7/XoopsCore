@@ -40,7 +40,7 @@ class DtypeUrl extends DtypeAbstract
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
             return $value;
         }
-        if ($value !== '' && ! preg_match("/^http[s]*:\/\//i", $value)) {
+        if ($value !== '' && !preg_match("/^http[s]*:\/\//i", $value)) {
             $value = 'http://' . $value;
         }
         return $value;

@@ -58,7 +58,7 @@ class DateSelect extends Text
         $display_value = \Xoops\Core\Locale\Time::formatDate($this->getValue(false));
 
         $dataList = $this->isDatalist();
-        if (! empty($dataList)) {
+        if (!empty($dataList)) {
             $this->add('list', 'list_' . $this->getName());
         }
 
@@ -89,6 +89,6 @@ class DateSelect extends Text
         $ret .= '</span></div>';
 
         return $ret;
-            //'<input ' . $attributes . 'value="' . $display_value . '" ' . $this->getExtra() .' >';
+        //'<input ' . $attributes . 'value="' . $display_value . '" ' . $this->getExtra() .' >';
     }
 }

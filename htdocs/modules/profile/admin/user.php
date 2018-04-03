@@ -49,6 +49,7 @@ switch ($op) {
         $form->display();
         /* fallthrough */
 
+        // no break
     case 'new':
         $xoops->loadLanguage('main', $xoops->module->getVar('dirname', 'n'));
         include_once dirname(__DIR__) . '/include/forms.php';
@@ -61,7 +62,7 @@ switch ($op) {
     case 'edit':
         $xoops->loadLanguage('main', $xoops->module->getVar('dirname', 'n'));
         $obj = $handler->getUser($_REQUEST['id']);
-        if (in_array(FixedGroups::ADMIN, $obj->getGroups(), true) && ! in_array(FixedGroups::ADMIN, $xoops->user->getGroups(), true)) {
+        if (in_array(FixedGroups::ADMIN, $obj->getGroups(), true) && !in_array(FixedGroups::ADMIN, $xoops->user->getGroups(), true)) {
             // If not webmaster trying to edit a webmaster - disallow
             $xoops->redirect('user.php', 3, XoopsLocale::E_NO_ACTION_PERMISSION);
         }
@@ -72,7 +73,7 @@ switch ($op) {
 
     case 'save':
         $xoops->loadLanguage('main', $xoops->module->getVar('dirname', 'n'));
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect(
                 'user.php',
                 3,
@@ -97,10 +98,10 @@ switch ($op) {
         );
 
         $uid = empty($_POST['uid']) ? 0 : (int) ($_POST['uid']);
-        if (! empty($uid)) {
+        if (!empty($uid)) {
             $user = $handler->getUser($uid);
             $profile = $profile_handler->getProfile($uid);
-            if (! is_object($profile)) {
+            if (!is_object($profile)) {
                 $profile = $profile_handler->create();
                 $profile->setVar('profile_id', $uid);
             }
@@ -129,7 +130,7 @@ switch ($op) {
             $user->setVar('level', (int) ($_POST['level']));
         }
         $password = $vpass = null;
-        if (! empty($_POST['password'])) {
+        if (!empty($_POST['password'])) {
             $password = trim($_POST['password']);
             $vpass = trim($_POST['vpass']);
             $user->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
@@ -212,12 +213,12 @@ switch ($op) {
         }
 
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('user.php', 3, implode(',', $xoops->security()->getErrors()), false);
             }
             $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
             $profile = $profile_handler->getProfile($obj->getVar('uid'));
-            if (! $profile || $profile->isNew() || $profile_handler->delete($profile)) {
+            if (!$profile || $profile->isNew() || $profile_handler->delete($profile)) {
                 if ($handler->deleteUser($obj)) {
                     $xoops->redirect(
                         'user.php',
@@ -231,7 +232,6 @@ switch ($op) {
             } else {
                 echo $profile->getHtmlErrors();
             }
-
         } else {
             echo $xoops->confirm(
                 ['ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'],

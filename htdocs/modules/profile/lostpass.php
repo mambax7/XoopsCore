@@ -54,20 +54,20 @@ if (empty($user)) {
         $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
         $xoopsMailer->setSubject(sprintf(XoopsLocale::F_NEW_PASSWORD_REQUEST_AT, \XoopsBaseConfig::get('url')));
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
 
         // todo convert to handleer update and bcrypt
         // Next step: add the new password to the database
         $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = %u", $xoopsDB->prefix('users'), md5($newpass), $user->getVar('uid'));
-        if (! $xoopsDB->queryF($sql)) {
+        if (!$xoopsDB->queryF($sql)) {
             $xoops->header();
             echo XoopsLocale::E_USER_NOT_UPDATED;
             include __DIR__ . '/footer.php';
         }
         $xoops->redirect('user.php', 3, sprintf(XoopsLocale::SF_PASSWORD_SENT_TO, $user->getVar('uname')), false);
-        // If no Code, send it
+    // If no Code, send it
     } else {
         $xoopsMailer = $xoops->getMailer();
         $xoopsMailer->useMail();
@@ -82,7 +82,7 @@ if (empty($user)) {
         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
         $xoopsMailer->setSubject(sprintf(XoopsLocale::F_NEW_PASSWORD_REQUEST_AT, $xoops->getConfig('sitename')));
         $xoops->header();
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
         echo '<h4>';

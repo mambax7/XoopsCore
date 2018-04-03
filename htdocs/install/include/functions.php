@@ -188,8 +188,7 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
     if ($setting === $wanted) {
         return xoDiag(1, $setting ? 'ON' : 'OFF');
     }
-        return xoDiag($severe ? -1 : 0, $setting ? 'ON' : 'OFF');
-
+    return xoDiag($severe ? -1 : 0, $setting ? 'ON' : 'OFF');
 }
 
 /**
@@ -200,14 +199,14 @@ function xoDiagIfWritable($path)
 {
     $path = '../' . $path;
     $error = true;
-    if (! is_dir($path)) {
+    if (!is_dir($path)) {
         if (file_exists($path)) {
             @chmod($path, 0666);
-            $error = ! is_writeable($path);
+            $error = !is_writeable($path);
         }
     } else {
         @chmod($path, 0777);
-        $error = ! is_writeable($path);
+        $error = !is_writeable($path);
     }
     return xoDiag($error ? -1 : 1, $error ? 'Not writable' : 'Writable');
 }
@@ -220,8 +219,7 @@ function xoPhpVersion()
     if (version_compare(PHP_VERSION, '7.1.0', '>=')) {
         return xoDiag(1, PHP_VERSION);
     }
-        return xoDiag(-1, PHP_VERSION);
-
+    return xoDiag(-1, PHP_VERSION);
 }
 
 /**
@@ -245,7 +243,7 @@ function genPathCheckHtml($path, $valid)
         }
         return '<span class="pathmessage"><img src="img/yes.png" alt="Success" />' . $msg . '</span>';
     }
-        switch ($path) {
+    switch ($path) {
             case 'root':
                 $msg = ERR_NO_XOOPS_FOUND;
                 break;
@@ -256,8 +254,7 @@ function genPathCheckHtml($path, $valid)
                 $msg = ERR_COULD_NOT_ACCESS;
                 break;
         }
-        return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> ' . $msg . '</span>';
-
+    return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> ' . $msg . '</span>';
 }
 
 /**
@@ -287,7 +284,7 @@ function getDbConnectionParams()
     }
 
     foreach ($driver_params as $param) {
-        if (! empty($settings[$wizard->configs['db_param_names'][$param]])) {
+        if (!empty($settings[$wizard->configs['db_param_names'][$param]])) {
             $connectionParams[$param] = $settings[$wizard->configs['db_param_names'][$param]];
         }
     }
@@ -311,19 +308,19 @@ function getDbConnection(&$error)
     try {
         $instance = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     } catch (Exception $e) {
-            $error = $e->getMessage();
-            return false;
+        $error = $e->getMessage();
+        return false;
     }
-    if (! $instance) {
+    if (!$instance) {
         $error = ERR_NO_DBCONNECTION;
         return false;
     }
-        try {
-            $instance->connect();
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-            return false;
-        }
+    try {
+        $instance->connect();
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        return false;
+    }
 
     return $instance;
 }

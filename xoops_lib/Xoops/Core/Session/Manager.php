@@ -105,13 +105,13 @@ class Manager implements AttributeInterface
         }
 
         // Make sure the session hasn't expired, and destroy it if it has
-        if (! $this->validateSession()) {
+        if (!$this->validateSession()) {
             $this->clearSession();
             return;
         }
 
         // Check to see if the session shows sign of hijacking attempt
-        if (! $this->fingerprint->checkSessionPrint($this)) {
+        if (!$this->fingerprint->checkSessionPrint($this)) {
             $this->regenerateSession(); // session data already cleared, just needs new id
             return;
         }
@@ -274,7 +274,7 @@ class Manager implements AttributeInterface
     protected function validateSession()
     {
         // invalid to have obsolete and not expires
-        if ($this->has('SESSION_MANAGER_OBSOLETE') && ! $this->has('SESSION_MANAGER_EXPIRES')) {
+        if ($this->has('SESSION_MANAGER_OBSOLETE') && !$this->has('SESSION_MANAGER_EXPIRES')) {
             return false;
         }
 

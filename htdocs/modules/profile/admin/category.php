@@ -69,7 +69,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('category.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -97,7 +97,7 @@ switch ($op) {
         if ($id > 0) {
             $obj = $category_Handler->get($id);
             if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('category.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($category_Handler->delete($obj)) {

@@ -45,12 +45,12 @@ $rewrite = [
 ];
 $rewrite = array_merge($rewrite, $settings);
 
-if (! @copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH'] . '/mainfile.php')) {
+if (!@copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH'] . '/mainfile.php')) {
     $error = ERR_COPY_MAINFILE;
 } else {
     clearstatcache();
 
-    if (! $file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'r')) {
+    if (!$file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'r')) {
         $error = ERR_READ_MAINFILE;
     } else {
         $content = fread($file, filesize($settings['ROOT_PATH'] . '/mainfile.php'));
@@ -67,12 +67,11 @@ if (! @copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH'
                     $val = str_replace('$', '\$', addslashes($val));
                     $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
                 }
-                    //$this->error = true;
+                //$this->error = true;
                     //$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<strong>$val</strong>")."<br />\n";
-
             }
         }
-        if (! $file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'w')) {
+        if (!$file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'w')) {
             $error = ERR_WRITE_MAINFILE;
         } else {
             if (fwrite($file, $content) === -1) {
@@ -83,12 +82,12 @@ if (! @copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH'
     }
 }
 
-if (! @copy($rewrite['VAR_PATH'] . '/data/secure.dist.php', $rewrite['VAR_PATH'] . '/data/secure.php')) {
+if (!@copy($rewrite['VAR_PATH'] . '/data/secure.dist.php', $rewrite['VAR_PATH'] . '/data/secure.php')) {
     $error = ERR_COPY_SECURE . $rewrite['VAR_PATH'] . '/data/secure.dist.php';
 } else {
     clearstatcache();
 
-    if (! $file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'r')) {
+    if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'r')) {
         $error = ERR_READ_SECURE;
     } else {
         $content = fread($file, filesize($rewrite['VAR_PATH'] . '/data/secure.php'));
@@ -107,7 +106,7 @@ if (! @copy($rewrite['VAR_PATH'] . '/data/secure.dist.php', $rewrite['VAR_PATH']
                 }
             }
         }
-        if (! $file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'w')) {
+        if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'w')) {
             $error = ERR_WRITE_SECURE;
         } else {
             if (fwrite($file, $content) === -1) {
@@ -137,8 +136,7 @@ if (empty($error)) {
     $_SESSION['UserLogin'] = true;
     $settings['authorized'] = true;
     $wizard->cleanCache($rewrite['VAR_PATH']);
-    ob_start();
-    ?>
+    ob_start(); ?>
 
 <div class="caption"><?php echo SAVED_MAINFILE; ?></div>
 <div class='x2-note confirmMsg'><?php echo SAVED_MAINFILE_MSG; ?></div>
@@ -146,12 +144,11 @@ if (empty($error)) {
 
     <?php
     foreach ($settings as $k => $v) {
-    if ($k === 'authorized') {
-        continue;
-    }
-    echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
-}
-    ?>
+        if ($k === 'authorized') {
+            continue;
+        }
+        echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
+    } ?>
 </ul>
     <?php
         $content = ob_get_contents();

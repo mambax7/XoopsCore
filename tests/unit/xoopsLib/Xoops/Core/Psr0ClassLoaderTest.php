@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class Psr0ClassLoaderTest extends \PHPUnit\Framework\TestCase
@@ -6,58 +7,58 @@ class Psr0ClassLoaderTest extends \PHPUnit\Framework\TestCase
     protected $myclass = 'Xoops\Core\Psr0ClassLoader';
 
     public function test___construct()
-	{
-		$instance = new $this->myclass();
-		$this->assertInstanceOf($this->myclass, $instance);
+    {
+        $instance = new $this->myclass();
+        $this->assertInstanceOf($this->myclass, $instance);
     }
 
     public function test_addLoader()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_setNamespaceSeparator()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_getNamespaceSeparator()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_setIncludePath()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_getIncludePath()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_setFileExtension()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_getFileExtension()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_register()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_unregister()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 
     public function test_loadClass()
-	{
-		$this->markTestIncomplete();
+    {
+        $this->markTestIncomplete();
     }
 }

@@ -35,7 +35,8 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\ArrayObject', $this->object);
     }
 
-    public function test__construct(){
+    public function test__construct()
+    {
         $config = new Configuration();
         $this->assertInstanceOf('\Xoops\Core\Text\Sanitizer\ConfigurationAbstract', $config);
         $this->assertTrue($config->has('sanitizer'));

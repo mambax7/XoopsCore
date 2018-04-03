@@ -142,15 +142,14 @@ class PublisherUtils
         $xoops = Xoops::getInstance();
         $publisher = Publisher::getInstance();
 
-        if (! $publisher->getConfig('format_breadcrumb_modname')) {
+        if (!$publisher->getConfig('format_breadcrumb_modname')) {
             return '';
         }
 
-        if (! $withLink) {
+        if (!$withLink) {
             return $publisher->getModule()->getVar('name');
         }
-            return '<a href="' . $xoops->url(PUBLISHER_URL) . '/">' . $publisher->getModule()->getVar('name') . '</a>';
-
+        return '<a href="' . $xoops->url(PUBLISHER_URL) . '/">' . $publisher->getModule()->getVar('name') . '</a>';
     }
 
     /**
@@ -172,7 +171,7 @@ class PublisherUtils
         }
 
         // Make destination directory
-        if (! is_dir($dest)) {
+        if (!is_dir($dest)) {
             mkdir($dest);
         }
 
@@ -223,18 +222,17 @@ class PublisherUtils
         if (@is_writable($thePath)) {
             $pathCheckResult = 1;
             $path_status = _AM_PUBLISHER_AVAILABLE;
-        } elseif (! @is_dir($thePath)) {
+        } elseif (!@is_dir($thePath)) {
             $pathCheckResult = -1;
             $path_status = _AM_PUBLISHER_NOTAVAILABLE . " <a href='" . $publisher->url("admin/index.php?op=createdir&amp;path={$item}") . "'>" . _AM_PUBLISHER_CREATETHEDIR . '</a>';
         } else {
             $pathCheckResult = -2;
             $path_status = _AM_PUBLISHER_NOTWRITABLE . " <a href='" . $publisher->url("admin/index.php?op=setperm&amp;path={$item}") . "'>" . _AM_SCS_SETMPERM . '</a>';
         }
-        if (! $getStatus) {
+        if (!$getStatus) {
             return $path_status;
         }
-            return $pathCheckResult;
-
+        return $pathCheckResult;
     }
 
     /**
@@ -253,12 +251,12 @@ class PublisherUtils
             return true; // best case check first
         }
 
-        if (XoopsLoad::fileExists($target) && ! is_dir($target)) {
+        if (XoopsLoad::fileExists($target) && !is_dir($target)) {
             return false;
         }
 
         if (self::mkdir(substr($target, 0, strrpos($target, '/')))) {
-            if (! XoopsLoad::fileExists($target)) {
+            if (!XoopsLoad::fileExists($target)) {
                 $res = mkdir($target, 0777); // crawl back up & create dir tree
                 self::chmod($target);
 
@@ -305,8 +303,7 @@ class PublisherUtils
         if ($hasPath) {
             return $xoops->path(PUBLISHER_UPLOADS_PATH . '/' . $item);
         }
-            return $xoops->url(PUBLISHER_UPLOADS_URL . '/' . $item);
-
+        return $xoops->url(PUBLISHER_UPLOADS_URL . '/' . $item);
     }
 
     /**
@@ -481,8 +478,7 @@ class PublisherUtils
         if (isset($_COOKIE[$name]) && ($_COOKIE[$name] > '')) {
             return $_COOKIE[$name];
         }
-            return $default;
-
+        return $default;
     }
 
     /**
@@ -672,7 +668,7 @@ class PublisherUtils
 
         $amp = ($encodeAmp ? '&amp;' : '&');
 
-        if (! count($vars)) {
+        if (!count($vars)) {
             return $page;
         }
 
@@ -722,7 +718,7 @@ class PublisherUtils
         $session->set('publisher_file_uid', $uid);
         $session->set('publisher_file_itemid', $itemid);
 
-        if (! is_object($itemObj)) {
+        if (!is_object($itemObj)) {
             $itemObj = $publisher->getItemHandler()->get($itemid);
         }
 
@@ -740,7 +736,7 @@ class PublisherUtils
         $errors = [];
         /* @var $fileObj PublisherFile */
         if ($publisher->getConfig('perm_upload') && is_uploaded_file($_FILES['item_upload_file']['tmp_name'])) {
-            if (! $ret = $fileObj->checkUpload('item_upload_file', $allowed_mimetypes, $errors)) {
+            if (!$ret = $fileObj->checkUpload('item_upload_file', $allowed_mimetypes, $errors)) {
                 $errorstxt = implode('<br />', $errors);
 
                 $message = sprintf(_CO_PUBLISHER_MESSAGE_FILE_ERROR, $errorstxt);
@@ -753,7 +749,7 @@ class PublisherUtils
         }
 
         // Storing the file
-        if (! $fileObj->store($allowed_mimetypes)) {
+        if (!$fileObj->store($allowed_mimetypes)) {
             if ($withRedirect) {
                 $xoops->redirect('file.php?op=mod&itemid=' . $fileObj->getVar('itemid'), 3, _CO_PUBLISHER_FILEUPLOAD_ERROR . self::formatErrors($fileObj->getErrors()));
             } else {
@@ -804,7 +800,7 @@ class PublisherUtils
 
         if (strlen($string) > $length) {
             $length -= strlen($etc);
-            if (! $break_words) {
+            if (!$break_words) {
                 $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
                 $string = preg_replace('/<[^>]*$/', '', $string);
                 $string = self::closeTags($string);
@@ -812,8 +808,7 @@ class PublisherUtils
 
             return $string . $etc;
         }
-            return $string;
-
+        return $string;
     }
 
     /**
@@ -895,7 +890,7 @@ class PublisherUtils
         $groups = $xoops->getUserGroups();
         $gperm_handler = $publisher->getGrouppermHandler();
 
-        if (! $gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $publisher->getModule()->getVar('mid'))) {
+        if (!$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $publisher->getModule()->getVar('mid'))) {
             $static_rater = [];
             $static_rater[] .= "\n" . '<div class="publisher_ratingblock">';
             $static_rater[] .= '<div id="unit_long' . $itemid . '">';
@@ -908,32 +903,31 @@ class PublisherUtils
 
             return join("\n", $static_rater);
         }
-            $rater = '';
-            $rater .= '<div class="publisher_ratingblock">';
-            $rater .= '<div id="unit_long' . $itemid . '">';
-            $rater .= '<div id="unit_ul' . $itemid . '" class="publisher_unit-rating" style="width:' . $rating_unitwidth * $units . 'px;">';
-            $rater .= '<div class="publisher_current-rating" style="width:' . $rating_width . 'px;">' . _MD_PUBLISHER_VOTE_RATING . ' ' . $rating2 . '/' . $units . '</div>';
+        $rater = '';
+        $rater .= '<div class="publisher_ratingblock">';
+        $rater .= '<div id="unit_long' . $itemid . '">';
+        $rater .= '<div id="unit_ul' . $itemid . '" class="publisher_unit-rating" style="width:' . $rating_unitwidth * $units . 'px;">';
+        $rater .= '<div class="publisher_current-rating" style="width:' . $rating_width . 'px;">' . _MD_PUBLISHER_VOTE_RATING . ' ' . $rating2 . '/' . $units . '</div>';
 
-            for ($ncount = 1; $ncount <= $units; ++$ncount) { // loop from 1 to the number of units
-                if (! $voted) { // if the user hasn't yet voted, draw the voting stars
+        for ($ncount = 1; $ncount <= $units; ++$ncount) { // loop from 1 to the number of units
+                if (!$voted) { // if the user hasn't yet voted, draw the voting stars
                     $rater .= '<div><a href="' . PUBLISHER_URL . '/rate.php?itemid=' . $itemid . '&amp;rating=' . $ncount . '" title="' . $ncount . ' ' . _MD_PUBLISHER_VOTE_OUTOF . ' ' . $units . '" class="publisher_r' . $ncount . '-unit rater" rel="nofollow">' . $ncount . '</a></div>';
                 }
-            }
+        }
 
-            $rater .= '  </div>';
-            $rater .= '  <div';
+        $rater .= '  </div>';
+        $rater .= '  <div';
 
-            if ($voted) {
-                $rater .= ' class="publisher_voted"';
-            }
+        if ($voted) {
+            $rater .= ' class="publisher_voted"';
+        }
 
-            $rater .= '>' . _MD_PUBLISHER_VOTE_RATING . ': <strong> ' . $rating1 . '</strong>/' . $units . ' (' . $count . ' ' . $tense . ')';
-            $rater .= '  </div>';
-            $rater .= '</div>';
-            $rater .= '</div>';
+        $rater .= '>' . _MD_PUBLISHER_VOTE_RATING . ': <strong> ' . $rating1 . '</strong>/' . $units . ' (' . $count . ' ' . $tense . ')';
+        $rater .= '  </div>';
+        $rater .= '</div>';
+        $rater .= '</div>';
 
-            return $rater;
-
+        return $rater;
     }
 
     /**
@@ -1001,8 +995,7 @@ class PublisherUtils
 
             return $serialize;
         }
-            return @iconv('windows-1256', 'UTF-8', $item);
-
+        return @iconv('windows-1256', 'UTF-8', $item);
     }
 
     public static function seoTitle($title = '', $withExt = true)
@@ -1066,7 +1059,7 @@ class PublisherUtils
     {
         $publisher = Publisher::getInstance();
         if ($publisher->getConfig('seo_url_rewrite') !== 'none') {
-            if (! empty($short_url)) {
+            if (!empty($short_url)) {
                 $short_url = $short_url . '.html';
             }
 
@@ -1074,15 +1067,14 @@ class PublisherUtils
                 // generate SEO url using htaccess
                 return \XoopsBaseConfig::get('url') . '/' . $publisher->getConfig('seo_module_name') . ".${op}.${id}/${short_url}";
             }
-                if ($publisher->getConfig('seo_url_rewrite') === 'path-info') {
-                    // generate SEO url using path-info
-                    return $publisher->url("index.php/${op}.${id}/${short_url}");
-                }
-                    die('Unknown SEO method.');
-
+            if ($publisher->getConfig('seo_url_rewrite') === 'path-info') {
+                // generate SEO url using path-info
+                return $publisher->url("index.php/${op}.${id}/${short_url}");
+            }
+            die('Unknown SEO method.');
         }
-            // generate classic url
-            switch ($op) {
+        // generate classic url
+        switch ($op) {
                 case 'category':
                     return $publisher->url("${op}.php?categoryid=${id}");
                 case 'item':
@@ -1091,7 +1083,6 @@ class PublisherUtils
                 default:
                     die('Unknown SEO operation.');
             }
-
     }
 
     /**
@@ -1103,13 +1094,13 @@ class PublisherUtils
      */
     public static function displayFlash($url, $width = 0, $height = 0)
     {
-        if (! $width || ! $height) {
-            if (! $dimension = @getimagesize($url)) {
+        if (!$width || !$height) {
+            if (!$dimension = @getimagesize($url)) {
                 return "<a href='{$url}' target='_blank'>{$url}</a>";
             }
-            if (! $width) {
+            if (!$width) {
                 $height = $dimension[1] * $width / $dimension[0];
-            } elseif (! empty($height)) {
+            } elseif (!empty($height)) {
                 $width = $dimension[0] * $height / $dimension[1];
             } else {
                 list($width, $height) = [$dimension[0], $dimension[1]];

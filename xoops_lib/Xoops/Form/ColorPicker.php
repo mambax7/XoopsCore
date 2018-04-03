@@ -67,7 +67,7 @@ class ColorPicker extends Text
             echo '<script type="text/javascript" src="' . $xoops->url('/include/color-picker.js') . '"></script>';
         }
         $temp = $this->get('value', '');
-        if (! empty($temp)) {
+        if (!empty($temp)) {
             $this->set('style', 'background-color:' . $temp . ';');
         }
         $this->set('class', 'form-control');

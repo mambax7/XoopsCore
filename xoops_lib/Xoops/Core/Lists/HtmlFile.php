@@ -36,7 +36,7 @@ class HtmlFile extends ListAbstract
         $fileList = [];
         if (is_dir($path) && $handle = opendir($path)) {
             while (($file = readdir($handle)) !== false) {
-                if ((preg_match('/\.(htm|html|xhtml)$/i', $file) && ! is_dir($file))) {
+                if ((preg_match('/\.(htm|html|xhtml)$/i', $file) && !is_dir($file))) {
                     $file = $prefix . $file;
                     $fileList[$file] = $prefix . $file;
                 }

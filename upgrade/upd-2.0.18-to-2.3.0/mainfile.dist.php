@@ -14,7 +14,7 @@
  * @version     $Id$
  */
 
-if (! defined('XOOPS_MAINFILE_INCLUDED')) {
+if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_MAINFILE_INCLUDED', 1);
 
     // XOOPS Physical Paths
@@ -32,7 +32,7 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
 
     // URL Association for SSL and Protocol Compatibility
     $http = 'http://';
-    if (! empty($_SERVER['HTTPS'])) {
+    if (!empty($_SERVER['HTTPS'])) {
         $http = ($_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
     }
     define('XOOPS_PROT', $http);
@@ -45,11 +45,11 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
     // Shall be handled later, don't forget!
     define('XOOPS_CHECK_PATH', 0);
     // Protect against external scripts execution if safe mode is not enabled
-    if (XOOPS_CHECK_PATH && ! @ini_get('safe_mode')) {
+    if (XOOPS_CHECK_PATH && !@ini_get('safe_mode')) {
         if (function_exists('debug_backtrace')) {
             $xoopsScriptPath = debug_backtrace();
-            if (! count($xoopsScriptPath)) {
-                 die('XOOPS path check: this file cannot be requested directly');
+            if (!count($xoopsScriptPath)) {
+                die('XOOPS path check: this file cannot be requested directly');
             }
             $xoopsScriptPath = $xoopsScriptPath[0]['file'];
         } else {
@@ -60,7 +60,7 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
             $xoopsScriptPath = str_replace(strpos($xoopsScriptPath, '\\\\', 2) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
         }
         if (strcasecmp(substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace(DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH))) {
-             exit('XOOPS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.');
+            exit('XOOPS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.');
         }
     }
 
@@ -69,7 +69,9 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_DB_TYPE', 'mysql');
 
     // Set the database charset if applicable
-    if (defined('XOOPS_DB_CHARSET')) die('Restricted Access');
+    if (defined('XOOPS_DB_CHARSET')) {
+        die('Restricted Access');
+    }
     define('XOOPS_DB_CHARSET', '');
 
     // Table Prefix
@@ -100,10 +102,7 @@ if (! defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_GROUP_USERS', '2');
     define('XOOPS_GROUP_ANONYMOUS', '3');
 
-    if (! isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH !== '') {
+    if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH !== '') {
         include XOOPS_ROOT_PATH . '/include/common.php';
     }
-
 }
-
-?>

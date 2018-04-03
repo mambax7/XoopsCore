@@ -74,7 +74,7 @@ class SyntaxHighlight extends FilterAbstract
     {
         $text = trim($text);
         $addedOpenTag = false;
-        if (! strpos($text, '<?php') && (substr($text, 0, 5) !== '<?php')) {
+        if (!strpos($text, '<?php') && (substr($text, 0, 5) !== '<?php')) {
             $text = '<?php ' . $text;
             $addedOpenTag = true;
         }
@@ -115,7 +115,7 @@ class SyntaxHighlight extends FilterAbstract
      */
     public function geshi($source, $language)
     {
-        if (! @\XoopsLoad::load('geshi', 'framework')) {
+        if (!@\XoopsLoad::load('geshi', 'framework')) {
             return false;
         }
 

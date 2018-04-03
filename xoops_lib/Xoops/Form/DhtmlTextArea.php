@@ -122,16 +122,16 @@ class DhtmlTextArea extends \XoopsEditor
         }
 
         $xoops = \Xoops::getInstance();
-        if (! isset($options['editor'])) {
+        if (!isset($options['editor'])) {
             if ($editor = $xoops->getConfig('editor')) {
                 $options['editor'] = $editor;
             }
         }
 
-        if (! empty($this->htmlEditor) || ! empty($options['editor'])) {
+        if (!empty($this->htmlEditor) || !empty($options['editor'])) {
             $options['name'] = $this->getName();
             $options['value'] = $this->getValue();
-            if (! empty($options['editor'])) {
+            if (!empty($options['editor'])) {
                 $this->htmlEditor = is_array($options['editor']) ? $options['editor'] : [$options['editor']];
             }
 
@@ -142,7 +142,7 @@ class DhtmlTextArea extends \XoopsEditor
                     $this->htmlEditor = null;
                 }
             } else {
-                list ($class, $path) = $this->htmlEditor;
+                list($class, $path) = $this->htmlEditor;
                 include_once \XoopsBaseConfig::get('root-path') . $path;
                 if (class_exists($class)) {
                     $this->htmlEditor = new $class($options);
@@ -164,7 +164,7 @@ class DhtmlTextArea extends \XoopsEditor
     public function render()
     {
         if ($this->htmlEditor && is_object($this->htmlEditor)) {
-            if (! isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
+            if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
                 return $this->htmlEditor->render();
             }
         }
@@ -194,7 +194,7 @@ class DhtmlTextArea extends \XoopsEditor
         $ret .= '<textarea ' . $attributes . $extra . '>' . $this->getValue() . "</textarea>\n";
 
         if (empty($this->skipPreview)) {
-            if (! $xoops->theme()) {
+            if (!$xoops->theme()) {
                 $this->js .= implode('', file($xoops->path('media/xoops/image.js')));
             } else {
                 $xoops->theme()->addScript('media/xoops/image.js', ['type' => 'text/javascript']);
@@ -244,11 +244,11 @@ class DhtmlTextArea extends \XoopsEditor
 
         $extensions = array_filter($myts->listExtensions());
         foreach ($extensions as $extension) {
-            list ($button, $js) = $myts->getDhtmlEditorSupport($extension, $textarea_id);
-            if (! empty($button)) {
+            list($button, $js) = $myts->getDhtmlEditorSupport($extension, $textarea_id);
+            if (!empty($button)) {
                 $code .= $button;
             }
-            if (! empty($js)) {
+            if (!empty($js)) {
                 $this->js .= $js;
             }
         }
@@ -290,7 +290,7 @@ class DhtmlTextArea extends \XoopsEditor
         $fontStr .= "+ '<select class=\"span2\" id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'";
         $fontStr .= "+ '<option value=\'FONT\'>" . \XoopsLocale::FONT . "</option>'";
         $localeFonts = \XoopsLocale::getFonts();
-        $fontarray = ! empty($localeFonts) ? $localeFonts :
+        $fontarray = !empty($localeFonts) ? $localeFonts :
             ['Arial', 'Courier', 'Georgia', 'Helvetica', 'Impact', 'Verdana', 'Haettenschweiler'];
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
@@ -331,7 +331,7 @@ class DhtmlTextArea extends \XoopsEditor
     public function renderValidationJS()
     {
         if ($this->htmlEditor && is_object($this->htmlEditor) && method_exists($this->htmlEditor, 'renderValidationJS')) {
-            if (! isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
+            if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
                 return $this->htmlEditor->renderValidationJS();
             }
         }

@@ -106,7 +106,6 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($value, '>grp_name</option>') !== false);
         $this->assertTrue(strpos($value, 'value="grp_key1"') !== false);
         $this->assertTrue(strpos($value, '>grp_name1</option>') !== false);
-
     }
 
     public function testRenderValidationJS()

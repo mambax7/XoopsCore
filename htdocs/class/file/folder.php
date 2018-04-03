@@ -106,13 +106,14 @@ class XoopsFolderHandler
         if ($mode) {
             $this->mode = intval($mode, 8);
         }
-        if (! XoopsLoad::fileExists($path) && $create === true) {
+        if (!XoopsLoad::fileExists($path) && $create === true) {
             $this->create($path, $this->mode);
         }
-        if (! $this->isAbsolute($path)) {
+        if (!$this->isAbsolute($path)) {
             $path1 = $this->realpath($path);
-            if ($path1 === false)
+            if ($path1 === false) {
                 throw new InvalidArgumentException($path . ' not found');
+            }
             $path = $path1;
         }
         $this->cd($path);
@@ -167,7 +168,7 @@ class XoopsFolderHandler
                 }
                 $item = false;
                 if (is_array($exceptions)) {
-                    if (! in_array($n, $exceptions, true)) {
+                    if (!in_array($n, $exceptions, true)) {
                         $item = $n;
                     }
                 } elseif ($exceptions === false || ($exceptions === true && $n{0} !== '.')) {
@@ -205,7 +206,7 @@ class XoopsFolderHandler
     public function find($regexp_pattern = '.*', $sort = false, $exceptions = false)
     {
         $data = $this->read($sort, $exceptions);
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             return [];
         }
         list($dirs, $files) = $data;
@@ -365,7 +366,7 @@ class XoopsFolderHandler
         $current = $this->slashTerm($this->pwd());
         $dir = str_replace('\\', '/', $dir);
         $current = str_replace('\\', '/', $current);
-        if (! $reverse) {
+        if (!$reverse) {
             $return = strpos($current, $dir);
         } else {
             $return = strpos($dir, $current);
@@ -386,7 +387,7 @@ class XoopsFolderHandler
      */
     public function chmod($path, $mode = false, $recursive = true, $exceptions = [])
     {
-        if (! $mode) {
+        if (!$mode) {
             $mode = $this->mode;
         }
         if ($recursive === false && is_dir($path)) {
@@ -394,9 +395,8 @@ class XoopsFolderHandler
                 $this->messages[] = sprintf('%s changed to %s', $path, $mode);
                 return true;
             }
-                $this->errors[] = sprintf('%s NOT changed to %s', $path, $mode);
-                return false;
-
+            $this->errors[] = sprintf('%s NOT changed to %s', $path, $mode);
+            return false;
         }
         if (is_dir($path)) {
             list($paths) = $this->tree($path);
@@ -469,7 +469,7 @@ class XoopsFolderHandler
         if (is_dir($pathname) || empty($pathname)) {
             return true;
         }
-        if (! $mode) {
+        if (!$mode) {
             $mode = $this->mode;
         }
         if (is_file($pathname)) {
@@ -478,14 +478,13 @@ class XoopsFolderHandler
         }
         $nextPathname = substr($pathname, 0, strrpos($pathname, '/'));
         if ($this->create($nextPathname, $mode)) {
-            if (! XoopsLoad::fileExists($pathname)) {
+            if (!XoopsLoad::fileExists($pathname)) {
                 if (mkdir($pathname, intval($mode, 8))) {
                     $this->messages[] = sprintf('%s created', $pathname);
                     return true;
                 }
-                    $this->errors[] = sprintf('%s NOT created', $pathname);
-                    return false;
-
+                $this->errors[] = sprintf('%s NOT created', $pathname);
+                return false;
             }
         }
         return true;
@@ -528,7 +527,7 @@ class XoopsFolderHandler
             $this->errors[] = sprintf('%s NOT removed', $path);
             return false;
         }
-            $this->messages[] = sprintf('%s removed', $path);
+        $this->messages[] = sprintf('%s removed', $path);
 
         return true;
     }
@@ -561,14 +560,14 @@ class XoopsFolderHandler
         $fromDir = $options['from'];
         $toDir = $options['to'];
         $mode = $options['mode'];
-        if (! $this->cd($fromDir)) {
+        if (!$this->cd($fromDir)) {
             $this->errors[] = sprintf('%s not found', $fromDir);
             return false;
         }
-        if (! is_dir($toDir)) {
+        if (!is_dir($toDir)) {
             mkdir($toDir, $mode);
         }
-        if (! is_writable($toDir)) {
+        if (!is_writable($toDir)) {
             $this->errors[] = sprintf('%s not writable', $toDir);
             return false;
         }
@@ -576,7 +575,7 @@ class XoopsFolderHandler
         $handle = opendir($fromDir);
         if ($handle) {
             while (($item = readdir($handle)) !== false) {
-                if (! in_array($item, $exceptions, true)) {
+                if (!in_array($item, $exceptions, true)) {
                     $from = $this->addPathElement($fromDir, $item);
                     $to = $this->addPathElement($toDir, $item);
                     if (is_file($from)) {
@@ -588,7 +587,7 @@ class XoopsFolderHandler
                             $this->errors[] = sprintf('%s NOT copied to %s', $from, $to);
                         }
                     }
-                    if (is_dir($from) && ! XoopsLoad::fileExists($to)) {
+                    if (is_dir($from) && !XoopsLoad::fileExists($to)) {
                         if (mkdir($to, intval($mode, 8))) {
                             chmod($to, intval($mode, 8));
                             $this->messages[] = sprintf('%s created', $to);
@@ -604,7 +603,7 @@ class XoopsFolderHandler
         } else {
             return false;
         }
-        if (! empty($this->errors)) {
+        if (!empty($this->errors)) {
             return false;
         }
         return true;

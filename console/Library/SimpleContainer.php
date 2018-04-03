@@ -3,6 +3,7 @@
 namespace XoopsConsole\Library;
 
 use ArrayObject;
+
 /**
  * A really simple container
  *

@@ -1,17 +1,16 @@
 <?php
+
 // This script displays a login screen in a popupbox when SSL is enabled in the preferences. You should use this script only when your server supports SSL. Place this file under your SSL directory
 
 // path to your xoops main directory
 //todo, check this file
 $path = '/path/to/xoops/directory';
-
 include $path . '/mainfile.php';
-if (! defined('XOOPS_ROOT_PATH')) {
+if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
 include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
 $op = (isset($_POST['op']) && $_POST['op'] === 'dologin') ? 'dologin' : 'login';
-
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 $password = isset($_POST['userpass']) ? trim($_POST['userpass']) : '';
 if ($username === '' || $password === '') {
@@ -37,7 +36,6 @@ echo '
   </head>
   <body>
 ';
-
 if ($op === 'dologin') {
     $member_handler = xoops_gethandler('member');
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -55,24 +53,19 @@ if ($op === 'dologin') {
                     break;
                 }
             }
-            if (! $allowed) {
+            if (!$allowed) {
                 redirect_header(XOOPS_URL . '/index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
                 exit();
             }
         }
         $user->setVar('last_login', time());
-        if (! $member_handler->insertUser($user)) {
+        if (!$member_handler->insertUser($user)) {
         }
         $_SESSION = [];
         $_SESSION['xoopsUserId'] = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
-        if (! empty($xoopsConfig['use_ssl'])) {
-            xoops_confirm(
-                [$xoopsConfig['sslpost_name'] => session_id()],
-                XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin',
-                XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN,
-                XoopsLocale::A_LOGIN
-            );
+        if (!empty($xoopsConfig['use_ssl'])) {
+            xoops_confirm([$xoopsConfig['sslpost_name'] => session_id()], XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', XoopsLocale::PRESS_BUTTON_BELLOW_TO_LOGIN, XoopsLocale::A_LOGIN);
         } else {
             echo sprintf(XoopsLocale::SF_THANK_YOU_FOR_LOGGING_IN, $user->getVar('uname'));
             echo '<div style="text-align:center;"><input value="' . XoopsLocale::A_CLOSE . '" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
@@ -109,4 +102,3 @@ echo '
   </body>
 </html>
 ';
-?>

@@ -22,70 +22,61 @@
 // Abstract of each filter classes
 class ProtectorFilterAbstract
 {
-    var
+    public $protector = null;
 
- $protector = null;
+    public $errors = [];
 
-    var
-
- $errors = [];
-
-    function ProtectorFilterAbstract()
+    public function ProtectorFilterAbstract()
     {
         $xoops = Xoops::getInstance();
         $language = $xoops->getConfig('language');
         $this->protector = Protector::getInstance();
-        $lang = ! $language ? @$this->protector->_conf['default_lang'] : $language;
+        $lang = !$language ? @$this->protector->_conf['default_lang'] : $language;
         @include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
-        if (! defined('_MD_PROTECTOR_YOUAREBADIP')) {
+        if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
             include_once dirname(__DIR__) . '/language/english/main.php';
         }
     }
 
-    function isMobile()
+    public function isMobile()
     {
         if (class_exists('Wizin_User')) {
             // WizMobile (gusagi)
             $user = Wizin_User::getSingleton();
             return $user->bIsMobile;
         }
-            if (defined('HYP_K_TAI_RENDER') && HYP_K_TAI_RENDER) {
-                // hyp_common ktai-renderer (nao-pon)
-                return true;
-            }
-                return false;
-
+        if (defined('HYP_K_TAI_RENDER') && HYP_K_TAI_RENDER) {
+            // hyp_common ktai-renderer (nao-pon)
+            return true;
+        }
+        return false;
     }
 }
 
 // Filter Handler class (singleton)
 class ProtectorFilterHandler
 {
-    var
+    public $protector = null;
 
- $protector = null;
+    public $filters_base = '';
 
-    var
-
- $filters_base = '';
-
-    function ProtectorFilterHandler()
+    public function ProtectorFilterHandler()
     {
         $this->protector = Protector::getInstance();
         $this->filters_base = dirname(__DIR__) . '/filters_enabled';
     }
 
-    static function getInstance()
+    public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $instance = new self();
         }
         return $instance;
     }
 
     // return: false : execute default action
-    function execute($type)
+    public function execute($type)
     {
         $ret = 0;
 

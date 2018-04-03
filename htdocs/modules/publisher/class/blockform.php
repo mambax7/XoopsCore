@@ -40,7 +40,7 @@ class PublisherBlockForm extends Xoops\Form\Form
         $ret = '<table border="0" width="100%">' . NWLINE;
         /* @var $ele Xoops\Form\Element */
         foreach ($this->getElements() as $ele) {
-            if (! $ele->isHidden()) {
+            if (!$ele->isHidden()) {
                 $ret .= '<tr><td colspan="2">';
                 $ret .= '<span style="font-weight: bold;">' . $ele->getCaption() . '</span>';
                 $ret .= '</td></tr><tr><td>' . $ele->render() . '</td></tr>';

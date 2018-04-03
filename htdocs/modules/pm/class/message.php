@@ -82,8 +82,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         if ($pm->getVar('to_delete') === 0) {
             return $this->updateAll('from_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
         }
-            return parent::delete($pm);
-
+        return parent::delete($pm);
     }
 
     /**
@@ -98,8 +97,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         if ($pm->getVar('from_delete') === 0 && $pm->getVar('from_userid') === 0) {
             return $this->updateAll('to_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
         }
-            return parent::delete($pm);
-
+        return parent::delete($pm);
     }
 
     /**
@@ -135,7 +133,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     public function getSavecount(XoopsUser $user = null)
     {
         $xoops = Xoops::getInstance();
-        if (! is_object($user)) {
+        if (!is_object($user)) {
             $user = $xoops->user;
         }
         $criteriaTo = new CriteriaCompo(new Criteria('to_delete', 0));
@@ -157,7 +155,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     public function sendEmail(PmMessage $pm, XoopsUser $user = null)
     {
         $xoops = Xoops::getInstance();
-        if (! is_object($user)) {
+        if (!is_object($user)) {
             $user = $xoops->user;
         }
         $msg = sprintf(_PM_EMAIL_DESC, $user->getVar('uname'));

@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
@@ -19,7 +20,7 @@ class XoopsXmlRpcParserTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceof('SaxParser', $instance);
 
         $handlers = $instance->tagHandlers;
-        $this->assertTrue(! empty($handlers));
+        $this->assertTrue(!empty($handlers));
         $validHandlers = ['RpcMethodNameHandler', 'RpcIntHandler', 'RpcDoubleHandler', 'RpcBooleanHandler',
             'RpcStringHandler', 'RpcDateTimeHandler', 'RpcBase64Handler', 'RpcNameHandler', 'RpcValueHandler',
             'RpcMemberHandler', 'RpcStructHandler', 'RpcArrayHandler', ];

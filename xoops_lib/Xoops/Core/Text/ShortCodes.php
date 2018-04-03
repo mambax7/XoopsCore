@@ -51,7 +51,7 @@ class ShortCodes
      */
     public function addShortcode($tag, $function)
     {
-        if (! is_callable($function)) {
+        if (!is_callable($function)) {
             throw new \ErrorException('Function must be callable');
         }
 
@@ -102,7 +102,7 @@ class ShortCodes
      */
     public function contentHasShortcode($content, $tag)
     {
-        if (! $this->hasShortcode($tag)) {
+        if (!$this->hasShortcode($tag)) {
             return false;
         }
 
@@ -211,9 +211,8 @@ class ShortCodes
             // enclosing tag - extra parameter
             return $tag[1] . call_user_func($this->shortcodes[$tagName], $attr, $tag[5], $tagName) . $tag[6];
         }
-            // self-closing tag
-            return $tag[1] . call_user_func($this->shortcodes[$tagName], $attr, null, $tagName) . $tag[6];
-
+        // self-closing tag
+        return $tag[1] . call_user_func($this->shortcodes[$tagName], $attr, null, $tagName) . $tag[6];
     }
 
     /**
@@ -231,18 +230,18 @@ class ShortCodes
     {
         $text = preg_replace("/[\x{00a0}\x{200b}]+/u", ' ', $text);
 
-        if (! preg_match_all($this->attrPattern, $text, $matches, PREG_SET_ORDER)) {
+        if (!preg_match_all($this->attrPattern, $text, $matches, PREG_SET_ORDER)) {
             return [ltrim($text)];
         }
 
         $attr = [];
 
         foreach ($matches as $match) {
-            if (! empty($match[1])) {
+            if (!empty($match[1])) {
                 $attr[strtolower($match[1])] = stripcslashes($match[2]);
-            } elseif (! empty($match[3])) {
+            } elseif (!empty($match[3])) {
                 $attr[strtolower($match[3])] = stripcslashes($match[4]);
-            } elseif (! empty($match[5])) {
+            } elseif (!empty($match[5])) {
                 $attr[strtolower($match[5])] = stripcslashes($match[6]);
             } elseif (isset($match[7]) && strlen($match[7])) {
                 $attr[] = stripcslashes($match[7]);

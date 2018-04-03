@@ -48,7 +48,7 @@ switch ($op) {
         $display_criteria = 1;
         $form = new Xoops\Form\ThemeForm(_AM_MAILUSERS_LIST, 'mailusers', 'send_mails.php', 'post', true);
         //----------------------------------------
-        if (! empty($memberslist_id) && (Request::getMethod() === 'POST')) {
+        if (!empty($memberslist_id) && (Request::getMethod() === 'POST')) {
             $user_count = count($memberslist_id);
             $display_names = '';
             for ($i = 0; $i < $user_count; ++$i) {
@@ -63,7 +63,7 @@ switch ($op) {
             $display_criteria = 0;
         }
         //----------------------------------------
-        if (! empty($display_criteria)) {
+        if (!empty($display_criteria)) {
             $selected_groups = [];
             $group_select = new Xoops\Form\SelectGroup('<div class="bold spacer">' . _AM_MAILUSERS_GROUPIS . '<span class="bold green">*</span></div>', 'mail_to_group', false, $selected_groups, 5, true);
 
@@ -172,7 +172,7 @@ switch ($op) {
         $mail_body = Request::getString('mail_body');
 
         $count_criteria = 0; // user count via criteria;
-        if (! empty($mail_send_to)) {
+        if (!empty($mail_send_to)) {
             $added = [];
             $added_id = [];
             $criteria = [];
@@ -222,12 +222,12 @@ switch ($op) {
                 }
             }
 
-            if (! empty($criteria) || ! empty($mail_to_group)) {
+            if (!empty($criteria) || !empty($mail_to_group)) {
                 $criteria_object = new CriteriaCompo();
                 $criteria_object->setStart($mail_start);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
-                    list ($field, $op, $value) = explode(' ', $c);
+                    list($field, $op, $value) = explode(' ', $c);
                     $crit = new Criteria($field, $value, $op);
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');
@@ -237,7 +237,7 @@ switch ($op) {
                 $count_criteria = $member_handler->getUserCountByGroupLink($mail_to_group, $criteria_object);
                 foreach ($getusers as $getuser) {
                     /* @var $getuser XoopsUser */
-                    if (! in_array($getuser->getVar('uid'), $added_id, true)) {
+                    if (!in_array($getuser->getVar('uid'), $added_id, true)) {
                         $added[] = $getuser;
                         $added_id[] = $getuser->getVar('uid');
                     }
@@ -245,7 +245,7 @@ switch ($op) {
             }
 
             foreach ($mail_to_user as $to_user) {
-                if (! in_array($to_user, $added_id, true)) {
+                if (!in_array($to_user, $added_id, true)) {
                     $added[] = new XoopsUser($to_user);
                     $added_id[] = $to_user;
                 }
@@ -266,7 +266,7 @@ switch ($op) {
                 if (in_array('mail', $mail_send_to, true)) {
                     $xoopsMailer->useMail();
                 }
-                if (in_array('pm', $mail_send_to, true) && ! $mail_inactive) {
+                if (in_array('pm', $mail_send_to, true) && !$mail_inactive) {
                     $xoopsMailer->usePM();
                 }
                 $xoopsMailer->send(true);

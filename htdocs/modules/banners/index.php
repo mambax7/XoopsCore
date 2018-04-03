@@ -295,7 +295,7 @@ switch ($op) {
         if ($access === false) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('index.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $bid = $Request::getInt('bid', 0);
@@ -378,7 +378,7 @@ switch ($op) {
                 $xoopsMailer->setFromName($xoops->getConfig('sitename'));
                 $xoopsMailer->setSubject($subject);
                 $xoopsMailer->setBody($message);
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     $xoops->redirect('index.php', 2, sprintf(XoopsLocale::EF_EMAIL_NOT_SENT_TO, $email));
                 }
                 $xoops->redirect('index.php', 2, _MD_BANNERS_INDEX_MAIL_OK);
@@ -401,9 +401,8 @@ switch ($op) {
                     header('Location: ' . $banner->getVar('banner_clickurl'));
                     exit();
                 }
-                    //No valid referer found so some javascript error or direct access found
-                    echo _MD_BANNERS_INDEX_NO_REFERER;
-
+                //No valid referer found so some javascript error or direct access found
+                echo _MD_BANNERS_INDEX_NO_REFERER;
             }
         }
         $xoops->redirect(\XoopsBaseConfig::get('url'), 3, _MD_BANNERS_INDEX_NO_ID);

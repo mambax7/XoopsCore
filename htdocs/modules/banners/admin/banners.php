@@ -222,7 +222,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('banners.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         $bid = Request::getInt('bid', 0);
@@ -251,7 +251,7 @@ switch ($op) {
         if ($uploader_banners_img->fetchMedia('banners_imageurl')) {
             $uploader_banners_img->setPrefix('banner');
             $uploader_banners_img->fetchMedia('banners_imageurl');
-            if (! $uploader_banners_img->upload()) {
+            if (!$uploader_banners_img->upload()) {
                 $error_msg .= $uploader_banners_img->getErrors();
             } else {
                 $obj->setVar('banner_imageurl', $xoops_upload_url . '/banners/' . $uploader_banners_img->getSavedFileName());
@@ -283,7 +283,7 @@ switch ($op) {
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
             if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-                if (! $xoops->security()->check()) {
+                if (!$xoops->security()->check()) {
                     $xoops->redirect('banners.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 $namefile = substr_replace($obj->getVar('imageurl'), '', 0, strlen($xoops_url . '/uploads/banners/'));

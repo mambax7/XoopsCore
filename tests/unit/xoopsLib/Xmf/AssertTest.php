@@ -53,7 +53,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 
     public static function getResource()
     {
-        if (! static::$resource) {
+        if (!static::$resource) {
             static::$resource = fopen(__FILE__, 'r');
         }
 
@@ -110,7 +110,8 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             ['resource', [1], false],
             ['isCallable', ['strlen'], true],
             ['isCallable', [[$this, 'getTests']], true],
-            ['isCallable', [function () {}], true],
+            ['isCallable', [function () {
+            }], true],
             ['isCallable', [1234], false],
             ['isCallable', ['foobar'], false],
             ['isArray', [[]], true],
@@ -308,12 +309,22 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             ['uuid', ['ff6f8cb0-c57da-51e1-9b21-0800200c9a66'], false],
             ['uuid', ['af6f8cb-c57d-11e1-9b21-0800200c9a66'], false],
             ['uuid', ['3f6f8cb0-c57d-11e1-9b21-0800200c9a6'], false],
-            ['throws', [function() { throw new LogicException('test'); }, 'LogicException'], true],
-            ['throws', [function() { throw new LogicException('test'); }, 'IllogicException'], false],
-            ['throws', [function() { throw new Exception('test'); }], true],
+            ['throws', [function () {
+                throw new LogicException('test');
+            }, 'LogicException'], true],
+            ['throws', [function () {
+                throw new LogicException('test');
+            }, 'IllogicException'], false],
+            ['throws', [function () {
+                throw new Exception('test');
+            }], true],
             //array('throws', array(function() { trigger_error('test'); }, 'Throwable'), true, false, 70000),
-            ['throws', [function() { trigger_error('test'); }, 'Unthrowable'], false, false, 70000],
-            ['throws', [function() { throw new Error(); }, 'Throwable'], true, true, 70000],
+            ['throws', [function () {
+                trigger_error('test');
+            }, 'Unthrowable'], false, false, 70000],
+            ['throws', [function () {
+                throw new Error();
+            }, 'Throwable'], true, true, 70000],
         ];
     }
 
@@ -338,13 +349,13 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 
             return;
         }
-        if ($multibyte && ! function_exists('mb_strlen')) {
+        if ($multibyte && !function_exists('mb_strlen')) {
             $this->markTestSkipped('The function mb_strlen() is not available');
 
             return;
         }
 
-        if (! $success) {
+        if (!$success) {
             $this->expectException('\InvalidArgumentException');
         }
 
@@ -362,13 +373,13 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 
             return;
         }
-        if ($multibyte && ! function_exists('mb_strlen')) {
+        if ($multibyte && !function_exists('mb_strlen')) {
             $this->markTestSkipped('The function mb_strlen() is not available');
 
             return;
         }
 
-        if (! $success && reset($args) !== null) {
+        if (!$success && reset($args) !== null) {
             $this->expectException('\InvalidArgumentException');
         }
 
@@ -395,13 +406,13 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 
             return;
         }
-        if ($multibyte && ! function_exists('mb_strlen')) {
+        if ($multibyte && !function_exists('mb_strlen')) {
             $this->markTestSkipped('The function mb_strlen() is not available');
 
             return;
         }
 
-        if (! $success) {
+        if (!$success) {
             $this->expectException('\InvalidArgumentException');
         }
 
@@ -422,13 +433,13 @@ class AssertTest extends \PHPUnit\Framework\TestCase
 
             return;
         }
-        if ($multibyte && ! function_exists('mb_strlen')) {
+        if ($multibyte && !function_exists('mb_strlen')) {
             $this->markTestSkipped('The function mb_strlen() is not available');
 
             return;
         }
 
-        if (! $success) {
+        if (!$success) {
             $this->expectException('\InvalidArgumentException');
         }
 

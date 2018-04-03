@@ -38,11 +38,11 @@ $helper = Notifications::getInstance();
 // to specially encode them first???
 // TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
-if (! isset($_POST['not_submit']) || ! isset($_POST['mid'])) {
+if (!isset($_POST['not_submit']) || !isset($_POST['mid'])) {
     $xoops->redirect($_POST['not_redirect'], 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
-if (! $xoops->security()->check()) {
+if (!$xoops->security()->check()) {
     $xoops->redirect($_POST['not_redirect'], 3, implode('<br />', $xoops->security()->getErrors()));
 }
 
@@ -64,8 +64,8 @@ $user_id = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
 $notification_handler = $helper->getHandlerNotification();
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
-    $status = ! empty($update_item['status']) ? 1 : 0;
-    if (! $status) {
+    $status = !empty($update_item['status']) ? 1 : 0;
+    if (!$status) {
         $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
     } else {
         $notification_handler->subscribe($category, $item_id, $event, null, $module_id);
@@ -83,7 +83,7 @@ $redirect_args = [];
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
     $category_info = $helper->getCategory($category, $module->getVar('dirname'));
-    if (! empty($category_info['item_name'])) {
+    if (!empty($category_info['item_name'])) {
         $redirect_args[$category_info['item_name']] = $item_id;
     }
 }

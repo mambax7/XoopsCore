@@ -69,10 +69,9 @@ class Logger implements LoggerInterface
     {
         $this->deprecatedMessage();
         // legacy compatibility: turn off logger display for $xoopsLogger->activated = false; usage
-        if ($var === 'activated' && ! $val) {
+        if ($var === 'activated' && !$val) {
             $this->quiet();
         }
-
     }
 
     /**
@@ -115,7 +114,7 @@ class Logger implements LoggerInterface
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
             // Always catch errors, for security reasons
@@ -261,8 +260,8 @@ class Logger implements LoggerInterface
     public function addLogger($logger)
     {
         if (is_object($logger) && method_exists($logger, 'log')) {
-                $this->loggers[] = $logger;
-                $this->logging_active = true;
+            $this->loggers[] = $logger;
+            $this->logging_active = true;
         }
     }
 
@@ -374,7 +373,7 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        if (! empty($this->loggers)) {
+        if (!empty($this->loggers)) {
             foreach ($this->loggers as $logger) {
                 if (is_object($logger)) {
                     try {
@@ -397,7 +396,7 @@ class Logger implements LoggerInterface
      */
     public function quiet()
     {
-        if (! empty($this->loggers)) {
+        if (!empty($this->loggers)) {
             foreach ($this->loggers as $logger) {
                 if (is_object($logger) && method_exists($logger, 'quiet')) {
                     try {

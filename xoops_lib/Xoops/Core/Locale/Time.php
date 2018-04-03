@@ -63,12 +63,12 @@ class Time
      */
     public static function describeRelativeInterval($dateEnd, $dateStart = null, $width = '', $locale = '')
     {
-        if (! is_a($dateEnd, '\DateTime')) {
+        if (!is_a($dateEnd, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
         }
         if (empty($dateStart) && ($dateStart !== 0) && ($dateStart !== '0')) {
             $dateStart = new \DateTime('now');
-        } elseif (! is_a($dateStart, '\DateTime')) {
+        } elseif (!is_a($dateStart, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
         } else {
             $dateStart = clone $dateStart;
@@ -82,7 +82,7 @@ class Time
         $data = Data::get('dateFields', $locale);
 
         $diff = $dateStart->diff($dateEnd, false);
-        $past = (boolean) $diff->invert;
+        $past = (bool) $diff->invert;
         $value = 0;
         $key = '';
         if ($diff->y !== 0) {
@@ -124,7 +124,7 @@ class Time
                 $relPattern = 'relativeTimePattern-count-' . $rule;
             }
         }
-        if (! empty($width) && array_key_exists($key . '-' . $width, $data)) {
+        if (!empty($width) && array_key_exists($key . '-' . $width, $data)) {
             $key .= '-' . $width;
         }
         if (empty($relPattern)) {

@@ -26,7 +26,7 @@ include __DIR__ . '/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->events()->triggerEvent('core.readpmsg.start');
 
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect('user.php', 2, XoopsLocale::E_YOU_ARE_NOT_REGISTERED);
 }
 
@@ -62,7 +62,7 @@ switch ($op) {
                 $pm_handler->setRead($pm_arr[0]);
             }
             $poster = new XoopsUser($pm_arr[0]->getVar('from_userid'));
-            if (! is_object($poster)) {
+            if (!is_object($poster)) {
                 $xoops->tpl()->assign('poster', false);
                 $xoops->tpl()->assign('anonymous', $xoopsConfig['anonymous']);
             } else {
@@ -86,7 +86,7 @@ switch ($op) {
     case 'delete':
         $obj = $pm_handler->get($id);
         if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('viewpmsg.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($pm_handler->delete($obj)) {

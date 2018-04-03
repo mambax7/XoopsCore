@@ -42,7 +42,7 @@ class Read extends XoopsModelAbstract
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
         if (is_array($fields) && count($fields) > 0) {
-            if (! in_array($this->handler->keyName, $fields, true)) {
+            if (!in_array($this->handler->keyName, $fields, true)) {
                 $fields[] = $this->handler->keyName;
             }
             $first = true;
@@ -64,7 +64,7 @@ class Read extends XoopsModelAbstract
 
         $ret = [];
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
         if ($asObject) {
@@ -127,7 +127,7 @@ class Read extends XoopsModelAbstract
         $ret = [];
 
         $qb->select($this->handler->keyName);
-        if (! empty($this->handler->identifierName)) {
+        if (!empty($this->handler->identifierName)) {
             $qb->addSelect($this->handler->identifierName);
         }
         $qb->from($this->handler->table, null);
@@ -136,11 +136,11 @@ class Read extends XoopsModelAbstract
                 ->setMaxResults($limit);
         }
         $qb->orderBy($this->handler->keyName); // any criteria order will override
-        if (! empty($criteria)) {
+        if (!empty($criteria)) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
 
@@ -168,11 +168,11 @@ class Read extends XoopsModelAbstract
 
         $qb->select($this->handler->keyName);
         $qb->from($this->handler->table, null);
-        if (! empty($criteria)) {
+        if (!empty($criteria)) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
-        if (! $result) {
+        if (!$result) {
             return $ret;
         }
 

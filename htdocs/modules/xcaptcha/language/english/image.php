@@ -19,10 +19,10 @@
 
 define('_MI_XCAPTCHA_ADMENU_IMAGE', 'Image');
 
-if (! defined('_XCAPTCHA_IMAGE')) {
+if (!defined('_XCAPTCHA_IMAGE')) {
     define('_XCAPTCHA_FORM_IMAGE', 'Configuration CAPTCHA : Image');
 
-    if (! defined('_XCAPTCHA_NUM_CHARS')) {
+    if (!defined('_XCAPTCHA_NUM_CHARS')) {
         define('_XCAPTCHA_NUM_CHARS', 'Number of characters');
     }
     define('_XCAPTCHA_CASESENSITIVE', 'Case insensitive');

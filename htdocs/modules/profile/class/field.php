@@ -79,7 +79,7 @@ class ProfileField extends XoopsObject
     public function getVar($key, $format = 's')
     {
         $value = parent::getVar($key, $format);
-        if ($key === 'field_options' && ! empty($value)) {
+        if ($key === 'field_options' && !empty($value)) {
             foreach (array_keys($value) as $idx) {
                 $value[$idx] = base64_decode($value[$idx], true);
             }
@@ -137,7 +137,7 @@ class ProfileField extends XoopsObject
             case 'select':
                 $element = new Xoops\Form\Select($caption, $name, $value);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
-                if (! in_array('', array_keys($options), true)) {
+                if (!in_array('', array_keys($options), true)) {
                     $element->addOption('', XoopsLocale::NONE);
 
                     $eltmsg = empty($caption) ? sprintf(XoopsLocale::F_ENTER, $name) : sprintf(XoopsLocale::F_ENTER, $caption);
@@ -211,14 +211,14 @@ class ProfileField extends XoopsObject
                 $handle = opendir(\XoopsBaseConfig::get('themes-path') . '/');
                 $dirlist = [];
                 while (($file = readdir($handle)) !== false) {
-                    if (is_dir(\XoopsBaseConfig::get('themes-path') . '/' . $file) && ! preg_match('/^[.]{1,2}$/', $file) && strtolower($file) !== 'cvs') {
+                    if (is_dir(\XoopsBaseConfig::get('themes-path') . '/' . $file) && !preg_match('/^[.]{1,2}$/', $file) && strtolower($file) !== 'cvs') {
                         if (XoopsLoad::fileExists(\XoopsBaseConfig::get('themes-path') . '/' . $file . '/theme.tpl') && in_array($file, $xoops->getConfig('theme_set_allowed'), true)) {
                             $dirlist[$file] = $file;
                         }
                     }
                 }
                 closedir($handle);
-                if (! empty($dirlist)) {
+                if (!empty($dirlist)) {
                     asort($dirlist);
                     $element->addOptionArray($dirlist);
                 }
@@ -321,7 +321,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'datetime':
-                if (! empty($value)) {
+                if (!empty($value)) {
                     return XoopsLocale::formatTimestamp($value, 'm');
                 }
                     return _PROFILE_MI_NEVER_LOGGED_IN;
@@ -395,7 +395,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'datetime':
-                if (! empty($value)) {
+                if (!empty($value)) {
                     return strtotime($value['date']) + (int) ($value['time']);
                 }
                 return $value;
@@ -436,7 +436,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
     public function loadFields($force_update = false)
     {
         static $fields = [];
-        if (! empty($force_update) || count($fields) === 0) {
+        if (!empty($force_update) || count($fields) === 0) {
             $this->table_link = $this->db2->prefix('profile_category');
             $criteria = new Criteria('o.field_id', 0, '!=');
             $criteria->setSort('l.cat_weight ASC, o.field_weight');
@@ -511,7 +511,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             $obj->setVar('field_valuetype', Dtype::TYPE_TEXT_BOX);
         }
 
-        if (! in_array($obj->getVar('field_name'), $this->getUserVars(), true)) {
+        if (!in_array($obj->getVar('field_name'), $this->getUserVars(), true)) {
             if ($obj->isNew()) {
                 //add column to table
                 $changetype = 'ADD';
@@ -530,7 +530,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                 case Dtype::TYPE_URL:
                     $type = 'varchar';
                     // varchars must have a maxlength
-                    if (! $maxlengthstring) {
+                    if (!$maxlengthstring) {
                         //so set it to max if maxlength is not set - or should it fail?
                         $maxlengthstring = '(255)';
                         $obj->setVar('field_maxlength', 255);
@@ -565,18 +565,17 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             if ($force) {
                 $this->db2->setForce(true);
             }
-            if (! $this->db2->query($sql)) {
+            if (!$this->db2->query($sql)) {
                 return false;
             }
         }
 
         //change this to also update the cached field information storage
         $obj->setDirty();
-        if (! parent::insert($obj, $force)) {
+        if (!parent::insert($obj, $force)) {
             return false;
         }
         return $obj->getVar('field_id');
-
     }
 
     /**
@@ -594,7 +593,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
         if ($this->db2->query($sql)) {
             //change this to update the cached field information storage
-            if (! parent::delete($obj, $force)) {
+            if (!parent::delete($obj, $force)) {
                 return false;
             }
 

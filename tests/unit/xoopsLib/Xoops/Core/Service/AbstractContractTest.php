@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../../init_new.php');
 
 use Xoops\Core\Service\AbstractContract;
@@ -6,7 +7,7 @@ use Xoops\Core\Service\Manager;
 
 class AbstractContractTestInstance extends AbstractContract
 {
-    const MODE = Manager::MODE_EXCLUSIVE;
+    public const MODE = Manager::MODE_EXCLUSIVE;
 
     public function getName()
     {

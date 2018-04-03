@@ -27,66 +27,56 @@
 use Xoops\Cache;
 use Xoops\Core\Lists\File;
 use XoopsBaseConfig;
+
 class XoopsCaptchaImageHandler
 {
     /**
      * @var array
      */
     public $config = [];
-
     /**
-     * @var string
-     */
+         * @var string
+         */
     public $code;
-
     /**
-     * @var string
-     */
+         * @var string
+         */
     public $mode = 'gd';
-
     /**
-     * @var bool
-     */
+         * @var bool
+         */
     public $invalid = false;
-
     /**
-     * @var string
-     */
+         * @var string
+         */
     public $font;
-
     /**
-     * @var int
-     */
+         * @var int
+         */
     public $spacing;
-
     /**
-     * @var int
-     */
+         * @var int
+         */
     public $width;
-
     /**
-     * @var int
-     */
+         * @var int
+         */
     public $height;
-
     /**
-     * @var XoopsCaptcha
-     */
+         * @var XoopsCaptcha
+         */
     public $xoopsCaptcha;
-
     /**
-     * @var object
-     */
+         * @var object
+         */
     public $object;
-
     /**
-     * @var string
-     */
+         * @var string
+         */
     protected $xoops_root_path;
-
     /**
-     * Constructor
-     */
+         * Constructor
+         */
     public function __construct()
     {
         $this->xoopsCaptcha = XoopsCaptcha::getInstance();
@@ -116,19 +106,16 @@ class XoopsCaptchaImageHandler
 
         if ($this->mode === 'bmp') {
             $this->config['num_chars'] = 4;
-            $this->code = mt_rand(
-                pow(10, $this->config['num_chars'] - 1),
-                (int) (str_pad('9', $this->config['num_chars'], '9'))
-            );
+            $this->code = mt_rand(pow(10, $this->config['num_chars'] - 1), (int) (str_pad('9', $this->config['num_chars'], '9')));
         } else {
             $raw_code = md5(uniqid(mt_rand(), 1));
-            if (! empty($this->config['skip_characters'])) {
+            if (!empty($this->config['skip_characters'])) {
                 $valid_code = str_replace($this->config['skip_characters'], '', $raw_code);
                 $this->code = substr($valid_code, 0, $this->config['num_chars']);
             } else {
                 $this->code = substr($raw_code, 0, $this->config['num_chars']);
             }
-            if (! $this->config['casesensitive']) {
+            if (!$this->config['casesensitive']) {
                 $this->code = strtoupper($this->code);
             }
         }
@@ -152,8 +139,7 @@ class XoopsCaptchaImageHandler
         if ($this->mode === 'bmp') {
             return $this->createImageBmp();
         }
-            return $this->createImageGd();
-
+        return $this->createImageGd();
     }
 
     /**
@@ -195,37 +181,59 @@ class XoopsCaptchaImageHandler
     {
         $this->loadFont();
         $this->setImageSize();
-
         $this->object = imagecreatetruecolor($this->width, $this->height);
         $background = imagecolorallocate($this->object, 255, 255, 255);
         imagefilledrectangle($this->object, 0, 0, $this->width, $this->height, $background);
         switch ($this->config['background_type']) {
-            case 0:
-                $this->drawBars();
-                break;
-            case 1:
-                $this->drawCircles();
-                break;
-            case 2:
-                $this->drawLines();
-                break;
-            case 3:
-                $this->drawRectangles();
-                break;
-            case 4:
-                $this->drawEllipses();
-                break;
-            case 5:
-                $this->drawPolygons();
-                break;
-            case 100:
-                $this->createFromFile();
-                break;
-            default:
-        }
+case 0:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawBars();
+
+
+break;
+case 1:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawCircles();
+
+
+break;
+case 2:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawLines();
+
+
+break;
+case 3:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawRectangles();
+
+
+break;
+case 4:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawEllipses();
+
+
+break;
+case 5:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->drawPolygons();
+
+
+break;
+case 100:
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  $this->createFromFile();
+
+
+break;
+default:
+        
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  }
         $this->drawBorder();
         $this->drawCode();
-
         header('Content-type: image/jpeg');
         imagejpeg($this->object);
         imagedestroy($this->object);
@@ -253,7 +261,8 @@ class XoopsCaptchaImageHandler
         $oImage = imagecreatetruecolor(100, 100);
         $FontSize = $this->config['fontsize_max'];
         for ($Angle = -30; $Angle <= 30; ++$Angle) {
-            for ($i = 65; $i <= 90; ++$i) {
+            for ($i = 65; $i <= 90;
+++$i) {
                 $CharDetails = imageftbbox($FontSize, $Angle, $this->font, chr($i), []);
                 $_MaxCharWidth = abs($CharDetails[0] + $CharDetails[2]);
                 if ($_MaxCharWidth > $MaxCharWidth) {
@@ -266,7 +275,6 @@ class XoopsCaptchaImageHandler
             }
         }
         imagedestroy($oImage);
-
         $this->height = $MaxCharHeight + 2;
         $this->spacing = (int) (($this->config['num_chars'] * $MaxCharWidth) / $this->config['num_chars']);
         $this->width = (int) (($this->config['num_chars'] * $MaxCharWidth) + ($this->spacing / 2));
@@ -281,9 +289,7 @@ class XoopsCaptchaImageHandler
     {
         $RandBackground = null;
         if ($backgrounds = $this->getList('backgrounds', '(gif|jpg|png)')) {
-            $RandBackground = $this->xoops_root_path . '/class/captcha/image/backgrounds/' . $backgrounds[array_rand(
-                $backgrounds
-            )];
+            $RandBackground = $this->xoops_root_path . '/class/captcha/image/backgrounds/' . $backgrounds[array_rand($backgrounds)];
         }
         return $RandBackground;
     }
@@ -296,30 +302,29 @@ class XoopsCaptchaImageHandler
         if ($RandImage = $this->loadBackground()) {
             $ImageType = @getimagesize($RandImage);
             switch (@$ImageType[2]) {
-            case 1:
-                $BackgroundImage = imagecreatefromgif($RandImage);
-                break;
-            case 2:
-                $BackgroundImage = imagecreatefromjpeg($RandImage);
-                break;
-            case 3:
-                $BackgroundImage = imagecreatefrompng($RandImage);
-                break;
-            }
+case 1:
+                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $BackgroundImage = imagecreatefromgif($RandImage);
+
+
+break;
+case 2:
+                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $BackgroundImage = imagecreatefromjpeg($RandImage);
+
+
+break;
+case 3:
+                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $BackgroundImage = imagecreatefrompng($RandImage);
+
+
+break;
+
+}
         }
-        if (isset($BackgroundImage) && ! empty($BackgroundImage)) {
-            imagecopyresized(
-                $this->object,
-                $BackgroundImage,
-                0,
-                0,
-                0,
-                0,
-                imagesx($this->object),
-                imagesy($this->object),
-                imagesx($BackgroundImage),
-                imagesy($BackgroundImage)
-            );
+        if (isset($BackgroundImage) && !empty($BackgroundImage)) {
+            imagecopyresized($this->object, $BackgroundImage, 0, 0, 0, 0, imagesx($this->object), imagesy($this->object), imagesx($BackgroundImage), imagesy($BackgroundImage));
             imagedestroy($BackgroundImage);
         } else {
             $this->drawBars();
@@ -331,10 +336,10 @@ class XoopsCaptchaImageHandler
      */
     public function drawCode()
     {
-        for ($i = 0; $i < $this->config['num_chars']; ++$i) {
+        for ($i = 0; $i < $this->config['num_chars'];
+++$i) {
             // select random greyscale colour
             $text_color = imagecolorallocate($this->object, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
-
             // write text to image
             $Angle = mt_rand(10, 30);
             if (($i % 2)) {
@@ -343,17 +348,25 @@ class XoopsCaptchaImageHandler
 
             // select random font size
             $FontSize = mt_rand($this->config['fontsize_min'], $this->config['fontsize_max']);
-
             $CharDetails = imageftbbox($FontSize, $Angle, $this->font, $this->code[$i], []);
             $CharHeight = abs($CharDetails[1] + $CharDetails[5]);
-
             // calculate character starting coordinates
             $posX = ($this->spacing / 2) + ($i * $this->spacing);
             $posY = 2 + ($this->height / 2) + ($CharHeight / 4);
 
             imagefttext(
-                $this->object, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], []
-            );
+    
+                $this->object,
+    $FontSize,
+    $Angle,
+    $posX,
+    $posY,
+    $text_color,
+    $this->font,
+    $this->code[$i],
+[]
+            
+    );
         }
     }
 
@@ -372,16 +385,10 @@ class XoopsCaptchaImageHandler
      */
     public function drawCircles()
     {
-        for ($i = 1; $i <= $this->config['background_num']; ++$i) {
+        for ($i = 1; $i <= $this->config['background_num'];
+++$i) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imagefilledellipse(
-                $this->object,
-                mt_rand(0, $this->width - 10),
-                mt_rand(0, $this->height - 3),
-                mt_rand(10, 20),
-                mt_rand(20, 30),
-                $randomcolor
-            );
+            imagefilledellipse($this->object, mt_rand(0, $this->width - 10), mt_rand(0, $this->height - 3), mt_rand(10, 20), mt_rand(20, 30), $randomcolor);
         }
     }
 
@@ -390,16 +397,10 @@ class XoopsCaptchaImageHandler
      */
     public function drawLines()
     {
-        for ($i = 0; $i < $this->config['background_num']; ++$i) {
+        for ($i = 0; $i < $this->config['background_num'];
+++$i) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageline(
-                $this->object,
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                $randomcolor
-            );
+            imageline($this->object, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
         }
     }
 
@@ -408,16 +409,10 @@ class XoopsCaptchaImageHandler
      */
     public function drawRectangles()
     {
-        for ($i = 1; $i <= $this->config['background_num']; ++$i) {
+        for ($i = 1; $i <= $this->config['background_num'];
+++$i) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imagefilledrectangle(
-                $this->object,
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                $randomcolor
-            );
+            imagefilledrectangle($this->object, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
         }
     }
 
@@ -426,12 +421,14 @@ class XoopsCaptchaImageHandler
      */
     public function drawBars()
     {
-        for ($i = 0; $i <= $this->height;) {
+        for ($i = 0; $i <= $this->height;
+) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
             imageline($this->object, 0, $i, $this->width, $i, $randomcolor);
             $i = $i + 2.5;
         }
-        for ($i = 0; $i <= $this->width;) {
+        for ($i = 0; $i <= $this->width;
+) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
             imageline($this->object, $i, 0, $i, $this->height, $randomcolor);
             $i = $i + 2.5;
@@ -443,16 +440,10 @@ class XoopsCaptchaImageHandler
      */
     public function drawEllipses()
     {
-        for ($i = 1; $i <= $this->config['background_num']; ++$i) {
+        for ($i = 1; $i <= $this->config['background_num'];
+++$i) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
-            imageellipse(
-                $this->object,
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                mt_rand(0, $this->width),
-                mt_rand(0, $this->height),
-                $randomcolor
-            );
+            imageellipse($this->object, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
         }
     }
 
@@ -463,10 +454,12 @@ class XoopsCaptchaImageHandler
      */
     public function drawPolygons()
     {
-        for ($i = 1; $i <= $this->config['background_num']; ++$i) {
+        for ($i = 1; $i <= $this->config['background_num'];
+++$i) {
             $randomcolor = imagecolorallocate($this->object, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
             $coords = [];
-            for ($j = 1; $j <= $this->config['polygon_point']; ++$j) {
+            for ($j = 1; $j <= $this->config['polygon_point'];
+++$j) {
                 $coords[] = mt_rand(0, $this->width);
                 $coords[] = mt_rand(0, $this->height);
             }
@@ -486,13 +479,11 @@ class XoopsCaptchaImageHandler
     public function createImageBmp($file = '')
     {
         $image = '';
-
         if (empty($file)) {
             header('Content-type: image/bmp');
             echo $image;
             exit();
         }
-            return $image;
-
+        return $image;
     }
 }

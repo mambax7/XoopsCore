@@ -61,7 +61,7 @@ if (empty($getuser)) {
         $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
         $xoopsMailer->setSubject(sprintf(XoopsLocale::F_NEW_PASSWORD_REQUEST_AT, \XoopsBaseConfig::get('url')));
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
         // Next step: add the new password to the database
@@ -72,7 +72,7 @@ if (empty($getuser)) {
             $xoops->footer();
         }
         $xoops->redirect('user.php', 3, sprintf(XoopsLocale::SF_PASSWORD_SENT_TO, $userObject->getVar('uname')), false);
-        // If no Code, send it
+    // If no Code, send it
     } else {
         $xoopsMailer = $xoops->getMailer();
         $xoopsMailer->useMail();
@@ -87,7 +87,7 @@ if (empty($getuser)) {
         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
         $xoopsMailer->setSubject(sprintf(XoopsLocale::F_NEW_PASSWORD_REQUEST_AT, $xoops->getConfig('sitename')));
         $xoops->header();
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoops->alert('error', $xoopsMailer->getErrors(false));
         } else {
             echo $xoops->alert('success', sprintf(XoopsLocale::F_CONFIRMATION_EMAIL_SENT, $userObject->getVar('uname')));

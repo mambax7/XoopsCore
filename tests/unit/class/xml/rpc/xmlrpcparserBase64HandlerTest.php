@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class RpcBase64HandlerTest extends \PHPUnit\Framework\TestCase

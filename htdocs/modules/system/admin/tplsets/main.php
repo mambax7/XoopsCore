@@ -28,7 +28,7 @@ $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -100,7 +100,7 @@ switch ($op) {
 
     //overload template
     case 'tpls_overload':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=tplsets', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         // Assign Breadcrumb menu
@@ -118,10 +118,10 @@ switch ($op) {
                 $verif_write = false;
                 $text = '';
 
-                if (! is_dir($template_overload)) {
+                if (!is_dir($template_overload)) {
                     //Creation du dossier modules
 
-                    if (! is_dir($template_overload)) {
+                    if (!is_dir($template_overload)) {
                         mkdir($template_overload, 0777);
                     }
                     chmod($template_overload, 0777);
@@ -153,15 +153,15 @@ switch ($op) {
                                 $module = $xoops->getModuleByDirname($moddir);
                                 if (is_object($module)) {
                                     // create module folder
-                                    if (! is_dir($template_overload . '/' . $module->getVar('dirname'))) {
+                                    if (!is_dir($template_overload . '/' . $module->getVar('dirname'))) {
                                         mkdir($template_overload . '/' . $module->getVar('dirname'), 0777);
                                         chmod($template_overload . '/' . $module->getVar('dirname'), 0777);
                                         copy($indexFile, $template_overload . '/' . $module->getVar('dirname') . '/index.html');
                                     }
 
                                     // create block folder
-                                    if (! is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
-                                        if (! is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
+                                    if (!is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
+                                        if (!is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
                                             mkdir($template_overload . '/' . $module->getVar('dirname') . '/blocks', 0777);
                                         }
                                         chmod($template_overload . '/' . $module->getVar('dirname') . '/blocks', 0777);
@@ -181,7 +181,7 @@ switch ($op) {
                                             $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
-                                                if (! XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
+                                                if (!XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
                                                     $open = fopen($physical_file, 'w+');
                                                     if (fwrite($open, '' . html_entity_decode($tplfile->getVar('tpl_source', 'E'), ENT_QUOTES))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . XoopsLocale::TEMPLATES . '</td><td>' . $physical_file . '</td><td align="center">';
@@ -208,7 +208,7 @@ switch ($op) {
                                             $btplfile = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
-                                                if (! XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
+                                                if (!XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
                                                     $open = fopen($physical_file, 'w+');
                                                     if (fwrite($open, '' . utf8_encode(html_entity_decode($btplfile->getVar('tpl_source', 'E'))) . '')) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . XoopsLocale::BLOCKS . '</td><td>' . $physical_file . '</td><td align="center">';
@@ -241,15 +241,15 @@ switch ($op) {
                             $module = $xoops->getModuleByDirname($moddir);
                             if (is_object($module)) {
                                 // create module folder
-                                if (! is_dir($template_overload . '/' . $module->getVar('dirname'))) {
+                                if (!is_dir($template_overload . '/' . $module->getVar('dirname'))) {
                                     mkdir($template_overload . '/' . $module->getVar('dirname'), 0777);
                                     chmod($template_overload . '/' . $module->getVar('dirname'), 0777);
                                     copy($indexFile, $template_overload . '/' . $module->getVar('dirname') . '/index.html');
                                 }
 
                                 // create block folder
-                                if (! is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
-                                    if (! is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
+                                if (!is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
+                                    if (!is_dir($template_overload . '/' . $module->getVar('dirname') . '/blocks')) {
                                         mkdir($template_overload . '/' . $module->getVar('dirname') . '/blocks', 0777);
                                     }
                                     chmod($template_overload . '/' . $module->getVar('dirname') . '/blocks', 0777);
@@ -270,7 +270,7 @@ switch ($op) {
                                             $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
-                                                if (! XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
+                                                if (!XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
                                                     if ($select_templates_modules[$l] === $filename) {
                                                         $open = fopen($physical_file, 'w+');
                                                         if (fwrite($open, html_entity_decode($tplfile->getVar('tpl_source', 'E'), ENT_QUOTES))) {
@@ -299,7 +299,7 @@ switch ($op) {
                                             $btplfile = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
-                                                if (! XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
+                                                if (!XoopsLoad::fileExists($physical_file) || $_REQUEST['force_generated'] === 1) {
                                                     if ($select_templates_modules[$l] === $filename) {
                                                         $open = fopen($physical_file, 'w+');
                                                         if (fwrite($open, utf8_encode(html_entity_decode($btplfile->getVar('tpl_source', 'E'))) . '')) {
@@ -360,15 +360,15 @@ switch ($op) {
 
     // save
     case 'tpls_save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=tplsets', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $clean_path_file = Request::getString('path_file', '');
-        if (! empty($clean_path_file)) {
+        if (!empty($clean_path_file)) {
             $path_file = realpath(\XoopsBaseConfig::get('themes-path') . '/' . trim($clean_path_file));
             $path_file = str_replace('\\', '/', $path_file);
             $pathInfo = pathinfo($path_file);
-            if (! in_array($pathInfo['extension'], ['css', 'html', 'tpl'], true)) {
+            if (!in_array($pathInfo['extension'], ['css', 'html', 'tpl'], true)) {
                 $xoops->redirect('admin.php?fct=tplsets', 2, XoopsLocale::E_NOT_DONE);
             }
             // copy file
@@ -377,7 +377,7 @@ switch ($op) {
             // Save modif
             if (isset($_REQUEST['templates'])) {
                 $open = fopen($path_file, 'w+');
-                if (! fwrite($open, utf8_encode(stripslashes($_REQUEST['templates'])))) {
+                if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['templates'])))) {
                     $xoops->redirect('admin.php?fct=tplsets', 2, XoopsLocale::E_NOT_DONE);
                 }
                 fclose($open);

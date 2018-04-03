@@ -13,7 +13,6 @@ use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
-
 /**
  * Extended User Profile
  *

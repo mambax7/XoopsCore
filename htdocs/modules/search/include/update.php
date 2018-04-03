@@ -46,10 +46,7 @@ function xoops_module_update_search(XoopsModule $module)
                 $config_handler->insertConfig($obj);
                 $config_handler->deleteConfig($configs[$i]);
             }
-
         }
-
     }
     return true;
-
 }

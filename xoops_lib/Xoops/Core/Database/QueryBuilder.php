@@ -11,7 +11,6 @@
 
 namespace Xoops\Core\Database;
 
-
 /**
  * Connection wrapper for Doctrine DBAL Connection
  *

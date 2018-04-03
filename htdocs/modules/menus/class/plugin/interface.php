@@ -31,4 +31,3 @@ interface MenusPluginInterface
      */
     public function subMenus();
 }
-

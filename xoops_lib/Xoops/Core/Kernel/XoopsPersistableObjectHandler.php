@@ -171,7 +171,7 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
     public function loadHandler($name, $args = null)
     {
         static $handlers;
-        if (! isset($handlers[$name])) {
+        if (!isset($handlers[$name])) {
             $xmf = XoopsModelFactory::getInstance();
             $handlers[$name] = $xmf->loadHandler($this, $name, $args);
         }
@@ -238,7 +238,7 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
         if (is_array($fields) && count($fields) > 0) {
-            if (! in_array($this->keyName, $fields, true)) {
+            if (!in_array($this->keyName, $fields, true)) {
                 $fields[] = $this->keyName;
             }
             $first = true;
@@ -256,11 +256,11 @@ abstract class XoopsPersistableObjectHandler extends XoopsObjectHandler
         $qb->from($this->table, null)
             ->where($eb->eq($this->keyName, ':id'))
             ->setParameter(':id', $id, \PDO::PARAM_INT);
-        if (! $result = $qb->execute()) {
+        if (!$result = $qb->execute()) {
             return $object;
         }
         $row = $result->fetch(\PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return $object;
         }
         $object = $this->create(false);

@@ -25,7 +25,7 @@ function b_system_info_show($options)
     $xoops->db();
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
     $block = [];
-    if (! empty($options[3])) {
+    if (!empty($options[3])) {
         $block['showgroups'] = true;
         $qb = $xoops->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();

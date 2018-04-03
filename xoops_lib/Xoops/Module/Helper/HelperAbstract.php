@@ -65,7 +65,7 @@ abstract class HelperAbstract
         if ($className === 'Xoops\Module\Helper\Dummy') {
             $id = @\Xoops::getInstance()->registry()->get('module_helper_id');
         }
-        if (! isset($instance[$id])) {
+        if (!isset($instance[$id])) {
             /* @var $class HelperAbstract */
             $class = new $className();
             $class->init();
@@ -112,7 +112,7 @@ abstract class HelperAbstract
             return $configs;
         }
         $name = strtolower($name);
-        if (! isset($configs[$name])) {
+        if (!isset($configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
             return $default;
         }
@@ -290,7 +290,7 @@ abstract class HelperAbstract
         } else {
             $this->module = $this->xoops()->getModuleByDirname($this->dirname);
         }
-        if (! $this->module instanceof XoopsModule) {
+        if (!$this->module instanceof XoopsModule) {
             $this->module = $this->xoops()->getHandlerModule()->create();
         }
         $this->addLog('Loading module');

@@ -17,7 +17,6 @@ class HelperTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-
         $this->object = Helper::getHelper();
     }
 

@@ -27,7 +27,7 @@ class Calendar extends \Punic\Calendar
                 //return $value->format('y');
             default:
                 $s = $value->format('Y');
-                if (! isset($s[$count])) {
+                if (!isset($s[$count])) {
                     $s = str_pad($s, $count, '0', STR_PAD_LEFT);
                 }
 

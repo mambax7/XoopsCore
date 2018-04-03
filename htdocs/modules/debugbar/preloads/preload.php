@@ -139,7 +139,7 @@ class DebugbarPreload extends PreloadItem
             $tpl->debugging_ctrl = 'URL';
         }
         if ($configs['debug_smarty_enable']) {
-                $tpl->debugging = Smarty::DEBUG_ON;
+            $tpl->debugging = Smarty::DEBUG_ON;
         }
     }
 
@@ -192,7 +192,6 @@ class DebugbarPreload extends PreloadItem
         //Logger::getInstance()->addBlock($block->getVar('name'), $isCached, $block->getVar('bcachetime'));
         $context = ['channel' => 'Blocks', 'cached' => $isCached, 'cachetime' => $block->getVar('bcachetime')];
         DebugbarLogger::getInstance()->log(LogLevel::INFO, $block->getVar('name'), $context);
-
     }
 
     /**
@@ -296,7 +295,6 @@ class DebugbarPreload extends PreloadItem
     {
         $context = ['channel' => 'Extra', 'name' => $args[0]];
         DebugbarLogger::getInstance()->log(LogLevel::DEBUG, $args[1], $context);
-
     }
 
     /**

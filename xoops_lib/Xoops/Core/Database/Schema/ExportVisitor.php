@@ -61,7 +61,6 @@ class ExportVisitor implements Visitor
      */
     public function acceptSchema(Schema $schema)
     {
-
     }
 
     /**
@@ -95,7 +94,7 @@ class ExportVisitor implements Visitor
      */
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
-        if (! isset($this->schemaArray['tables'][$localTable->getName()]['constraint'])) {
+        if (!isset($this->schemaArray['tables'][$localTable->getName()]['constraint'])) {
             $this->schemaArray['tables'][$localTable->getName()]['constraint'] = [];
         }
         $this->schemaArray['tables'][$localTable->getName()]['constraint'][] = [
@@ -105,7 +104,6 @@ class ExportVisitor implements Visitor
             'foreigncolumns' => $fkConstraint->getForeignColumns(),
             'options' => $fkConstraint->getOptions(),
         ];
-
     }
 
     /**

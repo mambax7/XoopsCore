@@ -140,11 +140,9 @@ class XoopsUser extends XoopsObject
                     if ($name !== '') {
                         return $ts->htmlSpecialChars($name);
                     }
-                        return $ts->htmlSpecialChars($user->getVar('uname'));
-
-                }
                     return $ts->htmlSpecialChars($user->getVar('uname'));
-
+                }
+                return $ts->htmlSpecialChars($user->getVar('uname'));
             }
         }
         return $xoops->getConfig('anonymous');
@@ -230,7 +228,7 @@ class XoopsUser extends XoopsObject
     public function rank()
     {
         $xoops = \Xoops::getInstance();
-        if (! isset($this->rank)) {
+        if (!isset($this->rank)) {
             $this->rank = $xoops->service('userrank')->getUserRank($this)->getValue();
         }
         return $this->rank;
@@ -256,7 +254,7 @@ class XoopsUser extends XoopsObject
      */
     public function isOnline()
     {
-        if (! isset($this->isOnline)) {
+        if (!isset($this->isOnline)) {
             $online_handler = \Xoops::getInstance()->getHandlerOnline();
             $this->isOnline =
                 ($online_handler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;

@@ -53,7 +53,7 @@ abstract class XoopsModelAbstract
      */
     public function setVars($args)
     {
-        if (! empty($args) && is_array($args)) {
+        if (!empty($args) && is_array($args)) {
             foreach ($args as $key => $value) {
                 $this->{$key} = $value;
             }

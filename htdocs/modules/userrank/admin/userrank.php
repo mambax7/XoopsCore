@@ -113,7 +113,7 @@ switch ($op) {
 
     // Save rank
     case 'userrank_save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('userrank.php', 3, implode(',', $xoops->security()->getErrors()));
         }
         if (isset($_POST['rank_id'])) {
@@ -133,7 +133,7 @@ switch ($op) {
         if ($uploader_rank_img->fetchMedia('rank_image')) {
             $uploader_rank_img->setPrefix('rank');
             $uploader_rank_img->fetchMedia('rank_image');
-            if (! $uploader_rank_img->upload()) {
+            if (!$uploader_rank_img->upload()) {
                 $errors = $uploader_rank_img->getErrors();
                 $xoops->redirect('javascript:history.go(-1)', 3, $errors);
             } else {
@@ -156,7 +156,7 @@ switch ($op) {
         $rank_id = $system->cleanVars($_REQUEST, 'rank_id', 0, 'int');
         $obj = $userrank_Handler->get($rank_id);
         if (isset($_POST['ok']) && $_POST['ok'] === 1) {
-            if (! $xoops->security()->check()) {
+            if (!$xoops->security()->check()) {
                 $xoops->redirect('userrank.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($userrank_Handler->delete($obj)) {
@@ -184,7 +184,7 @@ switch ($op) {
         if ($rank_id > 0) {
             $obj = $userrank_Handler->get($rank_id);
             $old = $obj->getVar('rank_special');
-            $obj->setVar('rank_special', ! $old);
+            $obj->setVar('rank_special', !$old);
             if ($userrank_Handler->insert($obj)) {
                 exit;
             }

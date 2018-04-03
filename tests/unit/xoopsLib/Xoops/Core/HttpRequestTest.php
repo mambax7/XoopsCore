@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../../init_new.php';
 
 use Xoops\Core\HttpRequest;
@@ -176,7 +177,6 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         unset($_SERVER['HTTPS']);
         $x = $instance->getEnv('HTTPS');
         $this->assertFalse($x);
-
     }
 
     public function test_getEnv_script_filename()
@@ -189,7 +189,6 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
 
         $_SERVER['PATH_TRANSLATED'] = '\\a\\test\\test.php';
         $this->assertSame('\a\test\test.php', $instance->getEnv('SCRIPT_FILENAME'));
-
     }
 
     public function test_getEnv_document_root()
@@ -198,7 +197,6 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $_SERVER['SCRIPT_NAME'] = 'test/filename';
         $_SERVER['SCRIPT_FILENAME'] = '/a/test/filename.php';
         $this->assertSame('/a/', $this->object->getEnv('DOCUMENT_ROOT'));
-
     }
 
     public function test_getEnv_php_self()
@@ -207,7 +205,6 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $_SERVER['DOCUMENT_ROOT'] = '/a/dir';
         $_SERVER['SCRIPT_FILENAME'] = '/a/dir/test/filename.php';
         $this->assertSame('/test/filename.php', $this->object->getEnv('PHP_SELF'));
-
     }
 
     public function test_getEnv_cgi_mode()
@@ -268,7 +265,6 @@ class HttpRequestTest extends \PHPUnit\Framework\TestCase
         $_SERVER['HTTP_HOST'] = '中国化工集团公司.公司';
         unset($_SERVER['HTTP_BASE']);
         $this->assertSame('.中国化工集团公司.公司', $instance->getEnv('HTTP_BASE'));
-
     }
 
     public function testGetFiles()

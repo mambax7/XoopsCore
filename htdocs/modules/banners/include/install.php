@@ -76,82 +76,82 @@ function xoops_module_install_banners(&$module)
         }
     }*/
 
-/* this should be in system upgrade, not module install
-    TODO: Add to upgrade script and remove from here
-    // delete banners and my_ip
-    $sql = "DELETE FROM " . $xoopsDB->prefix("config") . " WHERE `conf_name` = 'banners'";
-    $xoopsDB->queryF($sql);
-    $sql = "DELETE FROM " . $xoopsDB->prefix("config") . " WHERE `conf_name` = 'my_ip'";
-    $xoopsDB->queryF($sql);
-*/
-	$xoops_root_path = \XoopsBaseConfig::get('root-path');
-	$xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
+    /* this should be in system upgrade, not module install
+        TODO: Add to upgrade script and remove from here
+        // delete banners and my_ip
+        $sql = "DELETE FROM " . $xoopsDB->prefix("config") . " WHERE `conf_name` = 'banners'";
+        $xoopsDB->queryF($sql);
+        $sql = "DELETE FROM " . $xoopsDB->prefix("config") . " WHERE `conf_name` = 'my_ip'";
+        $xoopsDB->queryF($sql);
+    */
+    $xoops_root_path = \XoopsBaseConfig::get('root-path');
+    $xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
 
     // create folder "banners"
     $dir = $xoops_root_path . '/uploads/banners';
-    if (! is_dir($dir)) {
+    if (!is_dir($dir)) {
         mkdir($dir, 0777);
         chmod($dir, 0777);
     }
     //Copy index.html
     $file = $xoops_root_path . '/uploads/banners/index.html';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/modules/banners/images/index.html', $file);
     }
     //Copy blank.gif
     $file = $xoops_root_path . '/uploads/banners/blank.gif';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/uploads/blank.gif', $file);
     }
     //Copy .htaccess
     $file = $xoops_root_path . '/uploads/banners/.htaccess';
-    if (! is_file($file)) {
+    if (!is_file($file)) {
         copy($xoops_root_path . '/uploads/.htaccess', $file);
     }
 
-/* this should be in system upgrade, not module install
-    TODO: Add to upgrade script and remove from here
-    // Copy banner to banners_banner
-    $dbManager = new XoopsDatabaseManager();
-    $map = array(
-        'bid'        => 'banner_bid',
-        'cid'        => 'banner_cid',
-        'imptotal'   => 'banner_imptotal',
-        'impmade'    => 'banner_impmade',
-        'clicks'     => 'banner_clicks',
-        'imageurl'   => 'banner_imageurl',
-        'clickurl'   => 'banner_clickurl',
-        'date'       => 'banner_datestart',
-        'htmlbanner' => 'banner_htmlbanner',
-        'htmlcode'   => 'banner_htmlcode',
-    );
-    $dbManager->copyFields($map, 'banner', 'banners_banner', false);
-
-    // Copy bannerclient to banners_bannerclient
-    $dbManager = new XoopsDatabaseManager();
-    $map = array(
-        'cid'       => 'bannerclient_cid',
-        'name'      => 'bannerclient_name',
-        'extrainfo' => 'bannerclient_extrainfo',
-    );
-    $dbManager->copyFields($map, 'bannerclient', 'banners_bannerclient', false);
-
-    // Modification of imported banners below xoops 2.6
-    $banner_arr = $banner_Handler->getall();
-    foreach (array_keys($banner_arr) as $i) {
-        $namefile = substr_replace($banner_arr[$i]->getVar('banner_imageurl'),'',0,strlen(\XoopsBaseConfig::get('url') . '/images/banners/'));
-        $pathfile_image =  $xoops_root_path . '/images/banners/' . $namefile;
-        $pathfile_upload =  $xoops_root_path . '/uploads/banners/' . $namefile;
-        $obj = $banner_Handler->get($banner_arr[$i]->getVar('banner_bid'));
-        if (is_file($pathfile_image)){
-            copy($pathfile_image, $pathfile_upload);
-            unlink($pathfile_image);
-            $obj->setVar("banner_imageurl",  \XoopsBaseConfig::get('uploads-url') . '/banners/' . $namefile);
+    /* this should be in system upgrade, not module install
+        TODO: Add to upgrade script and remove from here
+        // Copy banner to banners_banner
+        $dbManager = new XoopsDatabaseManager();
+        $map = array(
+            'bid'        => 'banner_bid',
+            'cid'        => 'banner_cid',
+            'imptotal'   => 'banner_imptotal',
+            'impmade'    => 'banner_impmade',
+            'clicks'     => 'banner_clicks',
+            'imageurl'   => 'banner_imageurl',
+            'clickurl'   => 'banner_clickurl',
+            'date'       => 'banner_datestart',
+            'htmlbanner' => 'banner_htmlbanner',
+            'htmlcode'   => 'banner_htmlcode',
+        );
+        $dbManager->copyFields($map, 'banner', 'banners_banner', false);
+    
+        // Copy bannerclient to banners_bannerclient
+        $dbManager = new XoopsDatabaseManager();
+        $map = array(
+            'cid'       => 'bannerclient_cid',
+            'name'      => 'bannerclient_name',
+            'extrainfo' => 'bannerclient_extrainfo',
+        );
+        $dbManager->copyFields($map, 'bannerclient', 'banners_bannerclient', false);
+    
+        // Modification of imported banners below xoops 2.6
+        $banner_arr = $banner_Handler->getall();
+        foreach (array_keys($banner_arr) as $i) {
+            $namefile = substr_replace($banner_arr[$i]->getVar('banner_imageurl'),'',0,strlen(\XoopsBaseConfig::get('url') . '/images/banners/'));
+            $pathfile_image =  $xoops_root_path . '/images/banners/' . $namefile;
+            $pathfile_upload =  $xoops_root_path . '/uploads/banners/' . $namefile;
+            $obj = $banner_Handler->get($banner_arr[$i]->getVar('banner_bid'));
+            if (is_file($pathfile_image)){
+                copy($pathfile_image, $pathfile_upload);
+                unlink($pathfile_image);
+                $obj->setVar("banner_imageurl",  \XoopsBaseConfig::get('uploads-url') . '/banners/' . $namefile);
+            }
+            $obj->setVar("banner_status", 1);
+            $banner_Handler->insert($obj);
         }
-        $obj->setVar("banner_status", 1);
-        $banner_Handler->insert($obj);
-    }
-*/
+    */
 
     // create XOOPS client
     $client_name = 'XOOPS';
@@ -181,7 +181,7 @@ function xoops_module_install_banners(&$module)
         //Copy banner
         $file = $xoops_root_path . '/uploads/banners/' . $k;
         $copy_file = $xoops_root_path . '/modules/banners/images/' . $k;
-        if (! is_file($file) && is_file($copy_file)) {
+        if (!is_file($file) && is_file($copy_file)) {
             copy($copy_file, $file);
         }
         $obj = $banner_Handler->create();

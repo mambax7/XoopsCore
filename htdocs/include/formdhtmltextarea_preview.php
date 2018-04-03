@@ -18,6 +18,7 @@
  * @version         $Id$
  */
 use Xmf\Request;
+
 include_once dirname(__DIR__) . '/mainfile.php';
 
 $xoops = Xoops::getInstance();
@@ -26,7 +27,7 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
 $content = Request::getString('text', '');
 
-if (! $xoops->security()->validateToken(@$_POST['token'], false)) {
+if (!$xoops->security()->validateToken(@$_POST['token'], false)) {
     $content = 'Direct access is not allowed!!!';
 }
 $html = empty($_POST['html']) ? 0 : 1;
@@ -39,7 +40,7 @@ $content = $myts->displayTarea($content, $html, 1, 1, 1, 1);
 //    $content = urldecode($content);
 //}
 
-if (! headers_sent()) {
+if (!headers_sent()) {
     header('Content-Type:text/html; charset=UTF-8');
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
     header('Cache-Control: private, no-cache');

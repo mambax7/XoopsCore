@@ -24,7 +24,7 @@ use Xoops\Module\Plugin;
 function b_usermenu_usermenu_show()
 {
     // Check permissions
-    if (! \Xoops::getInstance()->isUser()) {
+    if (!\Xoops::getInstance()->isUser()) {
         return false;
     }
 
@@ -33,17 +33,16 @@ function b_usermenu_usermenu_show()
     $plugins = Plugin::getPlugins('usermenu');
     /* @var $plugin UsermenuPluginInterface */
     foreach ($plugins as $dirName => $plugin) {
-
         $helper = \Xoops::getModuleHelper($dirName);
 
         if (is_array($results = $plugin->usermenu())) {
             foreach ($results as $res) {
                 if (is_array($res) && isset($res['name']) && isset($res['link'])) {
                     $res['image'] = false;
-                    if (! isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
+                    if (!isset($res['icon']) && XoopsLoad::fileExists($helper->path('icons/logo_small.png'))) {
                         $res['image'] = $helper->url('icons/logo_small.png');
                         $res['icon'] = "${dirName}-icon";
-                    } elseif (! isset($res['icon'])) {
+                    } elseif (!isset($res['icon'])) {
                         $res['icon'] = 'glyphicon-time';
                     }
 

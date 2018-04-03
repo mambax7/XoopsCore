@@ -1,4 +1,5 @@
 <?php
+
 // $Id$
 // _LANGCODE: en
 // _CHARSET : UTF-8
@@ -26,5 +27,3 @@ define('_RELOAD', 'Reload');
 
 define('_UPGRADE_CHARSET', 'UTF-8');
 define('_UPDATE_SYSTEM_MODULE', 'update system module');
-
-?>

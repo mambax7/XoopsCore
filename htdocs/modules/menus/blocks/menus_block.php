@@ -45,7 +45,7 @@ function menus_block_show($options)
         foreach ($decorators as $decorator) {
             $decorator->hasAccess($menu, $hasAccess);
         }
-        if (! $hasAccess) {
+        if (!$hasAccess) {
             unset($menus[$key]);
         }
     }
@@ -134,7 +134,7 @@ function menus_block_show($options)
 function menus_block_edit($options)
 {
     //Unique ID
-    if (! $options[4] || (isset($_GET['op']) && $_GET['op'] === 'clone')) {
+    if (!$options[4] || (isset($_GET['op']) && $_GET['op'] === 'clone')) {
         $options[4] = uniqid();
     }
 

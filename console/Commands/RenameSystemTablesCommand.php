@@ -2,11 +2,11 @@
 
 namespace XoopsConsole\Commands;
 
-use Xmf\Database\Tables;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xmf\Database\Tables;
 
 class RenameSystemTablesCommand extends Command
 {
@@ -25,7 +25,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $tableNames = [
             'newblocks' => 'system_block',
             'block_module_link' => 'system_blockmodule',
@@ -43,7 +42,6 @@ EOT
             'tplsource' => 'system_tplsource',
             'users' => 'system_user',
         ];
-
         $undo = false;
         if ($input->getOption('undo')) {
             $output->writeln('<info>undo option selected.</info>');
@@ -51,10 +49,9 @@ EOT
         }
 
         $migrate = new Tables();
-
         $renameTable = function ($existingName, $newName) use ($migrate) {
             $status = $migrate->useTable($newName);
-            if (! $status) {
+            if (!$status) {
                 $status = $migrate->useTable($existingName);
                 if ($status) {
                     $migrate->renameTable($existingName, $newName);
@@ -62,7 +59,6 @@ EOT
             }
             return $status;
         };
-
         foreach ($tableNames as $oldName => $newName) {
             if ($undo) {
                 $renameTable($newName, $oldName);

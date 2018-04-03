@@ -52,7 +52,7 @@ function b_system_main_show()
                 $block['modules'][$i]['highlight'] = true;
                 $block['nothome'] = true;
             }
-             /* @var $plugin MenusPluginInterface */
+            /* @var $plugin MenusPluginInterface */
             if ($xoops->isModule() && $module->getVar('dirname') === $xoops->module->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'menus')) {
                 $sublinks = $plugin->subMenus();
                 foreach ($sublinks as $sublink) {
@@ -62,7 +62,6 @@ function b_system_main_show()
                     ];
                 }
             }
-
         }
     }
     return $block;

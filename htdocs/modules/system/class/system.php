@@ -45,7 +45,7 @@ class system
     public static function getInstance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $class = __CLASS__;
             $instance = new $class();
         }
@@ -59,7 +59,7 @@ class system
     {
         if ($this->xoops->isUser()) {
             $this->xoops->module = $this->xoops->getModuleByDirname('system');
-            if (! $this->xoops->user->isAdmin($this->xoops->module->mid())) {
+            if (!$this->xoops->user->isAdmin($this->xoops->module->mid())) {
                 return false;
             }
         } else {
@@ -173,7 +173,7 @@ class system
         $total_smarty_cache = 0;
         $total_smarty_compile = 0;
         $total_xoops_cache = 0;
-        if (! empty($cache)) {
+        if (!empty($cache)) {
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
@@ -219,7 +219,6 @@ class system
             $ret['xoops_cache'] = $total_xoops_cache;
             return $ret;
         }
-            return false;
-
+        return false;
     }
 }

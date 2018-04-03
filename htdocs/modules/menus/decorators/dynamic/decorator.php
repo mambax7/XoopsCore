@@ -32,7 +32,7 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
     {
         $ret = [];
         foreach ($menus as $menu) {
-            if (! preg_match('/{(MODULE\|.*)}/i', $menu['title'], $reg)) {
+            if (!preg_match('/{(MODULE\|.*)}/i', $menu['title'], $reg)) {
                 $ret[] = $menu;
                 continue;
             }

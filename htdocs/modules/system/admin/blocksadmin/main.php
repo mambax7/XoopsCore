@@ -30,7 +30,7 @@ $system = System::getInstance();
 $system_breadcrumb = SystemBreadcrumb::getInstance();
 
 // Check users rights
-if (! $xoops->isUser() || ! $xoops->isModule() || ! $xoops->user->isAdmin($xoops->module->mid())) {
+if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->module->mid())) {
     exit(XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -229,7 +229,7 @@ switch ($op) {
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('visible', $visible);
-            if (! $block_handler->insertBlock($block)) {
+            if (!$block_handler->insertBlock($block)) {
                 $error = true;
             }
         }
@@ -244,7 +244,7 @@ switch ($op) {
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('side', $side);
-            if (! $block_handler->insertBlock($block)) {
+            if (!$block_handler->insertBlock($block)) {
                 $error = true;
             }
         }
@@ -259,7 +259,7 @@ switch ($op) {
                 if ($order > 0) {
                     $block = $block_handler->get($order);
                     $block->setVar('weight', $i);
-                    if (! $block_handler->insertBlock($block)) {
+                    if (!$block_handler->insertBlock($block)) {
                         $error = true;
                     }
                     ++$i;
@@ -270,7 +270,7 @@ switch ($op) {
         break;
 
     case 'preview':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }
@@ -287,7 +287,7 @@ switch ($op) {
         break;
 
     case 'save':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }
@@ -303,7 +303,7 @@ switch ($op) {
         $block_type = $system->cleanVars($_POST, 'block_type', '', 'string');
         $block->setVar('block_type', $block_type);
 
-        if (! $block->isCustom()) {
+        if (!$block->isCustom()) {
             $block->setVars($_POST);
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
@@ -345,7 +345,7 @@ switch ($op) {
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
 
-        if (! $newid = $block_handler->insertBlock($block)) {
+        if (!$newid = $block_handler->insertBlock($block)) {
             $xoops->header();
             echo $xoops->alert('error', $block->getHtmlErrors());
             $xoops->footer();
@@ -362,7 +362,7 @@ switch ($op) {
                 $blockmodulelink = $blockmodulelink_handler->create();
                 $blockmodulelink->setVar('block_id', $newid);
                 $blockmodulelink->setVar('module_id', $mid);
-                if (! $blockmodulelink_handler->insert($blockmodulelink)) {
+                if (!$blockmodulelink_handler->insert($blockmodulelink)) {
                     $xoops->header();
                     echo $xoops->alert('error', $blockmodulelink->getHtmlErrors());
                     $xoops->footer();
@@ -479,7 +479,7 @@ switch ($op) {
         break;
 
     case 'delete_ok':
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('admin.php?fct=blocksadmin', 3, implode('<br />', $xoops->security()->getErrors()));
             exit();
         }

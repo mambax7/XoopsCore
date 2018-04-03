@@ -57,7 +57,7 @@ class Password extends Element
             $this->set('maxlength', empty($maxlength) ? 64 : (int) $maxlength);
             $this->setValue($value);
             $this->setWithDefaults('autocomplete', $autoComplete, 'off', ['on', 'off']);
-            if (! empty($placeholder)) {
+            if (!empty($placeholder)) {
                 $this->set('placeholder', $placeholder);
             }
         }

@@ -69,7 +69,7 @@ abstract class GenericHelper extends AbstractHelper
         if ($this->object === null) {
             $this->initObject();
         }
-        if (! is_object($this->object)) {
+        if (!is_object($this->object)) {
             $this->addLog("ERROR :: Module '{$this->dirname}' does not exist");
         }
 
@@ -96,7 +96,7 @@ abstract class GenericHelper extends AbstractHelper
             return $this->configs;
         }
 
-        if (! isset($this->configs[$name])) {
+        if (!isset($this->configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
             return $default;
         }
@@ -117,11 +117,11 @@ abstract class GenericHelper extends AbstractHelper
     {
         $ret = false;
         $name = strtolower($name);
-        if (! isset($this->handlers[$name])) {
+        if (!isset($this->handlers[$name])) {
             $this->initHandler($name);
         }
 
-        if (! isset($this->handlers[$name])) {
+        if (!isset($this->handlers[$name])) {
             $this->addLog("ERROR :: Handler '{$name}' does not exist");
         } else {
             $this->addLog("Getting handler '{$name}'");
@@ -256,7 +256,7 @@ abstract class GenericHelper extends AbstractHelper
     {
         $this->addLog('INIT ' . $name . ' HANDLER');
 
-        if (! isset($this->handlers[$name])) {
+        if (!isset($this->handlers[$name])) {
             $hnd_file = XOOPS_ROOT_PATH . "/modules/{$this->dirname}/class/{$name}.php";
             if (file_exists($hnd_file)) {
                 include_once $hnd_file;

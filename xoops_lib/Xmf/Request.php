@@ -34,11 +34,11 @@ class Request
     /**
      * Available masks for cleaning variables
      */
-    const MASK_NO_TRIM = 1;
+    public const MASK_NO_TRIM = 1;
 
-    const MASK_ALLOW_RAW = 2;
+    public const MASK_ALLOW_RAW = 2;
 
-    const MASK_ALLOW_HTML = 4;
+    public const MASK_ALLOW_HTML = 4;
 
     /**
      * Gets the request method
@@ -431,7 +431,7 @@ class Request
         if (isset($original[$name])) {
             $previous = $original[$name];
             // don't overwrite value unless asked
-            if (! $overwrite) {
+            if (!$overwrite) {
                 return $previous;
             }
         } else {
@@ -566,18 +566,18 @@ class Request
         static $safeHtmlFilter = null;
 
         // convert $var in array if $type is ARRAY
-        if (strtolower($type) === 'array' && ! is_array($var)) {
+        if (strtolower($type) === 'array' && !is_array($var)) {
             $var = [$var];
         }
 
         // If the no trim flag is not set, trim the variable
-        if (! ($mask & static::MASK_NO_TRIM) && is_string($var)) {
+        if (!($mask & static::MASK_NO_TRIM) && is_string($var)) {
             $var = trim($var);
         }
 
         // Now we handle input filtering
         // If the allow raw flag is set, do not modify the variable
-        if (! ($mask & static::MASK_ALLOW_RAW)) {
+        if (!($mask & static::MASK_ALLOW_RAW)) {
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable
                 if ($safeHtmlFilter === null) {

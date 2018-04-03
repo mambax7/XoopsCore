@@ -202,22 +202,21 @@ class Tables
 
             return true;
         }
-            if ($tableDef === true) {
-                $tableDef = [
+        if ($tableDef === true) {
+            $tableDef = [
                     'name' => $this->name($table),
                     'options' => 'ENGINE=InnoDB',
                     'columns' => [],
                     'keys' => [],
                     'create' => true,
                 ];
-                $this->tables[$table] = $tableDef;
+            $this->tables[$table] = $tableDef;
 
-                $this->queue[] = ['createtable' => $table];
+            $this->queue[] = ['createtable' => $table];
 
-                return true;
-            }
-                return false;
-
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -312,17 +311,16 @@ class Tables
 
                 return true;
             }
-                $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
+            $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
                     "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
-                // loop thru and find the column
-                foreach ($tableDef['columns'] as &$col) {
-                    if (strcasecmp($col['name'], $column) === 0) {
-                        $col['name'] = $newName;
-                        $col['attributes'] = $attributes;
-                        break;
-                    }
+            // loop thru and find the column
+            foreach ($tableDef['columns'] as &$col) {
+                if (strcasecmp($col['name'], $column) === 0) {
+                    $col['name'] = $newName;
+                    $col['attributes'] = $attributes;
+                    break;
                 }
-
+            }
         } else {
             return $this->tableNotEstablished();
         }
@@ -362,8 +360,7 @@ class Tables
 
             return true;
         }
-            return false;
-
+        return false;
     }
 
     /**
@@ -523,13 +520,11 @@ class Tables
                 $tableDef['options'] = $options;
                 return true;
             }
-                $this->queue[] = "ALTER TABLE `{$tableDef['name']}` {$options} ";
-                $tableDef['options'] = $options;
-                return true;
-
+            $this->queue[] = "ALTER TABLE `{$tableDef['name']}` {$options} ";
+            $tableDef['options'] = $options;
+            return true;
         }
-            return $this->tableNotEstablished();
-
+        return $this->tableNotEstablished();
     }
 
     /**
@@ -558,7 +553,7 @@ class Tables
                 }
             }
             $result = $this->execSql($ddl, $force);
-            if (! $result) {
+            if (!$result) {
                 $this->lastError = $this->db->errorInfo();
                 $this->lastErrNo = $this->db->errorCode();
 
@@ -623,8 +618,7 @@ class Tables
 
             return true;
         }
-            return $this->tableNotEstablished();
-
+        return $this->tableNotEstablished();
     }
 
     /**
@@ -660,8 +654,7 @@ class Tables
 
             return true;
         }
-            return $this->tableNotEstablished();
-
+        return $this->tableNotEstablished();
     }
 
     /**
@@ -782,8 +775,7 @@ class Tables
 
             return $sql;
         }
-            return $this->tableNotEstablished();
-
+        return $this->tableNotEstablished();
     }
 
     /**
@@ -802,7 +794,7 @@ class Tables
         }
         $result = $this->db->query($sql);
 
-        if (! $result) {
+        if (!$result) {
             $this->lastError = $this->db->errorInfo();
             $this->lastErrNo = $this->db->errorCode();
         }
@@ -842,7 +834,7 @@ class Tables
         $sql .= ' AND t.TABLE_COLLATION  = c.COLLATION_NAME ';
 
         $result = $this->execSql($sql);
-        if (! $result) {
+        if (!$result) {
             return false;
         }
         $tableSchema = $this->fetch($result);
@@ -889,24 +881,24 @@ class Tables
         $keyUnique = false;
         while ($key = $this->fetch($result)) {
             if ($lastKey !== $key['INDEX_NAME']) {
-                if (! empty($lastKey)) {
+                if (!empty($lastKey)) {
                     $tableDef['keys'][$lastKey]['columns'] = $keyCols;
                     $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
                 }
                 $lastKey = $key['INDEX_NAME'];
                 $keyCols = $key['COLUMN_NAME'];
-                if (! empty($key['SUB_PART'])) {
+                if (!empty($key['SUB_PART'])) {
                     $keyCols .= ' (' . $key['SUB_PART'] . ')';
                 }
-                $keyUnique = ! $key['NON_UNIQUE'];
+                $keyUnique = !$key['NON_UNIQUE'];
             } else {
                 $keyCols .= ', ' . $key['COLUMN_NAME'];
-                if (! empty($key['SUB_PART'])) {
+                if (!empty($key['SUB_PART'])) {
                     $keyCols .= ' (' . $key['SUB_PART'] . ')';
                 }
             }
         }
-        if (! empty($lastKey)) {
+        if (!empty($lastKey)) {
             $tableDef['keys'][$lastKey]['columns'] = $keyCols;
             $tableDef['keys'][$lastKey]['unique'] = $keyUnique;
         }

@@ -12,7 +12,6 @@
 
 namespace Xoops\Core\Kernel;
 
-
 /**
  * Establish Xoops object datatype legacy defines
  * New code should use Dtype::TYPE_* constants
@@ -220,7 +219,7 @@ abstract class XoopsObject implements \ArrayAccess
      */
     public function setVar($key, $value)
     {
-        if (! empty($key) && isset($value) && isset($this->vars[$key])) {
+        if (!empty($key) && isset($value) && isset($this->vars[$key])) {
             $this->vars[$key]['value'] = $value;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -253,9 +252,9 @@ abstract class XoopsObject implements \ArrayAccess
         if (empty($var)) {
             return true;
         }
-        $var = ! is_array($var) ? [$var] : $var;
+        $var = !is_array($var) ? [$var] : $var;
         foreach ($var as $key) {
-            if (! isset($this->vars[$key])) {
+            if (!isset($this->vars[$key])) {
                 continue;
             }
             $this->vars[$key]['changed'] = null;
@@ -306,7 +305,7 @@ abstract class XoopsObject implements \ArrayAccess
      */
     public function getValues($keys = null, $format = Dtype::FORMAT_SHOW, $maxDepth = 1)
     {
-        if (! isset($keys)) {
+        if (!isset($keys)) {
             $keys = array_keys($this->vars);
         }
         $vars = [];
@@ -339,7 +338,7 @@ abstract class XoopsObject implements \ArrayAccess
     public function getVar($key, $format = Dtype::FORMAT_SHOW)
     {
         $ret = null;
-        if (! isset($this->vars[$key])) {
+        if (!isset($this->vars[$key])) {
             return $ret;
         }
         $ret = Dtype::getVar($this, $key, $format);
@@ -356,7 +355,7 @@ abstract class XoopsObject implements \ArrayAccess
         $existing_errors = $this->getErrors();
         $this->errors = [];
         foreach ($this->vars as $k => $v) {
-            if (! $v['changed']) {
+            if (!$v['changed']) {
             } else {
                 $this->cleanVars[$k] = Dtype::cleanVar($this, $k);
             }
@@ -414,7 +413,7 @@ abstract class XoopsObject implements \ArrayAccess
     public function getHtmlErrors()
     {
         $ret = '<h4>Errors</h4>';
-        if (! empty($this->errors)) {
+        if (!empty($this->errors)) {
             foreach ($this->errors as $error) {
                 $ret .= $error . '<br />';
             }

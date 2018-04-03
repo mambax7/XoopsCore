@@ -87,7 +87,7 @@ abstract class ConfigurationAbstract extends XoopsArray
         $newValue = [];
         if ($this->offsetExists($stem)) {
             $newValue = $this->offsetGet($stem);
-            if (! is_array($newValue)) {
+            if (!is_array($newValue)) {
                 $newValue = [];
             }
         }

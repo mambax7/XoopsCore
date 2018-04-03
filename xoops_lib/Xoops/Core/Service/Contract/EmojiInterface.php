@@ -27,7 +27,7 @@ use Xoops\Core\Service\Response;
  */
 interface EmojiInterface
 {
-    const MODE = Manager::MODE_EXCLUSIVE;
+    public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
      * renderEmoji - given a string of source text being built for display, perform any processing of Emoji

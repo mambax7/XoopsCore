@@ -93,7 +93,8 @@ class XoopsObjectTree
         trigger_error(
             'Undefined property: XoopsObjectTree::$' . $name .
             " in {$trace[0]['file']} line {$trace[0]['line']}, ",
-            E_USER_NOTICE);
+        E_USER_NOTICE
+            );
         return null;
     }
 
@@ -291,7 +292,7 @@ class XoopsObjectTree
             $ret .= '>' . $prefix_curr . $this->tree[$key]['obj']->getVar($fieldName) . '</option>';
             $prefix_curr .= $prefix_orig;
         }
-        if (isset($this->tree[$key]['child']) && ! empty($this->tree[$key]['child'])) {
+        if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
             foreach ($this->tree[$key]['child'] as $childKey) {
                 $this->makeSelBoxOptions($fieldName, $selected, $childKey, $ret, $prefix_orig, $prefix_curr);
             }
@@ -316,7 +317,7 @@ class XoopsObjectTree
             $element->addOption($value, $name);
             $prefix_curr .= $prefix_orig;
         }
-        if (isset($this->tree[$key]['child']) && ! empty($this->tree[$key]['child'])) {
+        if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
             foreach ($this->tree[$key]['child'] as $childKey) {
                 $this->addSelectOptions($element, $fieldName, $childKey, $prefix_orig, $prefix_curr);
             }

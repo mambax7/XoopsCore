@@ -57,13 +57,13 @@ if ($user !== false) {
                 break;
             }
         }
-        if (! $allowed) {
+        if (!$allowed) {
             $xoops->redirect($xoops_url . '/index.php', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
             exit();
         }
     }
     $user->setVar('last_login', time());
-    if (! $member_handler->insertUser($user)) {
+    if (!$member_handler->insertUser($user)) {
     }
 
     $xoops->session()->user()->recordUserLogin($user->getVar('uid'), $rememberme);
@@ -74,7 +74,7 @@ if ($user !== false) {
 
     $xoops->events()->triggerEvent('core.include.checklogin.success');
 
-    if (! empty($xoops_redirect) && ! strpos($xoops_redirect, 'register')) {
+    if (!empty($xoops_redirect) && !strpos($xoops_redirect, 'register')) {
         $xoops_redirect = rawurldecode($xoops_redirect);
         $parsed = parse_url($xoops_url);
         $url = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';

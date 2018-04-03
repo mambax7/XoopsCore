@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../../../init_new.php';
 
 use Xoops\Core\Cache\Legacy;
@@ -16,7 +17,6 @@ class LegacyTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-
     }
 
     /**

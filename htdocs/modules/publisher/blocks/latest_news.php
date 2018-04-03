@@ -46,7 +46,7 @@ function publisher_latest_news_show($options)
     $block['spec']['columnwidth'] = (int) (1 / $column_count * 100);
 
     $allcats = false;
-    if (! isset($options[29])) {
+    if (!isset($options[29])) {
         $allcats = true;
     } elseif (in_array(0, explode(',', $options[29]), true)) {
         $allcats = true;

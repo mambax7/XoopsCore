@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class Xoops_Locale_AbstractTestInstance extends Xoops\Locale\AbstractLocale
@@ -36,7 +37,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $x = $instance::setLocale();
         if ($x === false) {
-            $this->markTestSkipped('setlocale() returned false'); 
+            $this->markTestSkipped('setlocale() returned false');
         }
         $y = $instance::getLocale();
         $this->assertSame($y, $x);
@@ -181,7 +182,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $value = $instance::formatTimestamp($time, $format);
         $this->assertSame($expected, $value);
-        if (! empty($shortform)) {
+        if (!empty($shortform)) {
             $value = $instance::formatTimestamp($time, $shortform);
             $this->assertSame($expected, $value);
         }

@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/../../../init_new.php');
 
 class Xoops_Auth_LdapTest extends \PHPUnit\Framework\TestCase
@@ -11,38 +12,40 @@ class Xoops_Auth_LdapTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-		if (! extension_loaded('ldap')) $this->markTestSkipped();
+        if (!extension_loaded('ldap')) {
+            $this->markTestSkipped();
+        }
     }
 
     public function testContract()
-	{
-		$instance = new $this->myclass();
-		$this->assertInstanceOf($this->myclass, $instance);
-		$this->assertInstanceOf('\Xoops\Auth\AuthAbstract', $instance);
+    {
+        $instance = new $this->myclass();
+        $this->assertInstanceOf($this->myclass, $instance);
+        $this->assertInstanceOf('\Xoops\Auth\AuthAbstract', $instance);
     }
 
-	public function test_cp1252_to_utf8()
-	{
-		$this->markTestIncomplete();
-	}
+    public function test_cp1252_to_utf8()
+    {
+        $this->markTestIncomplete();
+    }
 
-	public function test_authenticate()
-	{
-		$this->markTestIncomplete();
-	}
+    public function test_authenticate()
+    {
+        $this->markTestIncomplete();
+    }
 
-	public function test_getUserDN()
-	{
-		$this->markTestIncomplete();
-	}
+    public function test_getUserDN()
+    {
+        $this->markTestIncomplete();
+    }
 
-	public function test_getFilter()
-	{
-		$this->markTestIncomplete();
-	}
+    public function test_getFilter()
+    {
+        $this->markTestIncomplete();
+    }
 
-	public function test_loadXoopsUser()
-	{
-		$this->markTestIncomplete();
-	}
+    public function test_loadXoopsUser()
+    {
+        $this->markTestIncomplete();
+    }
 }

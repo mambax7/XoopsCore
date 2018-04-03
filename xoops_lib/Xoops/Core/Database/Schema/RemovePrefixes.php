@@ -76,7 +76,6 @@ class RemovePrefixes implements Visitor
      */
     public function acceptSchema(Schema $schema)
     {
-
     }
 
     /**
@@ -97,7 +96,6 @@ class RemovePrefixes implements Visitor
      */
     public function acceptColumn(Table $table, Column $column)
     {
-
     }
 
     /**
@@ -108,7 +106,6 @@ class RemovePrefixes implements Visitor
      */
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
-
     }
 
     /**
@@ -119,7 +116,6 @@ class RemovePrefixes implements Visitor
      */
     public function acceptIndex(Table $table, Index $index)
     {
-
     }
 
     /**

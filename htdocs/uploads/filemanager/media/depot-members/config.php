@@ -1,4 +1,5 @@
 <?php
+
 //------------------------------------------------------------------------------
 // YOU CAN COPY AND CHANGE THESE VARIABLES IN FOLDERS config.php FILES
 //------------------------------------------------------------------------------
@@ -16,12 +17,12 @@ $allowed_groups_createfolder = [1]; // id des groupes autorisés create folder
 if ($xoopsUser) {
     $usergroups = $GLOBALS['xoopsUser']->getGroups();
     $result_upload = array_intersect($usergroups, $allowed_groups_upload);
-        if ($result_upload || $result_upload !== null) {
-           $upload_files = true;
-        }
-  $result_createfolder = array_intersect($usergroups, $allowed_groups_createfolder);
-       if ($result_createfolder || $result_createfolder !== null) {
-          $create_folders = true;
+    if ($result_upload || $result_upload !== null) {
+        $upload_files = true;
+    }
+    $result_createfolder = array_intersect($usergroups, $allowed_groups_createfolder);
+    if ($result_createfolder || $result_createfolder !== null) {
+        $create_folders = true;
     }
 }
 // XOOPS

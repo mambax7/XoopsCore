@@ -32,7 +32,7 @@ $helper->loadLocale();
 $op = Request::getCmd('op', 'list');
 
 // If not a user, redirect
-if (! $xoops->isUser()) {
+if (!$xoops->isUser()) {
     $xoops->redirect('/index.php', 3, XoopsLocale::E_NO_ACCESS_PERMISSION);
     exit();
 }
@@ -66,7 +66,7 @@ switch ($op) {
         $xoops->tpl()->assign('uid', $xoops->user->getVar('uid'));
         $xoops->tpl()->assign('info_msg', $xoops->alert('info', $info_msg, XoopsLocale::INFORMATION_FOR_UPLOADS));
         $oldavatar = $xoops->user->getVar('user_avatar');
-        if (! empty($oldavatar) && $oldavatar !== 'blank.gif') {
+        if (!empty($oldavatar) && $oldavatar !== 'blank.gif') {
             $warning_msg = '<p>' . AvatarsLocale::ALERT_WARNING_OLD . '</p>';
             $xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
             $warning_msg .= "<img src='" . $xoops_upload_url . '/' . $oldavatar . "' alt='&nbsp;' />";
@@ -82,7 +82,7 @@ switch ($op) {
 
     case 'save':
         // Check security
-        if (! $xoops->security()->check()) {
+        if (!$xoops->security()->check()) {
             $xoops->redirect('/index.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $uid = Request::getInt('uid', 0);
@@ -98,7 +98,7 @@ switch ($op) {
         if ($uploader_avatars_img->fetchMedia('user_avatar')) {
             $uploader_avatars_img->setPrefix('savt');
             $uploader_avatars_img->fetchMedia('user_avatar');
-            if (! $uploader_avatars_img->upload()) {
+            if (!$uploader_avatars_img->upload()) {
                 $error_msg .= $uploader_avatars_img->getErrors();
                 $obj->setVar('avatar_file', 'avatars/blank.gif');
             } else {
@@ -115,7 +115,7 @@ switch ($op) {
                         $criteria->add(new Criteria('avatar_type', 'C'));
                         $criteria->add(new Criteria('avatar_file', $oldavatar));
                         $avatars = $avatar_Handler->getObjects($criteria);
-                        if (! empty($avatars) && count($avatars) === 1 && is_object($avatars[0])) {
+                        if (!empty($avatars) && count($avatars) === 1 && is_object($avatars[0])) {
                             $avatar_Handler->delete($avatars[0]);
                             $xoops_upload_path = \XoopsBaseConfig::get('uploads-path');
                             $oldavatar_path = realpath($xoops_upload_path . '/' . $oldavatar);
@@ -147,14 +147,14 @@ switch ($op) {
             $oldavatar = $xoops->user->getVar('user_avatar');
             $xoops->user->setVar('user_avatar', $user_avatar);
             $member_handler = $xoops->getHandlerMember();
-            if (! $member_handler->insertUser($xoops->user)) {
+            if (!$member_handler->insertUser($xoops->user)) {
                 echo $xoops->user->getHtmlErrors();
             }
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('avatar_type', 'C'));
             $criteria->add(new Criteria('avatar_file', $oldavatar));
             $avatars = $avatar_Handler->getObjects($criteria);
-            if (! empty($avatars) && count($avatars) === 1 && is_object($avatars[0])) {
+            if (!empty($avatars) && count($avatars) === 1 && is_object($avatars[0])) {
                 $avatar_Handler->delete($avatars[0]);
                 $xoops_upload_path = \XoopsBaseConfig::get('uploads-path');
                 $oldavatar_path = realpath($xoops_upload_path . '/' . $oldavatar);

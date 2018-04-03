@@ -74,7 +74,7 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
         $dirlist = XoopsLists::getDirListAsArray($admin_dir);
         foreach ($dirlist as $file) {
             include \XoopsBaseConfig::get('root-path') . '/modules/system/admin/' . $file . '/xoops_version.php';
-            if (! empty($modversion['category'])) {
+            if (!empty($modversion['category'])) {
                 if ($xoops->getModuleConfig('active_' . $file, 'system') === 1) {
                     $s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
                 }
@@ -143,7 +143,6 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
         $s_checkbox_all->setClass('xo-checkall');
         $r_block_tray->addElement($s_checkbox_all);
         foreach (array_keys($blocks_module) as $mid) {
-
             $new_blocks_array = [];
             foreach ($blocks_module[$mid] as $key => $value) {
                 $new_blocks_array[$key] = "<a href='" . \XoopsBaseConfig::get('url')
@@ -160,7 +159,7 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
             $r_block_tray->addElement($r_block_checkbox);
             unset($r_block_checkbox);
         }
-        if (! $obj->isNew()) {
+        if (!$obj->isNew()) {
             $this->addElement(new Xoops\Form\Hidden('g_id', $obj->getVar('groupid')));
             $this->addElement(new Xoops\Form\Hidden('op', 'groups_save_update'));
         } else {

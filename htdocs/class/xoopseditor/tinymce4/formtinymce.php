@@ -109,7 +109,7 @@ class XoopsFormTinymce4 extends XoopsEditor
     public function getFonts()
     {
         if (empty($this->config['fonts']) && defined('_XOOPS_EDITOR_TINYMCE4_FONTS')) {
-             $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE4_FONTS');
+            $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE4_FONTS');
         }
 
         return @$this->config['fonts'];
@@ -135,7 +135,7 @@ class XoopsFormTinymce4 extends XoopsEditor
      */
     public function isActive()
     {
-		$xoops_root_path = \XoopsBaseConfig::get('root-path');
+        $xoops_root_path = \XoopsBaseConfig::get('root-path');
         return is_readable($xoops_root_path . $this->rootPath . '/tinymce.php');
     }
 }
