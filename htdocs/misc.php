@@ -14,16 +14,14 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\XoopsTpl;
 
 /**
- * XOOPS misc utilities
+ * XOOPS misc utilities.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @version         $Id$
  */
-
-include __DIR__ . '/mainfile.php';
+include __DIR__.'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();
@@ -34,7 +32,7 @@ $xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
 $action = Request::getCmd('action', '');
 $type = Request::getCmd('type', '');
 
-if ($action === 'showpopups') {
+if ('showpopups' === $action) {
     $xoops->simpleHeader(false);
 
     // show javascript close button?
@@ -43,7 +41,7 @@ if ($action === 'showpopups') {
         case 'friend':
             $op = Request::getCmd('op', 'sendform');
             $tpl = new XoopsTpl();
-            if (!$xoops->security()->check() || $op === 'sendform') {
+            if (!$xoops->security()->check() || 'sendform' === $op) {
                 if ($xoops->isUser()) {
                     $yname = $xoops->user->getVar('uname', 'e');
                     $ymail = $xoops->user->getVar('email', 'e');
@@ -79,31 +77,31 @@ if ($action === 'showpopups') {
 
                 $tpl->assign('closebutton', 0);
                 $tpl->assign('form', $form->render());
-            } elseif ($op === 'sendsite') {
+            } elseif ('sendsite' === $op) {
                 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                 if ($xoops->isUser()) {
                     $ymail = $xoops->user->getVar('email');
                 } else {
                     $ymail = isset($_POST['ymail']) ? trim($_POST['ymail']) : '';
                 }
-                if (!isset($_POST['yname']) || trim($_POST['yname']) === '' || $ymail === ''
-                || !isset($_POST['fname']) || trim($_POST['fname']) === '' || !isset($_POST['fmail'])
-                || trim($_POST['fmail']) === '') {
-                    $xoops->redirect($xoops_url . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, XoopsLocale::E_YOU_NEED_TO_ENTER_REQUIRED_INFO);
+                if (!isset($_POST['yname']) || '' === trim($_POST['yname']) || '' === $ymail
+                || !isset($_POST['fname']) || '' === trim($_POST['fname']) || !isset($_POST['fmail'])
+                || '' === trim($_POST['fmail'])) {
+                    $xoops->redirect($xoops_url.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, XoopsLocale::E_YOU_NEED_TO_ENTER_REQUIRED_INFO);
                     exit();
                 }
                 $yname = trim($_POST['yname']);
                 $fname = trim($_POST['fname']);
                 $fmail = trim($_POST['fmail']);
                 if (!$xoops->checkEmail($fmail) || !$xoops->checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
-                    $errormessage = XoopsLocale::EMAIL_PROVIDED_IS_INVALID . '<br />' . XoopsLocale::E_CHECK_EMAIL_AND_TRY_AGAIN . '';
-                    $xoops->redirect($xoops_url . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
+                    $errormessage = XoopsLocale::EMAIL_PROVIDED_IS_INVALID.'<br />'.XoopsLocale::E_CHECK_EMAIL_AND_TRY_AGAIN.'';
+                    $xoops->redirect($xoops_url.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
                 }
                 $xoopsMailer = $xoops->getMailer();
                 $xoopsMailer->setTemplate('tellfriend.tpl');
                 $xoopsMailer->assign('SITENAME', $xoops->getConfig('sitename'));
                 $xoopsMailer->assign('ADMINMAIL', $xoops->getConfig('adminmail'));
-                $xoopsMailer->assign('SITEURL', $xoops_url . '/');
+                $xoopsMailer->assign('SITEURL', $xoops_url.'/');
                 $xoopsMailer->assign('YOUR_NAME', $yname);
                 $xoopsMailer->assign('FRIEND_NAME', $fname);
                 $xoopsMailer->setToEmails($fmail);
@@ -119,6 +117,7 @@ if ($action === 'showpopups') {
                 }
             }
             $tpl->display('module:system/system_misc_friend.tpl');
+
             break;
         case 'online':
             $isadmin = $xoops->userIsAdmin;
@@ -143,11 +142,11 @@ if ($action === 'showpopups') {
                     $onlineUsers[$i]['name'] = $user->getVar('uname');
                     $response = $xoops->service('Avatar')->getAvatarUrl($user);
                     $avatar = $response->getValue();
-                    $avatar = empty($avatar) ? $xoops_upload_url . '/blank.gif' : $avatar;
+                    $avatar = empty($avatar) ? $xoops_upload_url.'/blank.gif' : $avatar;
                     $onlineUsers[$i]['avatar'] = $avatar;
                 } else {
                     $onlineUsers[$i]['name'] = $xoops->getConfig('anonymous');
-                    $onlineUsers[$i]['avatar'] = $xoops_upload_url . '/blank.gif';
+                    $onlineUsers[$i]['avatar'] = $xoops_upload_url.'/blank.gif';
                 }
             }
 
@@ -160,14 +159,16 @@ if ($action === 'showpopups') {
             $tpl->assign('isadmin', $isadmin);
             $tpl->assign('closebutton', $closebutton);
             $tpl->display('module:system/system_misc_online.tpl');
+
             break;
         case 'ssllogin':
             if ($xoops->getConfig('use_ssl') && isset($_POST[$xoops->getConfig('sslpost_name')]) && $xoops->isUser()) {
                 $xoops->loadLanguage('user');
                 echo sprintf(XoopsLocale::E_INCORRECT_LOGIN, $xoops->user->getVar('uname'));
-                echo '<div style="text-align:center;"><input class="formButton" value="' . XoopsLocale::A_CLOSE . '" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
+                echo '<div style="text-align:center;"><input class="formButton" value="'.XoopsLocale::A_CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
                 $closebutton = false;
             }
+
             break;
         default:
             break;

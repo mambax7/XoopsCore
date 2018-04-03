@@ -12,17 +12,14 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
 defined('XOOPS_ROOT_PATH') or die('XOOPS root path not defined');
 
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_items_new_show($options)
 {
@@ -48,7 +45,7 @@ function publisher_items_new_show($options)
         $criteria = null;
     } else {
         $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('categoryid', '(' . $options[0] . ')', 'IN'));
+        $criteria->add(new Criteria('categoryid', '('.$options[0].')', 'IN'));
     }
     $xoops = \Xoops::getInstance();
     $thumbService = $xoops->service('thumbnail');
@@ -62,28 +59,28 @@ function publisher_items_new_show($options)
             $item['id'] = $itemsObj[$i]->getVar('itemid');
             $item['poster'] = $itemsObj[$i]->posterName(); // for make poster name linked, use linkedPosterName() instead of posterName()
 
-            if ($image === 'article') {
-                $item['image'] = \XoopsBaseConfig::get('url') . '/uploads/blank.gif';
+            if ('article' === $image) {
+                $item['image'] = \XoopsBaseConfig::get('url').'/uploads/blank.gif';
                 $item['image_name'] = '';
                 $images = $itemsObj[$i]->getImages();
                 if (is_object($images['main'])) {
                     $item['image'] = $thumbService
-                        ->getImgUrl('uploads/' . $images['main']->getVar('image_name'), 50, 0)
+                        ->getImgUrl('uploads/'.$images['main']->getVar('image_name'), 50, 0)
                         ->getValue();
 
                     $item['image_name'] = $images['main']->getVar('image_nicename');
                 }
-            } elseif ($image === 'category') {
+            } elseif ('category' === $image) {
                 $item['image'] = $itemsObj[$i]->getCategoryImagePath();
                 $item['image_name'] = $itemsObj[$i]->getCategoryName();
-            } elseif ($image === 'avatar') {
+            } elseif ('avatar' === $image) {
                 $auid = $itemsObj[$i]->getVar('uid');
-                if ($auid === '0') {
-                    $item['image'] = \XoopsBaseConfig::get('url') . '/uploads/blank.gif';
+                if ('0' === $auid) {
+                    $item['image'] = \XoopsBaseConfig::get('url').'/uploads/blank.gif';
                     $images = $itemsObj[$i]->getImages();
                     if (is_object($images['main'])) {
                         $item['image'] = $thumbService
-                            ->getImgUrl('uploads/' . $images['main']->getVar('image_name'), 50, 0)
+                            ->getImgUrl('uploads/'.$images['main']->getVar('image_name'), 50, 0)
                             ->getValue();
                     }
                 } else {
@@ -94,11 +91,11 @@ function publisher_items_new_show($options)
 
             $item['title'] = $itemsObj[$i]->title();
 
-            if ($sort === 'datesub') {
+            if ('datesub' === $sort) {
                 $item['new'] = $itemsObj[$i]->datesub();
-            } elseif ($sort === 'counter') {
+            } elseif ('counter' === $sort) {
                 $item['new'] = $itemsObj[$i]->getVar('counter');
-            } elseif ($sort === 'weight') {
+            } elseif ('weight' === $sort) {
                 $item['new'] = $itemsObj[$i]->weight();
             }
 

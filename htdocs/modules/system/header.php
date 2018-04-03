@@ -10,16 +10,15 @@
 */
 
 /**
- * System Header
+ * System Header.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     system
  * @version     $Id$
  */
 
 // Include XOOPS control panel header
-include_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
+include_once dirname(dirname(__DIR__)).'/include/cp_header.php';
 
 $xoops = Xoops::getInstance();
 
@@ -48,4 +47,4 @@ $fct = $system->cleanVars($_REQUEST, 'fct', '', 'string');
 XoopsLoad::load('systembreadcrumb', 'system');
 
 $system_breadcrumb = SystemBreadcrumb::getInstance($fct);
-$system_breadcrumb->addLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+$system_breadcrumb->addLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);

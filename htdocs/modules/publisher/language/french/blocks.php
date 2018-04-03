@@ -4,7 +4,7 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
 
 // Blocks
@@ -114,7 +114,7 @@ define('_MB_PUBLISHER_TEMPLATE_SLIDER2', 'Tabbed Slider');
 
 define('_MB_PUBLISHER_ARCHIVE', 'Archive');
 
-/**
+/*
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) <http://www.afux.org/>
  * @translation     grandoc 2010-02-06
  * @specification   _LANGCODE: fr

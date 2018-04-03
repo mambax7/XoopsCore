@@ -14,19 +14,18 @@ namespace Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeEmail
+ * DtypeEmail.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeEmail
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeEmail extends DtypeAbstract
 {
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -37,14 +36,17 @@ class DtypeEmail extends DtypeAbstract
     {
         $value = trim($obj->vars[$key]['value']);
 
-        if ($obj->vars[$key]['required'] && $value === '') {
+        if ($obj->vars[$key]['required'] && '' === $value) {
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
+
             return $value;
         }
-        if ($value !== '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $value)) {
+        if ('' !== $value && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $value)) {
             $obj->setErrors('Invalid Email');
+
             return $value;
         }
+
         return $value;
     }
 }

@@ -16,23 +16,22 @@ use Xoops\Core\Service\Manager;
 use Xoops\Core\Service\Response;
 
 /**
- * User Message service interface
+ * User Message service interface.
  *
  * A User Message is a message between two users (i.e. pm)
  *
  * @category  Xoops\Core\Service\Contract
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 The XOOPS Project https://xoops.org
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 interface UserMessageInterface
 {
     public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
-     * sendMessage - given user info return absolute URL to avatar image
+     * sendMessage - given user info return absolute URL to avatar image.
      *
      * @param Response $response response object
      * @param Message  $message  message to be sent

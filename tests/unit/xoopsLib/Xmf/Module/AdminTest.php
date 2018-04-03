@@ -2,7 +2,7 @@
 
 namespace Xmf\Module;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class AdminTest extends \PHPUnit\Framework\TestCase
 {

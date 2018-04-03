@@ -12,19 +12,18 @@
 namespace Xoops\Html;
 
 /**
- * Img - Render an html img tag
+ * Img - Render an html img tag.
  *
  * @category  Xoops\Html\Img
- * @package   Xoops\Html
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Img extends Attributes
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param array $attributes array of attribute name => value pairs for img tag
      */
@@ -34,13 +33,13 @@ class Img extends Attributes
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
     public function render()
     {
-        $tag = '<img ' . $this->renderAttributeString() . ' />';
+        $tag = '<img '.$this->renderAttributeString().' />';
 
         return $tag;
     }

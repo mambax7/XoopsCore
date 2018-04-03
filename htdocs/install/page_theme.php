@@ -12,7 +12,6 @@
 /**
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -21,11 +20,10 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon'] = true;
 
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 $xoops = Xoops::getInstance();
 
@@ -33,7 +31,7 @@ $xoops = Xoops::getInstance();
 $wizard = $_SESSION['wizard'];
 $config_handler = $xoops->getHandlerConfig();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
             $config = &$config_handler->getConfig($conf_id);
@@ -58,11 +56,11 @@ $criteria->add(new Criteria('conf_name', 'theme_set'));
 $tempvar = $config_handler->getConfigs($criteria);
 $config = array_pop($tempvar);
 
-include XOOPS_INSTALL_PATH . '/include/createconfigform.php';
+include XOOPS_INSTALL_PATH.'/include/createconfigform.php';
 $wizard->form = createThemeform($config);
 $content = $wizard->CreateForm();
 
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

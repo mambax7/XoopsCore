@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS main configuration file
+ * XOOPS main configuration file.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -13,7 +13,6 @@
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @version     $Id$
  */
-
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_MAINFILE_INCLUDED', 1);
 
@@ -33,7 +32,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // URL Association for SSL and Protocol Compatibility
     $http = 'http://';
     if (!empty($_SERVER['HTTPS'])) {
-        $http = ($_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+        $http = ('on' === $_SERVER['HTTPS']) ? 'https://' : 'http://';
     }
     define('XOOPS_PROT', $http);
 
@@ -103,6 +102,6 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_GROUP_ANONYMOUS', '3');
 
     if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH !== '') {
-        include XOOPS_ROOT_PATH . '/include/common.php';
+        include XOOPS_ROOT_PATH.'/include/common.php';
     }
 }

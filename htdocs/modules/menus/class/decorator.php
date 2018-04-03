@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusDecorator
 {
     /**
@@ -31,6 +29,7 @@ class MenusDecorator
         if (!in_array($dirname, array_keys($available), true)) {
             return false;
         }
+
         return $available[$dirname];
     }
 
@@ -47,7 +46,7 @@ class MenusDecorator
             $dirnames = XoopsLists::getDirListAsArray($helper->path('decorators/'), '');
             foreach ($dirnames as $dirname) {
                 if (XoopsLoad::loadFile($helper->path("decorators/{$dirname}/decorator.php"))) {
-                    $className = 'Menus' . ucfirst($dirname) . 'Decorator';
+                    $className = 'Menus'.ucfirst($dirname).'Decorator';
                     $class = new $className($dirname);
                     if ($class instanceof MenusDecoratorAbstract && $class instanceof MenusDecoratorInterface) {
                         $decorators[$dirname] = $class;
@@ -55,6 +54,7 @@ class MenusDecorator
                 }
             }
         }
+
         return $decorators;
     }
 }
@@ -81,6 +81,7 @@ class MenusDecoratorAbstract
         if (!$ret = XoopsLoad::loadFile("{$path}/{$language}/decorator.php")) {
             $ret = XoopsLoad::loadFile("{$path}/english/decorator.php");
         }
+
         return $ret;
     }
 }

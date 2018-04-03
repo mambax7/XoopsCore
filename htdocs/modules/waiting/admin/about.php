@@ -10,17 +10,15 @@
 */
 
 /**
- * waiting module
+ * waiting module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         waiting
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 $aboutAdmin = new \Xoops\Module\Admin();

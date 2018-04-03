@@ -18,17 +18,16 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
  * Object render handler class.
  *
  * @category  Xoops\Core\Kernel\Model\Read
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 class Read extends XoopsModelAbstract
 {
     /**
-     * get all objects matching a condition
+     * get all objects matching a condition.
      *
      * @param CriteriaElement|null $criteria  criteria to match
      * @param array                $fields    variables to fetch
@@ -90,11 +89,12 @@ class Read extends XoopsModelAbstract
             }
             unset($object);
         }
+
         return $ret;
     }
 
     /**
-     * retrieve objects from the database
+     * retrieve objects from the database.
      *
      * For performance consideration, getAll() is recommended
      *
@@ -107,11 +107,12 @@ class Read extends XoopsModelAbstract
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $objects = $this->getAll($criteria, null, $as_object, $id_as_key);
+
         return $objects;
     }
 
     /**
-     * Retrieve a list of objects data
+     * Retrieve a list of objects data.
      *
      * @param CriteriaElement|null $criteria criteria to match
      * @param int                  $limit    Max number of objects to fetch
@@ -131,7 +132,7 @@ class Read extends XoopsModelAbstract
             $qb->addSelect($this->handler->identifierName);
         }
         $qb->from($this->handler->table, null);
-        if ($limit !== 0 || $start !== 0) {
+        if (0 !== $limit || 0 !== $start) {
             $qb->setFirstResult($start)
                 ->setMaxResults($limit);
         }
@@ -150,11 +151,12 @@ class Read extends XoopsModelAbstract
             $ret[$myrow[$this->handler->keyName]] = empty($this->handler->identifierName) ? 1
                 : $myts->htmlSpecialChars($myrow[$this->handler->identifierName]);
         }
+
         return $ret;
     }
 
     /**
-     * get IDs of objects matching a condition
+     * get IDs of objects matching a condition.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -179,11 +181,12 @@ class Read extends XoopsModelAbstract
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $ret[] = $myrow[$this->handler->keyName];
         }
+
         return $ret;
     }
 
     /**
-     * getRandomObject - return a randomly selected object
+     * getRandomObject - return a randomly selected object.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -192,9 +195,9 @@ class Read extends XoopsModelAbstract
     public function getRandomObject(CriteriaElement $criteria = null)
     {
         $qb = $this->handler->db2->createXoopsQueryBuilder();
-        $qb ->select('COUNT(*)')
+        $qb->select('COUNT(*)')
             ->from($this->handler->table, null);
-        if ($criteria !== null) {
+        if (null !== $criteria) {
             $qb = $criteria->renderQb($qb);
         }
         $result = $qb->execute();
@@ -203,12 +206,12 @@ class Read extends XoopsModelAbstract
         $offset = mt_rand(0, $count - 1);
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
-        $qb ->select($this->handler->keyName)
+        $qb->select($this->handler->keyName)
             ->from($this->handler->table, null);
-        if ($criteria !== null) {
+        if (null !== $criteria) {
             $qb = $criteria->renderQb($qb);
         }
-        $qb ->setFirstResult($offset)
+        $qb->setFirstResult($offset)
             ->setMaxResults(1);
 
         $result = $qb->execute();

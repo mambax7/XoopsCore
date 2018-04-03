@@ -11,11 +11,9 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 class XlanguageLanguageForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -58,20 +56,20 @@ class XlanguageLanguageForm extends Xoops\Form\ThemeForm
 
         // language image
         $image_option_tray = new Xoops\Form\ElementTray(_AM_XLANGUAGE_IMAGE, '');
-        $flagPath = 'media/xoops/images/flags/' . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/';
+        $flagPath = 'media/xoops/images/flags/'.\Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme').'/';
         $image_select = new Xoops\Form\Select('', 'xlanguage_image', $obj->getVar('xlanguage_image'));
         \Xoops\Core\Lists\ImageFile::setOptionsArray($image_select, $xoops->path($flagPath));
-        $image_select->setExtra("onchange='showImgSelected(\"image\", \"xlanguage_image\", \"/media/xoops/images/flags/" . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/", "", "' . \XoopsBaseConfig::get('url') . "\")'");
+        $image_select->setExtra("onchange='showImgSelected(\"image\", \"xlanguage_image\", \"/media/xoops/images/flags/".\Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme').'/", "", "'.\XoopsBaseConfig::get('url')."\")'");
         $image_tray = new Xoops\Form\ElementTray('', '&nbsp;');
         $image_tray->addElement($image_select);
-        $image_tray->addElement(new Xoops\Form\Label('', "<div style='padding: 8px;'><img style='width:24px; height:24px; ' src='" . \XoopsBaseConfig::get('url') . '/media/xoops/images/flags/' . \Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme') . '/' . $obj->getVar('xlanguage_image') . "' name='image' id='image' alt='' /></div>"));
+        $image_tray->addElement(new Xoops\Form\Label('', "<div style='padding: 8px;'><img style='width:24px; height:24px; ' src='".\XoopsBaseConfig::get('url').'/media/xoops/images/flags/'.\Xoops\Module\Helper::getHelper('xlanguage')->getConfig('theme').'/'.$obj->getVar('xlanguage_image')."' name='image' id='image' alt='' /></div>"));
         $image_option_tray->addElement($image_tray);
         $this->addElement($image_option_tray);
 
         $this->addElement(new Xoops\Form\Hidden('xlanguage_id', $obj->getVar('xlanguage_id')));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
         $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
@@ -90,6 +88,7 @@ class XlanguageLanguageForm extends Xoops\Form\ThemeForm
                 $buttonCancel->setExtra('onclick="tinyMCEPopup.close();"');
                 $buttonCancel->setClass('btn btn-danger');
                 $buttonTray->addElement($buttonCancel);
+
                 break;
 
             case 'index':
@@ -98,6 +97,7 @@ class XlanguageLanguageForm extends Xoops\Form\ThemeForm
                 $buttonCancel->setExtra("onclick='javascript:history.go(-1);'");
                 $buttonCancel->setClass('btn btn-danger');
                 $buttonTray->addElement($buttonCancel);
+
                 break;
         }
 

@@ -13,16 +13,15 @@ use PluginsLocale as t;
 use Xmf\Request;
 
 /**
- * plugins module
+ * plugins module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         plugins
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get main instance
 $xoops = Xoops::getInstance();
@@ -74,6 +73,7 @@ switch ($op) {
         //In the impossible case no plugins were found, we alert the user
         if (!$objects) {
             $xoops->tpl()->assign('errorMsg', $xoops->alert('info', t::NO_PLUGINS_FOUND));
+
             break;
         }
 
@@ -85,11 +85,11 @@ switch ($op) {
             $plugin['plugin_listener_name'] = $xoops->getModuleByDirname($plugin['plugin_listener'])->getVar('name');
 
             //Add order field
-            $order = new \Xoops\Form\Text('', 'order[' . $plugin['plugin_id'] . ']', 2, 2, $plugin['plugin_order']);
+            $order = new \Xoops\Form\Text('', 'order['.$plugin['plugin_id'].']', 2, 2, $plugin['plugin_order']);
             $order->set('style', 'width:3em');
             $plugin['plugin_order_field'] = $order->render();
             //Add status field
-            $status = new \Xoops\Form\RadioYesNo('', 'status[' . $plugin['plugin_id'] . ']', $plugin['plugin_status'], false);
+            $status = new \Xoops\Form\RadioYesNo('', 'status['.$plugin['plugin_id'].']', $plugin['plugin_status'], false);
             $plugin['plugin_status_field'] = $status->render();
             $plugins[] = $plugin;
         }
@@ -135,6 +135,7 @@ switch ($op) {
         $hidden = new \Xoops\Form\Hidden('caller', $caller);
         $hiddenFields .= $hidden->render();
         $xoops->tpl()->assign('hiddenFields', $hiddenFields);
+
         break;
     case 'status':
         // Get the plugin id
@@ -143,9 +144,12 @@ switch ($op) {
         $status = Request::getInt('status', 0);
         if ($object = $handler->get($id)) {
             $object->setVar('plugin_status', $status);
+
             return $handler->insert($object);
         }
+
         return false;
+
         break;
 }
 $xoops->footer();

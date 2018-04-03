@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -30,5 +29,5 @@ The new class \\Xoops\\Module\\Plugin is the class that makes using plugins simp
 See how Codex module hooks into the search module just by using this codex/class/plugin/search.php
 ";
 
-\Xoops\Utils::dumpFile(__DIR__ . '/class/plugin/search.php');
+\Xoops\Utils::dumpFile(__DIR__.'/class/plugin/search.php');
 $xoops->footer();

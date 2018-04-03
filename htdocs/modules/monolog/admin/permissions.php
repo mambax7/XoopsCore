@@ -12,16 +12,14 @@
 /**
  * @copyright    XOOPS Project (http://xoops.org)
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package      debugbar
  * @since
  * @author       XOOPS Development Team
  */
-
 use Xmf\Module\Helper;
 use Xmf\Module\Helper\Permission;
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $moduleAdmin = new \Xoops\Module\Admin();
 $moduleAdmin->displayNavigation('permissions.php');
@@ -34,7 +32,7 @@ if ($permHelper) {
     $gperm_itemid = 0;
 
     // if this is a post operation get our variables
-    if (Request::getMethod() === 'POST') {
+    if ('POST' === Request::getMethod()) {
         $name = $permHelper->defaultFieldName($gperm_name, $gperm_itemid);
         $groups = Request::getVar($name, [], 'POST');
         $permHelper->savePermissionForItem($gperm_name, $gperm_itemid, $groups);
@@ -56,4 +54,4 @@ if ($permHelper) {
     echo $form->render();
 }
 
-include_once __DIR__ . '/admin_footer.php';
+include_once __DIR__.'/admin_footer.php';

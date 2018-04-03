@@ -17,7 +17,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class HelperAbstract
 {
@@ -37,14 +37,14 @@ abstract class HelperAbstract
     protected $debug = false;
 
     /**
-     * initialize - nothing to do here
+     * initialize - nothing to do here.
      */
     public function init()
     {
     }
 
     /**
-     * Set debug option on or off
+     * Set debug option on or off.
      *
      * @param bool $debug true to enable debugging log, false to disable
      */
@@ -54,7 +54,7 @@ abstract class HelperAbstract
     }
 
     /**
-     * get helper instance
+     * get helper instance.
      *
      * @return HelperAbstract
      */
@@ -62,7 +62,7 @@ abstract class HelperAbstract
     {
         static $instance = false;
         $id = $className = get_called_class();
-        if ($className === 'Xoops\Module\Helper\Dummy') {
+        if ('Xoops\Module\Helper\Dummy' === $className) {
             $id = @\Xoops::getInstance()->registry()->get('module_helper_id');
         }
         if (!isset($instance[$id])) {
@@ -71,6 +71,7 @@ abstract class HelperAbstract
             $class->init();
             $instance[$id] = $class;
         }
+
         return $instance[$id];
     }
 
@@ -79,14 +80,15 @@ abstract class HelperAbstract
      */
     public function getModule()
     {
-        if ($this->module === null) {
+        if (null === $this->module) {
             $this->initModule();
         }
+
         return $this->module;
     }
 
     /**
-     * return the Xoops instance
+     * return the Xoops instance.
      *
      * @return \Xoops
      */
@@ -96,7 +98,7 @@ abstract class HelperAbstract
     }
 
     /**
-     * get a module config item
+     * get a module config item.
      *
      * @param string $name    name of config item, or blank for all items
      * @param mixed  $default default value to return if config $name is not set
@@ -109,21 +111,23 @@ abstract class HelperAbstract
         $configs = $this->xoops()->getModuleConfigs($this->dirname);
         if (empty($name)) {
             $this->addLog('Getting all config');
+
             return $configs;
         }
         $name = strtolower($name);
         if (!isset($configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
+
             return $default;
         }
 
-        $this->addLog("Getting config '{$name}' : " . $configs[$name]);
+        $this->addLog("Getting config '{$name}' : ".$configs[$name]);
 
         return $configs[$name];
     }
 
     /**
-     * getConfigs
+     * getConfigs.
      *
      * @return array of config items for module
      */
@@ -131,11 +135,12 @@ abstract class HelperAbstract
     {
         $result = $this->xoops()->getModuleConfigs($this->dirname);
         $this->addLog("Getting configs for {$this->dirname} module");
+
         return $result;
     }
 
     /**
-     * Get handler for object managed by this module
+     * Get handler for object managed by this module.
      *
      * @param string $name object name
      *
@@ -145,11 +150,12 @@ abstract class HelperAbstract
     {
         $name = strtolower($name);
         $this->addLog("Getting handler '{$name}'");
+
         return $this->xoops()->getModuleHandler($name, $this->dirname);
     }
 
     /**
-     * Turn off caching for this module
+     * Turn off caching for this module.
      */
     public function disableCache()
     {
@@ -172,6 +178,7 @@ abstract class HelperAbstract
         if ($this->xoops()->moduleDirname === $this->dirname) {
             return true;
         }
+
         return false;
     }
 
@@ -185,11 +192,12 @@ abstract class HelperAbstract
         if ($this->xoops()->isUser()) {
             return $this->xoops()->user->isAdmin($this->getModule()->getVar('mid'));
         }
+
         return false;
     }
 
     /**
-     * Return absolute URL for a module relative URL
+     * Return absolute URL for a module relative URL.
      *
      * @param string $url URL to resolve
      *
@@ -197,11 +205,11 @@ abstract class HelperAbstract
      */
     public function url($url = '')
     {
-        return $this->xoops()->url('modules/' . $this->dirname . '/' . $url);
+        return $this->xoops()->url('modules/'.$this->dirname.'/'.$url);
     }
 
     /**
-     * Return absolute filesystem path for a module relative path
+     * Return absolute filesystem path for a module relative path.
      *
      * @param string $path path to resolve
      *
@@ -209,11 +217,11 @@ abstract class HelperAbstract
      */
     public function path($path = '')
     {
-        return $this->xoops()->path('modules/' . $this->dirname . '/' . $path);
+        return $this->xoops()->path('modules/'.$this->dirname.'/'.$path);
     }
 
     /**
-     * Redirect the user to a page within this module
+     * Redirect the user to a page within this module.
      *
      * @param string $url     url to redirect to
      * @param int    $time    time to delay
@@ -236,7 +244,7 @@ abstract class HelperAbstract
     }
 
     /**
-     * Load locale for our dirname
+     * Load locale for our dirname.
      */
     public function loadLocale()
     {
@@ -254,11 +262,12 @@ abstract class HelperAbstract
     {
         $name = strtolower($name);
         $this->addLog("Loading form '{$name}'");
+
         return $this->xoops()->getModuleForm($obj, $name, $this->dirname);
     }
 
     /**
-     * Add a message to the module helper's log
+     * Add a message to the module helper's log.
      *
      * @param string $message message to log
      */
@@ -281,7 +290,7 @@ abstract class HelperAbstract
     }
 
     /**
-     * Get a XoopsModule object for this module
+     * Get a XoopsModule object for this module.
      */
     private function initModule()
     {

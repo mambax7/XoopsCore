@@ -12,15 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_items_spot_show($options)
 {
@@ -34,11 +31,11 @@ function publisher_items_spot_show($options)
     $opt_display_type = $options[6];
     $opt_truncate = (int) ($options[7]);
     $opt_catimage = $options[8];
-    if ($opt_categoryid === 0) {
+    if (0 === $opt_categoryid) {
         $opt_categoryid = -1;
     }
     $block = [];
-    if ($opt_display_last === 1) {
+    if (1 === $opt_display_last) {
         $itemsObj = $publisher->getItemHandler()->getAllPublished($opt_items_count, 0, $opt_categoryid, $sort = 'datesub', $order = 'DESC', 'summary');
         $i = 1;
         $itemsCount = count($itemsObj);
@@ -47,8 +44,8 @@ function publisher_items_spot_show($options)
                 $cat = $publisher->getCategoryHandler()->get($opt_categoryid);
                 $category['name'] = $cat->getVar('name');
                 $category['categoryurl'] = $cat->getCategoryUrl();
-                if ($cat->image() !== 'blank.png') {
-                    $category['image_path'] = PublisherUtils::getImageDir('category', false) . $cat->image();
+                if ('blank.png' !== $cat->image()) {
+                    $category['image_path'] = PublisherUtils::getImageDir('category', false).$cat->image();
                 } else {
                     $category['image_path'] = '';
                 }
@@ -92,7 +89,7 @@ function publisher_items_spot_show($options)
             }
         }
     }
-    if (!isset($block['items']) || count($block['items']) === 0) {
+    if (!isset($block['items']) || 0 === count($block['items'])) {
         return false;
     }
     $block['publisher_url'] = PUBLISHER_URL;
@@ -102,6 +99,7 @@ function publisher_items_spot_show($options)
     $block['display_whowhen_link'] = $opt_display_poster;
     $block['display_comment_link'] = $opt_display_comment;
     $block['display_type'] = $opt_display_type;
+
     return $block;
 }
 
@@ -118,7 +116,7 @@ function publisher_items_spot_edit($options)
     $itemsObj = $publisher->getItemHandler()->getList($criteria);
     $keys = array_keys($itemsObj);
     unset($criteria);
-    if (empty($options[3]) || ($options[3] === 0)) {
+    if (empty($options[3]) || (0 === $options[3])) {
         $sel_items = isset($keys[0]) ? $keys[0] : 0;
     } else {
         $sel_items = explode(',', $options[3]);
@@ -143,5 +141,6 @@ function publisher_items_spot_edit($options)
     $form->addElement($typeEle);
     $form->addElement($truncateEle);
     $form->addElement($imageEle);
+
     return $form->render();
 }

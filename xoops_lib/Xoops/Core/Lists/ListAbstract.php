@@ -14,19 +14,18 @@ namespace Xoops\Core\Lists;
 use Xoops\Form\OptionElement;
 
 /**
- * ListAbstract - return a list of something
+ * ListAbstract - return a list of something.
  *
  * @category  Xoops\Core\Lists\ListAbstract
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class ListAbstract
 {
     /**
-     * return a list as an array
+     * return a list as an array.
      *
      * @return array
      */
@@ -36,7 +35,7 @@ abstract class ListAbstract
     }
 
     /**
-     * add list to a Xoops\Form\OptionElement
+     * add list to a Xoops\Form\OptionElement.
      */
     public static function setOptionsArray(OptionElement $element)
     {

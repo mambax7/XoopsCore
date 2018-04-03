@@ -1,6 +1,6 @@
 <?php
 /**
- * Upgrader index file
+ * Upgrader index file.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,13 +11,11 @@
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         upgrader
  * @since           2.3.0
  * @author          Skalpa Keo <skalpa@xoops.org>
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 @include_once '../mainfile.php';
 
 @set_time_limit(0);
@@ -34,8 +32,8 @@ function getDirList($dirname)
 {
     $dirlist = [];
     if (is_dir($dirname) && $handle = opendir($dirname)) {
-        while (($file = readdir($handle)) !== false) {
-            if (substr($file, 0, 1) !== '.' && strtolower($file) !== 'cvs') {
+        while (false !== ($file = readdir($handle))) {
+            if ('.' !== substr($file, 0, 1) && 'cvs' !== strtolower($file)) {
                 if (is_dir("{$dirname}/{$file}")) {
                     $dirlist[] = $file;
                 }
@@ -45,6 +43,7 @@ function getDirList($dirname)
         asort($dirlist);
         reset($dirlist);
     }
+
     return $dirlist;
 }
 
@@ -63,6 +62,7 @@ function getDbValue($db, $table, $field, $condition = '')
             return $row[0];
         }
     }
+
     return false;
 }
 
@@ -86,7 +86,6 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     exit();
 }
 
-
 ob_start();
 if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
     include_once 'login.php';
@@ -99,16 +98,16 @@ if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
         include_once 'check_version.php';
     } else {
         $next = array_shift($_SESSION['xoops_upgrade']['steps']);
-        printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
+        printf('<h2>'._PERFORMING_UPGRADE.'</h2>', $next);
         $upgrader = include_once "{$next}/index.php";
         $res = $upgrader->apply();
         if ($message = $upgrader->message()) {
-            echo '<p>' . $message . '</p>';
+            echo '<p>'.$message.'</p>';
         }
 
         if (!$res) {
             array_unshift($_SESSION['xoops_upgrade']['steps'], $next);
-            echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
+            echo '<a id="link-next" href="index.php?action=next">'._RELOAD.'</a>';
         } else {
             if (empty($_SESSION['xoops_upgrade']['steps'])) {
                 $text = _FINISH;
@@ -116,7 +115,7 @@ if (!$xoops->isUser() || !$xoops->user->isAdmin()) {
                 list($key, $val) = each($_SESSION['xoops_upgrade']['steps']);
                 $text = sprintf(_APPLY_NEXT, $val);
             }
-            echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
+            echo '<a id="link-next" href="index.php?action=next">'.$text.'</a>';
         }
     }
 }

@@ -16,47 +16,46 @@ use Stash\Pool;
 use Xmf\Yaml;
 
 /**
- * Provides a standardized cache access
+ * Provides a standardized cache access.
  *
  * @category  Xoops\Core\Cache
- * @package   CacheManager
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 The XOOPS Project https://github.com/XOOPS
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class CacheManager
 {
     /**
-     * Cache Access objects for pools
+     * Cache Access objects for pools.
      *
      * @var Access[]
      */
     protected $pools = [];
 
     /**
-     * Pool definitions
+     * Pool definitions.
      *
      * @var array
      */
     protected $poolDefs = [];
 
     /**
-     * Xoops instance
+     * Xoops instance.
      *
      * @var \Xoops
      */
     protected $xoops;
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
         $this->xoops = \Xoops::getInstance();
         $defaults = $this->getDefaults();
         $xoops_var_path = \XoopsBaseConfig::get('var-path');
-        $cache_file = $xoops_var_path . '/configs/cache.php';
+        $cache_file = $xoops_var_path.'/configs/cache.php';
         $poolDefs = Yaml::readWrapped($cache_file);
         if (empty($poolDefs)) {
             Yaml::saveWrapped($defaults, $cache_file);
@@ -66,7 +65,7 @@ class CacheManager
     }
 
     /**
-     * Create a default configuration file, used in installation
+     * Create a default configuration file, used in installation.
      *
      * SQLite is the recommended driver, and will be used by default if available.
      *
@@ -86,7 +85,7 @@ class CacheManager
      */
     public static function createDefaultConfig()
     {
-        $configFile = \XoopsBaseConfig::get('var-path') . '/configs/cache.php';
+        $configFile = \XoopsBaseConfig::get('var-path').'/configs/cache.php';
         if (file_exists($configFile)) {
             return;
         }
@@ -95,9 +94,9 @@ class CacheManager
             $defaults['default']['driver'] = 'FileSystem';
             $defaults['default']['options'] = [
                 'dirSplit' => 1,
-                'path' => \XoopsBaseConfig::get('var-path') . '/stash/',
+                'path' => \XoopsBaseConfig::get('var-path').'/stash/',
             ];
-            if (stripos(PHP_OS, 'WIN') !== false) {
+            if (false !== stripos(PHP_OS, 'WIN')) {
                 trigger_error('SQLite is strongly recommended on windows due to 260 character file path restrictions.');
             }
         }
@@ -105,7 +104,7 @@ class CacheManager
     }
 
     /**
-     * Get a cache corresponding to the specified name
+     * Get a cache corresponding to the specified name.
      *
      * @param string $name Name of cache definition
      *
@@ -119,7 +118,7 @@ class CacheManager
         } elseif (array_key_exists($name, $this->poolDefs)) {
             $pool = $this->startPoolAccess($name);
         }
-        if ($pool === false) {
+        if (false === $pool) {
             $pool = $this->getDefaultPool($name);
         }
 
@@ -130,7 +129,7 @@ class CacheManager
 
     /**
      * Instantiate an Access object from named configuration, including
-     * instantiating pool and driver
+     * instantiating pool and driver.
      *
      * @param string $name name of pool configuration to start
      *
@@ -144,7 +143,7 @@ class CacheManager
             $options = $this->poolDefs[$name]['options'];
         }
         $driverName = $this->poolDefs[$name]['driver'];
-        if (strcasecmp($driverName, 'Composite') === 0) {
+        if (0 === strcasecmp($driverName, 'Composite')) {
             $drivers = [];
             foreach ($this->poolDefs[$name]['options']['drivers'] as $subDriver) {
                 $drivers[] = $this->getDriver($subDriver['driver'], $subDriver['options']);
@@ -153,7 +152,7 @@ class CacheManager
         }
 
         $driver = $this->getDriver($driverName, $options);
-        if ($driver !== false) {
+        if (false !== $driver) {
             $pool = new Pool($driver);
             if (is_object($pool)) {
                 $pool->setLogger($this->xoops->logger());
@@ -161,7 +160,8 @@ class CacheManager
             }
         }
         if (!$pool) {
-            $this->xoops->logger()->warn('Could not create cache pool ' . $name);
+            $this->xoops->logger()->warn('Could not create cache pool '.$name);
+
             return $pool;
         }
 
@@ -169,7 +169,7 @@ class CacheManager
     }
 
     /**
-     * getDriver
+     * getDriver.
      *
      * @param string $driverName short name of the driver
      * @param array  $options    array of options for the driver
@@ -181,16 +181,17 @@ class CacheManager
         $driver = false;
         $driverClass = DriverList::getDriverClass($driverName);
 
-        if ($driverClass !== false && $driverClass::isAvailable()) {
+        if (false !== $driverClass && $driverClass::isAvailable()) {
             $options = is_array($options) ? $options : [];
             $driver = new $driverClass($options);
         }
+
         return ($driver instanceof DriverInterface) ? $driver : false;
     }
 
     /**
      * Get an Access object based on the default pool. If it isn't set, create it.
-     * If no definition exists for default, use Stash default (Ephimeral.)
+     * If no definition exists for default, use Stash default (Ephimeral.).
      *
      * @param string $originalName originally requested pool configuration name
      *
@@ -198,22 +199,23 @@ class CacheManager
      */
     protected function getDefaultPool($originalName)
     {
-        $this->xoops->events()->triggerEvent('debug.log', 'Substituting default cache pool for ' . $originalName);
+        $this->xoops->events()->triggerEvent('debug.log', 'Substituting default cache pool for '.$originalName);
         $name = 'default';
         if (array_key_exists($name, $this->pools)) {
             return $this->pools[$name];
         }
         $pool = $this->startPoolAccess($name);
-        if ($pool === false) {
+        if (false === $pool) {
             $this->xoops->logger()->error('Could not create default cache pool');
             $pool = new Access(new \Stash\Pool());
         }
         $this->pools[$name] = $pool;
+
         return $pool;
     }
 
     /**
-     * getDefaults get default cache configuration used if there is no config file
+     * getDefaults get default cache configuration used if there is no config file.
      *
      * @return array cache configuration
      */
@@ -222,13 +224,14 @@ class CacheManager
         $defaults = [
             'default' => [
                 'driver' => 'Sqlite',
-                'options' => ['path' => \XoopsBaseConfig::get('var-path') . '/stash/'],
+                'options' => ['path' => \XoopsBaseConfig::get('var-path').'/stash/'],
             ],
             'temp' => [
                 'driver' => 'Ephemeral',
                 'options' => [],
             ],
         ];
+
         return $defaults;
     }
 }

@@ -12,14 +12,13 @@
 namespace Xoops\Auth;
 
 /**
- * Authentication class for Native XOOPS
+ * Authentication class for Native XOOPS.
  *
  * @category  Xoops
- * @package   Auth
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 abstract class AuthAbstract
@@ -40,7 +39,7 @@ abstract class AuthAbstract
     protected $auth_method;
 
     /**
-     * Authentication Service constructor
+     * Authentication Service constructor.
      *
      * @param \Xoops\Core\Database\Connection|null $dao database
      */
@@ -50,7 +49,7 @@ abstract class AuthAbstract
     }
 
     /**
-     * authenticate a user
+     * authenticate a user.
      *
      * @param string      $uname user name
      * @param string|null $pwd   password
@@ -60,7 +59,7 @@ abstract class AuthAbstract
     abstract public function authenticate($uname, $pwd = null);
 
     /**
-     * setErrors
+     * setErrors.
      *
      * @param int    $err_no  error number
      * @param string $err_str error message
@@ -71,7 +70,7 @@ abstract class AuthAbstract
     }
 
     /**
-     * return the errors for this object as an array
+     * return the errors for this object as an array.
      *
      * @return array an array of errors
      */
@@ -81,7 +80,7 @@ abstract class AuthAbstract
     }
 
     /**
-     * return the errors for this object as html
+     * return the errors for this object as html.
      *
      * @return string html listing the errors
      */
@@ -89,18 +88,19 @@ abstract class AuthAbstract
     {
         $xoops = \Xoops::getInstance();
         $ret = '<br />';
-        if ($xoops->getConfig('debug_mode') === 1 || $xoops->getConfig('debug_mode') === 2) {
+        if (1 === $xoops->getConfig('debug_mode') || 2 === $xoops->getConfig('debug_mode')) {
             if (!empty($this->errors)) {
                 foreach ($this->errors as $errstr) {
-                    $ret .= $errstr . '<br/>';
+                    $ret .= $errstr.'<br/>';
                 }
             } else {
-                $ret .= \XoopsLocale::NONE . '<br />';
+                $ret .= \XoopsLocale::NONE.'<br />';
             }
             $ret .= sprintf(\XoopsLocale::F_USING_AUTHENTICATION_METHOD, $this->auth_method);
         } else {
             $ret .= \XoopsLocale::E_INCORRECT_LOGIN;
         }
+
         return $ret;
     }
 }

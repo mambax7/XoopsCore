@@ -14,16 +14,15 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $system = System::getInstance();
 $xoops = Xoops::getInstance();
@@ -53,7 +52,7 @@ if (isset($_REQUEST['submit'])) {
     $visibility_handler->insert($visibility, true);
     $xoops->redirect('visibility.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }
-if ($op === 'del') {
+if ('del' === $op) {
     $criteria = new CriteriaCompo(new Criteria('field_id', (int) ($_REQUEST['field_id'])));
     $criteria->add(new Criteria('user_group', (int) ($_REQUEST['ug'])));
     $criteria->add(new Criteria('profile_group', (int) ($_REQUEST['pg'])));

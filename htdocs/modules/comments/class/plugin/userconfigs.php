@@ -15,11 +15,10 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class CommentsUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implements UserconfigsPluginInterface
 {
     /**
-     * Expects an array of arrays containing:
+     * Expects an array of arrays containing:.
      *
      * name,        Name of the category
      * description, Description for the category, use constant
@@ -32,7 +31,7 @@ class CommentsUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     }
 
     /**
-     * Expects an array of arrays containing:
+     * Expects an array of arrays containing:.
      *
      * name,        Name of the config
      * title,       Display name for the config, use constant
@@ -61,6 +60,7 @@ class CommentsUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
         $configs[$i]['valuetype'] = 'int';
         $configs[$i]['options'] = ['XoopsLocale::OLDEST_FIRST' => 0, 'XoopsLocale::NEWEST_FIRST' => 1];
         $configs[$i]['default'] = 0;
+
         return $configs;
     }
 }

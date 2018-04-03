@@ -10,16 +10,15 @@
 */
 
 /**
- * Users Manager
+ * Users Manager.
  *
  * @category  Xoops\Core
- * @package   users
  * @author    Kazumi Ono (AKA onokazu)
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2002-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 
@@ -40,7 +39,7 @@ if (!$xoops->getModuleConfig('active_users', 'system')) {
 /* Users Functions                                       */
 /*********************************************************/
 /**
- * synchronize number of posts credited to user
+ * synchronize number of posts credited to user.
  *
  * @param int    $uid  uid of user row
  * @param string $type type of processing, 'user' for one user, 'all users' for all
@@ -87,6 +86,7 @@ function synchronize($uid, $type)
             foreach ($rows as $row) {
                 synchronize($row['uid'], 'user');
             }
+
             break;
     }
 }

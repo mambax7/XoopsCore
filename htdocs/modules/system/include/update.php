@@ -14,17 +14,16 @@ use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * System update functions
+ * System update functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
 
 /**
- * xoops_module_update_system
+ * xoops_module_update_system.
  *
  *
  * @return bool
@@ -32,7 +31,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 function xoops_module_update_system(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();
-    if ($module->getVar('version') === 100) {
+    if (100 === $module->getVar('version')) {
         $qb = $xoops->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
         $sql = $qb->select('t1.tpl_id')
@@ -50,7 +49,7 @@ function xoops_module_update_system(XoopsModule $module)
         if (count($tplids) > 0) {
             $tplfile_handler = $xoops->getHandlerTplFile();
             $duplicate_files = $tplfile_handler->getTplObjects(
-                new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN')
+                new Criteria('tpl_id', '('.implode(',', $tplids).')', 'IN')
             );
 
             if (count($duplicate_files) > 0) {
@@ -87,5 +86,6 @@ function xoops_module_update_system(XoopsModule $module)
             }
         }
     }
+
     return true;
 }

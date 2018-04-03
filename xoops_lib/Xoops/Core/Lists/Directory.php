@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * Directory - provide list of directory names
+ * Directory - provide list of directory names.
  *
  * @category  Xoops\Core\Lists\Directory
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Directory extends ListAbstract
 {
     /**
-     * gets list of directories inside a directory path
+     * gets list of directories inside a directory path.
      *
      * @param string   $path    filesystem path
      * @param string[] $ignored directory names to ignore. Hidden (starting with a '.') directories
@@ -36,13 +35,13 @@ class Directory extends ListAbstract
     {
         $ignored = (array) $ignored;
         $list = [];
-        $path = rtrim($path, '/') . '/';
+        $path = rtrim($path, '/').'/';
         if (is_dir($path) && $handle = opendir($path)) {
             while ($file = readdir($handle)) {
-                if (substr($file, 0, 1) === '.' || in_array(strtolower($file), $ignored, true)) {
+                if ('.' === substr($file, 0, 1) || in_array(strtolower($file), $ignored, true)) {
                     continue;
                 }
-                if (is_dir($path . $file)) {
+                if (is_dir($path.$file)) {
                     $list[$file] = $file;
                 }
             }

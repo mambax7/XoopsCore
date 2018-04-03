@@ -14,14 +14,13 @@ use Xoops\Core\Service\Contract\EmojiInterface;
 use Xoops\Core\Service\Response;
 
 /**
- * Smilies provider for service manager
+ * Smilies provider for service manager.
  *
  * @category  SmiliesProvider
- * @package   Smilies
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SmiliesProvider extends AbstractContract implements EmojiInterface
 {
@@ -37,7 +36,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -65,7 +64,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
     }
 
     /**
-     * getEmojiList - return a list of available emoji
+     * getEmojiList - return a list of available emoji.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
@@ -75,7 +74,7 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
     }
 
     /**
-     * renderEmojiSelector - provide emoji selector support for editing
+     * renderEmojiSelector - provide emoji selector support for editing.
      *
      * This should return an HTML string that, when displayed, will provide a link to an emoji selector.
      * Additionally, this should perform any additional tasks required to make the link function, such
@@ -86,16 +85,16 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
      */
     public function renderEmojiSelector(Response $response, $identifier)
     {
-        $selector = '<img src="' . \XoopsBaseConfig::get('url') . '/images/smiley.gif" alt="'
-            . \XoopsLocale::SMILIES . '" title="' . \XoopsLocale::SMILIES . '" onclick=\'openWithSelfMain("'
-            . \XoopsBaseConfig::get('url') . '/modules/smilies/include/popup.php?target=' . $identifier
-            . '","smilies",300,650);\' onmouseover=\'style.cursor="hand"\'/>&nbsp;';
+        $selector = '<img src="'.\XoopsBaseConfig::get('url').'/images/smiley.gif" alt="'
+            .\XoopsLocale::SMILIES.'" title="'.\XoopsLocale::SMILIES.'" onclick=\'openWithSelfMain("'
+            .\XoopsBaseConfig::get('url').'/modules/smilies/include/popup.php?target='.$identifier
+            .'","smilies",300,650);\' onmouseover=\'style.cursor="hand"\'/>&nbsp;';
 
         $response->setValue($selector);
     }
 
     /**
-     * get list of smilies in emoji format
+     * get list of smilies in emoji format.
      *
      * @return array emoji list
      */
@@ -103,17 +102,18 @@ class SmiliesProvider extends AbstractContract implements EmojiInterface
     {
         static $emojiList = null;
 
-        if ($emojiList === null) {
+        if (null === $emojiList) {
             $smiliesArray = \Xoops::getInstance()->getModuleHandler('smiley', 'smilies')->getActiveSmilies(false);
             $emojiList = [];
             foreach ($smiliesArray as $smile) {
                 $emoji['name'] = $smile['smiley_code'];
                 $emoji['description'] = $smile['smiley_emotion'];
                 $emoji['rendered'] =
-                    '<img src="' . $smile['smiley_url'] . '" alt="' . $smile['smiley_emotion'] . '" />';
+                    '<img src="'.$smile['smiley_url'].'" alt="'.$smile['smiley_emotion'].'" />';
                 $emojiList[] = $emoji;
             }
         }
+
         return $emojiList;
     }
 }

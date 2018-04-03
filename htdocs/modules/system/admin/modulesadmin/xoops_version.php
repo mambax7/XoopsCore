@@ -10,15 +10,13 @@
 */
 
 /**
- * Modules admin Manager
+ * Modules admin Manager.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 $modversion['name'] = XoopsLocale::MODULES;
 $modversion['version'] = '1.0';
 $modversion['description'] = SystemLocale::MODULES_DESC;

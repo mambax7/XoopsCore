@@ -5,14 +5,13 @@ namespace XoopsConsole\Library;
 use ArrayObject;
 
 /**
- * A really simple container
+ * A really simple container.
  *
  * @category  XoopsConsole\Library
- * @package   SimpleContainer
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SimpleContainer extends ArrayObject
 {
@@ -21,7 +20,7 @@ class SimpleContainer extends ArrayObject
      *
      * @param string $name Name of an attribute
      *
-     * @return  mixed  The value of the attribute, or null if not set
+     * @return mixed The value of the attribute, or null if not set
      */
     public function get($name)
     {
@@ -33,7 +32,7 @@ class SimpleContainer extends ArrayObject
      *
      * @param string $name An attribute name.
      *
-     * @return boolean TRUE if the given attribute exists, otherwise FALSE.
+     * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
     public function has($name)
     {

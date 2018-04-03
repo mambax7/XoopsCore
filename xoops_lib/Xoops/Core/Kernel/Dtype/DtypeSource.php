@@ -15,19 +15,18 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeSource
+ * DtypeSource.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeSource
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeSource extends DtypeAbstract
 {
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -59,7 +58,7 @@ class DtypeSource extends DtypeAbstract
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable

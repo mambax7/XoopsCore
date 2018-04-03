@@ -92,6 +92,7 @@ class EmailAddressListTest extends \PHPUnit\Framework\TestCase
     public function testGetEachAddressException()
     {
         $count = 0;
+
         try {
             foreach ($this->object->getEachAddress() as $address) {
                 ++$count;

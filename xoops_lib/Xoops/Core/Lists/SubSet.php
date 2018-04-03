@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * SubSet - return a list which is a subset of another list
+ * SubSet - return a list which is a subset of another list.
  *
  * @category  Xoops\Core\Lists\SubSet
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SubSet extends ListAbstract
 {
     /**
-     * return a subset of a list
+     * return a subset of a list.
      *
      * @param array $list associative list array
      * @param array $keys indexed array of keys to keep
@@ -36,8 +35,10 @@ class SubSet extends ListAbstract
         if (is_array($keys)) {
             $keys = array_flip($keys);
             $subset = array_intersect_key($list, $keys);
+
             return $subset;
         }
+
         return $list;
     }
 }

@@ -16,23 +16,22 @@ use Xoops\Core\Service\Manager;
 use Xoops\Core\Service\Response;
 
 /**
- * Email service interface
+ * Email service interface.
  *
  * A User Message is a message between two users (i.e. pm)
  *
  * @category  Xoops\Core\Service\Contract
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 The XOOPS Project https://xoops.org
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 interface EmailInterface
 {
     public const MODE = Manager::MODE_EXCLUSIVE;
 
     /**
-     * sendEmail - send an email
+     * sendEmail - send an email.
      *
      * @param Response $response response object
      * @param Email    $email    email message to be sent

@@ -12,16 +12,15 @@
 namespace Xoops\Core;
 
 /**
- * XOOPS template engine class
+ * XOOPS template engine class.
  *
  * @category  Xoops\Core
- * @package   Template
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsTpl extends \Smarty
 {
@@ -33,7 +32,7 @@ class XoopsTpl extends \Smarty
     public $currentTheme = null;
 
     /**
-     * XoopsTpl constructor
+     * XoopsTpl constructor.
      */
     public function __construct()
     {
@@ -52,7 +51,7 @@ class XoopsTpl extends \Smarty
         $this->setTemplateDir(\XoopsBaseConfig::get('themes-path'));
         $this->setCacheDir(\XoopsBaseConfig::get('smarty-cache'));
         $this->setCompileDir(\XoopsBaseConfig::get('smarty-compile'));
-        $this->compile_check = ($xoops->getConfig('theme_fromfile') === 1);
+        $this->compile_check = (1 === $xoops->getConfig('theme_fromfile'));
         $this->setPluginsDir(\XoopsBaseConfig::get('smarty-xoops-plugins'));
         $this->addPluginsDir(SMARTY_PLUGINS_DIR);
         $this->setCompileId();
@@ -85,11 +84,12 @@ class XoopsTpl extends \Smarty
         if ($countLeft > 0) {
             $temp = str_replace('}>', '}', $temp, $countRight);
         }
+
         return ($countLeft === $countRight) ? $temp : $tpl_source;
     }
 
     /**
-     * XoopsTpl::touch
+     * XoopsTpl::touch.
      *
      * @param string $resourceName name of resource
      *
@@ -102,11 +102,12 @@ class XoopsTpl extends \Smarty
         $this->clearCache($resourceName);
         $result = true; // $this->_compile_resource($resourceName, $this->_get_compile_path($resourceName));
         $this->force_compile = $isForced;
+
         return $result;
     }
 
     /**
-     * XoopsTpl::setCompileId()
+     * XoopsTpl::setCompileId().
      *
      * @param mixed $module_dirname module directory
      * @param mixed $theme_set      theme set
@@ -119,13 +120,13 @@ class XoopsTpl extends \Smarty
         $template_set = empty($template_set) ? $xoops->getConfig('template_set') : $template_set;
         $theme_set = empty($theme_set) ? $xoops->getConfig('theme_set') : $theme_set;
         $module_dirname = empty($module_dirname) ? $xoops->moduleDirname : $module_dirname;
-        $this->compile_id = substr(md5(\XoopsBaseConfig::get('url')), 0, 8) . '-' . $module_dirname
-            . '-' . $theme_set . '-' . $template_set;
+        $this->compile_id = substr(md5(\XoopsBaseConfig::get('url')), 0, 8).'-'.$module_dirname
+            .'-'.$theme_set.'-'.$template_set;
         //$this->_compile_id = $this->compile_id;
     }
 
     /**
-     * XoopsTpl::clearModuleCompileCache()
+     * XoopsTpl::clearModuleCompileCache().
      *
      * Clean up compiled and cached templates for a module
      *
@@ -146,38 +147,40 @@ class XoopsTpl extends \Smarty
         $compile_id = $this->compile_id;
         $this->compile_id = $hold_compile_id;
         $compile_id = preg_replace('![^\w\|]+!', '_', $compile_id);
-        $glob = $compile_id . '*.php';
+        $glob = $compile_id.'*.php';
         $count = 0;
-        $files = glob($this->getCompileDir() . '/' . $glob);
+        $files = glob($this->getCompileDir().'/'.$glob);
         foreach ($files as $filename) {
             $count += unlink($filename) ? 1 : 0;
         }
-        $files = glob($this->getCacheDir() . '/*' . $glob);
+        $files = glob($this->getCacheDir().'/*'.$glob);
         foreach ($files as $filename) {
             $count += unlink($filename) ? 1 : 0;
         }
+
         return $count;
     }
 
     /**
-     * Empty cache for a specific template
+     * Empty cache for a specific template.
      *
      * This is just a pass-through wrapper with a warning since this method previously existed
      * only in XoopsTpl, but now is also a regular Smarty method.
      *
      * clearModuleCompileCache() is the replacement for the old clearCache
      *
-     * @param  string  $template_name template name
-     * @param  string  $cache_id      cache id
-     * @param  string  $compile_id    compile id
-     * @param  integer $exp_time      expiration time
-     * @param  string  $type          resource type
+     * @param string $template_name template name
+     * @param string $cache_id      cache id
+     * @param string $compile_id    compile id
+     * @param int    $exp_time      expiration time
+     * @param string $type          resource type
      *
-     * @return integer number of cache files deleted
+     * @return int number of cache files deleted
      */
     public function clearCache($template_name, $cache_id = null, $compile_id = null, $exp_time = null, $type = null)
     {
         \Xoops::getInstance()->deprecated('XoopsTpl::clearCache() is potentially ambiguous');
+
         return parent::clearCache($template_name, $cache_id, $compile_id, $exp_time, $type);
     }
 }

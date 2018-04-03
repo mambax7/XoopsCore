@@ -29,6 +29,7 @@ function smarty_block_noshortcodes($params, $content, $template, &$repeat)
     if (!$repeat) {
         if (isset($content)) {
             $ts = \Xoops\Core\Text\Sanitizer::getInstance();
+
             return $ts->escapeShortCodes($content);
         }
     }

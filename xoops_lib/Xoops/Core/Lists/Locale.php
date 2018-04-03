@@ -15,21 +15,20 @@ use Punic\Data;
 use Punic\Language;
 
 /**
- * Locale - provide list of locale names
+ * Locale - provide list of locale names.
  *
  * @category  Xoops\Core\Lists\Locale
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Locale extends ListAbstract
 {
     /**
-     * gets list of locales
+     * gets list of locales.
      *
-     * @param boolean $showInCodeLanguage true to show a code's name in the language the code represents
+     * @param bool $showInCodeLanguage true to show a code's name in the language the code represents
      *
      * @return array
      */

@@ -12,16 +12,15 @@
 use Xoops\Core\Kernel\Dtype;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $system = System::getInstance();
 $xoops = Xoops::getInstance();
@@ -39,11 +38,10 @@ $cat_handler = \Xoops::getModuleHelper('profile')->getHandler('category');
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('field.php');
 
-
 switch ($op) {
     default:
     case 'list':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_FIELD, 'field.php?op=new', 'add');
         $admin_page->renderButton();
         $fields = $field_handler->getObjects(null, true, false);
         $modules = $xoops->getHandlerModule()->getObjectsArray(null, true);
@@ -99,6 +97,7 @@ switch ($op) {
         $xoops->tpl()->assign('fieldcategories', $categories);
         $xoops->tpl()->assign('token', $xoops->security()->getTokenHTML());
         $xoops->tpl()->assign('fieldlist', true);
+
         break;
 
     case 'new':
@@ -107,10 +106,11 @@ switch ($op) {
         $obj = $field_handler->create();
         $form = $xoops->getModuleForm($obj, 'field');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_FIELD, 'field.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_FIELD_LIST, 'field.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -121,6 +121,7 @@ switch ($op) {
         } else {
             $xoops->redirect('field.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'reorder':
@@ -143,7 +144,7 @@ switch ($op) {
                 $errors = [];
                 //if there are changed fields, fetch the fieldcategory objects
                 $fields = $field_handler->getObjects(
-                    new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'),
+                    new Criteria('field_id', '('.implode(',', $ids).')', 'IN'),
                     true
                 );
                 foreach ($ids as $i) {
@@ -153,7 +154,7 @@ switch ($op) {
                         $errors = array_merge($errors, $fields[$i]->getErrors());
                     }
                 }
-                if (count($errors) === 0) {
+                if (0 === count($errors)) {
                     //no errors
                     $xoops->redirect('field.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_FIELDS));
                 } else {
@@ -161,6 +162,7 @@ switch ($op) {
                 }
             }
         }
+
         break;
 
     case 'save':
@@ -281,7 +283,7 @@ switch ($op) {
                         $removed_groups = array_diff(array_keys($groups), $_REQUEST[$perm]);
                         if (count($removed_groups) > 0) {
                             $criteria->add(
-                                new Criteria('gperm_groupid', '(' . implode(',', $removed_groups) . ')', 'IN')
+                                new Criteria('gperm_groupid', '('.implode(',', $removed_groups).')', 'IN')
                             );
                             $groupperm_handler->deleteAll($criteria);
                         }
@@ -292,22 +294,23 @@ switch ($op) {
                     unset($criteria);
                 }
             }
-            $url = $redirect_to_edit ? 'field.php?op=edit&amp;id=' . $obj->getVar('field_id') : 'field.php';
+            $url = $redirect_to_edit ? 'field.php?op=edit&amp;id='.$obj->getVar('field_id') : 'field.php';
             $xoops->redirect($url, 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_FIELD));
         }
         echo $xoops->alert('error', $obj->getHtmlErrors());
         $form = $xoops->getModuleForm($obj, 'regstep');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_FIELD, 'field.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_FIELD, 'field.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_FIELD_LIST, 'field.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $field_handler->get($id);
-            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('field.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
@@ -323,12 +326,13 @@ switch ($op) {
                 echo $xoops->confirm(
                     ['ok' => 1, 'id' => $id, 'op' => 'delete'],
                     'field.php',
-                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')) . '<br />'
+                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')).'<br />'
                 );
             }
         } else {
             $xoops->redirect('field.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 }
 $xoops->footer();

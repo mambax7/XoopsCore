@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 class DefaultConfigurationTest extends \PHPUnit\Framework\TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Xlanguage module
+ * Xlanguage module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
@@ -25,7 +23,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 function xoops_module_install_xlanguage(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();
-    xlanguage_mkdirs($xoops->path(\XoopsBaseConfig::get('var-path')) . '/configs/xlanguage');
+    xlanguage_mkdirs($xoops->path(\XoopsBaseConfig::get('var-path')).'/configs/xlanguage');
 
     return true;
 }
@@ -49,12 +47,12 @@ function xlanguage_mkdirs($pathname, $pathout = null)
     $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
     $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
-    $dest = ($pathout === null) ? \XoopsBaseConfig::get('root-path') : $pathout;
+    $dest = (null === $pathout) ? \XoopsBaseConfig::get('root-path') : $pathout;
     $paths = explode('/', $pathname);
 
     foreach ($paths as $path) {
         if (!empty($path)) {
-            $dest = $dest . '/' . $path;
+            $dest = $dest.'/'.$path;
             if (!is_dir($dest)) {
                 if (!mkdir($dest, 0755)) {
                     return false;
@@ -79,8 +77,8 @@ function xlanguage_copyfile($folder_in, $source_file, $folder_out)
     }
 
     // Simple copy for a file
-    if (is_file($folder_in . '/' . $source_file)) {
-        return copy($folder_in . '/' . $source_file, $folder_out . '/' . basename($source_file));
+    if (is_file($folder_in.'/'.$source_file)) {
+        return copy($folder_in.'/'.$source_file, $folder_out.'/'.basename($source_file));
     }
 
     return false;

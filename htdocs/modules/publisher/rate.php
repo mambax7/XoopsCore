@@ -14,13 +14,11 @@ use Xmf\Request;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 
@@ -37,11 +35,11 @@ $module_id = $publisher->getModule()->getVar('mid');
 if (!$publisher->getConfig('perm_rating')
     || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)
 ) {
-    $xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
+    $xoops->redirect(PUBLISHER_URL.'/item.php?itemid='.$itemid, 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 if ($rating > 5 || $rating < 1) {
-    $xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, _MD_PUBLISHER_VOTE_BAD);
+    $xoops->redirect(PUBLISHER_URL.'/item.php?itemid='.$itemid, 2, _MD_PUBLISHER_VOTE_BAD);
 }
 
 $criteria = new Criteria('itemid', $itemid);
@@ -62,7 +60,7 @@ foreach ($ratingObjs as $ratingObj) {
 }
 
 if ($voted) {
-    $xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, _MD_PUBLISHER_VOTE_ALREADY);
+    $xoops->redirect(PUBLISHER_URL.'/item.php?itemid='.$itemid, 2, _MD_PUBLISHER_VOTE_ALREADY);
 }
 
 $newRatingObj = $publisher->getRatingHandler()->create();
@@ -79,4 +77,4 @@ $current_rating += $rating;
 $publisher->getItemHandler()->updateAll('rating', number_format($current_rating / $count, 4), $criteria, true);
 $publisher->getItemHandler()->updateAll('votes', $count, $criteria, true);
 
-$xoops->redirect(PUBLISHER_URL . '/item.php?itemid=' . $itemid, 2, _MD_PUBLISHER_VOTE_THANKS);
+$xoops->redirect(PUBLISHER_URL.'/item.php?itemid='.$itemid, 2, _MD_PUBLISHER_VOTE_THANKS);

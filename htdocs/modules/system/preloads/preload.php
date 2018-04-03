@@ -13,7 +13,6 @@
  * @author          Cointin Maxime (AKA Kraven30)
  * @author          Andricq Nicolas (AKA MusS)
  */
-
 use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
@@ -32,7 +31,7 @@ class SystemPreload extends PreloadItem
             && $xoops->getConfig('redirect_message_ajax')
         ) {
             $_SESSION['redirect_message'] = $args[2];
-            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
+            header('Location: '.preg_replace('/[&]amp;/i', '&', $url));
             exit();
         }
     }
@@ -57,7 +56,7 @@ class SystemPreload extends PreloadItem
             $xoops->theme()->addScript('', ['type' => 'text/javascript'], '
             (function($){
                 $(document).ready(function(){
-                $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
+                $.jGrowl("'.$_SESSION['redirect_message'].'", {  life:3000 , position: "center", speed: "slow" });
             });
             })(jQuery);
             ');
@@ -75,7 +74,7 @@ class SystemPreload extends PreloadItem
             $xoops->theme()->addScript('', ['type' => 'text/javascript'], '
             (function($){
             $(document).ready(function(){
-                $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
+                $.jGrowl("'.$_SESSION['redirect_message'].'", {  life:3000 , position: "center", speed: "slow" });
             });
             })(jQuery);
             ');
@@ -84,14 +83,14 @@ class SystemPreload extends PreloadItem
     }
 
     /**
-     * listen for core.service.locate.countryflag event
+     * listen for core.service.locate.countryflag event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateCountryflag(Provider $provider)
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
-            $path = dirname(__DIR__) . '/class/CountryFlagProvider.php';
+            $path = dirname(__DIR__).'/class/CountryFlagProvider.php';
             require $path;
             $object = new CountryFlagProvider();
             $provider->register($object);

@@ -12,17 +12,16 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.4.0
  * @author          trabis <lusopoemas@gmail.com>
  */
 
 /**
- * Profile core preloads
+ * Profile core preloads.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -41,8 +40,8 @@ class ProfileCorePreload extends PreloadItem
         } elseif (isset($_GET['op'])) {
             $op = trim($_GET['op']);
         }
-        if ($op !== 'login' && (empty($_GET['from']) || $_GET['from'] !== 'profile')) {
-            \Xoops::simpleRedirect('./modules/profile/user.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        if ('login' !== $op && (empty($_GET['from']) || 'profile' !== $_GET['from'])) {
+            \Xoops::simpleRedirect('./modules/profile/user.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         }
     }
 
@@ -52,7 +51,7 @@ class ProfileCorePreload extends PreloadItem
      */
     public static function eventCoreEdituserStart($args)
     {
-        \Xoops::simpleRedirect('./modules/profile/edituser.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        \Xoops::simpleRedirect('./modules/profile/edituser.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }
 
     /**
@@ -63,7 +62,7 @@ class ProfileCorePreload extends PreloadItem
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
-        \Xoops::simpleRedirect("./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&' . $_GET['code']));
+        \Xoops::simpleRedirect("./modules/profile/lostpass.php?email={$email}".(empty($_GET['code']) ? '' : '&'.$_GET['code']));
     }
 
     /**
@@ -72,7 +71,7 @@ class ProfileCorePreload extends PreloadItem
      */
     public static function eventCoreRegisterStart($args)
     {
-        \Xoops::simpleRedirect('./modules/profile/register.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        \Xoops::simpleRedirect('./modules/profile/register.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }
 
     /**
@@ -81,6 +80,6 @@ class ProfileCorePreload extends PreloadItem
      */
     public static function eventCoreUserinfoStart($args)
     {
-        \Xoops::simpleRedirect('./modules/profile/userinfo.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        \Xoops::simpleRedirect('./modules/profile/userinfo.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
     }
 }

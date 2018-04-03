@@ -15,19 +15,18 @@ use Punic\Territory;
 use Xoops\Form\OptionElement;
 
 /**
- * Country - provide list of country names
+ * Country - provide list of country names.
  *
  * @category  Xoops\Core\Lists\Country
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Country extends ListAbstract
 {
     /**
-     * Get a list of localized country names
+     * Get a list of localized country names.
      *
      * @return array
      */
@@ -35,11 +34,12 @@ class Country extends ListAbstract
     {
         $countryList = Territory::getCountries();
         \XoopsLocale::asort($countryList);
+
         return $countryList;
     }
 
     /**
-     * add list to a Xoops\Form\OptionElement
+     * add list to a Xoops\Form\OptionElement.
      */
     public static function setOptionsArray(OptionElement $element)
     {

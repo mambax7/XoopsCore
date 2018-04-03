@@ -16,14 +16,12 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Avatars
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 class AvatarsUserlink extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -35,7 +33,7 @@ class AvatarsUserlink extends XoopsObject
 class AvatarsUserlinkHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */

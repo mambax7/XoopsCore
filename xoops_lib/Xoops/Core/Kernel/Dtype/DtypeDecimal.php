@@ -14,19 +14,18 @@ namespace Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeDecimal
+ * DtypeDecimal.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeDecimal
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeDecimal extends DtypeAbstract
 {
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -37,6 +36,7 @@ class DtypeDecimal extends DtypeAbstract
     {
         $value = $obj->vars[$key]['value'];
         $value = doubleval($value);
+
         return $value;
     }
 }

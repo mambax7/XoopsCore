@@ -10,16 +10,14 @@
 */
 
 /**
- * maintenance extensions
+ * maintenance extensions.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         maintenance
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage), Cointin Maxime (AKA Kraven30)
  * @version         $Id$
  */
-
 class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -30,7 +28,7 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
     }
 
     /**
-     * Maintenance Form
+     * Maintenance Form.
      */
     public function getMaintenance()
     {
@@ -38,7 +36,7 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
         parent::__construct('', 'form_maintenance', 'center.php', 'post', true);
 
         $cache = new Xoops\Form\Select(_AM_MAINTENANCE_CENTER_CACHE, 'cache', '', 3, true);
-        $cache->setDescription(\XoopsBaseConfig::get('var-path') . '/cache/smarty_cache/<br />' . \XoopsBaseConfig::get('var-path') . '/cache/smarty_compile/<br />' . \XoopsBaseConfig::get('var-path') . '/cache/xoops_cache/');
+        $cache->setDescription(\XoopsBaseConfig::get('var-path').'/cache/smarty_cache/<br />'.\XoopsBaseConfig::get('var-path').'/cache/smarty_compile/<br />'.\XoopsBaseConfig::get('var-path').'/cache/xoops_cache/');
         $cache_arr = [1 => _AM_MAINTENANCE_CENTER_SMARTY_CACHE, 2 => _AM_MAINTENANCE_CENTER_SMARTY_COMPILE, 3 => _AM_MAINTENANCE_CENTER_XOOPS_CACHE];
         $cache->addOptionArray($cache_arr);
         $this->addElement($cache);
@@ -50,7 +48,7 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
         $select_tables = new Xoops\Form\Select('', 'tables', '', 7, true);
         $select_tables->addOptionArray($maintenance->displayTables(true));
         $tables_tray->addElement($select_tables, false);
-        $choice = new Xoops\Form\Select('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_MAINTENANCE_AND . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'maintenance', '', 4, true);
+        $choice = new Xoops\Form\Select('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'._AM_MAINTENANCE_AND.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'maintenance', '', 4, true);
         $options = [
             '1' => _AM_MAINTENANCE_CENTER_CHOICE1, '2' => _AM_MAINTENANCE_CENTER_CHOICE2,
             '3' => _AM_MAINTENANCE_CENTER_CHOICE3, '4' => _AM_MAINTENANCE_CENTER_CHOICE4,
@@ -73,11 +71,11 @@ class MaintenanceMaintenanceForm extends Xoops\Form\ThemeForm
         $select_tables1 = new Xoops\Form\Select('', 'dump_tables', '', 7, true);
         $select_tables1->addOptionArray($maintenance->displayTables(true));
         $dump_tray->addElement($select_tables1, false);
-        $ele = new Xoops\Form\Select('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_MAINTENANCE_OR . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'dump_modules', '', 7, true);
+        $ele = new Xoops\Form\Select('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'._AM_MAINTENANCE_OR.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'dump_modules', '', 7, true);
         $module_list = XoopsLists::getModulesList();
         $module_handler = $xoops->getHandlerModule();
         foreach ($module_list as $file) {
-            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
+            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$file.'/xoops_version.php')) {
                 clearstatcache();
                 $file = trim($file);
                 $module = $module_handler->create();

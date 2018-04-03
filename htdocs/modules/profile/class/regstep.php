@@ -15,16 +15,14 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 class ProfileRegstep extends XoopsObject
 {
     public function __construct()
@@ -45,11 +43,11 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Delete an object from the database
+     * Delete an object from the database.
      * @see XoopsPersistableObjectHandler
      *
      * @param XoopsObject|ProfileRegstep $obj
-     * @param bool $force
+     * @param bool                       $force
      *
      * @return bool
      */
@@ -57,8 +55,10 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
     {
         if (parent::delete($obj, $force)) {
             $field_handler = \Xoops::getModuleHelper('profile')->getHandler('field');
+
             return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')), $force);
         }
+
         return false;
     }
 }

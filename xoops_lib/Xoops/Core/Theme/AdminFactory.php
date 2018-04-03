@@ -12,20 +12,19 @@
 namespace Xoops\Core\Theme;
 
 /**
- * Admin theme factory
+ * Admin theme factory.
  *
  * @category  Xoops\Core
- * @package   Theme
  * @author    Andricq Nicolas (AKA MusS)
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2009-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class AdminFactory extends Factory
 {
     /**
-     * Create an admin theme instance
+     * Create an admin theme instance.
      *
      * @param array $options theme options
      *
@@ -36,13 +35,13 @@ class AdminFactory extends Factory
         $options['plugins'] = [];
         $options['renderBanner'] = false;
         $inst = parent::createInstance($options);
-        $inst->path = \XoopsBaseConfig::get('adminthemes-path') . '/' . $inst->folderName;
-        $inst->url = \XoopsBaseConfig::get('adminthemes-url') . '/' . $inst->folderName;
+        $inst->path = \XoopsBaseConfig::get('adminthemes-path').'/'.$inst->folderName;
+        $inst->url = \XoopsBaseConfig::get('adminthemes-url').'/'.$inst->folderName;
         $inst->template->assign([
-            'theme_path' => $inst->path, 'theme_tpl' => $inst->path . '/xotpl', 'theme_url' => $inst->url,
-            'theme_img' => $inst->url . '/img', 'theme_icons' => $inst->url . '/icons',
-            'theme_css' => $inst->url . '/css', 'theme_js' => $inst->url . '/js',
-            'theme_lang' => $inst->url . '/language',
+            'theme_path' => $inst->path, 'theme_tpl' => $inst->path.'/xotpl', 'theme_url' => $inst->url,
+            'theme_img' => $inst->url.'/img', 'theme_icons' => $inst->url.'/icons',
+            'theme_css' => $inst->url.'/css', 'theme_js' => $inst->url.'/js',
+            'theme_lang' => $inst->url.'/language',
         ]);
 
         return $inst;

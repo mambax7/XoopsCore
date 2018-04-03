@@ -10,13 +10,13 @@ if (PHP_SAPI !== 'cli') {
 
 spl_autoload_register(function ($class) {
     $prefix = 'XoopsConsole\\';
-    $base_dir = __DIR__ . '/';
+    $base_dir = __DIR__.'/';
     $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
+    if (0 !== strncmp($prefix, $class, $len)) {
         return;
     }
     $relative_class = substr($class, $len);
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    $file = $base_dir.str_replace('\\', '/', $relative_class).'.php';
     if (file_exists($file)) {
         require $file;
     }
@@ -24,7 +24,7 @@ spl_autoload_register(function ($class) {
 date_default_timezone_set('UTC');
 //set_time_limit(0);
 
-$configs = (include __DIR__ . '/config.php');
+$configs = (include __DIR__.'/config.php');
 $mainfile = $configs->get('mainfile');
 if (file_exists($mainfile)) {
     $xoopsOption['nocommon'] = true;
@@ -46,7 +46,6 @@ if (file_exists($mainfile)) {
 
 // simple psr-4 loader, example from
 // https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md
-
 
 $app = new XCApplication('XOOPS Console', '0.1.0');
 $app->XContainer = $configs;

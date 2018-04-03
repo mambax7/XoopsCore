@@ -14,20 +14,18 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class PagePage_related extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -40,8 +38,9 @@ class PagePage_related extends XoopsObject
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $ret = parent::getValues($keys, $format, $maxDepth);
-        $ret['navigation'] = \Xoops\Locale::translate('L_RELATED_NAVIGATION_OPTION' . $this->getVar('related_navigation'), 'page');
+        $ret['navigation'] = \Xoops\Locale::translate('L_RELATED_NAVIGATION_OPTION'.$this->getVar('related_navigation'), 'page');
         $ret['related_links'] = Page::getInstance()->getLinkHandler()->getLinks($this->getVar('related_id'));
+
         return $ret;
     }
 
@@ -49,6 +48,7 @@ class PagePage_related extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         $new_id = $xoopsDB->getInsertId();
+
         return $new_id;
     }
 }
@@ -67,6 +67,7 @@ class PagePage_relatedHandler extends XoopsPersistableObjectHandler
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+
         return parent::getAll($criteria, null, false);
     }
 
@@ -77,6 +78,7 @@ class PagePage_relatedHandler extends XoopsPersistableObjectHandler
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+
         return parent::getCount();
     }
 }

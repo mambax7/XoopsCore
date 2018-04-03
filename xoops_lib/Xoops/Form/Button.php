@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * Button - button form element
+ * Button - button form element.
  *
  * @category  Xoops\Form\Button
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Button extends Element
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption button caption or array of all attributes
      * @param string       $name    button name
@@ -45,7 +44,7 @@ class Button extends Element
     }
 
     /**
-     * prepare HTML for output
+     * prepare HTML for output.
      *
      * @return string
      */
@@ -54,6 +53,7 @@ class Button extends Element
         $this->themeDecorateElement();
 
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . $this->getExtra() . ' >';
+
+        return '<input '.$attributes.$this->getExtra().' >';
     }
 }

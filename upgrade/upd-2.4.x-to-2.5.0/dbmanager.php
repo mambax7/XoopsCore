@@ -1,6 +1,6 @@
 <?php
 /**
- * database manager for XOOPS installer
+ * database manager for XOOPS installer.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,21 +11,17 @@
  *
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     upgrader
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @version     $Id$
- * @access      public
  **/
-
-include_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
-include_once XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php';
-include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
+include_once XOOPS_ROOT_PATH.'/class/database/databasefactory.php';
+include_once XOOPS_ROOT_PATH.'/class/database/'.XOOPS_DB_TYPE.'database.php';
+include_once XOOPS_ROOT_PATH.'/class/database/sqlutility.php';
 
 /**
- * Database manager
+ * Database manager.
  *
  * @copyright   copyright (c) 2000 XOOPS.org
- * @package     upgrader
  */
 class db_manager
 {
@@ -57,21 +53,21 @@ class db_manager
 
     public function isConnectable()
     {
-        return ($this->db->connect(false) !== false) ? true : false;
+        return (false !== $this->db->connect(false)) ? true : false;
     }
 
     public function dbExists()
     {
-        return ($this->db->connect() !== false) ? true : false;
+        return (false !== $this->db->connect()) ? true : false;
     }
 
     public function createDB()
     {
         $this->db->connect(false);
 
-        $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
+        $result = $this->db->query('CREATE DATABASE '.XOOPS_DB_NAME);
 
-        return ($result !== false) ? true : false;
+        return (false !== $result) ? true : false;
     }
 
     public function queryFromFile($sql_file_path)
@@ -89,10 +85,10 @@ class db_manager
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
             $prefixed_query = SqlUtility::prefixQuery($piece, $this->db->prefix());
-            if ($prefixed_query !== false) {
+            if (false !== $prefixed_query) {
                 $table = $this->db->prefix($prefixed_query[4]);
-                if ($prefixed_query[1] === 'CREATE TABLE') {
-                    if ($this->db->query($prefixed_query[0]) !== false) {
+                if ('CREATE TABLE' === $prefixed_query[1]) {
+                    if (false !== $this->db->query($prefixed_query[0])) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
@@ -101,8 +97,8 @@ class db_manager
                             $this->f_tables['create'][$table] = 1;
                         }
                     }
-                } elseif ($prefixed_query[1] === 'INSERT INTO') {
-                    if ($this->db->query($prefixed_query[0]) !== false) {
+                } elseif ('INSERT INTO' === $prefixed_query[1]) {
+                    if (false !== $this->db->query($prefixed_query[0])) {
                         if (!isset($this->s_tables['insert'][$table])) {
                             $this->s_tables['insert'][$table] = 1;
                         } else {
@@ -115,8 +111,8 @@ class db_manager
                             $this->f_tables['insert'][$table]++;
                         }
                     }
-                } elseif ($prefixed_query[1] === 'ALTER TABLE') {
-                    if ($this->db->query($prefixed_query[0]) !== false) {
+                } elseif ('ALTER TABLE' === $prefixed_query[1]) {
+                    if (false !== $this->db->query($prefixed_query[0])) {
                         if (!isset($this->s_tables['alter'][$table])) {
                             $this->s_tables['alter'][$table] = 1;
                         }
@@ -125,8 +121,8 @@ class db_manager
                             $this->f_tables['alter'][$table] = 1;
                         }
                     }
-                } elseif ($prefixed_query[1] === 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE ' . $table) !== false) {
+                } elseif ('DROP TABLE' === $prefixed_query[1]) {
+                    if (false !== $this->db->query('DROP TABLE '.$table)) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -138,6 +134,7 @@ class db_manager
                 }
             }
         }
+
         return true;
     }
 
@@ -149,7 +146,7 @@ class db_manager
             if (!@empty($this->s_tables[$cmd])) {
                 foreach ($this->s_tables[$cmd] as $key => $val) {
                     $content .= '<li class="success">';
-                    $content .= ($cmd !== 'insert') ? sprintf($this->successStrings[$cmd], $key) : sprintf($this->successStrings[$cmd], $val, $key);
+                    $content .= ('insert' !== $cmd) ? sprintf($this->successStrings[$cmd], $key) : sprintf($this->successStrings[$cmd], $val, $key);
                     $content .= "</li>\n";
                 }
             }
@@ -158,30 +155,34 @@ class db_manager
             if (!@empty($this->f_tables[$cmd])) {
                 foreach ($this->f_tables[$cmd] as $key => $val) {
                     $content .= '<li class="failure">';
-                    $content .= ($cmd !== 'insert') ? sprintf($this->failureStrings[$cmd], $key) : sprintf($this->failureStrings[$cmd], $val, $key);
+                    $content .= ('insert' !== $cmd) ? sprintf($this->failureStrings[$cmd], $key) : sprintf($this->failureStrings[$cmd], $val, $key);
                     $content .= "</li>\n";
                 }
             }
         }
         $content .= '</ul>';
+
         return $content;
     }
 
     public function query($sql)
     {
         $this->db->connect();
+
         return $this->db->query($sql);
     }
 
     public function prefix($table)
     {
         $this->db->connect();
+
         return $this->db->prefix($table);
     }
 
     public function fetchArray($ret)
     {
         $this->db->connect();
+
         return $this->db->fetchArray($ret);
     }
 
@@ -189,13 +190,14 @@ class db_manager
     {
         $this->db->connect();
         $table = $this->db->prefix($table);
-        $query = 'INSERT INTO ' . $table . ' ' . $query;
+        $query = 'INSERT INTO '.$table.' '.$query;
         if (!$this->db->queryF($query)) {
             if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
             } else {
                 $this->f_tables['insert'][$table]++;
             }
+
             return false;
         }
         if (!isset($this->s_tables['insert'][$table])) {
@@ -203,6 +205,7 @@ class db_manager
         } else {
             $this->s_tables['insert'][$table]++;
         }
+
         return $this->db->getInsertId();
     }
 
@@ -216,10 +219,11 @@ class db_manager
         $deleted = [];
         $this->db->connect();
         foreach ($tables as $key => $val) {
-            if (!$this->db->query('DROP TABLE ' . $this->db->prefix($key))) {
+            if (!$this->db->query('DROP TABLE '.$this->db->prefix($key))) {
                 $deleted[] = $va;
             }
         }
+
         return $deleted;
     }
 
@@ -227,11 +231,12 @@ class db_manager
     {
         $table = trim($table);
         $ret = false;
-        if ($table !== '') {
+        if ('' !== $table) {
             $this->db->connect();
-            $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-            $ret = ($this->db->query($sql) !== false) ? true : false;
+            $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix($table);
+            $ret = (false !== $this->db->query($sql)) ? true : false;
         }
+
         return $ret;
     }
 }

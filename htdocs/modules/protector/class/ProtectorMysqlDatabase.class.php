@@ -10,25 +10,23 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $root_path = \XoopsBaseConfig::get('root-path');
 $db_type = \XoopsBaseConfig::get('db-type');
 
-if (XoopsLoad::fileExists($root_path . '/class/database/drivers/' . $db_type . '/database.php')) {
-    require_once $root_path . '/class/database/drivers/' . $db_type . '/database.php';
+if (XoopsLoad::fileExists($root_path.'/class/database/drivers/'.$db_type.'/database.php')) {
+    require_once $root_path.'/class/database/drivers/'.$db_type.'/database.php';
 } else {
-    require_once $root_path . '/class/database/' . $db_type . 'database.php';
+    require_once $root_path.'/class/database/'.$db_type.'database.php';
 }
 
-require_once $root_path . '/class/database/database.php';
+require_once $root_path.'/class/database/database.php';
 
 class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
 {
@@ -40,7 +38,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      'information_schema',
      'select',
      'union',
-     '/*', /**/
+     '/*',
      '--',
      '#',
  ];
@@ -80,17 +78,18 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
                     $new_i = strpos($sql, $string_start, $i);
                     $current_string .= substr($sql, $i, $new_i - $i + 1);
                     $i = $new_i;
-                    if ($i === false) {
+                    if (false === $i) {
                         break 2;
-                    } elseif ( /* $string_start == '`' || */ $sql[$i - 1] !== '\\') {
+                    } elseif ( /* $string_start == '`' || */ '\\' !== $sql[$i - 1]) {
                         $string_start = '';
                         $in_string = false;
                         $strings[] = $current_string;
+
                         break;
                     }
                     $j = 2;
                     $escaped_backslash = false;
-                    while ($i - $j > 0 && $sql[$i - $j] === '\\') {
+                    while ($i - $j > 0 && '\\' === $sql[$i - $j]) {
                         $escaped_backslash = !$escaped_backslash;
                         ++$j;
                     }
@@ -98,11 +97,12 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
                         $string_start = '';
                         $in_string = false;
                         $strings[] = $current_string;
+
                         break;
                     }
                     ++$i;
                 }
-            } elseif ($char === '"' || $char === "'") { // dare to ignore ``
+            } elseif ('"' === $char || "'" === $char) { // dare to ignore ``
                 $in_string = true;
                 $string_start = $char;
                 $current_string = $char;
@@ -132,6 +132,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
                     foreach ($strings as $string) {
                         if (strstr($string, $request)) {
                             $ok_flag = true;
+
                             break;
                         }
                     }
@@ -170,6 +171,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         foreach ($this->doubtful_needles as $needle) {
             if (stristr($sql4check, $needle)) {
                 $this->checkSql($sql);
+
                 break;
             }
         }
@@ -179,6 +181,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         } else {
             $ret = parent::query($sql, $limit, $start);
         }
+
         return $ret;
     }
 }

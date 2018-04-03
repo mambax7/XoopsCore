@@ -10,14 +10,14 @@
 */
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsGroup extends Xoops\Core\Kernel\Handlers\XoopsGroup
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsGroupHandler extends Xoops\Core\Kernel\Handlers\XoopsGroupHandler
 {

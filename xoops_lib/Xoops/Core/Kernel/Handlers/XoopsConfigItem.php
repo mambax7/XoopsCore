@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
@@ -22,7 +21,7 @@ namespace Xoops\Core\Kernel\Handlers;
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
-/**
+/*
  * deprecated
  * Config type
  */
@@ -35,26 +34,25 @@ define('XOOPS_CONF_MAILER', 6);
 define('XOOPS_CONF_AUTH', 7);
 
 /**
- * Configuration Item
+ * Configuration Item.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsConfigItem
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsConfigItem extends XoopsObject
 {
     /**
-     * Config options
+     * Config options.
      *
-     * @var    array
+     * @var array
      */
     private $configurationOptions = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -71,7 +69,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -83,7 +81,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -95,7 +93,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -107,7 +105,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -119,7 +117,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -131,7 +129,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -143,7 +141,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -155,7 +153,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -167,7 +165,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -179,7 +177,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -191,7 +189,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -203,35 +201,40 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * Get a config value in a format ready for output
+     * Get a config value in a format ready for output.
      *
-     * @return    string
+     * @return string
      */
     public function getConfValueForOutput()
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
                 return (int) ($this->getVar('conf_value', 'n'));
+
                 break;
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'n'));
+
                 return $value ? $value : [];
             case 'float':
                 $value = $this->getVar('conf_value', 'n');
+
                 return (float) $value;
+
                 break;
             case 'textarea':
                 return $this->getVar('conf_value');
             default:
                 return $this->getVar('conf_value', 'n');
+
                 break;
         }
     }
 
     /**
-     * Set a config value
+     * Set a config value.
      *
-     * @param mixed $value       Value by reference
+     * @param mixed $value Value by reference
      */
     public function setConfValueForInput(&$value)
     {
@@ -241,18 +244,21 @@ class XoopsConfigItem extends XoopsObject
                     $value = explode('|', trim($value));
                 }
                 $this->setVar('conf_value', serialize($value));
+
                 break;
             case 'text':
                 $this->setVar('conf_value', trim($value));
+
                 break;
             default:
                 $this->setVar('conf_value', $value);
+
                 break;
         }
     }
 
     /**
-     * Assign one or more configuration options
+     * Assign one or more configuration options.
      *
      * @param XoopsConfigOption|XoopsConfigOption[] $option configuration option(s)
      */
@@ -271,7 +277,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * Get the configuration options for this item
+     * Get the configuration options for this item.
      *
      * @return XoopsConfigOption[]
      */
@@ -281,7 +287,7 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * Clear options from this item
+     * Clear options from this item.
      *
      **/
     public function clearConfOptions()

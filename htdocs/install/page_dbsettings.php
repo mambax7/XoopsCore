@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer database configuration page
+ * Installer database configuration page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,15 +22,14 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
 
 $settings = $_SESSION['settings'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $params = ['DB_NAME'];
     foreach ($params as $name) {
         $settings[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
@@ -65,11 +63,12 @@ if (!$connection && !empty($settings['DB_NAME'])) {
             $canCreate = $platform->supportsCreateDropDatabase();
             if ($canCreate) {
                 $tried_create = true;
+
                 try {
                     $sql = $platform->getCreateDatabaseSQL($connection->quoteIdentifier($settings['DB_NAME']));
                     $result = $connection->exec($sql);
                     if ($result) {
-                        if ($platform->getName() === 'mysql') {
+                        if ('mysql' === $platform->getName()) {
                             $sql = sprintf(
                                 'ALTER DATABASE %s CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
                                 $connection->quoteIdentifier($settings['DB_NAME'])
@@ -107,6 +106,7 @@ if ($connection && empty($error)) {
 
 if ($connection) {
     $platform = $connection->getDatabasePlatform();
+
     try {
         $sql = $platform->getListDatabasesSQL();
         $dbResults = $connection->fetchAll($sql);
@@ -129,7 +129,7 @@ if ($connection) {
     }
 }
 
-if (is_array($availableDatabases) && count($availableDatabases) === 1) {
+if (is_array($availableDatabases) && 1 === count($availableDatabases)) {
     if (empty($settings['DB_NAME'])) {
         $settings['DB_NAME'] = $availableDatabases[0];
     }
@@ -141,7 +141,7 @@ ob_start();
 ?>
 <?php
 if (!empty($error)) {
-    echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
+    echo '<div class="x2-note errorMsg">'.$error."</div>\n";
 }
 ?>
 <script type="text/javascript">
@@ -155,12 +155,12 @@ document.getElementById("DB_NAME").value=dbSelected;
 <fieldset>
 <?php
 if (!empty($availableDatabases)) {
-    echo '<legend>' . LEGEND_DATABASE . '</legend>';
-    echo '<div class="xoform-help">' . DB_AVAILABLE_HELP . '</div>';
+    echo '<legend>'.LEGEND_DATABASE.'</legend>';
+    echo '<div class="xoform-help">'.DB_AVAILABLE_HELP.'</div>';
     echo '<label class="xolabel" for="DB_DATABASE_LABEL" class="center">';
     echo DB_AVAILABLE_LABEL;
     echo ' <select size="1" name="DB_AVAILABLE" id="DB_AVAILABLE" onchange="updateDbName();">';
-    $selected = ($settings['DB_NAME'] === '') ? 'selected' : '';
+    $selected = ('' === $settings['DB_NAME']) ? 'selected' : '';
     echo '<option value="" {$selected}>-----------</option>';
     foreach ($availableDatabases as $dbase) {
         $selected = ($settings['DB_NAME'] === $dbase) ? 'selected' : '';
@@ -182,4 +182,4 @@ $_SESSION['pageHasHelp'] = true;
 $_SESSION['pageHasForm'] = true;
 $_SESSION['content'] = $content;
 $_SESSION['settings'] = $settings;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

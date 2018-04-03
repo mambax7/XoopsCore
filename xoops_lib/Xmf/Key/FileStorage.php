@@ -12,16 +12,15 @@
 namespace Xmf\Key;
 
 /**
- * Xmf\Key\StorageInterface
+ * Xmf\Key\StorageInterface.
  *
  * load a database table
  *
  * @category  Xmf\Key\FileStorage
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class FileStorage implements StorageInterface
 {
@@ -43,17 +42,17 @@ class FileStorage implements StorageInterface
      */
     public function __construct($storagePath = null, $systemSecret = null)
     {
-        $this->storagePath = ($storagePath === null) ? XOOPS_VAR_PATH . '/data' : $storagePath;
-        $this->systemSecret = ($systemSecret === null) ? $this->generateSystemSecret() : $systemSecret;
+        $this->storagePath = (null === $storagePath) ? XOOPS_VAR_PATH.'/data' : $storagePath;
+        $this->systemSecret = (null === $systemSecret) ? $this->generateSystemSecret() : $systemSecret;
     }
 
     /**
-     * Save key data by name
+     * Save key data by name.
      *
      * @param string $name key name
      * @param string $data key data, serialized to string if required
      *
-     * @return boolean true if key saved, otherwise false
+     * @return bool true if key saved, otherwise false
      */
     public function save($name, $data)
     {
@@ -61,12 +60,13 @@ class FileStorage implements StorageInterface
             throw new \DomainException('Invalid key data');
         }
         $fileContents = "<?php\n//**Warning** modifying this file will break things!\n"
-            . "return '{$data}';\n";
-        return file_put_contents($this->fileName($name), $fileContents) !== false;
+            ."return '{$data}';\n";
+
+        return false !== file_put_contents($this->fileName($name), $fileContents);
     }
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
@@ -78,11 +78,11 @@ class FileStorage implements StorageInterface
     }
 
     /**
-     * Check if key data exists
+     * Check if key data exists.
      *
      * @param string $name key name
      *
-     * @return boolean true if key exists, otherwise false
+     * @return bool true if key exists, otherwise false
      */
     public function exists($name)
     {
@@ -90,11 +90,11 @@ class FileStorage implements StorageInterface
     }
 
     /**
-     * Delete a key
+     * Delete a key.
      *
      * @param string $name key name
      *
-     * @return boolean true if key deleted, otherwise false
+     * @return bool true if key deleted, otherwise false
      */
     public function delete($name)
     {
@@ -102,7 +102,7 @@ class FileStorage implements StorageInterface
     }
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
@@ -110,11 +110,11 @@ class FileStorage implements StorageInterface
      */
     protected function fileName($name)
     {
-        return $this->storagePath . "/{$this->systemSecret}-key-{$name}.php";
+        return $this->storagePath."/{$this->systemSecret}-key-{$name}.php";
     }
 
     /**
-     * Construct a string related to the system to make name less predictable
+     * Construct a string related to the system to make name less predictable.
      *
      * @return string
      */
@@ -124,6 +124,7 @@ class FileStorage implements StorageInterface
         $prefix = $db->prefix();
         $secret = md5($prefix);
         $secret = substr($secret, 8, 8);
+
         return $secret;
     }
 }

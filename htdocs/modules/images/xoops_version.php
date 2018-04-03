@@ -10,7 +10,7 @@
 */
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -45,7 +45,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [];
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_IMAGES_DESC;
+$modversion['paypal']['item_name'] = 'Donation : '._MI_IMAGES_DESC;
 $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
@@ -74,7 +74,6 @@ $modversion['tables'] = [
 
 // JQuery
 $modversion['jquery'] = 1;
-
 
 $modversion['config'][] = [
     'name' => 'images_pager',

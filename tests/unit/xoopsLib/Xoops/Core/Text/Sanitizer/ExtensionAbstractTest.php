@@ -4,7 +4,7 @@ namespace Xoops\Core\Text\Sanitizer;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 class ExtensionAbstractTest extends \PHPUnit\Framework\TestCase
 {
@@ -48,7 +48,7 @@ class ExtensionAbstractTest extends \PHPUnit\Framework\TestCase
     public function testGetDhtmlEditorSupport()
     {
         $support = $this->object->getDhtmlEditorSupport('testeditorarea');
-        $this->assertTrue(count($support) === 2);
+        $this->assertTrue(2 === count($support));
         $this->assertSame('', $support[0]);
         $this->assertSame('', $support[1]);
     }

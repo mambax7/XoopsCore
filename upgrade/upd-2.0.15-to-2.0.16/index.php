@@ -30,7 +30,8 @@ class upgrade_2016 extends xoopsUpgrade
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = " . XOOPS_CONF_AUTH);
+        $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = ".XOOPS_CONF_AUTH);
+
         return (bool) ($value);
     }
 
@@ -55,12 +56,14 @@ class upgrade_2016 extends xoopsUpgrade
         ];
         foreach ($data as $name => $values) {
             if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='${name}'")) {
-                $this->query("INSERT INTO `${table}` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'${name}',${values})");
+                $this->query("INSERT INTO `${table}` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) "."VALUES ( 0,7,'${name}',${values})");
             }
         }
+
         return true;
     }
 }
 
 $upg = new upgrade_2016();
+
 return $upg;

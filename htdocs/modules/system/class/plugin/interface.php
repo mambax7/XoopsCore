@@ -15,12 +15,11 @@
  * @author          Laurent JEN (aka DuGris)
  * @version         $Id$
  */
-
 interface SystemPluginInterface
 {
     /**
      * Used to synchronize a user number of posts
-     * Please return the number of posts the user as made in your module
+     * Please return the number of posts the user as made in your module.
      *
      * @param int $uid The uid of the user
      *
@@ -29,7 +28,7 @@ interface SystemPluginInterface
     public function userPosts($uid);
 
     /**
-     * Used to populate the Waiting Block
+     * Used to populate the Waiting Block.
      *
      * Expects an array containing:
      *    count : Number of waiting items,    ex: 3
@@ -41,7 +40,7 @@ interface SystemPluginInterface
     public function waiting();
 
     /**
-     * Used to populate backend
+     * Used to populate backend.
      *
      * @param int $limit : Number of item for backend
      *
@@ -56,7 +55,7 @@ interface SystemPluginInterface
     public function backend($limit);
 
     /**
-     * Used to populate the User Block
+     * Used to populate the User Block.
      *
      * Expects an array containing:
      *    name  : Name for the Link

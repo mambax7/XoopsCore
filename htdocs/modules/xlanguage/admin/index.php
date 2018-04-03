@@ -10,16 +10,13 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 switch ($op) {
-
     case 'save':
         if (!$xoops->security()->check()) {
             $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
@@ -37,6 +34,7 @@ switch ($op) {
             $helper->getHandlerLanguage()->createConfig();
             $xoops->redirect('index.php', 2, _AM_XLANGUAGE_SAVED);
         }
+
         break;
 
     case 'add':
@@ -61,6 +59,7 @@ switch ($op) {
         } else {
             $xoops->redirect('index.php', 2);
         }
+
         break;
 
     case 'del':
@@ -68,7 +67,7 @@ switch ($op) {
         if (isset($xlanguage_id) && $xlanguage_id > 0) {
             if ($lang = $helper->getHandlerLanguage()->get($xlanguage_id)) {
                 $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
-                if ($delete === 1) {
+                if (1 === $delete) {
                     if (!$xoops->security()->check()) {
                         $xoops->redirect('index.php', 2, implode(',', $xoops->security()->getErrors()));
                     }
@@ -78,8 +77,8 @@ switch ($op) {
                 } else {
                     $confirm = $xoops->confirm([
                         'ok' => 1, 'xlanguage_id' => $xlanguage_id, 'op' => 'del',
-                    ], $_SERVER['REQUEST_URI'], sprintf(_AM_XLANGUAGE_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $lang->getVar('xlanguage_name')));
-                    $confirm = '<div class="confirm">' . $confirm . '</div>';
+                    ], $_SERVER['REQUEST_URI'], sprintf(_AM_XLANGUAGE_DELETE_CFM."<br /><b><span style='color : Red'> %s </span></b><br /><br />", $lang->getVar('xlanguage_name')));
+                    $confirm = '<div class="confirm">'.$confirm.'</div>';
                     $admin_page->addInfoBox(_MI_XLANGUAGE_DELETE);
                     $admin_page->addInfoBoxLine($confirm);
                     $admin_page->displayIndex();
@@ -90,11 +89,13 @@ switch ($op) {
         } else {
             $xoops->redirect('index.php', 2);
         }
+
         break;
 
     case 'createconfig':
         $helper->getHandlerLanguage()->createConfig();
         $xoops->redirect('index.php', 2, _AM_XLANGUAGE_CREATED);
+
         break;
 
     case 'default':
@@ -102,6 +103,7 @@ switch ($op) {
         $admin_page->addInfoBox(_AM_XLANGUAGE_LANGLIST);
         $admin_page->addInfoBoxLine($helper->getHandlerLanguage()->renderlist());
         $admin_page->displayIndex();
+
         break;
 }
-include __DIR__ . '/footer.php';
+include __DIR__.'/footer.php';

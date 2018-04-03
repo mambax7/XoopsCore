@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Exception;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class NoHandlerExceptionTest extends \PHPUnit\Framework\TestCase
 {
@@ -37,6 +37,7 @@ class NoHandlerExceptionTest extends \PHPUnit\Framework\TestCase
     public function testException()
     {
         $this->expectException('\Xoops\Core\Exception\NoHandlerException');
+
         throw $this->object;
     }
 }

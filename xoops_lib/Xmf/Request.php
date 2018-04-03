@@ -14,25 +14,24 @@ namespace Xmf;
 use Xoops\Core\Locale\Time;
 
 /**
- * Request Class
+ * Request Class.
  *
  * This class serves to provide a common interface to access
  * request variables.  This includes $_POST, $_GET, and naturally $_REQUEST.  Variables
  * can be passed through an input filter to avoid injection or returned raw.
  *
  * @category  Xmf\Request
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Joomla!
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Request
 {
     /**
-     * Available masks for cleaning variables
+     * Available masks for cleaning variables.
      */
     public const MASK_NO_TRIM = 1;
 
@@ -41,7 +40,7 @@ class Request
     public const MASK_ALLOW_HTML = 4;
 
     /**
-     * Gets the request method
+     * Gets the request method.
      *
      * @return string
      */
@@ -77,7 +76,7 @@ class Request
      * @param string $type    Return type for the variable (INT, FLOAT, BOOLEAN, WORD,
      *                         ALPHANUM, CMD, BASE64, STRING, ARRAY, PATH, NONE) For more
      *                         information see FilterInput::clean().
-     * @param int    $mask    Filter mask for the variable
+     * @param int $mask Filter mask for the variable
      *
      * @return mixed Requested variable
      */
@@ -85,7 +84,7 @@ class Request
     {
         // Ensure hash and type are uppercase
         $hash = strtoupper($hash);
-        if ($hash === 'METHOD') {
+        if ('METHOD' === $hash) {
             $hash = static::getMethod();
         }
         $type = strtoupper($type);
@@ -94,32 +93,39 @@ class Request
         switch ($hash) {
             case 'GET':
                 $input = &$_GET;
+
                 break;
             case 'POST':
                 $input = &$_POST;
+
                 break;
             case 'FILES':
                 $input = &$_FILES;
+
                 break;
             case 'COOKIE':
                 $input = &$_COOKIE;
+
                 break;
             case 'ENV':
                 $input = &$_ENV;
+
                 break;
             case 'SERVER':
                 $input = &$_SERVER;
+
                 break;
             default:
                 $input = &$_REQUEST;
+
                 break;
         }
 
-        if (isset($input[$name]) && $input[$name] !== null) {
+        if (isset($input[$name]) && null !== $input[$name]) {
             // Get the variable from the input hash and clean it
             $var = static::cleanVar($input[$name], $mask, $type);
         } else {
-            if ($default !== null) {
+            if (null !== $default) {
                 // Clean the default value
                 $var = static::cleanVar($default, $mask, $type);
             } else {
@@ -240,7 +246,7 @@ class Request
     }
 
     /**
-     * Fetches and returns an array
+     * Fetches and returns an array.
      *
      * @param string $name    Variable name
      * @param mixed  $default Default value if the variable does not exist
@@ -254,7 +260,7 @@ class Request
     }
 
     /**
-     * Fetches and returns raw text
+     * Fetches and returns raw text.
      *
      * @param string $name    Variable name
      * @param string $default Default value if the variable does not exist
@@ -268,7 +274,7 @@ class Request
     }
 
     /**
-     * Fetches and returns a web url
+     * Fetches and returns a web url.
      *
      * @param string $name    Variable name
      * @param string $default Default value if the variable does not exist
@@ -282,7 +288,7 @@ class Request
     }
 
     /**
-     * Fetches and returns a file (or web) path
+     * Fetches and returns a file (or web) path.
      *
      * @param string $name    Variable name
      * @param string $default Default value if the variable does not exist
@@ -296,7 +302,7 @@ class Request
     }
 
     /**
-     * Fetches and returns an email address
+     * Fetches and returns an email address.
      *
      * @param string $name    Variable name
      * @param string $default Default value if the variable does not exist
@@ -307,11 +313,12 @@ class Request
     public static function getEmail($name, $default = '', $hash = 'default')
     {
         $ret = (string) static::getVar($name, $default, $hash, 'email');
+
         return empty($ret) ? $default : $ret;
     }
 
     /**
-     * Fetches and returns an IP address
+     * Fetches and returns an IP address.
      *
      * @param string $name    Variable name
      * @param string $default Default value if the variable does not exist
@@ -322,11 +329,12 @@ class Request
     public static function getIP($name, $default = '', $hash = 'default')
     {
         $ret = (string) static::getVar($name, $default, $hash, 'ip');
+
         return empty($ret) ? $default : $ret;
     }
 
     /**
-     * Return a DateTime object from a Xoops\Form\DateSelect or Xoops\Form\DateTimeSelect field
+     * Return a DateTime object from a Xoops\Form\DateSelect or Xoops\Form\DateTimeSelect field.
      *
      * @param string $name    Variable name
      * @param mixed  $default Default value if the variable does not exist
@@ -338,7 +346,7 @@ class Request
     {
         $values = self::getVar($name, [], $hash, 'array');
         $count = count($values);
-        if ($count === 1) {
+        if (1 === $count) {
             $date = reset($values);
             $ret = (empty($date)) ? $default : Time::inputToDateTime($date);
         } elseif (isset($values['date']) && isset($values['time'])) {
@@ -346,11 +354,12 @@ class Request
         } else {
             $ret = $default;
         }
+
         return $ret;
     }
 
     /**
-     * get request header
+     * get request header.
      *
      * @param string      $headerName name of header to retrieve, case insensitive
      * @param string|null $default    default to return if named header is not found
@@ -361,7 +370,7 @@ class Request
     {
         static $headers = null;
 
-        if ($headers === null) {
+        if (null === $headers) {
             $headers = [];
             if (function_exists('apache_request_headers')) {
                 $rawHeaders = apache_request_headers();
@@ -371,7 +380,7 @@ class Request
             } else {
                 // From joyview - http://php.net/manual/en/function.getallheaders.php
                 foreach ($_SERVER as $name => $value) {
-                    if (substr($name, 0, 5) === 'HTTP_') {
+                    if ('HTTP_' === substr($name, 0, 5)) {
                         $translatedName = str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($name, 5))));
                         $headers[$translatedName] = $value;
                     }
@@ -383,21 +392,22 @@ class Request
         if (isset($headers[$name])) {
             return static::cleanVar($headers[$name]);
         }
+
         return $default;
     }
 
     /**
-     * See if a variable exists in one of the request hashes
+     * See if a variable exists in one of the request hashes.
      *
      * @param string $name variable to look for
      * @param string $hash hash to check
      *
-     * @return boolean True if hash has an element 'name', otherwise false
+     * @return bool True if hash has an element 'name', otherwise false
      */
     public static function hasVar($name, $hash = 'method')
     {
         $hash = strtoupper($hash);
-        if ($hash === 'METHOD') {
+        if ('METHOD' === $hash) {
             $hash = strtoupper($_SERVER['REQUEST_METHOD']);
         }
 
@@ -406,23 +416,24 @@ class Request
         if (isset($original[$name])) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * Set a variable in one of the request variables
+     * Set a variable in one of the request variables.
      *
-     * @param string  $name      Name
-     * @param string  $value     Value
-     * @param string  $hash      Hash
-     * @param boolean $overwrite Boolean
+     * @param string $name      Name
+     * @param string $value     Value
+     * @param string $hash      Hash
+     * @param bool   $overwrite Boolean
      *
      * @return string Previous value
      */
     public static function setVar($name, $value = null, $hash = 'method', $overwrite = true)
     {
         $hash = strtoupper($hash);
-        if ($hash === 'METHOD') {
+        if ('METHOD' === $hash) {
             $hash = strtoupper($_SERVER['REQUEST_METHOD']);
         }
 
@@ -443,26 +454,33 @@ class Request
             case 'GET':
                 $_GET[$name] = $value;
                 $_REQUEST[$name] = $value;
+
                 break;
             case 'POST':
                 $_POST[$name] = $value;
                 $_REQUEST[$name] = $value;
+
                 break;
             case 'REQUEST':
                 $_REQUEST[$name] = $value;
+
                 break;
             case 'COOKIE':
                 $_COOKIE[$name] = $value;
                 $_REQUEST[$name] = $value;
+
                 break;
             case 'FILES':
                 $_FILES[$name] = $value;
+
                 break;
             case 'ENV':
                 $_ENV['name'] = $value;
+
                 break;
             case 'SERVER':
                 $_SERVER['name'] = $value;
+
                 break;
         }
 
@@ -496,31 +514,38 @@ class Request
     {
         $hash = strtoupper($hash);
 
-        if ($hash === 'METHOD') {
+        if ('METHOD' === $hash) {
             $hash = strtoupper($_SERVER['REQUEST_METHOD']);
         }
 
         switch ($hash) {
             case 'GET':
                 $input = $_GET;
+
                 break;
             case 'POST':
                 $input = $_POST;
+
                 break;
             case 'FILES':
                 $input = $_FILES;
+
                 break;
             case 'COOKIE':
                 $input = $_COOKIE;
+
                 break;
             case 'ENV':
                 $input = &$_ENV;
+
                 break;
             case 'SERVER':
                 $input = &$_SERVER;
+
                 break;
             default:
                 $input = $_REQUEST;
+
                 break;
         }
 
@@ -530,11 +555,11 @@ class Request
     }
 
     /**
-     * Sets a request variable
+     * Sets a request variable.
      *
-     * @param array   $array     An associative array of key-value pairs
-     * @param string  $hash      The request variable to set (POST, GET, FILES, METHOD)
-     * @param boolean $overwrite If true and an existing key is found, the value is overwritten,
+     * @param array  $array     An associative array of key-value pairs
+     * @param string $hash      The request variable to set (POST, GET, FILES, METHOD)
+     * @param bool   $overwrite If true and an existing key is found, the value is overwritten,
      *                            otherwise it is ignored
      */
     public static function set($array, $hash = 'method', $overwrite = true)
@@ -547,8 +572,8 @@ class Request
     /**
      * Clean up an input variable.
      *
-     * @param mixed  $var  The input variable.
-     * @param int    $mask Filter bit mask.
+     * @param mixed $var  The input variable.
+     * @param int   $mask Filter bit mask.
      *                      - 1=no trim: If this flag is cleared and the input is a string,
      *                        the string will have leading and trailing whitespace trimmed.
      *                      - 2=allow_raw: If set, no more filtering is performed, higher bits are ignored.
@@ -566,7 +591,7 @@ class Request
         static $safeHtmlFilter = null;
 
         // convert $var in array if $type is ARRAY
-        if (strtolower($type) === 'array' && !is_array($var)) {
+        if ('array' === strtolower($type) && !is_array($var)) {
             $var = [$var];
         }
 
@@ -580,13 +605,13 @@ class Request
         if (!($mask & static::MASK_ALLOW_RAW)) {
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable
-                if ($safeHtmlFilter === null) {
+                if (null === $safeHtmlFilter) {
                     $safeHtmlFilter = FilterInput::getInstance([], [], 1, 1);
                 }
                 $var = $safeHtmlFilter->cleanVar($var, $type);
             } else {
                 // Since no allow flags were set, we will apply the most strict filter to the variable
-                if ($noHtmlFilter === null) {
+                if (null === $noHtmlFilter) {
                     $noHtmlFilter = FilterInput::getInstance();
                 }
                 $var = $noHtmlFilter->clean($var, $type);

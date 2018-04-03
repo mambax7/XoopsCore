@@ -17,9 +17,9 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 function xoops_module_update_publisher(XoopsModule $module, $version)
 {
     $gperm_handler = Xoops::getInstance()->getHandlerGroupPermission();
+
     return $gperm_handler->deleteByModule($module->getVar('mid'), 'item_read');
 }

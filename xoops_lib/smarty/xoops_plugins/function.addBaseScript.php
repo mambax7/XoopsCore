@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS addBaseScriptAsset() via Smarty template
+ * XOOPS addBaseScriptAsset() via Smarty template.
  *
  * @copyright   2015 XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -8,7 +8,7 @@
  */
 
 /**
- * Add one or more scripts to the base script asset
+ * Add one or more scripts to the base script asset.
  *
  * @param string                   $params commas separated list of script assets
  * @param Smarty_Internal_Template $smarty passed by smarty
@@ -25,5 +25,6 @@ function smarty_function_addBaseScript($params, Smarty_Internal_Template $smarty
     if (!empty($assets)) {
         $xoops->theme()->addBaseScriptAssets($assets);
     }
+
     return '';
 }

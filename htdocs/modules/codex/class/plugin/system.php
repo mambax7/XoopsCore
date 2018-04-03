@@ -10,18 +10,17 @@
 */
 
 /**
- * Codex module
+ * Codex module.
  *
  * @author    Laurent JEN (Aka DuGris)
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  */
-
 class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
     /**
      * Used to synchronize a user number of posts
-     * Please return the number of posts the user as made in your module
+     * Please return the number of posts the user as made in your module.
      *
      * @param int $uid The uid of the user
      *
@@ -35,7 +34,7 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
     }
 
     /**
-     * Used to populate the Waiting Block
+     * Used to populate the Waiting Block.
      *
      * Expects an array containing:
      *    count : Number of waiting items,    ex: 3
@@ -50,11 +49,12 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
         $ret['count'] = count(\Xoops\Core\Lists\File::getList($xoops->path('modules/codex/'))) - 2;
         $ret['name'] = $xoops->getHandlerModule()->getByDirname('codex')->getVar('name');
         $ret['link'] = $xoops->url('modules/codex/');
+
         return [];
     }
 
     /**
-     * Used to populate backend
+     * Used to populate backend.
      *
      * @param int $limit : Number of item for backend
      *
@@ -76,17 +76,18 @@ class CodexSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sy
         foreach ($files as $file) {
             if (!in_array($file, ['xoops_version.php', 'index.php'], true)) {
                 $ret[$i]['title'] = ucfirst(str_replace('.php', '', $file));
-                $ret[$i]['link'] = $xoops->url('modules/codex/' . $file);
-                $ret[$i]['content'] = 'Codex module : ' . ucfirst(str_replace('.php', '', $file));
-                $ret[$i]['date'] = filemtime($xoops->path('modules/codex/' . $file));
+                $ret[$i]['link'] = $xoops->url('modules/codex/'.$file);
+                $ret[$i]['content'] = 'Codex module : '.ucfirst(str_replace('.php', '', $file));
+                $ret[$i]['date'] = filemtime($xoops->path('modules/codex/'.$file));
                 ++$i;
             }
         }
+
         return $ret;
     }
 
     /**
-     * Used to populate the User Block
+     * Used to populate the User Block.
      *
      * Expects an array containing:
      *    name  : Name for the Link

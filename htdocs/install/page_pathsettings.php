@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer path configuration page
+ * Installer path configuration page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,21 +22,20 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
+require_once __DIR__.'/include/common.inc.php';
 
-require_once __DIR__ . '/include/common.inc.php';
-
-include_once XOOPS_INSTALL_PATH . '/class/pathcontroller.php';
+include_once XOOPS_INSTALL_PATH.'/class/pathcontroller.php';
 
 $ctrl = new XoopsPathController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && @$_GET['action'] === 'checkpath') {
+if ('GET' === $_SERVER['REQUEST_METHOD'] && @$_GET['var'] && 'checkpath' === @$_GET['action']) {
     $path = $_GET['var'];
     $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']));
     echo genPathCheckHtml($path, $ctrl->checkPath($path));
     exit();
 }
 $ctrl->execute();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     return;
 }
 ob_start();
@@ -68,13 +66,13 @@ function updPath( key, val ) {
         <?php
         if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
             echo '<div id="rootperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+            echo CHECKING_PERMISSIONS.'<br /><p>'.ERR_NEED_WRITE_ACCESS.'</p>';
             echo '<ul class="diags">';
             foreach ($ctrl->permErrors['root'] as $path => $result) {
                 if ($result) {
-                    echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+                    echo '<li class="success">'.sprintf(IS_WRITABLE, $path).'</li>';
                 } else {
-                    echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+                    echo '<li class="failure">'.sprintf(IS_NOT_WRITABLE, $path).'</li>';
                 }
             }
             echo '</ul>';
@@ -91,13 +89,13 @@ function updPath( key, val ) {
         <?php
         if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
             echo '<div id="dataperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+            echo CHECKING_PERMISSIONS.'<br /><p>'.ERR_NEED_WRITE_ACCESS.'</p>';
             echo '<ul class="diags">';
             foreach ($ctrl->permErrors['data'] as $path => $result) {
                 if ($result) {
-                    echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+                    echo '<li class="success">'.sprintf(IS_WRITABLE, $path).'</li>';
                 } else {
-                    echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+                    echo '<li class="failure">'.sprintf(IS_NOT_WRITABLE, $path).'</li>';
                 }
             }
             echo '</ul>';
@@ -127,4 +125,4 @@ ob_end_clean();
 $_SESSION['pageHasHelp'] = true;
 $_SESSION['pageHasForm'] = true;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer configuration check page
+ * Installer configuration check page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,8 +22,7 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  **/
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
@@ -63,7 +61,7 @@ ob_start();
 
 <tr>
     <th><?php printf(PHP_EXTENSION, 'PDO'); ?></th>
-    <td><?php echo xoDiag(extension_loaded('PDO') ? 1 : -1, 'PDO::getAvailableDrivers() = ' . @implode(', ', PDO::getAvailableDrivers())); ?></td>
+    <td><?php echo xoDiag(extension_loaded('PDO') ? 1 : -1, 'PDO::getAvailableDrivers() = '.@implode(', ', PDO::getAvailableDrivers())); ?></td>
 </tr>
 
 <tr>
@@ -99,7 +97,7 @@ ob_start();
 <tbody>
 <?php
 foreach ($wizard->configs['extensions'] as $key => $value) {
-    echo '<tr><th>' . $value[1] . '</th><td>' . $value[2] . '</td></tr>';
+    echo '<tr><th>'.$value[1].'</th><td>'.$value[2].'</td></tr>';
 }
 ?>
 
@@ -112,4 +110,4 @@ ob_end_clean();
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

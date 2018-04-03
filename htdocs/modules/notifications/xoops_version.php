@@ -10,13 +10,12 @@
 */
 
 /**
- * Notifications
+ * Notifications.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 $modversion = [];
 $modversion['name'] = _MI_NOTIFICATIONS_NAME;
 $modversion['description'] = _MI_NOTIFICATIONS_DSC;

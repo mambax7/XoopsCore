@@ -10,23 +10,20 @@
 */
 
 /**
- * XOOPS Utilities
+ * XOOPS Utilities.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      utility
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 class xoopsutility
 {
     /**
      * @static
-     * @param mixed $handler
-     * @param mixed $data
+     * @param  mixed       $handler
+     * @param  mixed       $data
      * @return array|mixed
      */
     public static function recursive($handler, $data)
@@ -37,6 +34,7 @@ class xoopsutility
             array_fill(0, count($data), $handler),
                 $data
                 );
+
             return $return;
         }
         // single function
@@ -47,6 +45,7 @@ class xoopsutility
         if (is_callable($handler)) {
             return call_user_func($handler, $data);
         }
+
         return $data;
     }
 }

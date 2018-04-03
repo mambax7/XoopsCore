@@ -28,8 +28,8 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
 
         $member_handler = $xoops->getHandlerMember();
 
-        if (!@include_once XOOPS_ROOT_PATH . '/language/' . $upgrade_language . '/auth.php') {
-            include_once XOOPS_ROOT_PATH . '/language/english/auth.php';
+        if (!@include_once XOOPS_ROOT_PATH.'/language/'.$upgrade_language.'/auth.php') {
+            include_once XOOPS_ROOT_PATH.'/language/english/auth.php';
         }
         $xoopsAuth = Xoops_Auth_Factory::getAuthConnection($uname);
         $user = $xoopsAuth->authenticate($uname, $pass);
@@ -44,7 +44,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         $isAllowed = false;
         if (is_object($user) && $user->getVar('level') > 0) {
             $isAllowed = true;
-            if ($xoops->getConfig('closesite') === 1) {
+            if (1 === $xoops->getConfig('closesite')) {
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups, true) || array_intersect($groups, $xoopsConfig['closesite_okgrp'])) {
                     $isAllowed = true;
@@ -77,6 +77,6 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
             }
         }
 
-        header('location: ' . XOOPS_URL . '/upgrade/index.php');
+        header('location: '.XOOPS_URL.'/upgrade/index.php');
         exit();
     }

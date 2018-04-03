@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Object
+ * XOOPS Kernel Object.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -12,7 +12,7 @@
 
 namespace Xoops\Core\Kernel;
 
-/**
+/*
  * Establish Xoops object datatype legacy defines
  * New code should use Dtype::TYPE_* constants
  *
@@ -34,28 +34,27 @@ define('XOBJ_DTYPE_DECIMAL', Dtype::TYPE_DECIMAL);
 define('XOBJ_DTYPE_ENUM', Dtype::TYPE_ENUM);
 
 /**
- * Base class for all objects in the Xoops kernel (and beyond)
+ * Base class for all objects in the Xoops kernel (and beyond).
  *
  * @category  Xoops\Core\Kernel\XoopsObject
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono (AKA onokazu) <http://www.myweb.ne.jp/, http://jp.xoops.org/>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0.0
  */
 abstract class XoopsObject implements \ArrayAccess
 {
     /**
-     * holds all variables(properties) of an object
+     * holds all variables(properties) of an object.
      *
      * @var array
      */
     public $vars = [];
 
     /**
-     * variables cleaned for store in DB
+     * variables cleaned for store in DB.
      *
      * @var array
      */
@@ -81,25 +80,23 @@ abstract class XoopsObject implements \ArrayAccess
     private $isDirty = false;
 
     /**
-     * errors
+     * errors.
      *
      * @var array
      */
     private $errors = [];
 
     /**
-     * constructor
+     * constructor.
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
     }
 
     /**
-     * Adjust a newly cloned object
+     * Adjust a newly cloned object.
      */
     public function __clone()
     {
@@ -108,7 +105,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * used for new/clone objects
+     * used for new/clone objects.
      */
     public function setNew()
     {
@@ -116,7 +113,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * clear new flag
+     * clear new flag.
      */
     public function unsetNew()
     {
@@ -124,7 +121,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * check new flag
+     * check new flag.
      *
      * @return bool
      */
@@ -134,7 +131,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * mark modified objects as dirty
+     * mark modified objects as dirty.
      *
      * used for modified objects only
      */
@@ -144,7 +141,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * cleaar dirty flag
+     * cleaar dirty flag.
      */
     public function unsetDirty()
     {
@@ -152,7 +149,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * check dirty flag
+     * check dirty flag.
      *
      * @return bool
      */
@@ -162,7 +159,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * initialize variables for the object
+     * initialize variables for the object.
      *
      * @param string $key       key
      * @param int    $data_type set to one of Dtype::TYPE_XXX constants (set to Dtype::TYPE_OTHER
@@ -185,7 +182,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * assign a value to a variable
+     * assign a value to a variable.
      *
      * @param string $key   name of the variable to assign
      * @param mixed  $value value to assign
@@ -198,7 +195,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * assign values to multiple variables in a batch
+     * assign values to multiple variables in a batch.
      *
      * @param array $var_arr associative array of values to assign
      */
@@ -212,10 +209,10 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * assign a value to a variable
+     * assign a value to a variable.
      *
-     * @param string $key     name of the variable to assign
-     * @param mixed  $value   value to assign
+     * @param string $key   name of the variable to assign
+     * @param mixed  $value value to assign
      */
     public function setVar($key, $value)
     {
@@ -227,7 +224,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * assign values to multiple variables in a batch
+     * assign values to multiple variables in a batch.
      *
      * @param array $var_arr associative array of values to assign
      */
@@ -241,7 +238,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * unset variable(s) for the object
+     * unset variable(s) for the object.
      *
      * @param mixed $var variable(s)
      *
@@ -259,11 +256,12 @@ abstract class XoopsObject implements \ArrayAccess
             }
             $this->vars[$key]['changed'] = null;
         }
+
         return true;
     }
 
     /**
-     * Assign values to multiple variables in a batch
+     * Assign values to multiple variables in a batch.
      *
      * Meant for a CGI context:
      * - prefixed CGI args are considered save
@@ -285,7 +283,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * returns all variables for the object
+     * returns all variables for the object.
      *
      * @return array associative array of key->value pairs
      */
@@ -295,7 +293,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * Returns the values of the specified variables
+     * Returns the values of the specified variables.
      *
      * @param mixed  $keys     An array containing the names of the keys to retrieve, or null to get all of them
      * @param string $format   Format to use (see getVar)
@@ -324,11 +322,12 @@ abstract class XoopsObject implements \ArrayAccess
                 }
             }
         }
+
         return $vars;
     }
 
     /**
-     * returns a specific variable for the object in a proper format
+     * returns a specific variable for the object in a proper format.
      *
      * @param string $key    key of the object's variable to be returned
      * @param string $format format to use for the output
@@ -342,6 +341,7 @@ abstract class XoopsObject implements \ArrayAccess
             return $ret;
         }
         $ret = Dtype::getVar($this, $key, $format);
+
         return $ret;
     }
 
@@ -362,26 +362,29 @@ abstract class XoopsObject implements \ArrayAccess
         }
         if (count($this->errors) > 0) {
             $this->errors = array_merge($existing_errors, $this->errors);
+
             return false;
         }
         // $this->_errors = array_merge($existing_errors, $this->_errors);
         $this->unsetDirty();
+
         return true;
     }
 
     /**
-     * create a clone(copy) of the current object
+     * create a clone(copy) of the current object.
      *
      * @return object clone
      */
     public function xoopsClone()
     {
         $clone = clone $this;
+
         return $clone;
     }
 
     /**
-     * add an error
+     * add an error.
      *
      * @param string $err_str to add
      */
@@ -395,7 +398,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * return the errors for this object as an array
+     * return the errors for this object as an array.
      *
      * @return array an array of errors
      */
@@ -405,7 +408,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * return the errors for this object as html
+     * return the errors for this object as html.
      *
      * @return string html listing the errors
      * @todo remove hardcoded HTML strings
@@ -415,16 +418,17 @@ abstract class XoopsObject implements \ArrayAccess
         $ret = '<h4>Errors</h4>';
         if (!empty($this->errors)) {
             foreach ($this->errors as $error) {
-                $ret .= $error . '<br />';
+                $ret .= $error.'<br />';
             }
         } else {
             $ret .= 'None<br />';
         }
+
         return $ret;
     }
 
     /**
-     * Get object variables as an array
+     * Get object variables as an array.
      *
      * @return array of object values
      */
@@ -434,11 +438,11 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * ArrayAccess methods
+     * ArrayAccess methods.
      */
 
     /**
-     * offsetExists
+     * offsetExists.
      *
      * @param mixed $offset array key
      *
@@ -450,7 +454,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * offsetGet
+     * offsetGet.
      *
      * @param mixed $offset array key
      *
@@ -462,7 +466,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * offsetSet
+     * offsetSet.
      *
      * @param mixed $offset array key
      * @param mixed $value
@@ -473,7 +477,7 @@ abstract class XoopsObject implements \ArrayAccess
     }
 
     /**
-     * offsetUnset
+     * offsetUnset.
      *
      * @param mixed $offset array key
      */

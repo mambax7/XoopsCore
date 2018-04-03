@@ -15,39 +15,38 @@ use XoopsLoad;
 
 /**
  * XoopsBaseConfig holds the base XOOPS configs needed to locate key paths and
- * enable database access
+ * enable database access.
  *
  * @category  XoopsBaseConfig
- * @package   XoopsBaseConfig
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
-
 class XoopsBaseConfig
 {
     /**
      * @var string[]
      */
     private static $configs = [];
+
     /**
-         * __construct
-         * @param string|string[] $config fully qualified name of configuration file
-         *                                or configuration array
-         * @throws Exception
-         */
-    final private function __construct($config)
+     * __construct.
+     * @param string|string[] $config fully qualified name of configuration file
+     *                                or configuration array
+     * @throws Exception
+     */
+    private function __construct($config)
     {
         if (!class_exists('XoopsLoad', false)) {
-            include __DIR__ . '/xoopsload.php';
+            include __DIR__.'/xoopsload.php';
         }
         if (is_string($config)) {
             $yamlString = file_get_contents($config);
-            if ($yamlString === false) {
+            if (false === $yamlString) {
                 throw new Exception('XoopsBaseConfig failed to load configuration.');
             }
-            $loaderPath = $this->extractLibPath($yamlString) . '/vendor/autoload.php';
+            $loaderPath = $this->extractLibPath($yamlString).'/vendor/autoload.php';
             if (file_exists($loaderPath)) {
                 include_once $loaderPath;
             }
@@ -80,9 +79,10 @@ class XoopsBaseConfig
             $instance = new \XoopsBaseConfig($config);
         }
 
-        if ($instance === false || empty(self::$configs)) {
+        if (false === $instance || empty(self::$configs)) {
             throw new Exception('XoopsBaseConfig failed.');
         }
+
         return $instance;
     }
 
@@ -107,7 +107,7 @@ class XoopsBaseConfig
      *
      * @param string $name name of an attribute
      *
-     * @return boolean true if attribute is defined, otherwise false.
+     * @return bool true if attribute is defined, otherwise false.
      */
     final public static function has($name)
     {
@@ -115,7 +115,7 @@ class XoopsBaseConfig
     }
 
     /**
-     * Get a copy of all base configurations
+     * Get a copy of all base configurations.
      *
      * @return array of of all attributes
      */
@@ -125,7 +125,7 @@ class XoopsBaseConfig
     }
 
     /**
-     * Establish backward compatibility defines
+     * Establish backward compatibility defines.
      */
     final public static function establishBCDefines()
     {
@@ -181,7 +181,7 @@ class XoopsBaseConfig
     }
 
     /**
-     * Create a working environment from traditional mainfile environment
+     * Create a working environment from traditional mainfile environment.
      *
      * For the early phases in the installer, these may not be defined. Until it
      * is converted we try and do the best we can without errors
@@ -191,12 +191,12 @@ class XoopsBaseConfig
         $path = self::defineDefault('XOOPS_ROOT_PATH', basename(__DIR__));
         $url = (defined('XOOPS_URL')) ?
             XOOPS_URL :
-            ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://')
-            . $_SERVER['SERVER_NAME']
-            . (($_SERVER['SERVER_PORT'] !== '80') ? ':' . $_SERVER['SERVER_PORT'] : '');
-        $parts = parse_url($url . '/');
+            ((isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) ? 'https://' : 'http://')
+            .$_SERVER['SERVER_NAME']
+            .(('80' !== $_SERVER['SERVER_PORT']) ? ':'.$_SERVER['SERVER_PORT'] : '');
+        $parts = parse_url($url.'/');
         $host = isset($parts['host']) ? $parts['host'] : $_SERVER['SERVER_NAME'];
-        $host = ($host === 'localhost') ? '' : $host;
+        $host = ('localhost' === $host) ? '' : $host;
         $urlpath = isset($parts['path']) ? $parts['path'] : '/';
         $libpath = self::defineDefault('XOOPS_PATH');
         $varpath = self::defineDefault('XOOPS_VAR_PATH');
@@ -207,21 +207,21 @@ class XoopsBaseConfig
             'trust-path' => $libpath,
             'url' => $url,
             'prot' => self::defineDefault('XOOPS_PROT'),
-            'asset-path' => $path . '/assets',
-            'asset-url' => $url . '/assets',
-            'themes-path' => $path . '/themes',
-            'themes-url' => $url . '/themes',
-            'adminthemes-path' => $path . '/modules/system/themes',
-            'adminthemes-url' => $url . '/modules/system/themes',
-            'media-path' => $path . '/media',
-            'media-url' => $url . '/media',
-            'uploads-path' => $path . '/uploads',
-            'uploads-url' => $url . '/uploads',
+            'asset-path' => $path.'/assets',
+            'asset-url' => $url.'/assets',
+            'themes-path' => $path.'/themes',
+            'themes-url' => $url.'/themes',
+            'adminthemes-path' => $path.'/modules/system/themes',
+            'adminthemes-url' => $url.'/modules/system/themes',
+            'media-path' => $path.'/media',
+            'media-url' => $url.'/media',
+            'uploads-path' => $path.'/uploads',
+            'uploads-url' => $url.'/uploads',
             'cookie-domain' => $host,
             'cookie-path' => $urlpath,
-            'smarty-cache' => $varpath . '/caches/smarty_cache',
-            'smarty-compile' => $varpath . '/caches/smarty_compile',
-            'smarty-xoops-plugins' => $libpath . '/smarty/xoops_plugins',
+            'smarty-cache' => $varpath.'/caches/smarty_cache',
+            'smarty-compile' => $varpath.'/caches/smarty_compile',
+            'smarty-xoops-plugins' => $libpath.'/smarty/xoops_plugins',
             'db-type' => self::defineDefault('XOOPS_DB_TYPE'),
             'db-charset' => 'utf8',
             'db-prefix' => self::defineDefault('XOOPS_DB_PREFIX'),
@@ -236,7 +236,7 @@ class XoopsBaseConfig
     }
 
     /**
-     * extractLibPath - solve a which comes first, chicken or egg type problem
+     * extractLibPath - solve a which comes first, chicken or egg type problem.
      *
      * The yaml file we can load has the path we need to set up the autoloader we need
      * to reach our yaml library. We solve this by looking through the raw yaml file
@@ -249,10 +249,11 @@ class XoopsBaseConfig
      *
      * @return string the extracted lib-path value
      */
-    final private function extractLibPath($filecontents)
+    private function extractLibPath($filecontents)
     {
         $match = [];
         $matched = preg_match('/[.\v]*^lib-path\h*\:\h*[\']?([^\'\v]*)[\']?\h*$[.\v]*/m', $filecontents, $match);
+
         return $matched ? trim($match[1]) : '';
     }
 
@@ -267,8 +268,9 @@ class XoopsBaseConfig
      */
     private static function defineDefault($define, $default = null)
     {
-        $default = ($default === null) ? $define : $default;
+        $default = (null === $default) ? $define : $default;
         $return = defined($define) ? constant($define) : $default;
+
         return $return;
     }
 }

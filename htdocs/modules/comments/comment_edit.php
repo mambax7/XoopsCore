@@ -10,13 +10,12 @@
 */
 
 /**
- * Comments
+ * Comments.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(dirname(__DIR__)) . '/mainfile.php';
+include_once dirname(dirname(__DIR__)).'/mainfile.php';
 Comments::getInstance()->displayEdit();

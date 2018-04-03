@@ -10,30 +10,27 @@
  */
 
 /**
- * Userconfigs
+ * Userconfigs.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * A Config-Option
+ * A Config-Option.
  *
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright    copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
  */
 class UserconfigsOption extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -44,7 +41,7 @@ class UserconfigsOption extends XoopsObject
     }
 
     /**
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'n')
@@ -53,7 +50,7 @@ class UserconfigsOption extends XoopsObject
     }
 
     /**
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_id($format = '')
@@ -62,7 +59,7 @@ class UserconfigsOption extends XoopsObject
     }
 
     /**
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_name($format = '')
@@ -71,7 +68,7 @@ class UserconfigsOption extends XoopsObject
     }
 
     /**
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_value($format = '')
@@ -80,7 +77,7 @@ class UserconfigsOption extends XoopsObject
     }
 
     /**
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_id($format = '')
@@ -92,7 +89,7 @@ class UserconfigsOption extends XoopsObject
 class UserconfigsOptionHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */

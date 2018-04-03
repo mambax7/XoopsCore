@@ -324,7 +324,7 @@ define('_MI_PUBLISHER_ALLOW_AUTHOR_ITEMS', "Autoriser la fonctionnalité 'auteur
 define('_MI_PUBLISHER_ALLOW_AUTHOR_ITEMS_DSC', '');
 //define("_MI_PUBLISHER_AUTHOR_ITEMS_DSC", "Afficher les articles du même auteur");
 
-/**
+/*
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) <http://www.afux.org/>
  * @translation        grandoc 2010-02-06
  * @specification   _LANGCODE: fr

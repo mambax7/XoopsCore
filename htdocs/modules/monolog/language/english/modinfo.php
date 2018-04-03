@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MI_MONOLOG_NAME', 'Monolog');
 define('_MI_MONOLOG_DSC', 'Error and performance data logging');
 

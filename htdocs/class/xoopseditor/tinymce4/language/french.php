@@ -1,12 +1,10 @@
 <?php
 
 /**
- *  TinyMCE adapter for XOOPS
+ *  TinyMCE adapter for XOOPS.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     core
- * @subpackage	 xoopseditor
  * @since       2.3.0
  * @author		 Taiwen Jiang <phppp@users.sourceforge.net>
  */

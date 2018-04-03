@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MD_LOGGER_DEBUG', 'Debug');
 define('_MD_LOGGER_INCLUDED_FILES', 'Included files');
 define('_MD_LOGGER_FILES', '%s files');

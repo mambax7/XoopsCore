@@ -12,11 +12,10 @@
 use Xoops\Module\Plugin;
 
 /**
- * mainmenu module
+ * mainmenu module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         mainmenu
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -74,5 +73,6 @@ function b_mainmenu_mainmenu_show()
     }
 
     $block['count'] = count($block['mainmenu']);
+
     return $block['count'] ? $block : false;
 }

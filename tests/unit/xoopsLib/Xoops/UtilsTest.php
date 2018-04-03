@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../init_new.php';
+require_once __DIR__.'/../../init_new.php';
 
 class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,7 +15,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
         $this->save_SERVER = $_SERVER;
         $this->save_ENV = $_ENV;
         $this->markTestSkipped('side effects');
-        if (!function_exists('ini_get') || ini_get('safe_mode') === '1') {
+        if (!function_exists('ini_get') || '1' === ini_get('safe_mode')) {
             $this->markTestSkipped('safe mode is on');
         }
     }
@@ -77,10 +77,10 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
         $this->assertTrue(is_array($x));
-        $this->assertTrue($x['a'] === 'green');
-        $this->assertTrue($x[0] === 'red');
-        $this->assertTrue($x[1] === 'blue');
-        $this->assertTrue($x[2] === 'red');
+        $this->assertTrue('green' === $x['a']);
+        $this->assertTrue('red' === $x[0]);
+        $this->assertTrue('blue' === $x[1]);
+        $this->assertTrue('red' === $x[2]);
     }
 
     public function test_arrayRecursiveDiff100()
@@ -95,7 +95,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
         $this->assertTrue(is_array($x));
-        $this->assertTrue($x['a'] === 'green');
+        $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x[1]['a'] === 'green');
         $this->assertTrue($x[1][0] === 'red');
         $this->assertTrue($x[1][1] === 'blue');
@@ -113,7 +113,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
         $this->assertTrue(is_array($x));
-        $this->assertTrue($x['a'] === 'green');
+        $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
         $this->assertTrue($x['array'][1] === 'blue');
@@ -131,7 +131,7 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
         $x = $class::arrayRecursiveDiff($array1, $array2);
         $this->assertTrue(is_array($x));
-        $this->assertTrue($x['a'] === 'green');
+        $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
         $this->assertTrue($x['array'][1] === 'blue');
@@ -160,11 +160,11 @@ class Xoops_UtilsTest extends \PHPUnit\Framework\TestCase
 
         $x = $class::arrayRecursiveMerge($array1, $array2);
         $this->assertTrue(is_array($x));
-        $this->assertTrue($x['a'] === 'green');
+        $this->assertTrue('green' === $x['a']);
         $this->assertTrue($x['array']['a'] === 'green');
         $this->assertTrue($x['array'][0] === 'red');
         $this->assertTrue($x['array'][1] === 'blue');
-        $this->assertTrue($x['b'] === 'green');
+        $this->assertTrue('green' === $x['b']);
         $this->assertTrue($x['array'][2] === 'yellow');
     }
 

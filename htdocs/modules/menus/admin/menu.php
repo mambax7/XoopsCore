@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $i = -1;
 ++$i;
 $adminmenu[$i]['title'] = _MI_MENUS_ADMMENU0;

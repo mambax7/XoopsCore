@@ -12,20 +12,18 @@
 use Xoops\Module\Plugin;
 
 /**
- * waiting module
+ * waiting module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         waiting
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get main instance
 $xoops = \Xoops::getInstance();
-
 
 // Call header
 $xoops->header('admin:waiting/waiting_admin_plugins.tpl');
@@ -34,7 +32,6 @@ $xoops->header('admin:waiting/waiting_admin_plugins.tpl');
 $contents = [];
 $plugins = Plugin::getPlugins('waiting');
 foreach ($plugins as $dirName => $plugin) {
-
     //No permissions, no links
     $helper = \Xoops::getModuleHelper($dirName);
     if (!$helper->isUserAdmin()) {

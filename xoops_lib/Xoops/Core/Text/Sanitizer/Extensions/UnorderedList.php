@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Wishcraft <simon@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class UnorderedList extends ExtensionAbstract
 {
@@ -32,7 +31,7 @@ class UnorderedList extends ExtensionAbstract
     protected static $defaultConfiguration = ['enabled' => true];
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -41,7 +40,8 @@ class UnorderedList extends ExtensionAbstract
         $shortcodes->addShortcode(
             'ul',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<ul>' . $shortcodes->process($content) . '</ul>';
+                $newcontent = '<ul>'.$shortcodes->process($content).'</ul>';
+
                 return $newcontent;
             }
         );
@@ -49,7 +49,8 @@ class UnorderedList extends ExtensionAbstract
         $shortcodes->addShortcode(
             'li',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<li>' . $shortcodes->process($content) . '</li>';
+                $newcontent = '<li>'.$shortcodes->process($content).'</li>';
+
                 return $newcontent;
             }
         );

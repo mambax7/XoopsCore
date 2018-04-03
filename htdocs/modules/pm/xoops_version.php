@@ -10,16 +10,14 @@
 */
 
 /**
- * Private message module
+ * Private message module.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         pm
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 $modversion = [];
 $modversion['name'] = _PM_MI_NAME;
 $modversion['version'] = 1.07;
@@ -43,7 +41,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [];
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _PM_MI_DESC;
+$modversion['paypal']['item_name'] = 'Donation : '._PM_MI_DESC;
 $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 

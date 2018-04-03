@@ -14,8 +14,7 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  */
-
-require __DIR__ . '/admin_header.php';
+require __DIR__.'/admin_header.php';
 
 $aboutAdmin = new \Xoops\Module\Admin();
 

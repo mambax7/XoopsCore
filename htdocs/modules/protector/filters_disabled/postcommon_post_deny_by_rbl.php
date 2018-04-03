@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
 {
     public function execute()
@@ -27,19 +25,19 @@ class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
         // RBL servers (don't enable too many servers)
         $rbls = [
             'sbl-xbl.spamhaus.org',
-            #           'niku.2ch.net' ,
-            #           'list.dsbl.org' ,
-            #           'bl.spamcop.net' ,
-            #           'all.rbl.jp' ,
-            #           'opm.blitzed.org' ,
-            #           'bsb.empty.us' ,
-            #           'bsb.spamlookup.net' ,
+            //           'niku.2ch.net' ,
+            //           'list.dsbl.org' ,
+            //           'bl.spamcop.net' ,
+            //           'all.rbl.jp' ,
+            //           'opm.blitzed.org' ,
+            //           'bsb.empty.us' ,
+            //           'bsb.spamlookup.net' ,
         ];
 
         $rev_ip = implode('.', array_reverse(explode('.', @$_SERVER['REMOTE_ADDR'])));
 
         foreach ($rbls as $rbl) {
-            $host = $rev_ip . '.' . $rbl;
+            $host = $rev_ip.'.'.$rbl;
             if (gethostbyname($host) !== $host) {
                 $this->protector->message .= "DENY by ${rbl}\n";
                 $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;

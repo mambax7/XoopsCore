@@ -18,7 +18,6 @@ use Xmf\Request;
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
  */
-
 class CommentsCommentForm extends Xoops\Form\ThemeForm
 {
     public function __construct(CommentsComment $obj)
@@ -42,13 +41,16 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
         switch ($xoops->getModuleConfig('com_rule', $dirname)) {
             case Comments::APPROVE_ALL:
                 $rule_text = _MD_COMMENTS_COMAPPROVEALL;
+
                 break;
             case Comments::APPROVE_USER:
                 $rule_text = _MD_COMMENTS_COMAPPROVEUSER;
+
                 break;
             case Comments::APPROVE_ADMIN:
             default:
                 $rule_text = _MD_COMMENTS_COMAPPROVEADMIN;
+
                 break;
         }
         $this->addElement(new Xoops\Form\Label(_MD_COMMENTS_COMRULES, $rule_text));
@@ -83,7 +85,7 @@ class CommentsCommentForm extends Xoops\Form\ThemeForm
                 $noname_checkbox->addOption(1, XoopsLocale::POST_ANONYMOUSLY);
                 $option_tray->addElement($noname_checkbox);
             }
-            if ($xoops->user->isAdmin($obj->getVar('modid')) !== false) {
+            if (false !== $xoops->user->isAdmin($obj->getVar('modid'))) {
                 // show status change box when editing (comment id is not empty)
                 if ($obj->getVar('id', 'e')) {
                     $status_select = new Xoops\Form\Select(_MD_COMMENTS_STATUS, 'com_status', $obj->getVar('status', 'e'));

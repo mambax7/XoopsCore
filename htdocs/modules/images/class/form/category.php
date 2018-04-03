@@ -12,7 +12,7 @@
 use Xoops\Core\FixedGroups;
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -52,7 +52,7 @@ class ImagesCategoryForm extends Xoops\Form\ThemeForm
         $tab1->addElement(new Xoops\Form\Text(_AM_IMAGES_WEIGHT, 'imgcat_weight', 1, 5, $obj->getVar('imgcat_weight')));
         $tab1->addElement(new Xoops\Form\RadioYesNo(_AM_IMAGES_CAT_DISPLAY, 'imgcat_display', $obj->getVar('imgcat_display')));
         if ($obj->isNew()) {
-            $store = new Xoops\Form\Radio(_AM_IMAGES_CAT_STR_TYPE . '<div class="red">' . _AM_IMAGES_CAT_STR_TYOPENG . '</div>', 'imgcat_storetype', 'file');
+            $store = new Xoops\Form\Radio(_AM_IMAGES_CAT_STR_TYPE.'<div class="red">'._AM_IMAGES_CAT_STR_TYOPENG.'</div>', 'imgcat_storetype', 'file');
             $store->addOptionArray(['file' => _AM_IMAGES_CAT_ASFILE, 'db' => _AM_IMAGES_CAT_INDB]);
             $tab1->addElement($store);
         } else {
@@ -72,7 +72,7 @@ class ImagesCategoryForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('imgcat_id', $obj->getVar('imgcat_id')));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
         $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));

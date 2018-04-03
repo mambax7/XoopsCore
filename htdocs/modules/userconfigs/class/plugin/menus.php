@@ -16,7 +16,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class UserconfigsMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
 {
     /**
@@ -26,7 +25,7 @@ class UserconfigsMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      * ex: return array(0 => array(
      *      'name' => _MI_PUBLISHER_SUB_SMNAME3;
      *      'url' => "search.php";
-     *    ));
+     *    ));.
      *
      * @return array
      */
@@ -38,7 +37,7 @@ class UserconfigsMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
             foreach (array_keys($plugins) as $dirname) {
                 $mHelper = $xoops->getModuleHelper($dirname);
                 $ret[$dirname]['name'] = $mHelper->getModule()->getVar('name');
-                $ret[$dirname]['url'] = 'index.php?op=showmod&mid=' . $mHelper->getModule()->getVar('mid');
+                $ret[$dirname]['url'] = 'index.php?op=showmod&mid='.$mHelper->getModule()->getVar('mid');
             }
         }
 

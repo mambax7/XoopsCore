@@ -12,15 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_items_random_item_show($options)
 {

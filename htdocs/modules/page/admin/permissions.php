@@ -12,17 +12,15 @@
 use Xmf\Request;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get Action type
 $op = Request::getString('op', 'global');
@@ -42,7 +40,6 @@ $opform->addElement($op_select);
 $xoops->tpl()->assign('form', $opform->render());
 
 switch ($op) {
-
     case 'global':
     default:
         $global_perm_array = ['1' => PageLocale::PERMISSIONS_RATE];
@@ -51,6 +48,7 @@ switch ($op) {
             $form->addItem($perm_id, $perm_name);
         }
         $form->display();
+
         break;
 
     case 'view':
@@ -71,13 +69,13 @@ switch ($op) {
                 $groups_ids_view = $gperm_Handler->getGroupIds('page_view_item', $content_id, $module_id);
                 $groups_ids_view = array_values($groups_ids_view);
                 foreach (array_keys($group_list) as $j) {
-                    $perms .= '<img id="loading_display' . $content_id . '_' . $j . '" src="' . $xoops->url('media/xoops/images/spinner.gif') . '" style="display:none;" alt="' . XoopsLocale::LOADING . '" />';
+                    $perms .= '<img id="loading_display'.$content_id.'_'.$j.'" src="'.$xoops->url('media/xoops/images/spinner.gif').'" style="display:none;" alt="'.XoopsLocale::LOADING.'" />';
                     if (in_array($j, $groups_ids_view, true)) {
-                        $perms .= '<img class="cursorpointer" id="display' . $content_id . '_' . $j . "\" onclick=\"Xoops.changeStatus( 'permissions.php', { op: 'update_view', content_id: " . $content_id . ', group: ' . $j . ", status: 'no' }, 'display" . $content_id . '_' . $j . "', 'permissions.php' )\" src=\"" . $xoops->url('modules/system/images/icons/default/success.png') . '" alt="' . XoopsLocale::A_DISABLE . '" title="' . XoopsLocale::A_DISABLE . '" />';
+                        $perms .= '<img class="cursorpointer" id="display'.$content_id.'_'.$j."\" onclick=\"Xoops.changeStatus( 'permissions.php', { op: 'update_view', content_id: ".$content_id.', group: '.$j.", status: 'no' }, 'display".$content_id.'_'.$j."', 'permissions.php' )\" src=\"".$xoops->url('modules/system/images/icons/default/success.png').'" alt="'.XoopsLocale::A_DISABLE.'" title="'.XoopsLocale::A_DISABLE.'" />';
                     } else {
-                        $perms .= '<img class="cursorpointer" id="display' . $content_id . '_' . $j . "\" onclick=\"Xoops.changeStatus( 'permissions.php', { op: 'update_view', content_id: " . $content_id . ', group: ' . $j . ", status: 'yes' }, 'display" . $content_id . '_' . $j . "', 'permissions.php' )\" src=\"" . $xoops->url('modules/system/images/icons/default/cancel.png') . '" alt="' . XoopsLocale::A_ENABLE . '" title="' . XoopsLocale::A_ENABLE . '" />';
+                        $perms .= '<img class="cursorpointer" id="display'.$content_id.'_'.$j."\" onclick=\"Xoops.changeStatus( 'permissions.php', { op: 'update_view', content_id: ".$content_id.', group: '.$j.", status: 'yes' }, 'display".$content_id.'_'.$j."', 'permissions.php' )\" src=\"".$xoops->url('modules/system/images/icons/default/cancel.png').'" alt="'.XoopsLocale::A_ENABLE.'" title="'.XoopsLocale::A_ENABLE.'" />';
                     }
-                    $perms .= $group_list[$j] . '<br />';
+                    $perms .= $group_list[$j].'<br />';
                 }
                 $content['id'] = $content_id;
                 $content['title'] = $content_arr[$i]->getVar('content_title');
@@ -93,14 +91,15 @@ switch ($op) {
         } else {
             $xoops->tpl()->assign('error_message', PageLocale::E_NO_CONTENT);
         }
+
         break;
 
     case 'update_view':
         $content_id = $system->cleanVars($_REQUEST, 'content_id', 0, 'int');
         $group = $system->cleanVars($_REQUEST, 'group', 0, 'int');
         $status = $system->cleanVars($_REQUEST, 'status', '', 'string');
-        if ($content_id > 0 && $group > 0 && $status !== '') {
-            if ($status === 'no') {
+        if ($content_id > 0 && $group > 0 && '' !== $status) {
+            if ('no' === $status) {
                 // deleting permissions
                 $criteria = new CriteriaCompo();
                 $criteria->add(new Criteria('gperm_groupid', $group));
@@ -113,6 +112,7 @@ switch ($op) {
                 $gperm_Handler->addRight('page_view_item', $content_id, $group, $module_id);
             }
         }
+
         break;
 }
 $xoops->footer();

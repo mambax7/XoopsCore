@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
 class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
 {
@@ -40,7 +40,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * callback for test
+     * callback for test.
      */
     public function decode_check_level($sanitizer, $text)
     {
@@ -49,6 +49,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         while (ob_get_level() > $level) {
             @ob_end_flush();
         }
+
         return $message;
     }
 
@@ -58,17 +59,17 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $path = \XoopsBaseConfig::get('root-path');
         if (!class_exists('Comments', false)) {
             \XoopsLoad::addMap([
-                'comments' => $path . '/modules/comments/class/helper.php',
+                'comments' => $path.'/modules/comments/class/helper.php',
             ]);
         }
         if (!class_exists('MenusDecorator', false)) {
             \XoopsLoad::addMap([
-                'menusdecorator' => $path . '/modules/menus/class/decorator.php',
+                'menusdecorator' => $path.'/modules/menus/class/decorator.php',
             ]);
         }
         if (!class_exists('MenusBuilder', false)) {
             \XoopsLoad::addMap([
-                'menusbuilder' => $path . '/modules/menus/class/builder.php',
+                'menusbuilder' => $path.'/modules/menus/class/builder.php',
             ]);
         }
 
@@ -77,44 +78,44 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $host = 'monhost.fr';
         $site = 'MonSite';
 
-        $text = '[siteurl="' . $host . '"]' . $site . '[/siteurl]';
+        $text = '[siteurl="'.$host.'"]'.$site.'[/siteurl]';
         $message = $this->decode_check_level($sanitizer, $text);
         $xoops_url = \XoopsBaseConfig::get('url');
-        $this->assertSame('<a href="' . $xoops_url . '/' . $host . '" title="">' . $site . '</a>', $message);
-        $text = '[siteurl=\'' . $host . '\']' . $site . '[/siteurl]';
+        $this->assertSame('<a href="'.$xoops_url.'/'.$host.'" title="">'.$site.'</a>', $message);
+        $text = '[siteurl=\''.$host.'\']'.$site.'[/siteurl]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="' . $xoops_url . '/' . $host . '" title="">' . $site . '</a>', $message);
+        $this->assertSame('<a href="'.$xoops_url.'/'.$host.'" title="">'.$site.'</a>', $message);
 
-        $text = '[url="http://' . $host . '"]' . $site . '[/url]';
+        $text = '[url="http://'.$host.'"]'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="http://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url=\'http://' . $host . '\']' . $site . '[/url]';
+        $this->assertSame('<a href="http://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url=\'http://'.$host.'\']'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="http://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url="https://' . $host . '"]' . $site . '[/url]';
+        $this->assertSame('<a href="http://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url="https://'.$host.'"]'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="https://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url=\'https://' . $host . '\']' . $site . '[/url]';
+        $this->assertSame('<a href="https://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url=\'https://'.$host.'\']'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="https://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url="ftp://' . $host . '"]' . $site . '[/url]';
+        $this->assertSame('<a href="https://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url="ftp://'.$host.'"]'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="ftp://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url=\'ftp://' . $host . '\']' . $site . '[/url]';
+        $this->assertSame('<a href="ftp://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url=\'ftp://'.$host.'\']'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="ftp://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url="ftps://' . $host . '"]' . $site . '[/url]';
+        $this->assertSame('<a href="ftp://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url="ftps://'.$host.'"]'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="ftps://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url=\'ftps://' . $host . '\']' . $site . '[/url]';
+        $this->assertSame('<a href="ftps://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url=\'ftps://'.$host.'\']'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="ftps://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url="' . $host . '"]' . $site . '[/url]';
+        $this->assertSame('<a href="ftps://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url="'.$host.'"]'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="http://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
-        $text = '[url=\'' . $host . '\']' . $site . '[/url]';
+        $this->assertSame('<a href="http://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
+        $text = '[url=\''.$host.'\']'.$site.'[/url]';
         $message = $this->decode_check_level($sanitizer, $text);
-        $this->assertSame('<a href="http://' . $host . '" rel="external" title="">' . $site . '</a>', $message);
+        $this->assertSame('<a href="http://'.$host.'" rel="external" title="">'.$site.'</a>', $message);
     }
 
     public function test_xoopsCodeDecode100()
@@ -125,28 +126,28 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $string = 'string';
 
         $color = 'color';
-        $text = '[color="' . $color . '"]' . $string . '[/color]';
+        $text = '[color="'.$color.'"]'.$string.'[/color]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="color: #' . $color . ';">' . $string . '</span>', $message);
-        $text = '[color=\'' . $color . '\']' . $string . '[/color]';
+        $this->assertSame('<span style="color: #'.$color.';">'.$string.'</span>', $message);
+        $text = '[color=\''.$color.'\']'.$string.'[/color]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="color: #' . $color . ';">' . $string . '</span>', $message);
+        $this->assertSame('<span style="color: #'.$color.';">'.$string.'</span>', $message);
 
         $size = 'size-size';
-        $text = '[size="' . $size . '"]' . $string . '[/size]';
+        $text = '[size="'.$size.'"]'.$string.'[/size]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="font-size: ' . $size . ';">' . $string . '</span>', $message);
-        $text = '[size=\'' . $size . '\']' . $string . '[/size]';
+        $this->assertSame('<span style="font-size: '.$size.';">'.$string.'</span>', $message);
+        $text = '[size=\''.$size.'\']'.$string.'[/size]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="font-size: ' . $size . ';">' . $string . '</span>', $message);
+        $this->assertSame('<span style="font-size: '.$size.';">'.$string.'</span>', $message);
 
         $font = 'font-font';
-        $text = '[font="' . $font . '"]' . $string . '[/font]';
+        $text = '[font="'.$font.'"]'.$string.'[/font]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="font-family: ' . $font . ';">' . $string . '</span>', $message);
-        $text = '[font=\'' . $font . '\']' . $string . '[/font]';
+        $this->assertSame('<span style="font-family: '.$font.';">'.$string.'</span>', $message);
+        $text = '[font=\''.$font.'\']'.$string.'[/font]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<span style="font-family: ' . $font . ';">' . $string . '</span>', $message);
+        $this->assertSame('<span style="font-family: '.$font.';">'.$string.'</span>', $message);
     }
 
     public function test_xoopsCodeDecode200()
@@ -156,27 +157,27 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $sanitizer = $class::getInstance();
         $string = 'string';
 
-        $text = '[b]' . $string . '[/b]';
+        $text = '[b]'.$string.'[/b]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<strong>' . $string . '</strong>', $message);
-        $text = '[i]' . $string . '[/i]';
+        $this->assertSame('<strong>'.$string.'</strong>', $message);
+        $text = '[i]'.$string.'[/i]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<em>' . $string . '</em>', $message);
-        $text = '[u]' . $string . '[/u]';
+        $this->assertSame('<em>'.$string.'</em>', $message);
+        $text = '[u]'.$string.'[/u]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<u>' . $string . '</u>', $message);
-        $text = '[d]' . $string . '[/d]';
+        $this->assertSame('<u>'.$string.'</u>', $message);
+        $text = '[d]'.$string.'[/d]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<del>' . $string . '</del>', $message);
-        $text = '[center]' . $string . '[/center]';
+        $this->assertSame('<del>'.$string.'</del>', $message);
+        $text = '[center]'.$string.'[/center]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<div style="text-align: center;">' . $string . '</div>', $message);
-        $text = '[left]' . $string . '[/left]';
+        $this->assertSame('<div style="text-align: center;">'.$string.'</div>', $message);
+        $text = '[left]'.$string.'[/left]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<div style="text-align: left;">' . $string . '</div>', $message);
-        $text = '[right]' . $string . '[/right]';
+        $this->assertSame('<div style="text-align: left;">'.$string.'</div>', $message);
+        $text = '[right]'.$string.'[/right]';
         $message = $sanitizer->xoopsCodeDecode($text);
-        $this->assertSame('<div style="text-align: right;">' . $string . '</div>', $message);
+        $this->assertSame('<div style="text-align: right;">'.$string.'</div>', $message);
     }
 
     public function test_quoteConv()
@@ -185,14 +186,14 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $class = $this->myClass;
         $sanitizer = $class::getInstance();
         $string = 'string';
-        $text = '[quote]' . $string . '[/quote]';
+        $text = '[quote]'.$string.'[/quote]';
         $message = $sanitizer->quoteConv($text);
-        $this->assertSame(XoopsLocale::C_QUOTE . '<div class="xoopsQuote"><blockquote>' . $string . '</blockquote></div>', $message);
+        $this->assertSame(XoopsLocale::C_QUOTE.'<div class="xoopsQuote"><blockquote>'.$string.'</blockquote></div>', $message);
 
         $string = 'string';
-        $text = '[quote]toto' . '[quote]' . $string . '[/quote]' . 'titi[/quote]';
+        $text = '[quote]toto'.'[quote]'.$string.'[/quote]'.'titi[/quote]';
         $message = $sanitizer->quoteConv($text);
-        $this->assertSame(XoopsLocale::C_QUOTE . '<div class="xoopsQuote"><blockquote>totoQuote:<div class="xoopsQuote"><blockquote>' . $string . '</blockquote></div>titi</blockquote></div>', $message);
+        $this->assertSame(XoopsLocale::C_QUOTE.'<div class="xoopsQuote"><blockquote>totoQuote:<div class="xoopsQuote"><blockquote>'.$string.'</blockquote></div>titi</blockquote></div>', $message);
     }
 
     public function test_filterxss()
@@ -220,7 +221,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function test_addSlashes()
     {
@@ -231,7 +232,7 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function test_stripSlashesGPC()
     {
@@ -292,9 +293,9 @@ class ModuleMyTextSanitizerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $result);
 
         $string = 'string';
-        $text = '[b]' . $string . '[/b]';
+        $text = '[b]'.$string.'[/b]';
         $message = $sanitizer->previewTarea($text, 0, 0, 1, 0, 0);
-        $this->assertSame('<strong>' . $string . '</strong>', $message);
+        $this->assertSame('<strong>'.$string.'</strong>', $message);
 
         $text = "line\015\012line\015line\012line";
         $message = $sanitizer->previewTarea($text, 0, 0, 0, 0, 1);

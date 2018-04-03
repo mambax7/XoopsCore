@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MD_MONOLOG_DEBUG', 'Debug');
 define('_MD_MONOLOG_INCLUDED_FILES', 'Included files');
 define('_MD_MONOLOG_FILES', '%s files');

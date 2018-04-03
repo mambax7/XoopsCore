@@ -10,11 +10,10 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
@@ -22,14 +21,14 @@
 class bannerrender
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
     }
 
     /**
-     * Display banner
+     * Display banner.
      *
      * @param int    $nb_banner number of banners
      * @param string $align     alignment H,V
@@ -41,7 +40,7 @@ class bannerrender
     public function displayBanner($nb_banner = 1, $align = 'H', $client = [], $ids = '')
     {
         $xoops = Xoops::getInstance();
-        XoopsLoad::addMap(['banners' => __DIR__ . '/helper.php']);
+        XoopsLoad::addMap(['banners' => __DIR__.'/helper.php']);
         $helper = Banners::getInstance();
         if ($xoops->isActiveModule('banners')) {
             // Get banners handler
@@ -49,18 +48,18 @@ class bannerrender
             // Display banner
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('banner_status', 0, '!='));
-            $sort = (\XoopsBaseConfig::get('db-type') === 'sqlite') ? 'RANDOM()' : 'RAND()';
+            $sort = ('sqlite' === \XoopsBaseConfig::get('db-type')) ? 'RANDOM()' : 'RAND()';
             $criteria->setSort($sort);
             if (!empty($client)) {
                 if (!in_array(0, $client, true)) {
-                    $criteria->add(new Criteria('banner_cid', '(' . implode(',', $client) . ')', 'IN'));
+                    $criteria->add(new Criteria('banner_cid', '('.implode(',', $client).')', 'IN'));
                 }
             }
-            if ($ids === '') {
+            if ('' === $ids) {
                 $criteria->setLimit($nb_banner);
                 $criteria->setStart(0);
             } else {
-                $criteria->add(new Criteria('banner_bid', '(' . $ids . ')', 'IN'));
+                $criteria->add(new Criteria('banner_bid', '('.$ids.')', 'IN'));
             }
             $banner_arr = $banner_Handler->getAll($criteria);
             $numrows = count($banner_arr);
@@ -74,19 +73,19 @@ class bannerrender
                     $imageurl = $banner_arr[$i]->getVar('banner_imageurl');
                     $bid = $banner_arr[$i]->getVar('banner_bid');
                     $clickurl = $banner_arr[$i]->getVar('banner_clickurl');
-                    /**
+                    /*
                      * Print the banner
                      */
                     if ($htmlbanner) {
                         $bannerobject .= $htmlcode;
                     } else {
                         if (stristr($imageurl, '.swf')) {
-                            $bannerobject .= '<a href="' . \XoopsBaseConfig::get('url') . '/modules/banners/index.php?op=click&amp;bid=' . $bid . '" rel="external" title="' . $clickurl . '"></a>' . '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                            $bannerobject .= '<a href="'.\XoopsBaseConfig::get('url').'/modules/banners/index.php?op=click&amp;bid='.$bid.'" rel="external" title="'.$clickurl.'"></a>'.'<object type="application/x-shockwave-flash" width="468" height="60" data="'.$imageurl.'" style="z-index:100;">'.'<param name="movie" value="'.$imageurl.'" />'.'<param name="wmode" value="opaque" />'.'</object>';
                         } else {
-                            $bannerobject .= '<a href="' . \XoopsBaseConfig::get('url') . '/modules/banners/index.php?op=click&amp;bid=' . $bid . '" rel="external" title="' . $clickurl . '"><img src="' . $imageurl . '" alt="' . $clickurl . '" /></a>';
+                            $bannerobject .= '<a href="'.\XoopsBaseConfig::get('url').'/modules/banners/index.php?op=click&amp;bid='.$bid.'" rel="external" title="'.$clickurl.'"><img src="'.$imageurl.'" alt="'.$clickurl.'" /></a>';
                         }
                     }
-                    if ($align === 'V') {
+                    if ('V' === $align) {
                         $bannerobject .= '<br /><br />';
                     } else {
                         $bannerobject .= '&nbsp;';
@@ -95,7 +94,7 @@ class bannerrender
                         // EMPTY
                     } else {
                         /**
-                         * Check if this impression is the last one
+                         * Check if this impression is the last one.
                          */
                         $impmade = $impmade + 1;
                         $qb = $xoops->db()->createXoopsQueryBuilder();
@@ -120,6 +119,7 @@ class bannerrender
                         }
                     }
                 }
+
                 return $bannerobject;
             }
         }

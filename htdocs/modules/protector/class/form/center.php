@@ -10,16 +10,14 @@
 */
 
 /**
- * Center Form Class
+ * Center Form Class.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Protector
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class ProtectorCenterForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -30,24 +28,24 @@ class ProtectorCenterForm extends Xoops\Form\ThemeForm
     }
 
     /**
-     * Maintenance Form
+     * Maintenance Form.
      */
     public function getPrefIp($bad_ips4disp, $group1_ips4disp)
     {
         global $xoopsDB;
         $db = $xoopsDB;
         $protector = Protector::getInstance($db->conn);
-        require_once dirname(__DIR__) . '/gtickets.php';
+        require_once dirname(__DIR__).'/gtickets.php';
 
         parent::__construct('', 'form_prefip', 'center.php', 'post', true);
 
         $bad_ips = new Xoops\Form\TextArea(_AM_TH_BADIPS, 'bad_ips', $bad_ips4disp, 3, 90);
-        $bad_ips->setDescription('<br />' . htmlspecialchars($protector->get_filepath4badips()));
+        $bad_ips->setDescription('<br />'.htmlspecialchars($protector->get_filepath4badips()));
         $bad_ips->setClass('span3');
         $this->addElement($bad_ips);
 
         $group1_ips = new Xoops\Form\TextArea(_AM_TH_GROUP1IPS, 'group1_ips', $group1_ips4disp, 3, 90);
-        $group1_ips->setDescription('<br />' . htmlspecialchars($protector->get_filepath4group1ips()));
+        $group1_ips->setDescription('<br />'.htmlspecialchars($protector->get_filepath4group1ips()));
         $group1_ips->setClass('span3');
         $this->addElement($group1_ips);
         $formTicket = new xoopsGTicket();

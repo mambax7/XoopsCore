@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS constansts
+ * XOOPS constansts.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,13 +11,12 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @version         $Id$
  */
 
 /**
- * Define required Defines (I guess lol )
+ * Define required Defines (I guess lol ).
  */
 define('XOOPS_SIDEBLOCK_LEFT', 0);
 define('XOOPS_SIDEBLOCK_RIGHT', 1);
@@ -53,7 +52,7 @@ define('XOOPS_MATCH_CONTAIN', 3);
 // define('XOOPS_CACHE_PATH', XOOPS_VAR_PATH . '/caches/xoops_cache');
 // ----- END: Deprecated, move to template class -----
 
-/**
+/*
  * User Mulitbytes
  */
 // if ( !defined( 'XOOPS_USE_MULTIBYTES' ) ) {

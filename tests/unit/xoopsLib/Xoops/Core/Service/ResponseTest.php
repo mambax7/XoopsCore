@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 use Xoops\Core\Service\Response;
 
@@ -69,7 +69,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $result = $instance->getValue();
-        $this->assertTrue($result === null);
+        $this->assertTrue(null === $result);
 
         $value = 'value';
         $result = $instance->setValue($value);

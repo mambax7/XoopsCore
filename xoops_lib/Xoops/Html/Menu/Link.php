@@ -12,19 +12,18 @@
 namespace Xoops\Html\Menu;
 
 /**
- * Link - a menu link
+ * Link - a menu link.
  *
  * @category  Xoops\Html\Menu
- * @package   Link
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Link extends Item
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param array $attributes array of attribute name => value pairs
      *

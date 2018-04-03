@@ -17,19 +17,18 @@ use Xoops\Core\Locale\Punic\Calendar;
 use Xoops\Locale;
 
 /**
- * Xoops\Core\Locale\Time - localized time handling
+ * Xoops\Core\Locale\Time - localized time handling.
  *
  * @category  Xoops\Core\Locale\Time
- * @package   Xoops
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Time
 {
     /**
-     * cleanTime
+     * cleanTime.
      *
      * @param number|\DateTime|string $time An Unix timestamp, DateTime instance or string accepted by strtotime.
      *
@@ -40,9 +39,10 @@ class Time
         if (is_a($time, '\DateTime')) {
             return $time->setTimezone(Locale::getTimeZone());
         }
-        if ($time === null || $time === 0 || $time === '') {
+        if (null === $time || 0 === $time || '' === $time) {
             return new \DateTime('now', Locale::getTimeZone());
         }
+
         return Calendar::toDateTime($time, Locale::getTimeZone());
     }
 
@@ -54,8 +54,8 @@ class Time
      * @param \DateTime      $dateEnd   The terminal date
      * @param \DateTime|null $dateStart The anchor date, defaults to now. (if it has a timezone different than
      *                        $dateEnd, we'll use the one of $dateEnd)
-     * @param string         $width     The format name; it can be '', 'short' or 'narrow'
-     * @param string         $locale    The locale to use. If empty we'll use the default locale set in \Punic\Data
+     * @param string $width  The format name; it can be '', 'short' or 'narrow'
+     * @param string $locale The locale to use. If empty we'll use the default locale set in \Punic\Data
      *
      * @return string
      *
@@ -66,7 +66,7 @@ class Time
         if (!is_a($dateEnd, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
         }
-        if (empty($dateStart) && ($dateStart !== 0) && ($dateStart !== '0')) {
+        if (empty($dateStart) && (0 !== $dateStart) && ('0' !== $dateStart)) {
             $dateStart = new \DateTime('now');
         } elseif (!is_a($dateStart, '\DateTime')) {
             throw new \InvalidArgumentException('Not a DateTime object');
@@ -85,47 +85,47 @@ class Time
         $past = (bool) $diff->invert;
         $value = 0;
         $key = '';
-        if ($diff->y !== 0) {
+        if (0 !== $diff->y) {
             $key = 'year';
             $value = $diff->y + (($diff->m > 6) ? 1 : 0);
-        } elseif ($diff->m !== 0) {
+        } elseif (0 !== $diff->m) {
             $key = 'month';
             $value = $diff->m + (($diff->d > 15) ? 1 : 0);
-        } elseif ($diff->d !== 0) {
+        } elseif (0 !== $diff->d) {
             $key = 'day';
             $value = $diff->d + (($diff->h > 12) ? 1 : 0);
-        } elseif ($diff->h !== 0) {
+        } elseif (0 !== $diff->h) {
             $key = 'hour';
             $value = $diff->h + (($diff->i > 30) ? 1 : 0);
-        } elseif ($diff->i !== 0) {
+        } elseif (0 !== $diff->i) {
             $key = 'minute';
             $value = $diff->i + (($diff->s > 30) ? 1 : 0);
-        } elseif ($diff->s !== 0) {
+        } elseif (0 !== $diff->s) {
             $key = 'second';
             $value = $diff->s;
         }
-        if ($value === 0) {
+        if (0 === $value) {
             $key = 'second';
             $relKey = 'relative-type-0';
             $relPattern = null;
-        } elseif ($key === 'day' && $value > 1 && $value < 7) {
+        } elseif ('day' === $key && $value > 1 && $value < 7) {
             $dow = $dateEnd->format('N') - 1;
             $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
             $key = $days[$dow];
             $relKey = ($past) ? 'relative-type--1' : 'relative-type-1';
             $relPattern = null;
         } else {
-            if ($value === 1 && isset($data[$key]['relative-type--1'])) {
+            if (1 === $value && isset($data[$key]['relative-type--1'])) {
                 $relKey = ($past) ? 'relative-type--1' : 'relative-type-1';
                 $relPattern = null;
             } else {
                 $relKey = ($past) ? 'relativeTime-type-past' : 'relativeTime-type-future';
                 $rule = Plural::getRule($value, $locale);
-                $relPattern = 'relativeTimePattern-count-' . $rule;
+                $relPattern = 'relativeTimePattern-count-'.$rule;
             }
         }
-        if (!empty($width) && array_key_exists($key . '-' . $width, $data)) {
-            $key .= '-' . $width;
+        if (!empty($width) && array_key_exists($key.'-'.$width, $data)) {
+            $key .= '-'.$width;
         }
         if (empty($relPattern)) {
             $relativeString = $data[$key][$relKey];
@@ -134,22 +134,23 @@ class Time
             $tempString = str_replace('{0}', '%d', $tempString);
             $relativeString = sprintf($tempString, $value);
         }
+
         return $relativeString;
     }
 
     /**
      * Format a date.
      *
-     * @param number|\DateTime|string $value      An Unix timestamp, a `\DateTime` instance or a string accepted
+     * @param number|\DateTime|string $value An Unix timestamp, a `\DateTime` instance or a string accepted
      *                                             by strtotime().
-     * @param string                  $width      The format name; it can be
+     * @param string $width The format name; it can be
      *                                               'full' (eg 'EEEE, MMMM d, y' - 'Wednesday, August 20, 2014'),
      *                                               'long' (eg 'MMMM d, y' - 'August 20, 2014'),
      *                                               'medium' (eg 'MMM d, y' - 'August 20, 2014') or
      *                                               'short' (eg 'M/d/yy' - '8/20/14').
-     * @param string|\DateTimeZone    $toTimezone The timezone to set; leave empty to use the default timezone
+     * @param string|\DateTimeZone $toTimezone The timezone to set; leave empty to use the default timezone
      *                                             (or the timezone associated to $value if it's already a \DateTime)
-     * @param string                  $locale     The locale to use. If empty we'll use the default
+     * @param string $locale The locale to use. If empty we'll use the default
      *
      * @return string Returns an empty string if $value is empty, the localized textual representation otherwise
      */
@@ -161,22 +162,23 @@ class Time
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
             $formatted = '';
         }
+
         return $formatted;
     }
 
     /**
      * Format a date.
      *
-     * @param number|\DateTime|string $value      An Unix timestamp, a `\DateTime` instance or a string accepted
+     * @param number|\DateTime|string $value An Unix timestamp, a `\DateTime` instance or a string accepted
      *                                             by strtotime().
-     * @param string                  $width      The format name; it can be
+     * @param string $width The format name; it can be
      *                                               'full' (eg 'h:mm:ss a zzzz' - '11:42:13 AM GMT+2:00'),
      *                                               'long' (eg 'h:mm:ss a z' - '11:42:13 AM GMT+2:00'),
      *                                               'medium' (eg 'h:mm:ss a' - '11:42:13 AM') or
      *                                               'short' (eg 'h:mm a' - '11:42 AM')
-     * @param string|\DateTimeZone    $toTimezone The timezone to set; leave empty to use the default timezone
+     * @param string|\DateTimeZone $toTimezone The timezone to set; leave empty to use the default timezone
      *                                             (or the timezone associated to $value if it's already a \DateTime)
-     * @param string                  $locale     The locale to use. If empty we'll use the default
+     * @param string $locale The locale to use. If empty we'll use the default
      *
      * @return string Returns an empty string if $value is empty, the localized textual representation otherwise
      *
@@ -190,6 +192,7 @@ class Time
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
             $formatted = '';
         }
+
         return $formatted;
     }
 
@@ -203,7 +206,7 @@ class Time
      *                          You can also append an asterisk ('*') to the date part of $width. If so,
      *                          special day names may be used (like 'Today', 'Yesterday', 'Tomorrow') instead
      *                          of the date part.
-     * @param string $locale   The locale to use. If empty we'll use the default locale
+     * @param string $locale The locale to use. If empty we'll use the default locale
      *
      * @return string Returns an empty string if $value is empty, the localized textual representation otherwise
      *
@@ -215,16 +218,16 @@ class Time
     }
 
     /**
-     * Perform any localization required for date picker used in Form\DateSelect
+     * Perform any localization required for date picker used in Form\DateSelect.
      */
     public static function localizeDatePicker()
     {
         $delimiter = '-';
         $locale = Locale::normalizeLocale(Locale::getCurrent(), $delimiter, false);
-        if (Locale::getCurrent() === 'zh_Hant') {
+        if ('zh_Hant' === Locale::getCurrent()) {
             $locale = 'zh-TW';
         }
-        if ($locale === 'zh') {
+        if ('zh' === $locale) {
             $locale = 'zh-CN';
         }
         list($language) = explode($delimiter, $locale);
@@ -232,16 +235,17 @@ class Time
 
         $locales = [$locale, $language];
         foreach ($locales as $name) {
-            $i18nScript = 'media/jquery/ui/i18n/datepicker-' . $name . '.js';
+            $i18nScript = 'media/jquery/ui/i18n/datepicker-'.$name.'.js';
             if (file_exists($xoops->path($i18nScript))) {
                 $xoops->theme()->addBaseScriptAssets($i18nScript);
+
                 return;
             }
         }
     }
 
     /**
-     * Convert a XOOPS DateSelect or DateTime form input into a DateTime object
+     * Convert a XOOPS DateSelect or DateTime form input into a DateTime object.
      *
      * @param string|string[] $input  date string, or array of date and time strings
      * @param string          $locale optional locale to use, leave blank to use current
@@ -259,11 +263,12 @@ class Time
         } else { // single string should be just a date
             static::parseInputDate($dateTime, $input, $locale);
         }
+
         return $dateTime;
     }
 
     /**
-     * turn a utf8 string into an array of characters
+     * turn a utf8 string into an array of characters.
      *
      * @param string $input string to convert
      *
@@ -276,11 +281,12 @@ class Time
         for ($i = 0; $i < $strLen; $i++) {
             $chars[] = mb_substr($input, $i, 1, 'UTF-8');
         }
+
         return $chars;
     }
 
     /**
-     * parse a date input according to a locale and apply it to a DateTime object
+     * parse a date input according to a locale and apply it to a DateTime object.
      *
      * @param \DateTime $datetime datetime to apply date to
      * @param string    $input    localized date string
@@ -304,15 +310,19 @@ class Time
             switch ($char) {
                 case 'y':
                     $newstate = 'y';
+
                     break;
                 case 'M':
                     $newstate = 'm';
+
                     break;
                 case 'd':
                     $newstate = 'd';
+
                     break;
                 default:
                     $newstate = 'non';
+
                     break;
             }
             if ($newstate !== $state) {
@@ -341,17 +351,19 @@ class Time
                 case '8':
                 case '9':
                     $newstate = 'digit';
+
                     break;
                 default:
                     $newstate = 'non';
+
                     break;
             }
             if ($newstate !== $state) {
-                if ($newstate === 'digit') {
+                if ('digit' === $newstate) {
                     $pieces[++$pieceIndex] = $char;
                 }
                 $state = $newstate;
-            } elseif ($state === 'digit') {
+            } elseif ('digit' === $state) {
                 $pieces[$pieceIndex] .= $char;
             }
         }
@@ -361,12 +373,15 @@ class Time
             switch ($order[$i]) {
                 case 'd':
                     $day = $piece;
+
                     break;
                 case 'm':
                     $month = $piece;
+
                     break;
                 case 'y':
                     $year = $piece;
+
                     break;
             }
         }
@@ -382,7 +397,7 @@ class Time
     }
 
     /**
-     * parse a time input according to a locale and apply it to a DateTime object
+     * parse a time input according to a locale and apply it to a DateTime object.
      *
      * @param \DateTime $datetime datetime to apply time to
      * @param string    $input    localized time string
@@ -412,13 +427,16 @@ class Time
                 case 'h':
                 case 'H':
                     $newstate = 'h';
+
                     break;
                 case 'm':
                     $newstate = 'm';
+
                     break;
                 case 'a':
                 default:
                     $newstate = 'non';
+
                     break;
             }
             if ($newstate !== $state) {
@@ -447,17 +465,19 @@ class Time
                 case '8':
                 case '9':
                     $newstate = 'digit';
+
                     break;
                 default:
                     $newstate = 'non';
+
                     break;
             }
             if ($newstate !== $state) {
-                if ($newstate === 'digit') {
+                if ('digit' === $newstate) {
                     $pieces[++$pieceIndex] = $char;
                 }
                 $state = $newstate;
-            } elseif ($state === 'digit') {
+            } elseif ('digit' === $state) {
                 $pieces[$pieceIndex] .= $char;
             }
         }
@@ -467,17 +487,19 @@ class Time
             switch ($order[$i]) {
                 case 'h':
                     $hour = $piece;
+
                     break;
                 case 'm':
                     $minute = $piece;
+
                     break;
             }
         }
         if ($clock12) {
-            if ($hour === 12 && mb_strpos($input, $am) !== false) {
+            if (12 === $hour && false !== mb_strpos($input, $am)) {
                 $hour = 0;
             }
-            if (mb_strpos($input, $pm) !== false) {
+            if (false !== mb_strpos($input, $pm)) {
                 $hour += 12;
             }
         }

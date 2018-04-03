@@ -32,13 +32,11 @@ define('_AM_MSG_GROUP1IPSCANTOPEN', 'لم نتمكن فتح ملفات الاي�
 define('_AM_MSG_REMOVED', 'تم حذف السجلات');
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "اعطي التصرح 777 لمجلد الكونفيج في: %s" ) ;
 
-
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'ادارة حقل القاعدة');
 define('_AM_MSG_DBUPDATED', 'تم تحديث قاعدة البيانات');
 define('_AM_CONFIRM_DELETE', 'سيتم حذف كل البيانات');
 define('_AM_TXT_HOWTOCHANGEDB', "اذ رغبت بتغير اسم جدول قاعدة البيانات,<br /> عدل ملف  %s/mainfile.php <br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
-
 
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'غير محمي');

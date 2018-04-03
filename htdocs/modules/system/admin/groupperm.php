@@ -10,16 +10,15 @@
 */
 
 /**
- * Group permission check
+ * Group permission check.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     system
  * @version     $Id$
  */
 
 // Include XOOPS control panel header
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->loadLocale('system');
@@ -45,22 +44,23 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
         if (!$xoops->security()->check(true, false, $perm_name)) {
             continue;
         }
-        if ($gperm_handler->deleteByModule($modid, $perm_name) === false) {
-            $msg[] = sprintf(SystemLocale::EF_COULD_NOT_RESET_GROUP_PERMISSION_FOR_MODULE, $module->getVar('name') . '(' . $perm_name . ')');
+        if (false === $gperm_handler->deleteByModule($modid, $perm_name)) {
+            $msg[] = sprintf(SystemLocale::EF_COULD_NOT_RESET_GROUP_PERMISSION_FOR_MODULE, $module->getVar('name').'('.$perm_name.')');
         }
         if (!array_key_exists('groups', $perm_data)) {
             $msg[] = sprintf(SystemLocale::SF_ADDED_PERMISSION_FOR_GROUP, $module->getVar('name'), $perm_name, ' /');
         } else {
             foreach ($perm_data['groups'] as $group_id => $item_ids) {
                 foreach ($item_ids as $item_id => $selected) {
-                    if ($selected === 1) {
+                    if (1 === $selected) {
                         // make sure that all parent ids are selected as well
                         if ($perm_data['parents'][$item_id] !== '') {
                             $parent_ids = explode(':', $perm_data['parents'][$item_id]);
                             foreach ($parent_ids as $pid) {
-                                if ($pid !== 0 && !in_array($pid, array_keys($item_ids), true)) {
+                                if (0 !== $pid && !in_array($pid, array_keys($item_ids), true)) {
                                     // one of the parent items were not selected, so skip this item
-                                    $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>') . ' (' . XoopsLocale::E_ALL_PARENT_ITEMS_MUST_BE_SELECTED . ')';
+                                    $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>').' ('.XoopsLocale::E_ALL_PARENT_ITEMS_MUST_BE_SELECTED.')';
+
                                     continue 2;
                                 }
                             }
@@ -71,9 +71,9 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
                         $gperm->setVar('gperm_modid', $modid);
                         $gperm->setVar('gperm_itemid', $item_id);
                         if (!$gperm_handler->insert($gperm)) {
-                            $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');
+                            $msg[] = sprintf(SystemLocale::EF_COULD_NOT_ADD_PERMISSION_FOR_GROUP, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>');
                         } else {
-                            $msg[] = sprintf(SystemLocale::SF_ADDED_PERMISSION_FOR_GROUP, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');
+                            $msg[] = sprintf(SystemLocale::SF_ADDED_PERMISSION_FOR_GROUP, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>');
                         }
                         unset($gperm);
                     }
@@ -86,9 +86,9 @@ $backlink = $xoops->getEnv('HTTP_REFERER');
 if ($module->getVar('hasadmin')) {
     $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
     if ($adminindex) {
-        $backlink = $xoops->url('modules/' . $module->getVar('dirname') . '/' . $adminindex);
+        $backlink = $xoops->url('modules/'.$module->getVar('dirname').'/'.$adminindex);
     }
 }
-$backlink = ($backlink) ? $backlink : \XoopsBaseConfig::get('url') . '/admin.php';
+$backlink = ($backlink) ? $backlink : \XoopsBaseConfig::get('url').'/admin.php';
 
 $xoops->redirect($backlink, 2, implode('<br />', $msg));

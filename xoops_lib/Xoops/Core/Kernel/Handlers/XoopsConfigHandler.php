@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
@@ -30,40 +29,39 @@ use Xoops\Core\Kernel\XoopsObjectHandler;
  * and its modules.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsConfigHandler
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <webmaster@myweb.ne.jp>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @todo    Tests that need to be made:
  *          - error handling
  */
 class XoopsConfigHandler extends XoopsObjectHandler
 {
     /**
-     * holds reference to config item handler(DAO) class
+     * holds reference to config item handler(DAO) class.
      *
-     * @var       XoopsConfigItemHandler
+     * @var XoopsConfigItemHandler
      */
     private $itemHandler;
 
     /**
-     * holds reference to config option handler(DAO) class
+     * holds reference to config option handler(DAO) class.
      *
-     * @var       XoopsConfigOptionHandler
+     * @var XoopsConfigOptionHandler
      */
     private $optionHandler;
 
     /**
      * holds an array of cached references to config value arrays,
-     *  indexed on module id and category id
+     *  indexed on module id and category id.
      *
-     * @var     array
+     * @var array
      */
     private $cachedConfigs = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -72,36 +70,38 @@ class XoopsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Create a config
+     * Create a config.
      *
-     * @return  XoopsConfigItem
+     * @return XoopsConfigItem
      */
     public function createConfig()
     {
         $instance = $this->itemHandler->create();
+
         return $instance;
     }
 
     /**
-     * Get a config
+     * Get a config.
      *
      * @param int  $id          ID of the config
      * @param bool $withoptions load the config's options now?
      *
-     * @return   XoopsConfigItem
+     * @return XoopsConfigItem
      */
     public function getConfig($id, $withoptions = false)
     {
         /* @var $config XoopsConfigItem */
         $config = $this->itemHandler->get($id);
-        if ($withoptions === true) {
+        if (true === $withoptions) {
             $config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
         }
+
         return $config;
     }
 
     /**
-     * insert a new config in the database
+     * insert a new config in the database.
      *
      * @param XoopsConfigItem $config configuration item
      *
@@ -126,11 +126,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
         if (!empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
             unset($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
         }
+
         return true;
     }
 
     /**
-     * Delete a config from the database
+     * Delete a config from the database.
      *
      * @param XoopsConfigItem $config configuration item
      *
@@ -143,7 +144,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
         }
         $options = $config->getConfOptions();
         $count = count($options);
-        if ($count === 0) {
+        if (0 === $count) {
             $options = $this->getConfigOptions(new Criteria('conf_id', $config->getVar('conf_id')));
             $count = count($options);
         }
@@ -155,11 +156,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
         if (!empty($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
             unset($this->cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
         }
+
         return true;
     }
 
     /**
-     * get one or more Configs
+     * get one or more Configs.
      *
      * @param CriteriaElement|null $criteria  criteria to match
      * @param bool                 $id_as_key Use the configs' ID as keys?
@@ -179,11 +181,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
             $criteria2->setSort('conf_order');
             $criteria2->setOrder('ASC');
         }
+
         return $this->itemHandler->getObjects($criteria2, $id_as_key);
     }
 
     /**
-     * Count some configs
+     * Count some configs.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -195,7 +198,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get configs from a certain module
+     * Get configs from a certain module.
      *
      * @param int $module ID of a module
      *
@@ -211,11 +214,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
                 $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
             }
         }
+
         return $ret;
     }
 
     /**
-     * Get configs from a certain category
+     * Get configs from a certain category.
      *
      * @param int $category ID of a category
      * @param int $module   ID of a module
@@ -242,22 +246,24 @@ class XoopsConfigHandler extends XoopsObjectHandler
             }
         }
         $_cachedConfigs[$module][$category] = $ret;
+
         return $_cachedConfigs[$module][$category];
     }
 
     /**
-     * Make a new XoopsConfigOption
+     * Make a new XoopsConfigOption.
      *
      * @return XoopsConfigOption
      */
     public function createConfigOption()
     {
         $inst = $this->optionHandler->create();
+
         return $inst;
     }
 
     /**
-     * Get a XoopsConfigOption
+     * Get a XoopsConfigOption.
      *
      * @param int $id ID of the config option
      *
@@ -266,11 +272,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
     public function getConfigOption($id)
     {
         $inst = $this->optionHandler->get($id);
+
         return $inst;
     }
 
     /**
-     * Get one or more XoopsConfigOption objects
+     * Get one or more XoopsConfigOption objects.
      *
      * @param CriteriaElement|null $criteria  criteria to match
      * @param bool                 $id_as_key Use IDs as keys in the array?
@@ -283,7 +290,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Count options
+     * Count options.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -295,12 +302,12 @@ class XoopsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get a list of configs
+     * Get a list of configs.
      *
      * @param int $conf_modid ID of the modules
      * @param int $conf_catid ID of the category
      *
-     * @return    array   Associative array of name=>value pairs.
+     * @return array Associative array of name=>value pairs.
      */
     public function getConfigList($conf_modid, $conf_catid = 0)
     {
@@ -320,6 +327,7 @@ class XoopsConfigHandler extends XoopsObjectHandler
             $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
         }
         $this->cachedConfigs[$conf_modid][$conf_catid] = $ret;
+
         return $ret;
     }
 }

@@ -10,13 +10,11 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
 
 $op = '';
 if (isset($_POST)) {

@@ -15,14 +15,13 @@ use Firebase\JWT\JWT;
 use Xmf\Key\KeyAbstract;
 
 /**
- * Basic JSON Web Token support
+ * Basic JSON Web Token support.
  *
  * @category  Xmf\Jwt\JsonWebToken
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class JsonWebToken
 {
@@ -64,14 +63,16 @@ class JsonWebToken
     {
         if (array_key_exists($algorithm, JWT::$supported_algs)) {
             $this->algorithm = $algorithm;
+
             return $this;
         }
+
         throw new \DomainException('Algorithm not supported');
     }
 
     /**
      * Decode a JWT string, validating signature and well defined registered claims,
-     * and optionally validate against a list of supplied claims
+     * and optionally validate against a list of supplied claims.
      *
      * @param string             $jwtString    string containing the JWT to decode
      * @param array|\Traversable $assertClaims associative array, claim => value, of claims to assert
@@ -81,10 +82,12 @@ class JsonWebToken
     public function decode($jwtString, $assertClaims = [])
     {
         $allowedAlgorithms = [$this->algorithm];
+
         try {
             $values = JWT::decode($jwtString, $this->key->getVerifying(), $allowedAlgorithms);
         } catch (\Exception $e) {
             trigger_error($e->getMessage(), E_USER_NOTICE);
+
             return false;
         }
         foreach ($assertClaims as $claim => $assert) {
@@ -94,11 +97,12 @@ class JsonWebToken
                 return false;
             }
         }
+
         return $values;
     }
 
     /**
-     * Create a signed token string for a payload
+     * Create a signed token string for a payload.
      *
      * @param array|\ArrayObject $payload          traversable set of claims, claim => value
      * @param int                $expirationOffset seconds from now that token will expire. If not specified,
@@ -116,6 +120,7 @@ class JsonWebToken
             $payload['exp'] = time() + (int) $expirationOffset;
         }
         $value = JWT::encode($payload, $this->key->getSigning(), $this->algorithm);
+
         return $value;
     }
 }

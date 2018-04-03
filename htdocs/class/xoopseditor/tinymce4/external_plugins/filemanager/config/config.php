@@ -6,7 +6,7 @@ if (DIRECTORY_SEPARATOR !== '/') {
     $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
 $xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce4/'));
-include_once $xoops_root_path . '/mainfile.php';
+include_once $xoops_root_path.'/mainfile.php';
 
 $xoops = \Xoops::getInstance();
 $xoops->logger()->quiet();
@@ -51,11 +51,11 @@ mb_internal_encoding('UTF-8');
 //    |   |   |   |   |- plugin.min.js
 
 //$base_url="http://www.site.com";  // base url (only domain) of site (without final /). If you prefer relative urls leave empty
-$base_url = $chemin_scheme . '://' . $chemin_host;
+$base_url = $chemin_scheme.'://'.$chemin_host;
 
 //$upload_dir = '/source/'; // path from base_url to base of upload folder (with start and final /)
 
-$upload_dir = $chemin_path . '/uploads/filemanager/media/'; // path from base_url to base of upload folder (with start and final /)
+$upload_dir = $chemin_path.'/uploads/filemanager/media/'; // path from base_url to base of upload folder (with start and final /)
 
 //$current_path = '../source/'; // relative path from filemanager folder to upload folder (with final /)
 $current_path = '../../../../../uploads/filemanager/media/'; // relative path from filemanager folder to upload folder (with final /)
@@ -136,11 +136,11 @@ $allowed_groups_createfolder = [1]; // id des groupes autoris?s create folder
 if ($xoopsUser) {
     $usergroups = $GLOBALS['xoopsUser']->getGroups();
     $result_upload = array_intersect($usergroups, $allowed_groups_upload);
-    if ($result_upload || $result_upload !== null) {
+    if ($result_upload || null !== $result_upload) {
         $upload_files = true;
     }
     $result_createfolder = array_intersect($usergroups, $allowed_groups_createfolder);
-    if ($result_createfolder || $result_createfolder !== null) {
+    if ($result_createfolder || null !== $result_createfolder) {
         $create_folders = true;
     }
 }
@@ -164,7 +164,6 @@ $ext_misc = ['zip', 'rar', 'gz', 'tar', 'iso', 'dmg']; //Archives
 
 $ext = array_merge($ext_img, $ext_file, $ext_misc, $ext_video, $ext_music); //allowed extensions
 
-
 /******************
  * AVIARY config
 *******************/
@@ -173,7 +172,6 @@ $aviary_key = 'dvh8qudbp6yx2bnp';
 $aviary_secret = 'm6xaym5q42rpw433';
 $aviary_version = 3;
 $aviary_language = 'en';
-
 
 //The filter and sorter are managed through both javascript and php scripts because if you have a lot of
 //file in a folder the javascript script can't sort all or filter all, so the filemanager switch to php script.
@@ -197,11 +195,9 @@ $hidden_files = ['index.html'];
 $java_upload = true;
 $JAVAMaxSizeUpload = 200; //Gb
 
-
 //************************************
 //Thumbnail for external use creation
 //************************************
-
 
 // New image resized creation with fixed path from filemanager folder after uploading (thumbnails in fixed mode)
 // If you want create images resized out of upload folder for use with external script you can choose this method,
@@ -215,7 +211,6 @@ $fixed_image_creation_name_to_prepend = ['', 'test_']; //name to prepend on file
 $fixed_image_creation_to_append = ['_test', '']; //name to appendon filename
 $fixed_image_creation_width = [300, 400]; //width of image (you can leave empty if you set height)
 $fixed_image_creation_height = [200, '']; //height of image (you can leave empty if you set width)
-
 
 // New image resized creation with relative path inside to upload folder after uploading (thumbnails in relative mode)
 // With Responsive filemanager you can create automatically resized image inside the upload folder, also more than one at a time

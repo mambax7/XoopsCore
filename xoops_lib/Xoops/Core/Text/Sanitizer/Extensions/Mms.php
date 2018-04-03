@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Mms extends ExtensionAbstract
 {
@@ -32,7 +31,7 @@ class Mms extends ExtensionAbstract
     protected static $defaultConfiguration = ['enabled' => false];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -70,11 +69,12 @@ class Mms extends ExtensionAbstract
                 domobj.focus();
             }
 EOH;
+
         return [$buttonCode, $javascript];
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -116,6 +116,7 @@ EOH;
 EOT;
 
                 $newContent = sprintf($template, $url, $width, $height);
+
                 return $newContent;
             }
         );

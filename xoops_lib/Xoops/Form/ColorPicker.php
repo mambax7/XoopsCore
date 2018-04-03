@@ -12,21 +12,20 @@
 namespace Xoops\Form;
 
 /**
- * ColorPicker - colorpicker form element
+ * ColorPicker - colorpicker form element.
  *
  * @category  Xoops\Form\ColorPicker
- * @package   Xoops\Form
  * @author    Zoullou <webmaster@zoullou.org>
  * @author    John Neill <catzwolf@xoops.org>
  * @copyright 2003-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ColorPicker extends Text
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption field caption or array of all attributes
      * @param string       $name    field name
@@ -54,7 +53,7 @@ class ColorPicker extends Text
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -64,21 +63,21 @@ class ColorPicker extends Text
         if ($xoops->theme()) {
             $xoops->theme()->addScript('include/color-picker.js');
         } else {
-            echo '<script type="text/javascript" src="' . $xoops->url('/include/color-picker.js') . '"></script>';
+            echo '<script type="text/javascript" src="'.$xoops->url('/include/color-picker.js').'"></script>';
         }
         $temp = $this->get('value', '');
         if (!empty($temp)) {
-            $this->set('style', 'background-color:' . $temp . ';');
+            $this->set('style', 'background-color:'.$temp.';');
         }
         $this->set('class', 'form-control');
         $ret = '<div class="input-group">';
         $attributes = $this->renderAttributeString();
-        $ret .= '<input ' . $attributes . ' ' . $this->getExtra() . ' >';
+        $ret .= '<input '.$attributes.' '.$this->getExtra().' >';
         $ret .= '<span class="input-group-btn">';
         $ret .= '<button class="btn btn-default" type="button" ';
-        $ret .= 'data-toggle="tooltip" data-placement="left" title="' . \XoopsLocale::A_SELECT . '" ';
+        $ret .= 'data-toggle="tooltip" data-placement="left" title="'.\XoopsLocale::A_SELECT.'" ';
         $ret .= 'onclick="return TCP.popup(\'';
-        $ret .= $xoops->url('/include/') . '\',document.getElementById(\'' . $this->getName() . '\'));">';
+        $ret .= $xoops->url('/include/').'\',document.getElementById(\''.$this->getName().'\'));">';
         $ret .= '<span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>';
         $ret .= '</span></div>';
 
@@ -86,7 +85,7 @@ class ColorPicker extends Text
     }
 
     /**
-     * Returns custom validation Javascript
+     * Returns custom validation Javascript.
      *
      * @return string Element validation Javascript
      */
@@ -99,6 +98,6 @@ class ColorPicker extends Text
             : sprintf(\XoopsLocale::F_ENTER, $eltcaption);
 
         return "if ( !(new RegExp(\"^#[0-9a-fA-F]{6}\",\"i\").test(myform.{$eltname}.value)) )"
-            . " { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+            ." { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
     }
 }

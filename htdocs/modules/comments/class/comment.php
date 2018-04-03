@@ -12,18 +12,16 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Comments
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
  */
-
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * A Comment
+ * A Comment.
  *
  * @author        Kazumi Ono    <onokazu@xoops.org>
  * @copyright    copyright (c) 2000-2003 XOOPS.org
@@ -31,7 +29,7 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 class CommentsComment extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      **/
     public function __construct()
     {
@@ -75,7 +73,7 @@ class CommentsComment extends XoopsObject
 class CommentsCommentHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */
@@ -85,16 +83,16 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Retrieves comments for an item
+     * Retrieves comments for an item.
      *
-     * @param   int     $module_id  Module ID
-     * @param   int     $item_id    Item ID
-     * @param   string  $order      Sort order
-     * @param   int     $status     Status of the comment
-     * @param   int     $limit      Max num of comments to retrieve
-     * @param   int     $start      Start offset
+     * @param int    $module_id Module ID
+     * @param int    $item_id   Item ID
+     * @param string $order     Sort order
+     * @param int    $status    Status of the comment
+     * @param int    $limit     Max num of comments to retrieve
+     * @param int    $start     Start offset
      *
-     * @return  array   Array of {@link CommentsComment} objects
+     * @return array Array of {@link CommentsComment} objects
      **/
     public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
     {
@@ -110,17 +108,18 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
             $criteria->setLimit($limit);
             $criteria->setStart($start);
         }
+
         return $this->getObjects($criteria);
     }
 
     /**
-     * Gets total number of comments for an item
+     * Gets total number of comments for an item.
      *
-     * @param   int     $module_id  Module ID
-     * @param   int     $item_id    Item ID
-     * @param   int     $status     Status of the comment
+     * @param int $module_id Module ID
+     * @param int $item_id   Item ID
+     * @param int $status    Status of the comment
      *
-     * @return  integer   Array of {@link CommentsComment} objects
+     * @return int Array of {@link CommentsComment} objects
      **/
     public function getCountByItemId($module_id, $item_id, $status = null)
     {
@@ -129,12 +128,13 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
         if (isset($status)) {
             $criteria->add(new Criteria('status', (int) ($status)));
         }
+
         return $this->getCount($criteria);
     }
 
     /**
-     * @param int $module_id
-     * @param int|null $item_id
+     * @param  int      $module_id
+     * @param  int|null $item_id
      * @return int
      */
     public function getCountByModuleId($module_id, $item_id = null)
@@ -143,18 +143,19 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
         if (isset($item_id)) {
             $criteria->add(new Criteria('itemid', (int) ($item_id)));
         }
+
         return $this->getCount($criteria);
     }
 
     /**
-     * Get the top {@link CommentsComment}s
+     * Get the top {@link CommentsComment}s.
      *
-     * @param   int     $module_id
-     * @param   int     $item_id
-     * @param   string  $order
-     * @param   int     $status
+     * @param int    $module_id
+     * @param int    $item_id
+     * @param string $order
+     * @param int    $status
      *
-     * @return  array   Array of {@link CommentsComment} objects
+     * @return array Array of {@link CommentsComment} objects
      **/
     public function getTopComments($module_id, $item_id, $order, $status = null)
     {
@@ -165,17 +166,18 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
             $criteria->add(new Criteria('status', (int) ($status)));
         }
         $criteria->setOrder($order);
+
         return $this->getObjects($criteria);
     }
 
     /**
-     * Retrieve a whole thread
+     * Retrieve a whole thread.
      *
-     * @param   int     $comment_rootid
-     * @param   int     $comment_id
-     * @param   int     $status
+     * @param int $comment_rootid
+     * @param int $comment_id
+     * @param int $status
      *
-     * @return  array   Array of {@link CommentsComment} objects
+     * @return array Array of {@link CommentsComment} objects
      **/
     public function getThread($comment_rootid, $comment_id, $status = null)
     {
@@ -184,30 +186,32 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
         if (isset($status)) {
             $criteria->add(new Criteria('status', (int) ($status)));
         }
+
         return $this->getObjects($criteria);
     }
 
     /**
-     * Update
+     * Update.
      *
-     * @param   CommentsComment  $comment       {@link CommentsComment} object
-     * @param   string  $field_name     Name of the field
-     * @param   mixed   $field_value    Value to write
+     * @param CommentsComment $comment     {@link CommentsComment} object
+     * @param string          $field_name  Name of the field
+     * @param mixed           $field_value Value to write
      *
-     * @return  bool
+     * @return bool
      **/
     public function updateByField(CommentsComment $comment, $field_name, $field_value)
     {
         $comment->unsetNew();
         $comment->setVar($field_name, $field_value);
+
         return $this->insert($comment);
     }
 
     /**
-     * Delete all comments for one whole module
+     * Delete all comments for one whole module.
      *
-     * @param   int $module_id  ID of the module
-     * @return  bool
+     * @param  int  $module_id ID of the module
+     * @return bool
      **/
     public function deleteByModule($module_id)
     {
@@ -215,8 +219,8 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int $module_id
-     * @param int $item_id
+     * @param  int  $module_id
+     * @param  int  $item_id
      * @return bool
      */
     public function deleteByItemId($module_id, $item_id)
@@ -229,10 +233,10 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
                 $count = count($comments);
                 $deleted_num = [];
                 for ($i = 0; $i < $count; ++$i) {
-                    if ($this->delete($comments[$i]) !== false) {
+                    if (false !== $this->delete($comments[$i])) {
                         // store poster ID and deleted post number into array for later use
                         $poster_id = $comments[$i]->getVar('uid');
-                        if ($poster_id !== 0) {
+                        if (0 !== $poster_id) {
                             $deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1
                                 : ($deleted_num[$poster_id] + 1);
                         }
@@ -248,9 +252,11 @@ class CommentsCommentHandler extends XoopsPersistableObjectHandler
                         $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') - $post_num);
                     }
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
-require_once(XOOPS_TU_ROOT_PATH . '/kernel/object.php');
+require_once XOOPS_TU_ROOT_PATH.'/kernel/object.php';
 
 class Legacy_XoopsPersistableObjectHandlerTestInstance extends \XoopsPersistableObjectHandler
 {

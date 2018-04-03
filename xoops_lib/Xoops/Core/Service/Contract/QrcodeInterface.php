@@ -14,15 +14,14 @@ namespace Xoops\Core\Service\Contract;
 use Xoops\Core\Service\Response;
 
 /**
- * Qrcode service interface
+ * Qrcode service interface.
  *
  * @category  Xoops\Core\Service\Contract\QrcodeInterface
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 interface QrcodeInterface
@@ -30,7 +29,7 @@ interface QrcodeInterface
     public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
-     * getImgUrl - get URL to QR Code image of supplied text
+     * getImgUrl - get URL to QR Code image of supplied text.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $qrText   text to encode in QR Code
@@ -38,7 +37,7 @@ interface QrcodeInterface
     public function getImgUrl(Response $response, $qrText);
 
     /**
-     * getImgTag - get a full HTML img tag to display a QR Code image of supplied text
+     * getImgTag - get a full HTML img tag to display a QR Code image of supplied text.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $qrText     text to encode in QR Code

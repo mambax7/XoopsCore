@@ -6,16 +6,15 @@ namespace Xoops\Core\Text;
  * WordPress style ShortCodes
  * This is taken from https://github.com/Badcow/Shortcodes where it was described as:
  * >  This is a port of WordPress' brilliant shortcode feature for
- * >  use outside of WordPress. The code has remained largely unchanged
+ * >  use outside of WordPress. The code has remained largely unchanged.
  *
  * WordPress, source of the original code, wp-includes/shortcodes.php, is licensed under the GPL
  *
  * @category Sanitizer\ShortCodes
- * @package  Xoops\Core\Text
  * @author   Sam Williams <sam@swilliams.com.au>
  * @license  GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link     https://github.com/Badcow/Shortcodes
- * @link     https://github.com/WordPress/WordPress/blob/master/wp-includes/shortcodes.php
+ * @see     https://github.com/Badcow/Shortcodes
+ * @see     https://github.com/WordPress/WordPress/blob/master/wp-includes/shortcodes.php
  */
 class ShortCodes
 {
@@ -34,14 +33,14 @@ class ShortCodes
     private $attrPattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 
     /**
-     * Indexed array of tags: shortcode callbacks
+     * Indexed array of tags: shortcode callbacks.
      *
      * @var array
      */
     private $shortcodes = [];
 
     /**
-     * add a shortcode to the active set
+     * add a shortcode to the active set.
      *
      * @param string   $tag      shortcode name
      * @param callable $function shortcode processor
@@ -59,7 +58,7 @@ class ShortCodes
     }
 
     /**
-     * remove shortcode from the active set
+     * remove shortcode from the active set.
      *
      * @param string $tag short code tag
      */
@@ -71,7 +70,7 @@ class ShortCodes
     }
 
     /**
-     * get the current shortcode set
+     * get the current shortcode set.
      *
      * @return array of tag => callable
      */
@@ -81,7 +80,7 @@ class ShortCodes
     }
 
     /**
-     * Check if a shortcode is defined
+     * Check if a shortcode is defined.
      *
      * @param string $shortcode shortcode tag
      *
@@ -93,7 +92,7 @@ class ShortCodes
     }
 
     /**
-     * Tests whether content has a particular shortcode
+     * Tests whether content has a particular shortcode.
      *
      * @param string $content content to check
      * @param string $tag     tag to look for
@@ -167,8 +166,8 @@ class ShortCodes
      * If the $attributes list has unsupported attributes, then they will be ignored and
      * removed from the final returned list.
      *
-     * @param array  $defaults     Entire list of supported attributes and their defaults.
-     * @param array  $attributes   User defined attributes in shortcode tag.
+     * @param array $defaults   Entire list of supported attributes and their defaults.
+     * @param array $attributes User defined attributes in shortcode tag.
      *
      * @return array Combined and filtered attribute list.
      */
@@ -199,9 +198,9 @@ class ShortCodes
     private function processTag(array $tag)
     {
         // allow [[foo]] syntax for escaping a tag
-        if ($tag[1] === '[' && $tag[6] === ']') {
+        if ('[' === $tag[1] && ']' === $tag[6]) {
             //return substr($tag[0], 1, -1);
-            return '&#91;' . substr($tag[0], 2, -2) . '&#93';
+            return '&#91;'.substr($tag[0], 2, -2).'&#93';
         }
 
         $tagName = $tag[2];
@@ -209,10 +208,10 @@ class ShortCodes
 
         if (isset($tag[5])) {
             // enclosing tag - extra parameter
-            return $tag[1] . call_user_func($this->shortcodes[$tagName], $attr, $tag[5], $tagName) . $tag[6];
+            return $tag[1].call_user_func($this->shortcodes[$tagName], $attr, $tag[5], $tagName).$tag[6];
         }
         // self-closing tag
-        return $tag[1] . call_user_func($this->shortcodes[$tagName], $attr, null, $tagName) . $tag[6];
+        return $tag[1].call_user_func($this->shortcodes[$tagName], $attr, null, $tagName).$tag[6];
     }
 
     /**
@@ -254,7 +253,7 @@ class ShortCodes
     }
 
     /**
-     * Strips a tag leaving escaped tags
+     * Strips a tag leaving escaped tags.
      *
      * @param array $tag tag expression matches
      *
@@ -262,11 +261,11 @@ class ShortCodes
      */
     private function stripShortcodeTag($tag)
     {
-        if ($tag[1] === '[' && $tag[6] === ']') {
+        if ('[' === $tag[1] && ']' === $tag[6]) {
             return substr($tag[0], 1, -1);
         }
 
-        return $tag[1] . $tag[6];
+        return $tag[1].$tag[6];
     }
 
     /**
@@ -291,34 +290,34 @@ class ShortCodes
         $tagRegex = join('|', array_map('preg_quote', array_keys($this->shortcodes)));
 
         return '/'
-            . '\\['                              // Opening bracket
-            . '(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
-            . "(${tagRegex})"                      // 2: Shortcode name
-            . '(?![\\w-])'                       // Not followed by word character or hyphen
-            . '('                                // 3: Unroll the loop: Inside the opening shortcode tag
-            . '[^\\]\\/]*'                   // Not a closing bracket or forward slash
-            . '(?:'
-            . '\\/(?!\\])'               // A forward slash not followed by a closing bracket
-            . '[^\\]\\/]*'               // Not a closing bracket or forward slash
-            . ')*?'
-            . ')'
-            . '(?:'
-            . '(\\/)'                        // 4: Self closing tag ...
-            . '\\]'                          // ... and closing bracket
-            . '|'
-            . '\\]'                          // Closing bracket
-            . '(?:'
-            . '('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
-            . '[^\\[]*+'             // Not an opening bracket
-            . '(?:'
-            . '\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
-            . '[^\\[]*+'         // Not an opening bracket
-            . ')*+'
-            . ')'
-            . '\\[\\/\\2\\]'             // Closing shortcode tag
-            . ')?'
-            . ')'
-            . '(\\]?)'                           // 6: Optional second closing bracket for escaping shortcodes: [[tag]]
-            . '/s';
+            .'\\['                              // Opening bracket
+            .'(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
+            ."(${tagRegex})"                      // 2: Shortcode name
+            .'(?![\\w-])'                       // Not followed by word character or hyphen
+            .'('                                // 3: Unroll the loop: Inside the opening shortcode tag
+            .'[^\\]\\/]*'                   // Not a closing bracket or forward slash
+            .'(?:'
+            .'\\/(?!\\])'               // A forward slash not followed by a closing bracket
+            .'[^\\]\\/]*'               // Not a closing bracket or forward slash
+            .')*?'
+            .')'
+            .'(?:'
+            .'(\\/)'                        // 4: Self closing tag ...
+            .'\\]'                          // ... and closing bracket
+            .'|'
+            .'\\]'                          // Closing bracket
+            .'(?:'
+            .'('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
+            .'[^\\[]*+'             // Not an opening bracket
+            .'(?:'
+            .'\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
+            .'[^\\[]*+'         // Not an opening bracket
+            .')*+'
+            .')'
+            .'\\[\\/\\2\\]'             // Closing shortcode tag
+            .')?'
+            .')'
+            .'(\\]?)'                           // 6: Optional second closing bracket for escaping shortcodes: [[tag]]
+            .'/s';
     }
 }

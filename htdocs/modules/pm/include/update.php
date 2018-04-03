@@ -10,18 +10,17 @@
 */
 
 /**
- * Private Message
+ * Private Message.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         pm
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
 /**
- * @param XoopsModule $module
- * @param string|null $oldversion
+ * @param  XoopsModule $module
+ * @param  string|null $oldversion
  * @return bool|void
  * @todo this should be removed, it is now handled by schema
  */

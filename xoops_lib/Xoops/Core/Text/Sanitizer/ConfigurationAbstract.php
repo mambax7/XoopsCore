@@ -18,16 +18,15 @@ use Xoops\Core\XoopsArray;
  * for attributes and parameters.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class ConfigurationAbstract extends XoopsArray
 {
     /**
-     * Get a copy of all attributes
+     * Get a copy of all attributes.
      *
      * @return array An array of attributes
      */
@@ -37,7 +36,7 @@ abstract class ConfigurationAbstract extends XoopsArray
     }
 
     /**
-     * Get a list of all attribute names
+     * Get a list of all attribute names.
      *
      * @return array An array of attribute names/keys
      */
@@ -47,7 +46,7 @@ abstract class ConfigurationAbstract extends XoopsArray
     }
 
     /**
-     * Replace all attribute with new set
+     * Replace all attribute with new set.
      *
      * @param mixed $values array (or object) of new attributes
      *
@@ -56,11 +55,12 @@ abstract class ConfigurationAbstract extends XoopsArray
     public function setAll($values)
     {
         $oldValues = $this->exchangeArray($values);
+
         return $oldValues;
     }
 
     /**
-     * Set multiple attributes by using an associative array
+     * Set multiple attributes by using an associative array.
      *
      * @param array $values array of new attributes
      */
@@ -71,16 +71,16 @@ abstract class ConfigurationAbstract extends XoopsArray
     }
 
     /**
-     * Set an element attribute array
+     * Set an element attribute array.
      *
      * This allows an attribute which is an array to be built one
      * element at a time.
      *
-     * @param string $stem  An attribute array name.
-     * @param string $name  An attribute array item name. If empty, the
+     * @param string $stem An attribute array name.
+     * @param string $name An attribute array item name. If empty, the
      *                      value will be appended to the end of the
      *                      array rather than added with the key $name.
-     * @param mixed  $value An attribute array item value.
+     * @param mixed $value An attribute array item value.
      */
     public function setArrayItem($stem, $name, $value)
     {
@@ -100,7 +100,7 @@ abstract class ConfigurationAbstract extends XoopsArray
     }
 
     /**
-     * Retrieve a set of attributes based on a partial name
+     * Retrieve a set of attributes based on a partial name.
      *
      * @param string|null $nameLike restrict output to only attributes with a name starting with
      *                              this string.
@@ -109,7 +109,7 @@ abstract class ConfigurationAbstract extends XoopsArray
      */
     public function getAllLike($nameLike = null)
     {
-        if ($nameLike === null) {
+        if (null === $nameLike) {
             return $this->getArrayCopy();
         }
 
@@ -119,6 +119,7 @@ abstract class ConfigurationAbstract extends XoopsArray
                 $likeSet[$k] = $v;
             }
         }
+
         return $likeSet;
     }
 }

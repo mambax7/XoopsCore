@@ -12,16 +12,14 @@
 use Xoops\Core\FixedGroups;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
@@ -39,16 +37,16 @@ if (in_array(FixedGroups::ADMIN, $user->getGroups(), true)) {
 }
 $user->setVar('level', $_REQUEST['level']);
 if ($member_handler->insertUser($user)) {
-    if ($_REQUEST['level'] === 1) {
+    if (1 === $_REQUEST['level']) {
         $message = _PROFILE_AM_USER_ACTIVATED;
     } else {
         $message = _PROFILE_AM_USER_DEACTIVATED;
     }
 } else {
-    if ($_REQUEST['level'] === 1) {
+    if (1 === $_REQUEST['level']) {
         $message = _PROFILE_AM_USER_NOT_ACTIVATED;
     } else {
         $message = _PROFILE_AM_USER_NOT_DEACTIVATED;
     }
 }
-$xoops->redirect($xoops->url('modules/profile/userinfo.php?uid=' . $user->getVar('uid')), 3, $message);
+$xoops->redirect($xoops->url('modules/profile/userinfo.php?uid='.$user->getVar('uid')), 3, $message);

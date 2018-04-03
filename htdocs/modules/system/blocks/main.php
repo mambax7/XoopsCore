@@ -13,15 +13,13 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * Blocks functions
+ * Blocks functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 function b_system_main_show()
 {
     $xoops = Xoops::getInstance();
@@ -41,8 +39,8 @@ function b_system_main_show()
         if (in_array($i, $read_allowed, true)) {
             $block['modules'][$i]['name'] = $module->getVar('name');
             $block['modules'][$i]['dirname'] = $module->getVar('dirname');
-            if (XoopsLoad::fileExists($xoops->path('modules/' . $module->getVar('dirname') . '/icons/logo_small.png'))) {
-                $block['modules'][$i]['image'] = $xoops->url('modules/' . $module->getVar('dirname') . '/icons/logo_small.png');
+            if (XoopsLoad::fileExists($xoops->path('modules/'.$module->getVar('dirname').'/icons/logo_small.png'))) {
+                $block['modules'][$i]['image'] = $xoops->url('modules/'.$module->getVar('dirname').'/icons/logo_small.png');
             }
             if ($xoops->isModule() && ($i === $xoops->module->getVar('mid'))) {
                 $block['modules'][$i]['highlight'] = true;
@@ -58,12 +56,13 @@ function b_system_main_show()
                 foreach ($sublinks as $sublink) {
                     $block['modules'][$i]['sublinks'][] = [
                         'name' => $sublink['name'],
-                        'url' => \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname') . '/' . $sublink['url'],
+                        'url' => \XoopsBaseConfig::get('url').'/modules/'.$module->getVar('dirname').'/'.$sublink['url'],
                     ];
                 }
             }
         }
     }
+
     return $block;
 }
 
@@ -85,5 +84,6 @@ function b_system_main_edit($options)
     $admin_page->renderTips();
     $list = $system_module->getModuleList();
     $xoops->tpl()->assign('modules_list', $list);
+
     return $xoops->tpl()->fetch('admin:system/system_modules_menu.tpl');
 }

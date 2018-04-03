@@ -12,7 +12,7 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * Search core preloads
+ * Search core preloads.
  *
  * @author          trabis <lusopoemas@gmail.com>
  * @copyright       XOOPS Project (http://xoops.org)
@@ -21,7 +21,7 @@ use Xoops\Core\PreloadItem;
 class SearchPreload extends PreloadItem
 {
     /**
-     * listen for core.header.start
+     * listen for core.header.start.
      *
      * @param mixed $args not used
      */

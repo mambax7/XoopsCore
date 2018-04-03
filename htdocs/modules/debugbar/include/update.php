@@ -12,7 +12,7 @@
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * Install and Update debugbar module support routines
+ * Install and Update debugbar module support routines.
  *
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -20,7 +20,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  */
 
 /**
- * xoops_module_install_debugbar
+ * xoops_module_install_debugbar.
  *
  * @param XoopsModule $module instance of our module
  *
@@ -30,16 +30,17 @@ function xoops_module_install_debugbar(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();
     // copy font-awesome font files to assets directory
-    $dir = \XoopsBaseConfig::get('lib-path') . '/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/font-awesome/fonts/';
+    $dir = \XoopsBaseConfig::get('lib-path').'/vendor/maximebf/debugbar/src/DebugBar/Resources/vendor/font-awesome/fonts/';
     $pattern = '*';
+
     return $xoops->assets()->copyFileAssets($dir, $pattern, 'fonts');
 }
 
 /**
- * xoops_module_update_debugbar
+ * xoops_module_update_debugbar.
  *
  * @param XoopsModule $module  instance of our module
- * @param integer     $version previously installed module version
+ * @param int         $version previously installed module version
  *
  * @return mixed boolean false on error, integer file count on success
  */

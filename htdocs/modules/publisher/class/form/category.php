@@ -12,17 +12,15 @@
 use Xoops\Core\Kernel\Criteria;
 
 /**
- *  Publisher form class
+ *  Publisher form class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(dirname(__DIR__)) . '/include/common.php';
+include_once dirname(dirname(__DIR__)).'/include/common.php';
 
 class PublisherCategoryForm extends Xoops\Form\ThemeForm
 {
@@ -81,10 +79,10 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
         }
 
         $editor_configs = [];
-        $editor_configs['rows'] = $publisher->getConfig('submit_editor_rows') === '' ? 35 : $publisher->getConfig('submit_editor_rows');
-        $editor_configs['cols'] = $publisher->getConfig('submit_editor_cols') === '' ? 60 : $publisher->getConfig('submit_editor_cols');
-        $editor_configs['width'] = $publisher->getConfig('submit_editor_width') === '' ? '100%' : $publisher->getConfig('submit_editor_width');
-        $editor_configs['height'] = $publisher->getConfig('submit_editor_height') === '' ? '400px' : $publisher->getConfig('submit_editor_height');
+        $editor_configs['rows'] = '' === $publisher->getConfig('submit_editor_rows') ? 35 : $publisher->getConfig('submit_editor_rows');
+        $editor_configs['cols'] = '' === $publisher->getConfig('submit_editor_cols') ? 60 : $publisher->getConfig('submit_editor_cols');
+        $editor_configs['width'] = '' === $publisher->getConfig('submit_editor_width') ? '100%' : $publisher->getConfig('submit_editor_width');
+        $editor_configs['height'] = '' === $publisher->getConfig('submit_editor_height') ? '400px' : $publisher->getConfig('submit_editor_height');
 
         $editor_configs['name'] = 'header';
         $editor_configs['value'] = $obj->getVar('header', 'e');
@@ -96,10 +94,10 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
         // IMAGE
         $image_select = new Xoops\Form\Select('', 'image', $obj->image());
         \Xoops\Core\Lists\ImageFile::setOptionsArray($image_select, PublisherUtils::getImageDir('category'));
-        $image_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . PUBLISHER_DIRNAME . '/images/category/' . '", "", "' . \XoopsBaseConfig::get('url') . "\")'");
+        $image_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"".'uploads/'.PUBLISHER_DIRNAME.'/images/category/'.'", "", "'.\XoopsBaseConfig::get('url')."\")'");
         $image_tray = new Xoops\Form\ElementTray(_AM_PUBLISHER_IMAGE, '&nbsp;');
         $image_tray->addElement($image_select);
-        $image_tray->addElement(new Xoops\Form\Label('', "<br /><br /><img src='" . PublisherUtils::getImageDir('category', false) . $obj->image() . "' name='image3' id='image3' alt='' />"));
+        $image_tray->addElement(new Xoops\Form\Label('', "<br /><br /><img src='".PublisherUtils::getImageDir('category', false).$obj->image()."' name='image3' id='image3' alt='' />"));
         $image_tray->setDescription(_AM_PUBLISHER_IMAGE_DSC);
         $this->addElement($image_tray);
 
@@ -166,7 +164,7 @@ class PublisherCategoryForm extends Xoops\Form\ThemeForm
             } else {
                 $subname = '';
             }
-            $cat_tray->addElement(new Xoops\Form\Text('', 'scname[' . $i . ']', 50, 255, $subname));
+            $cat_tray->addElement(new Xoops\Form\Text('', 'scname['.$i.']', 50, 255, $subname));
         }
         $t = new Xoops\Form\Text('', 'nb_subcats', 3, 2);
         $l = new Xoops\Form\Label('', sprintf(_AM_PUBLISHER_ADD_OPT, $t->render()));

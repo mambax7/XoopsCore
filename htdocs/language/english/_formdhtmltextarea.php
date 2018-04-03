@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Language definitions for {@link XoopsFormDhtmlTextArea}
  *
  * You may not change or alter any portion of this comment or credits
@@ -21,7 +21,7 @@
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
-/**
+/*
  * Localized fonts
  */
 /*$GLOBALS['formtextdhtml_fonts'] = array(
@@ -32,7 +32,7 @@
     'Impact' ,
     'Verdana' ,
     'Haettenschweiler');*/
-/**
+/*
  * Localized font sizes: 'font size value' => 'font size name'
  */
 /*

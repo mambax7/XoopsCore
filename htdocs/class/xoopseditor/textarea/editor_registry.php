@@ -10,20 +10,18 @@
 */
 
 /**
- * XOOPS editor
+ * XOOPS editor.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           2.3.0
- * @package         class
- * @subpackage      xoopseditor
  * @version         $Id$
  */
 
 return $config = [
     'class' => 'FormTextArea',
-    'file' => \XoopsBaseConfig::get('root-path') . '/class/xoopseditor/textarea/textarea.php',
+    'file' => \XoopsBaseConfig::get('root-path').'/class/xoopseditor/textarea/textarea.php',
     'title' => _XOOPS_EDITOR_TEXTAREA, // display to end user
     'order' => 1, // 0 will disable the editor
     'nohtml' => 1, // For forms that have "dohtml" disabled

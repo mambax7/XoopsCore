@@ -10,7 +10,7 @@
 */
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -18,7 +18,6 @@
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
 {
     /**
@@ -33,18 +32,20 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         $item = [];
         $item_id = (int) $item_id;
 
-        if ($category === 'global') {
+        if ('global' === $category) {
             $item['name'] = '';
             $item['url'] = '';
+
             return $item;
         }
 
-        if ($category === 'item') {
-            $sql = 'SELECT content_title FROM ' . $xoopsDB->prefix('page_content') . ' WHERE content_id = ' . $item_id;
+        if ('item' === $category) {
+            $sql = 'SELECT content_title FROM '.$xoopsDB->prefix('page_content').' WHERE content_id = '.$item_id;
             $result = $xoopsDB->query($sql); // TODO: error check
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['title'];
-            $item['url'] = \XoopsBaseConfig::get('url') . '/modules/page/viewpage.php?id=' . $item_id;
+            $item['url'] = \XoopsBaseConfig::get('url').'/modules/page/viewpage.php?id='.$item_id;
+
             return $item;
         }
 
@@ -70,6 +71,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         $ret[2]['subscribe_from'] = ['viewpage.php'];
         $ret[2]['item_name'] = 'id';
         $ret[2]['allow_bookmark'] = 1;
+
         return $ret;
     }
 
@@ -88,6 +90,7 @@ class PageNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         $ret[1]['description'] = PageLocale::NOTIFICATION_GLOBAL_NEWCONTENT_DSC;
         $ret[1]['mail_template'] = 'global_newcontent';
         $ret[1]['mail_subject'] = PageLocale::NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
+
         return $ret;
     }
 

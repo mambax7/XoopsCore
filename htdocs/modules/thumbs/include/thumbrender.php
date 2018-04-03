@@ -15,11 +15,11 @@ use Xmf\Request;
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 
 // this is located in include, otherwise normal/anon users do not have authority to run
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+include dirname(dirname(dirname(__DIR__))).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();
@@ -28,7 +28,7 @@ $imgPath = Request::getString('img', '');
 $imgWidth = Request::getInt('w', 0);
 $imgHeight = Request::getInt('h', 0);
 
-if ($imgWidth === 0 && $imgHeight === 0) {
+if (0 === $imgWidth && 0 === $imgHeight) {
     $configs = $xoops->getModuleConfigs('thumbs');
     $imgWidth = $configs['thumbs_width'];
     $imgHeight = $configs['thumbs_height'];
@@ -51,7 +51,7 @@ $image->preserve_time = true;
 
 if ($image->resize($imgWidth, $imgHeight, ZEBRA_IMAGE_NOT_BOXED, -1)) {
     header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ' . $xoops->url($thumbPath));
+    header('Location: '.$xoops->url($thumbPath));
 } else {
     header('HTTP/1.0 404 Not Found');
     // http_response_code(400);
@@ -59,27 +59,35 @@ if ($image->resize($imgWidth, $imgHeight, ZEBRA_IMAGE_NOT_BOXED, -1)) {
     switch ($image->error) {
         case 1:
             echo 'Source file could not be found!';
+
             break;
         case 2:
             echo 'Source file is not readable!';
+
             break;
         case 3:
             echo 'Could not write target file!';
+
             break;
         case 4:
             echo 'Unsupported source file format!';
+
             break;
         case 5:
             echo 'Unsupported target file format!';
+
             break;
         case 6:
             echo 'GD library version does not support target file format!';
+
             break;
         case 7:
             echo 'GD library is not installed!';
+
             break;
         case 8:
             echo '"chmod" command is disabled via configuration!';
+
             break;
     }
 }

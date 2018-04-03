@@ -10,12 +10,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xcaptcha
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 class XcaptchaText extends Xcaptcha
 {
     public $config = [];
@@ -37,6 +35,7 @@ class XcaptchaText extends Xcaptcha
         foreach (array_keys($this->config) as $key) {
             $config[$key] = $_POST[$key];
         }
+
         return $config;
     }
 }

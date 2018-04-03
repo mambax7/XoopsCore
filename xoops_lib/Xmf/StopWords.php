@@ -12,21 +12,20 @@
 namespace Xmf;
 
 /**
- * StopWords - facilitate filtering of common or purely connective words for natural language processing
+ * StopWords - facilitate filtering of common or purely connective words for natural language processing.
  *
  * @category  Xmf\StopWords
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  * @see       https://en.wikipedia.org/wiki/Stop_words
  */
 class StopWords
 {
     /**
-     * mbstring encoding
+     * mbstring encoding.
      */
     public const ENCODING = 'UTF-8';
 
@@ -34,7 +33,7 @@ class StopWords
     protected $stopwordList = [];
 
     /**
-     * StopWords constructor - load stop words for current locale
+     * StopWords constructor - load stop words for current locale.
      *
      * @todo specify locale to constructor, will require shift away from defined constant
      */
@@ -62,6 +61,7 @@ class StopWords
         $key = function_exists('mb_strtolower')
             ? mb_strtolower($key, static::ENCODING)
             : strtolower($key);
+
         return !isset($this->stopwordList[$key]);
     }
 }

@@ -14,7 +14,6 @@
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  */
-
 class CodexMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
 {
     /**
@@ -24,7 +23,7 @@ class CodexMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements Men
      * ex: return array(0 => array(
      *      'name' => _MI_PUBLISHER_SUB_SMNAME3;
      *      'url' => "search.php";
-     *    ));
+     *    ));.
      *
      * @return array
      */

@@ -13,15 +13,13 @@ use Xmf\Request;
 use Xoops\Core\XoopsTpl;
 
 /**
- * User configs
+ * User configs.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userconfigs
  * @version         $Id$
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $helper = Userconfigs::getInstance();
@@ -72,6 +70,7 @@ switch ($op) {
         $form = $helper->getForm(null, 'modules');
         $form->getModulesForm($module);
         $xoops->tpl()->assign('modules_form', $form->render());
+
         break;
     case 'show':
         if (!$mid) {
@@ -84,6 +83,7 @@ switch ($op) {
         $form = $helper->getForm(null, 'modules');
         $form->getModulesForm($module);
         $xoops->tpl()->assign('modules_form', $form->render());
+
         break;
     case 'save':
         if (!$xoops->security()->check()) {
@@ -104,7 +104,7 @@ switch ($op) {
             for ($i = 0; $i < $count; ++$i) {
                 $config = $config_handler->getConfig($conf_ids[$i]);
                 $new_value = isset(${$config->getVar('conf_name')}) ? ${$config->getVar('conf_name')} : null;
-                if ($new_value !== null && (is_array($new_value) || $new_value !== $config->getVar('conf_value'))) {
+                if (null !== $new_value && (is_array($new_value) || $new_value !== $config->getVar('conf_value'))) {
                     $config->setConfValueForInput($new_value);
                     $config_handler->insertConfig($config);
                 }
@@ -112,6 +112,7 @@ switch ($op) {
             }
         }
         $xoops->redirect("index.php?mid={$mid}&amp;op=showmod", 2, _MD_USERCONFIGS_UPDATED);
+
         break;
 }
 $xoops->footer();

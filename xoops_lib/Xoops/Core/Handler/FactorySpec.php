@@ -13,14 +13,13 @@ namespace Xoops\Core\Handler;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
- * HandlerFactory
+ * HandlerFactory.
  *
  * @category  Xoops\Core\Handler\FactorySpec
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class FactorySpec
 {
@@ -61,7 +60,7 @@ class FactorySpec
     }
 
     /**
-     * Set Scheme
+     * Set Scheme.
      *
      * @param string $value
      *
@@ -70,11 +69,12 @@ class FactorySpec
     public function scheme($value)
     {
         $this->specScheme = $value;
+
         return $this;
     }
 
     /**
-     * Set Name
+     * Set Name.
      *
      * @param string $value
      *
@@ -83,11 +83,12 @@ class FactorySpec
     public function name($value)
     {
         $this->specName = $value;
+
         return $this;
     }
 
     /**
-     * Set Dirname
+     * Set Dirname.
      *
      * @param string $value
      *
@@ -96,24 +97,26 @@ class FactorySpec
     public function dirname($value)
     {
         $this->specDirname = $value;
+
         return $this;
     }
 
     /**
-     * Set Optional
+     * Set Optional.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return FactorySpec $this for fluent use
      */
     public function optional($value)
     {
         $this->specOptional = (bool) $value;
+
         return $this;
     }
 
     /**
-     * Set FQN
+     * Set FQN.
      *
      * @param string $value
      *
@@ -122,11 +125,12 @@ class FactorySpec
     public function fqn($value)
     {
         $this->specFQN = $value;
+
         return $this;
     }
 
     /**
-     * request build from factory
+     * request build from factory.
      *
      * @return XoopsObjectHandler|null
      */

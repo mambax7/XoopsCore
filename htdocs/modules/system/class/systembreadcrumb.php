@@ -10,15 +10,13 @@
 */
 
 /**
- * BreadCrumb Class
+ * BreadCrumb Class.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Andricq Nicolas (AKA MusS)
- * @package     system
  * @version     $Id$
  */
-
 class systembreadcrumb
 {
     public $_help;
@@ -36,19 +34,19 @@ class systembreadcrumb
     private $_bread = [];
 
     /**
-     * Actual System BreadCrumb Object
+     * Actual System BreadCrumb Object.
      *
      * @param string $fct
      */
     private function __construct($fct)
     {
-        if ($fct !== '') {
+        if ('' !== $fct) {
             $this->_directory = $fct;
         }
     }
 
     /**
-     * Access the only instance of this class
+     * Access the only instance of this class.
      *
      * @param string $fct
      *
@@ -62,6 +60,7 @@ class systembreadcrumb
             $class = __CLASS__;
             $instance = new $class($fct);
         }
+
         return $instance;
     }
 
@@ -71,7 +70,7 @@ class systembreadcrumb
     }
 
     /**
-     * Add link to breadcrumb
+     * Add link to breadcrumb.
      */
     public function addLink($title = '', $link = '', $home = false)
     {
@@ -81,7 +80,7 @@ class systembreadcrumb
     }
 
     /**
-     * Add Help link
+     * Add Help link.
      */
     public function addHelp($link = '')
     {
@@ -89,7 +88,7 @@ class systembreadcrumb
     }
 
     /**
-     * Add Tips
+     * Add Tips.
      */
     public function addTips($value)
     {
@@ -97,7 +96,7 @@ class systembreadcrumb
     }
 
     /**
-     * Render System BreadCrumb
+     * Render System BreadCrumb.
      */
     public function render()
     {
@@ -111,34 +110,34 @@ class systembreadcrumb
                 }
             }
             // Call template
-            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language') . '/help/' . $this->_directory . '.html')) {
+            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/system/language/'.$xoops->getConfig('language').'/help/'.$this->_directory.'.html')) {
                 $xoops->tpl()
-                    ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language') . '/help/' . $this->_directory . '.html');
+                    ->assign('help_content', \XoopsBaseConfig::get('root-path').'/modules/system/language/'.$xoops->getConfig('language').'/help/'.$this->_directory.'.html');
             } else {
-                if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/system/language/english/help/' . $this->_directory . '.html')) {
+                if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/system/language/english/help/'.$this->_directory.'.html')) {
                     $xoops->tpl()
-                        ->assign('help_content', \XoopsBaseConfig::get('root-path') . '/modules/system/language/english/help/' . $this->_directory . '.html');
+                        ->assign('help_content', \XoopsBaseConfig::get('root-path').'/modules/system/language/english/help/'.$this->_directory.'.html');
                 } else {
                     $xoops->tpl()->assign('load_error', 1);
                 }
             }
         } else {
-            $out = $menu = '<style type="text/css" media="screen">@import ' . \XoopsBaseConfig::get('url') . '/modules/system/css/menu.css;</style>';
+            $out = $menu = '<style type="text/css" media="screen">@import '.\XoopsBaseConfig::get('url').'/modules/system/css/menu.css;</style>';
             $out .= '<ul id="xo-breadcrumb">';
             foreach ($this->_bread as $menu) {
                 if ($menu['home']) {
-                    $out .= '<li><a href="' . $menu['link'] . '" title="' . $menu['title'] . '"><img src="images/home.png" alt="' . $menu['title'] . '" class="home" /></a></li>';
+                    $out .= '<li><a href="'.$menu['link'].'" title="'.$menu['title'].'"><img src="images/home.png" alt="'.$menu['title'].'" class="home" /></a></li>';
                 } else {
-                    if ($menu['link'] !== '') {
-                        $out .= '<li><a href="' . $menu['link'] . '" title="' . $menu['title'] . '">' . $menu['title'] . '</a></li>';
+                    if ('' !== $menu['link']) {
+                        $out .= '<li><a href="'.$menu['link'].'" title="'.$menu['title'].'">'.$menu['title'].'</a></li>';
                     } else {
-                        $out .= '<li>' . $menu['title'] . '</li>';
+                        $out .= '<li>'.$menu['title'].'</li>';
                     }
                 }
             }
             $out .= '</ul>';
             if ($this->_tips) {
-                $out .= '<div class="tips">' . $this->_tips . '</div>';
+                $out .= '<div class="tips">'.$this->_tips.'</div>';
             }
             echo $out;
         }

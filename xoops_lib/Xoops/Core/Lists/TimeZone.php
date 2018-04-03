@@ -15,19 +15,18 @@ use Punic\Territory;
 use Xoops\Core\Locale\Punic\Calendar;
 
 /**
- * TimeZone - provide list of timezone names
+ * TimeZone - provide list of timezone names.
  *
  * @category  Xoops\Core\Lists\TimeZone
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015-2018 XOOPS Project (https://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class TimeZone extends ListAbstract
 {
     /**
-     * Get a list of localized timezone names
+     * Get a list of localized timezone names.
      *
      * @return array
      */
@@ -52,7 +51,7 @@ class TimeZone extends ListAbstract
                             $maxLen = max(strlen($zone), $maxLen);
                             $name = Calendar::getTimezoneExemplarCity($zone);
                             if (!isset($timeZones[$zone]) && !empty($name)) {
-                                $timeZones[$zone] = $cName['name'] . '/' . $name;
+                                $timeZones[$zone] = $cName['name'].'/'.$name;
                             }
                         }
                     }
@@ -62,6 +61,7 @@ class TimeZone extends ListAbstract
                     'UTC' => Calendar::getTimezoneNameNoLocationSpecific(new \DateTimeZone('GMT')),
                 ];
                 $timeZones = array_merge($default, $timeZones);
+
                 return $timeZones;
             }
         );

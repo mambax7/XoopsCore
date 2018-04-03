@@ -10,16 +10,15 @@
 */
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $system = System::getInstance();
 $xoops = Xoops::getInstance();
@@ -39,10 +38,11 @@ switch ($op) {
     default:
         // Add Scripts
         $xoops->theme()->addScript('media/xoops/xoops.js');
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_STEP, 'step.php?op=new', 'add');
         $admin_page->renderButton();
         $xoops->tpl()->assign('steps', $regstep_Handler->getObjects(null, true, false));
         $xoops->tpl()->assign('step', true);
+
         break;
 
     case 'new':
@@ -51,10 +51,11 @@ switch ($op) {
         $obj = $regstep_Handler->create();
         $form = $xoops->getModuleForm($obj, 'regstep');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_STEP, 'step.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_STEP_LIST, 'step.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -65,6 +66,7 @@ switch ($op) {
         } else {
             $xoops->redirect('step.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'save':
@@ -87,16 +89,17 @@ switch ($op) {
         echo $xoops->alert('error', $obj->getHtmlErrors());
         $form = $xoops->getModuleForm($obj, 'regstep');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_STEP, 'step.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_STEP_LIST, 'step.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $regstep_Handler->get($id);
-            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('step.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
@@ -112,12 +115,13 @@ switch ($op) {
                 echo $xoops->confirm(
                     ['ok' => 1, 'id' => $id, 'op' => 'delete'],
                     'step.php',
-                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')) . '<br />'
+                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')).'<br />'
                 );
             }
         } else {
             $xoops->redirect('step.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'step_update':
@@ -131,6 +135,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 }
 $xoops->footer();

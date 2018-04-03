@@ -14,20 +14,19 @@ namespace Xoops\Auth;
 use Xoops\Core\Database\Connection;
 
 /**
- * Authentication class for Native XOOPS
+ * Authentication class for Native XOOPS.
  *
  * @category  Xoops\Auth
- * @package   Xoops
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class Xoops extends AuthAbstract
 {
     /**
-     * Authentication Service constructor
+     * Authentication Service constructor.
      *
      * @param Connection|null $dao database object
      */
@@ -38,7 +37,7 @@ class Xoops extends AuthAbstract
     }
 
     /**
-     * Authenticate user
+     * Authenticate user.
      *
      * @param string $uname user name
      * @param string $pwd   password
@@ -52,7 +51,7 @@ class Xoops extends AuthAbstract
         $user = false;
         if ($member_handler) {
             $user = $member_handler->loginUser($uname, $pwd);
-            if ($user === false) {
+            if (false === $user) {
                 $this->setErrors(1, \XoopsLocale::E_INCORRECT_LOGIN);
             }
         }

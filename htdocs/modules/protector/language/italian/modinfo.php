@@ -6,7 +6,7 @@
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $mydirname = 'protector';
 }
-$constpref = '_MI_' . strtoupper($mydirname);
+$constpref = '_MI_'.strtoupper($mydirname);
 
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined('_MI_PROTECTOR_LOADED')) {
     define('_MI_PROTECTOR_LOADED', 1);

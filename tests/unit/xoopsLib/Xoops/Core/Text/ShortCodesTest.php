@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Many tests adapted from Badcow/Shortcodes
- * @link https://github.com/Badcow/Shortcodes/blob/master/tests/ShotcodesTest.php
+ * Many tests adapted from Badcow/Shortcodes.
+ * @see https://github.com/Badcow/Shortcodes/blob/master/tests/ShotcodesTest.php
  */
 
 namespace Xoops\Core\Text;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class ShortCodesTest extends \PHPUnit\Framework\TestCase
 {
@@ -127,7 +127,7 @@ class ShortCodesTest extends \PHPUnit\Framework\TestCase
         $this->object->addShortcode('qbf', [$this, 'dummyFunction_qbf']);
 
         $content = 'Hello my name is [test name="Sam"]! Did you know that [qbf]';
-        $expectation = 'Hello my name is name: Sam! Did you know that ' . $this->qbf;
+        $expectation = 'Hello my name is name: Sam! Did you know that '.$this->qbf;
 
         $this->assertSame($expectation, $this->object->process($content));
     }

@@ -12,15 +12,14 @@
 namespace Xoops\Core\Theme;
 
 /**
- * XoopsTheme component class file
+ * XoopsTheme component class file.
  *
  * @category  Xoops\Core
- * @package   Theme
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2008-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class PluginAbstract
 {
@@ -30,7 +29,7 @@ abstract class PluginAbstract
     public $theme = false;
 
     /**
-     * initialize the plugin
+     * initialize the plugin.
      *
      * @return bool
      */

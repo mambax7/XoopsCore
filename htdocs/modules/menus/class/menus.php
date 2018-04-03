@@ -16,16 +16,14 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusMenus extends XoopsObject
 {
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {

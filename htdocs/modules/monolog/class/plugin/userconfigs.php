@@ -10,14 +10,13 @@
  */
 
 /**
- * MonologLogger core preloads
+ * MonologLogger core preloads.
  *
  * @category  MonologLogger
- * @package   MonologLogger
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class MonologUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implements UserconfigsPluginInterface
 {
@@ -39,6 +38,7 @@ class MonologUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implem
             'name' => _MI_MONOLOG_UCONF_CAT_OPT,
             'title' => _MI_MONOLOG_UCONF_CAT_OPT_DESC,
         ];
+
         return $categories;
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.6.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
@@ -23,22 +22,21 @@ use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * XOOPS membership handler class. (Singleton)
+ * XOOPS membership handler class. (Singleton).
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS group membership class objects.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsMembershipHandler
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsMembershipHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db database
      */
@@ -54,7 +52,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * retrieve groups for a user
+     * retrieve groups for a user.
      *
      * @param int $uid ID of the user objects
      *
@@ -65,7 +63,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('groupid')
+        $qb->select('groupid')
             ->fromPrefix('system_usergroup', 'g')
             ->where($eb->eq('g.uid', ':uid'))
             ->setParameter(':uid', $uid, \PDO::PARAM_INT);
@@ -78,7 +76,7 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * retrieve users belonging to a group
+     * retrieve users belonging to a group.
      *
      * @param int $groupid ID of the group
      * @param int $limit   number of entries to return
@@ -91,11 +89,11 @@ class XoopsMembershipHandler extends XoopsPersistableObjectHandler
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('uid')
+        $qb->select('uid')
             ->fromPrefix('system_usergroup', 'g')
             ->where($eb->eq('g.groupid', ':gid'))
             ->setParameter(':gid', $groupid, \PDO::PARAM_INT);
-        if ($limit !== 0 || $start !== 0) {
+        if (0 !== $limit || 0 !== $start) {
             $qb->setFirstResult($start)
                 ->setMaxResults($limit);
         }

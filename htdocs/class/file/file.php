@@ -23,61 +23,59 @@
 /**
  * File engine For XOOPS
  * Convenience class for reading, writing and appending to files.
- * PHP 5.3
+ * PHP 5.3.
  *
  * @category  Xoops\Class\File\File
- * @package   File
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2005-2008 Cake Software Foundation, Inc.
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  * @version   $Id$
- * @link      http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @see      http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
  * @since     CakePHP(tm) v 0.2.9
  */
 class XoopsFileHandler
 {
     /**
-     * folder object of the File
+     * folder object of the File.
      *
      * @var XoopsFolderHandler
-     * @access public
      */
     public $folder = null;
 
     /**
-     * Filename
+     * Filename.
      *
      * @var string
      */
     public $name = null;
 
     /**
-     * file info
+     * file info.
      *
      * @var string
      */
     public $info = [];
 
     /**
-     * Holds the file handler resource if the file is opened
+     * Holds the file handler resource if the file is opened.
      *
      * @var resource
      */
     public $handle = null;
 
     /**
-     * enable locking for file reading and writing
+     * enable locking for file reading and writing.
      *
      * @var boolean
      */
     public $lock = null;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string  $path   Path to file
-     * @param boolean $create Create file if it does not exist (if true)
-     * @param integer $mode   Mode to apply to the folder holding the file
+     * @param string $path   Path to file
+     * @param bool   $create Create file if it does not exist (if true)
+     * @param int    $mode   Mode to apply to the folder holding the file
      *
      * @todo reconsider validity this class, if valid add exceptions to __construct()
      */
@@ -90,19 +88,20 @@ class XoopsFileHandler
             return; // false;
         }
         if (!$this->exists()) {
-            if ($create === true) {
-                if ($this->safe($path) && $this->create() === false) {
+            if (true === $create) {
+                if ($this->safe($path) && false === $this->create()) {
                     return; // false;
                 }
             } else {
                 return; // false;
             }
         }
+
         return; // true;
     }
 
     /**
-     * Closes the current file if it is opened
+     * Closes the current file if it is opened.
      */
     public function __destruct()
     {
@@ -112,7 +111,7 @@ class XoopsFileHandler
     /**
      * Creates the File.
      *
-     * @return boolean Success
+     * @return bool Success
      */
     public function create()
     {
@@ -122,25 +121,26 @@ class XoopsFileHandler
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * Opens the current file with a given $mode
+     * Opens the current file with a given $mode.
      *
-     * @param string  $mode  A valid 'fopen' mode string (r|w|a ...)
-     * @param boolean $force If true then the file will be re-opened even if
+     * @param string $mode  A valid 'fopen' mode string (r|w|a ...)
+     * @param bool   $force If true then the file will be re-opened even if
      * its already opened, otherwise it won't
      *
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function open($mode = 'r', $force = false)
     {
         if (!$force && is_resource($this->handle)) {
             return true;
         }
-        if ($this->exists() === false) {
-            if ($this->create() === false) {
+        if (false === $this->exists()) {
+            if (false === $this->create()) {
                 return false;
             }
         }
@@ -148,6 +148,7 @@ class XoopsFileHandler
         if (is_resource($this->handle)) {
             return true;
         }
+
         return false;
     }
 
@@ -156,22 +157,22 @@ class XoopsFileHandler
      *
      * @param string|bool $bytes where to start
      * @param string      $mode  mode of file access
-     * @param boolean     $force If true then the file will be re-opened even if its already opened, otherwise it won't
+     * @param bool        $force If true then the file will be re-opened even if its already opened, otherwise it won't
      *
      * @return mixed string on success, false on failure
      */
     public function read($bytes = false, $mode = 'rb', $force = false)
     {
         $success = false;
-        if ($this->lock !== null) {
-            if (flock($this->handle, LOCK_SH) === false) {
+        if (null !== $this->lock) {
+            if (false === flock($this->handle, LOCK_SH)) {
                 return false;
             }
         }
-        if ($bytes === false) {
+        if (false === $bytes) {
             $success = file_get_contents($this->pwd());
         } else {
-            if ($this->open($mode, $force) === true) {
+            if (true === $this->open($mode, $force)) {
                 if (is_int($bytes)) {
                     $success = fread($this->handle, $bytes);
                 } else {
@@ -183,38 +184,40 @@ class XoopsFileHandler
                 }
             }
         }
-        if ($this->lock !== null) {
+        if (null !== $this->lock) {
             flock($this->handle, LOCK_UN);
         }
+
         return $success;
     }
 
     /**
      * Sets or gets the offset for the currently opened file.
      *
-     * @param mixed   $offset The $offset in bytes to seek. If set to false then the current offset is returned.
-     * @param integer $seek   PHP Constant SEEK_SET | SEEK_CUR | SEEK_END determining what the $offset is relative to
+     * @param mixed $offset The $offset in bytes to seek. If set to false then the current offset is returned.
+     * @param int   $seek   PHP Constant SEEK_SET | SEEK_CUR | SEEK_END determining what the $offset is relative to
      *
      * @return mixed True on success, false on failure (set mode),
      * false on failure or integer offset on success (get mode)
      */
     public function offset($offset = false, $seek = SEEK_SET)
     {
-        if ($offset === false) {
+        if (false === $offset) {
             if (is_resource($this->handle)) {
                 return ftell($this->handle);
             }
         } else {
-            if ($this->open() === true) {
-                return fseek($this->handle, $offset, $seek) === 0;
+            if (true === $this->open()) {
+                return 0 === fseek($this->handle, $offset, $seek);
             }
         }
+
         return false;
     }
 
     /**
      * Prepares a ascii string for writing
-     * fixes line endings
+     * fixes line endings.
      *
      * @param string $data Data to prepare for writing.
      *
@@ -223,9 +226,10 @@ class XoopsFileHandler
     public function prepare($data)
     {
         $lineBreak = "\n";
-        if (substr(PHP_OS, 0, 3) === 'WIN') {
+        if ('WIN' === substr(PHP_OS, 0, 3)) {
             $lineBreak = "\r\n";
         }
+
         return strtr($data, ["\r\n" => $lineBreak, "\n" => $lineBreak, "\r" => $lineBreak]);
     }
 
@@ -241,19 +245,20 @@ class XoopsFileHandler
     public function write($data, $mode = 'w', $force = false)
     {
         $success = false;
-        if ($this->open($mode, $force) === true) {
-            if ($this->lock !== null) {
-                if (flock($this->handle, LOCK_EX) === false) {
+        if (true === $this->open($mode, $force)) {
+            if (null !== $this->lock) {
+                if (false === flock($this->handle, LOCK_EX)) {
                     return false;
                 }
             }
-            if (fwrite($this->handle, $data) !== false) {
+            if (false !== fwrite($this->handle, $data)) {
                 $success = true;
             }
-            if ($this->lock !== null) {
+            if (null !== $this->lock) {
                 flock($this->handle, LOCK_UN);
             }
         }
+
         return $success;
     }
 
@@ -273,42 +278,45 @@ class XoopsFileHandler
     /**
      * Closes the current file if it is opened.
      *
-     * @return boolean True if closing was successful or file was already closed, otherwise false
+     * @return bool True if closing was successful or file was already closed, otherwise false
      */
     public function close()
     {
         if (!is_resource($this->handle)) {
             return true;
         }
+
         return fclose($this->handle);
     }
 
     /**
      * Deletes the File.
      *
-     * @return boolean Success
+     * @return bool Success
      */
     public function delete()
     {
         if ($this->exists()) {
             return unlink($this->pwd());
         }
+
         return false;
     }
 
     /**
-     * Returns the File information array
+     * Returns the File information array.
      *
      * @return array The File information
      */
     public function info()
     {
-        if ($this->info === null) {
+        if (null === $this->info) {
             $this->info = pathinfo($this->pwd());
         }
         if (!isset($this->info['filename'])) {
             $this->info['filename'] = $this->name();
         }
+
         return $this->info;
     }
 
@@ -319,12 +327,13 @@ class XoopsFileHandler
      */
     public function ext()
     {
-        if ($this->info === null) {
+        if (null === $this->info) {
             $this->info();
         }
         if (isset($this->info['extension'])) {
             return $this->info['extension'];
         }
+
         return false;
     }
 
@@ -335,19 +344,20 @@ class XoopsFileHandler
      */
     public function name()
     {
-        if ($this->info === null) {
+        if (null === $this->info) {
             $this->info();
         }
         if (isset($this->info['extension'])) {
-            return basename($this->name, '.' . $this->info['extension']);
+            return basename($this->name, '.'.$this->info['extension']);
         } elseif ($this->name) {
             return $this->name;
         }
+
         return false;
     }
 
     /**
-     * makes filename safe for saving
+     * makes filename safe for saving.
      *
      * @param string $name the name of the file to make safe if different from $this->name
      * @param string $ext  the extension of the file
@@ -362,19 +372,20 @@ class XoopsFileHandler
         if (!$ext) {
             $ext = $this->ext();
         }
+
         return preg_replace('/[^\w\.-]+/', '_', basename($name, $ext));
     }
 
     /**
-     * Get md5 Checksum of file with previous check of Filesize
+     * Get md5 Checksum of file with previous check of Filesize.
      *
-     * @param integer $maxsize in MB or true to force
+     * @param int $maxsize in MB or true to force
      *
      * @return string md5 Checksum {@link http://php.net/md5_file See md5_file()}
      */
     public function md5($maxsize = 5)
     {
-        if ($maxsize === true) {
+        if (true === $maxsize) {
             return md5_file($this->pwd());
         }
         $size = $this->size();
@@ -392,7 +403,7 @@ class XoopsFileHandler
      */
     public function pwd()
     {
-        return $this->folder->slashTerm($this->folder->pwd()) . $this->name;
+        return $this->folder->slashTerm($this->folder->pwd()).$this->name;
     }
 
     /**
@@ -403,6 +414,7 @@ class XoopsFileHandler
     public function exists()
     {
         $exists = is_file($this->pwd());
+
         return $exists;
     }
 
@@ -416,6 +428,7 @@ class XoopsFileHandler
         if ($this->exists()) {
             return substr(sprintf('%o', fileperms($this->pwd())), -4);
         }
+
         return false;
     }
 
@@ -428,15 +441,17 @@ class XoopsFileHandler
     {
         if ($this->exists()) {
             clearstatcache();
+
             return filesize($this->pwd());
         }
+
         return false;
     }
 
     /**
      * Returns true if the File is writable.
      *
-     * @return boolean true if its writable, false otherwise
+     * @return bool true if its writable, false otherwise
      */
     public function writable()
     {
@@ -446,7 +461,7 @@ class XoopsFileHandler
     /**
      * Returns true if the File is executable.
      *
-     * @return boolean true if its executable, false otherwise
+     * @return bool true if its executable, false otherwise
      */
     public function executable()
     {
@@ -456,7 +471,7 @@ class XoopsFileHandler
     /**
      * Returns true if the File is readable.
      *
-     * @return boolean true if file is readable, false otherwise
+     * @return bool true if file is readable, false otherwise
      */
     public function readable()
     {
@@ -473,6 +488,7 @@ class XoopsFileHandler
         if ($this->exists()) {
             return fileowner($this->pwd());
         }
+
         return false;
     }
 
@@ -486,6 +502,7 @@ class XoopsFileHandler
         if ($this->exists()) {
             return filegroup($this->pwd());
         }
+
         return false;
     }
 
@@ -499,6 +516,7 @@ class XoopsFileHandler
         if ($this->exists()) {
             return fileatime($this->pwd());
         }
+
         return false;
     }
 
@@ -512,6 +530,7 @@ class XoopsFileHandler
         if ($this->exists()) {
             return filemtime($this->pwd());
         }
+
         return false;
     }
 

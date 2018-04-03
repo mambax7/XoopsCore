@@ -10,12 +10,10 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $xoops = Xoops::getInstance();
 $xoops->registry()->set('XLANGUAGE_CONFIG_FILE', 'xlanguage.config');
 $xoops->registry()->set('XLANGUAGE_LANG_TAG', 'lang');
@@ -23,11 +21,11 @@ $xoops->registry()->set('XLANGUAGE_TAGS_RESERVED', '</head>,</body>');
 $xoops->registry()->set('XLANGUAGE_THEME_ENABLE', true);
 $xoops->registry()->set('XLANGUAGE_THEME_OPTIONS', 'bootstrap|&nbsp;|5'); // display mode, delimitor, number per line
 
-/**
+/*
  * phpMyAdmin Language Loading File
  */
 
-/**
+/*
  * All the supported languages have to be listed in the array below.
  * 1. The key must be the "official" ISO 639 language code and, if required,
  *     the dialect code. It can also contains some informations about the

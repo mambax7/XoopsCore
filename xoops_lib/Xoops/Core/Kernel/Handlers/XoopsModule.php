@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @version         $Id$
  */
@@ -22,15 +21,14 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * A Module
+ * A Module.
  *
  * @category  Xoops\Core\Kernel\XoopsModule
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsModule extends XoopsObject
 {
@@ -54,7 +52,7 @@ class XoopsModule extends XoopsObject
     private $internalMessages = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -78,10 +76,10 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * Load module info
+     * Load module info.
      *
-     * @param string  $dirname module directory
-     * @param boolean $verbose true for more information
+     * @param string $dirname module directory
+     * @param bool   $verbose true for more information
      *
      * @todo module 'version' should be semver based -- 1.0.0 should be OK, not an error
      */
@@ -95,18 +93,18 @@ class XoopsModule extends XoopsObject
         // see @todo
         $versionPieces = explode('.', $this->modinfo['version']);
         if (count($versionPieces) > 2) {
-            $this->modinfo['version'] = $versionPieces[0] . '.' . $versionPieces[1];
+            $this->modinfo['version'] = $versionPieces[0].'.'.$versionPieces[1];
         }
         $this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)));
         $this->setVar('dirname', $this->modinfo['dirname']);
-        $hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] === 1) ? 1 : 0;
-        $hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] === 1) ? 1 : 0;
-        $hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] === 1) ? 1 : 0;
+        $hasmain = (isset($this->modinfo['hasMain']) && 1 === $this->modinfo['hasMain']) ? 1 : 0;
+        $hasadmin = (isset($this->modinfo['hasAdmin']) && 1 === $this->modinfo['hasAdmin']) ? 1 : 0;
+        $hassearch = (isset($this->modinfo['hasSearch']) && 1 === $this->modinfo['hasSearch']) ? 1 : 0;
         $hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config']))
             || !empty($this->modinfo['hasComments'])) ? 1 : 0;
-        $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] === 1) ? 1 : 0;
+        $hascomments = (isset($this->modinfo['hasComments']) && 1 === $this->modinfo['hasComments']) ? 1 : 0;
         // RMV-NOTIFY
-        $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] === 1) ? 1 : 0;
+        $hasnotification = (isset($this->modinfo['hasNotification']) && 1 === $this->modinfo['hasNotification']) ? 1 : 0;
         $this->setVar('hasmain', $hasmain);
         $this->setVar('hasadmin', $hasadmin);
         $this->setVar('hassearch', $hassearch);
@@ -117,7 +115,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * add a message
+     * add a message.
      *
      * @param string $str message to add
      */
@@ -127,7 +125,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * return the messages for this object as an array
+     * return the messages for this object as an array.
      *
      * @return array an array of messages
      */
@@ -137,12 +135,12 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * Set module info
+     * Set module info.
      *
      * @param string $name  name
      * @param mixed  $value value
      *
-     * @return  bool
+     * @return bool
      **/
     public function setInfo($name, $value)
     {
@@ -151,11 +149,12 @@ class XoopsModule extends XoopsObject
         } else {
             $this->modinfo[$name] = $value;
         }
+
         return true;
     }
 
     /**
-     * Get module info
+     * Get module info.
      *
      * @param string $name If $name is set, returns a single module information item as string.
      *
@@ -171,28 +170,32 @@ class XoopsModule extends XoopsObject
                 return $this->modinfo[$name];
             }
             $return = false;
+
             return $return;
         }
+
         return $this->modinfo;
     }
 
     /**
-     * Get a link to the modules main page
+     * Get a link to the modules main page.
      *
      * @return string|false FALSE on fail
      */
     public function mainLink()
     {
-        if ($this->getVar('hasmain') === 1) {
-            $ret = '<a href="' . $this->xoops_url . '/modules/' . $this->getVar('dirname') . '/">'
-                . $this->getVar('name') . '</a>';
+        if (1 === $this->getVar('hasmain')) {
+            $ret = '<a href="'.$this->xoops_url.'/modules/'.$this->getVar('dirname').'/">'
+                .$this->getVar('name').'</a>';
+
             return $ret;
         }
+
         return false;
     }
 
     /**
-     * Get links to the subpages
+     * Get links to the subpages.
      *
      * @return string
      */
@@ -206,16 +209,17 @@ class XoopsModule extends XoopsObject
                     'url' => $submenu['url'], ];
             }
         }
+
         return $ret;
     }
 
     /**
-     * Load the admin menu for the module
+     * Load the admin menu for the module.
      */
     public function loadAdminMenu()
     {
-        $file = $this->xoops_root_path . '/modules/' . $this->getInfo('dirname') . '/' . $this->getInfo('adminmenu');
-        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') !== '' && \XoopsLoad::fileExists($file)) {
+        $file = $this->xoops_root_path.'/modules/'.$this->getInfo('dirname').'/'.$this->getInfo('adminmenu');
+        if ($this->getInfo('adminmenu') && '' !== $this->getInfo('adminmenu') && \XoopsLoad::fileExists($file)) {
             $adminmenu = [];
             include $file;
             $this->adminmenu = $adminmenu;
@@ -223,7 +227,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * Get the admin menu for the module
+     * Get the admin menu for the module.
      *
      * @return string
      */
@@ -232,11 +236,12 @@ class XoopsModule extends XoopsObject
         if (!isset($this->adminmenu)) {
             $this->loadAdminMenu();
         }
+
         return $this->adminmenu;
     }
 
     /**
-     * Load the module info for this module
+     * Load the module info for this module.
      *
      * @param string $dirname Module directory
      * @param bool   $verbose Give an error on fail?
@@ -254,6 +259,7 @@ class XoopsModule extends XoopsObject
         $dirname = basename($dirname);
         if (isset($modVersions[$dirname])) {
             $this->modinfo = $modVersions[$dirname];
+
             return true;
         }
         $xoops = \Xoops::getInstance();
@@ -261,21 +267,23 @@ class XoopsModule extends XoopsObject
         $xoops->loadLanguage('modinfo', $dirname);
         $xoops->loadLocale($dirname);
 
-        if (!\XoopsLoad::fileExists($file = $xoops->path('modules/' . $dirname . '/xoops_version.php'))) {
-            if ($verbose !== false) {
+        if (!\XoopsLoad::fileExists($file = $xoops->path('modules/'.$dirname.'/xoops_version.php'))) {
+            if (false !== $verbose) {
                 echo "Module File for ${dirname} Not Found!";
             }
+
             return false;
         }
         $modversion = [];
         include $file;
         $modVersions[$dirname] = $modversion;
         $this->modinfo = $modVersions[$dirname];
+
         return true;
     }
 
     /**
-     * getter for mid
+     * getter for mid.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -287,7 +295,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * another getter for mid
+     * another getter for mid.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -299,7 +307,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for module name
+     * getter for module name.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -311,7 +319,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for module version
+     * getter for module version.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -323,7 +331,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for module last update
+     * getter for module last update.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -335,7 +343,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for weight
+     * getter for weight.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -347,7 +355,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for isactive
+     * getter for isactive.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -359,7 +367,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for dirname
+     * getter for dirname.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -371,7 +379,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hasmain
+     * getter for hasmain.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -383,7 +391,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hasadmin
+     * getter for hasadmin.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -395,7 +403,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hassearch
+     * getter for hassearch.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -407,7 +415,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hasconfig
+     * getter for hasconfig.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -419,7 +427,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hascomments
+     * getter for hascomments.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -431,7 +439,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * getter for hasnotifications
+     * getter for hasnotifications.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -443,7 +451,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * get module by dirname
+     * get module by dirname.
      *
      * @param string $dirname directory name
      *

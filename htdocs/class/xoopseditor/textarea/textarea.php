@@ -10,17 +10,14 @@
 */
 
 /**
- * XOOPS textarea class
+ * XOOPS textarea class.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xoopseditor
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 class FormTextArea extends XoopsEditor
 {
 }

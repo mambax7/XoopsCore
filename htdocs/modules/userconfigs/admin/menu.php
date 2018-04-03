@@ -26,11 +26,11 @@ $adminmenu = [];
 $adminmenu[] = [
     'title' => _MI_USERCONFIGS_ADMENU1,
     'link' => 'admin/index.php',
-    'icon' => $pathIcon32 . 'home.png',
+    'icon' => $pathIcon32.'home.png',
 ];
 // About
 $adminmenu[] = [
     'title' => _MI_USERCONFIGS_ADMENU2,
     'link' => 'admin/about.php',
-    'icon' => $pathIcon32 . 'about.png',
+    'icon' => $pathIcon32.'about.png',
 ];

@@ -15,17 +15,16 @@ use Xoops\Core\AttributeInterface;
 use Xoops\Core\HttpRequest;
 
 /**
- * Session management
+ * Session management.
  *
  * Credits due to Robert Hafner's article "How to Create Bulletproof Sessions"
  * see: http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
  *
  * @category  Xoops\Core\Session
- * @package   Manager
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Manager implements AttributeInterface
 {
@@ -50,7 +49,7 @@ class Manager implements AttributeInterface
     protected $sessionUser = null;
 
     /**
-     * establish access to other classes we will use
+     * establish access to other classes we will use.
      */
     public function __construct()
     {
@@ -61,12 +60,12 @@ class Manager implements AttributeInterface
     }
 
     /**
-     * Configure and start the session
+     * Configure and start the session.
      */
     public function sessionStart()
     {
         /**
-         * Revisit this once basics are working
+         * Revisit this once basics are working.
          *
          * grab session_id from https login form
          *
@@ -107,6 +106,7 @@ class Manager implements AttributeInterface
         // Make sure the session hasn't expired, and destroy it if it has
         if (!$this->validateSession()) {
             $this->clearSession();
+
             return;
         }
 
@@ -128,7 +128,7 @@ class Manager implements AttributeInterface
     }
 
     /**
-     * Clear the current session and reset fingerprint
+     * Clear the current session and reset fingerprint.
      */
     public function clearSession()
     {
@@ -188,7 +188,7 @@ class Manager implements AttributeInterface
     }
 
     /**
-     * shutdown function
+     * shutdown function.
      */
     public function sessionShutdown()
     {
@@ -205,7 +205,7 @@ class Manager implements AttributeInterface
      * @param mixed  $default A default value returned if the requested
      *                        named session variable is not set.
      *
-     * @return  mixed  The value of the session variable, or $default if not set.
+     * @return mixed The value of the session variable, or $default if not set.
      */
     public function get($name, $default = null)
     {
@@ -223,6 +223,7 @@ class Manager implements AttributeInterface
     public function set($name, $value)
     {
         $_SESSION[$name] = $value;
+
         return $this;
     }
 
@@ -231,7 +232,7 @@ class Manager implements AttributeInterface
      *
      * @param string $name An attribute name.
      *
-     * @return boolean TRUE if the given attribute exists, otherwise FALSE.
+     * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
     public function has($name)
     {
@@ -263,13 +264,14 @@ class Manager implements AttributeInterface
     {
         $oldValues = $_SESSION;
         $_SESSION = [];
+
         return $oldValues;
     }
 
     /**
      * Validate that the session has not expired.
      *
-     * @return boolean true is session is valid and not expired, otherwise false
+     * @return bool true is session is valid and not expired, otherwise false
      */
     protected function validateSession()
     {

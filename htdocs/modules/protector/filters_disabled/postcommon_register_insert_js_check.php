@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstract
 {
     public function execute()
@@ -39,20 +37,21 @@ class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
     {
         $antispam_htmls = $this->getHtml4Assign();
 
-        return preg_replace('/<form[^>]*action=["\'](|#|register.php)["\'][^>]+>/i', '$0' . "\n" . $antispam_htmls['html_in_form'] . "\n" . $antispam_htmls['js_global'], $s, 1);
+        return preg_replace('/<form[^>]*action=["\'](|#|register.php)["\'][^>]+>/i', '$0'."\n".$antispam_htmls['html_in_form']."\n".$antispam_htmls['js_global'], $s, 1);
     }
 
     // import from D3forumAntispamDefault.clas.php
 
     /**
-     * @param integer $time
+     * @param int $time
      */
     public function getMd5($time = null)
     {
         if (empty($time)) {
             $time = time();
         }
-        return md5(gmdate('YmdH', $time) . \XoopsBaseConfig::get('db-prefix') . \XoopsBaseConfig::get('db-name'));
+
+        return md5(gmdate('YmdH', $time).\XoopsBaseConfig::get('db-prefix').\XoopsBaseConfig::get('db-name'));
     }
 
     public function getHtml4Assign()
@@ -83,7 +82,7 @@ class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
 
         return [
             'html_in_form' => '<input type="hidden" name="antispam_md5" id="antispam_md5" value="" />',
-            'js_global' => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>',
+            'js_global' => '<script type="text/javascript"><!--//'."\n".$js_in_validate_function."\n".'//--></script><noscript><div class="errorMsg">'._MD_PROTECTOR_TURNJAVASCRIPTON.'</div></noscript>',
         ];
     }
 
@@ -94,8 +93,10 @@ class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
         // 2-3 hour margin
         if ($user_md5 !== $this->getMd5() && $user_md5 !== $this->getMd5(time() - 3600) && $user_md5 !== $this->getMd5(time() - 7200)) {
             $this->errors[] = _MD_PROTECTOR_TURNJAVASCRIPTON;
+
             return false;
         }
+
         return true;
     }
 }

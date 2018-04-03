@@ -10,11 +10,10 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Gregory (AKA Mage)
  * @version         $Id: $
@@ -44,7 +43,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [];
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_BANNERS_DESC;
+$modversion['paypal']['item_name'] = 'Donation : '._MI_BANNERS_DESC;
 $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 

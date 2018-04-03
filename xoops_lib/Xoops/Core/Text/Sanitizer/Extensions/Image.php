@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer\Extensions
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Image extends ExtensionAbstract
 {
@@ -40,7 +39,7 @@ class Image extends ExtensionAbstract
     ];
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -57,8 +56,8 @@ class Image extends ExtensionAbstract
                     'width' => $this->config['max_width'],
                 ];
                 $cleanAttributes = $this->shortcodes->shortcodeAttributes($defaults, $attributes);
-                if ($cleanAttributes['id'] !== 0) {
-                    $cleanAttributes['url'] = $xoops->url('/image.php?id=' . $cleanAttributes['id']);
+                if (0 !== $cleanAttributes['id']) {
+                    $cleanAttributes['url'] = $xoops->url('/image.php?id='.$cleanAttributes['id']);
                 }
                 $url = $cleanAttributes['url'];
 
@@ -69,8 +68,8 @@ class Image extends ExtensionAbstract
                     true
                 );
                 $class = '';
-                if ($cleanAttributes['align'] !== '') {
-                    $class = ' class="' . $cleanAttributes['align'] . '"';
+                if ('' !== $cleanAttributes['align']) {
+                    $class = ' class="'.$cleanAttributes['align'].'"';
                 }
                 $width = $cleanAttributes['width'];
                 if (preg_match('/[0-9]{1}$/', $width)) {
@@ -98,6 +97,7 @@ class Image extends ExtensionAbstract
                     $template = '<img src="%1$s" alt="%2$s"%3$s />';
                 }
                 $newContent = sprintf($template, $url, $alt, $class, $width);
+
                 return $newContent;
             }
         );

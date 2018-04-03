@@ -17,8 +17,7 @@ use Xoops\Core\XoopsTpl;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 

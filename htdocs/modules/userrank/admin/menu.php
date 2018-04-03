@@ -10,16 +10,14 @@
 */
 
 /**
- * User Rank module
+ * User Rank module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userrank
  * @since           2.6.0
  * @author          Cointin Maxime (AKA Kraven30)
  * @version         $Id$
  */
-
 $pathIcon32 = '../../media/xoops/images/icons/32/';
 
 $adminmenu = [];

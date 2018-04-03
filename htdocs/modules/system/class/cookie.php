@@ -1,6 +1,6 @@
 <?php
 /**
- * Cookie class
+ * Cookie class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -12,9 +12,7 @@
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Andricq Nicolas (AKA MusS)
- * @package     system
  */
-
 class cookie
 {
     // Reserved session keys
@@ -45,7 +43,7 @@ class cookie
                 list($k, $v) = each($key);
 
                 // Set string representation
-                $key = $k . '[' . $v . ']';
+                $key = $k.'['.$v.']';
 
                 // Set expiration time to -1hr (will cause browser deletion)
                 setcookie($key, false, time() - 3600);
@@ -58,7 +56,7 @@ class cookie
             elseif (is_array($_COOKIE[$key])) {
                 foreach ($_COOKIE[$key] as $k => $v) {
                     // Set string representation
-                    $cookie = $key . '[' . $k . ']';
+                    $cookie = $key.'['.$k.']';
 
                     // Set expiration time to -1hr (will cause browser deletion)
                     setcookie($cookie, false, time() - 3600);
@@ -175,7 +173,7 @@ class cookie
                 list($k, $v) = each($key);
 
                 // Set string representation
-                $key = $k . '[' . $v . ']';
+                $key = $k.'['.$v.']';
             }
         }
 

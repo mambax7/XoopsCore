@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
@@ -138,6 +138,7 @@ class XoopsXmlRpcApiTest extends \PHPUnit\Framework\TestCase
     {
         $prop = new ReflectionProperty(get_class($this->object), $name);
         $prop->setAccessible(true);
+
         return $prop->getValue($this->object);
     }
 }

@@ -15,20 +15,19 @@ use Xoops\Core\Kernel\Dtype\DtypeAbstract;
 use Xoops\Core\Kernel\Dtype\DtypeOther;
 
 /**
- * Dtype
+ * Dtype.
  *
  * @category  Xoops\Core\Kernel\Dtype
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Dtype
 {
     /**
-     * format constants used for getVar()
+     * format constants used for getVar().
      */
     public const FORMAT_SHOW = 'show';        // shorthand 's'
 
@@ -41,7 +40,7 @@ class Dtype
     public const FORMAT_NONE = 'none';        // shorthand 'n'
 
     /**
-     * Xoops object datatype
+     * Xoops object datatype.
      * @todo we should eliminate the need for Dtype::getLegacyNames()
      * Once the legacy defines in XoopsObject are removed, we can shift these definitions
      * to reflect the (self documenting) name, instead of a number, and most objects will
@@ -85,7 +84,7 @@ class Dtype
     public const TYPE_MONEY = 33;
 
     /**
-     * cleanVar
+     * cleanVar.
      *
      * @param XoopsObject $obj object
      * @param mixed       $key key
@@ -98,7 +97,7 @@ class Dtype
     }
 
     /**
-     * getVar
+     * getVar.
      *
      * @param XoopsObject $obj    object
      * @param string      $key    key
@@ -113,7 +112,7 @@ class Dtype
     }
 
     /**
-     * loadDtype
+     * loadDtype.
      *
      * @param string $name dtype name to load
      *
@@ -125,7 +124,7 @@ class Dtype
 
         $dtype = null;
         if (!isset($dtypes[$name])) {
-            $className = 'Xoops\Core\Kernel\Dtype\\' . $name;
+            $className = 'Xoops\Core\Kernel\Dtype\\'.$name;
             $dtype = new $className();
             if (!$dtype instanceof DtypeAbstract) {
                 trigger_error("Dtype '{$name}' not found", E_USER_WARNING);
@@ -139,7 +138,7 @@ class Dtype
     }
 
     /**
-     * getDtypeName
+     * getDtypeName.
      *
      * @param XoopsObject $obj object
      * @param mixed       $key key
@@ -173,6 +172,7 @@ class Dtype
         if (isset($legacyNames[$nameIndex])) {
             return $legacyNames[$nameIndex];
         }
+
         return 'DtypeOther';
     }
 }

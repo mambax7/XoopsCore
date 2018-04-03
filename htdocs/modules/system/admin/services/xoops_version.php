@@ -10,15 +10,13 @@
 */
 
 /**
- * Services Manager
+ * Services Manager.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 $modversion['name'] = XoopsLocale::SERVICES;
 $modversion['version'] = '1.0';
 $modversion['description'] = SystemLocale::SERVICES_DESC;

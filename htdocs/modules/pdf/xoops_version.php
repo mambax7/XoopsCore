@@ -12,11 +12,9 @@
 /**
  * @copyright       2012-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         pdf
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $modversion = [];
 $modversion['name'] = _MI_PDF_NAME;
 $modversion['description'] = _MI_PDF_DSC;
@@ -70,7 +68,6 @@ $modversion['hasMain'] = 0;
  Blocks
 */
 $modversion['blocks'] = [];
-
 
 // Config categories
 $modversion['configcat'] = [];

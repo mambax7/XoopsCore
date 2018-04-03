@@ -2,13 +2,14 @@
 
 namespace Xmf\Module\Helper;
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class GenericHelperTestHelper extends GenericHelper
 {
     public static function getHelper($dirname = 'system')
     {
         $instance = new static($dirname);
+
         return $instance;
     }
 }
@@ -17,6 +18,7 @@ if (!function_exists('xoops_getHandler')) {
     function xoops_getHandler($name, $optional = false)
     {
         $handler = \Xoops\Core\Handler\Factory::newSpec()->scheme('kernel')->name($name)->optional((bool) $optional)->build();
+
         return $handler;
     }
 }
@@ -103,7 +105,7 @@ class GenericHelperTest extends \PHPUnit\Framework\TestCase
 
     public function testIsUserAdmin()
     {
-        include_once XOOPS_ROOT_PATH . '/kernel/user.php';
+        include_once XOOPS_ROOT_PATH.'/kernel/user.php';
         $GLOBALS['xoopsUser'] = '';
         $this->assertFalse($this->object->isUserAdmin());
 

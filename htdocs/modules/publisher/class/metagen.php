@@ -11,20 +11,17 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 class PublisherMetagen
 {
     /**
      * @var Publisher
-     * @access public
      */
     public $publisher = null;
 
@@ -64,10 +61,10 @@ class PublisherMetagen
     public $_minChar = 4;
 
     /**
-     * @param string       $title
-     * @param string       $keywords
-     * @param string       $description
-     * @param bool         $categoryPath
+     * @param string $title
+     * @param string $keywords
+     * @param string $description
+     * @param bool   $categoryPath
      */
     public function __construct($title, $keywords = '', $description = '', $categoryPath = false)
     {
@@ -76,7 +73,7 @@ class PublisherMetagen
         $this->setCategoryPath($categoryPath);
         $this->setTitle($title);
         $this->setDescription($description);
-        if ($keywords === '') {
+        if ('' === $keywords) {
             $keywords = $this->createMetaKeywords();
         }
         $this->setKeywords($keywords);
@@ -91,21 +88,21 @@ class PublisherMetagen
         $this->_original_title = $this->_title;
         $titleTag = [];
         $titleTag['module'] = $this->publisher->getModule()->getVar('name');
-        if (isset($this->_title) && ($this->_title !== '') && (strtoupper($this->_title) !== strtoupper($titleTag['module']))) {
+        if (isset($this->_title) && ('' !== $this->_title) && (strtoupper($this->_title) !== strtoupper($titleTag['module']))) {
             $titleTag['title'] = $this->_title;
         }
-        if (isset($this->_categoryPath) && ($this->_categoryPath !== '')) {
+        if (isset($this->_categoryPath) && ('' !== $this->_categoryPath)) {
             $titleTag['category'] = $this->_categoryPath;
         }
         $ret = isset($titleTag['title']) ? $titleTag['title'] : '';
-        if (isset($titleTag['category']) && $titleTag['category'] !== '') {
-            if ($ret !== '') {
+        if (isset($titleTag['category']) && '' !== $titleTag['category']) {
+            if ('' !== $ret) {
                 $ret .= ' - ';
             }
             $ret .= $titleTag['category'];
         }
-        if (isset($titleTag['module']) && $titleTag['module'] !== '') {
-            if ($ret !== '') {
+        if (isset($titleTag['module']) && '' !== $titleTag['module']) {
+            if ('' !== $ret) {
                 $ret .= ' - ';
             }
             $ret .= $titleTag['module'];
@@ -141,7 +138,7 @@ class PublisherMetagen
     }
 
     /**
-     * Does nothing
+     * Does nothing.
      */
     public function createTitleTag()
     {
@@ -167,6 +164,7 @@ class PublisherMetagen
             }
             ++$i;
         }
+
         return $ret;
     }
 
@@ -192,6 +190,7 @@ class PublisherMetagen
                 }
             }
         }
+
         return $keywords;
     }
 
@@ -200,25 +199,26 @@ class PublisherMetagen
      */
     public function createMetaKeywords()
     {
-        $keywords = $this->findMetaKeywords($this->_original_title . ' ' . $this->_description, $this->_minChar);
+        $keywords = $this->findMetaKeywords($this->_original_title.' '.$this->_description, $this->_minChar);
         $moduleKeywords = $this->publisher->getConfig('seo_meta_keywords');
-        if ($moduleKeywords !== '') {
+        if ('' !== $moduleKeywords) {
             $moduleKeywords = explode(',', $moduleKeywords);
             $keywords = array_merge($keywords, array_map('trim', $moduleKeywords));
         }
         $ret = implode(',', $keywords);
+
         return $ret;
     }
 
     /**
-     * Does nothing
+     * Does nothing.
      */
     public function autoBuildMeta_keywords()
     {
     }
 
     /**
-     * Build Metatags
+     * Build Metatags.
      */
     public function buildAutoMetaTags()
     {
@@ -228,27 +228,27 @@ class PublisherMetagen
     }
 
     /**
-     * Creates meta tags
+     * Creates meta tags.
      */
     public function createMetaTags()
     {
         global $xoopsTpl, $xoTheme;
-        if ($this->_keywords !== '') {
+        if ('' !== $this->_keywords) {
             $xoTheme->addMeta('meta', 'keywords', $this->_keywords);
         }
-        if ($this->_description !== '') {
+        if ('' !== $this->_description) {
             $xoTheme->addMeta('meta', 'description', $this->_description);
         }
-        if ($this->_title !== '') {
+        if ('' !== $this->_title) {
             $xoopsTpl->assign('xoops_pagetitle', $this->_title);
         }
     }
 
     /**
-     * Return true if the string is length > 0
+     * Return true if the string is length > 0.
      *
      * @credit psylove
-     * @var string Chaine de caractère
+     * @var    string  Chaine de caractère
      * @return boolean
      */
     public static function emptyString($var)
@@ -257,12 +257,12 @@ class PublisherMetagen
     }
 
     /**
-     * Create a title for the short_url field of an article
+     * Create a title for the short_url field of an article.
      *
      * @credit psylove
      *
-     * @param string $title    title of the article
-     * @param bool   $withExt  do we add an html extension or not
+     * @param string $title   title of the article
+     * @param bool   $withExt do we add an html extension or not
      *
      * @return string short url for article
      */
@@ -288,14 +288,16 @@ class PublisherMetagen
             if ($withExt) {
                 $title .= '.html';
             }
+
             return $title;
         }
+
         return '';
     }
 
     /**
-     * @param string  $text
-     * @param boolean $keyword
+     * @param string $text
+     * @param bool   $keyword
      *
      * @return string
      */
@@ -323,6 +325,7 @@ class PublisherMetagen
             $text = str_replace('\'', ' ', $text);
         }
         $text = str_replace(';', ' ', $text);
+
         return $text;
     }
 
@@ -373,6 +376,7 @@ class PublisherMetagen
             //"chr(\\1)"
         ];
         $text = preg_replace($search, $replace, $document);
+
         return $text;
     }
 }

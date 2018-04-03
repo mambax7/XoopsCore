@@ -13,17 +13,14 @@ use Xmf\Request;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * Mailusers Plugin
+ * Mailusers Plugin.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Kazumi Ono (AKA onokazu)
- * @package         system
- * @subpackage      mailusers
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 // Parameters
@@ -42,19 +39,18 @@ $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('send_mails.php');
 
 switch ($op) {
-
     case 'list':
     default:
         $display_criteria = 1;
         $form = new Xoops\Form\ThemeForm(_AM_MAILUSERS_LIST, 'mailusers', 'send_mails.php', 'post', true);
         //----------------------------------------
-        if (!empty($memberslist_id) && (Request::getMethod() === 'POST')) {
+        if (!empty($memberslist_id) && ('POST' === Request::getMethod())) {
             $user_count = count($memberslist_id);
             $display_names = '';
             for ($i = 0; $i < $user_count; ++$i) {
                 $uid_hidden = new Xoops\Form\Hidden('mail_to_user[]', $memberslist_id[$i]);
                 $form->addElement($uid_hidden);
-                $display_names .= "<a href='" . \XoopsBaseConfig::get('url') . '/userinfo.php?uid=' . $memberslist_id[$i] . "' rel='external'>" . XoopsUser::getUnameFromId($memberslist_id[$i]) . '</a>, ';
+                $display_names .= "<a href='".\XoopsBaseConfig::get('url').'/userinfo.php?uid='.$memberslist_id[$i]."' rel='external'>".XoopsUser::getUnameFromId($memberslist_id[$i]).'</a>, ';
                 unset($uid_hidden);
             }
             $users_label = new Xoops\Form\Label(_AM_MAILUSERS_SENDTOUSERS2, substr($display_names, 0, -2));
@@ -65,41 +61,41 @@ switch ($op) {
         //----------------------------------------
         if (!empty($display_criteria)) {
             $selected_groups = [];
-            $group_select = new Xoops\Form\SelectGroup('<div class="bold spacer">' . _AM_MAILUSERS_GROUPIS . '<span class="bold green">*</span></div>', 'mail_to_group', false, $selected_groups, 5, true);
+            $group_select = new Xoops\Form\SelectGroup('<div class="bold spacer">'._AM_MAILUSERS_GROUPIS.'<span class="bold green">*</span></div>', 'mail_to_group', false, $selected_groups, 5, true);
 
-            $lastlog_min = new Xoops\Form\DateSelect(_AM_MAILUSERS_LASTLOGMIN . '<span class="bold green">*</span>', 'mail_lastlog_min');
+            $lastlog_min = new Xoops\Form\DateSelect(_AM_MAILUSERS_LASTLOGMIN.'<span class="bold green">*</span>', 'mail_lastlog_min');
             $lastlog_min->setValue('');
-            $lastlog_max = new Xoops\Form\DateSelect(_AM_MAILUSERS_LASTLOGMAX . '<span class="bold green">*</span>', 'mail_lastlog_max');
+            $lastlog_max = new Xoops\Form\DateSelect(_AM_MAILUSERS_LASTLOGMAX.'<span class="bold green">*</span>', 'mail_lastlog_max');
             $lastlog_max->setValue('');
 
-            $date = new Xoops\Form\ElementTray('<div class="bold spacer">' . _AM_MAILUSERS_DATE . '</div>', '');
+            $date = new Xoops\Form\ElementTray('<div class="bold spacer">'._AM_MAILUSERS_DATE.'</div>', '');
             $date->addElement($lastlog_min);
             $date->addElement($lastlog_max);
 
-            $idle_more = new Xoops\Form\Text(_AM_MAILUSERS_IDLEMORE . '<span class="bold green">*</span>', 'mail_idle_more', 2, 5);
-            $idle_less = new Xoops\Form\Text(_AM_MAILUSERS_IDLELESS . '<span class="bold green">*</span>', 'mail_idle_less', 2, 5);
+            $idle_more = new Xoops\Form\Text(_AM_MAILUSERS_IDLEMORE.'<span class="bold green">*</span>', 'mail_idle_more', 2, 5);
+            $idle_less = new Xoops\Form\Text(_AM_MAILUSERS_IDLELESS.'<span class="bold green">*</span>', 'mail_idle_less', 2, 5);
 
-            $idle = new Xoops\Form\ElementTray('<div class="bold spacer">' . _AM_MAILUSERS_DAY . '</div>', '');
+            $idle = new Xoops\Form\ElementTray('<div class="bold spacer">'._AM_MAILUSERS_DAY.'</div>', '');
             $idle->addElement($idle_more);
             $idle->addElement($idle_less);
 
-            $regd_min = new Xoops\Form\DateSelect(_AM_MAILUSERS_REGDMIN . '<span class="bold green">*</span>', 'mail_regd_min');
+            $regd_min = new Xoops\Form\DateSelect(_AM_MAILUSERS_REGDMIN.'<span class="bold green">*</span>', 'mail_regd_min');
             $regd_min->setValue('');
-            $regd_max = new Xoops\Form\DateSelect(_AM_MAILUSERS_REGDMAX . '<span class="bold green">*</span>', 'mail_regd_max');
+            $regd_max = new Xoops\Form\DateSelect(_AM_MAILUSERS_REGDMAX.'<span class="bold green">*</span>', 'mail_regd_max');
             $regd_max->setValue('');
 
-            $regdate = new Xoops\Form\ElementTray('<div class="bold spacer">' . _AM_MAILUSERS_REGDATE . '</div>', '');
+            $regdate = new Xoops\Form\ElementTray('<div class="bold spacer">'._AM_MAILUSERS_REGDATE.'</div>', '');
             $regdate->addElement($regd_min);
             $regdate->addElement($regd_max);
 
             $mailok_cbox = new Xoops\Form\Checkbox('', 'mail_mailok');
-            $mailok_cbox->addOption(1, _AM_MAILUSERS_MAILOK . '<span class="bold green">*</span>');
+            $mailok_cbox->addOption(1, _AM_MAILUSERS_MAILOK.'<span class="bold green">*</span>');
             $inactive_cbox = new Xoops\Form\Checkbox('', 'mail_inactive');
-            $inactive_cbox->addOption(1, _AM_MAILUSERS_INACTIVE . '<span class="bold green">*</span>');
+            $inactive_cbox->addOption(1, _AM_MAILUSERS_INACTIVE.'<span class="bold green">*</span>');
             $inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
 
             $criteria_tray = new Xoops\Form\ElementTray(_AM_MAILUSERS_SENDTOUSERS, '<br /><br />');
-            $criteria_tray->setDescription('<span class="bold green">*</span>' . _AM_MAILUSERS_OPTIONAL);
+            $criteria_tray->setDescription('<span class="bold green">*</span>'._AM_MAILUSERS_OPTIONAL);
             $criteria_tray->addElement($group_select);
             //$criteria_tray->addElement($lastlog);
             $criteria_tray->addElement($date);
@@ -117,9 +113,9 @@ switch ($op) {
         $fname_text = new Xoops\Form\Text(_AM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, $xoops->getConfig('fromname') ? $xoops->getConfig('fromname') : htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES));
         $fromemail = $xoops->getConfig('from') ? $xoops->getConfig('from') : $xoops->user->getVar('email', 'E');
         $femail_text = new Xoops\Form\Text(_AM_MAILUSERS_MAILFMAIL, 'mail_fromemail', 30, 255, $fromemail);
-        $subject_caption = _AM_MAILUSERS_MAILSUBJECT . "<br /><br /><span style='font-size:x-small;font-weight:bold;'>" . _AM_MAILUSERS_MAILTAGS . "</span><br /><span style='font-size:x-small;font-weight:normal;'>" . _AM_MAILUSERS_MAILTAGS2 . '</span>';
+        $subject_caption = _AM_MAILUSERS_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILUSERS_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILUSERS_MAILTAGS2.'</span>';
         $subject_text = new Xoops\Form\Text($subject_caption, 'mail_subject', 50, 255);
-        $body_caption = _AM_MAILUSERS_MAILBODY . "<br /><br /><span style='font-size:x-small;font-weight:bold;'>" . _AM_MAILUSERS_MAILTAGS . "</span><br /><span style='font-size:x-small;font-weight:normal;'>" . _AM_MAILUSERS_MAILTAGS1 . '<br />' . _AM_MAILUSERS_MAILTAGS2 . '<br />' . _AM_MAILUSERS_MAILTAGS3 . '<br />' . _AM_MAILUSERS_MAILTAGS4 . '</span>';
+        $body_caption = _AM_MAILUSERS_MAILBODY."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILUSERS_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILUSERS_MAILTAGS1.'<br />'._AM_MAILUSERS_MAILTAGS2.'<br />'._AM_MAILUSERS_MAILTAGS3.'<br />'._AM_MAILUSERS_MAILTAGS4.'</span>';
         $editor_configs = [];
         $editor_configs['name'] = 'mail_body';
         $editor_configs['value'] = '';
@@ -146,6 +142,7 @@ switch ($op) {
         $form->addElement($start_hidden);
         $form->addElement($submit_button);
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     // Send
@@ -323,6 +320,7 @@ switch ($op) {
                 $xoops->tpl()->assign('errors', _AM_MAILUSERS_NOUSERMATCH);
             }
         }
+
         break;
 }
 // Call Footer

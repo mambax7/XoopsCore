@@ -10,19 +10,18 @@
 */
 
 /**
- * SystemExtension
+ * SystemExtension.
  *
  * @category  SystemExtension
- * @package   SystemExtension
  * @author    Andricq Nicolas (AKA MusS)
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SystemExtension extends SystemModule
 {
     /**
-     * getExtension
+     * getExtension.
      *
      * @param string $mod module dirname
      *
@@ -38,7 +37,7 @@ class SystemExtension extends SystemModule
                 if (!is_array($list->getInfo('extension_module'))) {
                     $ret[] = $list;
                 } else {
-                    if (array_search($mod, $list->getInfo('extension_module'), true) !== false) {
+                    if (false !== array_search($mod, $list->getInfo('extension_module'), true)) {
                         $ret[] = $list;
                         //echo $list->getInfo('name') . is_array( $list->getInfo('extension_module') );
                     }
@@ -51,7 +50,7 @@ class SystemExtension extends SystemModule
     }
 
     /**
-     * Return all extensions
+     * Return all extensions.
      *
      * @return array
      */
@@ -66,7 +65,7 @@ class SystemExtension extends SystemModule
         $i = 0;
         foreach ($this->modulesList as $file) {
             $file = trim($file);
-            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
+            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$file.'/xoops_version.php')) {
                 clearstatcache();
                 /* @var $module XoopsModule */
                 $module = $module_handler->create();
@@ -96,8 +95,8 @@ class SystemExtension extends SystemModule
                         ) {
                             $module->setInfo(
                                 'link_pref',
-                                \XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='
-                                . $module->getInfo('mid')
+                                \XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='
+                                .$module->getInfo('mid')
                             );
                         }
                     } else {
@@ -105,28 +104,28 @@ class SystemExtension extends SystemModule
                     }
                     $module->setInfo('version', round($module->getInfo('version'), 2));
                     if (XoopsLoad::fileExists(
-                        \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getInfo('dirname') . '/icons/logo_small.png'
+                        \XoopsBaseConfig::get('root-path').'/modules/'.$module->getInfo('dirname').'/icons/logo_small.png'
                     )) {
                         $module->setInfo(
                             'logo_small',
-                            \XoopsBaseConfig::get('url') . '/modules/' . $module->getInfo('dirname') . '/icons/logo_small.png'
+                            \XoopsBaseConfig::get('url').'/modules/'.$module->getInfo('dirname').'/icons/logo_small.png'
                         );
                     } else {
-                        $module->setInfo('logo_small', \XoopsBaseConfig::get('url') . '/media/xoops/images/icons/16/default.png');
+                        $module->setInfo('logo_small', \XoopsBaseConfig::get('url').'/media/xoops/images/icons/16/default.png');
                     }
                     if (XoopsLoad::fileExists(
-                        \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getInfo('dirname') . '/icons/logo_large.png'
+                        \XoopsBaseConfig::get('root-path').'/modules/'.$module->getInfo('dirname').'/icons/logo_large.png'
                     )) {
                         $module->setInfo(
                             'logo_large',
-                            \XoopsBaseConfig::get('url') . '/modules/' . $module->getInfo('dirname') . '/icons/logo_large.png'
+                            \XoopsBaseConfig::get('url').'/modules/'.$module->getInfo('dirname').'/icons/logo_large.png'
                         );
                     } else {
-                        $module->setInfo('logo_large', \XoopsBaseConfig::get('url') . '/media/xoops/images/icons/32/default.png');
+                        $module->setInfo('logo_large', \XoopsBaseConfig::get('url').'/media/xoops/images/icons/32/default.png');
                     }
                     $module->setInfo(
                         'link_admin',
-                        \XoopsBaseConfig::get('url') . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('adminindex')
+                        \XoopsBaseConfig::get('url').'/modules/'.$module->getInfo('dirname').'/'.$module->getInfo('adminindex')
                     );
                     $module->setInfo('options', $module->getAdminMenu());
                     $ret[] = $module;
@@ -135,11 +134,12 @@ class SystemExtension extends SystemModule
                 }
             }
         }
+
         return $ret;
     }
 
     /**
-     * getInstalledExtensions
+     * getInstalledExtensions.
      *
      * @return array
      */
@@ -152,7 +152,7 @@ class SystemExtension extends SystemModule
         $ret = [];
         $i = 0;
         foreach ($this->modulesList as $file) {
-            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $file . '/xoops_version.php')) {
+            if (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$file.'/xoops_version.php')) {
                 clearstatcache();
                 $file = trim($file);
                 if (!in_array($file, $this->modulesDirnames, true)) {
@@ -169,6 +169,7 @@ class SystemExtension extends SystemModule
                 }
             }
         }
+
         return $ret;
     }
 }

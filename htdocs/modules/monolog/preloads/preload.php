@@ -13,15 +13,14 @@ use Psr\Log\LogLevel;
 use Xoops\Core\PreloadItem;
 
 /**
- * MonologLogger core preloads
+ * MonologLogger core preloads.
  *
  * @category  MonologLogger
- * @package   MonologLogger
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 class MonologPreload extends PreloadItem
@@ -31,7 +30,7 @@ class MonologPreload extends PreloadItem
     private static $configs = null;
 
     /**
-     * eventCoreException
+     * eventCoreException.
      *
      * @param Exception $e an exception
      */
@@ -41,7 +40,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -49,12 +48,12 @@ class MonologPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'monologlogger' => $path . '/class/monologlogger.php',
+            'monologlogger' => $path.'/class/monologlogger.php',
         ]);
     }
 
     /**
-     * core.include.common.security
+     * core.include.common.security.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -69,7 +68,7 @@ class MonologPreload extends PreloadItem
 
         // we will not regenerate this on a miss - will wait until auth is complete
         $monolog_configs = $cache->read($key);
-        if ($monolog_configs !== false) {
+        if (false !== $monolog_configs) {
             self::$configs = $monolog_configs;
         }
         $logger = MonologLogger::getInstance();
@@ -91,7 +90,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * core.database.noconn
+     * core.database.noconn.
      *
      * @param array $args arguments
      */
@@ -105,7 +104,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDatabaseNodb
+     * eventCoreDatabaseNodb.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -119,7 +118,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDatabaseQueryComplete
+     * eventCoreDatabaseQueryComplete.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -137,7 +136,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonConfigsSuccess
+     * eventCoreIncludeCommonConfigsSuccess.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -149,7 +148,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonAuthSuccess
+     * eventCoreIncludeCommonAuthSuccess.
      */
     public static function eventCoreIncludeCommonAuthSuccess()
     {
@@ -164,7 +163,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonEnd
+     * eventCoreIncludeCommonEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -176,7 +175,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreTemplateConstructStart
+     * eventCoreTemplateConstructStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -196,7 +195,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderStart
+     * eventCoreThemeRenderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -206,7 +205,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderEnd
+     * eventCoreThemeRenderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -216,7 +215,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeCheckcacheSuccess
+     * eventCoreThemeCheckcacheSuccess.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -231,7 +230,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeblocksBuildblockStart
+     * eventCoreThemeblocksBuildblockStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -245,7 +244,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDeprecated
+     * eventCoreDeprecated.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -256,7 +255,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDisableerrorreporting
+     * eventCoreDisableerrorreporting.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -266,7 +265,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderStart
+     * eventCoreHeaderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -278,7 +277,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderEnd
+     * eventCoreHeaderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -290,7 +289,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterStart
+     * eventCoreFooterStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -314,7 +313,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterEnd
+     * eventCoreFooterEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -326,7 +325,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreSecurityValidatetokenEnd
+     * eventCoreSecurityValidatetokenEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -341,7 +340,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventCoreModuleAddlog
+     * eventCoreModuleAddlog.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -352,7 +351,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * eventSystemPreferencesSave
+     * eventSystemPreferencesSave.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -381,7 +380,7 @@ class MonologPreload extends PreloadItem
     }
 
     /**
-     * getConfigs
+     * getConfigs.
      *
      * @return array of config options
      */
@@ -389,7 +388,7 @@ class MonologPreload extends PreloadItem
     {
         $xoops = \Xoops::getInstance();
         if (array_key_exists('monolog_default_configs', self::$configs)
-            && self::$configs['monolog_default_configs'] === true) {
+            && true === self::$configs['monolog_default_configs']) {
             self::$configs = $xoops->getModuleConfigs('monolog');
         }
         /*

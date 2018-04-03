@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class ButtonTest extends \PHPUnit\Framework\TestCase
 {
@@ -31,12 +31,12 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(strpos($value, '<input') !== false);
-        $this->assertTrue(strpos($value, 'type="button"') !== false);
-        $this->assertTrue(strpos($value, 'name="button_name"') !== false);
-        $this->assertTrue(strpos($value, 'id="button_name"') !== false);
-        $this->assertTrue(strpos($value, 'title="button_caption"') !== false);
-        $this->assertTrue(strpos($value, 'value="button_value"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input'));
+        $this->assertTrue(false !== strpos($value, 'type="button"'));
+        $this->assertTrue(false !== strpos($value, 'name="button_name"'));
+        $this->assertTrue(false !== strpos($value, 'id="button_name"'));
+        $this->assertTrue(false !== strpos($value, 'title="button_caption"'));
+        $this->assertTrue(false !== strpos($value, 'value="button_value"'));
     }
 
     public function test__construct()

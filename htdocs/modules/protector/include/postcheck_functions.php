@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -38,12 +37,12 @@ function protector_postcheck()
     }
 
     // configs writable check
-    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
-        trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
+    if ('/admin.php' === @$_SERVER['REQUEST_URI'] && !is_writable(dirname(__DIR__).'/configs')) {
+        trigger_error('You should turn the directory '.dirname(__DIR__).'/configs writable', E_USER_WARNING);
     }
 
     // Protector object
-    require_once dirname(__DIR__) . '/class/protector.php';
+    require_once dirname(__DIR__).'/class/protector.php';
     $protector = Protector::getInstance();
 
     $protector->setConn($xoopsDB->conn);
@@ -57,7 +56,7 @@ function protector_postcheck()
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
     if (in_array(substr(XOOPS_VERSION, 0, 12), ['XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'], true)) {
         $xoopsMailerConfig = $xoops->getConfigs();
-        if ($xoopsMailerConfig['mailmethod'] === 'sendmail' && md5_file(\XoopsBaseConfig::get('root-path') . '/class/mail/phpmailer/class.phpmailer.php') === 'ee1c09a8e579631f0511972f929fe36a') {
+        if ('sendmail' === $xoopsMailerConfig['mailmethod'] && 'ee1c09a8e579631f0511972f929fe36a' === md5_file(\XoopsBaseConfig::get('root-path').'/class/mail/phpmailer/class.phpmailer.php')) {
             echo '<strong>phpmailer security hole! Change the preferences of mail from "sendmail" to another, or upgrade the core right now! (message by protector)</strong>';
         }
     }
@@ -82,7 +81,7 @@ function protector_postcheck()
     $reliable_ips = @unserialize(@$conf['reliable_ips']);
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
-            if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+            if (!empty($reliable_ip) && preg_match('/'.$reliable_ip.'/', $_SERVER['REMOTE_ADDR'])) {
                 return true;
             }
         }
@@ -101,7 +100,7 @@ function protector_postcheck()
         $can_ban = true;
     }
     // CHECK for spammers IPS/EMAILS during POST Actions
-    if (@$conf['stopforumspam_action'] !== 'none') {
+    if ('none' !== @$conf['stopforumspam_action']) {
         $protector->stopforumspam($uid);
     }
 
@@ -128,6 +127,7 @@ function protector_postcheck()
         foreach ($skip_dirnames as $skip_dirname) {
             if ($skip_dirname && strstr(getcwd(), $skip_dirname)) {
                 $dos_skipping = true;
+
                 break;
             }
         }
@@ -203,7 +203,7 @@ function protector_postcheck()
     }
 
     // register.php Protection
-    if ($_SERVER['SCRIPT_FILENAME'] === \XoopsBaseConfig::get('root-path') . '/register.php') {
+    if ($_SERVER['SCRIPT_FILENAME'] === \XoopsBaseConfig::get('root-path').'/register.php') {
         $protector->call_filter('postcommon_register');
     }
 

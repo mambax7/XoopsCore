@@ -19,7 +19,7 @@ namespace Xoops\Module\Plugin;
 class PluginAbstract
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string $dirname module dirname
      */

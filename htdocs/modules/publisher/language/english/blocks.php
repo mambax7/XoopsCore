@@ -4,7 +4,7 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
 
 // Blocks

@@ -12,12 +12,11 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
 
 // todo: Check this file
-include __DIR__ . '/header.php';
-include \XoopsBaseConfig::get('root-path') . '/modules/tag/list.tag.php';
+include __DIR__.'/header.php';
+include \XoopsBaseConfig::get('root-path').'/modules/tag/list.tag.php';

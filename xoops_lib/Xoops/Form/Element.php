@@ -14,19 +14,18 @@ namespace Xoops\Form;
 use Xoops\Html\Attributes;
 
 /**
- * Element - Abstract base class for form elements
+ * Element - Abstract base class for form elements.
  *
  * @category  Xoops\Form\Element
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class Element extends Attributes
 {
     /**
-     * Javascript performing additional validation of this element data
+     * Javascript performing additional validation of this element data.
      *
      * This property contains a list of Javascript snippets that will be sent to
      * \Xoops\Form\Form::renderValidationJS().
@@ -43,14 +42,14 @@ abstract class Element extends Attributes
     protected $suppressList = ['caption', 'datalist', 'description', 'option'];
 
     /**
-     * extra attributes to go in the tag
+     * extra attributes to go in the tag.
      *
      * @var array
      */
     protected $extra = [];
 
     /**
-     * __construct
+     * __construct.
      *
      * @param array $attributes array of attribute name => value pairs
      *                           Control attributes:
@@ -70,12 +69,12 @@ abstract class Element extends Attributes
      *
      * This method is abstract and must be overwritten by the child classes.
      *
-     * @return    string
+     * @return string
      */
     abstract public function render();
 
     /**
-     * render attributes as a string to include in HTML output
+     * render attributes as a string to include in HTML output.
      *
      * @return string
      */
@@ -90,18 +89,19 @@ abstract class Element extends Attributes
         // generate id from name if not already set
         if (!$this->has('id')) {
             $id = $this->get('name');
-            if (substr($id, -2) === '[]') {
+            if ('[]' === substr($id, -2)) {
                 $id = substr($id, 0, strlen($id) - 2);
             }
             $this->set('id', $id);
         }
+
         return parent::renderAttributeString();
     }
 
     /**
-     * getValue - Get an array of pre-selected values
+     * getValue - Get an array of pre-selected values.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return mixed
      */
@@ -113,13 +113,15 @@ abstract class Element extends Attributes
             foreach ($values as $value) {
                 $ret[] = $encode ? htmlspecialchars($value, ENT_QUOTES) : $value;
             }
+
             return $ret;
         }
+
         return $encode ? htmlspecialchars($values, ENT_QUOTES) : $values;
     }
 
     /**
-     * setValue - Set pre-selected values
+     * setValue - Set pre-selected values.
      *
      * @param mixed $value value to assign to this element
      */
@@ -129,7 +131,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setName - set the "name" attribute for the element
+     * setName - set the "name" attribute for the element.
      *
      * @param string $name "name" attribute for the element
      */
@@ -139,7 +141,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getName - get the "name" attribute for the element
+     * getName - get the "name" attribute for the element.
      *
      * @return string
      */
@@ -149,7 +151,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setAccessKey - set the access key attribute for the element
+     * setAccessKey - set the access key attribute for the element.
      *
      * @param string $key "accesskey" attribute for the element
      */
@@ -159,7 +161,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getAccessKey - get the access key attribute for the element
+     * getAccessKey - get the access key attribute for the element.
      *
      * @return string "accesskey" attribute value
      */
@@ -169,7 +171,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getAccessString - If the access key is found in the specified string, underline it
+     * getAccessString - If the access key is found in the specified string, underline it.
      *
      * @param string $str string to add access key highlight to
      *
@@ -178,17 +180,18 @@ abstract class Element extends Attributes
     public function getAccessString($str)
     {
         $access = $this->getAccessKey();
-        if (!empty($access) && (($pos = strpos($str, $access)) !== false)) {
+        if (!empty($access) && (false !== ($pos = strpos($str, $access)))) {
             return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES)
-                . '<span style="text-decoration: underline;">'
-                . htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES) . '</span>'
-                . htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES);
+                .'<span style="text-decoration: underline;">'
+                .htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES).'</span>'
+                .htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES);
         }
+
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
     /**
-     * setClass - set the "class" attribute for the element
+     * setClass - set the "class" attribute for the element.
      *
      * @param string $class class attribute for the element
      */
@@ -198,21 +201,22 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getClass - get the "class" attribute for the element
+     * getClass - get the "class" attribute for the element.
      *
      * @return string "class" attribute value
      */
     public function getClass()
     {
         $class = $this->get('class', false);
-        if ($class === false) {
+        if (false === $class) {
             return false;
         }
+
         return htmlspecialchars(implode(' ', $class), ENT_QUOTES);
     }
 
     /**
-     * setPattern - set the "pattern" attribute for the element
+     * setPattern - set the "pattern" attribute for the element.
      *
      * @param string $pattern            pattern attribute for the element
      * @param string $patternDescription pattern description
@@ -224,7 +228,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getPattern - get the "pattern" attribute for the element
+     * getPattern - get the "pattern" attribute for the element.
      *
      * @return string "pattern"
      */
@@ -234,7 +238,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getPatternDescription - get the "pattern_description"
+     * getPatternDescription - get the "pattern_description".
      *
      * @return string "pattern_description"
      */
@@ -244,7 +248,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setDatalist - set the datalist attribute for the element
+     * setDatalist - set the datalist attribute for the element.
      *
      * @param string[]|string $datalist datalist attribute for the element
      */
@@ -254,7 +258,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * renderDatalist - get the datalist attribute for the element
+     * renderDatalist - get the datalist attribute for the element.
      *
      * @return string "datalist" attribute value
      */
@@ -263,18 +267,19 @@ abstract class Element extends Attributes
         if (!$this->isDatalist()) {
             return '';
         }
-        $ret = "\n" . '<datalist id="list_' . $this->getName() . '">' . "\n";
+        $ret = "\n".'<datalist id="list_'.$this->getName().'">'."\n";
         foreach ($this->get('datalist') as $datalist) {
-            $ret .= '<option value="' . htmlspecialchars($datalist, ENT_QUOTES) . '">' . "\n";
+            $ret .= '<option value="'.htmlspecialchars($datalist, ENT_QUOTES).'">'."\n";
         }
-        $ret .= '</datalist>' . "\n";
+        $ret .= '</datalist>'."\n";
+
         return $ret;
     }
 
     /**
      * isDatalist - is there a datalist for the element?
      *
-     * @return boolean true if element has a non-empty datalist
+     * @return bool true if element has a non-empty datalist
      */
     public function isDatalist()
     {
@@ -282,7 +287,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setCaption - set the caption for the element
+     * setCaption - set the caption for the element.
      *
      * @param string $caption caption for element
      */
@@ -292,7 +297,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getCaption - get the caption for the element
+     * getCaption - get the caption for the element.
      *
      * @return string
      */
@@ -303,7 +308,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setTitle - set the title for the element
+     * setTitle - set the title for the element.
      *
      * @param string $title title for element
      */
@@ -313,7 +318,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getTitle - get the title for the element
+     * getTitle - get the title for the element.
      *
      * @return string
      */
@@ -324,15 +329,16 @@ abstract class Element extends Attributes
         }
         if ($this->has(':pattern_description')) {
             return htmlspecialchars(
-                    strip_tags($this->get('caption') . ' - ' . $this->get(':pattern_description')),
+                    strip_tags($this->get('caption').' - '.$this->get(':pattern_description')),
                     ENT_QUOTES
                 );
         }
+
         return htmlspecialchars(strip_tags($this->get('caption')), ENT_QUOTES);
     }
 
     /**
-     * setDescription - set the element's description
+     * setDescription - set the element's description.
      *
      * @param string $description description
      */
@@ -342,20 +348,21 @@ abstract class Element extends Attributes
     }
 
     /**
-     * getDescription - get the element's description
+     * getDescription - get the element's description.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string
      */
     public function getDescription($encode = false)
     {
         $description = $this->get('description', '');
+
         return $encode ? htmlspecialchars($description, ENT_QUOTES) : $description;
     }
 
     /**
-     * setHidden - flag the element as "hidden"
+     * setHidden - flag the element as "hidden".
      */
     public function setHidden()
     {
@@ -365,7 +372,7 @@ abstract class Element extends Attributes
     /**
      * isHidden - is this a hidden element?
      *
-     * @return boolean true if hidden
+     * @return bool true if hidden
      */
     public function isHidden()
     {
@@ -373,9 +380,9 @@ abstract class Element extends Attributes
     }
 
     /**
-     * setRequired - set entry required
+     * setRequired - set entry required.
      *
-     * @param boolean $bool true to set required entry for this element
+     * @param bool $bool true to set required entry for this element
      */
     public function setRequired($bool = true)
     {
@@ -387,7 +394,7 @@ abstract class Element extends Attributes
     /**
      * isRequired - is entry required for this element?
      *
-     * @return boolean true if entry is required
+     * @return bool true if entry is required
      */
     public function isRequired()
     {
@@ -400,8 +407,8 @@ abstract class Element extends Attributes
      * This string will be inserted verbatim and unvalidated in the
      * element's tag. Know what you are doing!
      *
-     * @param string  $extra   extra raw text to insert into form
-     * @param boolean $replace If true, passed string will replace current
+     * @param string $extra   extra raw text to insert into form
+     * @param bool   $replace If true, passed string will replace current
      *                         content, otherwise it will be appended to it
      *
      * @return string[] New content of the extra string
@@ -415,13 +422,14 @@ abstract class Element extends Attributes
         } else {
             $this->extra[] = trim($extra);
         }
+
         return $this->extra;
     }
 
     /**
-     * getExtra - Get the extra attributes for the element
+     * getExtra - Get the extra attributes for the element.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string
      *
@@ -436,17 +444,18 @@ abstract class Element extends Attributes
         foreach ($this->extra as $val) {
             $value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
         }
+
         return empty($value) ? '' : implode(' ', $value);
     }
 
     /**
-     * addCustomValidationCode - Add custom validation javascript
+     * addCustomValidationCode - Add custom validation javascript.
      *
      * This string will be inserted verbatim and unvalidated in the page.
      * Know what you are doing!
      *
-     * @param string  $code    javascript code  to insert into form
-     * @param boolean $replace If true, passed string will replace current code,
+     * @param string $code    javascript code  to insert into form
+     * @param bool   $replace If true, passed string will replace current code,
      *                          otherwise it will be appended to it
      */
     public function addCustomValidationCode($code, $replace = false)
@@ -459,7 +468,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * renderValidationJS - Render custom javascript validation code
+     * renderValidationJS - Render custom javascript validation code.
      *
      * @return string|false
      */
@@ -479,20 +488,21 @@ abstract class Element extends Attributes
             $eltmsg = str_replace([':', '?', '%'], '', $eltmsg);
             $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
             $eltmsg = strip_tags($eltmsg);
+
             return "\n"
-                    . "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\");"
-                    . " myform.{$eltname}.focus(); return false; }\n";
+                    ."if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\");"
+                    ." myform.{$eltname}.focus(); return false; }\n";
         }
 
         return false;
     }
 
     /**
-     * Test if a class that starts with the pattern string is set
+     * Test if a class that starts with the pattern string is set.
      *
      * @param string $pattern 'starts with' to match
      *
-     * @return integer|false false if no match, or index of matching class
+     * @return int|false false if no match, or index of matching class
      */
     public function hasClassLike($pattern)
     {
@@ -500,16 +510,17 @@ abstract class Element extends Attributes
         if ($class) {
             $length = strlen($pattern);
             foreach ((array) $class as $i => $value) {
-                if (strncmp($value, $pattern, $length) === 0) {
+                if (0 === strncmp($value, $pattern, $length)) {
                     return $i;
                 }
             }
         }
+
         return false;
     }
 
     /**
-     * themeDecorateElement - add theme decoration to element
+     * themeDecorateElement - add theme decoration to element.
      *
      *
      * @todo this should ask the theme
@@ -518,15 +529,15 @@ abstract class Element extends Attributes
     {
         $class = 'form-control';
         if ($this instanceof Button) {
-            if ($this->hasClassLike('btn') !== false) {
+            if (false !== $this->hasClassLike('btn')) {
                 return;
             }
             $class = 'btn btn-default';
-        } elseif ($this->hasClassLike('form-') !== false && $this->hasClassLike('col-') !== false) {
+        } elseif (false !== $this->hasClassLike('form-') && false !== $this->hasClassLike('col-')) {
             return;
         } elseif ($this instanceof TextArea) {
             $class = 'form-control';
-        } /**
+        } /*
         } elseif ($this instanceof OptionElement) {
             $class = 'col-md-3';
             $options = $this->get('option', []);
@@ -558,7 +569,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * Convenience method to assist with setting attributes when using BC Element syntax
+     * Convenience method to assist with setting attributes when using BC Element syntax.
      *
      * Set attribute $name to $value, replacing $value with $default if $value is empty, or if the
      * value is not one of the values specified in the (optional) $enum array
@@ -572,14 +583,14 @@ abstract class Element extends Attributes
     {
         if (empty($value)) {
             $value = $default;
-        } elseif ($enum !== null && !in_array($value, $enum, true)) {
+        } elseif (null !== $enum && !in_array($value, $enum, true)) {
             $value = $default;
         }
         $this->set($name, $value);
     }
 
     /**
-     * Convenience method to assist with setting attributes when using BC Element syntax
+     * Convenience method to assist with setting attributes when using BC Element syntax.
      *
      * Set attribute $name to $value, replacing $value with $default if $value is empty, or if the
      * value is not one of the values specified in the (optional) $enum array
@@ -596,7 +607,7 @@ abstract class Element extends Attributes
     }
 
     /**
-     * Convenience method to assist with setting attributes
+     * Convenience method to assist with setting attributes.
      *
      * Set attribute $name to $value, replacing $value with $default if $value is empty, or if the
      * value is not one of the values specified in the (optional) $enum array

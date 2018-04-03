@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * Tab - a form tab
+ * Tab - a form tab.
  *
  * @category  Xoops\Form\Tab
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Tab extends ElementTray
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $name    unique identifier for this tab
@@ -41,7 +40,7 @@ class Tab extends ElementTray
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -55,16 +54,17 @@ class Tab extends ElementTray
             }
             if (!$ele->isHidden()) {
                 $ret .= '<div class="form-group">';
-                $ret .= '<label>' . $ele->getCaption();
-                $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '') . '</label>';
+                $ret .= '<label>'.$ele->getCaption();
+                $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '').'</label>';
                 $ret .= $ele->render();
-                $ret .= '<small class="text-muted">' . $ele->getDescription() . '</small>';
-                $ret .= '<p class="dsc_pattern_vertical">' . $ele->getPatternDescription() . '</p>';
-                $ret .= '</div>' . "\n";
+                $ret .= '<small class="text-muted">'.$ele->getDescription().'</small>';
+                $ret .= '<p class="dsc_pattern_vertical">'.$ele->getPatternDescription().'</p>';
+                $ret .= '</div>'."\n";
             } else {
-                $ret .= $ele->render() . "\n";
+                $ret .= $ele->render()."\n";
             }
         }
+
         return $ret;
     }
 }

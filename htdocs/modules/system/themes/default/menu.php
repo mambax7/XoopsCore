@@ -47,16 +47,16 @@ $admin_dir = $xoops->path('modules/system/admin');
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 $index = 0;
 foreach ($dirlist as $file) {
-    if (XoopsLoad::fileExists($admin_dir . '/' . $file . '/xoops_version.php')) {
-        include $admin_dir . '/' . $file . '/xoops_version.php';
+    if (XoopsLoad::fileExists($admin_dir.'/'.$file.'/xoops_version.php')) {
+        include $admin_dir.'/'.$file.'/xoops_version.php';
         if ($modversion['hasAdmin']) {
-            if ($xoops->getModuleConfig('active_' . $file, 'system')) {
+            if ($xoops->getModuleConfig('active_'.$file, 'system')) {
                 $category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
-                if ($all_ok !== false || in_array($modversion['category'], $ok_syscats, true)) {
+                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats, true)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
                     $adminmenu[$index]['desc'] = trim($modversion['description']);
-                    $adminmenu[$index]['link'] = 'admin.php?fct=' . $file;
-                    $adminmenu[$index]['icon'] = 'icons/' . $modversion['image'];
+                    $adminmenu[$index]['link'] = 'admin.php?fct='.$file;
+                    $adminmenu[$index]['icon'] = 'icons/'.$modversion['image'];
                 }
             }
         }

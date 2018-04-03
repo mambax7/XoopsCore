@@ -12,22 +12,20 @@
 use Xoops\Html\Menu\Link;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->getConfigs();
 
-if (!$xoops->user || $xoops->getConfig('allow_chgmail') !== 1) {
-    $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
+if (!$xoops->user || 1 !== $xoops->getConfig('allow_chgmail')) {
+    $xoops->redirect(\XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'n').'/', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $xoops->header('module:profile/profile_email.tpl');
@@ -67,7 +65,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $xoopsMailer->setTemplate('emailchanged.tpl');
             $xoopsMailer->assign('SITENAME', $xoops->getConfig('sitename'));
             $xoopsMailer->assign('ADMINMAIL', $xoops->getConfig('adminmail'));
-            $xoopsMailer->assign('SITEURL', \XoopsBaseConfig::get('url') . '/');
+            $xoopsMailer->assign('SITEURL', \XoopsBaseConfig::get('url').'/');
             $xoopsMailer->assign('NEWEMAIL', $email);
             $xoopsMailer->setToEmails($email);
             $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
@@ -78,9 +76,9 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $msg = implode('<br />', $xoops->user->getErrors());
         }
     }
-    $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/userinfo.php?uid=' . $xoops->user->getVar('uid'), 2, $msg);
+    $xoops->redirect(\XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'n').'/userinfo.php?uid='.$xoops->user->getVar('uid'), 2, $msg);
 }
 
 $xoops->registry()->get('profile_breadcrumbs')->addItem(new Link(['caption' => _PROFILE_MA_CHANGEMAIL]));
 
-include __DIR__ . '/footer.php';
+include __DIR__.'/footer.php';

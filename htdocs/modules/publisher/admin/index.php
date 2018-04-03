@@ -10,17 +10,15 @@
 */
 
 /**
- * Publisher
+ * Publisher.
  *
  * @copyright    XOOPS Project (http://xoops.org)
  * @license      GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package      Publisher
  * @since        1.0
  * @author       Mage, Mamba
  * @version      $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -30,6 +28,5 @@ $indexAdmin->displayNavigation('index.php');
 
 $indexAdmin->addConfigBoxLine('thumbnail', 'service');
 $indexAdmin->displayIndex();
-
 
 $xoops->footer();

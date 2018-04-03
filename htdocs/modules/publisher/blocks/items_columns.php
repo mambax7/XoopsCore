@@ -12,18 +12,15 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Bandit-x
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 /**
- * Function To Show Publisher Items From Categories In Their Own Columns
+ * Function To Show Publisher Items From Categories In Their Own Columns.
  *
  * @param array $options Block Options
  *
@@ -65,7 +62,7 @@ function publisher_items_columns_show($options)
 
     $ccount = count($sel_categories_obj);
 
-    if ($ccount === 0) {
+    if (0 === $ccount) {
         return false;
     }
 
@@ -103,7 +100,7 @@ function publisher_items_columns_show($options)
             $mainitem['item_summary'] = $thisitem->getBlockSummary($opt_cat_truncate);
 
             $mainitem['item_cat_name'] = $mainitemCatObj->getVar('name');
-            $mainitem['item_cat_description'] = $mainitemCatObj->getVar('description') !== '' ? $mainitemCatObj->getVar('description') : $mainitemCatObj->getVar('name');
+            $mainitem['item_cat_description'] = '' !== $mainitemCatObj->getVar('description') ? $mainitemCatObj->getVar('description') : $mainitemCatObj->getVar('name');
             $mainitem['item_cat_link'] = $mainitemCatObj->getCategoryLink();
             $mainitem['categoryurl'] = $mainitemCatObj->getCategoryUrl();
 
@@ -133,7 +130,7 @@ function publisher_items_columns_show($options)
     $block['columns'] = $columns;
     $block['columnwidth'] = (int) (100 / $opt_num_columns);
 
-    $xoTheme->addStylesheet(\XoopsBaseConfig::get('url') . '/modules/' . PUBLISHER_DIRNAME . '/css/publisher.css');
+    $xoTheme->addStylesheet(\XoopsBaseConfig::get('url').'/modules/'.PUBLISHER_DIRNAME.'/css/publisher.css');
 
     return $block;
 }

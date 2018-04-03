@@ -10,11 +10,10 @@
 */
 
 /**
- * maintenance extensions
+ * maintenance extensions.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         maintenance
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage), Cointin Maxime (AKA Kraven30)
  * @version         $Id$
@@ -51,7 +50,7 @@ $modversion['min_db'] = ['mysql' => '5.0.7']; // table maintenance and dump func
 // paypal
 $modversion['paypal'] = [];
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_MAINTENANCE_DESC;
+$modversion['paypal']['item_name'] = 'Donation : '._MI_MAINTENANCE_DESC;
 $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 

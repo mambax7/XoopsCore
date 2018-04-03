@@ -1,10 +1,9 @@
 <?php
 /**
- * Installer main english strings declaration file
+ * Installer main english strings declaration file.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -17,7 +16,6 @@
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
-
 
 // Configuration check page
 define('SERVER_API', 'Server API');
@@ -67,15 +65,13 @@ define('WELCOME', 'Welcome');
 define('WELCOME_TITLE', 'Welcome to your XOOPS site'); // L0
 define('HELP_BUTTON_ALT', 'Turn on help messages');
 
-
-
 define('XOOPS_ROOT_PATH_LABEL', 'XOOPS documents root physical path');
 define('XOOPS_ROOT_PATH_HELP', 'Physical path to the XOOPS documents (served) directory WITHOUT trailing slash');
 
 define('XOOPS_LIB_PATH_LABEL', 'XOOPS library directory');
-define('XOOPS_LIB_PATH_HELP', 'Physical path to the XOOPS library directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of ' . XOOPS_ROOT_PATH_LABEL . ' to make it secure.');
+define('XOOPS_LIB_PATH_HELP', 'Physical path to the XOOPS library directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of '.XOOPS_ROOT_PATH_LABEL.' to make it secure.');
 define('XOOPS_DATA_PATH_LABEL', 'XOOPS datafiles directory');
-define('XOOPS_DATA_PATH_HELP', 'Physical path to the XOOPS datafiles (writable) directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of ' . XOOPS_ROOT_PATH_LABEL . ' to make it secure.');
+define('XOOPS_DATA_PATH_HELP', 'Physical path to the XOOPS datafiles (writable) directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of '.XOOPS_ROOT_PATH_LABEL.' to make it secure.');
 
 define('XOOPS_URL_LABEL', 'Website location (URL)'); // L56
 define('XOOPS_URL_HELP', 'Main URL that will be used to access your XOOPS installation'); // L58
@@ -141,7 +137,6 @@ define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to 
 define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.<br />Press <em>next</em> to go to the next step.');
 define('DATA_INSERTED', 'Initial data have been inserted into database.<br />Press <em>next</em> to go to the next step.');
 
-
 // Error messages
 define('ERR_COULD_NOT_ACCESS', 'Can not access the folder.');
 define('ERR_NO_XOOPS_FOUND', 'No instalable XOOPS found.');
@@ -165,7 +160,6 @@ define('ERR_WRITE_SECURE', 'Could not write into secure.php. Please check the fi
 define('ERR_INVALID_DBCHARSET', "The charset '%s' is not supported.");
 define('ERR_INVALID_DBCOLLATION', "The collation '%s' is not supported.");
 define('ERR_CHARSET_NOT_SET', 'Default character set is not set for XOOPS database.');
-
 
 define('_INSTALL_CHARSET', 'UTF-8');
 define('_LANGCODE', 'en-US');
@@ -202,7 +196,6 @@ define('NO_INSTALLED_MODULES', 'No module installed.<br />Press <strong>next</st
 define('INSTALLED_EXTENSION', 'The following extensions have been installed.<br />Press <strong>next</strong> to go to the next step.');
 define('NO_EXTENSION_FOUND', 'No extensions found.<br />Press <strong>next</strong> to go to the next step.');
 define('NO_INSTALLED_EXTENSION', 'No extension installed.<br />Press <strong>next</strong> to go to the next step.');
-
 
 define('THEME_NO_SCREENSHOT', 'No screenshot found');
 

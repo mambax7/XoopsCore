@@ -13,14 +13,13 @@ use Xoops\Core\Service\AbstractContract;
 use Xoops\Core\Service\Contract\HtmlToPdfInterface;
 
 /**
- * HtmlToPdf provider for service manager
+ * HtmlToPdf provider for service manager.
  *
  * @category  ServiceProvider
- * @package   HtmlToPdfProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
@@ -83,7 +82,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     private $moddir = 'pdf';
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
@@ -91,7 +90,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * startPdf - start a new pdf
+     * startPdf - start a new pdf.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
@@ -112,7 +111,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -122,7 +121,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setPageOrientation - set page orientation
+     * setPageOrientation - set page orientation.
      *
      * @param Response $response        \Xoops\Core\Service\Response object
      * @param string   $pageOrientation page orientation, 'P' for portrait, 'L' for landscape
@@ -136,7 +135,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setPageSize - set standard page size
+     * setPageSize - set standard page size.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pageSize standard named page size, i.e. 'LETTER', 'A4', etc.
@@ -165,7 +164,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setMargins - set margin sizes
+     * setMargins - set margin sizes.
      *
      * @param Response $response     \Xoops\Core\Service\Response object
      * @param float    $leftMargin   left margin in base units, @see setBaseUnits()
@@ -189,7 +188,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setBaseFont - set the base font used in rendering
+     * setBaseFont - set the base font used in rendering.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $fontFamily font family
@@ -207,7 +206,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setDefaultMonospacedFont - default monotype font used in rendering
+     * setDefaultMonospacedFont - default monotype font used in rendering.
      *
      * @param Response $response       \Xoops\Core\Service\Response object
      * @param string   $monoFontFamily font family
@@ -221,7 +220,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setAuthor - set author in pdf meta data
+     * setAuthor - set author in pdf meta data.
      *
      * @param Response $response  \Xoops\Core\Service\Response object
      * @param string   $pdfAuthor author name
@@ -235,7 +234,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setTitle - set title in pdf meta data
+     * setTitle - set title in pdf meta data.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pdfTitle document title
@@ -249,7 +248,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setSubject - set subject in pdf meta data
+     * setSubject - set subject in pdf meta data.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $pdfSubject document subject
@@ -263,7 +262,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setKeywords - set keywords in pdf meta data
+     * setKeywords - set keywords in pdf meta data.
      *
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string[] $pdfKeywords array of keywords pertaining to document
@@ -279,7 +278,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * addHtml - add HTML formatted text to document. This may be called multiple times
+     * addHtml - add HTML formatted text to document. This may be called multiple times.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $html     HTML formated text to include in document
@@ -293,7 +292,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * outputPdfInline - output a named pdf document file inline
+     * outputPdfInline - output a named pdf document file inline.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
@@ -309,7 +308,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * outputPdfDownload - output a named pdf document file for download
+     * outputPdfDownload - output a named pdf document file for download.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
@@ -325,7 +324,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * fetchPdf - fetch rendered document as a string
+     * fetchPdf - fetch rendered document as a string.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
@@ -337,7 +336,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * resetPdf - resets to default state
+     * resetPdf - resets to default state.
      */
     protected function resetPdf()
     {
@@ -367,7 +366,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * setFromConfigs - set property from config value or default
+     * setFromConfigs - set property from config value or default.
      *
      * @param string $name     config name
      * @param string $property property name
@@ -383,7 +382,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * initPdf - initialize TCPDF with current setting
+     * initPdf - initialize TCPDF with current setting.
      */
     private function initPdf()
     {
@@ -423,7 +422,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
     }
 
     /**
-     * decodeEntities - handles numeric entities
+     * decodeEntities - handles numeric entities.
      *
      * @param string $text text to decode
      *
@@ -442,7 +441,7 @@ class HtmlToPdfProvider extends AbstractContract implements HtmlToPdfInterface
         $text = preg_replace_callback(
             '/&#x([a-f0-9]+);/mi',
             function ($m) {
-                return utf8_encode(chr('0x' . $m[1]));
+                return utf8_encode(chr('0x'.$m[1]));
             },
             $text
         );  //hex notation

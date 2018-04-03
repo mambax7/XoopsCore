@@ -15,20 +15,19 @@ use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsBlockModuleLinkHandler
- * @package   Xoops\Core\Kernel
  * @author    Gregory Mage (AKA Mage)
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsBlockModuleLinkHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param null|Connection $db database
      */

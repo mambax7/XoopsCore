@@ -10,19 +10,18 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
 
 /**
- * Class XlanguageTinymceForm
+ * Class XlanguageTinymceForm.
  */
 class XlanguageTinymceForm extends Xoops\Form\SimpleForm
 {
     /**
-     *__construct
+     *__construct.
      *
      * @param array $xlanguage language options array
      */
@@ -46,7 +45,7 @@ class XlanguageTinymceForm extends Xoops\Form\SimpleForm
         $this->addElement(new Xoops\Form\Raw('<div id="text_language_msg"><script type="text/javascript">Xoops_xlanguageDialog.onkeyupMLC(this);</script></div>'));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
 

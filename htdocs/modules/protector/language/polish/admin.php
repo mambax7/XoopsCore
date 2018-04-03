@@ -41,13 +41,11 @@ define('_AM_MSG_GROUP1IPSCANTOPEN', 'Plik z adresami IP dla grupy=1 nie może zo
 define('_AM_MSG_REMOVED', 'Zaznaczone wpisy zostały usunięte');
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "Nadaj prawa zapisu dla katalogu: %s" ) ;
 
-
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'Manager prefixu');
 define('_AM_MSG_DBUPDATED', 'Baza danych została uaktualniona!');
 define('_AM_CONFIRM_DELETE', 'Wszystkie dane zostaną zrzucone. OK?');
 define('_AM_TXT_HOWTOCHANGEDB', "Jeśli chcesz zmienić prefix w bazie,<br /> wyedytuj %s/mainfile.php za pomocą dowolnego edytora.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
-
 
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'Niebezpieczne');

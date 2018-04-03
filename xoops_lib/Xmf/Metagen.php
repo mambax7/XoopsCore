@@ -12,20 +12,19 @@
 namespace Xmf;
 
 /**
- * Metagen facilitates generating and assigning page meta tags
+ * Metagen facilitates generating and assigning page meta tags.
  *
  * @category  Xmf\Metagen
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Metagen
 {
     /**
-     * mbstring encoding
+     * mbstring encoding.
      */
     public const ENCODING = 'UTF-8';
 
@@ -36,7 +35,7 @@ class Metagen
     public const ELLIPSIS = '…'; // unicode horizontal ellipsis U+2026
 
     /**
-     * assignTitle set the page title
+     * assignTitle set the page title.
      *
      * @param string $title page title
      */
@@ -48,7 +47,7 @@ class Metagen
     }
 
     /**
-     * assignKeywords set the meta keywords tag
+     * assignKeywords set the meta keywords tag.
      *
      * @param string[] $keywords keywords list
      */
@@ -61,7 +60,7 @@ class Metagen
     }
 
     /**
-     * assignDescription set the meta description tag
+     * assignDescription set the meta description tag.
      *
      * @param string $description page description
      */
@@ -74,11 +73,11 @@ class Metagen
     }
 
     /**
-     * generateKeywords builds a set of keywords from text body
+     * generateKeywords builds a set of keywords from text body.
      *
      * @param string        $body      text to extract keywords from
-     * @param integer       $count     number of keywords to use
-     * @param integer       $minLength minimum length of word to consider as a keyword
+     * @param int           $count     number of keywords to use
+     * @param int           $minLength minimum length of word to consider as a keyword
      * @param string[]|null $forceKeys array of keywords to force use, or null for none
      *
      * @return array of keywords
@@ -135,10 +134,10 @@ class Metagen
     }
 
     /**
-     * generateDescription - generate a short description from a body of text
+     * generateDescription - generate a short description from a body of text.
      *
-     * @param string  $body      body text
-     * @param integer $wordCount maximum word count for description
+     * @param string $body      body text
+     * @param int    $wordCount maximum word count for description
      *
      * @return string
      */
@@ -159,14 +158,14 @@ class Metagen
         if (function_exists('mb_strlen')) {
             $len = mb_strlen($ret, static::ENCODING);
             $lastPeriod = mb_strrpos($ret, '.', 0, static::ENCODING);
-            $ret .= ($lastPeriod === false) ? static::ELLIPSIS : '';
+            $ret .= (false === $lastPeriod) ? static::ELLIPSIS : '';
             if ($len > 100 && ($len - $lastPeriod) < 30) {
                 $ret = mb_substr($ret, 0, $lastPeriod + 1, static::ENCODING);
             }
         } else {
             $len = strlen($ret);
             $lastPeriod = strrpos($ret, '.');
-            $ret .= ($lastPeriod === false) ? static::ELLIPSIS : '';
+            $ret .= (false === $lastPeriod) ? static::ELLIPSIS : '';
             if ($len > 100 && ($len - $lastPeriod) < 30) {
                 $ret = substr($ret, 0, $lastPeriod + 1);
             }
@@ -176,7 +175,7 @@ class Metagen
     }
 
     /**
-     * generateMetaTags - generate and assign all meta tags
+     * generateMetaTags - generate and assign all meta tags.
      *
      * @param string        $title     title
      * @param string        $body      body text
@@ -202,7 +201,7 @@ class Metagen
     }
 
     /**
-     * Create a title for the short_url field of an article
+     * Create a title for the short_url field of an article.
      *
      * @param string $title     title of the article
      * @param string $extension extension to add
@@ -221,7 +220,8 @@ class Metagen
         $tableau = array_filter($tableau, [static::stopWordsObject(), 'check']);
         $title = implode('-', $tableau);
 
-        $title = (empty($title)) ? '' : $title . $extension;
+        $title = (empty($title)) ? '' : $title.$extension;
+
         return $title;
     }
 
@@ -254,7 +254,7 @@ class Metagen
             if ($pre) {
                 // we are not at the beginning so find first blank
                 $temp = mb_strpos($haystack, ' ', $start, static::ENCODING);
-                $start = ($temp === false) ? $start : $temp;
+                $start = (false === $temp) ? $start : $temp;
                 $haystack = mb_substr($haystack, $start, mb_strlen($haystack), static::ENCODING);
             }
 
@@ -270,7 +270,7 @@ class Metagen
             if ($pre) {
                 // we are not at the beginning so find first blank
                 $temp = strpos($haystack, ' ', $start);
-                $start = ($temp === false) ? $start : $temp;
+                $start = (false === $temp) ? $start : $temp;
                 $haystack = substr($haystack, $start);
             }
 
@@ -283,7 +283,8 @@ class Metagen
                 }
             }
         }
-        $haystack = ($pre ? static::ELLIPSIS : '') . trim($haystack) . ($post ? static::ELLIPSIS : '');
+        $haystack = ($pre ? static::ELLIPSIS : '').trim($haystack).($post ? static::ELLIPSIS : '');
+
         return $haystack;
     }
 
@@ -302,7 +303,7 @@ class Metagen
     }
 
     /**
-     * assign meta variables in template engine
+     * assign meta variables in template engine.
      *
      * @param string $name  meta name (keywords, description)
      * @param string $value meta value
@@ -318,7 +319,7 @@ class Metagen
     }
 
     /**
-     * assign meta variables in template engine
+     * assign meta variables in template engine.
      *
      * @param string $name  variable name (i.e. xoops_pagtitle)
      * @param string $value meta value
@@ -334,7 +335,7 @@ class Metagen
     }
 
     /**
-     * Return true if the string is length > 0
+     * Return true if the string is length > 0.
      *
      * @param string $var to test
      *
@@ -375,7 +376,7 @@ class Metagen
      * @param string $haystack the string to summarize
      * @param mixed  $needles  search term, array of search terms, or null
      *
-     * @return integer[] array of initial positions of substring of haystack
+     * @return int[] array of initial positions of substring of haystack
      */
     protected static function getNeedlePositions($haystack, $needles)
     {
@@ -387,18 +388,19 @@ class Metagen
             } else {
                 $i = stripos($haystack, $needle, 0);
             }
-            if ($i !== false) {
+            if (false !== $i) {
                 $pos[] = $i; // only store matches
             }
         }
+
         return $pos;
     }
 
     /**
-     * purifyText
+     * purifyText.
      *
-     * @param string  $text    text to clean
-     * @param boolean $keyword replace some punctuation with white space
+     * @param string $text    text to clean
+     * @param bool   $keyword replace some punctuation with white space
      *
      * @return string cleaned text
      */
@@ -437,7 +439,7 @@ class Metagen
     /**
      * html2text
      * This will remove HTML tags, javascript sections and white space. It will also
-     * convert some common HTML entities to their text equivalent. Credits to newbb2
+     * convert some common HTML entities to their text equivalent. Credits to newbb2.
      *
      * @param string $document HTML to be converted
      *
@@ -491,16 +493,17 @@ class Metagen
     }
 
     /**
-     * Get a StopWords object
+     * Get a StopWords object.
      *
      * @return StopWords
      */
     protected static function stopWordsObject()
     {
         static $object;
-        if ($object === null) {
+        if (null === $object) {
             $object = new StopWords();
         }
+
         return $object;
     }
 }

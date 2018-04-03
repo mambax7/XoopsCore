@@ -10,11 +10,10 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
@@ -70,7 +69,6 @@ define('_AM_BANNERS_BANNERS_UPLOADS', 'Upload');
 define('_AM_BANNERS_BANNERS_USEHTML', 'Use HTML?');
 
 define('_AM_BANNERS_BANNERS_ERROR_NOCLIENT', 'Please create first a client');
-
 
 // Tips
 define('_AM_BANNERS_TIPS_CLIENTS', '<ul><li>Add, modify and update clients.</li></ul>');

@@ -10,17 +10,14 @@
  */
 
 /**
- *  Publisher class
+ *  Publisher class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Class
- * @subpackage      Utils
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class PublisherMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
 {
     /**
@@ -30,7 +27,7 @@ class PublisherMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      * ex: return array(0 => array(
      *      'name' => _MI_PUBLISHER_SUB_SMNAME3;
      *      'url' => "search.php";
-     *    ));
+     *    ));.
      *
      * @return array
      */
@@ -61,6 +58,7 @@ class PublisherMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements
             'name' => _MI_PUBLISHER_SUB_ARCHIVE,
             'url' => 'archive.php',
         ];
+
         return $ret;
     }
 }

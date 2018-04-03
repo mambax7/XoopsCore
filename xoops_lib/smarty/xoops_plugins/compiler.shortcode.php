@@ -16,13 +16,13 @@
  */
 
 /**
- * Allows usage of shortcodes in templates
+ * Allows usage of shortcodes in templates.
  *
  * Usage example: {shortcode [b]Hello World[/b]}
  * Output example: <b>Hello World<b>
  *
  *
- * @param array $args
+ * @param  array  $args
  * @return string
  */
 function smarty_compiler_shortcode($args, Smarty $smarty)
@@ -30,6 +30,7 @@ function smarty_compiler_shortcode($args, Smarty $smarty)
     if ($string = reset($args)) {
         $string = trim($string, " '\"\t\n\r\0\x0B");
         $shortCodes = \Xoops\Core\Text\Sanitizer::getInstance()->getShortCodes();
+
         return $shortCodes->process($string);
     }
 }

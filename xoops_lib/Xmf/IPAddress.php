@@ -12,14 +12,13 @@
 namespace Xmf;
 
 /**
- * Language
+ * Language.
  *
  * @category  Xmf\IPAddress
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class IPAddress
 {
@@ -40,7 +39,7 @@ class IPAddress
     }
 
     /**
-     * Get IP address from the request server data
+     * Get IP address from the request server data.
      *
      * @return IPAddress
      */
@@ -49,11 +48,12 @@ class IPAddress
         $ip = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
         $class = get_called_class();
         $instance = new $class($ip);
+
         return $instance;
     }
 
     /**
-     * return presentation form of address
+     * return presentation form of address.
      *
      * @return string|false
      */
@@ -63,33 +63,35 @@ class IPAddress
     }
 
     /**
-     * get network (binary) form of address
+     * get network (binary) form of address.
      *
      * @return string|false
      */
     public function asBinary()
     {
-        if ($this->ip === false) {
+        if (false === $this->ip) {
             return false;
         }
         $binary = inet_pton($this->ip);
+
         return $binary;
     }
 
     /**
-     * get the ip version, 4 or 6, of address
+     * get the ip version, 4 or 6, of address.
      *
      * @return int|false integer 4 for IPV4, 6 for IPV6, or false if invalid
      */
     public function ipVersion()
     {
-        if ($this->ip === false) {
+        if (false === $this->ip) {
             return false;
-        } elseif (filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+        } elseif (false !== filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             return 4;
-        } elseif (filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+        } elseif (false !== filter_var($this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             return 6;
         }
+
         return false;
     }
 
@@ -108,26 +110,31 @@ class IPAddress
     public function sameSubnet($matchIp, $netMask4, $netMask6)
     {
         $match = new self($matchIp);
-        if ($this->ipVersion() === false || ($this->ipVersion() !== $match->ipVersion())) {
+        if (false === $this->ipVersion() || ($this->ipVersion() !== $match->ipVersion())) {
             return false;
         }
         switch ($this->ipVersion()) {
             case 4:
                 $mask = (-1) << (32 - $netMask4);
+
                 return (ip2long($this->ip) & $mask) === (ip2long($match->asReadable()) & $mask);
+
                 break;
             case 6:
                 $ipBits = $this->asBinaryString($this);
                 $matchBits = $this->asBinaryString($match);
-                $match = (strncmp($ipBits, $matchBits, $netMask6) === 0);
+                $match = (0 === strncmp($ipBits, $matchBits, $netMask6));
+
                 return $match;
+
                 break;
         }
+
         return false;
     }
 
     /**
-     * convert IP address into a normalized condensed notation
+     * convert IP address into a normalized condensed notation.
      *
      * @param string $ip ip address to normalize
      *
@@ -136,11 +143,12 @@ class IPAddress
     protected function normalize($ip)
     {
         $normal = inet_ntop(inet_pton($ip));
+
         return $normal;
     }
 
     /**
-     * Convert an IP address to a binary character string (i.e. "01111111000000000000000000000001")
+     * Convert an IP address to a binary character string (i.e. "01111111000000000000000000000001").
      *
      * @param IPAddress $ip address object
      *
@@ -148,13 +156,14 @@ class IPAddress
      */
     protected function asBinaryString(self $ip)
     {
-        $length = ($ip->ipVersion() === 4) ? 4 : 16;
+        $length = (4 === $ip->ipVersion()) ? 4 : 16;
         $binaryIp = $ip->asBinary();
         $bits = '';
         for ($i = 0; $i < $length; $i++) {
             $byte = decbin(ord($binaryIp[$i]));
-            $bits .= substr('00000000' . $byte, -8);
+            $bits .= substr('00000000'.$byte, -8);
         }
+
         return $bits;
     }
 }

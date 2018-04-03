@@ -14,21 +14,20 @@ namespace Xmf\Key;
 use Xmf\Random;
 
 /**
- * Xmf\Key\StorageInterface
+ * Xmf\Key\StorageInterface.
  *
  * load a database table
  *
  * @category  Xmf\Key\Basic
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Basic extends KeyAbstract
 {
     /**
-     * get key for use in signing
+     * get key for use in signing.
      *
      * @return string verifying key, false on error
      */
@@ -38,7 +37,7 @@ class Basic extends KeyAbstract
     }
 
     /**
-     * get key for use in verifying
+     * get key for use in verifying.
      *
      * @return string verifying key, false on error
      */
@@ -48,22 +47,23 @@ class Basic extends KeyAbstract
     }
 
     /**
-     * create the key and store it for use
+     * create the key and store it for use.
      *
-     * @return boolean true if key was created and stored, otherwise false
+     * @return bool true if key was created and stored, otherwise false
      */
     public function create()
     {
         if (!$this->storage->exists($this->name)) {
             return $this->storage->save($this->name, Random::generateKey());
         }
+
         return false;
     }
 
     /**
-     * delete the key
+     * delete the key.
      *
-     * @return boolean true if key was deleted, otherwise false
+     * @return bool true if key was deleted, otherwise false
      */
     public function kill()
     {

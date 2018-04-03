@@ -51,10 +51,10 @@ define('_PROFILE_AM_PROF_SEARCH', 'Searchable by these groups');
 define('_PROFILE_AM_PROF_ACCESS', 'Profile accessible by these groups');
 define(
     '_PROFILE_AM_PROF_ACCESS_DESC',
-        '<ul>' .
-        "<li>Admin groups: If a user belongs to admin groups, the current user has access if and only if one of the current user's groups is allowed to access admin group; else</li>" .
-        "<li>Non basic groups: If a user belongs to one or more non basic groups (NOT admin, user, anonymous), the current user has access if and only if one of the current user's groups is allowed to allowed to any of the non basic groups; else</li>" .
-        '<li>User group: If a user belongs to User group only, the current user has access if and only if one of his groups is allowed to access User group</li>' .
+        '<ul>'.
+        "<li>Admin groups: If a user belongs to admin groups, the current user has access if and only if one of the current user's groups is allowed to access admin group; else</li>".
+        "<li>Non basic groups: If a user belongs to one or more non basic groups (NOT admin, user, anonymous), the current user has access if and only if one of the current user's groups is allowed to allowed to any of the non basic groups; else</li>".
+        '<li>User group: If a user belongs to User group only, the current user has access if and only if one of his groups is allowed to access User group</li>'.
         '</ul>'
 );
 

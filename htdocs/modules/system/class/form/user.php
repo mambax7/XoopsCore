@@ -13,19 +13,18 @@ use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * SystemUserForm
+ * SystemUserForm.
  *
  * @category  Modules/system/class/form
- * @package   SystemUserForm
  * @author    Andricq Nicolas (AKA MusS)
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SystemUserForm extends Xoops\Form\ThemeForm
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param XoopsUser|XoopsObject &$obj user object
      */
@@ -73,7 +72,7 @@ class SystemUserForm extends Xoops\Form\ThemeForm
             $occ_value = $obj->getVar('user_occ', 'E');
             $interest_value = $obj->getVar('user_intrest', 'E');
             $sig_value = $obj->getVar('user_sig', 'E');
-            $sig_cbox_value = ($obj->getVar('attachsig') === 1) ? 1 : 0;
+            $sig_cbox_value = (1 === $obj->getVar('attachsig')) ? 1 : 0;
             $bio_value = $obj->getVar('bio', 'E');
             $rank_value = $obj->getVar('rank');
             $mailok_value = $obj->getVar('user_mailok', 'E');
@@ -113,7 +112,7 @@ class SystemUserForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\TextArea(XoopsLocale::EXTRA_INFO, 'bio', $bio_value, 5, 5));
 
         $ranklist = $xoops->service('userrank')->getAssignableUserRankList()->getValue();
-        if ($ranklist !== null) {
+        if (null !== $ranklist) {
             $rank_select = new Xoops\Form\Select(XoopsLocale::RANK, 'rank', $rank_value);
             $rank_select->addOption(0, '--------------');
             if (count($ranklist) > 0) {
@@ -145,7 +144,7 @@ class SystemUserForm extends Xoops\Form\ThemeForm
         } else {
             //add each user groups
             foreach ($groups as $key => $group) {
-                $group_select[] = new Xoops\Form\Hidden('groups[' . $key . ']', $group);
+                $group_select[] = new Xoops\Form\Hidden('groups['.$key.']', $group);
             }
         }
         foreach ($group_select as $group) {

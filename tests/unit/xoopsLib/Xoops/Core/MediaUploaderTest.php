@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class MediaUploaderTest extends \PHPUnit\Framework\TestCase
 {
@@ -76,7 +76,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $allowed_mime_types = ['toto'];
         $theme = new $this->myclass($upload_dir, $allowed_mime_types);
         $nom = 'toto';
-        $theme->setTargetFileName('  ' . $nom . '  ');
+        $theme->setTargetFileName('  '.$nom.'  ');
         $this->assertSame($nom, $theme->targetFileName);
     }
 
@@ -86,7 +86,7 @@ class MediaUploaderTest extends \PHPUnit\Framework\TestCase
         $allowed_mime_types = ['toto'];
         $theme = new $this->myclass($upload_dir, $allowed_mime_types);
         $nom = 'toto';
-        $theme->setPrefix('  ' . $nom . '  ');
+        $theme->setPrefix('  '.$nom.'  ');
         $this->assertSame($nom, $theme->prefix);
     }
 

@@ -10,20 +10,18 @@
 */
 
 /**
- * Upgrader check version file
+ * Upgrader check version file.
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
  * @since       2.0.13
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id$
  */
-
 defined('XOOPS_ROOT_PATH') or die();
 
 $dirs = getDirList('.');
@@ -71,19 +69,20 @@ if ($needUpgrade && !empty($files)) {
 </table>
 <?php
     if (!$needUpgrade) {
-        $update_link = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _UPDATE_SYSTEM_MODULE . '</a>';
-        echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . '</div>';
+        $update_link = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._UPDATE_SYSTEM_MODULE.'</a>';
+        echo '<div class="x2-note">'.sprintf(_NO_NEED_UPGRADE, $update_link).'</div>';
+
         return;
     }
         if (!empty($files)) {
-            echo '<div class="x2-note"><p>' . _NEED_UPGRADE . '<br />' . _SET_FILES_WRITABLE . '</p><ul>';
+            echo '<div class="x2-note"><p>'._NEED_UPGRADE.'<br />'._SET_FILES_WRITABLE.'</p><ul>';
             foreach ($files as $file) {
                 echo "<li>{$file}</li>\n";
             }
             echo '</ul></div>';
-            echo '<a id="link-next" href="index.php">' . _RELOAD . '</a>';
+            echo '<a id="link-next" href="index.php">'._RELOAD.'</a>';
         } else {
-            echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a>';
+            echo '<a id="link-next" href="index.php?action=next">'._PROCEED_UPGRADE.'</a>';
         }
 
 ?>

@@ -2,7 +2,7 @@
 
 namespace Xmf;
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class LanguageTest extends \PHPUnit\Framework\TestCase
 {

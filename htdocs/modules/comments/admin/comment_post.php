@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Comments
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 //there is no way to override current tabs when using system menu
 //this dirty hack will have to do it
 $_SERVER['REQUEST_URI'] = 'admin/main.php';

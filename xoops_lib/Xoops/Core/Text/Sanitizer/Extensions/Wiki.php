@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Wiki extends ExtensionAbstract
 {
@@ -36,7 +35,7 @@ class Wiki extends ExtensionAbstract
     ];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -71,11 +70,12 @@ class Wiki extends ExtensionAbstract
                 domobj.focus();
             }
 EOH;
+
         return [$buttonCode, $javascript];
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -86,7 +86,7 @@ EOH;
     }
 
     /**
-     * build link to wiki page
+     * build link to wiki page.
      *
      * @param array $match from preg_match of wiki resource
      *
@@ -101,6 +101,7 @@ EOH;
         $url = \Xoops::getInstance()->url(sprintf($this->config['link'], urlencode($wikiWord)));
 
         $newContent = sprintf($this->config['template'], $url, $wikiWord);
+
         return $newContent;
     }
 }

@@ -15,15 +15,14 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
- * ComposerUtility
+ * ComposerUtility.
  *
  * @category  Xoops\Core\ComposerUtility
- * @package   ComposerUtility
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class ComposerUtility
@@ -37,52 +36,55 @@ class ComposerUtility
     private $errors = [];
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
     }
 
     /**
-     * composerExecute - execute a command using composer
+     * composerExecute - execute a command using composer.
      *
      * @param string $command_line command to pass to composer, i.e. 'update'
      *
-     * @return boolean true on success, false if command failed or could not execute
+     * @return bool true on success, false if command failed or could not execute
      */
     public function composerExecute($command_line)
     {
         $this->output = [];
         $this->errors = [];
 
-        $options = ' ' . trim($this->exeOptions) . ' ';
+        $options = ' '.trim($this->exeOptions).' ';
 
         if (empty($this->exe)) {
             $exeFinder = new PhpExecutableFinder();
             $foundExe = $exeFinder->find();
             if ($foundExe) {
-                $this->exe = $foundExe . ' composer.phar';
+                $this->exe = $foundExe.' composer.phar';
             } else {
                 $this->errors[] = 'Cannot find PHP executable';
+
                 return false;
             }
         }
 
         if (!chdir(\XoopsBaseConfig::get('lib-path'))) {
             $this->errors[] = 'Cannot change directory to lib-path';
+
             return false;
         }
 
         set_time_limit(300); // don't want this script to timeout;
-        $command = $this->exe . $options . $command_line;
-        putenv('COMPOSER_HOME=' . \XoopsBaseConfig::get('var-path') . '/composer');
+        $command = $this->exe.$options.$command_line;
+        putenv('COMPOSER_HOME='.\XoopsBaseConfig::get('var-path').'/composer');
         $process = new Process($command);
         //$process->setEnv(array('COMPOSER_HOME' => \XoopsBaseConfig::get('var-path').'/composer'));
         $process->setTimeout(120);
+
         try {
             $process->run(
                 function ($type, $buffer) use (&$errors, &$output) {
-                    if ($type === Process::ERR) {
+                    if (Process::ERR === $type) {
                         $errors[] = $buffer;
                     } else {
                         $this->output[] = $buffer;
@@ -95,9 +97,10 @@ class ComposerUtility
 
         if ($process->isSuccessful()) {
             array_unshift($this->output, $process->getErrorOutput());
+
             return true;
         }
-        $this->errors[] = 'Failed: ' . $command;
+        $this->errors[] = 'Failed: '.$command;
         $this->errors[] = sprintf(
                 "Process exit code: %s, '%s'",
                 $process->getExitCode(),
@@ -108,7 +111,7 @@ class ComposerUtility
     }
 
     /**
-     * getLastOutput - return output from last composerExecute()
+     * getLastOutput - return output from last composerExecute().
      *
      * @return array
      */
@@ -118,7 +121,7 @@ class ComposerUtility
     }
 
     /**
-     * getLastError - return errors from last composerExecute()
+     * getLastError - return errors from last composerExecute().
      *
      * @return array
      */
@@ -128,7 +131,7 @@ class ComposerUtility
     }
 
     /**
-     * setComposerExe - set a specific executable for Composer
+     * setComposerExe - set a specific executable for Composer.
      *
      * By default symfony/process looks for a PHP executable, and it is passed an
      * argument of a local copy of composer.phar. This method allows an override

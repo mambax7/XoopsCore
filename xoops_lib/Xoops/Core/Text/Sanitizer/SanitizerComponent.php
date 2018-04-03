@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\ShortCodes;
 
 /**
- * XOOPS Text/Sanitizer/SanitizerComponent - extension, filter
+ * XOOPS Text/Sanitizer/SanitizerComponent - extension, filter.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class SanitizerComponent extends SanitizerConfigurable
 {
@@ -42,7 +41,7 @@ abstract class SanitizerComponent extends SanitizerConfigurable
     protected $config = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Sanitizer $ts text sanitizer instance being extended
      */

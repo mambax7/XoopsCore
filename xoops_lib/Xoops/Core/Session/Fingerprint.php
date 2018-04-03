@@ -15,26 +15,25 @@ use Xoops\Core\AttributeInterface;
 use Xoops\Core\HttpRequest;
 
 /**
- * Session management
+ * Session management.
  *
  * @category  Xoops\Core\Session
- * @package   Fingerprint
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Fingerprint implements FingerprintInterface
 {
     /**
-     * The current request's client IP
+     * The current request's client IP.
      *
      * @var string
      */
     protected $clientFingerprint = [];
 
     /**
-     * This method manages the session fingerprint
+     * This method manages the session fingerprint.
      *
      * Check current client Fingerprint against the values saved in the session.
      * Save the current Fingerprint to the session
@@ -52,7 +51,7 @@ class Fingerprint implements FingerprintInterface
         $changes = 0; // number of changed fields
         $currentFingerprint = $this->takePrint();
         $savedFingerprint = unserialize($session->get('SESSION_FINGERPRINT'));
-        if ($savedFingerprint === false) {
+        if (false === $savedFingerprint) {
             $savedFingerprint = $currentFingerprint;
             $changes = empty($_SESSION) ? 0 : 3; // in a populated session - force fail;
         }
@@ -71,6 +70,7 @@ class Fingerprint implements FingerprintInterface
             $return = false;
         }
         $session->set('SESSION_FINGERPRINT', serialize($currentFingerprint));
+
         return $return;
     }
 

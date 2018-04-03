@@ -16,21 +16,20 @@ use Xoops\Core\Kernel\CriteriaElement;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * XoopsBlockHandler
+ * XoopsBlockHandler.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsBlockHandler
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author    Gregory Mage (AKA Mage)
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsBlockHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db database
      */
@@ -40,7 +39,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Insert a block
+     * Insert a block.
      *
      * @param XoopsBlock $obj   block object to persist
      * @param bool       $force force insert even in 'safe' requests
@@ -50,11 +49,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
     public function insertBlock(XoopsBlock $obj, $force = false)
     {
         $obj->setVar('last_modified', time());
+
         return parent::insert($obj, $force);
     }
 
     /**
-     * Delete a ID from the database
+     * Delete a ID from the database.
      *
      * @param XoopsBlock $obj object to delete
      *
@@ -67,13 +67,13 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         }
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->deletePrefix('system_permission', null)
+        $qb->deletePrefix('system_permission', null)
             ->where($eb->eq('gperm_name', $eb->literal('block_read')))
             ->andWhere($eb->eq('gperm_itemid', $qb->createNamedParameter($obj->getVar('bid'), \PDO::PARAM_INT)))
             ->andWhere($eb->eq('gperm_modid', $qb->createNamedParameter(1, \PDO::PARAM_INT)))
             ->execute();
 
-        $qb ->deletePrefix('system_blockmodule', null)
+        $qb->deletePrefix('system_blockmodule', null)
             ->where($eb->eq('block_id', $qb->createNamedParameter($obj->getVar('bid'), \PDO::PARAM_INT)))
             ->execute();
 
@@ -81,7 +81,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * retrieve array of XoopsBlock objects meeting certain conditions
+     * retrieve array of XoopsBlock objects meeting certain conditions.
      *
      * @param CriteriaElement|null $criteria  criteria to match
      * @param bool                 $id_as_key should the blocks' bid be the key for the returned array?
@@ -94,7 +94,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
 
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('DISTINCT(b.bid)')
+        $qb->select('DISTINCT(b.bid)')
             ->addSelect('b.*')
             ->fromPrefix('system_block', 'b')
             ->leftJoinPrefix('b', 'system_blockmodule', 'l', $eb->eq('b.bid', 'l.block_id'));
@@ -117,11 +117,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             }
             unset($block);
         }
+
         return $ret;
     }
 
     /**
-     * get a list of blocks matching certain conditions
+     * get a list of blocks matching certain conditions.
      *
      * @param CriteriaElement|null $criteria conditions to match
      *
@@ -135,11 +136,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             $name = (!$blocks[$i]->isCustom()) ? $blocks[$i]->getVar('name') : $blocks[$i]->getVar('title');
             $ret[$i] = $name;
         }
+
         return $ret;
     }
 
     /**
-     * get all the blocks that match the supplied parameters
+     * get all the blocks that match the supplied parameters.
      *
      * @param int|int[] $groupid  groupid (can be an array)
      * @param bool      $asobject retrieve as objects
@@ -151,9 +153,9 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      *                               4: centerblock - right
      *                               5: centerblock - center
      *                               6: centerblock - left, right, center
-     * @param int|null  $visible  0: not visible 1: visible
-     * @param string    $orderby  order of the blocks
-     * @param int       $isactive 1: active or 0:inactive blocks
+     * @param int|null $visible  0: not visible 1: visible
+     * @param string   $orderby  order of the blocks
+     * @param int      $isactive 1: active or 0:inactive blocks
      *
      * @return array of block objects
      */
@@ -169,11 +171,11 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
         if ($asobject) {
-            $qb ->select('b.*');
+            $qb->select('b.*');
         } else {
-            $qb ->select('b.bid');
+            $qb->select('b.bid');
         }
-        $qb ->fromPrefix('system_block', 'b')
+        $qb->fromPrefix('system_block', 'b')
             ->leftJoinPrefix('b', 'system_permission', 'l', $eb->eq('b.bid', 'l.gperm_itemid'))
             ->where($eb->eq('gperm_name', $eb->literal('block_read')))
             ->andWhere($eb->eq('gperm_modid', 1));
@@ -192,9 +194,9 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb->andWhere($eb->eq('b.isactive', $qb->createNamedParameter($isactive, \PDO::PARAM_INT)));
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
-            if ($side === XOOPS_SIDEBLOCK_BOTH) {
+            if (XOOPS_SIDEBLOCK_BOTH === $side) {
                 $qb->andWhere($eb->in('b.side', [0, 1]));
-            } elseif ($side === XOOPS_CENTERBLOCK_ALL) {
+            } elseif (XOOPS_CENTERBLOCK_ALL === $side) {
                 $qb->andWhere($eb->in('b.side', [3, 4, 5, 7, 8, 9]));
             } else {
                 $qb->andWhere($eb->eq('b.side', $qb->createNamedParameter($side, \PDO::PARAM_INT)));
@@ -216,11 +218,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 array_push($added, $myrow['bid']);
             }
         }
+
         return $ret;
     }
 
     /**
-     * getAllBlocks matching selection criteria
+     * getAllBlocks matching selection criteria.
      *
      * @param string   $rettype  what to return, values can be object, list or id
      * @param int      $side     block location (side)
@@ -241,13 +244,13 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
-        $qb ->fromPrefix('system_block', null)
+        $qb->fromPrefix('system_block', null)
             ->where($eb->eq('isactive', $qb->createNamedParameter($isactive, \PDO::PARAM_INT)));
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
-            if ($side === XOOPS_SIDEBLOCK_BOTH) {
+            if (XOOPS_SIDEBLOCK_BOTH === $side) {
                 $qb->andWhere($eb->in('side', [0, 1]));
-            } elseif ($side === XOOPS_CENTERBLOCK_ALL) {
+            } elseif (XOOPS_CENTERBLOCK_ALL === $side) {
                 $qb->andWhere($eb->in('side', [3, 4, 5, 7, 8, 9]));
             } else {
                 $qb->andWhere($eb->eq('side', $qb->createNamedParameter($side, \PDO::PARAM_INT)));
@@ -264,6 +267,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
                     $ret[] = new XoopsBlock($myrow);
                 }
+
                 break;
             case 'list':
                 $qb->select('*');
@@ -274,6 +278,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                     $title = empty($title) ? $block->getVar('name') : $title;
                     $ret[$block->getVar('bid')] = $title;
                 }
+
                 break;
             case 'id':
                 $qb->select('bid');
@@ -281,6 +286,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
                     $ret[] = $myrow['bid'];
                 }
+
                 break;
         }
 
@@ -288,7 +294,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * get blocks by module id
+     * get blocks by module id.
      *
      * @param int  $moduleid module id
      * @param bool $asobject true to fetch as objects, otherwise associative array
@@ -300,9 +306,9 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
-        $qb ->fromPrefix('system_block', null)
+        $qb->fromPrefix('system_block', null)
             ->where($eb->eq('mid', $qb->createNamedParameter($moduleid, \PDO::PARAM_INT)));
-        if ($asobject === true) {
+        if (true === $asobject) {
             $qb->select('*');
         } else {
             $qb->select('bid');
@@ -317,18 +323,19 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 $ret[] = $myrow['bid'];
             }
         }
+
         return $ret;
     }
 
     /**
-     * XoopsBlock::getAllByGroupModule()
+     * XoopsBlock::getAllByGroupModule().
      *
-     * @param mixed   $groupid      int group id, int[] of group ids,
-     * @param integer $module_id    module id
-     * @param boolean $toponlyblock only for top block
-     * @param mixed   $visible      restrict by visible values
-     * @param string  $orderby      comma separated list of columns to order by
-     * @param integer $isactive     restrict by isactive values
+     * @param mixed  $groupid      int group id, int[] of group ids,
+     * @param int    $module_id    module id
+     * @param bool   $toponlyblock only for top block
+     * @param mixed  $visible      restrict by visible values
+     * @param string $orderby      comma separated list of columns to order by
+     * @param int    $isactive     restrict by isactive values
      *
      * @return array
      */
@@ -347,7 +354,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
 
         $blockids = null;
         if (isset($groupid)) {
-            $qb ->select('DISTINCT gperm_itemid')
+            $qb->select('DISTINCT gperm_itemid')
                 ->fromPrefix('system_permission', null)
                 ->where($eb->eq('gperm_name', $eb->literal('block_read')))
                 ->andWhere('gperm_modid=1');
@@ -365,14 +372,14 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
 
         $qb->resetQueryParts();
 
-        $qb ->select('b.*')
+        $qb->select('b.*')
             ->fromPrefix('system_block', 'b')
             ->where($eb->eq('b.isactive', $qb->createNamedParameter($isactive, \PDO::PARAM_INT)));
         if (isset($visible)) {
             $qb->andWhere($eb->eq('b.visible', $qb->createNamedParameter($visible, \PDO::PARAM_INT)));
         }
         if (isset($module_id)) {
-            $qb ->fromPrefix('system_blockmodule', 'm')
+            $qb->fromPrefix('system_blockmodule', 'm')
                 ->andWhere($eb->eq('m.block_id', 'b.bid'));
             if (!empty($module_id)) {
                 $in = [];
@@ -404,17 +411,18 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             $ret[$myrow['bid']] = $block;
             unset($block);
         }
+
         return $ret;
     }
 
     /**
-     * XoopsBlock::getNonGroupedBlocks()
+     * XoopsBlock::getNonGroupedBlocks().
      *
-     * @param integer $module_id    module id
-     * @param boolean $toponlyblock only for top block
-     * @param mixed   $visible      restrict by visible values
-     * @param string  $orderby      comma separated list of columns to order by
-     * @param integer $isactive     restrict by isactive values
+     * @param int    $module_id    module id
+     * @param bool   $toponlyblock only for top block
+     * @param mixed  $visible      restrict by visible values
+     * @param string $orderby      comma separated list of columns to order by
+     * @param int    $isactive     restrict by isactive values
      *
      * @return array
      */
@@ -430,14 +438,14 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
-        $qb ->select('DISTINCT(bid)')
+        $qb->select('DISTINCT(bid)')
             ->fromPrefix('system_block', null);
         $result = $qb->execute();
         $bids = $result->fetchAll(\PDO::FETCH_COLUMN);
 
         $qb->resetQueryParts();
 
-        $qb ->select('DISTINCT(p.gperm_itemid)')
+        $qb->select('DISTINCT(p.gperm_itemid)')
             ->fromPrefix('system_permission', 'p')
             ->fromPrefix('system_group', 'g')
             ->where($eb->eq('g.groupid', 'p.gperm_groupid'))
@@ -450,7 +458,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         if (!empty($non_grouped)) {
             $qb->resetQueryParts();
 
-            $qb ->select('b.*')
+            $qb->select('b.*')
                 ->fromPrefix('system_block', 'b')
                 ->where($eb->eq('b.isactive', $qb->createNamedParameter($isactive, \PDO::PARAM_INT)));
             if (isset($visible)) {
@@ -458,7 +466,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             }
 
             if (isset($module_id)) {
-                $qb ->fromPrefix('system_blockmodule', 'm')
+                $qb->fromPrefix('system_blockmodule', 'm')
                     ->andWhere($eb->eq('m.block_id', 'b.bid'));
                 if (!empty($module_id)) {
                     $in = [];
@@ -489,11 +497,12 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
                 unset($block);
             }
         }
+
         return $ret;
     }
 
     /**
-     * XoopsBlock::countSimilarBlocks()
+     * XoopsBlock::countSimilarBlocks().
      *
      * @param int    $moduleId module id
      * @param string $funcNum  func number
@@ -513,7 +522,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
 
-        $qb ->select('COUNT(*)')
+        $qb->select('COUNT(*)')
             ->fromPrefix('system_block', null)
             ->where($eb->eq('mid', $qb->createNamedParameter($moduleId, \PDO::PARAM_INT)))
             ->andWhere($eb->eq('func_num', $qb->createNamedParameter($funcNum, \PDO::PARAM_INT)));
@@ -526,30 +535,32 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             return 0;
         }
         list($count) = $result->fetch(\PDO::FETCH_NUM);
+
         return $count;
     }
 
     /**
-     * Aligns the content of a block
+     * Aligns the content of a block.
      *
-     * @param integer $position  order of content
+     * @param int $position order of content
      *                              0 -> content in DB is positioned before the original content
      *                              1 -> content in DB is positioned after the original content
-     * @param string  $content   content
-     * @param string  $contentdb content from database
+     * @param string $content   content
+     * @param string $contentdb content from database
      *
      * @return string
      */
     public function buildContent($position, $content = '', $contentdb = '')
     {
         $ret = '';
-        if ($position === 0) {
-            $ret = $contentdb . $content;
+        if (0 === $position) {
+            $ret = $contentdb.$content;
         } else {
-            if ($position === 1) {
-                $ret = $content . $contentdb;
+            if (1 === $position) {
+                $ret = $content.$contentdb;
             }
         }
+
         return $ret;
     }
 
@@ -563,20 +574,21 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
      */
     public function buildTitle($originaltitle, $newtitle = '')
     {
-        if ($newtitle !== '') {
+        if ('' !== $newtitle) {
             $ret = $newtitle;
         } else {
             $ret = $originaltitle;
         }
+
         return $ret;
     }
 
     /************ system ***************/
 
     /**
-     * get list of ids of block that a group has permission to views
+     * get list of ids of block that a group has permission to views.
      *
-     * @param null|integer $groupid group
+     * @param null|int $groupid group
      *
      * @return int[]
      */
@@ -587,7 +599,7 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
             $qb = $this->db2->createXoopsQueryBuilder();
             $eb = $qb->expr();
 
-            $qb ->select('DISTINCT(gperm_itemid)')
+            $qb->select('DISTINCT(gperm_itemid)')
                 ->fromPrefix('system_permission', 'p')
                 ->fromPrefix('system_group', 'g')
                 ->where($eb->eq('p.gperm_name', $eb->literal('block_read')))
@@ -603,8 +615,10 @@ class XoopsBlockHandler extends XoopsPersistableObjectHandler
 
             $result = $qb->execute();
             $blockids = $result->fetchAll(\PDO::FETCH_COLUMN);
+
             return $blockids;
         }
+
         return $ret;
     }
 }

@@ -10,16 +10,14 @@
 */
 
 /**
- * XOOPS notification
+ * XOOPS notification.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @version         $Id$
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $helper = Notifications::getInstance();
@@ -56,6 +54,7 @@ switch ($op) {
     case 'cancel':
         // FIXME: does this always go back to correct location??
         $xoops->redirect('index.php');
+
         break;
 
     case 'list':
@@ -164,7 +163,7 @@ switch ($op) {
         $hidden_vars = [
             'uid' => $uid, 'delete_ok' => 1, 'del_not' => $_POST['del_not'],
         ];
-        echo '<h4>' . _MD_NOTIFICATIONS_DELETINGNOTIFICATIONS . '</h4>';
+        echo '<h4>'._MD_NOTIFICATIONS_DELETINGNOTIFICATIONS.'</h4>';
         echo $xoops->confirm($hidden_vars, $xoops->getEnv('PHP_SELF'), _MD_NOTIFICATIONS_RUSUREDEL);
         $xoops->footer();
         // FIXME: There is a problem here... in $xoops->confirm it treats arrays as
@@ -189,6 +188,7 @@ switch ($op) {
             }
         }
         $helper->redirect('index.php', 2, _MD_NOTIFICATIONS_DELETESUCCESS);
+
         break;
     default:
         break;

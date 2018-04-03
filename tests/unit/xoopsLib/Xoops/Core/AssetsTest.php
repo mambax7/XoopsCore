@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Xoops\Core\Assets;
 
@@ -51,15 +51,15 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $instance = $this->object;
 
         $xoops = \Xoops::getInstance();
-        $from = $xoops->path('assets') . '/js/';
+        $from = $xoops->path('assets').'/js/';
         $glob = '*.js';
         $output = 'dummy_dir';
 
         $result = $instance->copyFileAssets($from, $glob, $output);
         $this->assertTrue(is_numeric($result));
 
-        $dir = $xoops->path('assets') . '/' . $output . '/';
-        array_map('unlink', glob($dir . $glob));
+        $dir = $xoops->path('assets').'/'.$output.'/';
+        array_map('unlink', glob($dir.$glob));
         rmdir($dir);
     }
 }

@@ -7,28 +7,27 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 use Xoops\Core\Database\Connection;
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 abstract class XoopsObject extends Xoops\Core\Kernel\XoopsObject
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 abstract class XoopsObjectHandler extends Xoops\Core\Kernel\XoopsObjectHandler
 {
     /**
-     * This is a reference to the legacy database connection
+     * This is a reference to the legacy database connection.
      */
     public $db;
 
     /**
-     * this is a legacy compatibility shim to make the legacy database available
+     * this is a legacy compatibility shim to make the legacy database available.
      *
      * @param Connection $db reference to the {@link Connection} object
      */
@@ -40,17 +39,17 @@ abstract class XoopsObjectHandler extends Xoops\Core\Kernel\XoopsObjectHandler
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 abstract class XoopsPersistableObjectHandler extends Xoops\Core\Kernel\XoopsPersistableObjectHandler
 {
     /**
-     * This is a reference to the legacy database connection
+     * This is a reference to the legacy database connection.
      */
     public $db;
 
     /**
-     * this is a legacy compatibility shim to make the legacy database available
+     * this is a legacy compatibility shim to make the legacy database available.
      *
      * @param Connection $db reference to the {@link Connection} object
      */
@@ -61,7 +60,7 @@ abstract class XoopsPersistableObjectHandler extends Xoops\Core\Kernel\XoopsPers
         $keyName = '',
         $identifierName = ''
     ) {
-        if ($db === null) {
+        if (null === $db) {
             $this->db2 = \Xoops\Core\Database\Factory::getConnection();
             $db = $this->db2;
         }

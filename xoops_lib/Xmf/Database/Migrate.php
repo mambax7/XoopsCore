@@ -15,7 +15,7 @@ use Xmf\Module\Helper;
 use Xmf\Yaml;
 
 /**
- * Xmf\Database\Migrate
+ * Xmf\Database\Migrate.
  *
  * For a given module, compare the existing tables with a defined target schema
  * and build a work queue of DDL/SQL to transform the existing tables to the
@@ -25,11 +25,10 @@ use Xmf\Yaml;
  * logic (see preSyncActions() method.)
  *
  * @category  Xmf\Database\Migrate
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Migrate
 {
@@ -49,7 +48,7 @@ class Migrate
     protected $targetDefinitions;
 
     /**
-     * Migrate constructor
+     * Migrate constructor.
      *
      * @param string $dirname module directory name that defines the tables to be migrated
      *
@@ -59,7 +58,7 @@ class Migrate
     public function __construct($dirname)
     {
         $this->helper = Helper::getHelper($dirname);
-        if ($this->helper === false) {
+        if (false === $this->helper) {
             throw new \InvalidArgumentException("Invalid module ${dirname} specified");
         }
         $module = $this->helper->getModule();
@@ -73,7 +72,7 @@ class Migrate
     }
 
     /**
-     * Save current table definitions to a file
+     * Save current table definitions to a file.
      *
      * This is intended for developer use when setting up the migration by using the current database state
      *
@@ -95,7 +94,7 @@ class Migrate
     }
 
     /**
-     * get the current definitions
+     * get the current definitions.
      *
      * @return array
      */
@@ -109,7 +108,7 @@ class Migrate
     }
 
     /**
-     * Return the target database condition
+     * Return the target database condition.
      *
      * @return array|bool table structure or false on error
      *
@@ -119,15 +118,16 @@ class Migrate
     {
         if (!isset($this->targetDefinitions)) {
             $this->targetDefinitions = Yaml::read($this->tableDefinitionFile);
-            if ($this->targetDefinitions === null) {
-                throw new \RuntimeException('No schema definition ' . $this->tableDefinitionFile);
+            if (null === $this->targetDefinitions) {
+                throw new \RuntimeException('No schema definition '.$this->tableDefinitionFile);
             }
         }
+
         return $this->targetDefinitions;
     }
 
     /**
-     * Execute synchronization to transform current schema to target
+     * Execute synchronization to transform current schema to target.
      *
      * @param bool $force true to force updates even if this is a 'GET' request
      *
@@ -137,11 +137,12 @@ class Migrate
     {
         $this->tableHandler = new Tables(); // start fresh
         $this->getSynchronizeDDL();
+
         return $this->tableHandler->executeQueue($force);
     }
 
     /**
-     * Compare target and current schema, building work queue in $this->migrate to synchronized
+     * Compare target and current schema, building work queue in $this->migrate to synchronized.
      *
      * @return string[] array of DDL/SQL statements to transform current to target schema
      */
@@ -156,11 +157,12 @@ class Migrate
                 $this->addMissingTable($tableName);
             }
         }
+
         return $this->tableHandler->dumpQueue();
     }
 
     /**
-     * Return message from last error encountered
+     * Return message from last error encountered.
      *
      * @return string last error message
      */
@@ -170,7 +172,7 @@ class Migrate
     }
 
     /**
-     * Return code from last error encountered
+     * Return code from last error encountered.
      *
      * @return int last error number
      */
@@ -199,7 +201,7 @@ class Migrate
     }
 
     /**
-     * Add table create DDL to the work queue
+     * Add table create DDL to the work queue.
      *
      * @param string $tableName table to add
      */
@@ -211,7 +213,7 @@ class Migrate
             $this->tableHandler->addColumn($tableName, $column['name'], $column['attributes']);
         }
         foreach ($this->targetDefinitions[$tableName]['keys'] as $key => $keyData) {
-            if ($key === 'PRIMARY') {
+            if ('PRIMARY' === $key) {
                 $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
             } else {
                 $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
@@ -220,7 +222,7 @@ class Migrate
     }
 
     /**
-     * Build any DDL required to synchronize an existing table to match the target schema
+     * Build any DDL required to synchronize an existing table to match the target schema.
      *
      * @param string $tableName table to synchronize
      */
@@ -228,7 +230,7 @@ class Migrate
     {
         foreach ($this->targetDefinitions[$tableName]['columns'] as $column) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, $column['name']);
-            if ($attributes === false) {
+            if (false === $attributes) {
                 $this->tableHandler->addColumn($tableName, $column['name'], $column['attributes']);
             } elseif ($column['attributes'] !== $attributes) {
                 $this->tableHandler->alterColumn($tableName, $column['name'], $column['attributes']);
@@ -247,18 +249,18 @@ class Migrate
         $existingIndexes = $this->tableHandler->getTableIndexes($tableName);
         if (isset($this->targetDefinitions[$tableName]['keys'])) {
             foreach ($this->targetDefinitions[$tableName]['keys'] as $key => $keyData) {
-                if ($key === 'PRIMARY') {
+                if ('PRIMARY' === $key) {
                     if (!isset($existingIndexes[$key])) {
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
-                    } elseif ($keyData['columns'] !== $existingIndexes[$key]['columns']) {
+                    } elseif ($existingIndexes[$key]['columns'] !== $keyData['columns']) {
                         $this->tableHandler->dropPrimaryKey($tableName);
                         $this->tableHandler->addPrimaryKey($tableName, $keyData['columns']);
                     }
                 } else {
                     if (!isset($existingIndexes[$key])) {
                         $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
-                    } elseif ($keyData['unique'] !== $existingIndexes[$key]['unique']
-                        || $keyData['columns'] !== $existingIndexes[$key]['columns']
+                    } elseif ($existingIndexes[$key]['unique'] !== $keyData['unique']
+                        || $existingIndexes[$key]['columns'] !== $keyData['columns']
                     ) {
                         $this->tableHandler->dropIndex($key, $tableName);
                         $this->tableHandler->addIndex($key, $tableName, $keyData['columns'], $keyData['unique']);
@@ -266,7 +268,7 @@ class Migrate
                 }
             }
         }
-        if ($existingIndexes !== false) {
+        if (false !== $existingIndexes) {
             foreach ($existingIndexes as $key => $keyData) {
                 if (!isset($this->targetDefinitions[$tableName]['keys'][$key])) {
                     $this->tableHandler->dropIndex($key, $tableName);
@@ -276,7 +278,7 @@ class Migrate
     }
 
     /**
-     * determine if a column on a table exists in the target definitions
+     * determine if a column on a table exists in the target definitions.
      *
      * @param string $tableName  table containing the column
      * @param string $columnName column to check
@@ -287,7 +289,7 @@ class Migrate
     {
         if (isset($this->targetDefinitions[$tableName])) {
             foreach ($this->targetDefinitions[$tableName]['columns'] as $col) {
-                if (strcasecmp($col['name'], $columnName) === 0) {
+                if (0 === strcasecmp($col['name'], $columnName)) {
                     return true;
                 }
             }
@@ -297,7 +299,7 @@ class Migrate
     }
 
     /**
-     * determine if a table exists in the target definitions
+     * determine if a table exists in the target definitions.
      *
      * @param string $tableName table containing the column
      *
@@ -308,6 +310,7 @@ class Migrate
         if (isset($this->targetDefinitions[$tableName])) {
             return true;
         }
+
         return false;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Text;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class SanitizerTest extends \PHPUnit\Framework\TestCase
 {
@@ -54,7 +54,7 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
         $this->object->addPatternCallback(
             '~(\d{4})-(\d{2})-(\d{2})~',
             function ($matches) {
-                return $matches[2] . '/' . $matches[3] . '/' . $matches[1];
+                return $matches[2].'/'.$matches[3].'/'.$matches[1];
             }
         );
         $text = '2015-12-14';
@@ -193,12 +193,12 @@ class SanitizerTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->enableComponentForTesting('soundcloud');
         $support = $this->object->getDhtmlEditorSupport('soundcloud', 'testeditorarea');
-        $this->assertTrue(count($support) === 2);
+        $this->assertTrue(2 === count($support));
         $this->assertTrue(is_string($support[0]));
         $this->assertTrue(is_string($support[1]));
 
         $support = $this->object->getDhtmlEditorSupport('thisisnotarealextension', 'testeditorarea');
-        $this->assertTrue(count($support) === 2);
+        $this->assertTrue(2 === count($support));
         $this->assertSame('', $support[0]);
         $this->assertSame('', $support[1]);
     }

@@ -13,7 +13,7 @@ use Xmf\Metagen;
 use Xoops\Module\Plugin\PluginAbstract;
 
 /**
- * page module
+ * page module.
  *
  * @author          Mage Grégory (AKA Mage)
  * @copyright       2000-2015 XOOPS Project (http://xoops.org)
@@ -23,13 +23,13 @@ use Xoops\Module\Plugin\PluginAbstract;
 class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
 {
     /**
-     * search - search
+     * search - search.
      *
      * @param string[] $queryArray search terms
      * @param string   $andor      and/or how to treat search terms
-     * @param integer  $limit      max number to return
-     * @param integer  $offset     offset of first row to return
-     * @param integer  $userid     a specific user id to limit the query
+     * @param int      $limit      max number to return
+     * @param int      $offset     offset of first row to return
+     * @param int      $userid     a specific user id to limit the query
      *
      * @return array of result items
      *           'title' => the item title
@@ -41,11 +41,11 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
      */
     public function search($queryArray, $andor, $limit, $offset, $userid)
     {
-        $andor = strtolower($andor) === 'and' ? 'and' : 'or';
+        $andor = 'and' === strtolower($andor) ? 'and' : 'or';
 
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('DISTINCT *')
+        $qb->select('DISTINCT *')
             ->fromPrefix('page_content')
             ->where($eb->neq('content_status', '0'))
             ->orderBy('content_create', 'DESC')
@@ -54,15 +54,15 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
         if (is_array($queryArray) && !empty($queryArray)) {
             $queryParts = [];
             foreach ($queryArray as $i => $q) {
-                $qterm = ':qterm' . $i;
-                $qb->setParameter($qterm, '%' . $q . '%', \PDO::PARAM_STR);
-                $queryParts[] = $eb -> orX(
+                $qterm = ':qterm'.$i;
+                $qb->setParameter($qterm, '%'.$q.'%', \PDO::PARAM_STR);
+                $queryParts[] = $eb->orX(
                     $eb->like('content_title', $qterm),
                     $eb->like('content_text', $qterm),
                     $eb->like('content_shorttext', $qterm)
                 );
             }
-            if ($andor === 'and') {
+            if ('and' === $andor) {
                 $qb->andWhere(call_user_func_array([$eb, 'andX'], $queryParts));
             } else {
                 $qb->andWhere(call_user_func_array([$eb, 'orX'], $queryParts));
@@ -76,17 +76,18 @@ class PageSearchPlugin extends PluginAbstract implements SearchPluginInterface
         $items = [];
         $result = $qb->execute();
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
-            $content = $myrow['content_shorttext'] . '<br /><br />' . $myrow['content_text'];
+            $content = $myrow['content_shorttext'].'<br /><br />'.$myrow['content_text'];
             $content = $myts->displayTarea($content);
             $items[] = [
                 'title' => $myrow['content_title'],
                 'content' => Metagen::getSearchSummary($content, $queryArray),
-                'link' => 'viewpage.php?id=' . $myrow['content_id'],
+                'link' => 'viewpage.php?id='.$myrow['content_id'],
                 'time' => $myrow['content_create'],
                 'uid' => $myrow['content_author'],
                 'image' => 'images/logo_small.png',
             ];
         }
+
         return $items;
     }
 }

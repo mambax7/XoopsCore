@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 use Xoops\Core\Kernel\Criteria;
 
@@ -34,11 +34,11 @@ class Kernel_CriteriaCompoTest extends \PHPUnit\Framework\TestCase
         $condition = 'AND';
         $criteria = new $this->myclass($criteria_element, $condition);
         $this->assertInstanceOf($this->myclass, $criteria);
-        $this->assertTrue(count($criteria->getConditions()) === 1);
-        $this->assertTrue(count($criteria->getCriteriaElements()) === 1);
+        $this->assertTrue(1 === count($criteria->getConditions()));
+        $this->assertTrue(1 === count($criteria->getCriteriaElements()));
         $criteria->add($criteria_element, $condition);
-        $this->assertTrue(count($criteria->getConditions()) === 2);
-        $this->assertTrue(count($criteria->getCriteriaElements()) === 2);
+        $this->assertTrue(2 === count($criteria->getConditions()));
+        $this->assertTrue(2 === count($criteria->getCriteriaElements()));
     }
 
     public function test_render()

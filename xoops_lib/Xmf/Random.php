@@ -12,50 +12,51 @@
 namespace Xmf;
 
 /**
- * XOOPS Random generator
+ * XOOPS Random generator.
  *
  * @category  Xmf\Random
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Random
 {
     /**
-     * Create a one time token
+     * Create a one time token.
      *
      * Generates a low strength random number of size $bytes and hash with the
      * algorithm specified in $hash.
      *
-     * @param string  $hash  hash function to use
-     * @param integer $bytes the number of random bit to generate
+     * @param string $hash  hash function to use
+     * @param int    $bytes the number of random bit to generate
      *
-     * @return string hashed token
+     * @return string     hashed token
      * @throws \Exception on insufficient entropy
      */
     public static function generateOneTimeToken($hash = 'sha512', $bytes = 64)
     {
         $token = hash($hash, random_bytes($bytes));
+
         return $token;
     }
 
     /**
-     * Create a medium strength key
+     * Create a medium strength key.
      *
      * Generates a medium strength random number of size $bytes and hash with the
      * algorithm specified in $hash.
      *
-     * @param string  $hash  hash function to use
-     * @param integer $bytes the number of random bytes to generate
+     * @param string $hash  hash function to use
+     * @param int    $bytes the number of random bytes to generate
      *
-     * @return string hashed token
+     * @return string     hashed token
      * @throws \Exception on insufficient entropy
      */
     public static function generateKey($hash = 'sha512', $bytes = 128)
     {
         $token = hash($hash, random_bytes($bytes));
+
         return $token;
     }
 }

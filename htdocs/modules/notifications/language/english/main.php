@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MD_NOTIFICATIONS', 'Notifications');
 define('_MD_NOTIFICATIONS_NOTIFICATIONOPTIONS', 'Notification Options');
 define('_MD_NOTIFICATIONS_UPDATENOW', 'Update Now');

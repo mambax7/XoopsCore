@@ -13,14 +13,13 @@ use Xmf\Request;
 use Xoops\Core\XoopsTpl;
 
 /**
- * PDF output
+ * PDF output.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  */
-
 include_once 'header.php';
 
 // Call header
@@ -40,7 +39,7 @@ if (!$perm_view) {
 $view_content = $content_Handler->get($content_id);
 
 // Test if the page exist
-if (count($view_content) === 0 || $view_content->getVar('content_status') === 0) {
+if (0 === count($view_content) || 0 === $view_content->getVar('content_status')) {
     $xoops->redirect('index.php', 3, PageLocale::E_NOT_EXIST);
     exit();
 }
@@ -57,7 +56,7 @@ $tpl->assign('related', $link_Handler->menu_related($content_id));
 
 $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
 // Meta
-$tpl->assign('xoops_pagetitle', strip_tags($view_content->getVar('content_title') . ' - ' . XoopsLocale::A_PRINT . ' - ' . $xoopsModule->name()));
+$tpl->assign('xoops_pagetitle', strip_tags($view_content->getVar('content_title').' - '.XoopsLocale::A_PRINT.' - '.$xoopsModule->name()));
 
 $content = $tpl->fetch('module:page/page_pdf.tpl');
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class recaptchaTest extends \PHPUnit\Framework\TestCase
 {
@@ -41,7 +41,7 @@ class recaptchaTest extends \PHPUnit\Framework\TestCase
 
     public function test_verify100()
     {
-        if (($fs = @fsockopen('www.google.com', 80, $errno, $errstr, 10)) === false) {
+        if (false === ($fs = @fsockopen('www.google.com', 80, $errno, $errstr, 10))) {
             $this->markTestSkipped('');
         }
         $instance = new $this->myclass();

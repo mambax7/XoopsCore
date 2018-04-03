@@ -13,16 +13,14 @@ use Xmf\Request;
 use Xoops\Core\XoopsTpl;
 
 /**
- * Module Images
+ * Module Images.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Images
  * @since           2.6.0
  * @version         $Id$
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $helper = Images::getInstance();
@@ -59,16 +57,16 @@ switch ($op) {
             $category = $helper->getHandlerCategories()->get($imgcat_id);
 
             foreach (array_keys($images) as $i) {
-                if ($category->getVar('imgcat_storetype') === 'db') {
-                    $lcode = '[img align=left id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
-                    $code = '[img align=center id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
-                    $rcode = '[img align=right id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
-                    $src = $helper->url('image.php?id=' . $images[$i]->getVar('image_id'));
+                if ('db' === $category->getVar('imgcat_storetype')) {
+                    $lcode = '[img align=left id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
+                    $code = '[img align=center id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
+                    $rcode = '[img align=right id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
+                    $src = $helper->url('image.php?id='.$images[$i]->getVar('image_id'));
                 } else {
-                    $lcode = '[img align=left]' . \XoopsBaseConfig::get('uploads-url') . '/' . $images[$i]->getVar('image_name') . '[/img]';
-                    $code = '[img align=center]' . \XoopsBaseConfig::get('uploads-url') . '/' . $images[$i]->getVar('image_name') . '[/img]';
-                    $rcode = '[img align=right]' . \XoopsBaseConfig::get('uploads-url') . '/' . $images[$i]->getVar('image_name') . '[/img]';
-                    $src = \XoopsBaseConfig::get('uploads-url') . '/' . $images[$i]->getVar('image_name');
+                    $lcode = '[img align=left]'.\XoopsBaseConfig::get('uploads-url').'/'.$images[$i]->getVar('image_name').'[/img]';
+                    $code = '[img align=center]'.\XoopsBaseConfig::get('uploads-url').'/'.$images[$i]->getVar('image_name').'[/img]';
+                    $rcode = '[img align=right]'.\XoopsBaseConfig::get('uploads-url').'/'.$images[$i]->getVar('image_name').'[/img]';
+                    $src = \XoopsBaseConfig::get('uploads-url').'/'.$images[$i]->getVar('image_name');
                 }
                 $xoopsTpl->append('images', [
                     'id' => $images[$i]->getVar('image_id'),
@@ -81,6 +79,7 @@ switch ($op) {
                 ]);
             }
         }
+
         break;
 
     case 'upload':
@@ -96,11 +95,12 @@ switch ($op) {
                 $xoopsTpl->assign('form', $form->render());
             }
         }
+
         break;
 
     case 'save':
         if (!$xoops->security()->check()) {
-            $xoops->redirect('imagemanager.php?imgcat_id=' . $imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
+            $xoops->redirect('imagemanager.php?imgcat_id='.$imgcat_id, 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
         $mimetypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
@@ -119,7 +119,7 @@ switch ($op) {
         $xoops_upload_file = Request::getArray('xoops_upload_file', []);
 
         $uploader = new XoopsMediaUploader(
-            \XoopsBaseConfig::get('uploads-url') . '/images',
+            \XoopsBaseConfig::get('uploads-url').'/images',
             $mimetypes,
             $category->getVar('imgcat_maxsize'),
             $category->getVar('imgcat_maxwidth'),
@@ -133,19 +133,19 @@ switch ($op) {
                 $obj->setVar('image_mimetype', 'image/gif');
             } else {
                 $obj->setVar('image_mimetype', $uploader->getMediaType());
-                if ($category->getVar('imgcat_storetype') === 'db') {
+                if ('db' === $category->getVar('imgcat_storetype')) {
                     $fp = @fopen($uploader->getSavedDestination(), 'rb');
                     $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
                     @fclose($fp);
                     $image_body = $fbinary;
                 } else {
-                    $obj->setVar('image_name', 'images/' . $uploader->getSavedFileName());
+                    $obj->setVar('image_name', 'images/'.$uploader->getSavedFileName());
                 }
             }
         }
 
         if ($image_id = $helper->getHandlerImages()->insert($obj)) {
-            if ($category->getVar('imgcat_storetype') === 'db') {
+            if ('db' === $category->getVar('imgcat_storetype')) {
                 $imagebody = $helper->getHandlerImagesBody()->get($image_id);
                 if (!is_object($imagebody)) {
                     $imagebody = $helper->getHandlerImagesBody()->create();
@@ -156,9 +156,10 @@ switch ($op) {
                     @unlink($uploader->getSavedDestination());
                 }
             }
-            $xoops->redirect('imagemanager.php?target=' . $target . '&imgcat_id=' . $imgcat_id, 2, implode('<br />', $msg));
+            $xoops->redirect('imagemanager.php?target='.$target.'&imgcat_id='.$imgcat_id, 2, implode('<br />', $msg));
         }
         echo $xoops->alert('error', $obj->getHtmlErrors());
+
         break;
 }
 $xoopsTpl->assign('xsize', 800);

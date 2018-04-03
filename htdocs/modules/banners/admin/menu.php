@@ -10,16 +10,14 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Gregory (AKA Mage)
  * @version         $Id: $
  */
-
 $adminmenu = [];
 $i = 1;
 $adminmenu[$i]['title'] = _MI_BANNERS_INDEX;

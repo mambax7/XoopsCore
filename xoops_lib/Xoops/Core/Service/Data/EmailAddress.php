@@ -14,7 +14,7 @@ namespace Xoops\Core\Service\Data;
 use Xmf\Assert;
 
 /**
- * The EmailAddress data object is a email address with optional display name
+ * The EmailAddress data object is a email address with optional display name.
  *
  * This is an Immutable data object. That means any changes to the data (state)
  * return a new object, while the internal state of the original object is preserved.
@@ -25,11 +25,10 @@ use Xmf\Assert;
  * The EmailAddress data object is used for message and mailer services
  *
  * @category  Xoops\Core\Service\Data
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class EmailAddress
 {
@@ -59,15 +58,15 @@ class EmailAddress
      */
     public function __construct(?string $email = null, ?string $displayName = null)
     {
-        if ($email !== null) {
+        if (null !== $email) {
             $email = trim($email);
             Assert::true(
-                filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE) !== false,
+                false !== filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE),
                 static::MESSAGE_ADDRESS
             );
             $this->email = $email;
         }
-        if ($displayName !== null) {
+        if (null !== $displayName) {
             $displayName = trim($displayName);
             $displayName = empty($displayName) ? null : $displayName;
             Assert::nullOrStringNotEmpty($displayName, static::MESSAGE_NAME);
@@ -76,7 +75,7 @@ class EmailAddress
     }
 
     /**
-     * getEmail
+     * getEmail.
      *
      * @return string an email address
      *
@@ -86,17 +85,18 @@ class EmailAddress
     {
         try {
             Assert::true(
-                filter_var($this->email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE) !== false,
+                false !== filter_var($this->email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE),
                 static::MESSAGE_ADDRESS
             );
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->email;
     }
 
     /**
-     * getDisplayName
+     * getDisplayName.
      *
      * @return string|null the displayName or null if not set
      *
@@ -109,11 +109,12 @@ class EmailAddress
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->displayName;
     }
 
     /**
-     * Return a new object with a the specified email
+     * Return a new object with a the specified email.
      *
      *
      * @param string $email an email address, i.e. user@example.com
@@ -126,7 +127,7 @@ class EmailAddress
     }
 
     /**
-     * Return a new object with a the specified email
+     * Return a new object with a the specified email.
      *
      *
      * @param string $displayName a display name associated with the email

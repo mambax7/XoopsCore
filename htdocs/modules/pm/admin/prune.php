@@ -14,16 +14,15 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * Private message
+ * Private message.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         pm
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -40,27 +39,28 @@ switch ($op) {
     case 'form':
         $form = $pmHandler->getPruneForm();
         $form->display();
+
         break;
 
     case 'prune':
         $criteria = new CriteriaCompo();
         $afterDateTime = Request::getDateTime('after', null);
-        if ($afterDateTime !== null) {
+        if (null !== $afterDateTime) {
             $criteria->add(new Criteria('msg_time', $afterDateTime->getTimestamp(), '>'));
         }
         $beforeDateTime = Request::getDateTime('before', null);
-        if ($beforeDateTime !== null) {
+        if (null !== $beforeDateTime) {
             $criteria->add(new Criteria('msg_time', $beforeDateTime->getTimestamp(), '<'));
         }
-        if (isset($_REQUEST['onlyread']) && $_REQUEST['onlyread'] === 1) {
+        if (isset($_REQUEST['onlyread']) && 1 === $_REQUEST['onlyread']) {
             $criteria->add(new Criteria('read_msg', 1));
         }
-        if ((!isset($_REQUEST['includesave']) || $_REQUEST['includesave'] === 0)) {
+        if ((!isset($_REQUEST['includesave']) || 0 === $_REQUEST['includesave'])) {
             $savecriteria = new CriteriaCompo(new Criteria('to_save', 0));
             $savecriteria->add(new Criteria('from_save', 0));
             $criteria->add($savecriteria);
         }
-        if (isset($_REQUEST['notifyusers']) && $_REQUEST['notifyusers'] === 1) {
+        if (isset($_REQUEST['notifyusers']) && 1 === $_REQUEST['notifyusers']) {
             $notifycriteria = clone $criteria;
             $notifycriteria->add(new Criteria('to_delete', 0));
             $notifycriteria->setGroupBy('to_userid');
@@ -69,10 +69,10 @@ switch ($op) {
         }
         \Xmf\Debug::log($criteria, $uids);
         $deletedrows = 0; // $pmHandler->deleteAll($criteria);
-        if ($deletedrows === false) {
+        if (false === $deletedrows) {
             $xoops->redirect('prune.php', 2, _PM_AM_ERRORWHILEPRUNING);
         }
-        if (isset($_REQUEST['notifyusers']) && $_REQUEST['notifyusers'] === 1) {
+        if (isset($_REQUEST['notifyusers']) && 1 === $_REQUEST['notifyusers']) {
             $errors = false;
             foreach ($uids as $uid => $messagecount) {
                 $pm = $pmHandler->create();
@@ -87,12 +87,13 @@ switch ($op) {
                 }
                 unset($pm);
             }
-            if ($errors === true) {
+            if (true === $errors) {
                 echo implode('<br />', $errormsg);
                 $xoops->footer();
             }
         }
         $xoops->redirect('index.php', 2, sprintf(_PM_AM_MESSAGESPRUNED, $deletedrows));
+
         break;
 }
 $xoops->footer();

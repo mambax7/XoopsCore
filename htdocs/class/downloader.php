@@ -10,20 +10,17 @@
 */
 
 /**
- * XOOPS downloader
+ * XOOPS downloader.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
  * @since           2.0.0
  * @author          Kazumi Ono <onokazu@xoops.org>
  * @version         $Id$
  */
 
 /**
- * Sends non HTML files through a http socket
- *
- * @package class
+ * Sends non HTML files through a http socket.
  */
 abstract class XoopsDownloader
 {
@@ -73,24 +70,23 @@ abstract class XoopsDownloader
     abstract public function download($name, $gzip = true);
 
     /**
-     * Send the HTTP header
+     * Send the HTTP header.
      *
      * @param string $filename
-     * @access protected
      */
     protected function _header($filename)
     {
         if (function_exists('mb_http_output')) {
             mb_http_output('pass');
         }
-        header('Content-Type: ' . $this->mimetype);
+        header('Content-Type: '.$this->mimetype);
         if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
-            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Content-Disposition: attachment; filename="'.$filename.'"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Pragma: public');
         } else {
-            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Content-Disposition: attachment; filename="'.$filename.'"');
             header('Expires: 0');
             header('Pragma: no-cache');
         }

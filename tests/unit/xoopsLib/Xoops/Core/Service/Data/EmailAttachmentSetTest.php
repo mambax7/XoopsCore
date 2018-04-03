@@ -7,7 +7,7 @@ use Xoops\Core\Service\Data\EmailAttachmentSet;
 
 class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
 {
-    protected const TEST_FILE = __DIR__ . '/test.png';
+    protected const TEST_FILE = __DIR__.'/test.png';
 
     /**
      * @var EmailAttachmentSet
@@ -93,6 +93,7 @@ class EmailAttachmentSetTest extends \PHPUnit\Framework\TestCase
     public function testGetEachAttachmentException()
     {
         $count = 0;
+
         try {
             foreach ($this->object->getEachAttachment() as $attachment) {
                 ++$count;

@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\FilterAbstract;
 
 /**
- * TextSanitizer filter - clean XSS in HTML text
+ * TextSanitizer filter - clean XSS in HTML text.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Xss extends FilterAbstract
 {
@@ -36,7 +35,7 @@ class Xss extends FilterAbstract
     ];
 
     /**
-     * filter possible XSS
+     * filter possible XSS.
      *
      * @param string $text text string to filter
      *
@@ -67,7 +66,7 @@ class Xss extends FilterAbstract
     }
 
     /**
-     * truncate string in context of
+     * truncate string in context of.
      *
      * @param string $text string to be truncated
      *
@@ -81,10 +80,11 @@ class Xss extends FilterAbstract
         }
         $len = (((mb_strlen($text) - $config['truncate_length']) - 5) / 2);
         if ($len < 5) {
-            $ret = mb_substr($text, 0, $len) . ' ... ' . mb_substr($text, -$len);
+            $ret = mb_substr($text, 0, $len).' ... '.mb_substr($text, -$len);
         } else {
             $ret = mb_substr($text, 0, $config['truncate_length']);
         }
+
         return $ret;
     }
 }

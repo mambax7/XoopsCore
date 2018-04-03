@@ -15,21 +15,20 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * SelectUser - select user form element
+ * SelectUser - select user form element.
  *
  * limit: Only works with javascript enabled
  *
  * @category  Xoops\Form\SelectUser
- * @package   Xoops\Form
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SelectUser extends ElementTray
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $caption      caption
      * @param string $name         element name
@@ -38,8 +37,8 @@ class SelectUser extends ElementTray
      *                             For an item with massive members, such as "Registered Users",
      *                             "$value" should be used to store selected temporary users only
      *                             instead of all members of that item
-     * @param int    $size         Number or rows. "1" makes a drop-down-list.
-     * @param bool   $multiple     Allow multiple selections?
+     * @param int  $size     Number or rows. "1" makes a drop-down-list.
+     * @param bool $multiple Allow multiple selections?
      */
     public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
@@ -53,7 +52,7 @@ class SelectUser extends ElementTray
         $user_count = $member_handler->getUserCount();
         $value = is_array($value) ? $value : (empty($value) ? [] : [$value]);
         if ($user_count > $limit && count($value) > 0) {
-            $criteria = new CriteriaCompo(new Criteria('uid', '(' . implode(',', $value) . ')', 'IN'));
+            $criteria = new CriteriaCompo(new Criteria('uid', '('.implode(',', $value).')', 'IN'));
         } else {
             $criteria = new CriteriaCompo();
             $criteria->setLimit($limit);
@@ -65,6 +64,7 @@ class SelectUser extends ElementTray
         if ($user_count <= $limit) {
             parent::__construct($caption, '', $name);
             $this->addElement($select_element);
+
             return;
         }
 
@@ -72,7 +72,7 @@ class SelectUser extends ElementTray
             function addusers(opts){
                 var num = opts.substring(0, opts.indexOf(':'));
                 opts = opts.substring(opts.indexOf(':')+1, opts.length);
-                var sel = xoopsGetElementById('" . $name . "');
+                var sel = xoopsGetElementById('".$name."');
                 var arr = new Array(num);
                 for (var n=0; n < num; n++) {
                     var nm = opts.substring(0, opts.indexOf(':'));
@@ -99,14 +99,14 @@ class SelectUser extends ElementTray
         $token = $xoops->security()->createToken();
         $action_tray = new Label(
             '',
-            '<a href="#" onclick="var sel = xoopsGetElementById(\'' . $name
-                . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) '
-                . '{sel.options[i] = null;}}; return false;">' . \XoopsLocale::REMOVE_UNSELECTED_USERS . '</a>'
-                . ' | '
-                . '<a href="#" onclick="openWithSelfMain(\'' . \XoopsBaseConfig::get('url') . '/include/findusers.php?target='
-                . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token
-                . '\', \'userselect\', 800, 600, null); return false;" >'
-                . \XoopsLocale::SEARCH_USERS . '</a>' . $js_addusers
+            '<a href="#" onclick="var sel = xoopsGetElementById(\''.$name
+                .'\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) '
+                .'{sel.options[i] = null;}}; return false;">'.\XoopsLocale::REMOVE_UNSELECTED_USERS.'</a>'
+                .' | '
+                .'<a href="#" onclick="openWithSelfMain(\''.\XoopsBaseConfig::get('url').'/include/findusers.php?target='
+                .$name.'&amp;multiple='.$multiple.'&amp;token='.$token
+                .'\', \'userselect\', 800, 600, null); return false;" >'
+                .\XoopsLocale::SEARCH_USERS.'</a>'.$js_addusers
         );
         parent::__construct($caption, '', $name);
         $this->addElement($select_element);

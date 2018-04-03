@@ -10,14 +10,14 @@
 */
 
 /**
- * phpmailer module
+ * phpmailer module.
  *
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Richard Griffith <richard@geekwright.com>
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 $aboutAdmin = new \Xoops\Module\Admin();

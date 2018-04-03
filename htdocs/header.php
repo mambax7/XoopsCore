@@ -10,18 +10,16 @@
 */
 
 /**
- * XOOPS global header file
+ * XOOPS global header file.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @author          Kazumi Ono <webmaster@myweb.ne.jp>
  * @author          Skalpa Keo <skalpa@xoops.org>
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 $xoops = Xoops::getInstance();
 $xoops->deprecated("include 'header.php' is deprecated since 2.6.0, use Xoops::getInstance()->header(); instead");
 $xoops->header();

@@ -66,10 +66,10 @@ function smarty_function_xoMemberInfo($params, &$smarty)
             $member_info = [];
         }
         foreach ($infos as $info) {
-            if (!array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info . '_expire'] < $time) {
+            if (!array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info.'_expire'] < $time) {
                 $member_info[$info] = $xoops->user->getVar($info, 'E');
                 $_SESSION['xoops_member_info'][$info] = $member_info[$info];
-                $_SESSION['xoops_member_info'][$info . '_expire'] = $time + 60;
+                $_SESSION['xoops_member_info'][$info.'_expire'] = $time + 60;
             }
         }
     }

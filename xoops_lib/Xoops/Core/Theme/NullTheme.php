@@ -12,19 +12,18 @@
 namespace Xoops\Core\Theme;
 
 /**
- * A null theme, mainly for testing
+ * A null theme, mainly for testing.
  *
  * @category  Xoops\Core\Theme
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class NullTheme extends XoopsTheme
 {
     /**
-     * Initializes this theme
+     * Initializes this theme.
      *
      * @return bool
      */
@@ -34,7 +33,7 @@ class NullTheme extends XoopsTheme
     }
 
     /**
-     * Render the page
+     * Render the page.
      *
      * @return bool
      */
@@ -44,21 +43,21 @@ class NullTheme extends XoopsTheme
     }
 
     /**
-     * Add StyleSheet or CSS code to the document head
+     * Add StyleSheet or CSS code to the document head.
      */
     public function addStylesheet($src = '', $attributes = [], $content = '')
     {
     }
 
     /**
-     * addScriptAssets - add a list of scripts to the page
+     * addScriptAssets - add a list of scripts to the page.
      */
     public function addScriptAssets($assets, $filters = 'default', $target = null)
     {
     }
 
     /**
-     * addStylesheetAssets - add a list of stylesheets to the page
+     * addStylesheetAssets - add a list of stylesheets to the page.
      */
     public function addStylesheetAssets($assets, $filters = 'default', $target = null)
     {
@@ -66,21 +65,21 @@ class NullTheme extends XoopsTheme
 
     /**
      * addBaseAssets - add a list of assets to the page, these will all
-     * be combined into a single asset file at render time
+     * be combined into a single asset file at render time.
      */
     public function addBaseAssets($type, $assets)
     {
     }
 
     /**
-     * addBaseScriptAssets - add a list of scripts to the page
+     * addBaseScriptAssets - add a list of scripts to the page.
      */
     public function addBaseScriptAssets($assets)
     {
     }
 
     /**
-     * addBaseStylesheetAssets - add a list of stylesheets to the page
+     * addBaseStylesheetAssets - add a list of stylesheets to the page.
      */
     public function addBaseStylesheetAssets($assets)
     {
@@ -89,7 +88,7 @@ class NullTheme extends XoopsTheme
     /**
      * setNamedAsset - Add an asset reference to the asset manager.
      *
-     * @return boolean true if asset registers, false on error
+     * @return bool true if asset registers, false on error
      */
     public function setNamedAsset($name, $assets, $filters = null)
     {

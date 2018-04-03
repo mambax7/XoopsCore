@@ -14,8 +14,6 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xml
  * @since           1.0.0
  * @author          Kazumi Ono (AKA onokazu)
  * @version         $Id $
@@ -76,13 +74,16 @@ class XoopsXmlRpcApi
         $this->user = $member_handler->loginUser(addslashes($username), addslashes($password));
         if (!is_object($this->user)) {
             $this->user = null;
+
             return false;
         }
         $moduleperm_handler = $xoops->getHandlerGroupPermission();
         if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
             $this->user = null;
+
             return false;
         }
+
         return true;
     }
 
@@ -101,6 +102,7 @@ class XoopsXmlRpcApi
             return false;
         }
         $this->isadmin = true;
+
         return true;
     }
 
@@ -141,7 +143,7 @@ class XoopsXmlRpcApi
      */
     public function _setXoopsTagMap($xoopstag, $blogtag)
     {
-        if (trim($blogtag) !== '') {
+        if ('' !== trim($blogtag)) {
             $this->xoopsTagMap[$xoopstag] = $blogtag;
         }
     }
@@ -167,7 +169,7 @@ class XoopsXmlRpcApi
     {
         $ret = '';
         $match = [];
-        if (preg_match("/\<" . $tag . "\>(.*)\<\/" . $tag . "\>/is", $text, $match)) {
+        if (preg_match("/\<".$tag."\>(.*)\<\/".$tag."\>/is", $text, $match)) {
             if ($remove) {
                 $text = str_replace($match[0], '', $text);
             }
@@ -185,11 +187,13 @@ class XoopsXmlRpcApi
      */
     public function _getXoopsApi(&$params)
     {
-        if (strtolower(get_class($this)) !== 'xoopsapi') {
+        if ('xoopsapi' !== strtolower(get_class($this))) {
             $xoops_root_path = \XoopsBaseConfig::get('root-path');
-            require_once($xoops_root_path . '/class/xml/rpc/xoopsapi.php');
+            require_once $xoops_root_path.'/class/xml/rpc/xoopsapi.php';
+
             return new XoopsApi($params, $this->response, $this->module);
         }
+
         return $this;
     }
 }

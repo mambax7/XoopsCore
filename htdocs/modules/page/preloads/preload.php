@@ -12,11 +12,10 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * Page core preloads
+ * Page core preloads.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
@@ -25,7 +24,7 @@ class PagePreload extends PreloadItem
 {
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -33,7 +32,7 @@ class PagePreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'page' => $path . '/class/helper.php',
+            'page' => $path.'/class/helper.php',
         ]);
     }
 }

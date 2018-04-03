@@ -26,6 +26,7 @@ class NotificationsUsermenuPlugin implements UsermenuPluginInterface
             'name' => $helper->getModule()->getVar('name'),
             'link' => $helper->url('index.php'),
         ];
+
         return $ret;
     }
 }

@@ -14,17 +14,16 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Xmf\Module\Helper;
 use Xoops\Core\Service\AbstractContract;
 use Xoops\Core\Service\Contract\EmailInterface;
-
 use Xoops\Core\Service\Data\Email;
 use Xoops\Core\Service\Response;
 
 /**
- * phpmailer module
+ * phpmailer module.
  *
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Richard Griffith <richard@geekwright.com>
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
 {
@@ -40,7 +39,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -62,6 +61,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
             $response->setSuccess(false)->addErrorMessage($e->getMessage());
         } catch (\Throwable $e) {
             $response->setSuccess(false)->addErrorMessage($e->getMessage());
+
             return;
         }
     }
@@ -78,21 +78,21 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
         }
 
         $list = $email->getReplyToAddresses();
-        if ($list !== null) {
+        if (null !== $list) {
             foreach ($list->getEachAddress() as $address) {
                 $mailer->addReplyTo($address->getEmail(), (string) $address->getDisplayName());
             }
         }
 
         $list = $email->getCcAddresses();
-        if ($list !== null) {
+        if (null !== $list) {
             foreach ($list->getEachAddress() as $address) {
                 $mailer->addCC($address->getEmail(), (string) $address->getDisplayName());
             }
         }
 
         $list = $email->getBccAddresses();
-        if ($list !== null) {
+        if (null !== $list) {
             foreach ($list->getEachAddress() as $address) {
                 $mailer->addBCC($address->getEmail(), (string) $address->getDisplayName());
             }
@@ -100,20 +100,20 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
 
         // Attachments
         $attachmentSet = $email->getAttachments();
-        if ($attachmentSet !== null) {
+        if (null !== $attachmentSet) {
             foreach ($attachmentSet->getEachAttachment() as $attachment) {
                 $file = $attachment->getFilename();
                 $body = $attachment->getStringBody();
                 $name = (string) $attachment->getName();
                 $type = (string) $attachment->getMimeType();
                 $inline = $attachment->getInlineAttribute();
-                if ($file !== null && !$inline) {
+                if (null !== $file && !$inline) {
                     $mailer->addAttachment($file, $name, 'base64', $type);
-                } elseif ($file === null && !$inline) {
+                } elseif (null === $file && !$inline) {
                     $mailer->addStringAttachment($body, $name, 'base64', $type);
-                } elseif ($file !== null && $inline) {
+                } elseif (null !== $file && $inline) {
                     $mailer->addEmbeddedImage($file, $name, $name, 'base64', $type);
-                } elseif ($file === null && $inline) {
+                } elseif (null === $file && $inline) {
                     $mailer->addStringEmbeddedImage($body, $name, $name, 'base64', $type);
                 }
             }
@@ -122,10 +122,11 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
         $mailer->CharSet = 'UTF-8';
         $mailer->Subject = $email->getSubject();
 
-        if ($email->getHtmlBody() !== null) {
+        if (null !== $email->getHtmlBody()) {
             $mailer->Body = $email->getHtmlBody();
             $mailer->AltBody = $email->getBody();
             $mailer->isHTML(true);
+
             return $mailer;
         }
 
@@ -136,7 +137,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
     }
 
     /**
-     * Get a mailer instance with configured transport
+     * Get a mailer instance with configured transport.
      */
     protected function setupMailer(): PHPMailer
     {
@@ -150,6 +151,7 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
             case 'sendmail':
                 $mailer->isSendmail();
                 $mailer->Sendmail = $helper->getConfig('sendmailpath', $mailer->Sendmail);
+
                 break;
             case 'smtpauth':
                 $mailer->SMTPAuth = true;
@@ -162,12 +164,15 @@ class PhpMailerEmailProvider extends AbstractContract implements EmailInterface
                 $mailer->Host = $helper->getConfig('smtp_host', $mailer->Host);
                 $mailer->SMTPAutoTLS = (bool) $helper->getConfig('smtp_usetls', true);
                 $mailer->SMTPDebug = (int) $helper->getConfig('smtp_debug', 0);
+
                 break;
             case 'mail':
             default:
                 $mailer->isMail();
+
                 break;
         }
+
         return $mailer;
     }
 }

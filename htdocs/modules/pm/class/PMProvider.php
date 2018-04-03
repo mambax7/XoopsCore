@@ -16,14 +16,13 @@ use Xoops\Core\Service\Data\Message;
 use Xoops\Core\Service\Response;
 
 /**
- * PM provider for service manager
+ * PM provider for service manager.
  *
  * @category  class
- * @package   PMProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  * @since     2.6.0
  */
 class PMProvider extends AbstractContract implements UserMessageInterface
@@ -40,7 +39,7 @@ class PMProvider extends AbstractContract implements UserMessageInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -55,6 +54,7 @@ class PMProvider extends AbstractContract implements UserMessageInterface
         /** @var \PmMessage */
         $pm = $pmHandler->create();
         $pm->setVar('msg_time', time());
+
         try {
             $pm->setVar('subject', $message->getSubject());
             $pm->setVar('msg_text', $message->getBody());
@@ -62,12 +62,13 @@ class PMProvider extends AbstractContract implements UserMessageInterface
             $pm->setVar('from_userid', $message->getFromId());
         } catch (\LogicException $e) {
             $response->setSuccess(false)->addErrorMessage($e->getMessage());
+
             return;
         }
         //PMs are by default not saved in outbox
         //$pm->setVar('from_delete', 0);
 
-        if ($pmHandler->insert($pm) === false) {
+        if (false === $pmHandler->insert($pm)) {
             $response->setSuccess(false)->addErrorMessage($pm->getErrors());
         }
     }

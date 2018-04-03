@@ -41,7 +41,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $byteCount = Yaml::save($inputArray, $tmpfname);
-        $this->assertFalse($byteCount === false);
+        $this->assertFalse(false === $byteCount);
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::read($tmpfname);
@@ -96,7 +96,7 @@ class YamlTest extends \PHPUnit\Framework\TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $byteCount = Yaml::saveWrapped($inputArray, $tmpfname);
-        $this->assertFalse($byteCount === false);
+        $this->assertFalse(false === $byteCount);
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::readWrapped($tmpfname);

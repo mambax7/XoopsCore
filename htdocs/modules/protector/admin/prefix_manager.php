@@ -10,18 +10,16 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
+include_once __DIR__.'/header.php';
 
-include_once __DIR__ . '/header.php';
-
-require_once dirname(__DIR__) . '/class/gtickets.php';
+require_once dirname(__DIR__).'/class/gtickets.php';
 
 $xoops = Xoops::getInstance();
 $xoops->db();
@@ -40,13 +38,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 3, $xoopsGTicket->getErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/', 3, $xoopsGTicket->getErrors());
     }
 
-    $new_prefix = empty($_POST['new_prefix']) ? 'x' . substr(md5(time()), -5) : $_POST['new_prefix'];
+    $new_prefix = empty($_POST['new_prefix']) ? 'x'.substr(md5(time()), -5) : $_POST['new_prefix'];
     $old_prefix = $_POST['old_prefix'];
 
-    $srs = $db->queryF('SHOW TABLE STATUS FROM `' . \XoopsBaseConfig::get('db-name') . '`');
+    $srs = $db->queryF('SHOW TABLE STATUS FROM `'.\XoopsBaseConfig::get('db-name').'`');
 
     if (!$db->getRowsNum($srs)) {
         $xoops->tpl()->assign('error', _AM_PROTECTOR_PREFIX_ERROR_NACT);
@@ -55,18 +53,19 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     }
 
     $count = 0;
-    while (($row_table = $db->fetchArray($srs)) !== false) {
+    while (false !== ($row_table = $db->fetchArray($srs))) {
         ++$count;
         $old_table = $row_table['Name'];
-        if (substr($old_table, 0, strlen($old_prefix) + 1) !== $old_prefix . '_') {
+        if (substr($old_table, 0, strlen($old_prefix) + 1) !== $old_prefix.'_') {
             continue;
         }
 
-        $new_table = $new_prefix . substr($old_table, strlen($old_prefix));
+        $new_table = $new_prefix.substr($old_table, strlen($old_prefix));
 
-        $crs = $db->queryF('SHOW CREATE TABLE ' . $old_table);
+        $crs = $db->queryF('SHOW CREATE TABLE '.$old_table);
         if (!$db->getRowsNum($crs)) {
-            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_SCT, $old_table) . '<br />';
+            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_SCT, $old_table).'<br />';
+
             continue;
         }
         $row_create = $db->fetchArray($crs);
@@ -74,13 +73,15 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         $crs = $db->queryF($create_sql);
         if (!$crs) {
-            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_CT, $new_table) . '<br />';
+            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_CT, $new_table).'<br />';
+
             continue;
         }
 
         $irs = $db->queryF("INSERT INTO `${new_table}` SELECT * FROM `${old_table}`");
         if (!$irs) {
-            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_II, $new_table) . '<br />';
+            $error .= sprintf(_AM_PROTECTOR_PREFIX_ERROR_II, $new_table).'<br />';
+
             continue;
         }
     }
@@ -89,7 +90,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $_SESSION['protector_logger'] = Logger::getInstance()->dump('queries');
     }
 
-    if ($error !== '') {
+    if ('' !== $error) {
         $xoops->tpl()->assign('error', $error);
         $xoops->footer();
     } else {
@@ -106,13 +107,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         // Ticket check
         if (!$xoopsGTicket->check(true, 'protector_admin')) {
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 3, $xoopsGTicket->getErrors());
+            $xoops->redirect(\XoopsBaseConfig::get('url').'/', 3, $xoopsGTicket->getErrors());
         }
 
         $prefix = $_POST['prefix'];
 
         // get table list
-        $srs = $db->queryF('SHOW TABLE STATUS FROM `' . \XoopsBaseConfig::get('db-name') . '`');
+        $srs = $db->queryF('SHOW TABLE STATUS FROM `'.\XoopsBaseConfig::get('db-name').'`');
         if (!$db->getRowsNum($srs)) {
             $xoops->tpl()->assign('error', _AM_PROTECTOR_PREFIX_ERROR_NADT);
             $xoops->footer();
@@ -121,13 +122,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         $export_string = '';
 
-        while (($row_table = $db->fetchArray($srs)) !== false) {
+        while (false !== ($row_table = $db->fetchArray($srs))) {
             $table = $row_table['Name'];
-            if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
+            if (substr($table, 0, strlen($prefix) + 1) !== $prefix.'_') {
                 continue;
             }
             $drs = $db->queryF("SHOW CREATE TABLE `${table}`");
-            $export_string .= "\nDROP TABLE IF EXISTS `${table}`;\n" . mysql_result($drs, 0, 1) . ";\n\n";
+            $export_string .= "\nDROP TABLE IF EXISTS `${table}`;\n".mysql_result($drs, 0, 1).";\n\n";
             $result = mysqli_query("SELECT * FROM `${table}`");
             $fields_cnt = mysql_num_fields($result);
             $field_flags = [];
@@ -142,40 +143,40 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
                 for ($j = 0; $j < $fields_cnt; ++$j) {
                     $fields_meta = mysql_fetch_field($result, $j);
                     // NULL
-                    if (!isset($row[$j]) || $row[$j] === null) {
+                    if (!isset($row[$j]) || null === $row[$j]) {
                         $values[] = 'NULL';
                     // a number
                         // timestamp is numeric on some MySQL 4.1
-                    } elseif ($fields_meta->numeric && $fields_meta->type !== 'timestamp') {
+                    } elseif ($fields_meta->numeric && 'timestamp' !== $fields_meta->type) {
                         $values[] = $row[$j];
                     // a binary field
                         // Note: with mysqli, under MySQL 4.1.3, we get the flag
                         // "binary" for those field types (I don't know why)
                     } else {
-                        if (stristr($field_flags[$j], 'BINARY') && $fields_meta->type !== 'datetime' && $fields_meta->type !== 'date' && $fields_meta->type !== 'time' && $fields_meta->type !== 'timestamp'
+                        if (stristr($field_flags[$j], 'BINARY') && 'datetime' !== $fields_meta->type && 'date' !== $fields_meta->type && 'time' !== $fields_meta->type && 'timestamp' !== $fields_meta->type
                         ) {
                             // empty blobs need to be different, but '0' is also empty :-(
-                            if (empty($row[$j]) && $row[$j] !== '0') {
+                            if (empty($row[$j]) && '0' !== $row[$j]) {
                                 $values[] = '\'\'';
                             } else {
-                                $values[] = '0x' . bin2hex($row[$j]);
+                                $values[] = '0x'.bin2hex($row[$j]);
                             }
                             // something else -> treat as a string
                         } else {
-                            $values[] = '\'' . str_replace($search, $replace, addslashes($row[$j])) . '\'';
+                            $values[] = '\''.str_replace($search, $replace, addslashes($row[$j])).'\'';
                         }
                     } // end if
                 } // end for
 
-                $export_string .= "INSERT INTO `${table}` VALUES (" . implode(', ', $values) . ");\n";
+                $export_string .= "INSERT INTO `${table}` VALUES (".implode(', ', $values).");\n";
                 unset($values);
             } // end while
             mysql_free_result($result);
         }
 
         header('Content-Type: Application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $prefix . '_' . date('YmdHis') . '.sql"');
-        header('Content-Length: ' . strlen($export_string));
+        header('Content-Disposition: attachment; filename="'.$prefix.'_'.date('YmdHis').'.sql"');
+        header('Content-Length: '.strlen($export_string));
         set_time_limit(0);
         echo $export_string;
         exit;
@@ -190,7 +191,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         // Ticket check
         if (!$xoopsGTicket->check(true, 'protector_admin')) {
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 3, $xoopsGTicket->getErrors());
+            $xoops->redirect(\XoopsBaseConfig::get('url').'/', 3, $xoopsGTicket->getErrors());
         }
 
         $prefix = $_POST['prefix'];
@@ -211,16 +212,16 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         }
 
         // get table list
-        $srs = $db->queryF('SHOW TABLE STATUS FROM `' . \XoopsBaseConfig::get('db-name') . '`');
+        $srs = $db->queryF('SHOW TABLE STATUS FROM `'.\XoopsBaseConfig::get('db-name').'`');
         if (!$db->getRowsNum($srs)) {
             $xoops->tpl()->assign('error', _AM_PROTECTOR_PREFIX_ERROR_NADT);
             $xoops->footer();
             exit;
         }
 
-        while (($row_table = $db->fetchArray($srs)) !== false) {
+        while (false !== ($row_table = $db->fetchArray($srs))) {
             $table = $row_table['Name'];
-            if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
+            if (substr($table, 0, strlen($prefix) + 1) !== $prefix.'_') {
                 continue;
             }
             $drs = $db->queryF("DROP TABLE `${table}`");
@@ -238,7 +239,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('prefix_manager.php');
 
-$xoops->tpl()->assign('prefix', sprintf(_AM_TXT_HOWTOCHANGEDB, \XoopsBaseConfig::get('var_path') . '/data/secure.php'));
+$xoops->tpl()->assign('prefix', sprintf(_AM_TXT_HOWTOCHANGEDB, \XoopsBaseConfig::get('var_path').'/data/secure.php'));
 $xoops->tpl()->assign('prefix_line', sprintf(_AM_PROTECTOR_PREFIX_CHANGEDBLINE, \XoopsBaseConfig::get('db-prefix')));
 
 // Display Log if exists
@@ -249,7 +250,7 @@ if (!empty($_SESSION['protector_logger'])) {
 }
 
 // query
-$srs = $db->queryF('SHOW TABLE STATUS FROM `' . \XoopsBaseConfig::get('db-name') . '`');
+$srs = $db->queryF('SHOW TABLE STATUS FROM `'.\XoopsBaseConfig::get('db-name').'`');
 if (!$db->getRowsNum($srs)) {
     $xoops->tpl()->assign('error', '_AM_PROTECTOR_PREFIX_ERROR_NACT');
     $xoops->footer();
@@ -259,8 +260,8 @@ if (!$db->getRowsNum($srs)) {
 // search prefixes
 $tables = [];
 $prefixes = [];
-while (($row_table = $db->fetchArray($srs)) !== false) {
-    if (substr($row_table['Name'], -6) === '_users') {
+while (false !== ($row_table = $db->fetchArray($srs))) {
+    if ('_users' === substr($row_table['Name'], -6)) {
         $prefixes[] = [
             'name' => substr($row_table['Name'], 0, -6),
             'updated' => $row_table['Update_time'],
@@ -275,10 +276,10 @@ foreach ($prefixes as $prefix) {
     $table_count = 0;
     $has_xoopscomments = false;
     foreach ($tables as $table) {
-        if ($table === $prefix['name'] . '_xoopscomments') {
+        if ($prefix['name'].'_xoopscomments' === $table) {
             $has_xoopscomments = true;
         }
-        if (substr($table, 0, strlen($prefix['name']) + 1) === $prefix['name'] . '_') {
+        if ($prefix['name'].'_' === substr($table, 0, strlen($prefix['name']) + 1)) {
             ++$table_count;
         }
     }

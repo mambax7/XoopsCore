@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class DateSelectTest extends \PHPUnit\Framework\TestCase
 {
@@ -39,7 +39,7 @@ class DateSelectTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new DateSelect('mycaption', 'myname');
-        $newWay = new DateSelect(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname', ]);
+        $newWay = new DateSelect(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname']);
         $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

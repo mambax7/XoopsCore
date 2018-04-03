@@ -14,29 +14,28 @@ namespace Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * XOOPS Text/Sanitizer extension
+ * XOOPS Text/Sanitizer extension.
  *
  * @category  Sanitizer\ExtensionAbstract
- * @package   Xoops\Core\Text
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Goghs Cheng (http://www.eqiao.com, http://www.devbeez.com/)
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class ExtensionAbstract extends SanitizerComponent
 {
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      *
      * was load()
      */
     abstract public function registerExtensionProcessing();
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * was encode()
      *
@@ -50,14 +49,14 @@ abstract class ExtensionAbstract extends SanitizerComponent
     }
 
     /**
-     * Convenience method to create a button for the editor
+     * Convenience method to create a button for the editor.
      *
      * @param string $textAreaId id of element passed to onclick
      * @param string $imageName  button image
      * @param string $altText    text for alt attribute
      * @param string $onclick    javascript function should expect arguments as
      *                            ($textAreaId, $varArgs1, $varArgs2 ...)
-     * @param string $varArgs    variable number of strings passed to onclick function
+     * @param string $varArgs variable number of strings passed to onclick function
      *
      * @return string
      */
@@ -66,13 +65,13 @@ abstract class ExtensionAbstract extends SanitizerComponent
         $input = func_get_args();
         $prompts = array_slice($input, 4);
         $altText = $this->ts->escapeForJavascript($altText);
-        $url = \Xoops::getInstance()->url('images/form/' . $imageName);
+        $url = \Xoops::getInstance()->url('images/form/'.$imageName);
 
-        $buttonCode = '<img src="' . $url . '"'
-            . ' alt="' . $altText . '" title="' . $altText . '"'
-            . ' onclick="' . $onclick . '(\'' . $textAreaId . '\'';
+        $buttonCode = '<img src="'.$url.'"'
+            .' alt="'.$altText.'" title="'.$altText.'"'
+            .' onclick="'.$onclick.'(\''.$textAreaId.'\'';
         foreach ($prompts as $prompt) {
-            $buttonCode .= ', \'' . $this->ts->escapeForJavascript($prompt) . '\'';
+            $buttonCode .= ', \''.$this->ts->escapeForJavascript($prompt).'\'';
         }
         $buttonCode .= ');" />&nbsp;';
 

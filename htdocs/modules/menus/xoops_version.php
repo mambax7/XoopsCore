@@ -12,11 +12,9 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 $modversion = [];
 $modversion['name'] = _MI_MENUS_NAME;
 $modversion['description'] = _MI_MENUS_DSC;
@@ -58,7 +56,6 @@ $modversion['hasAdmin'] = 1;
 $modversion['system_menu'] = 1;
 $modversion['adminindex'] = 'admin/index.php';
 $modversion['adminmenu'] = 'admin/menu.php';
-
 
 // Menu
 $modversion['hasMain'] = 0;

@@ -12,13 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xml
  * @since           1.0.0
  * @author          Kazumi Ono (AKA onokazu)
  * @version         $Id$
  */
-
 class XoopsThemeSetParser extends SaxParser
 {
     /**
@@ -72,7 +69,7 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param string $name
+     * @param  string     $name
      * @return array|bool
      */
     public function getThemeSetData($name = null)
@@ -81,8 +78,10 @@ class XoopsThemeSetParser extends SaxParser
             if (isset($this->themeSetData[$name])) {
                 return $this->themeSetData[$name];
             }
+
             return false;
         }
+
         return $this->themeSetData;
     }
 
@@ -128,7 +127,7 @@ class XoopsThemeSetParser extends SaxParser
         if (!isset($this->tempArr[$name])) {
             $this->tempArr[$name] = $value;
         } else {
-            $this->tempArr[$name] .= $delim . $value;
+            $this->tempArr[$name] .= $delim.$value;
         }
     }
 
@@ -141,8 +140,10 @@ class XoopsThemeSetParser extends SaxParser
             if (isset($this->tempArr[$name])) {
                 return $this->tempArr[$name];
             }
+
             return false;
         }
+
         return $this->tempArr;
     }
 
@@ -154,7 +155,7 @@ class XoopsThemeSetParser extends SaxParser
 }
 
 /**
- * Class ThemeSetDateCreatedHandler
+ * Class ThemeSetDateCreatedHandler.
  */
 class ThemeSetDateCreatedHandler extends XmlTagHandler
 {
@@ -177,6 +178,7 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'themeset':
                 $parser->setThemeSetData('date', $data);
+
                 break;
             default:
                 break;
@@ -185,7 +187,7 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetAuthorHandler
+ * Class ThemeSetAuthorHandler.
  */
 class ThemeSetAuthorHandler extends XmlTagHandler
 {
@@ -219,7 +221,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetDescriptionHandler
+ * Class ThemeSetDescriptionHandler.
  */
 class ThemeSetDescriptionHandler extends XmlTagHandler
 {
@@ -242,9 +244,11 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'template':
                 $parser->setTempArr('description', $data);
+
                 break;
             case 'image':
                 $parser->setTempArr('description', $data);
+
                 break;
             default:
                 break;
@@ -253,7 +257,7 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetGeneratorHandler
+ * Class ThemeSetGeneratorHandler.
  */
 class ThemeSetGeneratorHandler extends XmlTagHandler
 {
@@ -276,6 +280,7 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'themeset':
                 $parser->setThemeSetData('generator', $data);
+
                 break;
             default:
                 break;
@@ -284,7 +289,7 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetNameHandler
+ * Class ThemeSetNameHandler.
  */
 class ThemeSetNameHandler extends XmlTagHandler
 {
@@ -304,9 +309,11 @@ class ThemeSetNameHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'themeset':
                 $parser->setThemeSetData('name', $data);
+
                 break;
             case 'author':
                 $parser->setTempArr('name', $data);
+
                 break;
             default:
                 break;
@@ -315,7 +322,7 @@ class ThemeSetNameHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetEmailHandler
+ * Class ThemeSetEmailHandler.
  */
 class ThemeSetEmailHandler extends XmlTagHandler
 {
@@ -338,6 +345,7 @@ class ThemeSetEmailHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'author':
                 $parser->setTempArr('email', $data);
+
                 break;
             default:
                 break;
@@ -346,7 +354,7 @@ class ThemeSetEmailHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetLinkHandler
+ * Class ThemeSetLinkHandler.
  */
 class ThemeSetLinkHandler extends XmlTagHandler
 {
@@ -369,6 +377,7 @@ class ThemeSetLinkHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'author':
                 $parser->setTempArr('link', $data);
+
                 break;
             default:
                 break;
@@ -377,7 +386,7 @@ class ThemeSetLinkHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetTemplateHandler
+ * Class ThemeSetTemplateHandler.
  */
 class ThemeSetTemplateHandler extends XmlTagHandler
 {
@@ -414,7 +423,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetImageHandler
+ * Class ThemeSetImageHandler.
  */
 class ThemeSetImageHandler extends XmlTagHandler
 {
@@ -451,7 +460,7 @@ class ThemeSetImageHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetModuleHandler
+ * Class ThemeSetModuleHandler.
  */
 class ThemeSetModuleHandler extends XmlTagHandler
 {
@@ -475,6 +484,7 @@ class ThemeSetModuleHandler extends XmlTagHandler
             case 'template':
             case 'image':
                 $parser->setTempArr('module', $data);
+
                 break;
             default:
                 break;
@@ -483,7 +493,7 @@ class ThemeSetModuleHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetFileTypeHandler
+ * Class ThemeSetFileTypeHandler.
  */
 class ThemeSetFileTypeHandler extends XmlTagHandler
 {
@@ -506,6 +516,7 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'template':
                 $parser->setTempArr('type', $data);
+
                 break;
             default:
                 break;
@@ -514,7 +525,7 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
 }
 
 /**
- * Class ThemeSetTagHandler
+ * Class ThemeSetTagHandler.
  */
 class ThemeSetTagHandler extends XmlTagHandler
 {
@@ -537,6 +548,7 @@ class ThemeSetTagHandler extends XmlTagHandler
         switch ($parser->getParentTag()) {
             case 'image':
                 $parser->setTempArr('tag', $data);
+
                 break;
             default:
                 break;

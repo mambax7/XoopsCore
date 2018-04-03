@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * GroupCheckbox - select group(s) using checkboxes
+ * GroupCheckbox - select group(s) using checkboxes.
  *
  * @category  Xoops\Form\GroupCheckbox
- * @package   Xoops\Form
  * @author    John Neill <catzwolf@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class GroupCheckbox extends Checkbox
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $name    element name

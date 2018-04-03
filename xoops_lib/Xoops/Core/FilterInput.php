@@ -12,7 +12,7 @@
 namespace Xoops\Core;
 
 /**
- * XoopsFilterInput is a class for filtering input from any data source
+ * XoopsFilterInput is a class for filtering input from any data source.
  *
  * Forked from the php input filter library by Daniel Morris
  *
@@ -20,7 +20,6 @@ namespace Xoops\Core;
  *                        Marco Wandschneider, Chris Tobin and Andrew Eddie.
  *
  * @category  Xoops\Core\FilterInput
- * @package   Xoops\Core
  * @author    Daniel Morris <dan@rootcube.com>
  * @author    Louis Landry <louis.landry@joomla.org>
  * @author    Grégory Mage (Aka Mage)
@@ -31,7 +30,7 @@ namespace Xoops\Core;
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.5.7
  */
 class FilterInput extends \Xmf\FilterInput

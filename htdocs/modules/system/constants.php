@@ -10,15 +10,13 @@
 */
 
 /**
- * System constants
+ * System constants.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 define('XOOPS_SYSTEM_GROUP', 1);
 define('XOOPS_SYSTEM_USER', 2);
 define('XOOPS_SYSTEM_PREF', 3);

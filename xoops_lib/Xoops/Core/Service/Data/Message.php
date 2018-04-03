@@ -14,7 +14,7 @@ namespace Xoops\Core\Service\Data;
 use Xmf\Assert;
 
 /**
- * The Message data object is a minimal message from one user to another user
+ * The Message data object is a minimal message from one user to another user.
  *
  * This is an Immutable data object. That means any changes to the data (state)
  * return a new object, while the internal state of the original object is preserved.
@@ -25,11 +25,10 @@ use Xmf\Assert;
  * The Message data object is used for message and mailer services
  *
  * @category  Xoops\Core\Service\Data
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Message
 {
@@ -69,28 +68,28 @@ class Message
      */
     public function __construct(?string $subject = null, ?string $body = null, ?int $fromId = null, ?int $toId = null)
     {
-        if ($subject !== null) {
+        if (null !== $subject) {
             $subject = trim($subject);
             Assert::stringNotEmpty($subject, static::MESSAGE_SUBJECT);
             $this->subject = $subject;
         }
-        if ($body !== null) {
+        if (null !== $body) {
             $body = trim($body);
             Assert::stringNotEmpty($body, static::MESSAGE_BODY);
             $this->body = $body;
         }
-        if ($fromId !== null) {
+        if (null !== $fromId) {
             Assert::greaterThan($fromId, 0, static::MESSAGE_FROM);
             $this->fromId = $fromId;
         }
-        if ($toId !== null) {
+        if (null !== $toId) {
             Assert::greaterThan($toId, 0, static::MESSAGE_TO);
             $this->toId = $toId;
         }
     }
 
     /**
-     * Return a new object with a the specified toId
+     * Return a new object with a the specified toId.
      *
      *
      * @param int $toId userid message is to
@@ -103,7 +102,7 @@ class Message
     }
 
     /**
-     * Return a new object with a the specified fromId
+     * Return a new object with a the specified fromId.
      *
      *
      * @param int $fromId userid message is from
@@ -116,7 +115,7 @@ class Message
     }
 
     /**
-     * Return a new object with a the specified subject
+     * Return a new object with a the specified subject.
      *
      *
      * @param string $subject message subject
@@ -129,7 +128,7 @@ class Message
     }
 
     /**
-     * Return a new object with a the specified body
+     * Return a new object with a the specified body.
      *
      *
      * @param string $body message body
@@ -142,7 +141,7 @@ class Message
     }
 
     /**
-     * getToId
+     * getToId.
      *
      * @return int the toId
      *
@@ -155,11 +154,12 @@ class Message
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->toId;
     }
 
     /**
-     * getFromId
+     * getFromId.
      *
      * @return int the fromId
      *
@@ -172,11 +172,12 @@ class Message
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->fromId;
     }
 
     /**
-     * getSubject
+     * getSubject.
      *
      * @return string the message subject
      *
@@ -194,7 +195,7 @@ class Message
     }
 
     /**
-     * getBody
+     * getBody.
      *
      * @return string the message body
      *
@@ -207,6 +208,7 @@ class Message
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->body;
     }
 }

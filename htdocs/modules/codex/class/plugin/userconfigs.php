@@ -22,7 +22,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      * Expects an array of arrays containing:
      * name,        Name of the category
      * description, Description for the category, use constant
-     * The keys must be unique identifiers
+     * The keys must be unique identifiers.
      *
      * @return array
      */
@@ -32,6 +32,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
         $categories['cat_1']['title'] = t::UCONF_CAT1_DESC;
         $categories['cat_2']['name'] = t::UCONF_CAT2;
         $categories['cat_2']['title'] = t::UCONF_CAT2_DESC;
+
         return $categories;
     }
 
@@ -43,7 +44,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      * formtype,    Form to use for the config
      * default,     Default value for the config
      * options,     Options available for the config
-     * category,    Category for this config, use the unique identifier set on categories()
+     * category,    Category for this config, use the unique identifier set on categories().
      */
     public function configs()
     {
@@ -64,6 +65,7 @@ class CodexUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
         $config[$i]['valuetype'] = 'text';
         $config[$i]['default'] = 'Type Something here';
         $config[$i]['category'] = 'cat_2';
+
         return $config;
     }
 }

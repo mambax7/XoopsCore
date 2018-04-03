@@ -12,17 +12,16 @@
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * System help page
+ * System help page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Andricq Nicolas (AKA MusS)
- * @package     system
  * @version     $Id$
  */
 
 // Include header
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $system = System::getInstance();
@@ -41,22 +40,22 @@ $system_breadcrumb->addLink(XoopsLocale::HELP, 'help.php');
 if ($mid > 0) {
     $module = $xoops->getModuleById($mid);
 
-    $system_breadcrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
+    $system_breadcrumb->addLink($module->getVar('name'), 'help.php?mid='.$module->getVar('mid', 's'));
     $system_breadcrumb->addLink(system_adminVersion($page, 'name'));
     $system_breadcrumb->render();
 
-    if ($module->getVar('dirname', 'e') === 'system') {
-        $admin_dir = \XoopsBaseConfig::get('root-path') . '/modules/system/admin';
+    if ('system' === $module->getVar('dirname', 'e')) {
+        $admin_dir = \XoopsBaseConfig::get('root-path').'/modules/system/admin';
         $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 
         foreach ($dirlist as $directory) {
-            if (XoopsLoad::fileExists($file = $admin_dir . '/' . $directory . '/xoops_version.php')) {
+            if (XoopsLoad::fileExists($file = $admin_dir.'/'.$directory.'/xoops_version.php')) {
                 require $file;
                 unset($file);
 
                 if ($modversion['help']) {
                     $help['name'] = system_adminVersion($directory, 'name');
-                    $help['link'] = 'help.php?mid=' . $mid . '&amp;' . system_adminVersion($directory, 'help');
+                    $help['link'] = 'help.php?mid='.$mid.'&amp;'.system_adminVersion($directory, 'help');
 
                     $xoops->tpl()->appendByRef('help', $help);
                     unset($help);
@@ -72,9 +71,9 @@ if ($mid > 0) {
         $j = 0;
         if (is_array($helplist)) {
             foreach ($helplist as $helpitem) {
-                if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
+                if (('' !== $helpitem['name']) && ('' !== $helpitem['link'])) {
                     $list_help[$j]['name'] = $helpitem['name'];
-                    $list_help[$j]['link'] = 'help.php?mid=' . $mid . '&amp;' . $helpitem['link'];
+                    $list_help[$j]['link'] = 'help.php?mid='.$mid.'&amp;'.$helpitem['link'];
                     ++$j;
                 }
             }
@@ -82,9 +81,9 @@ if ($mid > 0) {
             $xoopsTpl->assign('list_mods', $listed_mods);
         }
         unset($helplist);
-        if (($module->getInfo('help') !== '') && ($j === 0)) {
+        if (('' !== $module->getInfo('help')) && (0 === $j)) {
             $help['name'] = $module->getInfo('name');
-            $help['link'] = 'help.php?mid=' . $mid . '&amp;' . $module->getInfo('help');
+            $help['link'] = 'help.php?mid='.$mid.'&amp;'.$module->getInfo('help');
             $xoopsTpl->appendByRef('help', $help);
         }
         unset($help);
@@ -95,51 +94,51 @@ if ($mid > 0) {
     $xoops->tpl()->assign('modname', $module->getVar('name'));
     $xoops->tpl()->assign('moddirname', $module->getVar('dirname', 'e'));
 
-    if ($page !== '') {
+    if ('' !== $page) {
         // Call template
-        if ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/' . XoopsLocale::getLocale() . '/help/' . $page . '.tpl')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/' . XoopsLocale::getLocale() . '/help/' . $page . '.tpl');
-        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/' . XoopsLocale::getLocale() . '/help/' . $page . '.html')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/' . XoopsLocale::getLocale() . '/help/' . $page . '.html');
-        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl');
-        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html');
-        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/en_US/help/' . $page . '.tpl')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/en_US/help/' . $page . '.tpl');
-        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/en_US/help/' . $page . '.html')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/locale/en_US/help/' . $page . '.html');
-        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl');
-        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html')) {
-            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html');
+        if ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/'.XoopsLocale::getLocale().'/help/'.$page.'.tpl')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/'.XoopsLocale::getLocale().'/help/'.$page.'.tpl');
+        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/'.XoopsLocale::getLocale().'/help/'.$page.'.html')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/'.XoopsLocale::getLocale().'/help/'.$page.'.html');
+        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/'.$xoopsConfig['language'].'/help/'.$page.'.tpl')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/'.$xoopsConfig['language'].'/help/'.$page.'.tpl');
+        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/'.$xoopsConfig['language'].'/help/'.$page.'.html')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/'.$xoopsConfig['language'].'/help/'.$page.'.html');
+        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/en_US/help/'.$page.'.tpl')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/en_US/help/'.$page.'.tpl');
+        } elseif ($helpfile = XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/en_US/help/'.$page.'.html')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/locale/en_US/help/'.$page.'.html');
+        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/english/help/'.$page.'.tpl')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/english/help/'.$page.'.tpl');
+        } elseif (XoopsLoad::fileExists(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/english/help/'.$page.'.html')) {
+            $helpcontent = $xoops->tpl()->fetch(\XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e').'/language/english/help/'.$page.'.html');
         } else {
             $xoops->tpl()->assign('load_error', 1);
         }
 
-        if ($module->getVar('dirname', 'e') !== 'system') {
+        if ('system' !== $module->getVar('dirname', 'e')) {
             $xoops->tpl()->assign('help_module', true);
         }
         $xoops->tpl()->assign('helpcontent', $helpcontent);
     } else {
         if ($helpfile = XoopsLoad::fileExists(
-            \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e')
-            . '/locale/' . XoopsLocale::getLocale() . '/help/module_index.html'
+            \XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e')
+            .'/locale/'.XoopsLocale::getLocale().'/help/module_index.html'
         )) {
             $helpcontent = $xoops->tpl()->fetch(
-                \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e')
-                . '/locale/' . XoopsLocale::getLocale() . '/help/module_index.html'
+                \XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e')
+                .'/locale/'.XoopsLocale::getLocale().'/help/module_index.html'
             );
         } elseif (XoopsLoad::fileExists(
-            \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e')
-            . '/language/' . $xoops->getConfig('language') . '/help/module_index.html'
+            \XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e')
+            .'/language/'.$xoops->getConfig('language').'/help/module_index.html'
         )) {
             $helpcontent = $xoops->tpl()->fetch(
-                \XoopsBaseConfig::get('root-path') . '/modules/' . $module->getVar('dirname', 'e')
-                . '/language/' . $xoops->getConfig('language') . '/help/module_index.html'
+                \XoopsBaseConfig::get('root-path').'/modules/'.$module->getVar('dirname', 'e')
+                .'/language/'.$xoops->getConfig('language').'/help/module_index.html'
             );
         } else {
-            $helpcontent = '<p>' . $module->getInfo('description') . '</p>';
+            $helpcontent = '<p>'.$module->getInfo('description').'</p>';
         }
         $xoops->tpl()->assign('helpcontent', $helpcontent);
     }
@@ -165,19 +164,19 @@ if ($mid > 0) {
         $listed_mods[$i]['license'] = $module->getInfo('license');
         $listed_mods[$i]['description'] = $module->getInfo('description');
 
-        if ($module->getVar('dirname', 'e') === 'system') {
-            $admin_dir = \XoopsBaseConfig::get('root-path') . '/modules/system/admin';
+        if ('system' === $module->getVar('dirname', 'e')) {
+            $admin_dir = \XoopsBaseConfig::get('root-path').'/modules/system/admin';
             $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 
             foreach ($dirlist as $directory) {
-                if (XoopsLoad::fileExists($file = $admin_dir . '/' . $directory . '/xoops_version.php')) {
+                if (XoopsLoad::fileExists($file = $admin_dir.'/'.$directory.'/xoops_version.php')) {
                     require $file;
                     unset($file);
 
                     if ($modversion['help']) {
                         $list_help[$j]['name'] = system_adminVersion($directory, 'name');
-                        $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
-                            . '&amp;' . system_adminVersion($directory, 'help');
+                        $list_help[$j]['link'] = 'help.php?mid='.$module->getVar('mid', 'e')
+                            .'&amp;'.system_adminVersion($directory, 'help');
                     }
                     unset($modversion);
                     ++$j;
@@ -191,10 +190,10 @@ if ($mid > 0) {
             // Only build the list if one has been defined.
             if (is_array($helplist)) {
                 foreach ($helplist as $helpitem) {
-                    if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
+                    if (('' !== $helpitem['name']) && ('' !== $helpitem['link'])) {
                         $list_help[$j]['name'] = $helpitem['name'];
-                        $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
-                            . '&amp;' . $helpitem['link'];
+                        $list_help[$j]['link'] = 'help.php?mid='.$module->getVar('mid', 'e')
+                            .'&amp;'.$helpitem['link'];
                         ++$j;
                         ++$k;
                     }
@@ -203,14 +202,14 @@ if ($mid > 0) {
             unset($helplist);
 
             // If there is no help section ($k=0), and a lone help parameter has been defined.
-            if (($module->getInfo('help') !== '') && ($k === 0)) {
+            if (('' !== $module->getInfo('help')) && (0 === $k)) {
                 $list_help[$j]['name'] = $module->getInfo('name');
-                $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e')
-                    . '&amp;' . $module->getInfo('help');
+                $list_help[$j]['link'] = 'help.php?mid='.$module->getVar('mid', 'e')
+                    .'&amp;'.$module->getInfo('help');
             }
         }
         $listed_mods[$i]['help_page'] = $list_help;
-        if ($module->getInfo('help') === '') {
+        if ('' === $module->getInfo('help')) {
             unset($listed_mods[$i]);
         }
         unset($list_help);
@@ -221,15 +220,15 @@ if ($mid > 0) {
     $xoops->tpl()->assign('list_mods', $listed_mods);
 
     if (XoopsLoad::fileExists(
-        \XoopsBaseConfig::get('root-path') . '/modules/system/language/'
-        . $xoops->getConfig('language') . '/help/help_center.html'
+        \XoopsBaseConfig::get('root-path').'/modules/system/language/'
+        .$xoops->getConfig('language').'/help/help_center.html'
     )) {
         $helpcontent = $xoops->tpl()->fetch(
-            \XoopsBaseConfig::get('root-path') . '/modules/system/language/' . $xoops->getConfig('language')
-            . '/help/help_center.html'
+            \XoopsBaseConfig::get('root-path').'/modules/system/language/'.$xoops->getConfig('language')
+            .'/help/help_center.html'
         );
     } else {
-        $helpcontent = '<div id="non-modhelp">' . SystemLocale::WELCOME_TO_XOOPS_HELP_CENTER . '</div>';
+        $helpcontent = '<div id="non-modhelp">'.SystemLocale::WELCOME_TO_XOOPS_HELP_CENTER.'</div>';
     }
 
     $xoops->tpl()->assign('helpcontent', $helpcontent);

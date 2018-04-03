@@ -19,15 +19,13 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Images
  * @author
  * @version         $Id$
  */
-
 class ImagesCategory extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -46,7 +44,7 @@ class ImagesCategory extends XoopsObject
 class ImagesCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Xoops\Core\Database\Connection}
      */
@@ -57,7 +55,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param CriteriaElement|null $criteria
-     * @param bool $id_as_key
+     * @param bool                 $id_as_key
      *
      * @return array
      */
@@ -79,12 +77,12 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Get a list of imagesCategories
+     * Get a list of imagesCategories.
      *
-     * @param array $groups
+     * @param array  $groups
      * @param string $perm
-     * @param null $display
-     * @param null $storetype
+     * @param null   $display
+     * @param null   $storetype
      *
      * @return array Array of {@link ImagesImage} objects
      */
@@ -98,7 +96,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
                 $criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
             }
             $criteria->add($criteriaTray);
-            if ($perm === 'imgcat_read' || $perm === 'imgcat_write') {
+            if ('imgcat_read' === $perm || 'imgcat_write' === $perm) {
                 $criteria->add(new Criteria('gperm_name', $perm));
                 $mid = $xoops->getModuleByDirname('images')->getVar('mid');
                 $criteria->add(new Criteria('gperm_modid', $mid));
@@ -115,6 +113,7 @@ class ImagesCategoryHandler extends XoopsPersistableObjectHandler
         foreach (array_keys($categories) as $i) {
             $ret[$i] = $categories[$i]->getVar('imgcat_name');
         }
+
         return $ret;
     }
 }

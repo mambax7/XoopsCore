@@ -10,30 +10,29 @@
 */
 
 /**
- * XoopsFile
+ * XoopsFile.
  *
  * File factory For XOOPS
  *
  * PHP 5.3
  *
  * @category  Xoops\Class\Cache\CacheApc
- * @package   CacheApc
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   $Id$
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class xoopsfile
 {
     /**
-     * XoopsFile::getHandler()
+     * XoopsFile::getHandler().
      *
      * @param string $name   name of file
-     * @param string  $path   path file is in
-     * @param boolean  $create create file if needed
-     * @param integer  $mode   mode on file created
+     * @param string $path   path file is in
+     * @param bool   $create create file if needed
+     * @param int    $mode   mode on file created
      *
      * @return XoopsFileHandler|XoopsFolderHandler|bool
      */
@@ -41,16 +40,18 @@ class xoopsfile
     {
         $handler = null;
         $name = strtolower(trim($name));
-        $class = 'Xoops' . ucfirst($name) . 'Handler';
+        $class = 'Xoops'.ucfirst($name).'Handler';
         if (in_array($name, ['file', 'folder'], true)) {
             $handler = new $class($path, $create, $mode);
         } else {
             trigger_error(
-                'Class ' . $class . ' not exist in File ' . __FILE__ . ' at Line ' . __LINE__,
+                'Class '.$class.' not exist in File '.__FILE__.' at Line '.__LINE__,
                 E_USER_WARNING
             );
+
             return false;
         }
+
         return $handler;
     }
 }

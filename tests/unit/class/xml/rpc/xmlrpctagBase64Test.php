@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
-require_once(XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcparser.php');
+require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcparser.php';
 
 class XoopsXmlRpcBase64Test extends \PHPUnit\Framework\TestCase
 {
@@ -22,6 +22,6 @@ class XoopsXmlRpcBase64Test extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($value);
 
         $result = $instance->render();
-        $this->assertSame('<value><base64>' . base64_encode($value) . '</base64></value>', $result);
+        $this->assertSame('<value><base64>'.base64_encode($value).'</base64></value>', $result);
     }
 }

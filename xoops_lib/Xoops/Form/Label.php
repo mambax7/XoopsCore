@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * Label - a field label
+ * Label - a field label.
  *
  * @category  Xoops\Form\Label
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Label extends Element
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $value   Text
@@ -44,7 +43,7 @@ class Label extends Element
     }
 
     /**
-     * render
+     * render.
      *
      * @return string rendered form element
      */
@@ -52,7 +51,8 @@ class Label extends Element
     {
         $this->suppressRender(['name', 'value']);
         $attributes = $this->renderAttributeString();
-        $ret = '<div ' . $attributes . '>' . $this->getValue() . '</div>';
+        $ret = '<div '.$attributes.'>'.$this->getValue().'</div>';
+
         return $ret;
     }
 }

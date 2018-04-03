@@ -16,7 +16,6 @@ namespace Xoops\Module;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
 class Plugin
 {
     /**
@@ -41,11 +40,12 @@ class Plugin
         if (!in_array($dirname, array_keys($available), true)) {
             return false;
         }
+
         return $available[$dirname];
     }
 
     /**
-     * @param string $pluginName
+     * @param string     $pluginName
      * @param array|bool $inactiveModules
      *
      * @return mixed
@@ -70,8 +70,8 @@ class Plugin
             }
             foreach ($dirnames as $dirname) {
                 if (\XoopsLoad::loadFile($xoops->path("modules/{$dirname}/class/plugin/{$pluginName}.php"))) {
-                    $className = '\\' . ucfirst($dirname) . ucfirst($pluginName) . 'Plugin';
-                    $interface = '\\' . ucfirst($pluginName) . 'PluginInterface';
+                    $className = '\\'.ucfirst($dirname).ucfirst($pluginName).'Plugin';
+                    $interface = '\\'.ucfirst($pluginName).'PluginInterface';
                     $class = new $className($dirname);
                     if ($class instanceof $interface) {
                         static::$plugins[$pluginName][$dirname] = $class;
@@ -79,12 +79,13 @@ class Plugin
                 }
             }
         }
+
         return static::$plugins[$pluginName];
     }
 
     /**
      * Clear cache of plugins
-     * return void
+     * return void.
      */
     public static function resetPluginsCache()
     {

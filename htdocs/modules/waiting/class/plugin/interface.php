@@ -10,20 +10,18 @@
 */
 
 /**
- * waiting module
+ * waiting module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         waiting
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 interface WaitingPluginInterface
 {
     /**
-     * Used to populate the Waiting Block
+     * Used to populate the Waiting Block.
      *
      * Your module can return several waiting items
      *

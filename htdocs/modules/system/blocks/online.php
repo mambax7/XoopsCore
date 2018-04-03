@@ -12,15 +12,13 @@
 use Xoops\Core\Kernel\Criteria;
 
 /**
- * Blocks functions
+ * Blocks functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 function b_system_online_show()
 {
     $xoops = Xoops::getInstance();
@@ -43,14 +41,14 @@ function b_system_online_show()
         $online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
     }
     $onlines = $online_handler->getAll(null, null, false, false);
-    if ($onlines !== false) {
+    if (false !== $onlines) {
         $total = count($onlines);
         $block = [];
         $guests = 0;
         $members = '';
         for ($i = 0; $i < $total; ++$i) {
             if ($onlines[$i]['online_uid'] > 0) {
-                $members .= ' <a href="' . \XoopsBaseConfig::get('url') . '/userinfo.php?uid=' . $onlines[$i]['online_uid'] . '" title="' . $onlines[$i]['online_uname'] . '">' . $onlines[$i]['online_uname'] . '</a>,';
+                $members .= ' <a href="'.\XoopsBaseConfig::get('url').'/userinfo.php?uid='.$onlines[$i]['online_uid'].'" title="'.$onlines[$i]['online_uname'].'">'.$onlines[$i]['online_uname'].'</a>,';
             } else {
                 ++$guests;
             }
@@ -58,7 +56,7 @@ function b_system_online_show()
         $block['online_total'] = sprintf(XoopsLocale::F_USERS_ONLINE, $total);
         if ($xoops->isModule()) {
             $mytotal = $online_handler->getCount(new Criteria('online_module', $xoops->module->getVar('mid')));
-            $block['online_total'] .= ' (' . sprintf(XoopsLocale::F_USERS_BROWSING, $mytotal, $xoops->module->getVar('name')) . ')';
+            $block['online_total'] .= ' ('.sprintf(XoopsLocale::F_USERS_BROWSING, $mytotal, $xoops->module->getVar('name')).')';
         }
         $block['lang_members'] = XoopsLocale::MEMBERS;
         $block['lang_guests'] = XoopsLocale::GUESTS;
@@ -66,7 +64,9 @@ function b_system_online_show()
         $block['online_members'] = $total - $guests;
         $block['online_guests'] = $guests;
         $block['lang_more'] = XoopsLocale::MORE;
+
         return $block;
     }
+
     return false;
 }

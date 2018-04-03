@@ -15,11 +15,10 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * UserrankRank and handler
+ * UserrankRank and handler.
  *
  * @copyright       2000-2015 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userrank
  * @since           2.6.0
  * @author          Gregory Mage (AKA Mage)
  * @author          trabis <lusopoemas@gmail.com>
@@ -27,7 +26,7 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 class UserrankRank extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -40,7 +39,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for id generic key
+     * getter for id generic key.
      *
      * @param string $format
      *
@@ -52,7 +51,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_id field
+     * getter for rank_id field.
      *
      * @param string $format
      *
@@ -64,7 +63,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_title field
+     * getter for rank_title field.
      *
      * @param string $format
      *
@@ -76,7 +75,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_min field
+     * getter for rank_min field.
      *
      * @param string $format
      *
@@ -88,7 +87,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_max field
+     * getter for rank_max field.
      *
      * @param string $format
      *
@@ -100,7 +99,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_special field
+     * getter for rank_special field.
      *
      * @param string $format
      *
@@ -112,7 +111,7 @@ class UserrankRank extends XoopsObject
     }
 
     /**
-     * getter for rank_image field
+     * getter for rank_image field.
      *
      * @param string $format
      *

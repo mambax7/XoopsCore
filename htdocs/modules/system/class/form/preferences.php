@@ -14,21 +14,20 @@ use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * Preference Form Class
+ * Preference Form Class.
  *
  * @category  Modules/system/class/form
- * @package   SystemPreferencesForm
  * @author    Andricq Nicolas (AKA MusS)
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class SystemPreferencesForm extends Xoops\Form\SimpleForm
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param null $obj unused object
      */
@@ -37,10 +36,10 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * getForm
+     * getForm.
      *
      * @param array       &$obj array of config objects
-     * @param XoopsModule $mod module
+     * @param XoopsModule $mod  module
      */
     public function getForm(&$obj, XoopsModule $mod)
     {
@@ -48,7 +47,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         $config_handler = $xoops->getHandlerConfig();
 
         parent::__construct('', 'pref_form', 'admin.php?fct=preferences', 'post', true);
-        if ($mod->getVar('dirname') !== 'system') {
+        if ('system' !== $mod->getVar('dirname')) {
             $xoops->loadLanguage('modinfo', $mod->getVar('dirname'));
         }
         $xoops->loadLocale($mod->getVar('dirname'));
@@ -83,8 +82,8 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         $tabTray = new Xoops\Form\TabTray('', 'pref_tabtay');
         $tabs = [];
         foreach ($configCats as $name => $info) {
-            $tabs[$name] = new Xoops\Form\Tab($info['name'], 'pref_tab_' . $name);
-            if (isset($info['description']) && $info['description'] !== '') {
+            $tabs[$name] = new Xoops\Form\Tab($info['name'], 'pref_tab_'.$name);
+            if (isset($info['description']) && '' !== $info['description']) {
                 $tabs[$name]->addElement(new Xoops\Form\Label('', $info['description']));
             }
         }
@@ -97,21 +96,20 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
         } elseif ($mod->getInfo('adminindex')) {
             $this->addElement(new Xoops\Form\Hidden(
                 'redirect',
-                \XoopsBaseConfig::get('url') . '/modules/' . $mod->getVar('dirname') . '/' . $mod->getInfo('adminindex')
+                \XoopsBaseConfig::get('url').'/modules/'.$mod->getVar('dirname').'/'.$mod->getInfo('adminindex')
             ));
         }
         $count = count($obj);
         for ($i = 0; $i < $count; ++$i) {
             $title = \Xoops\Locale::translate($obj[$i]->getVar('conf_title'), $mod->getVar('dirname'));
-            $desc = ($obj[$i]->getVar('conf_desc') !== '') ?
+            $desc = ('' !== $obj[$i]->getVar('conf_desc')) ?
                 \Xoops\Locale::translate($obj[$i]->getVar('conf_desc'), $mod->getVar('dirname')) : '';
             switch ($obj[$i]->getVar('conf_formtype')) {
-
                 case 'textarea':
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-                    if ($obj[$i]->getVar('conf_valuetype') === 'array') {
+                    if ('array' === $obj[$i]->getVar('conf_valuetype')) {
                         // this is exceptional.. only when value type is arrayneed a smarter way for this
-                        $ele = ($obj[$i]->getVar('conf_value') !== '')
+                        $ele = ('' !== $obj[$i]->getVar('conf_value'))
                             ? new Xoops\Form\TextArea(
                                 $title,
                                 $obj[$i]->getVar('conf_name'),
@@ -129,6 +127,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                             5
                         );
                     }
+
                     break;
 
                 case 'select':
@@ -144,6 +143,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                         $optkey = \Xoops\Locale::translate($options[$j]->getVar('confop_name'), $mod->getVar('dirname'));
                         $ele->addOption($optval, $optkey);
                     }
+
                     break;
 
                 case 'select_editor':
@@ -153,6 +153,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                         $obj[$i]->getConfValueForOutput()
                     );
                     \Xoops\Core\Lists\Editor::setOptionsArray($ele);
+
                     break;
 
                 case 'select_multi':
@@ -164,20 +165,23 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                         $optkey = \Xoops\Locale::translate($options[$j]->getVar('confop_name'), $mod->getVar('dirname'));
                         $ele->addOption($optval, $optkey);
                     }
+
                     break;
 
                 case 'yesno':
                     $ele = new Xoops\Form\RadioYesNo($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
+
                     break;
 
                 case 'theme':
                 case 'theme_multi':
-                    $ele = ($obj[$i]->getVar('conf_formtype') !== 'theme_multi') ? new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput()) : new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput(), 5, true);
+                    $ele = ('theme_multi' !== $obj[$i]->getVar('conf_formtype')) ? new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput()) : new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput(), 5, true);
                     $dirlist = XoopsLists::getThemesList();
                     if (!empty($dirlist)) {
                         asort($dirlist);
                         $ele->addOptionArray($dirlist);
                     }
+
                     break;
                 case 'tplset':
                     $ele = new Xoops\Form\Select($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
@@ -187,6 +191,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                     foreach ($tplsetlist as $key => $name) {
                         $ele->addOption($key, $name);
                     }
+
                     break;
 
                 case 'cpanel':
@@ -200,14 +205,17 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
 
                 case 'timezone':
                     $ele = new Xoops\Form\SelectTimeZone($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
+
                     break;
 
                 case 'language':
                     $ele = new Xoops\Form\SelectLanguage($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
+
                     break;
 
                 case 'locale':
                     $ele = new Xoops\Form\SelectLocale($title, $obj[$i]->getVar('conf_name'), $obj[$i]->getConfValueForOutput());
+
                     break;
 
                 case 'startpage':
@@ -219,23 +227,28 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                     $moduleslist = $module_handler->getNameList($criteria, true);
                     $moduleslist['--'] = XoopsLocale::NONE;
                     $ele->addOptionArray($moduleslist);
+
                     break;
 
                 case 'group':
                     $ele = new Xoops\Form\SelectGroup($title, $obj[$i]->getVar('conf_name'), false, $obj[$i]->getConfValueForOutput(), 1, false);
+
                     break;
 
                 case 'group_multi':
                     $ele = new Xoops\Form\SelectGroup($title, $obj[$i]->getVar('conf_name'), false, $obj[$i]->getConfValueForOutput(), 5, true);
+
                     break;
 
                 // RMV-NOTIFY: added 'user' and 'user_multi'
                 case 'user':
                     $ele = new Xoops\Form\SelectUser($title, $obj[$i]->getVar('conf_name'), false, $obj[$i]->getConfValueForOutput(), 1, false);
+
                     break;
 
                 case 'user_multi':
                     $ele = new Xoops\Form\SelectUser($title, $obj[$i]->getVar('conf_name'), false, $obj[$i]->getConfValueForOutput(), 5, true);
+
                     break;
                 case 'module_cache':
                     $module_handler = $xoops->getHandlerModule();
@@ -258,7 +271,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                         $ele = new Xoops\Form\ElementTray($title, '<br />');
                         foreach (array_keys($modules) as $mid) {
                             $c_val = isset($currrent_val[$mid]) ? (int) ($currrent_val[$mid]) : null;
-                            $selform = new Xoops\Form\Select($modules[$mid]->getVar('name'), $obj[$i]->getVar('conf_name') . "[${mid}]", $c_val);
+                            $selform = new Xoops\Form\Select($modules[$mid]->getVar('name'), $obj[$i]->getVar('conf_name')."[${mid}]", $c_val);
                             $selform->addOptionArray($cache_options);
                             $ele->addElement($selform);
                             unset($selform);
@@ -266,6 +279,7 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                     } else {
                         $ele = new Xoops\Form\Label($title, SystemLocale::NO_MODULE_TO_CACHE);
                     }
+
                     break;
 
                 case 'site_cache':
@@ -283,33 +297,38 @@ class SystemPreferencesForm extends Xoops\Form\SimpleForm
                         '604800' => XoopsLocale::ONE_WEEK,
                         '2592000' => XoopsLocale::ONE_MONTH,
                     ]);
+
                     break;
 
                 case 'password':
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                     $ele = new Xoops\Form\Password($title, $obj[$i]->getVar('conf_name'), 32, 255, $myts->htmlSpecialChars($obj[$i]->getConfValueForOutput()));
+
                     break;
 
                 case 'color':
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                     $ele = new Xoops\Form\ColorPicker($title, $obj[$i]->getVar('conf_name'), $myts->htmlSpecialChars($obj[$i]->getConfValueForOutput()));
+
                     break;
 
                 case 'hidden':
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                     $ele = new Xoops\Form\Hidden($obj[$i]->getVar('conf_name'), $myts->htmlSpecialChars($obj[$i]->getConfValueForOutput()));
+
                     break;
 
                 case 'textbox':
                 default:
                     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
                     $ele = new Xoops\Form\Text($title, $obj[$i]->getVar('conf_name'), 5, 255, $myts->htmlSpecialChars($obj[$i]->getConfValueForOutput()));
+
                     break;
             }
             $hidden = new Xoops\Form\Hidden('conf_ids[]', $obj[$i]->getVar('conf_id'));
             if (isset($ele)) {
                 $ele->setDescription($desc);
-                if ($obj[$i]->getVar('conf_formtype') !== 'hidden') {
+                if ('hidden' !== $obj[$i]->getVar('conf_formtype')) {
                     $name = 'default';
                     if (isset($configNames[$obj[$i]->getVar('conf_name')]['category'])) {
                         $name = $configNames[$obj[$i]->getVar('conf_name')]['category'];

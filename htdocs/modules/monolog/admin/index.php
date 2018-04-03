@@ -12,12 +12,10 @@
 /**
  * @copyright    XOOPS Project (http://xoops.org)
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package      debugbar
  * @since
  * @author       XOOPS Development Team
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $moduleAdmin = new \Xoops\Module\Admin();
 $moduleAdmin->displayNavigation('index.php');
@@ -25,4 +23,4 @@ $path = dirname(Xoops::getInstance()->getModuleConfig('log_file_path', 'monolog'
 $moduleAdmin->addConfigBoxLine($path, 'folder');
 $moduleAdmin->displayIndex();
 
-include_once __DIR__ . '/admin_footer.php';
+include_once __DIR__.'/admin_footer.php';

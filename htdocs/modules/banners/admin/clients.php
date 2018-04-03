@@ -12,16 +12,15 @@
 use Xmf\Request;
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get main instance
 $xoops = Xoops::getInstance();
@@ -49,7 +48,6 @@ $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('clients.php');
 
 switch ($op) {
-
     case 'list':
     default:
 
@@ -78,7 +76,7 @@ switch ($op) {
                 $client['cid'] = $client_arr[$i]->getVar('bannerclient_cid');
                 $client['uid'] = $client_arr[$i]->getVar('bannerclient_uid');
                 $client['banner_active'] = $banner_active;
-                if ($client_arr[$i]->getVar('bannerclient_uid') === 0) {
+                if (0 === $client_arr[$i]->getVar('bannerclient_uid')) {
                     $client['uname'] = '/';
                     $client['email'] = '/';
                 } else {
@@ -103,6 +101,7 @@ switch ($op) {
             $nav = new XoopsPageNav($client_count, $nb_clients, $start, 'start');
             $xoops->tpl()->assign('nav_menu', $nav->renderNav(4));
         }
+
         break;
 
     case 'new':
@@ -115,6 +114,7 @@ switch ($op) {
         $obj = $client_Handler->create();
         $form = $helper->getForm($obj, 'bannerclient');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -132,6 +132,7 @@ switch ($op) {
         } else {
             $xoops->redirect('clients.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'save':
@@ -145,7 +146,7 @@ switch ($op) {
             $obj = $client_Handler->create();
         }
         $obj->setVar('bannerclient_name', Request::getString('name', ''));
-        if ($_POST['user'] === 'Y') {
+        if ('Y' === $_POST['user']) {
             $obj->setVar('bannerclient_uid', Request::getInt('uid', 0));
         } else {
             $obj->setVar('bannerclient_uid', 0);
@@ -157,13 +158,14 @@ switch ($op) {
         $xoops->tpl()->assign('error_msg', $xoops->alert('error', $obj->getHtmlErrors()));
         $form = $helper->getForm($obj, 'bannerclient');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
         $cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             $obj = $client_Handler->get($cid);
-            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('clients.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
@@ -176,9 +178,9 @@ switch ($op) {
                             $banner_arr[$i]->getVar('banner_imageurl'),
                             '',
                             0,
-                            strlen($xoops_url . '/uploads/banners/')
+                            strlen($xoops_url.'/uploads/banners/')
                         );
-                        $urlfile = $xoops_root_path . '/uploads/banners/' . $namefile;
+                        $urlfile = $xoops_root_path.'/uploads/banners/'.$namefile;
                         if ($banner_Handler->delete($obj)) {
                             // delete banner
                             if (is_file($urlfile)) {
@@ -197,12 +199,13 @@ switch ($op) {
                 echo $xoops->confirm(
                     ['ok' => 1, 'cid' => $cid, 'op' => 'delete'],
                     'clients.php',
-                    sprintf(_AM_BANNERS_CLIENTS_SUREDEL, $obj->getVar('bannerclient_name')) . '<br />'
+                    sprintf(_AM_BANNERS_CLIENTS_SUREDEL, $obj->getVar('bannerclient_name')).'<br />'
                 );
             }
         } else {
             $xoops->redirect('clients.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 }
 $xoops->footer();

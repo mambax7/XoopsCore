@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class TextTest extends \PHPUnit\Framework\TestCase
 {
@@ -50,14 +50,14 @@ class TextTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input') !== false);
-        $this->assertTrue(strpos($value, 'type="text"') !== false);
-        $this->assertTrue(strpos($value, 'name="name"') !== false);
-        $this->assertTrue(strpos($value, 'size="10"') !== false);
-        $this->assertTrue(strpos($value, 'maxlength="20"') !== false);
-        $this->assertTrue(strpos($value, 'placeholder="placeholder"') !== false);
-        $this->assertTrue(strpos($value, 'title="Caption"') !== false);
-        $this->assertTrue(strpos($value, 'id="name"') !== false);
-        $this->assertTrue(strpos($value, 'value="value"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input'));
+        $this->assertTrue(false !== strpos($value, 'type="text"'));
+        $this->assertTrue(false !== strpos($value, 'name="name"'));
+        $this->assertTrue(false !== strpos($value, 'size="10"'));
+        $this->assertTrue(false !== strpos($value, 'maxlength="20"'));
+        $this->assertTrue(false !== strpos($value, 'placeholder="placeholder"'));
+        $this->assertTrue(false !== strpos($value, 'title="Caption"'));
+        $this->assertTrue(false !== strpos($value, 'id="name"'));
+        $this->assertTrue(false !== strpos($value, 'value="value"'));
     }
 }

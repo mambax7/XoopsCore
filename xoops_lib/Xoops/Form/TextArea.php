@@ -12,25 +12,24 @@
 namespace Xoops\Form;
 
 /**
- * TextArea - a text area element
+ * TextArea - a text area element.
  *
  * @category  Xoops\Form\TextArea
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class TextArea extends Element
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption     Caption or array of all attributes
      * @param string       $name        name
      * @param string       $value       initial content
-     * @param integer      $rows        number of rows
-     * @param integer      $cols        number of columns
+     * @param int          $rows        number of rows
+     * @param int          $cols        number of columns
      * @param string       $placeholder placeholder for this element.
      */
     public function __construct($caption, $name = null, $value = '', $rows = 5, $cols = 50, $placeholder = '')
@@ -51,7 +50,7 @@ class TextArea extends Element
     }
 
     /**
-     * get number of rows
+     * get number of rows.
      *
      * @return int
      */
@@ -61,7 +60,7 @@ class TextArea extends Element
     }
 
     /**
-     * Get number of columns
+     * Get number of columns.
      *
      * @return int
      */
@@ -71,7 +70,7 @@ class TextArea extends Element
     }
 
     /**
-     * Get placeholder for this element
+     * Get placeholder for this element.
      *
      * @return string
      */
@@ -81,7 +80,7 @@ class TextArea extends Element
     }
 
     /**
-     * prepare HTML for output
+     * prepare HTML for output.
      *
      * @return string HTML
      */
@@ -92,7 +91,8 @@ class TextArea extends Element
         $this->themeDecorateElement();
 
         $attributes = $this->renderAttributeString();
-        return '<textarea ' . $attributes . ' ' . $this->getExtra() . ' >'
-            . $this->getValue() . '</textarea>';
+
+        return '<textarea '.$attributes.' '.$this->getExtra().' >'
+            .$this->getValue().'</textarea>';
     }
 }

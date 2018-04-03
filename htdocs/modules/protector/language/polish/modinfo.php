@@ -3,11 +3,10 @@
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $mydirname = 'protector';
 }
-$constpref = '_MI_' . strtoupper($mydirname);
+$constpref = '_MI_'.strtoupper($mydirname);
 
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined('_MI_PROTECTOR_LOADED')) {
-
-// Appended by Xoops Language Checker -GIJOE- in 2009-07-06 05:46:52
+    // Appended by Xoops Language Checker -GIJOE- in 2009-07-06 05:46:52
     define('_MI_PROTECTOR_DBTRAPWOSRV', 'Never checking _SERVER for anti-SQL-Injection');
     define('_MI_PROTECTOR_DBTRAPWOSRVDSC', 'Some servers always enable DB Layer trapping. It causes wrong detections as SQL Injection attack. If you got such errors, turn this option on. You should know this option weakens the security of DB Layer trapping anti-SQL-Injection.');
 

@@ -14,20 +14,19 @@ namespace Xoops\Form;
 use Xoops\Core\XoopsTpl;
 
 /**
- * Form - Abstract Form
+ * Form - Abstract Form.
  *
  * @category  Xoops\Form\Form
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class Form implements ContainerInterface
 {
     /**
-     * "action" attribute for the html form
+     * "action" attribute for the html form.
      *
      * @var string
      */
@@ -41,56 +40,56 @@ abstract class Form implements ContainerInterface
     protected $method;
 
     /**
-     * "name" attribute of the form
+     * "name" attribute of the form.
      *
      * @var string
      */
     protected $name;
 
     /**
-     * title for the form
+     * title for the form.
      *
      * @var string
      */
     protected $title;
 
     /**
-     * display class for the form, i.e. horizontal, vertical, inline
+     * display class for the form, i.e. horizontal, vertical, inline.
      *
      * @var string
      */
     protected $display = '';
 
     /**
-     * array of Element objects
+     * array of Element objects.
      *
      * @var Element[]
      */
     protected $elements = [];
 
     /**
-     * extra information for the <form> tag
+     * extra information for the <form> tag.
      *
      * @var string[]
      */
     protected $extra = [];
 
     /**
-     * required elements
+     * required elements.
      *
      * @var string[]
      */
     protected $required = [];
 
     /**
-     * constructor
+     * constructor.
      *
-     * @param string  $title    title of the form
-     * @param string  $name     name attribute for the <form> tag
-     * @param string  $action   action attribute for the <form> tag
-     * @param string  $method   method attribute for the <form> tag
-     * @param boolean $addtoken whether to add a security token to the form
-     * @param string  $display  class for the form, i.e. horizontal, vertical, inline
+     * @param string $title    title of the form
+     * @param string $name     name attribute for the <form> tag
+     * @param string $action   action attribute for the <form> tag
+     * @param string $method   method attribute for the <form> tag
+     * @param bool   $addtoken whether to add a security token to the form
+     * @param string $display  class for the form, i.e. horizontal, vertical, inline
      */
     public function __construct($title, $name, $action, $method = 'post', $addtoken = false, $display = '')
     {
@@ -99,15 +98,15 @@ abstract class Form implements ContainerInterface
         $this->action = $action;
         $this->method = $method;
         $this->display = $display;
-        if ($addtoken !== false) {
+        if (false !== $addtoken) {
             $this->addElement(new Token());
         }
     }
 
     /**
-     * getDisplay - return the summary of the form
+     * getDisplay - return the summary of the form.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string
      */
@@ -117,7 +116,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getTitle - return the title of the form
+     * getTitle - return the title of the form.
      *
      * @param bool $encode To sanitizer the text?
      *
@@ -129,7 +128,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * setTitle
+     * setTitle.
      *
      * @param string $title form title
      *
@@ -141,11 +140,11 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * get the "name" attribute for the <form> tag
+     * get the "name" attribute for the <form> tag.
      *
      * Deprecated, to be refactored
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string
      */
@@ -155,7 +154,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * setAction
+     * setAction.
      *
      * @param string $value URL of form action
      */
@@ -165,9 +164,9 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getAction - get the "action" attribute for the <form> tag
+     * getAction - get the "action" attribute for the <form> tag.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string
      */
@@ -178,20 +177,20 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getMethod - get the "method" attribute for the <form> tag
+     * getMethod - get the "method" attribute for the <form> tag.
      *
      * @return string
      */
     public function getMethod()
     {
-        return (strtolower($this->method) === 'get') ? 'get' : 'post';
+        return ('get' === strtolower($this->method)) ? 'get' : 'post';
     }
 
     /**
-     * addElement - Add an element to the form
+     * addElement - Add an element to the form.
      *
      * @param Element $formElement Xoops\Form\Element to add
-     * @param boolean $required    true if this is a required element
+     * @param bool    $required    true if this is a required element
      */
     public function addElement(Element $formElement, $required = false)
     {
@@ -202,9 +201,9 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getElements - get an array of forms elements
+     * getElements - get an array of forms elements.
      *
-     * @param boolean $recurse true to get elements recursively
+     * @param bool $recurse true to get elements recursively
      *
      * @return Element[]
      */
@@ -228,11 +227,12 @@ abstract class Form implements ContainerInterface
             }
             unset($ele);
         }
+
         return $ret;
     }
 
     /**
-     * getElementNames - get an array of "name" attributes of form elements
+     * getElementNames - get an array of "name" attributes of form elements.
      *
      * @return string[] of form element names
      */
@@ -245,11 +245,12 @@ abstract class Form implements ContainerInterface
             $ret[] = $ele->getName();
             unset($ele);
         }
+
         return $ret;
     }
 
     /**
-     * getElementByName - get a reference to a Xoops\Form\Element by its name
+     * getElementByName - get a reference to a Xoops\Form\Element by its name.
      *
      * @param string $name name attribute assigned to a Xoops\Form\Element
      *
@@ -265,11 +266,12 @@ abstract class Form implements ContainerInterface
             }
         }
         $ele = null;
+
         return $ele;
     }
 
     /**
-     * setElementValue - Sets the "value" attribute of a form element
+     * setElementValue - Sets the "value" attribute of a form element.
      *
      * @param string $name  the "name" attribute of a form element
      * @param string $value the "value" attribute of a form element
@@ -283,7 +285,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * setElementValues - Sets the "value" attribute of form elements in a batch
+     * setElementValues - Sets the "value" attribute of form elements in a batch.
      *
      * @param array $values array of name/value pairs to be assigned to form elements
      */
@@ -303,23 +305,24 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getElementValue - Gets the value attribute of a form element
+     * getElementValue - Gets the value attribute of a form element.
      *
-     * @param string  $name   the name attribute of a form element
-     * @param boolean $encode True to encode special characters
+     * @param string $name   the name attribute of a form element
+     * @param bool   $encode True to encode special characters
      *
      * @return string|null the value attribute assigned to a form element, null if not set
      */
     public function getElementValue($name, $encode = false)
     {
         $ele = $this->getElementByName($name);
+
         return $ele->getValue($encode);
     }
 
     /**
-     * getElementValues - gets the value attribute of all form elements
+     * getElementValues - gets the value attribute of all form elements.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return array array of name/value pairs assigned to form elements
      */
@@ -335,11 +338,12 @@ abstract class Form implements ContainerInterface
                 $values[$name] = $ele->getValue($encode);
             }
         }
+
         return $values;
     }
 
     /**
-     * set the extra attributes for the <form> tag
+     * set the extra attributes for the <form> tag.
      *
      * @param string $extra extra attributes for the <form> tag
      */
@@ -351,18 +355,19 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getExtra - get the extra attributes for the <form> tag
+     * getExtra - get the extra attributes for the <form> tag.
      *
      * @return string
      */
     public function getExtra()
     {
-        $extra = empty($this->extra) ? '' : ' ' . implode(' ', $this->extra);
+        $extra = empty($this->extra) ? '' : ' '.implode(' ', $this->extra);
+
         return $extra;
     }
 
     /**
-     * setRequired - mark an element as required entry
+     * setRequired - mark an element as required entry.
      *
      * @param Element $formElement Xoops\Form\Element to set as required entry
      *
@@ -375,7 +380,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * getRequired - get an array of required form elements
+     * getRequired - get an array of required form elements.
      *
      * @return array array of Xoops\Form\Element
      */
@@ -387,11 +392,12 @@ abstract class Form implements ContainerInterface
                 $required[] = $el;
             }
         }
+
         return $required;
     }
 
     /**
-     * render - returns rendered form
+     * render - returns rendered form.
      *
      * This method is abstract. It must be overwritten in the child classes.
      *
@@ -400,7 +406,7 @@ abstract class Form implements ContainerInterface
     abstract public function render();
 
     /**
-     * display - displays rendered form
+     * display - displays rendered form.
      */
     public function display()
     {
@@ -408,7 +414,7 @@ abstract class Form implements ContainerInterface
     }
 
     /**
-     * Renders the Javascript function needed for client-side for validation
+     * Renders the Javascript function needed for client-side for validation.
      *
      * Form elements that have been declared "required" and not set will prevent the form from being
      * submitted. Additionally, each element class may provide its own "renderValidationJS" method
@@ -427,7 +433,7 @@ abstract class Form implements ContainerInterface
      * }
      * </code>
      *
-     * @param boolean $withtags Include the < javascript > tags in the returned string
+     * @param bool $withtags Include the < javascript > tags in the returned string
      *
      * @return string
      */
@@ -449,11 +455,12 @@ abstract class Form implements ContainerInterface
             $js .= "//--></script>\n";
             $js .= "<!-- End Form Validation JavaScript //-->\n";
         }
+
         return $js;
     }
 
     /**
-     * assign - assign to smarty form template instead of displaying directly
+     * assign - assign to smarty form template instead of displaying directly.
      *
      * @param \XoopsTpl $tpl template
      */
@@ -463,7 +470,7 @@ abstract class Form implements ContainerInterface
         $elements = [];
         if (count($this->getRequired()) > 0) {
             $this->elements[] =
-                new Raw("<tr class='foot'><td colspan='2'>* = " . \XoopsLocale::REQUIRED . '</td></tr>');
+                new Raw("<tr class='foot'><td colspan='2'>* = ".\XoopsLocale::REQUIRED.'</td></tr>');
         }
         foreach ($this->getElements() as $ele) {
             ++$i;
@@ -476,7 +483,7 @@ abstract class Form implements ContainerInterface
             $elements[$n]['body'] = $ele->render();
             $elements[$n]['hidden'] = $ele->isHidden();
             $elements[$n]['required'] = $ele->isRequired();
-            if ($ele_description !== '') {
+            if ('' !== $ele_description) {
                 $elements[$n]['description'] = $ele_description;
             }
         }
@@ -484,7 +491,7 @@ abstract class Form implements ContainerInterface
         $tpl->assign($this->getName(), [
             'title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),
             'method' => $this->getMethod(),
-            'extra' => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(),
+            'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();"'.$this->getExtra(),
             'javascript' => $js, 'elements' => $elements,
         ]);
     }

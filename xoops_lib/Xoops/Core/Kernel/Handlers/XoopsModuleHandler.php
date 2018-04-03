@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @version         $Id$
  */
@@ -30,33 +29,30 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  * of XOOPS module class objects.
  *
  * @category  Xoops\Core\Kernel\XoopsModuleHandler
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsModuleHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * holds an array of cached module references, indexed by module id
+     * holds an array of cached module references, indexed by module id.
      *
      * @var array
-     * @access private
      */
     private $cachedModulesByMid = [];
 
     /**
-     * holds an array of cached module references, indexed by module dirname
+     * holds an array of cached module references, indexed by module dirname.
      *
      * @var array
-     * @access private
      */
     private $cachedModulesByDirname = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db database
      */
@@ -66,7 +62,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Load a module from the database
+     * Load a module from the database.
      *
      * @param int $id ID of the module
      *
@@ -85,13 +81,15 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             }
             $this->cachedModulesByMid[$id] = $module;
             $this->cachedModulesByDirname[$module->getVar('dirname')] = $module;
+
             return $module;
         }
+
         return false;
     }
 
     /**
-     * Load a module by its dirname
+     * Load a module by its dirname.
      *
      * @param string $dirname module directory name
      *
@@ -106,7 +104,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         }
         $criteria = new Criteria('dirname', $dirname);
         $modules = $this->getObjectsArray($criteria);
-        if (count($modules) === 1 && is_object($modules[0])) {
+        if (1 === count($modules) && is_object($modules[0])) {
             $module = $modules[0];
         } else {
             return false;
@@ -114,11 +112,12 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         /* @var $module XoopsModule */
         $this->cachedModulesByDirname[$dirname] = $module;
         $this->cachedModulesByMid[$module->getVar('mid')] = $module;
+
         return $module;
     }
 
     /**
-     * Write a module to the database
+     * Write a module to the database.
      *
      * @param XoopsModule $module module to insert
      *
@@ -139,11 +138,12 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         if (!empty($this->cachedModulesByMid[$mid])) {
             unset($this->cachedModulesByMid[$mid]);
         }
+
         return true;
     }
 
     /**
-     * Delete a module from the database
+     * Delete a module from the database.
      *
      * @param XoopsModule $module module to delete
      *
@@ -161,7 +161,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         // delete admin and read permissions assigned for this module
         $qb = $this->db2->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->deletePrefix('system_permission')
+        $qb->deletePrefix('system_permission')
             ->where(
                 $eb->orX(
                     $eb->eq('gperm_name', $eb->literal('module_admin')),
@@ -173,7 +173,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             ->execute();
 
         $qb->resetQueryParts(); // reset
-        $qb ->select('block_id')
+        $qb->select('block_id')
             ->fromPrefix('system_blockmodule', null)
             ->where($eb->eq('module_id', ':mid'))
             ->setParameter(':mid', $mid, \PDO::PARAM_INT);
@@ -185,7 +185,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
 
         foreach ($block_id_arr as $i) {
             $qb->resetQueryParts(); // reset
-            $qb ->select('COUNT(*)')
+            $qb->select('COUNT(*)')
                 ->fromPrefix('system_blockmodule', null)
                 ->where($eb->ne('module_id', ':mid'))
                 ->setParameter(':mid', $mid, \PDO::PARAM_INT)
@@ -197,7 +197,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             if ($count > 0) {
                 // this block has other entries, so delete the entry for this module
                 $qb->resetQueryParts(); // reset
-                $qb ->deletePrefix('system_blockmodule')
+                $qb->deletePrefix('system_blockmodule')
                     ->where($eb->eq('module_id', ':mid'))
                     ->setParameter(':mid', $mid, \PDO::PARAM_INT)
                     ->andWhere($eb->eq('block_id', ':bid'))
@@ -207,7 +207,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
                 // this block does not have other entries, so disable the block and let it show
                 // on top page only. otherwise, this block will not display anymore on block admin page!
                 $qb->resetQueryParts(); // reset
-                $qb ->updatePrefix('system_block')
+                $qb->updatePrefix('system_block')
                     ->set('visible', ':notvisible')
                     ->where($eb->eq('bid', ':bid'))
                     ->setParameter(':bid', $i, \PDO::PARAM_INT)
@@ -215,7 +215,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
                     ->execute();
 
                 $qb->resetQueryParts(); // reset
-                $qb ->updatePrefix('system_blockmodule')
+                $qb->updatePrefix('system_blockmodule')
                     ->set('module_id', ':nomid')
                     ->where($eb->eq('module_id', ':mid'))
                     ->setParameter(':mid', $mid, \PDO::PARAM_INT)
@@ -234,14 +234,15 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
         $cache->delete("system/module/id/{$mid}");
         $cache->delete("system/module/dirname/{$dirname}");
         $cache->delete("module/{$dirname}");
+
         return true;
     }
 
     /**
-     * Load some modules
+     * Load some modules.
      *
      * @param CriteriaElement|null $criteria  criteria to match
-     * @param boolean              $id_as_key Use the ID as key into the array
+     * @param bool                 $id_as_key Use the ID as key into the array
      *
      * @return array
      */
@@ -278,14 +279,15 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
             }
             unset($module);
         }
+
         return $ret;
     }
 
     /**
-     * returns an array of module names
+     * returns an array of module names.
      *
      * @param CriteriaElement|null $criteria       criteria
-     * @param boolean              $dirname_as_key true  = array key is module directory
+     * @param bool                 $dirname_as_key true  = array key is module directory
      *                                             false = array key is module id
      *
      * @return array
@@ -301,6 +303,7 @@ class XoopsModuleHandler extends XoopsPersistableObjectHandler
                 $ret[$modules[$i]->getVar('dirname')] = $modules[$i]->getVar('name');
             }
         }
+
         return $ret;
     }
 }

@@ -13,11 +13,10 @@ use Xoops\Core\Kernel\Handlers\XoopsGroup;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * XOOPS mailer
+ * XOOPS mailer.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
@@ -29,17 +28,14 @@ use Xoops\Core\Kernel\Handlers\XoopsUser;
  *
  * Changed to use the facilities of  {@link XoopsMultiMailer}
  *
- * @package class
- * @subpackage mail
  * @author Kazumi Ono <onokazu@xoops.org>
  */
 class xoopsmailer
 {
     /**
-     * reference to a {@link XoopsMultiMailer}
+     * reference to a {@link XoopsMultiMailer}.
      *
      * @var XoopsMultiMailer
-     * @access protected
      * @since 21.02.2003 14:14:13
      */
     protected $multimailer;
@@ -55,35 +51,35 @@ class xoopsmailer
     protected $encoding = '8bit';
 
     /**
-     * sender email address
+     * sender email address.
      *
      * @var string
      */
     private $fromEmail;
 
     /**
-     * sender name
+     * sender name.
      *
      * @var string
      */
     private $fromName;
 
     /**
-     * sender UID
+     * sender UID.
      *
      * @var XoopsUser
      */
     private $fromUser;
 
     /**
-     * array of user class objects
+     * array of user class objects.
      *
      * @var array
      */
     private $toUsers;
 
     /**
-     * array of email addresses
+     * array of email addresses.
      *
      * @var array
      */
@@ -92,35 +88,35 @@ class xoopsmailer
     // private
 
     /**
-     * custom headers
+     * custom headers.
      *
      * @var array
      */
     private $headers;
 
     /**
-     * subjet of mail
+     * subjet of mail.
      *
      * @var string
      */
     private $subject;
 
     /**
-     * body of mail
+     * body of mail.
      *
      * @var string
      */
     private $body;
 
     /**
-     * error messages
+     * error messages.
      *
      * @var array
      */
     private $errors;
 
     /**
-     * messages upon success
+     * messages upon success.
      *
      * @var array
      */
@@ -162,7 +158,7 @@ class xoopsmailer
     private $LE;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @return XoopsMailer
      */
@@ -173,7 +169,7 @@ class xoopsmailer
     }
 
     /**
-     * reset all properties to default
+     * reset all properties to default.
      *
      * @param bool $value
      */
@@ -183,7 +179,7 @@ class xoopsmailer
     }
 
     /**
-     * reset all properties to default
+     * reset all properties to default.
      */
     public function reset()
     {
@@ -213,7 +209,7 @@ class xoopsmailer
     public function setTemplateDir($value = null)
     {
         $xoops = Xoops::getInstance();
-        if ($value === null && $xoops->isModule()) {
+        if (null === $value && $xoops->isModule()) {
             $value = $xoops->module->getVar('dirname', 'n');
         } else {
             $value = str_replace(DIRECTORY_SEPARATOR, '/', $value);
@@ -285,23 +281,25 @@ class xoopsmailer
     }
 
     /**
-     * @param bool $debug
+     * @param  bool $debug
      * @return bool
      */
     public function send($debug = false)
     {
         $xoops = Xoops::getInstance();
-        if ($this->body === '' && $this->template === '') {
+        if ('' === $this->body && '' === $this->template) {
             if ($debug) {
                 $this->errors[] = XoopsLocale::E_MESSAGE_BODY_NOT_SET;
             }
+
             return false;
-        } elseif ($this->template !== '') {
+        } elseif ('' !== $this->template) {
             $path = $this->getTemplatePath();
             if (!($fd = @fopen($path, 'r'))) {
                 if ($debug) {
                     $this->errors[] = XoopsLocale::E_TEMPLATE_FILE_NOT_OPENED;
                 }
+
                 return false;
             }
             $this->setBody(fread($fd, filesize($path)));
@@ -310,7 +308,7 @@ class xoopsmailer
         // for sending mail only
         if ($this->isMail || !empty($this->toEmails)) {
             if (!empty($this->priority)) {
-                $this->headers[] = 'X-Priority: ' . $this->priority;
+                $this->headers[] = 'X-Priority: '.$this->priority;
             }
             // $this->headers[] = "X-Mailer: PHP/".phpversion();
             // $this->headers[] = "Return-Path: ".$this->fromEmail;
@@ -324,14 +322,14 @@ class xoopsmailer
 
         $this->assign('X_ADMINMAIL', $xoops->getConfig('adminmail'));
         $this->assign('X_SITENAME', $xoops->getConfig('sitename'));
-        $this->assign('X_SITEURL', \XoopsBaseConfig::get('url') . '/');
+        $this->assign('X_SITEURL', \XoopsBaseConfig::get('url').'/');
         // TODO: also X_ADMINNAME??
         // TODO: X_SIGNATURE, X_DISCLAIMER ?? - these are probably best
         // done as includes if mail templates ever get this sophisticated
         // replace tags with actual values
         foreach ($this->assignedTags as $k => $v) {
-            $this->body = str_replace('{' . $k . '}', $v, $this->body);
-            $this->subject = str_replace('{' . $k . '}', $v, $this->subject);
+            $this->body = str_replace('{'.$k.'}', $v, $this->body);
+            $this->subject = str_replace('{'.$k.'}', $v, $this->subject);
         }
         $this->body = str_replace("\r\n", "\n", $this->body);
         $this->body = str_replace("\r", "\n", $this->body);
@@ -359,7 +357,7 @@ class xoopsmailer
             $text = str_replace('{X_UID}', $user->getVar('uid'), $this->body);
             $text = str_replace('{X_UEMAIL}', $user->getVar('email'), $text);
             $text = str_replace('{X_UNAME}', $user->getVar('uname'), $text);
-            $text = str_replace('{X_UACTLINK}', \XoopsBaseConfig::get('url') . '/register.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey'), $text);
+            $text = str_replace('{X_UACTLINK}', \XoopsBaseConfig::get('url').'/register.php?op=actv&id='.$user->getVar('uid').'&actkey='.$user->getVar('actkey'), $text);
             // send mail
             if ($this->isMail) {
                 if (!$this->sendMail($user->getVar('email'), $subject, $text, $headers)) {
@@ -389,11 +387,12 @@ class xoopsmailer
         if (count($this->errors) > 0) {
             return false;
         }
+
         return true;
     }
 
     /**
-     * @param bool $ashtml
+     * @param  bool   $ashtml
      * @return string
      */
     public function getErrors($ashtml = true)
@@ -403,11 +402,12 @@ class xoopsmailer
         }
         $ret = '';
         if (!empty($this->errors)) {
-            $ret = '<h4>' . XoopsLocale::ERRORS . '</h4>';
+            $ret = '<h4>'.XoopsLocale::ERRORS.'</h4>';
             foreach ($this->errors as $error) {
-                $ret .= $error . '<br />';
+                $ret .= $error.'<br />';
             }
         }
+
         return $ret;
     }
 
@@ -420,15 +420,16 @@ class xoopsmailer
         $ret = '';
         if (!empty($this->success)) {
             foreach ($this->success as $suc) {
-                $ret .= $suc . '<br />';
+                $ret .= $suc.'<br />';
             }
         }
+
         return $ret;
     }
 
     /**
      * @param string|array $tag
-     * @param null $value
+     * @param null         $value
      */
     public function assign($tag, $value = null)
     {
@@ -453,7 +454,7 @@ class xoopsmailer
      */
     public function addHeaders($value)
     {
-        $this->headers[] = trim($value) . $this->LE;
+        $this->headers[] = trim($value).$this->LE;
     }
 
     public function setToEmails($email)
@@ -495,7 +496,7 @@ class xoopsmailer
     }
 
     /**
-     * abstract, to be overridden by lang specific mail class, if needed
+     * abstract, to be overridden by lang specific mail class, if needed.
      */
     public function encodeFromName($text)
     {
@@ -503,9 +504,9 @@ class xoopsmailer
     }
 
     /**
-     * abstract, to be overridden by lang specific mail class, if needed
+     * abstract, to be overridden by lang specific mail class, if needed.
      *
-     * @param string $text
+     * @param  string $text
      * @return string
      */
     public function encodeSubject($text)
@@ -514,7 +515,7 @@ class xoopsmailer
     }
 
     /**
-     * abstract, to be overridden by lang specific mail class, if needed
+     * abstract, to be overridden by lang specific mail class, if needed.
      *
      * @param string $text
      */
@@ -529,26 +530,27 @@ class xoopsmailer
     {
         $xoops = Xoops::getInstance();
         if (!$path = $this->templatedir) {
-            $path = \XoopsBaseConfig::get('root-path') . '/locale/';
-        } elseif (strpos($path, '/') === false) {
-            $path = \XoopsBaseConfig::get('root-path') . '/modules/' . $path . '/locale/';
-        } elseif (substr($path, -1, 1) !== '/') {
+            $path = \XoopsBaseConfig::get('root-path').'/locale/';
+        } elseif (false === strpos($path, '/')) {
+            $path = \XoopsBaseConfig::get('root-path').'/modules/'.$path.'/locale/';
+        } elseif ('/' !== substr($path, -1, 1)) {
             $path .= '/';
         }
-        if (XoopsLoad::fileExists($path . $xoops->getConfig('locale') . '/templates/' . $this->template)) {
-            return $path . $xoops->getConfig('locale') . '/templates/' . $this->template;
-        } elseif (XoopsLoad::fileExists($path . 'en_US/templates/' . $this->template)) {
-            return $path . 'en_US/templates/' . $this->template;
-        } elseif (XoopsLoad::fileExists($path . $this->template)) {
-            return $path . $this->template;
+        if (XoopsLoad::fileExists($path.$xoops->getConfig('locale').'/templates/'.$this->template)) {
+            return $path.$xoops->getConfig('locale').'/templates/'.$this->template;
+        } elseif (XoopsLoad::fileExists($path.'en_US/templates/'.$this->template)) {
+            return $path.'en_US/templates/'.$this->template;
+        } elseif (XoopsLoad::fileExists($path.$this->template)) {
+            return $path.$this->template;
         }
+
         return false;
     }
 
     /**
-     * @param int $uid
-     * @param string $subject
-     * @param string $body
+     * @param  int    $uid
+     * @param  string $subject
+     * @param  string $body
      * @return bool
      */
     private function sendPM($uid, $subject, $body)
@@ -566,18 +568,19 @@ class xoopsmailer
         if (!$pm_handler->insert($pm)) {
             return false;
         }
+
         return true;
     }
 
     /**
-     * Send email
+     * Send email.
      *
      * Uses the new XoopsMultiMailer
      *
-     * @param string $email
-     * @param string $subject
-     * @param string $body
-     * @param array $headers
+     * @param  string $email
+     * @param  string $subject
+     * @param  string $body
+     * @param  array  $headers
      * @return bool
      */
     private function sendMail($email, $subject, $body, $headers)
@@ -603,8 +606,10 @@ class xoopsmailer
         }
         if (!$this->multimailer->Send()) {
             $this->errors[] = $this->multimailer->ErrorInfo;
+
             return false;
         }
+
         return true;
     }
 }

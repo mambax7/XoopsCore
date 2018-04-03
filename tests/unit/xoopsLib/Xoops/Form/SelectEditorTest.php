@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class SelectEditorTest extends \PHPUnit\Framework\TestCase
 {
@@ -32,18 +32,18 @@ class SelectEditorTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<select') !== false);
-        $this->assertTrue(strpos($value, 'name="editor"') !== false);
-        $this->assertTrue(strpos($value, 'size="1"') !== false);
-        $this->assertTrue(strpos($value, 'id="editor"') !== false);
+        $this->assertTrue(false !== strpos($value, '<select'));
+        $this->assertTrue(false !== strpos($value, 'name="editor"'));
+        $this->assertTrue(false !== strpos($value, 'size="1"'));
+        $this->assertTrue(false !== strpos($value, 'id="editor"'));
 
-        $this->assertTrue(strpos($value, '<option') !== false);
-        $this->assertTrue(strpos($value, 'value="textarea"') !== false);
-        $this->assertTrue(strpos($value, 'value="dhtmltextarea"') !== false);
+        $this->assertTrue(false !== strpos($value, '<option'));
+        $this->assertTrue(false !== strpos($value, 'value="textarea"'));
+        $this->assertTrue(false !== strpos($value, 'value="dhtmltextarea"'));
 //      $this->assertTrue(false !== strpos($value, 'value="tinymce"'));
-        $this->assertTrue(strpos($value, 'value="tinymce4"') !== false);
-        $this->assertTrue(strpos($value, '</option>') !== false);
+        $this->assertTrue(false !== strpos($value, 'value="tinymce4"'));
+        $this->assertTrue(false !== strpos($value, '</option>'));
 
-        $this->assertTrue(strpos($value, '</select>') !== false);
+        $this->assertTrue(false !== strpos($value, '</select>'));
     }
 }

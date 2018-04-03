@@ -2,7 +2,7 @@
 
 namespace Xmf\Module\Helper;
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class CacheTest extends \PHPUnit\Framework\TestCase
 {

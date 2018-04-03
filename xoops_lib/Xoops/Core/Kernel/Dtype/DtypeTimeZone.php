@@ -17,21 +17,20 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeTimeZone
+ * DtypeTimeZone.
  *
  * Data is stored as varchar(32) string, returned as \DateTimeZone object
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeOldTime
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeTimeZone extends DtypeAbstract
 {
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -46,6 +45,7 @@ class DtypeTimeZone extends DtypeAbstract
             case Dtype::FORMAT_NONE:
             case 'n':
                 $value = $storedValue;
+
                 break;
             default:
                 try {
@@ -53,13 +53,15 @@ class DtypeTimeZone extends DtypeAbstract
                 } catch (\Exception $e) {
                     $value = new DateTimeZone('UTC');
                 }
+
                 break;
         }
+
         return $value;
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable

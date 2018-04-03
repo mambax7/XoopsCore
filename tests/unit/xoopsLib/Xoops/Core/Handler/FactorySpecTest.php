@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Handler;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class FactorySpecTest extends \PHPUnit\Framework\TestCase
 {

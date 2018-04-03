@@ -10,17 +10,14 @@
  */
 
 /**
- *  Publisher class
+ *  Publisher class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Class
- * @subpackage      Utils
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
@@ -68,7 +65,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     public function update($item_id, $total_num)
     {
         $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('publisher_items') . ' SET comments = ' . (int) ($total_num) . ' WHERE itemid = ' . (int) ($item_id);
+        $sql = 'UPDATE '.$db->prefix('publisher_items').' SET comments = '.(int) ($total_num).' WHERE itemid = '.(int) ($item_id);
         $db->query($sql);
     }
 
@@ -79,7 +76,7 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      *      'title' => 'My Article Title',
      *      'text' => 'Content of the article');
      *      'timestamp' => time(); //Date of the article in unix format
-     *      'uid' => Id of the article author
+     *      'uid' => Id of the article author.
      *
      * @param int $item_id The unique ID of an item
      *
@@ -88,19 +85,20 @@ class PublisherCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     public function itemInfo($item_id)
     {
         $ret = [];
-        include_once dirname(dirname(__DIR__)) . '/include/common.php';
+        include_once dirname(dirname(__DIR__)).'/include/common.php';
 
         /* @var $itemObj PublisherItem */
         $itemObj = Publisher::getInstance()->getItemHandler()->get((int) ($item_id));
         $ret['text'] = '';
         $summary = $itemObj->summary();
-        if ($summary !== '') {
-            $ret['text'] .= $summary . '<br /><br />';
+        if ('' !== $summary) {
+            $ret['text'] .= $summary.'<br /><br />';
         }
         $ret['text'] .= $itemObj->body();
         $ret['title'] = $itemObj->title();
         $ret['uid'] = $itemObj->getVar('uid');
         $ret['timestamp'] = $itemObj->getVar('datesub', 'n');
+
         return $ret;
     }
 }

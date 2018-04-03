@@ -4,9 +4,8 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
-
 define('_AM_PUBLISHER_ABOUT', 'à propos');
 define('_AM_PUBLISHER_ACTION', 'Action');
 define('_AM_PUBLISHER_ADD_OPT', 'Créer %s autres sous catégories');
@@ -307,7 +306,6 @@ define('_AM_PUBLISHER_FULLACCESS', 'Permissions de lecture des catégories et de
 define('_AM_PUBLISHER_PERMISSIONS_UPDATED', 'Permissions mises à jour.');
 define('_AM_PUBLISHER_ITEM_TAG', 'Tags');
 
-
 define('_AM_PUBLISHER_PERMISSIONS_FORM', 'Options disponibles dans les formulaires de soumission');
 define('_AM_PUBLISHER_PERMISSIONS_FORM_DSC', 'Vous pouvez sélectionner les champs optionnels présents dans les formulaires de soumission des articles. Vous pouvez définir des valeurs par défaut pour ce domaine dans les préférences.');
 define('_AM_PUBLISHER_NOTIFY', 'Avertir des articles publiés?');
@@ -331,7 +329,7 @@ define('_AM_PUBLISHER_COMMENTS', 'Commentaires');
 define('_AM_PUBLISHER_CATEGORY_MODERATOR', 'Modérateur');
 define('_AM_PUBLISHER_CATEGORY_MODERATOR_DSC', "Un modérateur peut accéder et soumettre dans cette catégorie, même s'il ne dispose pas de groupe de permission. <br /> Pour modérer une sous-catégorie, l'utilisateur doit avoir les permissions de soumettre dans la catégorie parente. <br /> Configurez sur 'anonyme' si vous n'avez pas besoin d'un modérateur.");
 
-/**
+/*
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) <http://www.afux.org/>
  * @translation     grandoc 2010-02-06
  * @specification   _LANGCODE: fr

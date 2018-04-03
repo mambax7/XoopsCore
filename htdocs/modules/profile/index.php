@@ -12,17 +12,15 @@
 use Xoops\Core\FixedGroups;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 
 $op = 'main';
@@ -33,7 +31,7 @@ if (isset($_POST['op'])) {
     $op = trim($_GET['op']);
 }
 
-if ($op === 'main') {
+if ('main' === $op) {
     if (!$xoops->isUser()) {
         $xoops->header('module:profile/profile_userform.tpl');
         $xoops->tpl()->assign('lang_login', XoopsLocale::A_LOGIN);
@@ -50,7 +48,7 @@ if ($op === 'main') {
         $xoops->tpl()->assign('lang_youremail', XoopsLocale::C_YOUR_EMAIL);
         $xoops->tpl()->assign('lang_sendpassword', XoopsLocale::SEND_PASSWORD);
         $xoops->tpl()->assign('mailpasswd_token', $xoops->security()->createToken());
-        include __DIR__ . '/footer.php';
+        include __DIR__.'/footer.php';
     }
     if (!empty($_GET['xoops_redirect'])) {
         $redirect = trim($_GET['xoops_redirect']);
@@ -62,20 +60,20 @@ if ($op === 'main') {
             }
         }
         if (!$isExternal) {
-            header('Location: ' . $redirect);
+            header('Location: '.$redirect);
             exit();
         }
     }
-    header('Location: ./userinfo.php?uid=' . $xoops->user->getVar('uid'));
+    header('Location: ./userinfo.php?uid='.$xoops->user->getVar('uid'));
     exit();
 }
 
-if ($op === 'login') {
+if ('login' === $op) {
     include_once $xoops->path('include/checklogin.php');
     exit();
 }
 
-if ($op === 'logout') {
+if ('logout' === $op) {
     $message = '';
     $_SESSION = [];
     $xoops->session()->user()->recordUserLogout();
@@ -83,37 +81,37 @@ if ($op === 'logout') {
     if ($xoops->isUser()) {
         $xoops->getHandlerOnline()->destroy($xoops->user->getVar('uid'));
     }
-    $message = XoopsLocale::S_YOU_ARE_NOW_LOGGED_OUT . '<br />' . XoopsLocale::S_THANK_YOU_FOR_VISITING_OUR_SITE;
-    $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 1, $message);
+    $message = XoopsLocale::S_YOU_ARE_NOW_LOGGED_OUT.'<br />'.XoopsLocale::S_THANK_YOU_FOR_VISITING_OUR_SITE;
+    $xoops->redirect(\XoopsBaseConfig::get('url').'/', 1, $message);
 }
 
-if ($op === 'actv') {
+if ('actv' === $op) {
     $id = (int) ($_GET['id']);
     $actkey = trim($_GET['actkey']);
     $xoops->redirect("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
 }
 
-if ($op === 'delete') {
-    if (!$xoops->isUser() || $xoops->getConfig('self_delete') !== 1) {
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
+if ('delete' === $op) {
+    if (!$xoops->isUser() || 1 !== $xoops->getConfig('self_delete')) {
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
     } else {
         $groups = $xoops->user->getGroups();
         if (in_array(FixedGroups::ADMIN, $groups, true)) {
             // users in the webmasters group may not be deleted
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 5, XoopsLocale::E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED);
+            $xoops->redirect(\XoopsBaseConfig::get('url').'/', 5, XoopsLocale::E_USER_IN_WEBMASTER_GROUP_CANNOT_BE_REMOVED);
         }
         $ok = !isset($_POST['ok']) ? 0 : (int) ($_POST['ok']);
-        if ($ok !== 1) {
+        if (1 !== $ok) {
             $xoops->header();
             echo $xoops->confirm(
                 ['op' => 'delete', 'ok' => 1],
                 'user.php',
-                XoopsLocale::Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT . '<br/>' . XoopsLocale::THIS_WILL_REMOVE_ALL_YOUR_INFO
+                XoopsLocale::Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT.'<br/>'.XoopsLocale::THIS_WILL_REMOVE_ALL_YOUR_INFO
             );
-            include __DIR__ . '/footer.php';
+            include __DIR__.'/footer.php';
         } else {
             $del_uid = $xoops->user->getVar('uid');
-            if ($xoops->getHandlerMember()->deleteUser($xoops->user) !== false) {
+            if (false !== $xoops->getHandlerMember()->deleteUser($xoops->user)) {
                 $xoops->getHandlerOnline()->destroy($del_uid);
 
                 //todo, use preload here?
@@ -122,7 +120,7 @@ if ($op === 'delete') {
                 }
                 $xoops->redirect('index.php', 5, XoopsLocale::S_YOUR_ACCOUNT_DELETED);
             }
-            $xoops->redirect(XOOPS_URL . '/', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
+            $xoops->redirect(XOOPS_URL.'/', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
         }
     }
 }

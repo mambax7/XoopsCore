@@ -12,14 +12,13 @@
 namespace Xoops\Core;
 
 /**
- * AttributeInterface - standard access to attributes
+ * AttributeInterface - standard access to attributes.
  *
  * @category  Xoops\Core
- * @package   AttributeInterface
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 interface AttributeInterface
 {
@@ -29,7 +28,7 @@ interface AttributeInterface
      * @param string $name    Name of the attribute
      * @param mixed  $default A default value returned if the requested attribute is not set.
      *
-     * @return  mixed  The value of the session variable, or $default if not set.
+     * @return mixed The value of the session variable, or $default if not set.
      */
     public function get($name, $default = null);
 
@@ -48,7 +47,7 @@ interface AttributeInterface
      *
      * @param string $name An attribute name.
      *
-     * @return boolean TRUE if the given attribute exists, otherwise FALSE.
+     * @return bool TRUE if the given attribute exists, otherwise FALSE.
      */
     public function has($name);
 

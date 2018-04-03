@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
     public function hasAccess($menu, &$hasAccess)
@@ -57,7 +55,7 @@ class MenusConstantDecorator extends MenusDecoratorAbstract implements MenusDeco
         $expression = $reg[0];
         list($validator, $value) = array_map('strtoupper', explode('|', $reg[1]));
 
-        if ($validator === 'CONSTANT') {
+        if ('CONSTANT' === $validator) {
             if (defined($value)) {
                 $string = str_replace($expression, constant($value), $string);
             }

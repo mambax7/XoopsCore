@@ -12,7 +12,6 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -70,13 +69,13 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
     {
         $decorations = ['link', 'title', 'alt_title'];
         foreach ($decorations as $decoration) {
-            if ($decoration === 'alt_title' && empty($menu['alt_title'])) {
+            if ('alt_title' === $decoration && empty($menu['alt_title'])) {
                 $menu['alt_title'] = $menu['title'];
             }
             $menu[$decoration] = self::_doDecoration($menu[$decoration]);
-            if ($decoration === 'link') {
+            if ('link' === $decoration) {
                 if (!preg_match('/mailto:/i', $menu['link']) && !preg_match('#://#i', $menu['link'])) {
-                    $menu['link'] = \XoopsBaseConfig::get('url') . '/' . $menu['link']; //Do not do this in other decorators
+                    $menu['link'] = \XoopsBaseConfig::get('url').'/'.$menu['link']; //Do not do this in other decorators
                 }
             }
         }
@@ -90,8 +89,9 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
     public function hasAccess($menu, &$hasAccess)
     {
         $groups = $this->user_groups;
-        if ($menu['visible'] === 0 || !array_intersect($menu['groups'], $groups)) {
+        if (0 === $menu['visible'] || !array_intersect($menu['groups'], $groups)) {
             $hasAccess = false;
+
             return;
         }
 
@@ -100,6 +100,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         foreach ($hooks as $method) {
             if (!self::$method()) {
                 $hasAccess = false;
+
                 return;
             }
         }
@@ -115,21 +116,21 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         list($validator, $value) = array_map('strtolower', explode('|', $reg[1]));
 
         //just to prevent any bad admin to get easy passwords
-        if ($value === 'pass') {
+        if ('pass' === $value) {
             return $string;
         }
 
-        if ($validator === 'user') {
+        if ('user' === $validator) {
             $value = isset($this->user[$value]) ? $this->user[$value] : self::getExtraValue('user', $value);
             $string = str_replace($expression, $value, $string);
         }
 
-        if ($validator === 'uri') {
+        if ('uri' === $validator) {
             $value = isset($_GET[$value]) ? $_GET[$value] : 0;
             $string = str_replace($expression, $value, $string);
         }
 
-        if ($validator === 'owner') {
+        if ('owner' === $validator) {
             $value = isset($this->owner[$value]) ? $this->owner[$value] : self::getExtraValue('owner', $value);
             $string = str_replace($expression, $value, $string);
         }
@@ -139,7 +140,7 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
 
     public function isOwner()
     {
-        return ($this->user_uid !== 0 && ($this->user_uid === $this->get_uid)) ? true : false;
+        return (0 !== $this->user_uid && ($this->user_uid === $this->get_uid)) ? true : false;
     }
 
     public function isNotOwner()
@@ -164,17 +165,17 @@ class MenusDefaultDecorator extends MenusDecoratorAbstract implements MenusDecor
         $pm_handler = $xoops->getHandlerPrivateMessage();
 
         $criteria = new CriteriaCompo();
-        if ($value === 'pm_new') {
+        if ('pm_new' === $value) {
             $criteria->add(new Criteria('read_msg', 0));
             $criteria->add(new Criteria('to_userid', $entry['uid']));
         }
 
-        if ($value === 'pm_readed') {
+        if ('pm_readed' === $value) {
             $criteria->add(new Criteria('read_msg', 1));
             $criteria->add(new Criteria('to_userid', $entry['uid']));
         }
 
-        if ($value === 'pm_total') {
+        if ('pm_total' === $value) {
             $criteria->add(new Criteria('to_userid', $entry['uid']));
         }
 

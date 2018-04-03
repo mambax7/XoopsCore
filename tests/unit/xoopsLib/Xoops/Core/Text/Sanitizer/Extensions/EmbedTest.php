@@ -4,7 +4,7 @@ namespace Xoops\Core\Text\Sanitizer\Extensions;
 
 use Xoops\Core\Text\Sanitizer;
 
-require_once __DIR__ . '/../../../../../../init_new.php';
+require_once __DIR__.'/../../../../../../init_new.php';
 
 class EmbedTest extends \PHPUnit\Framework\TestCase
 {
@@ -50,7 +50,7 @@ class EmbedTest extends \PHPUnit\Framework\TestCase
         $in = 'https://xoops.org';
         $value = $this->sanitizer->executeFilter('embed', $in);
         $this->assertTrue(is_string($value));
-        if (strpos($value, '<div class="media">') === false) {
+        if (false === strpos($value, '<div class="media">')) {
             echo 'embed return: ' , $value; // this has failed, but what is it doing?
         }
         $this->assertNotFalse(strpos($value, '<div class="media">'));

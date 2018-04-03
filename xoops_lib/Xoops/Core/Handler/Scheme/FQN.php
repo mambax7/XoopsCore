@@ -15,19 +15,18 @@ use Xoops\Core\Handler\FactorySpec;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
- * FQN - build
+ * FQN - build.
  *
  * @category  Xoops\Core\Handler\Scheme
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class FQN implements SchemeInterface
 {
     /**
-     * build a handler from a fully qualified class name
+     * build a handler from a fully qualified class name.
      *
      * @param FactorySpec $spec specification for requested handler
      *
@@ -40,11 +39,12 @@ class FQN implements SchemeInterface
         if (class_exists($class)) {
             $handler = new $class($spec->getFactory()->db());
         }
-        if ($handler === null) {
-            if ($spec->getOptional() === false) {
+        if (null === $handler) {
+            if (false === $spec->getOptional()) {
                 throw new NoHandlerException(sprintf('Class not found %s', $class));
             }
         }
+
         return $handler;
     }
 }

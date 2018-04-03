@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Mp3 extends ExtensionAbstract
 {
@@ -35,7 +34,7 @@ class Mp3 extends ExtensionAbstract
     ];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -74,7 +73,7 @@ EOF;
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {

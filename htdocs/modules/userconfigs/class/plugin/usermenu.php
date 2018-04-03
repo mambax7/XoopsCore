@@ -30,7 +30,7 @@ class UserconfigsUsermenuPlugin implements UsermenuPluginInterface
                     $mHelper = Xoops::getModuleHelper($dirName);
                     $subMenu[] = [
                         'name' => $mHelper->getModule()->getVar('name'),
-                        'link' => 'index.php?op=showmod&mid=' . $mHelper->getModule()->getVar('mid'),
+                        'link' => 'index.php?op=showmod&mid='.$mHelper->getModule()->getVar('mid'),
                     ];
                 }
             }
@@ -41,6 +41,7 @@ class UserconfigsUsermenuPlugin implements UsermenuPluginInterface
             'link' => $helper->url('index.php'),
             'subMenu' => $subMenu,
         ];
+
         return $ret;
     }
 }

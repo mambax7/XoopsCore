@@ -14,16 +14,15 @@ namespace Xoops\Core\Session;
 use Xoops\Core\Database\Connection;
 
 /**
- * Handler for database session storage
+ * Handler for database session storage.
  *
  * @category  Xoops\Core\Session
- * @package   Handler
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Handler implements \SessionHandlerInterface
 {
@@ -38,7 +37,7 @@ class Handler implements \SessionHandlerInterface
     private $sessionTable = 'system_session';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -46,7 +45,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Open a session
+     * Open a session.
      *
      * @param string $save_path not used
      * @param string $name      not used
@@ -59,7 +58,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Close a session
+     * Close a session.
      *
      * @return bool
      */
@@ -69,7 +68,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Read a session from the database
+     * Read a session from the database.
      *
      * @param string $session_id Id of the session
      *
@@ -79,7 +78,7 @@ class Handler implements \SessionHandlerInterface
     {
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('s.session_data')
+        $qb->select('s.session_data')
             ->fromPrefix($this->sessionTable, 's')
             ->where($eb->eq('s.session_id', ':sessid'))
             ->andWhere($eb->gt('s.expires_at', ':expires'))
@@ -102,7 +101,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Write a session to the database
+     * Write a session to the database.
      *
      * @param string $session_id   id of session
      * @param string $session_data data to store
@@ -120,7 +119,7 @@ class Handler implements \SessionHandlerInterface
         //$readResult = $this->read($session_id);
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->updatePrefix($this->sessionTable)
+        $qb->updatePrefix($this->sessionTable)
             ->set('expires_at', ':expires')
             ->set('session_data', ':sessdata')
             ->where($eb->eq('session_id', ':sessid'))
@@ -131,7 +130,7 @@ class Handler implements \SessionHandlerInterface
         $result = $qb->execute();
         if ($result <= 0) {
             $qb = $this->db->createXoopsQueryBuilder();
-            $qb ->insertPrefix($this->sessionTable)
+            $qb->insertPrefix($this->sessionTable)
                 ->values([
                     'session_id' => ':sessid',
                     'expires_at' => ':expires',
@@ -150,7 +149,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Destroy a session
+     * Destroy a session.
      *
      * @param string $session_id Id of session
      *
@@ -160,7 +159,7 @@ class Handler implements \SessionHandlerInterface
     {
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->deletePrefix($this->sessionTable)
+        $qb->deletePrefix($this->sessionTable)
             ->where($eb->eq('session_id', ':sessid'))
             ->setParameter(':sessid', $session_id, \PDO::PARAM_STR);
         $this->db->setForce(true);
@@ -170,7 +169,7 @@ class Handler implements \SessionHandlerInterface
     }
 
     /**
-     * Garbage Collector
+     * Garbage Collector.
      *
      * @param string $maxlifetime Time in seconds until a session expires
      *
@@ -181,11 +180,12 @@ class Handler implements \SessionHandlerInterface
         $mintime = time();
         $qb = $this->db->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->deletePrefix($this->sessionTable)
+        $qb->deletePrefix($this->sessionTable)
             ->where($eb->lt('expires_at', ':expires'))
             ->setParameter(':expires', $mintime, \PDO::PARAM_INT);
         $this->db->setForce(true);
         $result = $qb->execute();
+
         return (bool) ($result > 0);
     }
 }

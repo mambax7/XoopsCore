@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class XoopsXmlRpcDatetimeTest extends \PHPUnit\Framework\TestCase
 {
@@ -20,12 +20,12 @@ class XoopsXmlRpcDatetimeTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($value);
 
         $result = $instance->render();
-        $this->assertSame('<value><dateTime.iso8601>' . gmstrftime('%Y%m%dT%H:%M:%S', $value) . '</dateTime.iso8601></value>', $result);
+        $this->assertSame('<value><dateTime.iso8601>'.gmstrftime('%Y%m%dT%H:%M:%S', $value).'</dateTime.iso8601></value>', $result);
 
         $value = 'now';
         $instance = new $this->myclass($value);
 
         $result = $instance->render();
-        $this->assertSame('<value><dateTime.iso8601>' . gmstrftime('%Y%m%dT%H:%M:%S', strtotime($value)) . '</dateTime.iso8601></value>', $result);
+        $this->assertSame('<value><dateTime.iso8601>'.gmstrftime('%Y%m%dT%H:%M:%S', strtotime($value)).'</dateTime.iso8601></value>', $result);
     }
 }

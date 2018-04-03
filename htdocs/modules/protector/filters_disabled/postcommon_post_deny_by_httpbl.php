@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -30,7 +29,7 @@ class protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
 
         // http:bl servers (don't enable too many servers)
         $rbls = [
-            'http:BL' => PROTECTOR_HTTPBL_KEY . '.%s.dnsbl.httpbl.org',
+            'http:BL' => PROTECTOR_HTTPBL_KEY.'.%s.dnsbl.httpbl.org',
         ];
 
         $rev_ip = implode('.', array_reverse(explode('.', @$_SERVER['REMOTE_ADDR'])));
@@ -46,6 +45,7 @@ class protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
                 die(_MD_PROTECTOR_DENYBYRBL);
             }
         }
+
         return true;
     }
 }

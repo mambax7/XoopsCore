@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Xmf\Request;
 
@@ -40,7 +40,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = $value;
 
         $this->assertSame($value, Request::getVar($varname));
-        $this->assertNull(Request::getVar($varname . 'no-such-key'));
+        $this->assertNull(Request::getVar($varname.'no-such-key'));
     }
 
     public function testGetInt()
@@ -59,7 +59,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = 'notanumber';
         $this->assertSame(0, Request::getInt($varname));
 
-        $this->assertSame(0, Request::getInt($varname . 'no-such-key'));
+        $this->assertSame(0, Request::getInt($varname.'no-such-key'));
     }
 
     public function testGetFloat()
@@ -76,7 +76,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(5.68, Request::getFloat($varname));
 
         $_REQUEST[$varname] = '1';
-        $this->assertTrue(Request::getFloat($varname) === 1.0);
+        $this->assertTrue(1.0 === Request::getFloat($varname));
     }
 
     public function testGetBool()
@@ -98,7 +98,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_REQUEST[$varname] = false;
         $this->assertFalse(Request::getBool($varname));
 
-        $this->assertFalse(Request::getBool($varname . 'no-such-key'));
+        $this->assertFalse(Request::getBool($varname.'no-such-key'));
     }
 
     public function testGetWord()

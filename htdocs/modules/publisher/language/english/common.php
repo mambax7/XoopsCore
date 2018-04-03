@@ -4,9 +4,8 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
-
 define('_CO_PUBLISHER_MESSAGE_FILE_ERROR', 'Error: Unable to store uploaded file for the following reasons:<br />%s');
 define('_CO_PUBLISHER_MESSAGE_WRONG_MIMETYPE', 'Error: filetype is not allowed. Please re-submit.');
 

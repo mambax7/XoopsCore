@@ -15,15 +15,14 @@ use Xoops\Core\Service\Manager;
 use Xoops\Core\Service\Response;
 
 /**
- * Emoji service interface
+ * Emoji service interface.
  *
  * @category  Xoops\Core\Service\Contract
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 interface EmojiInterface
 {
@@ -39,14 +38,14 @@ interface EmojiInterface
     public function renderEmoji(Response $response, $buffer);
 
     /**
-     * getEmojiList - return a list of available emoji
+     * getEmojiList - return a list of available emoji.
      *
-     * @param Response  $response \Xoops\Core\Service\Response object
+     * @param Response $response \Xoops\Core\Service\Response object
      */
     public function getEmojiList(Response $response);
 
     /**
-     * renderEmojiSelector - provide emoji selector support for editing
+     * renderEmojiSelector - provide emoji selector support for editing.
      *
      * This should return an HTML string that, when displayed, will provide a link to an emoji selector.
      * Additionally, this should perform any additional tasks required to make the link function, such

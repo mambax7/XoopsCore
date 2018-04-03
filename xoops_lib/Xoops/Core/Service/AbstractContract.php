@@ -12,29 +12,28 @@
 namespace Xoops\Core\Service;
 
 /**
- * Xoops services manager contract boilerplate
+ * Xoops services manager contract boilerplate.
  *
  * All service providers should extend this class, and implement the relevant
  * contract interface
  *
  * @category  Xoops\Core\Service\AbstractContract
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2014 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 abstract class AbstractContract
 {
-    /** @var integer $priority - lowest value is highest priority */
+    /** @var int $priority - lowest value is highest priority */
     protected $priority = Manager::PRIORITY_MEDIUM;
 
     /**
-     * setPriority - set the priority for this contract provider
+     * setPriority - set the priority for this contract provider.
      *
-     * @param integer $priority - priority of this contract provider
+     * @param int $priority - priority of this contract provider
      */
     public function setPriority($priority)
     {
@@ -42,9 +41,9 @@ abstract class AbstractContract
     }
 
     /**
-     * getPriority - get the priority for this contract provider
+     * getPriority - get the priority for this contract provider.
      *
-     * @return integer - priority of this contract provider
+     * @return int - priority of this contract provider
      */
     public function getPriority()
     {
@@ -53,13 +52,14 @@ abstract class AbstractContract
 
     /**
      * getMode - get the MODE for the contract. The MODE is set in the contract Interface, and
-     * permissible values defined in Manager
+     * permissible values defined in Manager.
      *
-     * @return integer - a MODE constant indicating how multiple services are handled
+     * @return int - a MODE constant indicating how multiple services are handled
      */
     public function getMode()
     {
         $class = get_called_class();
+
         return $class::MODE;
     }
 
@@ -72,7 +72,7 @@ abstract class AbstractContract
     abstract public function getName();
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */

@@ -18,15 +18,13 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Images
  * @author
  * @version         $Id$
  */
-
 class ImagesImage extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -44,7 +42,7 @@ class ImagesImage extends XoopsObject
 class ImagesImage_Body extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -64,7 +62,7 @@ class ImagesImage_Body extends XoopsObject
 class ImagesImageHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */

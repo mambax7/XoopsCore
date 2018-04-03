@@ -13,12 +13,12 @@
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 
 /**
- * smarty_function_thumbnail
- * @param array  $params  associative array of parameters
+ * smarty_function_thumbnail.
+ * @param array $params associative array of parameters
  *                        image => xoops virtual path to image
  *                        w => thumbnail width in pixels
  *                        w => thumbnail height in pixels

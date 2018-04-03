@@ -12,14 +12,13 @@
 namespace Xoops\Form;
 
 /**
- * SelectEditor
+ * SelectEditor.
  *
  * @category  Xoops\Form\SelectEditor
- * @package   Xoops\Form
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SelectEditor extends ElementTray
 {
@@ -49,13 +48,13 @@ class SelectEditor extends ElementTray
     public $nohtml;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param Form    $form            the form calling the editor selection
-     * @param string  $name            editor name
-     * @param string  $value           Pre-selected text value
-     * @param boolean $nohtml          dohtml disabled
-     * @param array   $allowed_editors allowed editors
+     * @param Form   $form            the form calling the editor selection
+     * @param string $name            editor name
+     * @param string $value           Pre-selected text value
+     * @param bool   $nohtml          dohtml disabled
+     * @param array  $allowed_editors allowed editors
      */
     public function __construct(
         Form $form,
@@ -73,7 +72,7 @@ class SelectEditor extends ElementTray
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -83,10 +82,11 @@ class SelectEditor extends ElementTray
         $editor_handler->allowed_editors = $this->allowed_editors;
         $option_select = new Select('', $this->name, $this->value);
         $onchangeCode = '"if(this.options[this.selectedIndex].value.length > 0 ){window.document.forms.'
-            . $this->form->getName() . '.submit();}"';
+            .$this->form->getName().'.submit();}"';
         $option_select->set('onchange', $onchangeCode);
         $option_select->addOptionArray($editor_handler->getList($this->nohtml));
         $this->addElement($option_select);
+
         return parent::render();
     }
 }

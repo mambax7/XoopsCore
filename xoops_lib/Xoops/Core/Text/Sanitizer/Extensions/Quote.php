@@ -16,14 +16,13 @@ use Xoops\Core\Text\Sanitizer\FilterAbstract;
 
 /**
  * TextSanitizer filter to Replace banned words in a string with their replacements
- * or terminate current request
+ * or terminate current request.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Quote extends FilterAbstract
 {
@@ -35,7 +34,7 @@ class Quote extends FilterAbstract
     ];
 
     /**
-     * Convert quote codes to blockquote tags
+     * Convert quote codes to blockquote tags.
      *
      * This seems to work for well matched sets, but is actually crisscrossing nested tags
      *
@@ -51,7 +50,7 @@ class Quote extends FilterAbstract
 
         //look for both open and closing tags in the correct order
         $pattern = "/\[quote](.*)\[\/quote\]/sU";
-        $replacement = \XoopsLocale::C_QUOTE . '<div class="xoopsQuote"><blockquote>\\1</blockquote></div>';
+        $replacement = \XoopsLocale::C_QUOTE.'<div class="xoopsQuote"><blockquote>\\1</blockquote></div>';
 
         $text = preg_replace($pattern, $replacement, $text, -1, $count);
         //no more matches, return now

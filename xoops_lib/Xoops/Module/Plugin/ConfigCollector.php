@@ -31,7 +31,7 @@ class ConfigCollector
     public $configs;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param XoopsModule $module  consuming module being installed
      * @param array       $configs configuration array for the consuming module

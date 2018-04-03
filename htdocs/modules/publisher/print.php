@@ -15,19 +15,17 @@ use Xoops\Core\XoopsTpl;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 $itemid = Request::getInt('itemid');
 
-if ($itemid === 0) {
+if (0 === $itemid) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
@@ -56,12 +54,12 @@ $item['body'] = $itemObj->body();
 $item['categoryname'] = $myts->displayTarea($categoryObj->getVar('name'));
 
 $mainImage = $itemObj->getMainImage();
-if ($mainImage['image_path'] !== '') {
-    $item['image'] = '<img src="' . $mainImage['image_path'] . '" alt="'
-                    . $myts->undoHtmlSpecialChars($mainImage['image_name']) . '"/>';
+if ('' !== $mainImage['image_path']) {
+    $item['image'] = '<img src="'.$mainImage['image_path'].'" alt="'
+                    .$myts->undoHtmlSpecialChars($mainImage['image_name']).'"/>';
 }
 $xoopsTpl->assign('item', $item);
-$xoopsTpl->assign('printtitle', $xoops->getConfig('sitename') . ' - ' . PublisherUtils::html2text($categoryObj->getCategoryPath()) . ' > ' . $myts->displayTarea($itemObj->title()));
+$xoopsTpl->assign('printtitle', $xoops->getConfig('sitename').' - '.PublisherUtils::html2text($categoryObj->getCategoryPath()).' > '.$myts->displayTarea($itemObj->title()));
 $xoopsTpl->assign('printlogourl', $publisher->getConfig('print_logourl'));
 $xoopsTpl->assign('printheader', $myts->displayTarea($publisher->getConfig('print_header'), 1));
 $xoopsTpl->assign('lang_category', _CO_PUBLISHER_CATEGORY);
@@ -77,10 +75,10 @@ $xoopsTpl->assign('noTitle', $noTitle);
 $xoopsTpl->assign('smartPopup', $smartPopup);
 $xoopsTpl->assign('current_language', $xoops->getConfig('language'));
 
-if ($publisher->getConfig('print_footer') === 'item footer' || $publisher->getConfig('print_footer') === 'both') {
+if ('item footer' === $publisher->getConfig('print_footer') || 'both' === $publisher->getConfig('print_footer')) {
     $xoopsTpl->assign('itemfooter', $myts->displayTarea($publisher->getConfig('item_footer'), 1));
 }
-if ($publisher->getConfig('print_footer') === 'index footer' || $publisher->getConfig('print_footer') === 'both') {
+if ('index footer' === $publisher->getConfig('print_footer') || 'both' === $publisher->getConfig('print_footer')) {
     $xoopsTpl->assign('indexfooter', $myts->displayTarea($publisher->getConfig('index_footer'), 1));
 }
 

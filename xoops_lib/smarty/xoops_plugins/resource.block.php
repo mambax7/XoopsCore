@@ -17,11 +17,11 @@
 class Smarty_Resource_Block extends Smarty_Resource_Custom
 {
     /**
-     * Fetch a template and its modification time from database
+     * Fetch a template and its modification time from database.
      *
-     * @param  string  $name   template name
-     * @param  string  $source template source
-     * @param  integer $mtime  template modification timestamp (epoch)
+     * @param string $name   template name
+     * @param string $source template source
+     * @param int    $mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -41,7 +41,7 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
     }
 
     /**
-     * Translate template name to absolute file name path
+     * Translate template name to absolute file name path.
      *
      * @param string $tpl_name template name
      *
@@ -51,7 +51,7 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
     {
         static $cache = [];
         $xoops = \Xoops::getInstance();
-        $tpl_info = $xoops->getTplInfo('block:' . $tpl_name);
+        $tpl_info = $xoops->getTplInfo('block:'.$tpl_name);
         $tpl_name = $tpl_info['tpl_name'];
         $dirname = $tpl_info['module'];
         $file = $tpl_info['file'];
@@ -62,6 +62,7 @@ class Smarty_Resource_Block extends Smarty_Resource_Custom
         if (!file_exists($file_path = $xoops->path("themes/{$theme_set}/modules/{$dirname}/blocks/{$file}"))) {
             $file_path = $xoops->path("modules/{$dirname}/templates/blocks/{$file}");
         }
+
         return $cache[$tpl_name] = $file_path;
     }
 }

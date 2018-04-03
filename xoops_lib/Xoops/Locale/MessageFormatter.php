@@ -1,6 +1,6 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @see http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
@@ -10,7 +10,7 @@ namespace Xoops\Locale;
 use Xoops\Core\Exception\NotSupportedException;
 
 /**
- * MessageFormatter allows formatting messages via [ICU message format](http://userguide.icu-project.org/formatparse/messages)
+ * MessageFormatter allows formatting messages via [ICU message format](http://userguide.icu-project.org/formatparse/messages).
  *
  * This class enhances the message formatter class provided by the PHP intl extension.
  *
@@ -48,8 +48,8 @@ class MessageFormatter
     private $_errorMessage = '';
 
     /**
-     * Get the error code from the last operation
-     * @link http://php.net/manual/en/messageformatter.geterrorcode.php
+     * Get the error code from the last operation.
+     * @see http://php.net/manual/en/messageformatter.geterrorcode.php
      * @return string Code of the last error.
      */
     public function getErrorCode()
@@ -58,8 +58,8 @@ class MessageFormatter
     }
 
     /**
-     * Get the error text from the last operation
-     * @link http://php.net/manual/en/messageformatter.geterrormessage.php
+     * Get the error text from the last operation.
+     * @see http://php.net/manual/en/messageformatter.geterrormessage.php
      * @return string Description of the last error.
      */
     public function getErrorMessage()
@@ -68,15 +68,15 @@ class MessageFormatter
     }
 
     /**
-     * Formats a message via [ICU message format](http://userguide.icu-project.org/formatparse/messages)
+     * Formats a message via [ICU message format](http://userguide.icu-project.org/formatparse/messages).
      *
      * It uses the PHP intl extension's [MessageFormatter](http://www.php.net/manual/en/class.messageformatter.php)
      * and works around some issues.
      * If PHP intl is not installed a fallback will be used that supports a subset of the ICU message format.
      *
-     * @param string $pattern The pattern string to insert parameters into.
-     * @param array $params The array of name value pairs to insert into the format string.
-     * @param string $language The locale to use for formatting locale-dependent parts
+     * @param  string       $pattern  The pattern string to insert parameters into.
+     * @param  array        $params   The array of name value pairs to insert into the format string.
+     * @param  string       $language The locale to use for formatting locale-dependent parts
      * @return string|false The formatted pattern string or `false` if an error occurred
      */
     public function format($pattern, $params, $language)
@@ -100,31 +100,36 @@ class MessageFormatter
         try {
             $formatter = new \MessageFormatter($language, $pattern);
 
-            if ($formatter === null) {
+            if (null === $formatter) {
                 // formatter may be null in PHP 5.x
                 $this->_errorCode = intl_get_error_code();
-                $this->_errorMessage = 'Message pattern is invalid: ' . intl_get_error_message();
+                $this->_errorMessage = 'Message pattern is invalid: '.intl_get_error_message();
+
                 return false;
             }
         } catch (\IntlException $e) {
             // IntlException is thrown since PHP 7
             $this->_errorCode = $e->getCode();
-            $this->_errorMessage = 'Message pattern is invalid: ' . $e->getMessage();
+            $this->_errorMessage = 'Message pattern is invalid: '.$e->getMessage();
+
             return false;
         } catch (\Exception $e) {
             // Exception is thrown by HHVM
             $this->_errorCode = $e->getCode();
-            $this->_errorMessage = 'Message pattern is invalid: ' . $e->getMessage();
+            $this->_errorMessage = 'Message pattern is invalid: '.$e->getMessage();
+
             return false;
         }
 
         $result = $formatter->format($params);
 
-        if ($result === false) {
+        if (false === $result) {
             $this->_errorCode = $formatter->getErrorCode();
             $this->_errorMessage = $formatter->getErrorMessage();
+
             return false;
         }
+
         return $result;
     }
 
@@ -135,10 +140,10 @@ class MessageFormatter
      * and adds support for named arguments.
      * Usage of this method requires PHP intl extension to be installed.
      *
-     * @param string $pattern The pattern to use for parsing the message.
-     * @param string $message The message to parse, conforming to the pattern.
-     * @param string $language The locale to use for formatting locale-dependent parts
-     * @return array|bool An array containing items extracted, or `FALSE` on error.
+     * @param  string                                      $pattern  The pattern to use for parsing the message.
+     * @param  string                                      $message  The message to parse, conforming to the pattern.
+     * @param  string                                      $language The locale to use for formatting locale-dependent parts
+     * @return array|bool                                  An array containing items extracted, or `FALSE` on error.
      * @throws \Xoops\Core\Exception\NotSupportedException when PHP intl extension is not installed.
      */
     public function parse($pattern, $message, $language)
@@ -151,7 +156,7 @@ class MessageFormatter
         }
 
         // replace named arguments
-        if (($tokens = self::tokenizePattern($pattern)) === false) {
+        if (false === ($tokens = self::tokenizePattern($pattern))) {
             $this->_errorCode = -1;
             $this->_errorMessage = 'Message pattern is invalid.';
 
@@ -165,21 +170,21 @@ class MessageFormatter
                     $map[$param] = count($map);
                 }
                 $token[0] = $map[$param];
-                $tokens[$i] = '{' . implode(',', $token) . '}';
+                $tokens[$i] = '{'.implode(',', $token).'}';
             }
         }
         $pattern = implode('', $tokens);
         $map = array_flip($map);
 
         $formatter = new \MessageFormatter($language, $pattern);
-        if ($formatter === null) {
+        if (null === $formatter) {
             $this->_errorCode = -1;
             $this->_errorMessage = 'Message pattern is invalid.';
 
             return false;
         }
         $result = $formatter->parse($message);
-        if ($result === false) {
+        if (false === $result) {
             $this->_errorCode = $formatter->getErrorCode();
             $this->_errorMessage = $formatter->getErrorMessage();
 
@@ -194,15 +199,15 @@ class MessageFormatter
     }
 
     /**
-     * Fallback implementation for MessageFormatter::formatMessage
-     * @param string $pattern The pattern string to insert things into.
-     * @param array $args The array of values to insert into the format string
-     * @param string $locale The locale to use for formatting locale-dependent parts
+     * Fallback implementation for MessageFormatter::formatMessage.
+     * @param  string       $pattern The pattern string to insert things into.
+     * @param  array        $args    The array of values to insert into the format string
+     * @param  string       $locale  The locale to use for formatting locale-dependent parts
      * @return false|string The formatted pattern string or `false` if an error occurred
      */
     protected function fallbackFormat($pattern, $args, $locale)
     {
-        if (($tokens = self::tokenizePattern($pattern)) === false) {
+        if (false === ($tokens = self::tokenizePattern($pattern))) {
             $this->_errorCode = -1;
             $this->_errorMessage = 'Message pattern is invalid.';
 
@@ -225,15 +230,15 @@ class MessageFormatter
     /**
      * Replace named placeholders with numeric placeholders and quote unused.
      *
-     * @param string $pattern The pattern string to replace things into.
-     * @param array $givenParams The array of values to insert into the format string.
-     * @param array $resultingParams Modified array of parameters.
-     * @param array $map
+     * @param  string $pattern         The pattern string to replace things into.
+     * @param  array  $givenParams     The array of values to insert into the format string.
+     * @param  array  $resultingParams Modified array of parameters.
+     * @param  array  $map
      * @return string The pattern string with placeholders replaced.
      */
     private function replaceNamedArguments($pattern, $givenParams, &$resultingParams = [], &$map = [])
     {
-        if (($tokens = self::tokenizePattern($pattern)) === false) {
+        if (false === ($tokens = self::tokenizePattern($pattern))) {
             return false;
         }
         foreach ($tokens as $i => $token) {
@@ -256,11 +261,11 @@ class MessageFormatter
             }
             $type = isset($token[1]) ? trim($token[1]) : 'none';
             // replace plural and select format recursively
-            if ($type === 'plural' || $type === 'select') {
+            if ('plural' === $type || 'select' === $type) {
                 if (!isset($token[2])) {
                     return false;
                 }
-                if (($subtokens = self::tokenizePattern($token[2])) === false) {
+                if (false === ($subtokens = self::tokenizePattern($token[2]))) {
                     return false;
                 }
                 $c = count($subtokens);
@@ -269,36 +274,36 @@ class MessageFormatter
                         return false;
                     }
                     $subpattern = $this->replaceNamedArguments(implode(',', $subtokens[$k]), $givenParams, $resultingParams, $map);
-                    $subtokens[$k] = $quote . '{' . $quote . $subpattern . $quote . '}' . $quote;
+                    $subtokens[$k] = $quote.'{'.$quote.$subpattern.$quote.'}'.$quote;
                 }
                 $token[2] = implode('', $subtokens);
             }
-            $tokens[$i] = $quote . '{' . $quote . implode(',', $token) . $quote . '}' . $quote;
+            $tokens[$i] = $quote.'{'.$quote.implode(',', $token).$quote.'}'.$quote;
         }
 
         return implode('', $tokens);
     }
 
     /**
-     * Tokenizes a pattern by separating normal text from replaceable patterns
-     * @param string $pattern patter to tokenize
+     * Tokenizes a pattern by separating normal text from replaceable patterns.
+     * @param  string     $pattern patter to tokenize
      * @return array|bool array of tokens or false on failure
      */
     private static function tokenizePattern($pattern)
     {
         $charset = \XoopsLocale::getCharset();
         $depth = 1;
-        if (($start = $pos = mb_strpos($pattern, '{', 0, $charset)) === false) {
+        if (false === ($start = $pos = mb_strpos($pattern, '{', 0, $charset))) {
             return [$pattern];
         }
         $tokens = [mb_substr($pattern, 0, $pos, $charset)];
         while (true) {
             $open = mb_strpos($pattern, '{', $pos + 1, $charset);
             $close = mb_strpos($pattern, '}', $pos + 1, $charset);
-            if ($open === false && $close === false) {
+            if (false === $open && false === $close) {
                 break;
             }
-            if ($open === false) {
+            if (false === $open) {
                 $open = mb_strlen($pattern, $charset);
             }
             if ($close > $open) {
@@ -308,14 +313,14 @@ class MessageFormatter
                 $depth--;
                 $pos = $close;
             }
-            if ($depth === 0) {
+            if (0 === $depth) {
                 $tokens[] = explode(',', mb_substr($pattern, $start + 1, $pos - $start - 1, $charset), 3);
                 $start = $pos + 1;
                 $tokens[] = mb_substr($pattern, $start, $open - $start, $charset);
                 $start = $open;
             }
         }
-        if ($depth !== 0) {
+        if (0 !== $depth) {
             return false;
         }
 
@@ -323,11 +328,11 @@ class MessageFormatter
     }
 
     /**
-     * Parses a token
-     * @param array $token the token to parse
-     * @param array $args arguments to replace
-     * @param string $locale the locale
-     * @return bool|string parsed token or false on failure
+     * Parses a token.
+     * @param  array                                       $token  the token to parse
+     * @param  array                                       $args   arguments to replace
+     * @param  string                                      $locale the locale
+     * @return bool|string                                 parsed token or false on failure
      * @throws \Xoops\Core\Exception\NotSupportedException when unsupported formatting is used.
      */
     private function parseToken($token, $args, $locale)
@@ -339,7 +344,7 @@ class MessageFormatter
         if (isset($args[$param])) {
             $arg = $args[$param];
         } else {
-            return '{' . implode(',', $token) . '}';
+            return '{'.implode(',', $token).'}';
         }
         $type = isset($token[1]) ? trim($token[1]) : 'none';
         switch ($type) {
@@ -353,14 +358,16 @@ class MessageFormatter
                 throw new NotSupportedException("Message format '${type}' is not supported. You have to install PHP intl extension to use this feature.");
             case 'number':
                 $format = isset($token[2]) ? trim($token[2]) : null;
-                if (is_numeric($arg) && ($format === null || $format === 'integer')) {
+                if (is_numeric($arg) && (null === $format || 'integer' === $format)) {
                     $number = number_format($arg);
-                    if ($format === null && ($pos = strpos($arg, '.')) !== false) {
+                    if (null === $format && false !== ($pos = strpos($arg, '.'))) {
                         // add decimals with unknown length
-                        $number .= '.' . substr($arg, $pos + 1);
+                        $number .= '.'.substr($arg, $pos + 1);
                     }
+
                     return $number;
                 }
+
                 throw new NotSupportedException("Message format 'number' is only supported for integer values. You have to install PHP intl extension to use this feature.");
             case 'none':
                 return $arg;
@@ -379,13 +386,14 @@ class MessageFormatter
                         return false;
                     }
                     $selector = trim($select[$i++]);
-                    if ($message === false && $selector === 'other' || $selector === $arg) {
+                    if (false === $message && 'other' === $selector || $selector === $arg) {
                         $message = implode(',', $select[$i]);
                     }
                 }
-                if ($message !== false) {
+                if (false !== $message) {
                     return $this->fallbackFormat($message, $args, $locale);
                 }
+
                 break;
             case 'plural':
                 /* http://icu-project.org/apiref/icu4c/classicu_1_1PluralFormat.html
@@ -409,20 +417,21 @@ class MessageFormatter
                     }
                     $selector = trim($plural[$i++]);
 
-                    if ($i === 1 && strncmp($selector, 'offset:', 7) === 0) {
+                    if (1 === $i && 0 === strncmp($selector, 'offset:', 7)) {
                         $offset = (int) trim(mb_substr($selector, 7, ($pos = mb_strpos(str_replace(["\n", "\r", "\t"], ' ', $selector), ' ', 7, $charset)) - 7, $charset));
                         $selector = trim(mb_substr($selector, $pos + 1, mb_strlen($selector, $charset), $charset));
                     }
-                    if ($message === false && $selector === 'other' ||
-                        $selector[0] === '=' && (int) mb_substr($selector, 1, mb_strlen($selector, $charset), $charset) === $arg ||
-                        $selector === 'one' && $arg - $offset === 1
+                    if (false === $message && 'other' === $selector ||
+                        '=' === $selector[0] && (int) mb_substr($selector, 1, mb_strlen($selector, $charset), $charset) === $arg ||
+                        'one' === $selector && 1 === $arg - $offset
                     ) {
                         $message = implode(',', str_replace('#', $arg - $offset, $plural[$i]));
                     }
                 }
-                if ($message !== false) {
+                if (false !== $message) {
                     return $this->fallbackFormat($message, $args, $locale);
                 }
+
                 break;
         }
 

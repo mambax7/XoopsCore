@@ -12,17 +12,15 @@
 use Xoops\Html\Menu\Link;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 
 if (!$xoops->isUser()) {
@@ -127,11 +125,11 @@ if (!isset($_POST['submit'])) {
         }
     }
     $xoops->redirect(
-        \XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/userinfo.php?uid='
-        . $xoops->user->getVar('uid'),
+        \XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'n').'/userinfo.php?uid='
+        .$xoops->user->getVar('uid'),
         2,
         $msg
     );
 }
 
-include __DIR__ . '/footer.php';
+include __DIR__.'/footer.php';

@@ -13,52 +13,51 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Private Messages preloads
+ * Private Messages preloads.
  *
- * @package   Pm
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.4.0
  */
 class PmPreload extends PreloadItem
 {
     /**
-     * core.pmlite.start
+     * core.pmlite.start.
      *
      * @param array $args
      */
     public static function eventCorePmliteStart($args)
     {
-        header('location: ./modules/pm/pmlite.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/pmlite.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
     }
 
     /**
-     * core.readpmsg.start
+     * core.readpmsg.start.
      *
      * @param array $args
      */
     public static function eventCoreReadpmsgStart($args)
     {
-        header('location: ./modules/pm/readpmsg.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/readpmsg.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
     }
 
     /**
-     * core.viewpmsg.start
+     * core.viewpmsg.start.
      *
      * @param array $args
      */
     public static function eventCoreViewpmsgStart($args)
     {
-        header('location: ./modules/pm/viewpmsg.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
+        header('location: ./modules/pm/viewpmsg.php'.(empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING']));
         exit();
     }
 
     /**
-     * core.Class.smarty.xoops_plugins.xoinboxcount
+     * core.Class.smarty.xoops_plugins.xoinboxcount.
      *
      * @param array $args
      */
@@ -68,7 +67,7 @@ class PmPreload extends PreloadItem
     }
 
     /**
-     * system.blocks.system_blocks.usershow
+     * system.blocks.system_blocks.usershow.
      *
      * @param array $args
      */
@@ -78,13 +77,13 @@ class PmPreload extends PreloadItem
     }
 
     /**
-     * listen for core.service.locate.usermessage event
+     * listen for core.service.locate.usermessage event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateUserMessage(Provider $provider)
     {
-        $path = dirname(__DIR__) . '/class/PMProvider.php';
+        $path = dirname(__DIR__).'/class/PMProvider.php';
         require $path;
         $object = new PMProvider();
         $provider->register($object);

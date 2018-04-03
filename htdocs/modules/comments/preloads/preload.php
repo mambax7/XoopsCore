@@ -15,7 +15,7 @@ use Xoops\Module\Plugin;
 use Xoops\Module\Plugin\ConfigCollector;
 
 /**
- * Comments core preloads
+ * Comments core preloads.
  *
  * @copyright XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -25,7 +25,7 @@ class CommentsPreload extends PreloadItem
 {
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -33,8 +33,8 @@ class CommentsPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'comments' => $path . '/class/helper.php',
-            'commentscommentrenderer' => $path . '/class/commentrenderer.php',
+            'comments' => $path.'/class/helper.php',
+            'commentscommentrenderer' => $path.'/class/commentrenderer.php',
         ]);
     }
 
@@ -66,7 +66,7 @@ class CommentsPreload extends PreloadItem
     }
 
     /**
-     * remove any comeents for module being uninstalled
+     * remove any comeents for module being uninstalled.
      *
      * @param XoopsModule $module module object
      */

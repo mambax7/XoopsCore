@@ -18,12 +18,13 @@ function smarty_outputfilter_shortcodes($output, Smarty_Internal_Template $templ
     $text = preg_replace_callback(
         $scPattern,
         function ($innerMatches) {
-            return '[nosc42]' . base64_encode($innerMatches[1]) . '[/nosc42]';
+            return '[nosc42]'.base64_encode($innerMatches[1]).'[/nosc42]';
         },
         $output
     );
-    if ($text === null) {
-        trigger_error('preg_last_error=' . preg_last_error(), E_USER_WARNING);
+    if (null === $text) {
+        trigger_error('preg_last_error='.preg_last_error(), E_USER_WARNING);
+
         return $output;
     }
 

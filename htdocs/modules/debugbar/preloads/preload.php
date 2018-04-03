@@ -13,16 +13,15 @@ use Psr\Log\LogLevel;
 use Xoops\Core\PreloadItem;
 
 /**
- * Debugbar module preloads
+ * Debugbar module preloads.
  *
  * @category  DebugbarLogger
- * @package   DebugbarLogger
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 class DebugbarPreload extends PreloadItem
@@ -30,7 +29,7 @@ class DebugbarPreload extends PreloadItem
     private static $registry = [];
 
     /**
-     * eventCoreException
+     * eventCoreException.
      *
      * @param Exception $e an exception
      */
@@ -40,7 +39,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -48,12 +47,12 @@ class DebugbarPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'debugbarlogger' => $path . '/class/debugbarlogger.php',
+            'debugbarlogger' => $path.'/class/debugbarlogger.php',
         ]);
     }
 
     /**
-     * eventCoreIncludeCommonStart
+     * eventCoreIncludeCommonStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -70,7 +69,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * core.database.noconn
+     * core.database.noconn.
      *
      * @param array $args arguments
      */
@@ -84,7 +83,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDatabaseNodb
+     * eventCoreDatabaseNodb.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -98,7 +97,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonAuthSuccess
+     * eventCoreIncludeCommonAuthSuccess.
      */
     public static function eventCoreIncludeCommonAuthSuccess()
     {
@@ -115,7 +114,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonEnd
+     * eventCoreIncludeCommonEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -127,7 +126,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreTemplateConstructStart
+     * eventCoreTemplateConstructStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -144,7 +143,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderStart
+     * eventCoreThemeRenderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -154,7 +153,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderEnd
+     * eventCoreThemeRenderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -165,7 +164,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeCheckcacheSuccess
+     * eventCoreThemeCheckcacheSuccess.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -180,7 +179,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeblocksBuildblockStart
+     * eventCoreThemeblocksBuildblockStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -195,7 +194,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDeprecated
+     * eventCoreDeprecated.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -206,7 +205,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDisableerrorreporting
+     * eventCoreDisableerrorreporting.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -216,7 +215,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderStart
+     * eventCoreHeaderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -228,7 +227,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderEnd
+     * eventCoreHeaderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -240,7 +239,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterStart
+     * eventCoreFooterStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -251,7 +250,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterEnd
+     * eventCoreFooterEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -262,7 +261,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreRedirectStart
+     * eventCoreRedirectStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -272,7 +271,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreSecurityValidatetokenEnd
+     * eventCoreSecurityValidatetokenEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -287,7 +286,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreModuleAddlog
+     * eventCoreModuleAddlog.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -298,7 +297,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventDebugLog - dump to DebugLog
+     * eventDebugLog - dump to DebugLog.
      *
      * @param mixed $args argument supplied to triggerEvent
      */
@@ -308,7 +307,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventDebugTimerStart - start a timer
+     * eventDebugTimerStart - start a timer.
      *
      * @param array $args array of name and label for timer
      */
@@ -319,7 +318,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventDebugTimerStop - start a timer
+     * eventDebugTimerStop - start a timer.
      *
      * @param string $args name of timer
      */
@@ -329,7 +328,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * eventCoreSessionShutdown
+     * eventCoreSessionShutdown.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -339,7 +338,7 @@ class DebugbarPreload extends PreloadItem
     }
 
     /**
-     * getConfigs
+     * getConfigs.
      *
      * @return array of config options
      */
@@ -347,7 +346,7 @@ class DebugbarPreload extends PreloadItem
     {
         static $configs = null;
 
-        if ($configs === null) {
+        if (null === $configs) {
             $xoops = Xoops::getInstance();
             $user_groups = $xoops->getUserGroups();
             $moduleperm_handler = $xoops->getHandlerGroupPermission();

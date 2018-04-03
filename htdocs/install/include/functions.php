@@ -12,7 +12,6 @@
 /**
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -21,14 +20,13 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
 function installHtmlSpecialCharacters($value)
 {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 /**
- * @param string $hash
+ * @param  string $hash
  * @return bool
  */
 function install_acceptUser($hash = '')
@@ -44,29 +42,29 @@ function install_acceptUser($hash = '')
     /* @var $user XoopsUser */
     $users = $member_handler->getUsers(new Criteria('uname', $uname));
     $user = array_pop($users);
-    if ($hash_login !== md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
+    if ($hash_login !== md5($user->getVar('pass').XOOPS_DB_NAME.XOOPS_DB_PASS.XOOPS_DB_PREFIX)) {
         return false;
     }
     $xoops->user = $user;
     $xoops->userIsAdmin = true;
     $_SESSION['xoopsUserId'] = $xoops->user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $xoops->user->getGroups();
+
     return true;
 }
-
 
 function install_finalize($installer_modified)
 {
     // Set mainfile.php readonly
-    @chmod(XOOPS_ROOT_PATH . '/mainfile.php', 0444);
+    @chmod(XOOPS_ROOT_PATH.'/mainfile.php', 0444);
     // Set Secure file readonly
-    @chmod(XOOPS_VAR_PATH . '/data/secure.php', 0444);
+    @chmod(XOOPS_VAR_PATH.'/data/secure.php', 0444);
     // Rename installer folder
-    @rename(XOOPS_ROOT_PATH . '/install', XOOPS_ROOT_PATH . '/' . $installer_modified);
+    @rename(XOOPS_ROOT_PATH.'/install', XOOPS_ROOT_PATH.'/'.$installer_modified);
 }
 
 /**
- * xoFormField - display an input field
+ * xoFormField - display an input field.
  *
  * @param string $name  field name
  * @param string $value value
@@ -80,9 +78,9 @@ function xoFormField($name, $value, $label, $help = '')
     $value = installHtmlSpecialCharacters($value);
     echo "<label class='xolabel' for='${name}'>${label}</label>\n";
     if ($help) {
-        echo '<div class="xoform-help">' . $help . "</div>\n";
+        echo '<div class="xoform-help">'.$help."</div>\n";
     }
-    if ($name === 'adminname') {
+    if ('adminname' === $name) {
         echo "<input type='text' name='${name}' id='${name}' value='${value}' maxlength='25' />";
     } else {
         echo "<input type='text' name='${name}' id='${name}' value='${value}' />";
@@ -90,7 +88,7 @@ function xoFormField($name, $value, $label, $help = '')
 }
 
 /**
- * xoPassField - display a password field
+ * xoPassField - display a password field.
  *
  * @param string $name  field name
  * @param string $value value
@@ -104,10 +102,10 @@ function xoPassField($name, $value, $label, $help = '')
     $value = installHtmlSpecialCharacters($value);
     echo "<label class='xolabel' for='{$name}'>{$label}</label>\n";
     if ($help) {
-        echo '<div class="xoform-help">' . $help . "</div>\n";
+        echo '<div class="xoform-help">'.$help."</div>\n";
     }
 
-    if ($name === 'adminpass') {
+    if ('adminpass' === $name) {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' onkeyup='passwordStrength(this.value)' />";
     } else {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' />";
@@ -115,7 +113,7 @@ function xoPassField($name, $value, $label, $help = '')
 }
 
 /**
- * xoBoolField - display a boolean checkbox field
+ * xoBoolField - display a boolean checkbox field.
  *
  * @param string $name  field name
  * @param string $value value
@@ -129,11 +127,11 @@ function xoBoolField($name, $value, $label, $help = '')
     $value = installHtmlSpecialCharacters($value);
     echo "<label class='xolabel' for='${name}'>${label}</label>\n";
     if ($help) {
-        echo '<div class="xoform-help">' . $help . "</div>\n";
+        echo '<div class="xoform-help">'.$help."</div>\n";
     }
     $checked = $value ? 'checked' : '';
     echo "<input type=\"checkbox\" name=\"{$name}\" value=\"1\" {$checked} />"
-        . ENABLE . '<br />';
+        .ENABLE.'<br />';
 }
 
 /*
@@ -147,7 +145,7 @@ function getDirList($dirname)
     $dirlist = [];
     if ($handle = opendir($dirname)) {
         while ($file = readdir($handle)) {
-            if ($file{0} !== '.' && is_dir($dirname . $file)) {
+            if ('.' !== $file[0] && is_dir($dirname.$file)) {
                 $dirlist[] = $file;
             }
         }
@@ -155,11 +153,12 @@ function getDirList($dirname)
         asort($dirlist);
         reset($dirlist);
     }
+
     return $dirlist;
 }
 
 /**
- * @param string $str
+ * @param  string $str
  * @return string
  */
 function xoDiag($status = -1, $str = '')
@@ -172,32 +171,34 @@ function xoDiag($status = -1, $str = '')
     if (empty($str)) {
         $str = $strings[$status];
     }
-    return '<span class="' . $classes[$status] . '">' . $str . '</span>';
+
+    return '<span class="'.$classes[$status].'">'.$str.'</span>';
 }
 
 /**
- * @param string $name
- * @param bool $wanted
- * @param bool $severe
+ * @param  string $name
+ * @param  bool   $wanted
+ * @param  bool   $severe
  * @return string
  */
 function xoDiagBoolSetting($name, $wanted = false, $severe = false)
 {
     $setting = strtolower(ini_get($name));
-    $setting = (empty($setting) || $setting === 'off' || $setting === 'false') ? false : true;
+    $setting = (empty($setting) || 'off' === $setting || 'false' === $setting) ? false : true;
     if ($setting === $wanted) {
         return xoDiag(1, $setting ? 'ON' : 'OFF');
     }
+
     return xoDiag($severe ? -1 : 0, $setting ? 'ON' : 'OFF');
 }
 
 /**
- * @param string $path
+ * @param  string $path
  * @return string
  */
 function xoDiagIfWritable($path)
 {
-    $path = '../' . $path;
+    $path = '../'.$path;
     $error = true;
     if (!is_dir($path)) {
         if (file_exists($path)) {
@@ -208,6 +209,7 @@ function xoDiagIfWritable($path)
         @chmod($path, 0777);
         $error = !is_writeable($path);
     }
+
     return xoDiag($error ? -1 : 1, $error ? 'Not writable' : 'Writable');
 }
 
@@ -219,12 +221,13 @@ function xoPhpVersion()
     if (version_compare(PHP_VERSION, '7.1.0', '>=')) {
         return xoDiag(1, PHP_VERSION);
     }
+
     return xoDiag(-1, PHP_VERSION);
 }
 
 /**
- * @param string $path
- * @param bool $valid
+ * @param  string $path
+ * @param  bool   $valid
  * @return string
  */
 function genPathCheckHtml($path, $valid)
@@ -233,33 +236,39 @@ function genPathCheckHtml($path, $valid)
         switch ($path) {
             case 'root':
                 $msg = sprintf(XOOPS_FOUND, XOOPS_VERSION);
+
                 break;
 
             case 'lib':
             case 'data':
             default:
                 $msg = XOOPS_PATH_FOUND;
+
                 break;
         }
-        return '<span class="pathmessage"><img src="img/yes.png" alt="Success" />' . $msg . '</span>';
+
+        return '<span class="pathmessage"><img src="img/yes.png" alt="Success" />'.$msg.'</span>';
     }
     switch ($path) {
             case 'root':
                 $msg = ERR_NO_XOOPS_FOUND;
+
                 break;
 
             case 'lib':
             case 'data':
             default:
                 $msg = ERR_COULD_NOT_ACCESS;
+
                 break;
         }
-    return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> ' . $msg . '</span>';
+
+    return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> '.$msg.'</span>';
 }
 
 /**
  * getDbConnectionParams - build array of connection parameters from collected
- * DB_* session variables
+ * DB_* session variables.
  *
  * @return array of Doctrine Connection parameters
  */
@@ -278,7 +287,7 @@ function getDbConnectionParams()
     ];
 
     // force mysql to use utf8mb4
-    if (strstr($settings['DB_DRIVER'], 'mysql') !== false) {
+    if (false !== strstr($settings['DB_DRIVER'], 'mysql')) {
         $connectionParams['charset'] = 'utf8mb4';
         $connectionParams['collate'] = 'utf8mb4_unicode_ci';
     }
@@ -293,7 +302,7 @@ function getDbConnectionParams()
 }
 
 /**
- * getDbConnection - get database connection based on current setting
+ * getDbConnection - get database connection based on current setting.
  *
  * @param string &$error will be set with any error encountered
  *
@@ -309,16 +318,20 @@ function getDbConnection(&$error)
         $instance = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     } catch (Exception $e) {
         $error = $e->getMessage();
+
         return false;
     }
     if (!$instance) {
         $error = ERR_NO_DBCONNECTION;
+
         return false;
     }
+
     try {
         $instance->connect();
     } catch (Exception $e) {
         $error = $e->getMessage();
+
         return false;
     }
 

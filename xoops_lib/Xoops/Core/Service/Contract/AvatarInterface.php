@@ -14,15 +14,14 @@ namespace Xoops\Core\Service\Contract;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * Avatar service interface
+ * Avatar service interface.
  *
  * @category  Xoops\Core\Service\Contract\AvatarInterface
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 interface AvatarInterface
@@ -30,7 +29,7 @@ interface AvatarInterface
     public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
-     * getAvatarUrl - given user info return absolute URL to avatar image
+     * getAvatarUrl - given user info return absolute URL to avatar image.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param mixed    $userinfo XoopsUser object for user or
@@ -40,7 +39,7 @@ interface AvatarInterface
     public function getAvatarUrl($response, $userinfo);
 
     /**
-     * getAvatarEditUrl - given user info return absolute URL to edit avatar data
+     * getAvatarEditUrl - given user info return absolute URL to edit avatar data.
      *
      * @param Response  $response \Xoops\Core\Service\Response object
      * @param XoopsUser $userinfo XoopsUser object for user

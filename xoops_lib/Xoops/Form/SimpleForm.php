@@ -12,14 +12,13 @@
 namespace Xoops\Form;
 
 /**
- * SimpleForm - Form that outputs as simple HTML, with minimum formatting
+ * SimpleForm - Form that outputs as simple HTML, with minimum formatting.
  *
  * @category  Xoops\Form\SimpleForm
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SimpleForm extends Form
 {
@@ -31,35 +30,36 @@ class SimpleForm extends Form
      */
     public function insertBreak($extra = '', $class = '')
     {
-        $class = empty($class) ? '' : ' class="' . $class . '"';
-        $value = '<br' . $class . ' />' . $extra;
+        $class = empty($class) ? '' : ' class="'.$class.'"';
+        $value = '<br'.$class.' />'.$extra;
         $ele = new Raw($value);
         $this->addElement($ele);
     }
 
     /**
-     * create HTML to output the form with minimal formatting
+     * create HTML to output the form with minimal formatting.
      *
      * @return string
      */
     public function render()
     {
-        $ret = $this->getTitle() . "\n<form name=\"" . $this->getName() . '" id="'
-            . $this->getName() . '" action="' . $this->getAction() . '" method="'
-            . $this->getMethod() . '"' . $this->getExtra() . ">\n";
+        $ret = $this->getTitle()."\n<form name=\"".$this->getName().'" id="'
+            .$this->getName().'" action="'.$this->getAction().'" method="'
+            .$this->getMethod().'"'.$this->getExtra().">\n";
         foreach ($this->getElements() as $ele) {
             /* @var $ele Element */
             if (!$ele->isHidden()) {
                 if (!$ele instanceof Raw) {
-                    $ret .= '<strong>' . $ele->getCaption() . '</strong><br />' . $ele->render() . "<br />\n";
+                    $ret .= '<strong>'.$ele->getCaption().'</strong><br />'.$ele->render()."<br />\n";
                 } else {
                     $ret .= $ele->render();
                 }
             } else {
-                $ret .= $ele->render() . "\n";
+                $ret .= $ele->render()."\n";
             }
         }
         $ret .= "</form>\n";
+
         return $ret;
     }
 }

@@ -14,15 +14,12 @@ use Xmf\Request;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 
 $publisher = Publisher::getInstance();
@@ -32,7 +29,7 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 //Checking general permissions
 $xoopsConfigSearch = $xoops->getConfigs();
 if (empty($xoopsConfigSearch['enable_search'])) {
-    $xoops->redirect(PUBLISHER_URL . '/index.php', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
+    $xoops->redirect(PUBLISHER_URL.'/index.php', 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
 $groups = $xoops->getUserGroups();
@@ -81,7 +78,7 @@ if (!(empty($_POST['submit']) && empty($term))) {
     $next_search['term'] = $term;
     $query = trim($term);
 
-    if ($andor !== 'EXACT') {
+    if ('EXACT' !== $andor) {
         $ignored_queries = []; // holds kewords that are shorter than allowed minmum length
         $temp_queries = preg_split("/[\s,]+/", $query);
         foreach ($temp_queries as $q) {
@@ -92,9 +89,9 @@ if (!(empty($_POST['submit']) && empty($term))) {
                 $ignored_queries[] = $q;
             }
         }
-        if (count($queries) === 0) {
+        if (0 === count($queries)) {
             $xoops->redirect(
-                PUBLISHER_URL . '/search.php',
+                PUBLISHER_URL.'/search.php',
                 2,
                 sprintf(XoopsLocale::EF_KEYWORDS_MUST_BE_GREATER_THAN, $xoopsConfigSearch['keyword_min'])
             );
@@ -103,7 +100,7 @@ if (!(empty($_POST['submit']) && empty($term))) {
     } else {
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             $xoops->redirect(
-                PUBLISHER_URL . '/search.php',
+                PUBLISHER_URL.'/search.php',
                 2,
                 sprintf(XoopsLocale::EF_KEYWORDS_MUST_BE_GREATER_THAN, $xoopsConfigSearch['keyword_min'])
             );
@@ -119,14 +116,14 @@ if (!(empty($_POST['submit']) && empty($term))) {
         $uname_required = true;
         $search_username = $search_username;
         if (!$result = $xoopsDB->query(
-            'SELECT uid FROM ' . $xoopsDB->prefix('users') .
-            ' WHERE uname LIKE ' . $xoopsDB->quoteString("%${search_username}%")
+            'SELECT uid FROM '.$xoopsDB->prefix('users').
+            ' WHERE uname LIKE '.$xoopsDB->quoteString("%${search_username}%")
         )) {
-            $xoops->redirect(PUBLISHER_URL . '/search.php', 1, _CO_PUBLISHER_ERROR);
+            $xoops->redirect(PUBLISHER_URL.'/search.php', 1, _CO_PUBLISHER_ERROR);
             exit();
         }
         $uid = [];
-        while (($row = $xoopsDB->fetchArray($result)) !== false) {
+        while (false !== ($row = $xoopsDB->fetchArray($result))) {
             $uid[] = $row['uid'];
         }
     } else {
@@ -168,29 +165,29 @@ if (!(empty($_POST['submit']) && empty($term))) {
         unset($next_search);
         unset($items);
     }
-    $search_url = $publisher->url('search.php?' . $paras);
+    $search_url = $publisher->url('search.php?'.$paras);
 
     if (count($results)) {
         $next = $start + $limit;
         $queries = implode(',', $queries);
-        $search_url_next = $search_url . "&start={$next}";
-        $search_next = '<a href="' . htmlspecialchars($search_url_next) . '">' . XoopsLocale::NEXT . '</a>';
+        $search_url_next = $search_url."&start={$next}";
+        $search_next = '<a href="'.htmlspecialchars($search_url_next).'">'.XoopsLocale::NEXT.'</a>';
         $xoopsTpl->assign('search_next', $search_next);
     }
     if ($start > 0) {
         $prev = $start - $limit;
-        $search_url_prev = $search_url . "&start={$prev}";
-        $search_prev = '<a href="' . htmlspecialchars($search_url_prev) . '">' . XoopsLocale::PREVIOUS . '</a>';
+        $search_url_prev = $search_url."&start={$prev}";
+        $search_prev = '<a href="'.htmlspecialchars($search_url_prev).'">'.XoopsLocale::PREVIOUS.'</a>';
         $xoopsTpl->assign('search_prev', $search_prev);
     }
 
     unset($results);
-    $search_info = XoopsLocale::KEYWORDS . ': ' . $myts->htmlSpecialChars($term);
+    $search_info = XoopsLocale::KEYWORDS.': '.$myts->htmlSpecialChars($term);
     if ($uname_required) {
         if ($search_info) {
             $search_info .= '<br />';
         }
-        $search_info .= _CO_PUBLISHER_UID . ': ' . $myts->htmlSpecialChars($search_username);
+        $search_info .= _CO_PUBLISHER_UID.': '.$myts->htmlSpecialChars($search_username);
     }
     $xoopsTpl->assign('search_info', $search_info);
 }
@@ -198,20 +195,20 @@ if (!(empty($_POST['submit']) && empty($term))) {
 /* type */
 $type_select = '<select name="andor">';
 $type_select .= '<option value="OR"';
-if ($andor === 'OR') {
+if ('OR' === $andor) {
     $type_select .= ' selected="selected"';
 }
-$type_select .= '>' . XoopsLocale::ANY_OR . '</option>';
+$type_select .= '>'.XoopsLocale::ANY_OR.'</option>';
 $type_select .= '<option value="AND"';
-if ($andor === 'AND') {
+if ('AND' === $andor) {
     $type_select .= ' selected="selected"';
 }
-$type_select .= '>' . XoopsLocale::ALL . '</option>';
+$type_select .= '>'.XoopsLocale::ALL.'</option>';
 $type_select .= '<option value="EXACT"';
-if ($andor === 'EXACT') {
+if ('EXACT' === $andor) {
     $type_select .= ' selected="selected"';
 }
-$type_select .= '>' . XoopsLocale::EXACT_MATCH . '</option>';
+$type_select .= '>'.XoopsLocale::EXACT_MATCH.'</option>';
 $type_select .= '</select>';
 
 /* category */
@@ -219,16 +216,16 @@ $categories = $publisher->getCategoryHandler()->getCategoriesForSearch();
 
 $select_category = '<select name="category[]" size="5" multiple="multiple">';
 $select_category .= '<option value="all"';
-if (empty($category) || count($category) === 0) {
+if (empty($category) || 0 === count($category)) {
     $select_category .= 'selected="selected"';
 }
-$select_category .= '>' . XoopsLocale::ALL . '</option>';
+$select_category .= '>'.XoopsLocale::ALL.'</option>';
 foreach ($categories as $id => $cat) {
-    $select_category .= '<option value="' . $id . '"';
+    $select_category .= '<option value="'.$id.'"';
     if (in_array($id, $category, true)) {
         $select_category .= 'selected="selected"';
     }
-    $select_category .= '>' . $cat . '</option>';
+    $select_category .= '>'.$cat.'</option>';
 }
 $select_category .= '</select>';
 
@@ -238,55 +235,55 @@ $searchin_select .= '<input type="checkbox" name="searchin[]" value="title"';
 if (in_array('title', $searchin, true)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _CO_PUBLISHER_TITLE . '&nbsp;&nbsp;';
+$searchin_select .= ' />'._CO_PUBLISHER_TITLE.'&nbsp;&nbsp;';
 $searchin_select .= '<input type="checkbox" name="searchin[]" value="subtitle"';
 if (in_array('subtitle', $searchin, true)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _CO_PUBLISHER_SUBTITLE . '&nbsp;&nbsp;';
+$searchin_select .= ' />'._CO_PUBLISHER_SUBTITLE.'&nbsp;&nbsp;';
 $searchin_select .= '<input type="checkbox" name="searchin[]" value="summary"';
 if (in_array('summary', $searchin, true)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _CO_PUBLISHER_SUMMARY . '&nbsp;&nbsp;';
+$searchin_select .= ' />'._CO_PUBLISHER_SUMMARY.'&nbsp;&nbsp;';
 $searchin_select .= '<input type="checkbox" name="searchin[]" value="text"';
 if (in_array('body', $searchin, true)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _CO_PUBLISHER_BODY . '&nbsp;&nbsp;';
+$searchin_select .= ' />'._CO_PUBLISHER_BODY.'&nbsp;&nbsp;';
 $searchin_select .= '<input type="checkbox" name="searchin[]" value="keywords"';
 if (in_array('meta_keywords', $searchin, true)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _CO_PUBLISHER_ITEM_META_KEYWORDS . '&nbsp;&nbsp;';
+$searchin_select .= ' />'._CO_PUBLISHER_ITEM_META_KEYWORDS.'&nbsp;&nbsp;';
 $searchin_select .= '<input type="checkbox" name="searchin[]" value="all"';
 if (in_array('all', $searchin, true) || empty($searchin)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . XoopsLocale::ALL . '&nbsp;&nbsp;';
+$searchin_select .= ' />'.XoopsLocale::ALL.'&nbsp;&nbsp;';
 
 /* sortby */
 $sortby_select = '<select name="sortby">';
 $sortby_select .= '<option value="itemid"';
-if ($sortby === 'itemid' || empty($sortby)) {
+if ('itemid' === $sortby || empty($sortby)) {
     $sortby_select .= ' selected="selected"';
 }
-$sortby_select .= '>' . XoopsLocale::NONE . '</option>';
+$sortby_select .= '>'.XoopsLocale::NONE.'</option>';
 $sortby_select .= '<option value="datesub"';
-if ($sortby === 'datesub') {
+if ('datesub' === $sortby) {
     $sortby_select .= ' selected="selected"';
 }
-$sortby_select .= '>' . _CO_PUBLISHER_DATESUB . '</option>';
+$sortby_select .= '>'._CO_PUBLISHER_DATESUB.'</option>';
 $sortby_select .= '<option value="title"';
-if ($sortby === 'title') {
+if ('title' === $sortby) {
     $sortby_select .= ' selected="selected"';
 }
-$sortby_select .= '>' . _CO_PUBLISHER_TITLE . '</option>';
+$sortby_select .= '>'._CO_PUBLISHER_TITLE.'</option>';
 $sortby_select .= '<option value="categoryid"';
-if ($sortby === 'categoryid') {
+if ('categoryid' === $sortby) {
     $sortby_select .= ' selected="selected"';
 }
-$sortby_select .= '>' . _CO_PUBLISHER_CATEGORY . '</option>';
+$sortby_select .= '>'._CO_PUBLISHER_CATEGORY.'</option>';
 $sortby_select .= '</select>';
 
 $xoopsTpl->assign('type_select', $type_select);

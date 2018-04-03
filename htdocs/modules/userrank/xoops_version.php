@@ -10,11 +10,10 @@
 */
 
 /**
- * User Rank module
+ * User Rank module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userrank
  * @since           2.6.0
  * @author          Cointin Maxime (AKA Kraven30)
  * @version         $Id$
@@ -50,7 +49,7 @@ $modversion['onInstall'] = 'include/install.php';
 // paypal
 $modversion['paypal'] = [];
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_USERRANK_DESC;
+$modversion['paypal']['item_name'] = 'Donation : '._MI_USERRANK_DESC;
 $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 

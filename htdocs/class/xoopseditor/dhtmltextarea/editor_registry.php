@@ -10,20 +10,18 @@
 */
 
 /**
- * XOOPS editor
+ * XOOPS editor.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since           2.3.0
- * @package         class
- * @subpackage      xoopseditor
  * @version         $Id$
  */
 
 return $config = [
     'class' => 'FormDhtmlTextArea',
-    'file' => \XoopsBaseConfig::get('root-path') . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
+    'file' => \XoopsBaseConfig::get('root-path').'/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
     'title' => _XOOPS_EDITOR_DHTMLTEXTAREA,
     'order' => 2,
     'nohtml' => 1,

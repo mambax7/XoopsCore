@@ -12,35 +12,35 @@
 namespace Xoops\Core;
 
 /**
- * XoopsArray - \ArrayObject with standard access to attributes
+ * XoopsArray - \ArrayObject with standard access to attributes.
  *
  * @category  Xoops\Core
- * @package   XoopsArray
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsArray extends \ArrayObject implements AttributeInterface
 {
     /**
-     * Retrieve an attribute
+     * Retrieve an attribute.
      *
      * @param string $name    Name of the attribute
      * @param mixed  $default A default value returned if the requested attribute is not set.
      *
-     * @return  mixed  The value of the attribute, or null if not set.
+     * @return mixed The value of the attribute, or null if not set.
      */
     public function get($name, $default = null)
     {
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
         }
+
         return $default;
     }
 
     /**
-     * Set an item attribute
+     * Set an item attribute.
      *
      * @param string $name  Name of the attribute
      * @param mixed  $value Value for the attribute
@@ -50,15 +50,16 @@ class XoopsArray extends \ArrayObject implements AttributeInterface
     public function set($name, $value)
     {
         $this->offsetSet($name, $value);
+
         return $this;
     }
 
     /**
-     * has - test if an attribute with a given name is set
+     * has - test if an attribute with a given name is set.
      *
      * @param string $name Name of the attribute
      *
-     * @return boolean true if named attribute is set
+     * @return bool true if named attribute is set
      */
     public function has($name)
     {

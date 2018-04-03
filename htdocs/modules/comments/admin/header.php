@@ -12,14 +12,11 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Comments
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include dirname(dirname(dirname(__DIR__))).'/mainfile.php';
+require_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
 
 $xoops = Xoops::getInstance();
 XoopsLoad::load('system', 'system');

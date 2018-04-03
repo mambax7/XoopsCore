@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Location: xml/SaxParser.class
+ * Location: xml/SaxParser.class.
  *
  * Provides basic functionality to read and parse XML documents.  Subclasses
  * must implement all the their custom handlers by using add* function methods.
@@ -12,7 +12,6 @@
  *
  * @author Ken Egervari
  */
-
 class saxparser
 {
     public $level;
@@ -70,7 +69,7 @@ class saxparser
     }
 
     /**
-     * @param boolean $isCaseFolding
+     * @param bool $isCaseFolding
      */
     public function setCaseFolding($isCaseFolding)
     {
@@ -99,7 +98,7 @@ class saxparser
     }
 
     /**
-     * Returns the name of the xml tag being parsed
+     * Returns the name of the xml tag being parsed.
      * @return string
      */
     public function getCurrentTag()
@@ -112,6 +111,7 @@ class saxparser
         if (isset($this->tags[count($this->tags) - 2])) {
             return $this->tags[count($this->tags) - 2];
         }
+
         return false;
     }
 
@@ -127,6 +127,7 @@ class saxparser
         if (!is_resource($this->input)) {
             if (!xml_parse($this->parser, $this->input)) {
                 $this->setErrors($this->getXmlError());
+
                 return false;
             }
             //if (!$fp = fopen($this->input, 'r')) {
@@ -138,11 +139,13 @@ class saxparser
                 if (!xml_parse($this->parser, str_replace("'", '&apos;', $data), feof($this->input))) {
                     $this->setErrors($this->getXmlError());
                     fclose($this->input);
+
                     return false;
                 }
             }
             fclose($this->input);
         }
+
         return true;
     }
 
@@ -165,7 +168,7 @@ class saxparser
     ---------------------------------------------------------------------------*/
 
     /**
-     * Adds a callback function to be called when a tag is encountered.<br>
+     * Adds a callback function to be called when a tag is encountered.<br>.
      */
     public function addTagHandler(XmlTagHandler $tagHandler)
     {
@@ -229,7 +232,7 @@ class saxparser
     public function handleCharacterData($parser, $data)
     {
         $tagHandler = isset($this->tagHandlers[$this->getCurrentTag()]) ? $this->tagHandlers[$this->getCurrentTag()] : null;
-        if ($tagHandler !== null && is_subclass_of($tagHandler, 'xmltaghandler')) {
+        if (null !== $tagHandler && is_subclass_of($tagHandler, 'xmltaghandler')) {
             $tagHandler->handleCharacterData($this, $data);
         } else {
             $this->handleCharacterDataDefault($parser, $data);
@@ -263,21 +266,21 @@ class saxparser
     }
 
     /**
-     * The default tag handler method for a tag with no handler
+     * The default tag handler method for a tag with no handler.
      */
     public function handleBeginElementDefault($parser, $tagName, $attributesArray)
     {
     }
 
     /**
-     * The default tag handler method for a tag with no handler
+     * The default tag handler method for a tag with no handler.
      */
     public function handleEndElementDefault($parser, $tagName)
     {
     }
 
     /**
-     * The default tag handler method for a tag with no handler
+     * The default tag handler method for a tag with no handler.
      *
      *
      * @abstract
@@ -287,9 +290,9 @@ class saxparser
     }
 
     /**
-     * Sets error messages
+     * Sets error messages.
      *
-     * @param    string $error    string    an error message
+     * @param string $error string    an error message
      */
     public function setErrors($error)
     {
@@ -297,9 +300,9 @@ class saxparser
     }
 
     /**
-     * Gets all the error messages
+     * Gets all the error messages.
      *
-     * @param bool $ashtml return as html?
+     * @param  bool  $ashtml return as html?
      * @return mixed
      */
     public function getErrors($ashtml = true)
@@ -310,9 +313,10 @@ class saxparser
         $ret = '';
         if (count($this->errors) > 0) {
             foreach ($this->errors as $error) {
-                $ret .= $error . '<br />';
+                $ret .= $error.'<br />';
             }
         }
+
         return $ret;
     }
 }

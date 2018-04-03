@@ -10,7 +10,7 @@
 */
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -55,7 +55,7 @@ class ImagesImage_imagemanagerForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('target', $target));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
         $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
@@ -74,6 +74,7 @@ class ImagesImage_imagemanagerForm extends Xoops\Form\ThemeForm
                 $buttonClose->setExtra('onclick="tinyMCEPopup.close();"');
                 $buttonClose->setClass('btn btn-danger');
                 $buttonTray->addElement($buttonClose);
+
                 break;
 
             case 'images':
@@ -82,6 +83,7 @@ class ImagesImage_imagemanagerForm extends Xoops\Form\ThemeForm
                 $buttonCancel->setExtra("onclick='javascript:history.go(-1);'");
                 $buttonCancel->setClass('btn btn-danger');
                 $buttonTray->addElement($buttonCancel);
+
                 break;
         }
 

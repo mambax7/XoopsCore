@@ -14,11 +14,9 @@ use Xoops\Core\XoopsTpl;
 /**
  * @copyright       2012-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL V2 or later http://www.gnu.org/licenses/gpl-2.0.html
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 function menus_block_show($options)
 {
     $block = [];
@@ -51,7 +49,7 @@ function menus_block_show($options)
     }
 
     $count = count($menus);
-    if ($count === 0) {
+    if (0 === $count) {
         return $block;
     }
 
@@ -86,21 +84,21 @@ function menus_block_show($options)
         $js = array_merge($js, $skin_info['js']);
     }
 
-    if ($helper->getConfig('assign_method') === 'xoopstpl') {
+    if ('xoopstpl' === $helper->getConfig('assign_method')) {
         $tpl_vars = '';
         foreach ($css as $file) {
-            $tpl_vars .= "\n" . '<link rel="stylesheet" type="text/css" media="all" href="' . $file . '" />';
+            $tpl_vars .= "\n".'<link rel="stylesheet" type="text/css" media="all" href="'.$file.'" />';
         }
 
         foreach ($js as $file) {
-            $tpl_vars .= "\n" . '<script type="text/javascript" src="' . $file . '"></script>';
+            $tpl_vars .= "\n".'<script type="text/javascript" src="'.$file.'"></script>';
         }
 
         if (isset($skin_info['header'])) {
-            $tpl_vars .= "\n" . $skin_info['header'];
+            $tpl_vars .= "\n".$skin_info['header'];
         }
 
-        $xoops->tpl()->assign('xoops_module_header', $tpl_vars . @$xoops->tpl()->getTemplateVars('xoops_module_header'));
+        $xoops->tpl()->assign('xoops_module_header', $tpl_vars.@$xoops->tpl()->getTemplateVars('xoops_module_header'));
     } else {
         foreach ($css as $file) {
             $xoops->theme()->addStylesheet($file);
@@ -111,7 +109,7 @@ function menus_block_show($options)
         }
 
         if (isset($skin_info['header'])) {
-            $xoops->tpl()->assign('xoops_footer', @$xoops->tpl()->getTemplateVars('xoops_footer') . "\n" . $skin_info['header']);
+            $xoops->tpl()->assign('xoops_footer', @$xoops->tpl()->getTemplateVars('xoops_footer')."\n".$skin_info['header']);
         }
     }
 
@@ -123,8 +121,8 @@ function menus_block_show($options)
 
     $block['content'] = $blockTpl->fetch($skin_info['template']);
 
-    if ($options[3] === 'template') {
-        $xoops->tpl()->assign('xoops_menu_' . $options[4], $block['content']);
+    if ('template' === $options[3]) {
+        $xoops->tpl()->assign('xoops_menu_'.$options[4], $block['content']);
         $block = [];
     }
 
@@ -134,7 +132,7 @@ function menus_block_show($options)
 function menus_block_edit($options)
 {
     //Unique ID
-    if (!$options[4] || (isset($_GET['op']) && $_GET['op'] === 'clone')) {
+    if (!$options[4] || (isset($_GET['op']) && 'clone' === $_GET['op'])) {
         $options[4] = uniqid();
     }
 
@@ -147,8 +145,9 @@ function menus_block_edit($options)
     $menus = $helper->getHandlerMenus()->getList($criteria);
     unset($criteria);
 
-    if (count($menus) === 0) {
-        $form = "<a href='" . $helper->url('admin/admin_menus.php') . "'>" . _AM_MENUS_MSG_NOMENUS . '</a>';
+    if (0 === count($menus)) {
+        $form = "<a href='".$helper->url('admin/admin_menus.php')."'>"._AM_MENUS_MSG_NOMENUS.'</a>';
+
         return $form;
     }
 
@@ -160,10 +159,10 @@ function menus_block_edit($options)
     $form->addElement($element);
 
     //Skin
-    $temp_skins = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/modules/menus/skins/', '');
+    $temp_skins = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/modules/menus/skins/', '');
     $skins_options = [];
     foreach ($temp_skins as $skin) {
-        if (XoopsLoad::fileExists($helper->path('skins/' . $skin . '/skin_version.php'))) {
+        if (XoopsLoad::fileExists($helper->path('skins/'.$skin.'/skin_version.php'))) {
             $skins_options[$skin] = $skin;
         }
     }
@@ -226,7 +225,7 @@ function menus_mainmenu_show()
             $menu->setVar('pid', 0);
             $menu->setVar('title', $modules[$i]->getVar('name'));
             $menu->setVar('alt_title', $modules[$i]->getVar('name'));
-            $menu->setVar('link', \XoopsBaseConfig::get('url') . '/modules/' . $modules[$i]->getVar('dirname'));
+            $menu->setVar('link', \XoopsBaseConfig::get('url').'/modules/'.$modules[$i]->getVar('dirname'));
             $menu->setVar('image', 'icon-tags');
             $menus[] = $menu->getValues();
             if ($xoops->isModule() && $xoops->module->getVar('dirname') === $modules[$i]->getVar('dirname') && $plugin = \Xoops\Module\Plugin::getPlugin($modules[$i]->getVar('dirname'), 'menus')) {
@@ -238,7 +237,7 @@ function menus_mainmenu_show()
                     $menu->setVar('pid', $i);
                     $menu->setVar('title', $sublink['name']);
                     $menu->setVar('alt_title', $sublink['name']);
-                    $menu->setVar('link', \XoopsBaseConfig::get('url') . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
+                    $menu->setVar('link', \XoopsBaseConfig::get('url').'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
                     $menus[] = $menu->getValues();
                     $j--;
                 }

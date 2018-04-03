@@ -10,18 +10,15 @@
  */
 
 /**
- *  Publisher class
+ *  Publisher class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Class
- * @subpackage      Utils
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(dirname(__DIR__)) . '/include/common.php';
+include_once dirname(dirname(__DIR__)).'/include/common.php';
 
 class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
 {
@@ -37,29 +34,32 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
         $item = [];
         $item_id = (int) $item_id;
 
-        if ($category === 'global') {
+        if ('global' === $category) {
             $item['name'] = '';
             $item['url'] = '';
+
             return $item;
         }
 
-        if ($category === 'category') {
+        if ('category' === $category) {
             // Assume we have a valid category id
-            $sql = 'SELECT name, short_url FROM ' . $xoopsDB->prefix('publisher_categories') . ' WHERE categoryid  = ' . $item_id;
+            $sql = 'SELECT name, short_url FROM '.$xoopsDB->prefix('publisher_categories').' WHERE categoryid  = '.$item_id;
             $result = $xoopsDB->query($sql); // TODO: error check
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['name'];
             $item['url'] = PublisherUtils::seoGenUrl('category', $item_id, $result_array['short_url']);
+
             return $item;
         }
 
-        if ($category === 'item') {
+        if ('item' === $category) {
             // Assume we have a valid story id
-            $sql = 'SELECT title, short_url FROM ' . $xoopsDB->prefix('publisher_items') . ' WHERE itemid = ' . $item_id;
+            $sql = 'SELECT title, short_url FROM '.$xoopsDB->prefix('publisher_items').' WHERE itemid = '.$item_id;
             $result = $xoopsDB->query($sql); // TODO: error check
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['title'];
             $item['url'] = PublisherUtils::seoGenUrl('item', $item_id, $result_array['short_url']);
+
             return $item;
         }
 
@@ -90,6 +90,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
         $ret[3]['subscribe_from'] = ['item.php'];
         $ret[3]['item_name'] = 'itemid';
         $ret[3]['allow_bookmark'] = 1;
+
         return $ret;
     }
 
@@ -158,6 +159,7 @@ class PublisherNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract im
         $ret[7]['description'] = _MI_PUBLISHER_ITEM_APPROVED_NOTIFY_DSC;
         $ret[7]['mail_template'] = 'item_approved';
         $ret[7]['mail_subject'] = _MI_PUBLISHER_ITEM_APPROVED_NOTIFY_SBJ;
+
         return $ret;
     }
 

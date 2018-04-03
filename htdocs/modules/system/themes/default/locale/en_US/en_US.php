@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class DefaultThemeLocaleEn_US /*extends XoopsLocaleEn_US*/
 {
     public const CONTROL_AND_MANAGE_YOUR_SITE = 'Control and manage your site';

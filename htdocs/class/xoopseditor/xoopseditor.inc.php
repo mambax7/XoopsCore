@@ -10,26 +10,23 @@
 */
 
 /**
- * XOOPS Editor usage guide
+ * XOOPS Editor usage guide.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xoopseditor
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 if (!function_exists('xoopseditor_get_rootpath')) {
     /**
      * @return string
      */
     function xoopseditor_get_rootpath()
     {
-        return \XoopsBaseConfig::get('root-path') . '/class/xoopseditor';
+        return \XoopsBaseConfig::get('root-path').'/class/xoopseditor';
     }
 }
 
-$mainfile = dirname(dirname(__DIR__)) . '/mainfile.php';
+$mainfile = dirname(dirname(__DIR__)).'/mainfile.php';
 require $mainfile;

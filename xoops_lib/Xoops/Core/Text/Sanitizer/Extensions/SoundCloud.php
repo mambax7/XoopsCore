@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    iHackCode <https://github.com/ihackcode>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SoundCloud extends ExtensionAbstract
 {
@@ -37,7 +36,7 @@ class SoundCloud extends ExtensionAbstract
     ];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -75,7 +74,7 @@ EOH;
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      *
      * Soundcloud offers a wp shortcode version under share/embed that we can accept:
      * [soundcloud url="https://api.soundcloud.com/tracks/46363550"
@@ -107,9 +106,9 @@ EOH;
                 $cleanParams = array_filter($cleanParams, 'urlencode');
 
                 $template = '<iframe width="%2$s" height="%3$s" scrolling="no" frameborder="no"'
-                    . ' src="https://w.soundcloud.com/player/?url=%1$s&amp;color=%4$s&amp;auto_play=%5$s'
-                    . '&amp;hide_related=%6$s&amp;show_comments=%7$s&amp;show_user=%8$s&amp;'
-                    . 'show_reposts=%9$s"></iframe>';
+                    .' src="https://w.soundcloud.com/player/?url=%1$s&amp;color=%4$s&amp;auto_play=%5$s'
+                    .'&amp;hide_related=%6$s&amp;show_comments=%7$s&amp;show_user=%8$s&amp;'
+                    .'show_reposts=%9$s"></iframe>';
 
                 $newContent = sprintf(
                     $template,
@@ -123,6 +122,7 @@ EOH;
                     $cleanParams['show_user'],
                     $cleanParams['show_reposts']
                 );
+
                 return $newContent;
             }
         );

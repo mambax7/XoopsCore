@@ -10,18 +10,15 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 use Xoops\Core\PreloadItem;
 
 /**
- * Xlanguage core preloads
+ * Xlanguage core preloads.
  *
- * @package   Xlanguage
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2010-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -33,7 +30,7 @@ class XlanguagePreload extends PreloadItem
      */
     public static function eventCoreIncludeCommonEnd($args)
     {
-        if (XoopsLoad::fileExists($hnd_file = dirname(__DIR__) . '/api.php')) {
+        if (XoopsLoad::fileExists($hnd_file = dirname(__DIR__).'/api.php')) {
             include_once $hnd_file;
         }
     }

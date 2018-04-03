@@ -10,14 +10,14 @@
 */
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsConfigItem extends Xoops\Core\Kernel\Handlers\XoopsConfigItem
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsConfigItemHandler extends Xoops\Core\Kernel\Handlers\XoopsConfigItemHandler
 {

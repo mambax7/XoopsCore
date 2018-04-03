@@ -12,27 +12,26 @@
 namespace Xoops\Core\Kernel;
 
 /**
- * abstract class object handler
+ * abstract class object handler.
  *
  * @category  Xoops\Core\Kernel\XoopsModelAbstract
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 abstract class XoopsModelAbstract
 {
     /**
-     * holds referenced to handler object
+     * holds referenced to handler object.
      *
      * @var XoopsPersistableObjectHandler
      */
     protected $handler;
 
     /**
-     * XoopsModelAbstract::setHandler()
+     * XoopsModelAbstract::setHandler().
      *
      * @param XoopsPersistableObjectHandler $handler handler to use
      *
@@ -41,11 +40,12 @@ abstract class XoopsModelAbstract
     public function setHandler(XoopsPersistableObjectHandler $handler)
     {
         $this->handler = $handler;
+
         return true;
     }
 
     /**
-     * XoopsModelAbstract::setVars()
+     * XoopsModelAbstract::setVars().
      *
      * @param mixed $args args
      *
@@ -58,6 +58,7 @@ abstract class XoopsModelAbstract
                 $this->{$key} = $value;
             }
         }
+
         return true;
     }
 }

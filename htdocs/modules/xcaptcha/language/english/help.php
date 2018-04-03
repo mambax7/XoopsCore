@@ -1,6 +1,6 @@
 <?php
 /**
- * Xoocontact module
+ * Xoocontact module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xoocontact
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 define('_HELP_DESCRIPTION_TITLE', 'Description');
 define('_HELP_DEVELOPER_TITLE', 'Developer');
 

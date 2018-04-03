@@ -12,26 +12,25 @@
 namespace Xoops\Auth;
 
 /**
- * Authentication class factory
+ * Authentication class factory.
  *
  * @category  Xoops\Auth
- * @package   Factory
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class Factory
 {
     /**
-     * Get a reference to the only instance of authentication class
+     * Get a reference to the only instance of authentication class.
      *
      * if the class has not been instantiated yet, this will also take
      * care of that
      *
-     * @param string $uname user name
-     * @param bool $_force internal use for tests
+     * @param string $uname  user name
+     * @param bool   $_force internal use for tests
      *
      * @return AuthAbstract|bool Reference to the only instance of authentication class
      */
@@ -52,25 +51,30 @@ class Factory
                 $xoops_auth_method = 'xoops';
             }
 
-            $class = '\Xoops\Auth\\' . ucfirst($xoops_auth_method);
+            $class = '\Xoops\Auth\\'.ucfirst($xoops_auth_method);
             if (!class_exists($class)) {
                 trigger_error(\XoopsLocale::EF_CLASS_NOT_FOUND, E_USER_ERROR);
+
                 return false;
             }
             $dao = null;
             switch ($xoops_auth_method) {
                 case 'xoops':
                     $dao = null;
+
                     break;
                 case 'ldap':
                     $dao = null;
+
                     break;
                 case 'ads':
                     $dao = null;
+
                     break;
             }
             $auth_instance = new $class($dao);
         }
+
         return $auth_instance;
     }
 }

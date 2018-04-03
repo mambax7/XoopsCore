@@ -10,15 +10,13 @@
 */
 
 /**
- * Blocks functions
+ * Blocks functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Laurent JEN (aka DuGris)
- * @package     system
  * @version     $Id$
  */
-
 function b_search_show()
 {
     $search = \Xoops::getModuleHelper('search');
@@ -36,5 +34,6 @@ function b_search_show()
     $form->addElement($buttonSubmit);
 
     $block['form'] = $form->render();
+
     return $block;
 }

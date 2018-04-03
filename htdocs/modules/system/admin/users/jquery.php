@@ -10,16 +10,14 @@
 */
 
 /**
- * Users Manager
+ * Users Manager.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Maxime Cointin (AKA Kraven30)
- * @package     system
  * @version     $Id$
  */
-
-include dirname(dirname(__DIR__)) . '/header.php';
+include dirname(dirname(__DIR__)).'/header.php';
 
 $xoops = Xoops::getInstance();
 $system = System::getInstance();
@@ -38,7 +36,6 @@ if (isset($_REQUEST['op'])) {
 }
 
 switch ($op) {
-
     // Display post
     case 'display_post':
         include_once $xoops->path('modules/system/include/functions.php');
@@ -63,5 +60,6 @@ switch ($op) {
             ->setParameter(':uid', $uid);
         $row_count = $sql->execute();
         echo $row_count;
+
         break;
 }

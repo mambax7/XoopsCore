@@ -12,23 +12,21 @@
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * XOOPS message detail
+ * XOOPS message detail.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @version         $Id$
  */
-
-include __DIR__ . '/mainfile.php';
+include __DIR__.'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->events()->triggerEvent('core.viewpmsg.start');
 
 if (!$xoops->isUser()) {
-    $errormessage = XoopsLocale::E_YOU_ARE_NOT_REGISTERED . '<br />'
-        . XoopsLocale::E_REGISTER_FIRST_TO_SEND_PRIVATE_MESSAGES . '';
+    $errormessage = XoopsLocale::E_YOU_ARE_NOT_REGISTERED.'<br />'
+        .XoopsLocale::E_REGISTER_FIRST_TO_SEND_PRIVATE_MESSAGES.'';
     $xoops->redirect('user.php', 2, $errormessage);
 } else {
     $pm_handler = $xoops->getHandlerPrivateMessage();
@@ -47,7 +45,6 @@ if (!$xoops->isUser()) {
                 ], $_SERVER['REQUEST_URI'], XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES);
             $xoops->footer();
         }
-
 
         $clean_msg_id = json_decode($_POST['msg_ids'], true, 2);
         if (!empty($clean_msg_id)) {

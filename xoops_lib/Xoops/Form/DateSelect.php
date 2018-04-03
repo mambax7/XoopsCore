@@ -12,23 +12,22 @@
 namespace Xoops\Form;
 
 /**
- * DateSelect - date entry element with calendar popup
+ * DateSelect - date entry element with calendar popup.
  *
  * @category  Xoops\Form\DateSelect
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DateSelect extends Text
 {
     /**
-     * __construct
+     * __construct.
      *
-     * @param string|array      $caption caption or array of all attributes
-     * @param string            $name    name
-     * @param integer|\DateTime $value   unix timestamp or DateTime object
+     * @param string|array  $caption caption or array of all attributes
+     * @param string        $name    name
+     * @param int|\DateTime $value   unix timestamp or DateTime object
      */
     public function __construct($caption, $name = null, $value = null)
     {
@@ -47,7 +46,7 @@ class DateSelect extends Text
     }
 
     /**
-     * render
+     * render.
      *
      * @return string rendered form element
      */
@@ -59,7 +58,7 @@ class DateSelect extends Text
 
         $dataList = $this->isDatalist();
         if (!empty($dataList)) {
-            $this->add('list', 'list_' . $this->getName());
+            $this->add('list', 'list_'.$this->getName());
         }
 
         $this->themeDecorateElement();
@@ -73,18 +72,18 @@ class DateSelect extends Text
         $xoops->theme()->addScript(
             '',
             '',
-            ' $(function() { $( "#' . $this->get('id') . '" ).datepicker({' .
-            'showOn: "focus", changeYear: true, constrainInput: false ' .
+            ' $(function() { $( "#'.$this->get('id').'" ).datepicker({'.
+            'showOn: "focus", changeYear: true, constrainInput: false '.
             ' }); }); '
         );
 
         $this->set('class', 'form-control');
         $ret = '<div class="input-group">';
-        $ret .= '<input ' . $attributes . ' value="' . $display_value . '" ' . $this->getExtra() . ' >';
+        $ret .= '<input '.$attributes.' value="'.$display_value.'" '.$this->getExtra().' >';
         $ret .= '<span class="input-group-btn">';
         $ret .= '<button class="btn btn-default" type="button" ';
-        $ret .= 'data-toggle="tooltip" data-placement="left" title="' . \XoopsLocale::A_SELECT . '" ';
-        $ret .= 'onclick="$( \'#' . $this->get('id') . '\' ).datepicker( \'show\' );"> ';
+        $ret .= 'data-toggle="tooltip" data-placement="left" title="'.\XoopsLocale::A_SELECT.'" ';
+        $ret .= 'onclick="$( \'#'.$this->get('id').'\' ).datepicker( \'show\' );"> ';
         $ret .= '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>';
         $ret .= '</span></div>';
 

@@ -10,17 +10,15 @@
 */
 
 /**
- * XOOPS restricted file access
+ * XOOPS restricted file access.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 $xoopsOption['nocommon'] = true;
-require_once __DIR__ . '/mainfile.php';
+require_once __DIR__.'/mainfile.php';
 //error_reporting(0);
 
 //require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
@@ -32,7 +30,7 @@ $xoops = Xoops::getInstance();
 if (!isset($path)) {
     if (!empty($_SERVER['QUERY_STRING'])) {
         $path = $_SERVER['QUERY_STRING'];
-        $path = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
+        $path = ('/' === substr($path, 0, 1)) ? substr($path, 1) : $path;
     } else {
         header('HTTP/1.0 404 Not Found');
         exit();
@@ -41,12 +39,12 @@ if (!isset($path)) {
 
 $path_type = substr($path, 0, strpos($path, '/'));
 if (!isset($xoops->paths[$path_type])) {
-    $path = 'XOOPS/' . $path;
+    $path = 'XOOPS/'.$path;
     $path_type = 'XOOPS';
 }
 
 //We are not allowing output of xoops_data
-if ($path_type === 'var') {
+if ('var' === $path_type) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
@@ -54,13 +52,13 @@ if ($path_type === 'var') {
 $file = realpath($xoops->path($path));
 $dir = realpath($xoops->paths[$path_type][0]);
 //We are not allowing directory traversal either
-if ($file === false || $dir === false || !strstr($file, $dir)) {
+if (false === $file || false === $dir || !strstr($file, $dir)) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 //We can't output empty files and php files do not output
-if (empty($file) || strpos($file, '.php') !== false) {
+if (empty($file) || false !== strpos($file, '.php')) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
@@ -68,7 +66,7 @@ if (empty($file) || strpos($file, '.php') !== false) {
 //$file = $xoops->path($path);
 $mtime = filemtime($file);
 // Is there really a file to output?
-if ($mtime === false) {
+if (false === $mtime) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
@@ -93,9 +91,9 @@ if (empty($mimetype)) {
 // seconds, minutes, hours, days
 $expires = 60 * 60 * 24 * 15;
 //header("Pragma: public");
-header('Cache-Control: public, max-age=' . $expires);
-header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', $mtime));
-header('Content-type: ' . $mimetype);
+header('Cache-Control: public, max-age='.$expires);
+header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expires).' GMT');
+header('Last-Modified: '.gmdate('D, d M Y H:i:s T', $mtime));
+header('Content-type: '.$mimetype);
 readfile($file);
 exit;

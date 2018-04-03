@@ -10,28 +10,26 @@
 */
 
 /**
- * XOOPS zip downloader
+ * XOOPS zip downloader.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
  */
 
 /**
- * Abstract base class for forms
+ * Abstract base class for forms.
  *
  * @author Kazumi Ono <onokazu@xoops.org>
  * @author John Neill <catzwolf@xoops.org>
  * @copyright copyright (c) XOOPS.org
- * @package class
  */
 class XoopsZipDownloader extends XoopsDownloader
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $ext      extention
      * @param string $mimyType mimi type
@@ -46,7 +44,7 @@ class XoopsZipDownloader extends XoopsDownloader
     }
 
     /**
-     * Add file
+     * Add file.
      *
      * @param string $filepath    path
      * @param string $newfilename name
@@ -57,18 +55,19 @@ class XoopsZipDownloader extends XoopsDownloader
     {
         // Read in the file's contents
         $fp = @fopen($filepath, 'r');
-        if ($fp === false) {
+        if (false === $fp) {
             return false;
         }
         $data = fread($fp, filesize($filepath));
         fclose($fp);
-        $filename = (isset($newfilename) && trim($newfilename) !== '') ? trim($newfilename) : $filepath;
+        $filename = (isset($newfilename) && '' !== trim($newfilename)) ? trim($newfilename) : $filepath;
         $result = $this->archiver->addFile($data, $filename, filemtime($filename));
+
         return $result;
     }
 
     /**
-     * Add Binary File
+     * Add Binary File.
      *
      * @param string $filepath    path
      * @param string $newfilename name
@@ -79,18 +78,19 @@ class XoopsZipDownloader extends XoopsDownloader
     {
         // Read in the file's contents
         $fp = @fopen($filepath, 'rb');
-        if ($fp === false) {
+        if (false === $fp) {
             return false;
         }
         $data = fread($fp, filesize($filepath));
         fclose($fp);
-        $filename = (isset($newfilename) && trim($newfilename) !== '') ? trim($newfilename) : $filepath;
+        $filename = (isset($newfilename) && '' !== trim($newfilename)) ? trim($newfilename) : $filepath;
         $result = $this->archiver->addFile($data, $filename, filemtime($filename));
+
         return $result;
     }
 
     /**
-     * Add File Data
+     * Add File Data.
      *
      * @param string &$data    data
      * @param string $filename name
@@ -101,11 +101,12 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addFileData(&$data, $filename, $time = 0)
     {
         $result = $this->archiver->addFile($data, $filename, $time);
+
         return $result;
     }
 
     /**
-     * Add Binary File Data
+     * Add Binary File Data.
      *
      * @param string &$data    data
      * @param string $filename name
@@ -116,20 +117,21 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addBinaryFileData(&$data, $filename, $time = 0)
     {
         $result = $this->addFileData($data, $filename, $time);
+
         return $result;
     }
 
     /**
-     * Fownload Data as a Zip file
+     * Fownload Data as a Zip file.
      *
      * @param string $name zip name
      * @param bool   $gzip unused
      */
     public function download($name, $gzip = true)
     {
-        $this->_header($name . $this->ext);
+        $this->_header($name.$this->ext);
         $result = $this->archiver->file();
-        if ($result !== false) {
+        if (false !== $result) {
             echo $result;
         }
     }

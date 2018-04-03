@@ -12,7 +12,6 @@
 /**
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -21,7 +20,6 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
 defined('XOOPS_INSTALL') or die('XOOPS Custom Installation die');
 
 $configs = [];
@@ -103,7 +101,6 @@ if (function_exists('mysqli_connect')) {
     ];
 }
 
-
 $configs['db_param_names'] = [
     'host' => 'DB_HOST',
     'user' => 'DB_USER',
@@ -141,7 +138,7 @@ $configs['extensions'] = [
     'xml' => ['XML', sprintf(PHP_EXTENSION, XML_PARSING)],
     'zlib' => ['Zlib', sprintf(PHP_EXTENSION, ZLIB_COMPRESSION)],
     'gd' => [
-        (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '',
+        (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD '.$gdlib['GD Version'] : '',
         sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS),
     ],
     'exif' => ['Exif', sprintf(PHP_EXTENSION, IMAGE_METAS)],

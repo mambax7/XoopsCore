@@ -14,7 +14,6 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Richard Griffith <richard@geekwright.com>
  */
-
 define('_MA_DEBUGBAR_PERMISSION_FORM', 'DebugBar Usage Permissions');
 define('_MA_DEBUGBAR_PERMISSION_GROUPS', 'Select groups that may use the DebugBar');
 define('_MA_DEBUGBAR_FORM_SUBMIT', 'Save');

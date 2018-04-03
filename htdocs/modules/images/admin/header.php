@@ -13,7 +13,7 @@ use Xmf\Request;
 use Xoops\Core\FixedGroups;
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -21,7 +21,7 @@ use Xoops\Core\FixedGroups;
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
 
 XoopsLoad::load('system', 'system');
 
@@ -43,7 +43,7 @@ $gperm_handler = $xoops->getHandlerGroupPermission();
 $groups = $xoops->getUserGroups();
 
 // check WRITE right by category before continue
-if (isset($imgcat_id) && ($op === 'addfile' || $op === 'editcat' || $op === 'updatecat' || $op === 'delcatok' || $op === 'delcat')) {
+if (isset($imgcat_id) && ('addfile' === $op || 'editcat' === $op || 'updatecat' === $op || 'delcatok' === $op || 'delcat' === $op)) {
     $imgcat_write = $gperm_handler->checkRight('imgcat_write', $imgcat_id, $groups, $xoops->module->mid());
     if (!$imgcat_write) {
         $xoops->redirect($redirect, 1);
@@ -51,12 +51,12 @@ if (isset($imgcat_id) && ($op === 'addfile' || $op === 'editcat' || $op === 'upd
 }
 
 // Only website administator can delete categories or images
-if (!in_array(FixedGroups::ADMIN, $groups, true) && ($op === 'delfile' || $op === 'delfileok' || $op === 'delcatok' || $op === 'delcat')) {
+if (!in_array(FixedGroups::ADMIN, $groups, true) && ('delfile' === $op || 'delfileok' === $op || 'delcatok' === $op || 'delcat' === $op)) {
     $xoops->redirect($redirect, 1);
 }
 
 // check READ right by category before continue
-if (isset($imgcat_id) && $op === 'list') {
+if (isset($imgcat_id) && 'list' === $op) {
     $imgcat_read = $gperm_handler->checkRight('imgcat_read', $imgcat_id, $groups, $xoops->module->mid());
     $imgcat_write = $gperm_handler->checkRight('imgcat_write', $imgcat_id, $groups, $xoops->module->mid());
     if (!$imgcat_read && !$imgcat_write) {

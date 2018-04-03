@@ -11,21 +11,19 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 function publisher_search($queryarray, $andor, $limit, $offset, $userid, $categories = [], $sortby = 0, $searchin = '', $extra = '')
 {
     $publisher = Publisher::getInstance();
     $ret = [];
-    if ($queryarray === '' || count($queryarray) === 0) {
+    if ('' === $queryarray || 0 === count($queryarray)) {
         $hightlight_key = '';
     } else {
         $keywords = implode('+', $queryarray);
-        $hightlight_key = '&amp;keywords=' . $keywords;
+        $hightlight_key = '&amp;keywords='.$keywords;
     }
     $itemsObjs = $publisher->getItemHandler()
         ->getItemsFromSearch($queryarray, $andor, $limit, $offset, $userid, $categories, $sortby, $searchin, $extra);
@@ -36,9 +34,9 @@ function publisher_search($queryarray, $andor, $limit, $offset, $userid, $catego
     foreach ($itemsObjs as $obj) {
         $item['image'] = 'images/item_icon.gif';
         $item['link'] = $obj->getItemUrl();
-        $item['link'] .= (!empty($hightlight_key) && (strpos($item['link'], '.php?') === false)) ? '?' . ltrim($hightlight_key, '&amp;') : $hightlight_key;
+        $item['link'] .= (!empty($hightlight_key) && (false === strpos($item['link'], '.php?'))) ? '?'.ltrim($hightlight_key, '&amp;') : $hightlight_key;
         if ($withCategoryPath) {
-            $item['title'] = $obj->getCategoryPath(false) . ' > ' . $obj->title();
+            $item['title'] = $obj->getCategoryPath(false).' > '.$obj->title();
         } else {
             $item['title'] = $obj->title();
         }
@@ -56,7 +54,7 @@ function publisher_search($queryarray, $andor, $limit, $offset, $userid, $catego
             $start = max(($pos - 100), 0);
             $length = strlen($query) + 200; //xoops_local("strlen", $query) + 200;
             $context = $obj->highlight(XoopsLocale::substr($text, $start, $length, ' [...]'), $query);
-            $sanitized_text .= '<p>[...] ' . $context . '</p>';
+            $sanitized_text .= '<p>[...] '.$context.'</p>';
         }
 
         //End of highlight
@@ -69,10 +67,11 @@ function publisher_search($queryarray, $andor, $limit, $offset, $userid, $catego
     }
     $usersNames = XoopsUserUtility::getUnameFromIds($usersIds, $publisher->getConfig('format_realname'), true);
     foreach ($ret as $key => $item) {
-        if ($item['author'] === '') {
+        if ('' === $item['author']) {
             $ret[$key]['author'] = @$usersNames[$item['uid']];
         }
     }
     unset($usersNames, $usersIds);
+
     return $ret;
 }

@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class TokenTest extends \PHPUnit\Framework\TestCase
 {
@@ -32,9 +32,9 @@ class TokenTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input') !== false);
-        $this->assertTrue(strpos($value, 'type="hidden"') !== false);
-        $this->assertTrue(strpos($value, 'name="XOOPS_TOKEN_REQUEST"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input'));
+        $this->assertTrue(false !== strpos($value, 'type="hidden"'));
+        $this->assertTrue(false !== strpos($value, 'name="XOOPS_TOKEN_REQUEST"'));
     }
 
     public function test__construct()

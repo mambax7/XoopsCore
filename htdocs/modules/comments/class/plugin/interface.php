@@ -15,12 +15,11 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 interface CommentsPluginInterface
 {
     /**
      * You must return the unique identifier for the item
-     * ex: return 'itemid';
+     * ex: return 'itemid';.
      *
      * @return string
      */
@@ -28,7 +27,7 @@ interface CommentsPluginInterface
 
     /**
      * You must return the page where the comment form is displayed
-     * ex: return 'item.php';
+     * ex: return 'item.php';.
      *
      * @return string
      */
@@ -51,7 +50,7 @@ interface CommentsPluginInterface
     /**
      * This method will be executed whenever the total number of 'active' comments for an item is changed.
      *
-     * @param int $item_id The unique ID of an item
+     * @param int $item_id   The unique ID of an item
      * @param int $total_num The total number of active comments
      */
     public function update($item_id, $total_num);
@@ -63,7 +62,7 @@ interface CommentsPluginInterface
      *      'title' => 'My Article Title',
      *      'text' => 'Content of the article');
      *      'timestamp' => time(); //Date of the article in unix format
-     *      'uid' => Id of the article author
+     *      'uid' => Id of the article author.
      *
      * @param int $item_id The unique ID of an item
      *

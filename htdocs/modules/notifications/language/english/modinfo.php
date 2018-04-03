@@ -14,7 +14,6 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 define('_MI_NOTIFICATIONS_NAME', 'Notifications');
 define('_MI_NOTIFICATIONS_DSC', 'Provides notifications ability for modules');
 

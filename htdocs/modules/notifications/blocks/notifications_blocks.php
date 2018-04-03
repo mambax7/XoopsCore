@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 function b_notification_show()
 {
     $xoops = Xoops::getInstance();
@@ -62,5 +61,6 @@ function b_notification_show()
     $block['redirect_script'] = $script_name;
     $block['submit_button'] = _MD_NOTIFICATIONS_UPDATENOW;
     $block['notification_token'] = $xoops->security()->createToken();
+
     return $block;
 }

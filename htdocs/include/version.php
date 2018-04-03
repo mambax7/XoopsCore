@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Version Definition
+ * XOOPS Version Definition.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,11 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @version         $Id$
  */
 
 /**
- * Define XOOPS version
+ * Define XOOPS version.
  * @todo This should be eliminated in favor of \Xoops::VERSION, but it is still required in installer
  */
 $XoopsIncludeVersionString = class_exists('\Xoops', false) ? \Xoops::VERSION : 'XOOPS 2.6.0';

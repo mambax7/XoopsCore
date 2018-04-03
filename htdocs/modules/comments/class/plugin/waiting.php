@@ -13,7 +13,6 @@
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  *
- * @package         Comments
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @author          trabis <lusopoemas@gmail.com>
@@ -37,6 +36,7 @@ class CommentsWaitingPlugin implements WaitingPluginInterface
                 'link' => $comments->url('admin/main.php'),
             ];
         }
+
         return $ret;
     }
 }

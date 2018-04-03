@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\FilterAbstract;
 
 /**
- * TextSanitizer filter - clean up HTML text
+ * TextSanitizer filter - clean up HTML text.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class TextFilter extends FilterAbstract
 {
@@ -39,7 +38,7 @@ class TextFilter extends FilterAbstract
     ];
 
     /**
-     * Apply HTML cleanup to text
+     * Apply HTML cleanup to text.
      *
      * @param string $text  text to filter
      * @param bool   $force true to force filtering even if user is an admin
@@ -57,6 +56,7 @@ class TextFilter extends FilterAbstract
             $config = \HTMLPurifier_Config::createDefault();
             $purifier = new \HTMLPurifier($config);
             $text = $purifier->purify($text);
+
             return $text;
         }
 
@@ -82,8 +82,8 @@ class TextFilter extends FilterAbstract
         $tags[] = 'VBSCRIPT';
         $tags[] = 'JAVASCRIPT';
         foreach ($tags as $tag) {
-            $search[] = '/<' . $tag . "[^>]*?>.*?<\/" . $tag . '>/si';
-            $replace[] = ' [!' . strtoupper($tag) . ' FILTERED!] ';
+            $search[] = '/<'.$tag."[^>]*?>.*?<\/".$tag.'>/si';
+            $replace[] = ' [!'.strtoupper($tag).' FILTERED!] ';
         }
         // Set meta refresh tag
         $search[] = "/<META[^>\/]*HTTP-EQUIV=(['\"])?REFRESH(\\1)[^>\/]*?\/>/si";
@@ -98,6 +98,7 @@ class TextFilter extends FilterAbstract
         $replace[] = ' [!IFRAME FILTERED! \\1] ';
         // action
         $text = preg_replace($search, $replace, $text);
+
         return $text;
     }
 }

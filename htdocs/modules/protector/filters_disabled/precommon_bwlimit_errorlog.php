@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class protector_precommon_bwlimit_errorlog extends ProtectorFilterAbstract
 {
     public function execute()
@@ -27,7 +25,7 @@ class protector_precommon_bwlimit_errorlog extends ProtectorFilterAbstract
         header('Retry-After: 600');
 
         echo _MD_PROTECTOR_BANDWIDTHLIMITED;
-        error_log('Protector: bwlimit ' . @$_SERVER['REMOTE_ADDR'], 0);
+        error_log('Protector: bwlimit '.@$_SERVER['REMOTE_ADDR'], 0);
         exit;
     }
 }

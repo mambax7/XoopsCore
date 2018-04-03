@@ -19,7 +19,7 @@ use Xoops\Core\Theme\XoopsTheme;
 use Xoops\Locale\MessageFormatter;
 
 /**
- * Locale
+ * Locale.
  *
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
@@ -40,22 +40,23 @@ class Locale
     protected static $userLocales = [];
 
     /**
-     * get the current active locale
+     * get the current active locale.
      *
      * @return string current locale
      */
     public static function getCurrent()
     {
         // if none set, take the top of the user locales
-        if (static::$currentLocale === null) {
+        if (null === static::$currentLocale) {
             $localeArray = static::getUserLocales();
             static::$currentLocale = reset($localeArray);
         }
+
         return static::$currentLocale;
     }
 
     /**
-     * Set the current locale
+     * Set the current locale.
      *
      * @param string $locale local code
      *
@@ -69,13 +70,13 @@ class Locale
     }
 
     /**
-     * Get the current timezone
+     * Get the current timezone.
      *
      * @return \DateTimeZone current timezone
      */
     public static function getTimeZone()
     {
-        if (static::$currentTimeZone === null) {
+        if (null === static::$currentTimeZone) {
             $xoops = \Xoops::getInstance();
             static::$currentTimeZone = static::getDefaultTimeZone();
             if ($xoops->isUser()) {
@@ -87,11 +88,12 @@ class Locale
                 }
             }
         }
+
         return static::$currentTimeZone;
     }
 
     /**
-     * Set the current timezone
+     * Set the current timezone.
      */
     public static function setTimeZone(\DateTimeZone $timeZone)
     {
@@ -99,47 +101,49 @@ class Locale
     }
 
     /**
-     * Get the default timezone as set in default_TZ config
+     * Get the default timezone as set in default_TZ config.
      *
      * @return \DateTimeZone
      */
     public static function getDefaultTimeZone()
     {
-        if (static::$defaultTimeZone === null) {
+        if (null === static::$defaultTimeZone) {
             $tz = \Xoops::getInstance()->getConfig('default_TZ');
             if (is_numeric($tz)) {
                 $tz = 'UTC';
             }
             static::$defaultTimeZone = static::newDateTimeZone($tz);
         }
+
         return static::$defaultTimeZone;
     }
 
     /**
-     * Get the server timezone as set in server_TZ config
+     * Get the server timezone as set in server_TZ config.
      *
      * @return \DateTimeZone
      */
     public static function getSystemTimeZone()
     {
-        if (static::$systemTimeZone === null) {
+        if (null === static::$systemTimeZone) {
             $tz = \Xoops::getInstance()->getConfig('server_TZ');
             if (is_numeric($tz)) {
                 $tz = 'UTC';
             }
             static::$systemTimeZone = static::newDateTimeZone($tz);
         }
+
         return static::$systemTimeZone;
     }
 
     /**
-     * @param string $name Name of language file to be loaded, without extension
-     * @param mixed $domain string: Module dirname; global language file will be loaded if
+     * @param string $name   Name of language file to be loaded, without extension
+     * @param mixed  $domain string: Module dirname; global language file will be loaded if
      *                                 $domain is set to 'global' or not specified
      *                         array:  example; array('Frameworks/moduleclasses/moduleadmin')
      * @param string $language Language to be loaded, current language content will be loaded if not specified
      *
-     * @return  boolean
+     * @return boolean
      */
     public static function loadLanguage($name, $domain = '', $language = null)
     {
@@ -148,7 +152,7 @@ class Locale
         }
         $language = empty($language) ? \XoopsLocale::getLegacyLanguage() : $language;
         // expanded domain to multiple categories, e.g. module:system, framework:filter, etc.
-        if ((empty($domain) || $domain === 'global')) {
+        if ((empty($domain) || 'global' === $domain)) {
             $path = '';
         } else {
             $path = (is_array($domain)) ? array_shift($domain) : "modules/{$domain}";
@@ -159,26 +163,27 @@ class Locale
             $fullPath2 = $xoops->path("{$path}/language/english/{$name}.php");
             $ret = \XoopsLoad::loadFile($fullPath2);
         }
+
         return $ret;
     }
 
     /**
-     * @param string $domain module dirname to load, if null will load global locale
+     * @param string $domain       module dirname to load, if null will load global locale
      * @param string $forcedLocale Locale to be loaded, current language content will be loaded if not specified
      *
-     * @return  boolean
+     * @return boolean
      */
     public static function loadLocale($domain = null, $forcedLocale = null)
     {
         $xoops = \Xoops::getInstance();
         // expanded domain to multiple categories, e.g. module:system, framework:filter, etc.
-        if ($domain === null) {
+        if (null === $domain) {
             $path = '';
             $domain = 'xoops';
         } else {
             $path = (is_array($domain)) ? array_shift($domain) : "modules/{$domain}";
         }
-        if ($forcedLocale !== null) {
+        if (null !== $forcedLocale) {
             try {
                 Data::setDefaultLocale($locale);
             } catch (InvalidLocale $e) {
@@ -189,6 +194,7 @@ class Locale
         } else {
             $locales = self::getUserLocales();
             $locale = reset($locales);
+
             try {
                 Data::setDefaultLocale($locale);
             } catch (InvalidLocale $e) {
@@ -202,18 +208,20 @@ class Locale
             $fullPath = $xoops->path("{$path}/locale/{$locale}/locale.php");
             $fullPath2 = $xoops->path("{$path}/locale/{$locale}/{$locale}.php");
             if (\XoopsLoad::fileExists($fullPath)) {
-                \XoopsLoad::addMap([$domain . 'locale' => $fullPath]);
+                \XoopsLoad::addMap([$domain.'locale' => $fullPath]);
                 if (\XoopsLoad::fileExists($fullPath2)) {
-                    \XoopsLoad::addMap([strtolower($domain . "locale{$locale}") => $fullPath2]);
+                    \XoopsLoad::addMap([strtolower($domain."locale{$locale}") => $fullPath2]);
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * load locale for theme
+     * load locale for theme.
      *
      *
      * @return bool
@@ -226,18 +234,20 @@ class Locale
             $fullPath = $xoops->path($theme->resourcePath("locale/{$locale}/locale.php"));
             $fullPath2 = $xoops->path($theme->resourcePath("locale/{$locale}/{$locale}.php"));
             if (\XoopsLoad::fileExists($fullPath)) {
-                \XoopsLoad::addMap([strtolower($theme->folderName . 'ThemeLocale') => $fullPath]);
+                \XoopsLoad::addMap([strtolower($theme->folderName.'ThemeLocale') => $fullPath]);
                 if (\XoopsLoad::fileExists($fullPath2)) {
-                    \XoopsLoad::addMap([strtolower($theme->folderName . "ThemeLocale{$locale}") => $fullPath2]);
+                    \XoopsLoad::addMap([strtolower($theme->folderName."ThemeLocale{$locale}") => $fullPath2]);
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * @return  boolean
+     * @return boolean
      */
     public static function loadMailerLocale()
     {
@@ -247,35 +257,39 @@ class Locale
             $fullPath = $xoops->path("locale/{$locale}/mailer.php");
             if (\XoopsLoad::fileExists($fullPath)) {
                 \XoopsLoad::addMap([strtolower('XoopsMailerLocale') => $fullPath]);
+
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * @param string $key
-     * @param string $dirname
-     * @param array  $params
+     * @param  string $key
+     * @param  string $dirname
+     * @param  array  $params
      * @return string
      */
     public static function translate($key, $dirname = 'xoops', $params = [])
     {
         $class = self::getClassFromDirname($dirname);
         $message = self::getMessage($class, $key);
+
         return self::format($message, $params, self::getCurrent());
     }
 
     /**
-     * @param string $key
-     * @param string $dirname
-     * @param array  $params
+     * @param  string $key
+     * @param  string $dirname
+     * @param  array  $params
      * @return string
      */
     public static function translateTheme($key, $dirname = '', $params = [])
     {
         $class = self::getThemeClassFromDirname($dirname);
         $message = self::getMessage($class, $key);
+
         return self::format($message, $params, self::getCurrent());
     }
 
@@ -331,6 +345,7 @@ class Locale
 
             static::$userLocales = array_unique($userLocales);
         }
+
         return static::$userLocales;
     }
 
@@ -338,7 +353,7 @@ class Locale
      * Convert a locale designation to a normal form ll_Ssss_CC, where
      *   ll   is language code
      *   Ssss is the script code, if specified
-     *   CC   is the country code, if specified
+     *   CC   is the country code, if specified.
      *
      * @param string $locale     locale code
      * @param string $separator  string to use to join locale parts
@@ -351,9 +366,9 @@ class Locale
         try {
             $keys = Data::explodeLocale($locale);
             $key = strtolower($keys['language']);
-            $key .= (empty($keys['script']) || $withScript === false) ?
-                '' : $separator . ucfirst(strtolower($keys['script']));
-            $key .= empty($keys['territory']) ? '' : $separator . strtoupper($keys['territory']);
+            $key .= (empty($keys['script']) || false === $withScript) ?
+                '' : $separator.ucfirst(strtolower($keys['script']));
+            $key .= empty($keys['territory']) ? '' : $separator.strtoupper($keys['territory']);
         } catch (InvalidLocale $e) {
             $key = '';
         }
@@ -374,7 +389,7 @@ class Locale
     }
 
     /**
-     * Instantiate a new DateTimeZone object for a timezone name, with fallback to UTC on error
+     * Instantiate a new DateTimeZone object for a timezone name, with fallback to UTC on error.
      *
      * @param string $timeZoneName name of timezone
      *
@@ -398,7 +413,7 @@ class Locale
      */
     protected static function getClassFromDirname($dirname)
     {
-        return ucfirst($dirname) . 'Locale';
+        return ucfirst($dirname).'Locale';
     }
 
     /**
@@ -411,14 +426,15 @@ class Locale
         if (!$dirname) {
             $dirname = \Xoops::getInstance()->theme()->folderName;
         }
-        return ucfirst($dirname) . 'ThemeLocale';
+
+        return ucfirst($dirname).'ThemeLocale';
     }
 
     /**
-     * Returns the raw translation
+     * Returns the raw translation.
      *
-     * @param string $class
-     * @param string $key
+     * @param  string $class
+     * @param  string $key
      * @return string
      */
     private static function getMessage($class, $key)
@@ -428,6 +444,7 @@ class Locale
         } elseif (defined($key)) {
             return constant($key);
         }
+
         return $key;
     }
 
@@ -436,9 +453,9 @@ class Locale
      *
      * @copyright Copyright (c) 2008 Yii Software LLC
      *
-     * @param string $message the message to be formatted.
-     * @param array  $params the parameters that will be used to replace the corresponding placeholders in the message.
-     * @param string $language the language code (e.g. `en-US`, `en`).
+     * @param  string $message  the message to be formatted.
+     * @param  array  $params   the parameters that will be used to replace the corresponding placeholders in the message.
+     * @param  string $language the language code (e.g. `en-US`, `en`).
      * @return string the formatted message.
      */
     private static function format($message, $params, $language)
@@ -451,17 +468,19 @@ class Locale
         if (preg_match('~{\s*[\d\w]+\s*,~u', $message)) {
             $formatter = self::getMessageFormatter();
             $result = $formatter->format($message, $params, $language);
-            if ($result === false) {
+            if (false === $result) {
                 $errorMessage = $formatter->getErrorMessage();
                 \Xoops::getInstance()->logger()->warning("Formatting message for language '${language}' failed with error: ${errorMessage}. The message being formatted was: ${message}.", [__METHOD__]);
+
                 return $message;
             }
+
             return $result;
         }
 
         $p = [];
         foreach ($params as $name => $value) {
-            $p['{' . $name . '}'] = $value;
+            $p['{'.$name.'}'] = $value;
         }
 
         return strtr($message, $p);
@@ -474,9 +493,10 @@ class Locale
     private static function getMessageFormatter()
     {
         static $messageFormatter = null;
-        if ($messageFormatter === null) {
+        if (null === $messageFormatter) {
             $messageFormatter = new MessageFormatter();
         }
+
         return $messageFormatter;
     }
 }

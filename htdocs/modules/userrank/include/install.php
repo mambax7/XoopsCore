@@ -17,7 +17,6 @@ use Xmf\Yaml;
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  */
-
 function xoops_module_install_userrank($module)
 {
     $xoops = Xoops::getInstance();
@@ -92,5 +91,6 @@ EOT;
     if ($count < 1) {
         TableLoad::loadTableFromArray($table, $tableData);
     }
+
     return true;
 }

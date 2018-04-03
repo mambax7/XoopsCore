@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 interface MenusPluginInterface
 {
     /**
@@ -25,7 +24,7 @@ interface MenusPluginInterface
      * ex: return array(0 => array(
      *      'name' => _MI_PUBLISHER_SUB_SMNAME3;
      *      'url' => "search.php";
-     *    ));
+     *    ));.
      *
      * @return array
      */

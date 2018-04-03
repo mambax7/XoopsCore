@@ -13,26 +13,25 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Pdf module preloads
+ * Pdf module preloads.
  *
  * @category  Pdf
- * @package   Pdf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL v2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class PdfPreload extends PreloadItem
 {
     /**
-     * listen for core.service.locate.htmltopdf event
+     * listen for core.service.locate.htmltopdf event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateHtmlToPdf(Provider $provider)
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
-            $path = dirname(__DIR__) . '/class/HtmlToPdfProvider.php';
+            $path = dirname(__DIR__).'/class/HtmlToPdfProvider.php';
             require $path;
             $object = new HtmlToPdfProvider();
             $provider->register($object);

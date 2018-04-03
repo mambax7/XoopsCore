@@ -14,7 +14,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         avatar
  * @since           2.6.0
  * @author          Mage Gregory (AKA Mage)
  * @version         $Id$
@@ -39,12 +38,12 @@ class AvatarsAvatar_userForm extends Xoops\Form\ThemeForm
         $avatar_select->addOptionArray($avatar_list);
         $xoops_url = \XoopsBaseConfig::get('url');
         $xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
-        $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . $xoops_url . "\")'");
+        $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".$xoops_url."\")'");
         $avatar_tray = new Xoops\Form\ElementTray(XoopsLocale::FILE, '&nbsp;');
         $avatar_tray->addElement($avatar_select);
-        $avatar_tray->addElement(new Xoops\Form\Label('', "<a href=\"javascript:openWithSelfMain('" . $xoops_url . "/modules/avatars/popup.php','avatars',600,400);\">" . XoopsLocale::LIST_ . '</a><br />'));
-        $avatar_tray->addElement(new Xoops\Form\Label('', "<br /><img src='" . $xoops_upload_url . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
-        if ($helper->getConfig('avatars_allowupload') === 1 && $xoops->user->getVar('posts') >= $helper->getConfig('avatars_postsrequired')) {
+        $avatar_tray->addElement(new Xoops\Form\Label('', "<a href=\"javascript:openWithSelfMain('".$xoops_url."/modules/avatars/popup.php','avatars',600,400);\">".XoopsLocale::LIST_.'</a><br />'));
+        $avatar_tray->addElement(new Xoops\Form\Label('', "<br /><img src='".$xoops_upload_url.'/'.$avatar_selected."' name='avatar' id='avatar' alt='' />"));
+        if (1 === $helper->getConfig('avatars_allowupload') && $xoops->user->getVar('posts') >= $helper->getConfig('avatars_postsrequired')) {
             $fileseltray_img = new Xoops\Form\ElementTray('<br />', '<br /><br />');
             $fileseltray_img->addElement(new Xoops\Form\File(XoopsLocale::A_UPLOAD, 'user_avatar'), false);
             $avatar_tray->addElement($fileseltray_img);

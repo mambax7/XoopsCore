@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer mainfile creation page
+ * Installer mainfile creation page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,8 +22,7 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
@@ -45,19 +43,19 @@ $rewrite = [
 ];
 $rewrite = array_merge($rewrite, $settings);
 
-if (!@copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH'] . '/mainfile.php')) {
+if (!@copy($settings['ROOT_PATH'].'/mainfile.dist.php', $settings['ROOT_PATH'].'/mainfile.php')) {
     $error = ERR_COPY_MAINFILE;
 } else {
     clearstatcache();
 
-    if (!$file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'r')) {
+    if (!$file = fopen($settings['ROOT_PATH'].'/mainfile.php', 'r')) {
         $error = ERR_READ_MAINFILE;
     } else {
-        $content = fread($file, filesize($settings['ROOT_PATH'] . '/mainfile.php'));
+        $content = fread($file, filesize($settings['ROOT_PATH'].'/mainfile.php'));
         fclose($file);
 
         foreach ($rewrite as $key => $val) {
-            if ($key === 'authorized') {
+            if ('authorized' === $key) {
                 continue;
             }
             if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", $content)) {
@@ -71,7 +69,7 @@ if (!@copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH']
                     //$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<strong>$val</strong>")."<br />\n";
             }
         }
-        if (!$file = fopen($settings['ROOT_PATH'] . '/mainfile.php', 'w')) {
+        if (!$file = fopen($settings['ROOT_PATH'].'/mainfile.php', 'w')) {
             $error = ERR_WRITE_MAINFILE;
         } else {
             if (fwrite($file, $content) === -1) {
@@ -82,19 +80,19 @@ if (!@copy($settings['ROOT_PATH'] . '/mainfile.dist.php', $settings['ROOT_PATH']
     }
 }
 
-if (!@copy($rewrite['VAR_PATH'] . '/data/secure.dist.php', $rewrite['VAR_PATH'] . '/data/secure.php')) {
-    $error = ERR_COPY_SECURE . $rewrite['VAR_PATH'] . '/data/secure.dist.php';
+if (!@copy($rewrite['VAR_PATH'].'/data/secure.dist.php', $rewrite['VAR_PATH'].'/data/secure.php')) {
+    $error = ERR_COPY_SECURE.$rewrite['VAR_PATH'].'/data/secure.dist.php';
 } else {
     clearstatcache();
 
-    if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'r')) {
+    if (!$file = fopen($rewrite['VAR_PATH'].'/data/secure.php', 'r')) {
         $error = ERR_READ_SECURE;
     } else {
-        $content = fread($file, filesize($rewrite['VAR_PATH'] . '/data/secure.php'));
+        $content = fread($file, filesize($rewrite['VAR_PATH'].'/data/secure.php'));
         fclose($file);
 
         foreach ($rewrite as $key => $val) {
-            if ($key === 'authorized') {
+            if ('authorized' === $key) {
                 continue;
             }
             if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", $content)) {
@@ -106,7 +104,7 @@ if (!@copy($rewrite['VAR_PATH'] . '/data/secure.dist.php', $rewrite['VAR_PATH'] 
                 }
             }
         }
-        if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'w')) {
+        if (!$file = fopen($rewrite['VAR_PATH'].'/data/secure.php', 'w')) {
             $error = ERR_WRITE_SECURE;
         } else {
             if (fwrite($file, $content) === -1) {
@@ -144,21 +142,21 @@ if (empty($error)) {
 
     <?php
     foreach ($settings as $k => $v) {
-        if ($k === 'authorized') {
+        if ('authorized' === $k) {
             continue;
         }
-        echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
+        echo "<li><strong>XOOPS_{$k}</strong> ".IS_VALOR." {$v}</li>";
     } ?>
 </ul>
     <?php
         $content = ob_get_contents();
     ob_end_clean();
 } else {
-    $content = '<div class="errorMsg">' . $error . '</div>';
+    $content = '<div class="errorMsg">'.$error.'</div>';
 }
 
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 $_SESSION['content'] = $content;
 $_SESSION['settings'] = $settings;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

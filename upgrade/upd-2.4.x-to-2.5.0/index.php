@@ -10,12 +10,10 @@
  *
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     upgrader
  * @since       2.5.0
  * @author      Andricq Nicolas (AKA MusS)
  * @version     $Id$
  */
-
 require_once 'dbmanager.php';
 
 class upgrade_250 extends xoopsUpgrade
@@ -23,30 +21,32 @@ class upgrade_250 extends xoopsUpgrade
     public $tasks = ['config', 'templates'];
 
     /**
-     * Check if cpanel config already exists
+     * Check if cpanel config already exists.
      */
     public function check_config()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
+        $sql = 'SELECT COUNT(*) FROM `'.$db->prefix('config')."` WHERE `conf_name` IN ('break1', 'usetips')";
         if (!$result = $db->queryF($sql)) {
             return false;
         }
         list($count) = $db->fetchRow($result);
-        return ($count === 0) ? false : true;
+
+        return (0 === $count) ? false : true;
     }
 
     public function check_templates()
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $sql = 'SELECT COUNT(*) FROM `' . $db->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html') AND `tpl_type` = 'admin'";
+        $sql = 'SELECT COUNT(*) FROM `'.$db->prefix('tplfile')."` WHERE `tpl_file` IN ('system_header.html') AND `tpl_type` = 'admin'";
         if (!$result = $db->queryF($sql)) {
             return false;
         }
         list($count) = $db->fetchRow($result);
-        return ($count === 0) ? false : true;
+
+        return (0 === $count) ? false : true;
     }
 
     public function apply_config()
@@ -55,13 +55,13 @@ class upgrade_250 extends xoopsUpgrade
         $db = $xoops->db();
         $dbm = new db_manager();
 
-        $sql = 'SELECT conf_id FROM `' . $db->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
+        $sql = 'SELECT conf_id FROM `'.$db->prefix('config')."` WHERE `conf_name` IN ('cpanel')";
         if (!$result = $db->queryF($sql)) {
             return false;
         }
         $count = $db->fetchRow($result);
 
-        $sql = 'UPDATE `' . $db->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
+        $sql = 'UPDATE `'.$db->prefix('config')."` SET `conf_value` = 'default' WHERE `conf_id` = ".$count[0];
         if (!$result = $db->queryF($sql)) {
             return false;
         }
@@ -108,25 +108,25 @@ class upgrade_250 extends xoopsUpgrade
         require_once '../class/xoopslists.php';
         $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${block_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${block_id})");
         }
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${com_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${com_id})");
         }
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${main_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${main_id})");
         }
         $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
         foreach ($icons as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${icon_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${icon_id})");
         }
         $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
         foreach ($breadcrumb as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${bc_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${bc_id})");
         }
         $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
         foreach ($jqueryui as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', ${jquery_id})");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', ${jquery_id})");
         }
 
         return true;
@@ -140,13 +140,14 @@ class upgrade_250 extends xoopsUpgrade
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
-            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
-                $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
-                $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+            if (isset($tplfile['type']) && 'admin' === $tplfile['type'] && $fp = fopen('../modules/system/templates/admin/'.$tplfile['file'], 'r')) {
+                $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '".addslashes($tplfile['file'])."', '".addslashes($tplfile['description'])."', ".$time.', '.$time.", 'admin')");
+                $tplsource = fread($fp, filesize('../modules/system/templates/admin/'.$tplfile['file']));
                 fclose($fp);
-                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES ('.$newtplid.", '".addslashes($tplsource)."')");
             }
         }
+
         return true;
     }
 
@@ -157,4 +158,5 @@ class upgrade_250 extends xoopsUpgrade
 }
 
 $upg = new upgrade_250();
+
 return $upg;

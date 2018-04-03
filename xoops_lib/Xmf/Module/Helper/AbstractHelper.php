@@ -16,12 +16,11 @@ namespace Xmf\Module\Helper;
  * helpers that simplify routine module tasks.
  *
  * @category  Xmf\Module\Helper\AbstractHelper
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 abstract class AbstractHelper
 {
@@ -39,7 +38,7 @@ abstract class AbstractHelper
      * Instantiate a XoopsModule object for the helper to use.
      * The module is determined as follows:
      * - if null is passed, use the current module
-     * - if a string is passed, use as dirname to load
+     * - if a string is passed, use as dirname to load.
      *
      * @param string|null $dirname dirname
      */
@@ -80,7 +79,7 @@ abstract class AbstractHelper
     abstract public function init();
 
     /**
-     * Set debug option on or off
+     * Set debug option on or off.
      *
      * @param bool $bool true to turn on debug logging, false for off
      */
@@ -90,7 +89,7 @@ abstract class AbstractHelper
     }
 
     /**
-     * Add a message to the module log
+     * Add a message to the module log.
      *
      * @param mixed $log log item, can be message or variable
      */
@@ -107,7 +106,7 @@ abstract class AbstractHelper
     }
 
     /**
-     * Serialize an arbitrary value to string. Intended for data being addLog()ed
+     * Serialize an arbitrary value to string. Intended for data being addLog()ed.
      *
      * @param mixed $value
      *
@@ -115,12 +114,13 @@ abstract class AbstractHelper
      */
     protected function serializeForHelperLog($value)
     {
-        if (is_resource($value) || @get_resource_type($value) !== null) {
+        if (is_resource($value) || null !== @get_resource_type($value)) {
             $value = '(resource)';
         }
         if (!is_string($value)) {
             $value = json_encode($value);
         }
+
         return (string) $value;
     }
 }

@@ -12,19 +12,15 @@
 use Xoops\Core\XoopsTpl;
 
 /**
- * XOOPS feed creator
+ * XOOPS feed creator.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.6.0
  * @author          Laurent JEN (aka DuGris)
  * @version         $Id$
  */
-
-
-
-require __DIR__ . '/mainfile.php';
+require __DIR__.'/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -37,9 +33,9 @@ $dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
 $tpl = new XoopsTpl();
 $tpl->caching = 2;
 $tpl->cache_lifetime = 3600;
-if (!$tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
+if (!$tpl->isCached('module:'.$dirname.'/system_rss.tpl')) {
     $tpl->assign('channel_title', $myts->htmlSpecialChars($xoops->getConfig('sitename')));
-    $tpl->assign('channel_link', $xoops_url . '/');
+    $tpl->assign('channel_link', $xoops_url.'/');
     $tpl->assign('channel_desc', $myts->htmlSpecialChars($xoops->getConfig('slogan')));
     $tpl->assign('channel_lastbuild', XoopsLocale::formatTimestamp(time(), 'rss'));
     $tpl->assign('channel_webmaster', $xoops->checkEmail($xoops->getConfig('adminmail'), true));
@@ -92,4 +88,4 @@ if (!$tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
     array_multisort($date, SORT_DESC, $items);
     $tpl->assign('items', $items);
 }
-$tpl->display('module:' . $dirname . '/system_rss.tpl');
+$tpl->display('module:'.$dirname.'/system_rss.tpl');

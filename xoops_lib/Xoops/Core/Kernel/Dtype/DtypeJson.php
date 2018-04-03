@@ -15,19 +15,18 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeJson
+ * DtypeJson.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeJson
- * @package   Xoops\Core\Kernel
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeJson extends DtypeAbstract
 {
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -44,14 +43,16 @@ class DtypeJson extends DtypeAbstract
                 break;
             default:
                 $decoded = json_decode($value, true);
-                $value = ($decoded === false) ? null : $decoded;
+                $value = (false === $decoded) ? null : $decoded;
+
                 break;
         }
+
         return $value;
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -61,16 +62,17 @@ class DtypeJson extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        $value = ($value === null || $value === '' || $value === false) ? null : $value;
-        if ($value !== null && json_decode($value, true) === null) {
+        $value = (null === $value || '' === $value || false === $value) ? null : $value;
+        if (null !== $value && null === json_decode($value, true)) {
             $value = json_encode($value, JSON_FORCE_OBJECT);
-            if ($value === false) {
+            if (false === $value) {
                 \Xoops::getInstance()->logger()->warning(
                     sprintf('Failed to encode to JSON - %s', json_last_error_msg())
                 );
                 $value = null;
             }
         }
+
         return $value;
     }
 }

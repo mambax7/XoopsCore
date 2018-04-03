@@ -50,7 +50,6 @@
  * 		Note: if you are using a callback function (i.e. callbackAfterUploadManagement) and you do not see a global 'object' you
  * 					are expecting then it might have been destroyed by PHP - c.f. http://bugs.php.net/bug.php?id=39693
  */
-
 class jupload
 {
     public $appletparams;
@@ -61,16 +60,16 @@ class jupload
 
     public function JUpload($appletparams = [], $classparams = [])
     {
-        if (gettype($classparams) !== 'array') {
+        if ('array' !== gettype($classparams)) {
             $this->abort('Invalid type of parameter classparams: Expecting an array');
         }
-        if (gettype($appletparams) !== 'array') {
+        if ('array' !== gettype($appletparams)) {
             $this->abort('Invalid type of parameter appletparams: Expecting an array');
         }
 
         // set some defaults for the applet params
         if (!isset($appletparams['afterUploadURL'])) {
-            $appletparams['afterUploadURL'] = $_SERVER['PHP_SELF'] . '?afterupload=1';
+            $appletparams['afterUploadURL'] = $_SERVER['PHP_SELF'].'?afterupload=1';
         }
         if (!isset($appletparams['name'])) {
             $appletparams['name'] = 'JUpload';
@@ -94,7 +93,7 @@ class jupload
             $appletparams['width'] = 640;
         }
         if (!isset($appletparams['height'])) {
-            $appletparams['height'] = ($appletparams['showLogWindow'] === 'true') ? 500 : 300;
+            $appletparams['height'] = ('true' === $appletparams['showLogWindow']) ? 500 : 300;
         }
         if (!isset($appletparams['mayscript'])) {
             $appletparams['mayscript'] = 'true';
@@ -123,7 +122,7 @@ class jupload
         }
         $appletparams['maxFileSize'] = $this->tobytes($appletparams['maxFileSize']);
         if (isset($classparams['errormail'])) {
-            $appletparams['urlToSendErrorTo'] = $_SERVER['PHP_SELF'] . '?errormail';
+            $appletparams['urlToSendErrorTo'] = $_SERVER['PHP_SELF'].'?errormail';
         }
 
         // Same for class parameters
@@ -173,7 +172,7 @@ class jupload
             $classparams['fileperm'] = 0644;
         }
         if (!isset($classparams['destdir'])) {
-            if ($obd !== '') {
+            if ('' !== $obd) {
                 $classparams['destdir'] = $obd;
             } else {
                 $classparams['destdir'] = '/var/tmp/jupload_test';
@@ -231,7 +230,7 @@ class jupload
 
     /**
      * Return an array of uploaded files * The array contains: name, size, tmp_name, error,
-     * relativePath, md5sum, mimetype, fullName, path
+     * relativePath, md5sum, mimetype, fullName, path.
      */
     public function uploadedfiles()
     {
@@ -243,7 +242,7 @@ class jupload
      */
     public function defaultAfterUploadManagement()
     {
-        $flist = '[defaultAfterUploadManagement] Nb uploaded files is: ' . sizeof($this->files);
+        $flist = '[defaultAfterUploadManagement] Nb uploaded files is: '.sizeof($this->files);
         $flist = $this->classparams['http_flist_start'];
         foreach ($this->files as $f) {
             //$f is an array, that contains all info about the uploaded file.
@@ -261,7 +260,7 @@ class jupload
             $addBR = false;
             foreach ($f as $key => $value) {
                 //If it's a specific key, let's display it:
-                if ($key !== 'name' && $key !== 'size' && $key !== 'relativePath' && $key !== 'fullName' && $key !== 'md5sum') {
+                if ('name' !== $key && 'size' !== $key && 'relativePath' !== $key && 'fullName' !== $key && 'md5sum' !== $key) {
                     if ($addBR) {
                         $flist .= '<br>';
                     } else {
@@ -288,11 +287,12 @@ class jupload
     public function interceptBeforeUpload($str)
     {
         $this->logDebug('interceptBeforeUpload', 'Entering function');
+
         return $this->generateAppletTag($str);
     }
 
     /**
-     * This function displays the uploaded files description in the current page (see tag_flist class parameter)
+     * This function displays the uploaded files description in the current page (see tag_flist class parameter).
      *
      * This *must* be public, because it is called from PHP's output buffering.
      */
@@ -303,13 +303,14 @@ class jupload
 
         if (count($this->files) > 0) {
             if (isset($this->classparams['callbackAfterUploadManagement'])) {
-                $this->logDebug('interceptAfterUpload', 'Before call of ' . $this->classparams['callbackAfterUploadManagement']);
+                $this->logDebug('interceptAfterUpload', 'Before call of '.$this->classparams['callbackAfterUploadManagement']);
                 $strForFListContent = call_user_func($this->classparams['callbackAfterUploadManagement'], $this, $this->files);
             } else {
                 $strForFListContent = $this->defaultAfterUploadManagement();
             }
-            $str = preg_replace('/' . $this->classparams['tag_flist'] . '/', $strForFListContent, $str);
+            $str = preg_replace('/'.$this->classparams['tag_flist'].'/', $strForFListContent, $str);
         }
+
         return $this->generateAppletTag($str);
     }
 
@@ -332,8 +333,8 @@ class jupload
      */
     protected function logPHPDebug($function, $msg)
     {
-        if ($this->classparams['debug_php'] === true) {
-            $output = "[DEBUG] [${function}] " . $this->arrayexpand($msg);
+        if (true === $this->classparams['debug_php']) {
+            $output = "[DEBUG] [${function}] ".$this->arrayexpand($msg);
             error_log($output);
         }
     }
@@ -343,21 +344,22 @@ class jupload
         $output = '';
         if (is_array($array)) {
             foreach ($array as $key => $value) {
-                $output .= "\n " . $key . ' => ' . $this->arrayexpand($value);
+                $output .= "\n ".$key.' => '.$this->arrayexpand($value);
             }
         } else {
             $output .= $array;
         }
+
         return $output;
     }
 
     /**
-     * Convert a value ending in 'G','M' or 'K' to bytes
+     * Convert a value ending in 'G','M' or 'K' to bytes.
      */
     private function tobytes($val)
     {
         $val = trim($val);
-        $last = fix_strtolower($val{strlen($val) - 1});
+        $last = fix_strtolower($val[strlen($val) - 1]);
         switch ($last) {
             case 'g':
                 $val *= 1024;
@@ -368,6 +370,7 @@ class jupload
             case 'k':
                 $val *= 1024;
         }
+
         return $val;
     }
 
@@ -386,14 +389,15 @@ class jupload
     {
         $N = "\n";
         $name = $this->appletparams['name'];
-        $ret = '<script type="text/javascript">' . $N;
-        $ret .= '<!--' . $N;
-        $ret .= 'function ' . $this->classparams['jscript_wrapper'] . '(name, value) {' . $N;
-        $ret .= '  document.applets["' . $name . '"] == null || document.applets["' . $name . '"].setProperty(name,value);' . $N;
-        $ret .= '  document.embeds["' . $name . '"] == null || document.embeds["' . $name . '"].setProperty(name,value);' . $N;
-        $ret .= '}' . $N;
-        $ret .= '//-->' . $N;
+        $ret = '<script type="text/javascript">'.$N;
+        $ret .= '<!--'.$N;
+        $ret .= 'function '.$this->classparams['jscript_wrapper'].'(name, value) {'.$N;
+        $ret .= '  document.applets["'.$name.'"] == null || document.applets["'.$name.'"].setProperty(name,value);'.$N;
+        $ret .= '  document.embeds["'.$name.'"] == null || document.embeds["'.$name.'"].setProperty(name,value);'.$N;
+        $ret .= '}'.$N;
+        $ret .= '//-->'.$N;
         $ret .= '</script>';
+
         return $ret;
     }
 
@@ -407,37 +411,38 @@ class jupload
         $N = "\n";
         $params = $this->appletparams;
         // return the actual applet tag
-        $ret = '<object classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"' . $N;
-        $ret .= '  codebase = "http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"' . $N;
-        $ret .= '  width = "' . $params['width'] . '"' . $N;
-        $ret .= '  height = "' . $params['height'] . '"' . $N;
-        $ret .= '  name = "' . $params['name'] . '">' . $N;
+        $ret = '<object classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"'.$N;
+        $ret .= '  codebase = "http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"'.$N;
+        $ret .= '  width = "'.$params['width'].'"'.$N;
+        $ret .= '  height = "'.$params['height'].'"'.$N;
+        $ret .= '  name = "'.$params['name'].'">'.$N;
         foreach ($params as $key => $val) {
-            if ($key !== 'width' && $key !== 'height') {
-                $ret .= '  <param name = "' . $key . '" value = "' . $val . '" />' . $N;
+            if ('width' !== $key && 'height' !== $key) {
+                $ret .= '  <param name = "'.$key.'" value = "'.$val.'" />'.$N;
             }
         }
-        $ret .= '  <comment>' . $N;
-        $ret .= '    <embed' . $N;
-        $ret .= '      type = "application/x-java-applet;version=1.5"' . $N;
+        $ret .= '  <comment>'.$N;
+        $ret .= '    <embed'.$N;
+        $ret .= '      type = "application/x-java-applet;version=1.5"'.$N;
         foreach ($params as $key => $val) {
-            $ret .= '      ' . $key . ' = "' . $val . '"' . $N;
+            $ret .= '      '.$key.' = "'.$val.'"'.$N;
         }
-        $ret .= '      pluginspage = "http://java.sun.com/products/plugin/index.html#download">' . $N;
-        $ret .= '      <noembed>' . $N;
-        $ret .= '        Java 1.5 or higher plugin required.' . $N;
-        $ret .= '      </noembed>' . $N;
-        $ret .= '    </embed>' . $N;
-        $ret .= '  </comment>' . $N;
+        $ret .= '      pluginspage = "http://java.sun.com/products/plugin/index.html#download">'.$N;
+        $ret .= '      <noembed>'.$N;
+        $ret .= '        Java 1.5 or higher plugin required.'.$N;
+        $ret .= '      </noembed>'.$N;
+        $ret .= '    </embed>'.$N;
+        $ret .= '  </comment>'.$N;
         $ret .= '</object>';
+
         return $ret;
     }
 
     private function abort($msg = '')
     {
         $this->cleanup();
-        if ($msg !== '') {
-            die(str_replace('(.*)', $msg, $this->appletparams['stringUploadError']) . "\n");
+        if ('' !== $msg) {
+            die(str_replace('(.*)', $msg, $this->appletparams['stringUploadError'])."\n");
         }
         exit;
     }
@@ -445,10 +450,10 @@ class jupload
     private function warning($msg = '')
     {
         $this->cleanup();
-        if ($msg !== '') {
-            echo 'WARNING: ' . $msg . "\n";
+        if ('' !== $msg) {
+            echo 'WARNING: '.$msg."\n";
         }
-        echo $this->appletparams['stringUploadSuccess'] . "\n";
+        echo $this->appletparams['stringUploadSuccess']."\n";
         exit;
     }
 
@@ -461,10 +466,11 @@ class jupload
             }
         }
         // remove accumulated file, if any.
-        @unlink($this->classparams['destdir'] . '/' . $this->classparams['tmp_prefix'] . session_id());
-        @unlink($this->classparams['destdir'] . '/' . $this->classparams['tmp_prefix'] . 'tmp' . session_id());
+        @unlink($this->classparams['destdir'].'/'.$this->classparams['tmp_prefix'].session_id());
+        @unlink($this->classparams['destdir'].'/'.$this->classparams['tmp_prefix'].'tmp'.session_id());
         // reset session var
-        $_SESSION['RF'][$this->classparams['var_prefix'] . 'size'] = 0;
+        $_SESSION['RF'][$this->classparams['var_prefix'].'size'] = 0;
+
         return;
     }
 
@@ -474,7 +480,7 @@ class jupload
         $dirs = explode('/', $path);
         $path = $this->classparams['destdir'];
         foreach ($dirs as $dir) {
-            $path .= '/' . $dir;
+            $path .= '/'.$dir;
             if (!file_exists($path)) {  // @ does NOT always supress the error!
                 $_umask = umask(0); 	// override the system mask
                 @mkdir($path, $this->classparams['dirperm']);
@@ -498,7 +504,7 @@ class jupload
     private function dstfinal(&$name, &$subdir)
     {
         $name = preg_replace('![`$\\\\/|]!', '_', $name);
-        if ($this->classparams['allow_subdirs'] && ($subdir !== '')) {
+        if ($this->classparams['allow_subdirs'] && ('' !== $subdir)) {
             $subdir = trim(preg_replace('!\\\\!', '/', $subdir), '/');
             $subdir = preg_replace('![`$|]!', '_', $subdir);
             if (!$this->classparams['spaces_in_subdirs']) {
@@ -513,20 +519,20 @@ class jupload
         } else {
             $subdir = '';
         }
-        $ret = $this->classparams['destdir'] . '/' . $subdir . $name;
+        $ret = $this->classparams['destdir'].'/'.$subdir.$name;
         if (file_exists($ret)) {
-            if ($this->classparams['duplicate'] === 'overwrite') {
+            if ('overwrite' === $this->classparams['duplicate']) {
                 return $ret;
             }
-            if ($this->classparams['duplicate'] === 'reject') {
+            if ('reject' === $this->classparams['duplicate']) {
                 $this->abort('A file with the same name already exists');
             }
-            if ($this->classparams['duplicate'] === 'warning') {
+            if ('warning' === $this->classparams['duplicate']) {
                 $this->warning("File ${name} already exists - rejected");
             }
-            if ($this->classparams['duplicate'] === 'rename') {
+            if ('rename' === $this->classparams['duplicate']) {
                 $cnt = 1;
-                $dir = $this->classparams['destdir'] . '/' . $subdir;
+                $dir = $this->classparams['destdir'].'/'.$subdir;
                 $ext = strrchr($name, '.');
                 if ($ext) {
                     $nameWithoutExtension = substr($name, 0, strlen($name) - strlen($ext));
@@ -535,16 +541,17 @@ class jupload
                     $nameWithoutExtension = $name;
                 }
 
-                $rtry = $dir . $nameWithoutExtension . '_' . $cnt . $ext;
+                $rtry = $dir.$nameWithoutExtension.'_'.$cnt.$ext;
                 while (file_exists($rtry)) {
                     $cnt++;
-                    $rtry = $dir . $nameWithoutExtension . '._' . $cnt . $ext;
+                    $rtry = $dir.$nameWithoutExtension.'._'.$cnt.$ext;
                 }
                 //We store the result name in the byReference name parameter.
-                $name = $nameWithoutExtension . '_' . $cnt . $ext;
+                $name = $nameWithoutExtension.'_'.$cnt.$ext;
                 $ret = $rtry;
             }
         }
+
         return $ret;
     }
 
@@ -556,8 +563,9 @@ class jupload
     private function generateAppletTag($str)
     {
         $this->logDebug('generateAppletTag', 'Entering function');
-        $str = preg_replace('/' . $this->classparams['tag_jscript'] . '/', $this->str_jsinit(), $str);
-        return preg_replace('/' . $this->classparams['tag_applet'] . '/', $this->str_applet(), $str);
+        $str = preg_replace('/'.$this->classparams['tag_jscript'].'/', $this->str_jsinit(), $str);
+
+        return preg_replace('/'.$this->classparams['tag_applet'].'/', $this->str_applet(), $str);
     }
 
     /**
@@ -594,22 +602,22 @@ class jupload
     {
         $this->logDebug('receive_uploaded_files', 'Entering POST management');
 
-        if (session_id() === '') {
+        if ('' === session_id()) {
             session_start();
         }
         // we check for the session *after* handling possible error log
         // because an error could have happened because the session-id is missing.
-        if (!isset($_SESSION['RF'][$this->classparams['var_prefix'] . 'size'])) {
+        if (!isset($_SESSION['RF'][$this->classparams['var_prefix'].'size'])) {
             $this->abort('Invalid session (in afterupload, POST, check of size)');
         }
-        if (!isset($_SESSION['RF'][$this->classparams['var_prefix'] . 'files'])) {
+        if (!isset($_SESSION['RF'][$this->classparams['var_prefix'].'files'])) {
             $this->abort('Invalid session (in afterupload, POST, check of files)');
         }
-        $this->files = $_SESSION['RF'][$this->classparams['var_prefix'] . 'files'];
+        $this->files = $_SESSION['RF'][$this->classparams['var_prefix'].'files'];
         if (!is_array($this->files)) {
             $this->abort('Invalid session (in afterupload, POST, is_array(files))');
         }
-        if ($this->appletparams['sendMD5Sum'] === 'true' && !isset($_POST['md5sum'])) {
+        if ('true' === $this->appletparams['sendMD5Sum'] && !isset($_POST['md5sum'])) {
             $this->abort('Required POST variable md5sum is missing');
         }
         $cnt = 0;
@@ -626,13 +634,13 @@ class jupload
             //$relpaths = (isset($_POST["relpathinfo$cnt"])) ? $_POST["relpathinfo$cnt"] : null;
             //$md5sums = (isset($_POST["md5sum$cnt"])) ? $_POST["md5sum$cnt"] : null;
 
-            if (gettype($relpaths) === 'string') {
+            if ('string' === gettype($relpaths)) {
                 $relpaths = [$relpaths];
             }
-            if (gettype($md5sums) === 'string') {
+            if ('string' === gettype($md5sums)) {
                 $md5sums = [$md5sums];
             }
-            if ($this->appletparams['sendMD5Sum'] === 'true' && !is_array($md5sums)) {
+            if ('true' === $this->appletparams['sendMD5Sum'] && !is_array($md5sums)) {
                 $this->abort('Expecting an array of MD5 checksums');
             }
             if (!is_array($relpaths)) {
@@ -644,19 +652,19 @@ class jupload
             // Check the MIME type (note: this is easily forged!)
             if (isset($this->classparams['allowed_mime_types']) && is_array($this->classparams['allowed_mime_types'])) {
                 if (!in_array($mimetypes[$cnt], $this->classparams['allowed_mime_types'], true)) {
-                    $this->abort('MIME type ' . $mimetypes[$cnt] . ' not allowed');
+                    $this->abort('MIME type '.$mimetypes[$cnt].' not allowed');
                 }
             }
             if (isset($this->classparams['allowed_file_extensions']) && is_array($this->classparams['allowed_file_extensions'])) {
                 $fileExtension = substr(strrchr($value['name'][$cnt], '.'), 1);
                 if (!in_array($fileExtension, $this->classparams['allowed_file_extensions'], true)) {
-                    $this->abort('File extension ' . $fileExtension . ' not allowed');
+                    $this->abort('File extension '.$fileExtension.' not allowed');
                 }
             }
 
             $dstdir = $this->classparams['destdir'];
-            $dstname = $dstdir . '/' . $this->classparams['tmp_prefix'] . session_id();
-            $tmpname = $dstdir . '/' . $this->classparams['tmp_prefix'] . 'tmp' . session_id();
+            $dstname = $dstdir.'/'.$this->classparams['tmp_prefix'].session_id();
+            $tmpname = $dstdir.'/'.$this->classparams['tmp_prefix'].'tmp'.session_id();
 
             // Controls are now done. Let's store the current uploaded files properties in an array, for future use.
             $files_data['name'] = $value['name'][$cnt];
@@ -689,16 +697,17 @@ class jupload
                 }
                 unlink($tmpname);
                 $cnt++;
+
                 continue;
             }
             //If we get here, the upload is a real one (no demo)
             if ($jupart) {
                 // got a chunk of a multi-part upload
                 $len = filesize($tmpname);
-                $_SESSION['RF'][$this->classparams['var_prefix'] . 'size'] += $len;
+                $_SESSION['RF'][$this->classparams['var_prefix'].'size'] += $len;
                 if ($len > 0) {
                     $src = fopen($tmpname, 'rb');
-                    $dst = fopen($dstname, ($jupart === 1) ? 'wb' : 'ab');
+                    $dst = fopen($dstname, (1 === $jupart) ? 'wb' : 'ab');
                     while ($len > 0) {
                         $rlen = ($len > 8192) ? 8192 : $len;
                         $buf = fread($src, $rlen);
@@ -724,10 +733,10 @@ class jupload
                     // This is the last chunk. Check total lenght and
                     // rename it to it's final name.
                     $dlen = filesize($dstname);
-                    if ($dlen !== $_SESSION['RF'][$this->classparams['var_prefix'] . 'size']) {
+                    if ($_SESSION['RF'][$this->classparams['var_prefix'].'size'] !== $dlen) {
                         $this->abort('file size mismatch');
                     }
-                    if ($this->appletparams['sendMD5Sum'] === 'true') {
+                    if ('true' === $this->appletparams['sendMD5Sum']) {
                         if ($md5sums[$cnt] !== md5_file($dstname)) {
                             $this->abort('MD5 checksum mismatch');
                         }
@@ -751,11 +760,11 @@ class jupload
                         unlink($dstname);
                     }
                     // reset session var
-                    $_SESSION['RF'][$this->classparams['var_prefix'] . 'size'] = 0;
+                    $_SESSION['RF'][$this->classparams['var_prefix'].'size'] = 0;
                 }
             } else {
                 // Got a single file upload. Trivial.
-                if ($this->appletparams['sendMD5Sum'] === 'true') {
+                if ('true' === $this->appletparams['sendMD5Sum']) {
                     if ($md5sums[$cnt] !== md5_file($tmpname)) {
                         $this->abort('MD5 checksum mismatch');
                     }
@@ -777,8 +786,8 @@ class jupload
             $cnt++;
         }
 
-        echo $this->appletparams['stringUploadSuccess'] . "\n";
-        $_SESSION['RF'][$this->classparams['var_prefix'] . 'files'] = $this->files;
+        echo $this->appletparams['stringUploadSuccess']."\n";
+        $_SESSION['RF'][$this->classparams['var_prefix'].'files'] = $this->files;
         session_write_close();
         exit;
     }
@@ -789,26 +798,26 @@ class jupload
 
         // If the applet checks for the serverProtocol, it issues a HEAD request
         // -> Simply return an empty doc.
-        if ($_SERVER['REQUEST_METHOD'] === 'HEAD') {
+        if ('HEAD' === $_SERVER['REQUEST_METHOD']) {
             // Nothing to do
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        } elseif ('GET' === $_SERVER['REQUEST_METHOD']) {
             // A GET request means: return upload page
             $this->logDebug('page_start', 'Entering GET management');
 
-            if (session_id() === '') {
+            if ('' === session_id()) {
                 session_start();
             }
             if (isset($_GET['afterupload'])) {
                 $this->logDebug('page_start', 'afterupload is set');
-                if (!isset($_SESSION['RF'][$this->classparams['var_prefix'] . 'files'])) {
+                if (!isset($_SESSION['RF'][$this->classparams['var_prefix'].'files'])) {
                     $this->abort('Invalid session (in afterupload, GET, check of $_SESSION["RF"]): files array is not set');
                 }
-                $this->files = $_SESSION['RF'][$this->classparams['var_prefix'] . 'files'];
+                $this->files = $_SESSION['RF'][$this->classparams['var_prefix'].'files'];
                 if (!is_array($this->files)) {
                     $this->abort('Invalid session (in afterupload, GET, check of is_array(files)): files is not an array');
                 }
                 // clear session data ready for new upload
-                $_SESSION['RF'][$this->classparams['var_prefix'] . 'files'] = [];
+                $_SESSION['RF'][$this->classparams['var_prefix'].'files'] = [];
 
                 // start intercepting the content of the calling page, to display the upload result.
                 ob_start([&$this, 'interceptAfterUpload']);
@@ -818,12 +827,12 @@ class jupload
                     session_regenerate_id(true);
                 }
                 $this->files = [];
-                $_SESSION['RF'][$this->classparams['var_prefix'] . 'size'] = 0;
-                $_SESSION['RF'][$this->classparams['var_prefix'] . 'files'] = $this->files;
+                $_SESSION['RF'][$this->classparams['var_prefix'].'size'] = 0;
+                $_SESSION['RF'][$this->classparams['var_prefix'].'files'] = $this->files;
                 // start intercepting the content of the calling page, to display the applet tag.
                 ob_start([&$this, 'interceptBeforeUpload']);
             }
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ('POST' === $_SERVER['REQUEST_METHOD']) {
             // If we got a POST request, this is the real work.
             if (isset($_GET['errormail'])) {
                 //Hum, an error occurs on server side. Let's manage the debug log, that we just received.

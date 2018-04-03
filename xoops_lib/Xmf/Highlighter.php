@@ -12,24 +12,23 @@
 namespace Xmf;
 
 /**
- * Highlighter
+ * Highlighter.
  *
  * @category  Xmf\Highlighter
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Highlighter
 {
     /**
-     * mbstring encoding
+     * mbstring encoding.
      */
     public const ENCODING = 'UTF-8';
 
     /**
-     * Apply highlight to words in body text
+     * Apply highlight to words in body text.
      *
      * Surround occurrences of words in body with pre in front and post
      * behind. Considers only occurrences of words outside of HTML tags.
@@ -55,7 +54,7 @@ class Highlighter
     }
 
     /**
-     * find needle in between html tags and add highlighting
+     * find needle in between html tags and add highlighting.
      *
      * @param string $needle   string to find
      * @param string $haystack html text to find needle in
@@ -67,6 +66,7 @@ class Highlighter
     protected static function splitOnTag($needle, $haystack, $pre, $post)
     {
         $encoding = static::ENCODING;
+
         return preg_replace_callback(
             '#((?:(?!<[/a-z]).)*)([^>]*>|$)#si',
             function ($capture) use ($needle, $pre, $post, $encoding) {
@@ -75,9 +75,9 @@ class Highlighter
                     $p1 = mb_stripos($haystack, $needle, 0, $encoding);
                     $l1 = mb_strlen($needle, $encoding);
                     $ret = '';
-                    while ($p1 !== false) {
-                        $ret .= mb_substr($haystack, 0, $p1, $encoding) . $pre
-                            . mb_substr($haystack, $p1, $l1, $encoding) . $post;
+                    while (false !== $p1) {
+                        $ret .= mb_substr($haystack, 0, $p1, $encoding).$pre
+                            .mb_substr($haystack, $p1, $l1, $encoding).$post;
                         $haystack = mb_substr($haystack, $p1 + $l1, mb_strlen($haystack), $encoding);
                         $p1 = mb_stripos($haystack, $needle, 0, $encoding);
                     }
@@ -85,13 +85,13 @@ class Highlighter
                     $p1 = stripos($haystack, $needle);
                     $l1 = strlen($needle);
                     $ret = '';
-                    while ($p1 !== false) {
-                        $ret .= substr($haystack, 0, $p1) . $pre . substr($haystack, $p1, $l1) . $post;
+                    while (false !== $p1) {
+                        $ret .= substr($haystack, 0, $p1).$pre.substr($haystack, $p1, $l1).$post;
                         $haystack = substr($haystack, $p1 + $l1);
                         $p1 = stripos($haystack, $needle);
                     }
                 }
-                $ret .= $haystack . $capture[2];
+                $ret .= $haystack.$capture[2];
 
                 return $ret;
             },

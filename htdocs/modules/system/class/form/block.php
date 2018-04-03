@@ -15,14 +15,13 @@ use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\Handlers\XoopsBlock;
 
 /**
- * Blocks Form Class
+ * Blocks Form Class.
  *
  * @category  Modules/system/class/form
- * @package   SystemBlockForm
  * @author    Andricq Nicolas (AKA MusS)
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SystemBlockForm extends Xoops\Form\ThemeForm
 {
@@ -32,7 +31,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
     private $obj = null;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param XoopsBlock $obj block object
      */
@@ -42,7 +41,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
     }
 
     /**
-     * getForm - get block edit form
+     * getForm - get block edit form.
      *
      * @param string $mode mode for form, edit or clone
      */
@@ -74,6 +73,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
             switch ($mode) {
                 case 'edit':
                     $title = SystemLocale::EDIT_BLOCK;
+
                     break;
                 case 'clone':
                     $title = SystemLocale::CLONE_BLOCK;
@@ -83,6 +83,7 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
                     } else {
                         $this->obj->setVar('block_type', XoopsBlock::BLOCK_TYPE_CLONED);
                     }
+
                     break;
             }
             $op = 'save';
@@ -143,29 +144,29 @@ class SystemBlockForm extends Xoops\Form\ThemeForm
                 $this->addElement(new Xoops\Form\Hidden('c_type', XoopsBlock::CUSTOM_HTML));
             }
         } else {
-            if ($this->obj->getVar('template') !== '') {
+            if ('' !== $this->obj->getVar('template')) {
                 $tplfile_handler = $xoops->getHandlerTplFile();
                 $btemplate = $tplfile_handler->
                     find($xoops->getConfig('template_set'), 'block', $this->obj->getVar('bid'));
                 if (count($btemplate) > 0) {
                     $this->addElement(new Xoops\Form\Label(
                         XoopsLocale::CONTENT,
-                        '<a href="' . \XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
-                        . $btemplate[0]->getVar('tpl_id') . '">' . SystemLocale::EDIT_TEMPLATE . '</a>'
+                        '<a href="'.\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
+                        .$btemplate[0]->getVar('tpl_id').'">'.SystemLocale::EDIT_TEMPLATE.'</a>'
                     ));
                 } else {
                     $btemplate2 = $tplfile_handler->find('default', 'block', $this->obj->getVar('bid'));
                     if (count($btemplate2) > 0) {
                         $this->addElement(new Xoops\Form\Label(
                             XoopsLocale::CONTENT,
-                            '<a href="' . \XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
-                            . $btemplate2[0]->getVar('tpl_id') . '" rel="external">'
-                            . SystemLocale::EDIT_TEMPLATE . '</a>'
+                            '<a href="'.\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
+                            .$btemplate2[0]->getVar('tpl_id').'" rel="external">'
+                            .SystemLocale::EDIT_TEMPLATE.'</a>'
                         ));
                     }
                 }
             }
-            if ($this->obj->getOptions() !== false) {
+            if (false !== $this->obj->getOptions()) {
                 $this->addElement(new Xoops\Form\Label(XoopsLocale::OPTIONS, $this->obj->getOptions()));
             } else {
                 $this->addElement(new Xoops\Form\Hidden('options', $this->obj->getVar('options')));

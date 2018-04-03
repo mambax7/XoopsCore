@@ -18,14 +18,12 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 // File status
 define('_PUBLISHER_STATUS_FILE_NOTSET', -1);
@@ -36,7 +34,6 @@ class PublisherFile extends XoopsObject
 {
     /**
      * @var Publisher
-     * @access public
      */
     public $publisher = null;
 
@@ -77,6 +74,7 @@ class PublisherFile extends XoopsObject
         $errors = [];
         if (!$this->publisher->getMimetypeHandler()->checkMimeTypes($post_field)) {
             $errors[] = _CO_PUBLISHER_MESSAGE_WRONG_MIMETYPE;
+
             return false;
         }
         if (empty($allowed_mimetypes)) {
@@ -90,13 +88,14 @@ class PublisherFile extends XoopsObject
             return true;
         }
         $errors = array_merge($errors, $uploader->getErrors(false));
+
         return false;
     }
 
     /**
-     * @param string      $post_field
-     * @param array       $allowed_mimetypes
-     * @param array       $errors
+     * @param string $post_field
+     * @param array  $allowed_mimetypes
+     * @param array  $errors
      *
      * @return bool
      */
@@ -112,21 +111,24 @@ class PublisherFile extends XoopsObject
         if (!is_dir(PublisherUtils::getUploadDir())) {
             mkdir(PublisherUtils::getUploadDir(), 0757);
         }
-        $uploader = new XoopsMediaUploader(PublisherUtils::getUploadDir() . '/', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new XoopsMediaUploader(PublisherUtils::getUploadDir().'/', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         if ($uploader->fetchMedia($post_field)) {
-            $uploader->setTargetFileName($itemid . '_' . $uploader->getMediaName());
+            $uploader->setTargetFileName($itemid.'_'.$uploader->getMediaName());
             if ($uploader->upload()) {
                 $this->setVar('filename', $uploader->getSavedFileName());
-                if ($this->getVar('name') === '') {
+                if ('' === $this->getVar('name')) {
                     $this->setVar('name', $this->getNameFromFilename());
                 }
                 $this->setVar('mimetype', $uploader->getMediaType());
+
                 return true;
             }
             $errors = array_merge($errors, $uploader->getErrors(false));
+
             return false;
         }
         $errors = array_merge($errors, $uploader->getErrors(false));
+
         return false;
     }
 
@@ -150,9 +152,11 @@ class PublisherFile extends XoopsObject
                 foreach ($errors as $error) {
                     $this->setErrors($error);
                 }
+
                 return false;
             }
         }
+
         return $this->publisher->getFileHandler()->insert($this, $force);
     }
 
@@ -172,7 +176,7 @@ class PublisherFile extends XoopsObject
      */
     public function notLoaded()
     {
-        return $this->getVar('itemid') === 0;
+        return 0 === $this->getVar('itemid');
     }
 
     /**
@@ -180,7 +184,7 @@ class PublisherFile extends XoopsObject
      */
     public function getFileUrl()
     {
-        return PublisherUtils::getUploadDir(false) . $this->getVar('filename');
+        return PublisherUtils::getUploadDir(false).$this->getVar('filename');
     }
 
     /**
@@ -188,7 +192,7 @@ class PublisherFile extends XoopsObject
      */
     public function getFilePath()
     {
-        return PublisherUtils::getUploadDir() . $this->getVar('filename');
+        return PublisherUtils::getUploadDir().$this->getVar('filename');
     }
 
     /**
@@ -196,7 +200,7 @@ class PublisherFile extends XoopsObject
      */
     public function getFileLink()
     {
-        return "<a href='" . PUBLISHER_URL . '/visit.php?fileid=' . $this->getVar('fileid') . "'>" . $this->getVar('name') . '</a>';
+        return "<a href='".PUBLISHER_URL.'/visit.php?fileid='.$this->getVar('fileid')."'>".$this->getVar('name').'</a>';
     }
 
     /**
@@ -204,11 +208,11 @@ class PublisherFile extends XoopsObject
      */
     public function getItemLink()
     {
-        return "<a href='" . PUBLISHER_URL . '/item.php?itemid=' . $this->getVar('itemid') . "'>" . $this->getVar('name') . '</a>';
+        return "<a href='".PUBLISHER_URL.'/item.php?itemid='.$this->getVar('itemid')."'>".$this->getVar('name').'</a>';
     }
 
     /**
-     * Update Counter
+     * Update Counter.
      */
     public function updateCounter()
     {
@@ -232,6 +236,7 @@ class PublisherFile extends XoopsObject
         $ret = $this->getVar('filename');
         $sep_pos = strpos($ret, '_');
         $ret = substr($ret, $sep_pos + 1, strlen($ret) - $sep_pos);
+
         return $ret;
     }
 }
@@ -242,7 +247,6 @@ class PublisherFile extends XoopsObject
  * of File class objects.
  *
  * @author  marcan <marcan@notrevie.ca>
- * @package Publisher
  */
 class PublisherFileHandler extends XoopsPersistableObjectHandler
 {
@@ -255,10 +259,10 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * delete a file from the database
+     * delete a file from the database.
      *
-     * @param XoopsObject|PublisherFile $file reference to the file to delete
-     * @param bool   $force
+     * @param XoopsObject|PublisherFile $file  reference to the file to delete
+     * @param bool                      $force
      *
      * @return bool FALSE if failed.
      */
@@ -269,11 +273,12 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
         if (is_file($file->getFilePath()) && unlink($file->getFilePath())) {
             $ret = parent::delete($file, $force);
         }
+
         return $ret;
     }
 
     /**
-     * delete files related to an item from the database
+     * delete files related to an item from the database.
      *
      * @param object $itemObj reference to the item which files to delete
      *
@@ -281,7 +286,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
      */
     public function deleteItemFiles(&$itemObj)
     {
-        if (strtolower(get_class($itemObj)) !== 'publisheritem') {
+        if ('publisheritem' !== strtolower(get_class($itemObj))) {
             return false;
         }
         $files = $this->getAllFiles($itemObj->getVar('itemid'));
@@ -291,19 +296,20 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
                 $result = false;
             }
         }
+
         return $result;
     }
 
     /**
-     * retrieve all files
+     * retrieve all files.
      *
-     * @param int     $itemid
-     * @param int     $status
-     * @param int     $limit
-     * @param int     $start
-     * @param string  $sort
-     * @param string  $order
-     * @param array   $category
+     * @param int    $itemid
+     * @param int    $status
+     * @param int    $limit
+     * @param int    $start
+     * @param string $sort
+     * @param string $order
+     * @param array  $category
      *
      * @return array array of {@link PublisherFile} objects
      */
@@ -326,7 +332,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
         $hasCategoryCriteria = false;
         $criteriaCategory = new CriteriaCompo();
         $category = (array) $category;
-        if (count($category) > 0 && $category[0] !== 0) {
+        if (count($category) > 0 && 0 !== $category[0]) {
             $hasCategoryCriteria = true;
             foreach ($category as $cat) {
                 $criteriaCategory->add(new Criteria('l.categoryid', $cat), 'OR');
@@ -334,7 +340,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
         }
         $criteriaItemid = new Criteria('o.itemid', $itemid);
         $criteria = new CriteriaCompo();
-        if ($itemid !== 0) {
+        if (0 !== $itemid) {
             $criteria->add($criteriaItemid);
         }
         if ($hasStatusCriteria) {
@@ -348,6 +354,7 @@ class PublisherFileHandler extends XoopsPersistableObjectHandler
         $criteria->setLimit($limit);
         $criteria->setStart($start);
         $files = $this->getByLink($criteria, ['o.*'], true);
+
         return $files;
     }
 }

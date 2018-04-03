@@ -12,7 +12,7 @@
 namespace Xoops\Form;
 
 /**
- * Captcha - captcha form element
+ * Captcha - captcha form element.
  *
  * For form creation:
  * Add form element where proper:
@@ -30,11 +30,10 @@ namespace Xoops\Form;
  * </code>
  *
  * @category  Xoops\Form\Captcha
- * @package   Xoops\Form
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2008-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Captcha extends Element
 {
@@ -44,11 +43,11 @@ class Captcha extends Element
     public $captchaHandler;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption    Caption (default defined in captcha/language/) or array of all attributes
      * @param string       $name       Name for the input box
-     * @param boolean      $skipmember Skip CAPTCHA check for members
+     * @param bool         $skipmember Skip CAPTCHA check for members
      * @param array        $configs    key/value pairs
      */
     public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = true, $configs = [])
@@ -80,7 +79,7 @@ class Captcha extends Element
     }
 
     /**
-     * setConfig
+     * setConfig.
      *
      * @param string $name name
      * @param mixed  $val  value
@@ -93,7 +92,7 @@ class Captcha extends Element
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -103,7 +102,7 @@ class Captcha extends Element
     }
 
     /**
-     * renderValidationJS
+     * renderValidationJS.
      *
      * @return string
      */

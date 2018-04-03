@@ -2,8 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
-
+require_once __DIR__.'/../../../init_new.php';
 
 class FormTest extends \PHPUnit\Framework\TestCase
 {
@@ -131,7 +130,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $name = 'form_name';
         $this->object->setExtra($name);
         $value = $this->object->getExtra();
-        $this->assertSame(' ' . $name, $value);
+        $this->assertSame(' '.$name, $value);
     }
 
     public function testGetRequired()
@@ -168,7 +167,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->renderValidationJS();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, 'Start Form Validation JavaScript') !== false);
+        $this->assertTrue(false !== strpos($value, 'Start Form Validation JavaScript'));
     }
 
     public function testAssign()

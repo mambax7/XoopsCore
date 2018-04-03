@@ -13,32 +13,31 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Smilies preloads
+ * Smilies preloads.
  *
  * @category  preloads
- * @package   SmiliesPreload
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SmiliesPreload extends PreloadItem
 {
     /**
-     * listen for core.service.locate.emoji event
+     * listen for core.service.locate.emoji event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateEmoji(Provider $provider)
     {
-        require dirname(__DIR__) . '/class/SmiliesProvider.php';
+        require dirname(__DIR__).'/class/SmiliesProvider.php';
         $provider->register(new SmiliesProvider());
     }
 
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -46,7 +45,7 @@ class SmiliesPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'smilies' => $path . '/class/helper.php',
+            'smilies' => $path.'/class/helper.php',
         ]);
     }
 }

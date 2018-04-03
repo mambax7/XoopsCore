@@ -14,8 +14,7 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  */
-
-require __DIR__ . '/admin_header.php';
+require __DIR__.'/admin_header.php';
 
 /* --------------------------------------------------------------- */
 
@@ -32,7 +31,7 @@ use Xoops\Core\Database\Schema\RemovePrefixes;
 // from $_POST we use keys: op, mod_dirname
 $op = Request::getCmd('op', 'selectmodule', 'POST');
 $mod_dirname = Request::getString('mod_dirname', '', 'POST');
-if ($op !== 'showschema' || empty($mod_dirname)) {
+if ('showschema' !== $op || empty($mod_dirname)) {
     $op = 'selectmodule';
 }
 
@@ -40,7 +39,7 @@ if ($op !== 'showschema' || empty($mod_dirname)) {
 $indexAdmin = new \Xoops\Module\Admin();
 $indexAdmin->displayNavigation('schematool.php');
 
-if ($op === 'showschema') {
+if ('showschema' === $op) {
     $helper = $xoops->getModuleHelper($mod_dirname);
     $mod_to_use = $helper->getModule();
     $mod_to_use->loadInfo($mod_dirname, false);
@@ -57,7 +56,6 @@ if ($op === 'showschema') {
             _MI_SCHEMATOOL_TITLE_NO_TABLES
         );
     } else {
-
         // get a schema manager
         $schemaManager = $xoops->db()->getSchemaManager();
 
@@ -91,7 +89,7 @@ if ($op === 'showschema') {
             }
         }
 
-        echo '<h2>' . _MI_SCHEMATOOL_EXPORT_SCHEMA . '</h2>';
+        echo '<h2>'._MI_SCHEMATOOL_EXPORT_SCHEMA.'</h2>';
         $yamldump = Yaml::dump($schemaArray, 5);
         //echo '<div contenteditable><pre>' . $yamldump . '</pre></div>';
         $schemadump = <<<EOT1
@@ -184,7 +182,7 @@ EOT2;
     $op = 'selectmodule';
 }
 
-if ($op === 'selectmodule') {
+if ('selectmodule' === $op) {
     $activeModules = $xoops->getActiveModules();
     natcasesort($activeModules);
 
@@ -202,8 +200,6 @@ if ($op === 'selectmodule') {
     $form->addElement(new Xoops\Form\Button('', 'button', XoopsLocale::A_SUBMIT, 'submit'));
     echo $form->render();
 }
-
-
 
 /*
     $importer = new ImportSchema;

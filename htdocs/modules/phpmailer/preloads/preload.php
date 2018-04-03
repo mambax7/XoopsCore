@@ -13,39 +13,38 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Gravatars preloads
+ * Gravatars preloads.
  *
  * @category  preloads
- * @package   GravatarsPreload
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class PhpmailerPreload extends PreloadItem
 {
     /**
-     * listen for core.service.locate.email event
+     * listen for core.service.locate.email event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateEmail(Provider $provider)
     {
-        $path = dirname(__DIR__) . '/class/PhpMailerEmailProvider.php';
+        $path = dirname(__DIR__).'/class/PhpMailerEmailProvider.php';
         require $path;
         $object = new PhpMailerEmailProvider();
         $provider->register($object);
     }
 
     /**
-     * listen for core.service.locate.useremailmessage event
+     * listen for core.service.locate.useremailmessage event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateUserEmailMessage(Provider $provider)
     {
-        $path = dirname(__DIR__) . '/class/PhpMailerMessageProvider.php';
+        $path = dirname(__DIR__).'/class/PhpMailerMessageProvider.php';
         require $path;
         $object = new PhpMailerMessageProvider();
         $provider->register($object);

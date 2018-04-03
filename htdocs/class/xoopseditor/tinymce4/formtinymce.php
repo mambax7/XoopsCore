@@ -11,12 +11,10 @@
 */
 
 /**
- *  TinyMCE adapter for XOOPS
+ *  TinyMCE adapter for XOOPS.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      editor
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id: formtinymce.php 8066 2011-11-06 05:09:33Z beckmi $
@@ -35,7 +33,7 @@ class XoopsFormTinymce4 extends XoopsEditor
     public $editor;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $configs Editor Options
      */
@@ -55,12 +53,12 @@ class XoopsFormTinymce4 extends XoopsEditor
         $this->configs['area_height'] = isset($this->configs['height']) ? $this->configs['height'] : $this->height;
         $this->configs['fonts'] = $this->getFonts();
 
-        require_once __DIR__ . '/tinymce.php';
+        require_once __DIR__.'/tinymce.php';
         $this->editor = new TinyMCE($this->configs);
     }
 
     /**
-     * Renders the Javascript function needed for client-side for validation
+     * Renders the Javascript function needed for client-side for validation.
      *
      * I'VE USED THIS EXAMPLE TO WRITE VALIDATION CODE
      * http://tinymce.moxiecode.com/punbb/viewtopic.php?id=12616
@@ -85,7 +83,7 @@ class XoopsFormTinymce4 extends XoopsEditor
     }
 
     /**
-     * get language
+     * get language.
      *
      * @return string
      */
@@ -98,7 +96,7 @@ class XoopsFormTinymce4 extends XoopsEditor
             $this->language = strtolower(constant('_XOOPS_EDITOR_TINYMCE4_LANGUAGE'));
         } else {
             $this->language = str_replace('_', '-', strtolower(_LANGCODE));
-            if (strtolower(_CHARSET) === 'utf-8') {
+            if ('utf-8' === strtolower(_CHARSET)) {
                 $this->language .= '_utf8';
             }
         }
@@ -116,7 +114,7 @@ class XoopsFormTinymce4 extends XoopsEditor
     }
 
     /**
-     * prepare HTML for output
+     * prepare HTML for output.
      *
      * @return string HTML
      */
@@ -129,13 +127,14 @@ class XoopsFormTinymce4 extends XoopsEditor
     }
 
     /**
-     * Check if compatible
+     * Check if compatible.
      *
      * @return boolean
      */
     public function isActive()
     {
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        return is_readable($xoops_root_path . $this->rootPath . '/tinymce.php');
+
+        return is_readable($xoops_root_path.$this->rootPath.'/tinymce.php');
     }
 }

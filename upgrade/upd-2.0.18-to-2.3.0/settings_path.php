@@ -10,20 +10,18 @@
 */
 
 /**
- * Installer path configuration page
+ * Installer path configuration page.
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
  * @since       2.3.0
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id$
  */
-
 if (!defined('XOOPS_ROOT_PATH')) {
     die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 }
@@ -37,22 +35,25 @@ function genPathCheckHtml($path, $valid)
         case 'data':
         default:
             $msg = XOOPS_PATH_FOUND;
+
             break;
         }
         $msg = $myts->htmlspecialchars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
-        return '<span class="result-y">y</span> ' . $msg;
+
+        return '<span class="result-y">y</span> '.$msg;
     }
     switch ($path) {
         case 'lib':
         case 'data':
         default:
             $msg = ERR_COULD_NOT_ACCESS;
+
             break;
         }
     $msg = $myts->htmlspecialchars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
-    return '<span class="result-x">x</span> ' . $msg;
-}
 
+    return '<span class="result-x">x</span> '.$msg;
+}
 
 $vars = $_SESSION['settings'];
 $ctrl = new PathStuffController();
@@ -75,13 +76,13 @@ $myts = MyTextSanitizer::getInstance();
     <?php if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
     ?>
     <div id="dataperms" class="x2-note">
-    <?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
+    <?php echo CHECKING_PERMISSIONS.'<br /><p>'.ERR_NEED_WRITE_ACCESS.'</p>'; ?>
     <ul class="diags">
     <?php foreach ($ctrl->permErrors['data'] as $path => $result) {
         if ($result) {
-            echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+            echo '<li class="success">'.sprintf(IS_WRITABLE, $path).'</li>';
         } else {
-            echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+            echo '<li class="failure">'.sprintf(IS_NOT_WRITABLE, $path).'</li>';
         }
     } ?>
     </ul>

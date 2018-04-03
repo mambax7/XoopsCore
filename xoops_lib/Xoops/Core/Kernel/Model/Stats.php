@@ -18,17 +18,16 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
  * Object stats handler class.
  *
  * @category  Xoops\Core\Kernel\Model\Stats
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 class Stats extends XoopsModelAbstract
 {
     /**
-     * count objects matching a condition
+     * count objects matching a condition.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -56,6 +55,7 @@ class Stats extends XoopsModelAbstract
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
             $qb = $criteria->renderQb($qb);
         }
+
         try {
             $result = $qb->execute();
             if (!$result) {
@@ -63,22 +63,25 @@ class Stats extends XoopsModelAbstract
             }
         } catch (\Exception $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+
             return 0;
         }
 
-        if ($groupBy === false) {
+        if (false === $groupBy) {
             list($count) = $result->fetch(\PDO::FETCH_NUM);
+
             return $count;
         }
         $ret = [];
         while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
+
         return $ret;
     }
 
     /**
-     * get counts matching a condition
+     * get counts matching a condition.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -112,6 +115,7 @@ class Stats extends XoopsModelAbstract
         while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
+
         return $ret;
     }
 }

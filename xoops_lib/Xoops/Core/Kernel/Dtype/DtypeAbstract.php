@@ -16,14 +16,13 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * DtypeAbstract
+ * DtypeAbstract.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeAbstract
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class DtypeAbstract
 {
@@ -38,7 +37,7 @@ abstract class DtypeAbstract
     protected $ts;
 
     /**
-     * Sets database and sanitizer for easy access
+     * Sets database and sanitizer for easy access.
      */
     public function __construct()
     {
@@ -47,7 +46,7 @@ abstract class DtypeAbstract
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -57,11 +56,12 @@ abstract class DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
+
         return $value;
     }
 
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -72,7 +72,7 @@ abstract class DtypeAbstract
     public function getVar(XoopsObject $obj, $key, $format)
     {
         $value = $obj->vars[$key]['value'];
-        if ($obj->vars[$key]['options'] !== '' && $value !== '') {
+        if ($obj->vars[$key]['options'] !== '' && '' !== $value) {
             switch (strtolower($format)) {
                 case 's':
                 case Dtype::FORMAT_SHOW:
@@ -86,6 +86,7 @@ abstract class DtypeAbstract
                         }
                         ++$i;
                     }
+
                     return implode(', ', $ret);
                 case 'e':
                 case Dtype::FORMAT_EDIT:
@@ -93,6 +94,7 @@ abstract class DtypeAbstract
                 default:
             }
         }
+
         return $value;
     }
 }

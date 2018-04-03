@@ -31,17 +31,16 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
  * Step #2: perform query
  *
  * @category  Xoops\Core\Kernel\Model\Sync
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 class Sync extends XoopsModelAbstract
 {
     /**
-     * Clean orphan objects in this handler (child table) that are not in parent table
+     * Clean orphan objects in this handler (child table) that are not in parent table.
      *
      * The parameters can be defined in the handler. Naming should be updated to reflect
      * standard relational terminology.
@@ -69,9 +68,10 @@ class Sync extends XoopsModelAbstract
             || empty($this->handler->field_link)
         ) {
             trigger_error(
-                "The link information is not set for '" . get_class($this->handler) . "' yet.",
+                "The link information is not set for '".get_class($this->handler)."' yet.",
                 E_USER_WARNING
             );
+
             return false;
         }
 
@@ -84,9 +84,9 @@ class Sync extends XoopsModelAbstract
             . "( SELECT DISTINCT `{$this->handler->field_link}` FROM `{$this->handler->table_link}`) )";
         */
         $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`"
-            . " LEFT JOIN `{$this->handler->table_link}` AS aa "
-            . " ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`"
-            . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
+            ." LEFT JOIN `{$this->handler->table_link}` AS aa "
+            ." ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`"
+            ." WHERE (aa.`{$this->handler->field_link}` IS NULL)";
 
         return $this->handler->db2->executeUpdate($sql);
     }

@@ -4,7 +4,7 @@ namespace Xoops\Core\Handler;
 
 use Xoops\Core\Database\Connection;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {

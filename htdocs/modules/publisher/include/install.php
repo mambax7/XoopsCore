@@ -10,18 +10,16 @@
 */
 
 /**
- * Publisher install
+ * Publisher install.
  *
  * @copyright       2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         publisher
  * @author          Richard Griffith <richard@geekwright.com>
  */
-
 use Xmf\Database\TableLoad;
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return boolean
  */
 function xoops_module_install_publisher($module)
@@ -29,9 +27,10 @@ function xoops_module_install_publisher($module)
     $xoops = Xoops::getInstance();
 
     $count = TableLoad::countRows('publisher_mimetypes');
-    if ($count === 0) {
+    if (0 === $count) {
         $filename = $xoops->path('modules/publisher/sql/publisher_mimetypes.yml');
         TableLoad::loadTableFromYamlFile('publisher_mimetypes', $filename);
     }
+
     return true;
 }

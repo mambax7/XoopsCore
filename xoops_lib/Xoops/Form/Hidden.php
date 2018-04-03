@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * Hidden - a hidden field
+ * Hidden - a hidden field.
  *
  * @category  Xoops\Form\Hidden
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Hidden extends Element
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $name  name attribute or array of all attributes
      * @param string       $value value attribute
@@ -44,13 +43,14 @@ class Hidden extends Element
     }
 
     /**
-     * render
+     * render.
      *
      * @return string rendered form element
      */
     public function render()
     {
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . $this->getExtra() . ' >' . "\n";
+
+        return '<input '.$attributes.$this->getExtra().' >'."\n";
     }
 }

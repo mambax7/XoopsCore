@@ -1,6 +1,6 @@
 <?php
 /**
- * Comments module
+ * Comments module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Comments
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
     /**
@@ -30,6 +28,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', Comments::STATUS_ACTIVE));
         $criteria->add(new Criteria('uid', $uid));
+
         return $comments->getHandlerComment()->getCount($criteria);
     }
 
@@ -46,6 +45,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
             $ret['name'] = Xoops::getInstance()->getHandlerModule()->getByDirname('comments')->getVar('name');
             $ret['link'] = Xoops::getInstance()->url('modules/comments/admin/main.php');
         }
+
         return $ret;
     }
 
@@ -59,7 +59,7 @@ class CommentsSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      * Expects an array containing:
      *    name  : Name for the Link
      *    link  : Link relative to module
-     *    image : Url of image to display, please use 16px*16px image
+     *    image : Url of image to display, please use 16px*16px image.
      *
      * @return array
      */

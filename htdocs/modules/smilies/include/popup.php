@@ -13,16 +13,14 @@ use Xmf\Request;
 use Xoops\Core\XoopsTpl;
 
 /**
- * smilies module
+ * smilies module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         smilies
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  */
-
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+include dirname(dirname(dirname(__DIR__))).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();

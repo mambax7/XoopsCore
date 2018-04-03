@@ -12,16 +12,15 @@
 use Xmf\Request;
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id: $
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $xoops = Xoops::getInstance();
 $helper = Banners::getInstance();
@@ -52,7 +51,6 @@ $admin_page->renderNavigation('banners.php');
 $info_msg = [sprintf(_AM_BANNERS_ALERT_INFO_MIMETYPES, implode(', ', $mimetypes)), sprintf(_AM_BANNERS_ALERT_INFO_MAXFILE, $upload_size / 1000)];
 
 switch ($op) {
-
     case 'list':
     default:
         // Define Stylesheet
@@ -63,7 +61,7 @@ switch ($op) {
         $admin_page->addTips(_AM_BANNERS_TIPS_BANNERS);
         $admin_page->addItemButton(_AM_BANNERS_BANNERS_ADD, 'banners.php?op=new', 'add');
         $admin_page->renderTips();
-        if ($client_Handler->getCount() === 0) {
+        if (0 === $client_Handler->getCount()) {
             echo $xoops->alert('error', _AM_BANNERS_BANNERS_ERROR_NOCLIENT);
         } else {
             $admin_page->renderButton();
@@ -95,13 +93,13 @@ switch ($op) {
                     $name = $name_client->getVar('bannerclient_name');
                 }
 
-                if ($impmade === 0) {
+                if (0 === $impmade) {
                     $percent = 0;
                 } else {
                     $percent = substr(100 * $clicks / $impmade, 0, 5);
                 }
-                if ($imptotal === 0) {
-                    $left = '' . _AM_BANNERS_BANNERS_UNLIMIT . '';
+                if (0 === $imptotal) {
+                    $left = ''._AM_BANNERS_BANNERS_UNLIMIT.'';
                 } else {
                     $left = $imptotal - $impmade;
                 }
@@ -110,9 +108,9 @@ switch ($op) {
                     $img .= html_entity_decode($htmlcode);
                 } else {
                     if (stristr($imageurl, '.swf')) {
-                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="'.$imageurl.'" style="z-index:100;">'.'<param name="movie" value="'.$imageurl.'" />'.'<param name="wmode" value="opaque" />'.'</object>';
                     } else {
-                        $img .= '<img src="' . $imageurl . '" alt="" />';
+                        $img .= '<img src="'.$imageurl.'" alt="" />';
                     }
                 }
 
@@ -130,7 +128,7 @@ switch ($op) {
         }
         // Display Page Navigation
         if ($banner_count > $nb_banners) {
-            $nav = new XoopsPageNav($banner_count, $nb_banners, $start, 'start', 'startF=' . $startF);
+            $nav = new XoopsPageNav($banner_count, $nb_banners, $start, 'start', 'startF='.$startF);
             $xoops->tpl()->assign('nav_menu_banner', $nav->renderNav(4));
         }
         // Display Finished Banners
@@ -155,7 +153,7 @@ switch ($op) {
                 $htmlcode = $banner_finish_arr[$i]->getVar('banner_htmlcode');
                 $impressions = $banner_finish_arr[$i]->getVar('banner_impmade');
                 $clicks = $banner_finish_arr[$i]->getVar('banner_clicks');
-                if ($impressions !== 0) {
+                if (0 !== $impressions) {
                     $percent = substr(100 * $clicks / $impressions, 0, 5);
                 } else {
                     $percent = 0;
@@ -166,9 +164,9 @@ switch ($op) {
                 } else {
                     $img = '<div id="xo-bannerfix">';
                     if (stristr($imageurl, '.swf')) {
-                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="'.$imageurl.'" style="z-index:100;">'.'<param name="movie" value="'.$imageurl.'" />'.'<param name="wmode" value="opaque" />'.'</object>';
                     } else {
-                        $img .= '<img src="' . $imageurl . '" alt="" />';
+                        $img .= '<img src="'.$imageurl.'" alt="" />';
                     }
 
                     $img .= '</div>';
@@ -193,9 +191,10 @@ switch ($op) {
         }
         // Display Page Navigation
         if ($banner_finish_count > $nb_banners) {
-            $nav = new XoopsPageNav($banner_finish_count, $nb_banners, $startF, 'startF', 'start=' . $start);
+            $nav = new XoopsPageNav($banner_finish_count, $nb_banners, $startF, 'startF', 'start='.$start);
             $xoops->tpl()->assign('nav_menu_bannerF', $nav->renderNav(4));
         }
+
         break;
 
     case 'new':
@@ -205,6 +204,7 @@ switch ($op) {
         $obj = $banner_Handler->create();
         $form = $helper->getForm($obj, 'banner');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -219,6 +219,7 @@ switch ($op) {
         } else {
             $xoops->redirect('banners.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'save':
@@ -236,8 +237,8 @@ switch ($op) {
         }
         $error_msg = '';
         $obj->setVar('banner_cid', Request::getInt('cid', 0));
-        if (preg_match('/^[0-9]*[0-9]+$|^[0-9]+[0-9]*$/', $_POST['imptotal']) === false) {
-            $error_msg .= XoopsLocale::E_YOU_NEED_A_POSITIVE_INTEGER . '<br />';
+        if (false === preg_match('/^[0-9]*[0-9]+$|^[0-9]+[0-9]*$/', $_POST['imptotal'])) {
+            $error_msg .= XoopsLocale::E_YOU_NEED_A_POSITIVE_INTEGER.'<br />';
             $obj->setVar('banner_imptotal', 0);
         } else {
             $obj->setVar('banner_imptotal', Request::getInt('imptotal', 0));
@@ -246,7 +247,7 @@ switch ($op) {
         $obj->setVar('banner_htmlbanner', Request::getInt('htmlbanner', 0));
         $obj->setVar('banner_htmlcode', Request::getString('htmlcode', ''));
 
-        $uploader_banners_img = new XoopsMediaUploader($xoops_upload_path . '/banners', $mimetypes, $upload_size, null, null);
+        $uploader_banners_img = new XoopsMediaUploader($xoops_upload_path.'/banners', $mimetypes, $upload_size, null, null);
 
         if ($uploader_banners_img->fetchMedia('banners_imageurl')) {
             $uploader_banners_img->setPrefix('banner');
@@ -254,17 +255,17 @@ switch ($op) {
             if (!$uploader_banners_img->upload()) {
                 $error_msg .= $uploader_banners_img->getErrors();
             } else {
-                $obj->setVar('banner_imageurl', $xoops_upload_url . '/banners/' . $uploader_banners_img->getSavedFileName());
+                $obj->setVar('banner_imageurl', $xoops_upload_url.'/banners/'.$uploader_banners_img->getSavedFileName());
             }
         } else {
-            if ($_POST['banners_imageurl'] === 'blank.gif') {
+            if ('blank.gif' === $_POST['banners_imageurl']) {
                 $obj->setVar('banner_imageurl', Request::getString('imageurl', ''));
             } else {
-                $obj->setVar('banner_imageurl', $xoops_upload_url . '/banners/' . Request::getString('banners_imageurl', ''));
+                $obj->setVar('banner_imageurl', $xoops_upload_url.'/banners/'.Request::getString('banners_imageurl', ''));
             }
         }
 
-        if ($error_msg === '') {
+        if ('' === $error_msg) {
             if ($banner_Handler->insert($obj)) {
                 $xoops->redirect('banners.php', 2, XoopsLocale::S_ITEM_SAVED);
             }
@@ -276,18 +277,19 @@ switch ($op) {
         $xoops->tpl()->assign('error_msg', $xoops->alert('error', $error_msg));
         $form = $helper->getForm($obj, 'banner');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
         $bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
-            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('banners.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
-                $namefile = substr_replace($obj->getVar('imageurl'), '', 0, strlen($xoops_url . '/uploads/banners/'));
-                $urlfile = $xoops_root_path . '/uploads/banners/' . $namefile;
+                $namefile = substr_replace($obj->getVar('imageurl'), '', 0, strlen($xoops_url.'/uploads/banners/'));
+                $urlfile = $xoops_root_path.'/uploads/banners/'.$namefile;
                 if ($banner_Handler->delete($obj)) {
                     // delete banner
                     if (is_file($urlfile)) {
@@ -304,21 +306,22 @@ switch ($op) {
                 if ($obj->getVar('banner_htmlbanner')) {
                     $img .= html_entity_decode($obj->getVar('banner_htmlcode'));
                 } else {
-                    if (strtolower(substr($imageurl, strrpos($imageurl, '.'))) === '.swf') {
+                    if ('.swf' === strtolower(substr($imageurl, strrpos($imageurl, '.')))) {
                         $img .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0" width="468" height="60">';
                         $img .= "<param name=movie value=\"${imageurl}\">";
                         $img .= "<embed src=\"${imageurl}\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
                         $img .= '</embed>';
                         $img .= '</object>';
                     } else {
-                        $img .= "<img src='" . $imageurl . "' alt='' />";
+                        $img .= "<img src='".$imageurl."' alt='' />";
                     }
                 }
-                echo $xoops->confirm(['ok' => 1, 'bid' => $bid, 'op' => 'delete'], 'banners.php', XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM . '<br \>' . $img . '<br \>');
+                echo $xoops->confirm(['ok' => 1, 'bid' => $bid, 'op' => 'delete'], 'banners.php', XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM.'<br \>'.$img.'<br \>');
             }
         } else {
             $xoops->redirect('banners.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'reload':
@@ -334,6 +337,7 @@ switch ($op) {
             $xoops->redirect('banners.php', 2, _AM_BANNERS_DBUPDATED);
         }
         echo $xoops->alert('error', $obj->getHtmlErrors());
+
         break;
 }
 $xoops->footer();

@@ -12,15 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
 $doNotStartPrint = true;
 $noTitle = true;
 $smartPopup = true;
-include_once __DIR__ . '/print.php';
+include_once __DIR__.'/print.php';

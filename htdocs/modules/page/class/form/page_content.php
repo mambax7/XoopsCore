@@ -10,16 +10,14 @@
 */
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class PagePage_contentForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -36,7 +34,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         $tabTray = new Xoops\Form\TabTray('', 'uniqueid');
 
         /**
-         * Main
+         * Main.
          */
         $tab1 = new Xoops\Form\Tab(PageLocale::TAB_MAIN, 'main');
 
@@ -75,7 +73,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         $tabTray->addElement($tab1);
 
         /**
-         * Metas
+         * Metas.
          */
         $tab2 = new Xoops\Form\Tab(PageLocale::TAB_METAS, 'metas');
         //content_mkeyword
@@ -86,7 +84,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         $tabTray->addElement($tab2);
 
         /**
-         * Options
+         * Options.
          */
         $tab3 = new Xoops\Form\Tab(PageLocale::TAB_OPTIONS, 'options');
         //Options
@@ -94,7 +92,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         $checkbox = new Xoops\Form\Checkbox(XoopsLocale::OPTIONS, 'content_option', $content_option, false);
         $checkbox->setDescription(PageLocale::CONTENT_OPTIONS_DSC);
         foreach ($obj->options as $option) {
-            $checkbox->addOption($option, \Xoops\Locale::translate('L_CONTENT_DO' . strtoupper($option), 'page'));
+            $checkbox->addOption($option, \Xoops\Locale::translate('L_CONTENT_DO'.strtoupper($option), 'page'));
         }
         $tab3->addElement($checkbox);
         //maindisplay
@@ -104,7 +102,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
 
         $tabTray->addElement($tab3);
 
-        /**
+        /*
          * Permissions
          */
         if ($helper->isUserAdmin()) {
@@ -131,7 +129,7 @@ class PagePage_contentForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('content_id', $obj->getVar('content_id')));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
         $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));

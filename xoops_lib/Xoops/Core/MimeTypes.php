@@ -14,26 +14,25 @@ namespace Xoops\Core;
 use Dflydev\ApacheMimeTypes\PhpRepository;
 
 /**
- * MimeTypes
+ * MimeTypes.
  *
  * YProvide translation from file extension to mimetype and back.
  *
  * At present, this class expects the symfony/yaml package.
  *
  * @category  Xoops\Core\MimeTypes
- * @package   MimeTypes
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @see       https://github.com/dflydev/dflydev-apache-mime-types
  * @since     1.0
  */
 class MimeTypes
 {
     /**
-     * findExtensions - given a mimetype, get array of possible file extensions
+     * findExtensions - given a mimetype, get array of possible file extensions.
      *
      * @param string $type mimetype
      *
@@ -42,11 +41,12 @@ class MimeTypes
     public static function findExtensions($type)
     {
         $mt = new PhpRepository();
+
         return $mt->findExtensions($type);
     }
 
     /**
-     * findType - given a file extensions, return applicable mimetype
+     * findType - given a file extensions, return applicable mimetype.
      *
      * @param string $extension file extension
      *
@@ -55,6 +55,7 @@ class MimeTypes
     public static function findType($extension)
     {
         $mt = new PhpRepository();
+
         return $mt->findType(strtolower($extension));
     }
 }

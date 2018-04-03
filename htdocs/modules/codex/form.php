@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -76,7 +75,6 @@ $label = new Xoops\Form\Label('Label', 'label', 'label');
 $label->setDescription('Description Label');
 $form->addElement($label, true);
 
-
 $color = new Xoops\Form\ColorPicker('Color', 'color');
 $color->setDescription('Description Color');
 $form->addElement($color, true);
@@ -117,8 +115,8 @@ $select_tray->addOption(4, 'Select_tray 4');
 $select_tray->addOption(5, 'Select_tray 5');
 $select_tray->addOption(6, 'Select_tray 6');
 $select_tray->setDescription('Description Select_tray');
-$testtray ->addElement($select_tray, true);
-$testtray ->addElement($select_tray);
+$testtray->addElement($select_tray, true);
+$testtray->addElement($select_tray);
 $form->addElement($testtray);
 
 $buttonSubmit = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');

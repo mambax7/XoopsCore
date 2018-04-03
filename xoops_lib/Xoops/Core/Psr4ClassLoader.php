@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2013 PHP Framework Interop Group
+ * Copyright (c) 2013 PHP Framework Interop Group.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,13 +79,12 @@ namespace Xoops\Core;
  * @endcode
  *
  * @category  Xoops\Core\Psr4ClassLoader
- * @package   Xoops
  * @author    https://github.com/php-fig/fig-standards/
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 PHP Framework Interop Group
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   MIT (see above)
- * @link      https://github.com/php-fig/fig-standards/wiki/PSR-4-Example-Implementations
+ * @see      https://github.com/php-fig/fig-standards/wiki/PSR-4-Example-Implementations
  * @see       http://www.php-fig.org/
  */
 class Psr4ClassLoader
@@ -99,7 +98,7 @@ class Psr4ClassLoader
     protected $prefixes = [];
 
     /**
-     * addLoader sets all basic options and registers the autoloader
+     * addLoader sets all basic options and registers the autoloader.
      *
      * @param type  $namespace namespace
      * @param mixed $path      path(s) to the namespace's directories
@@ -120,6 +119,7 @@ class Psr4ClassLoader
             $loader->addNamespace($namespace, $path);
         }
         $loader->register();
+
         return $loader;
     }
 
@@ -143,14 +143,14 @@ class Psr4ClassLoader
     public function addNamespace($prefix, $base_dir, $prepend = false)
     {
         // normalize namespace prefix
-        $prefix = trim($prefix, '\\') . '\\';
+        $prefix = trim($prefix, '\\').'\\';
 
         // normalize the base directory with a trailing separator
-        $base_dir = rtrim($base_dir, '/') . DIRECTORY_SEPARATOR;
-        $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
+        $base_dir = rtrim($base_dir, '/').DIRECTORY_SEPARATOR;
+        $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR).'/';
 
         // initialize the namespace prefix array
-        if (isset($this->prefixes[$prefix]) === false) {
+        if (false === isset($this->prefixes[$prefix])) {
             $this->prefixes[$prefix] = [];
         }
 
@@ -167,7 +167,7 @@ class Psr4ClassLoader
      *
      * @param string $class The fully-qualified class name.
      *
-     * @return string|false  The mapped file name on success, or boolean false on
+     * @return string|false The mapped file name on success, or boolean false on
      * failure.
      */
     public function loadClass($class)
@@ -186,7 +186,7 @@ class Psr4ClassLoader
 
             // try to load a mapped file for the prefix and relative class
             $mapped_file = $this->loadMappedFile($prefix, $relative_class);
-            if ($mapped_file !== false) {
+            if (false !== $mapped_file) {
                 return $mapped_file;
             }
 
@@ -205,13 +205,13 @@ class Psr4ClassLoader
      * @param string $prefix         The namespace prefix.
      * @param string $relative_class The relative class name.
      *
-     * @return false|string  Boolean false if no mapped file can be loaded, or the
+     * @return false|string Boolean false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
      */
     protected function loadMappedFile($prefix, $relative_class)
     {
         // are there any base directories for this namespace prefix?
-        if (isset($this->prefixes[$prefix]) === false) {
+        if (false === isset($this->prefixes[$prefix])) {
             return false;
         }
 
@@ -221,8 +221,8 @@ class Psr4ClassLoader
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
             $file = $base_dir
-                  . str_replace('\\', '/', $relative_class)
-                  . '.php';
+                  .str_replace('\\', '/', $relative_class)
+                  .'.php';
 
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {
@@ -240,7 +240,7 @@ class Psr4ClassLoader
      *
      * @param string $file The file to require.
      *
-     * @return bool   True if the file exists, false if not.
+     * @return bool True if the file exists, false if not.
      */
     protected function requireFile($file)
     {

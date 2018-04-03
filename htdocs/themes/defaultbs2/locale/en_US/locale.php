@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class Defaultbs2ThemeLocale extends DefaultThemeLocaleEn_US
 {
 }

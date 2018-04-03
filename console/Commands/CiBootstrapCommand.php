@@ -12,7 +12,7 @@ use XoopsBaseConfig;
 class CiBootstrapCommand extends Command
 {
     /**
-     * establish the command configuration
+     * establish the command configuration.
      */
     protected function configure()
     {
@@ -28,10 +28,10 @@ EOT
     }
 
     /**
-     * Write mainfile.php using specified configFile
+     * Write mainfile.php using specified configFile.
      *
-     * @param string $configFile fully qualified path to YAML configuration file
-     * @param string $mainfile   fully qualified name of mainfile to write
+     * @param  string        $configFile fully qualified path to YAML configuration file
+     * @param  string        $mainfile   fully qualified name of mainfile to write
      * @return integer|false
      */
     protected function createMainfile($configFile, $mainfile)
@@ -50,42 +50,43 @@ if (!class_exists('XoopsBaseConfig', false)) {
 }
 EOT;
         $lines = str_replace('<{$xoopsbaseconfigs}>', $configFile, $lines);
+
         return file_put_contents($mainfile, $lines);
     }
 
     /**
-     * This builds a config file suitable for travis-ci.org
+     * This builds a config file suitable for travis-ci.org.
      *
-     * @param string $configFile fully qualified path to YAML configuration file
-     * @param string $baseDir    base directory
+     * @param  string        $configFile fully qualified path to YAML configuration file
+     * @param  string        $baseDir    base directory
      * @return integer|false
      */
     protected function createConfigFile($configFile, $baseDir)
     {
         $url = 'http://localhost';
-        $webRoot = $baseDir . '/htdocs';
+        $webRoot = $baseDir.'/htdocs';
         $configs = [
             'root-path' => $webRoot,
-            'lib-path' => $baseDir . '/xoops_lib',
-            'var-path' => $baseDir . '/xoops_data',
-            'trust-path' => $baseDir . '/xoops_lib',
+            'lib-path' => $baseDir.'/xoops_lib',
+            'var-path' => $baseDir.'/xoops_data',
+            'trust-path' => $baseDir.'/xoops_lib',
             'url' => $url,
             'prot' => 'http://',
-            'asset-path' => $webRoot . '/assets',
-            'asset-url' => $url . '/assets',
-            'themes-path' => $webRoot . '/themes',
-            'themes-url' => $url . '/themes',
-            'adminthemes-path' => $webRoot . '/modules/system/themes',
-            'adminthemes-url' => $url . '/modules/system/themes',
-            'media-path' => $webRoot . '/media',
-            'media-url' => $url . '/media',
-            'uploads-path' => $webRoot . '/uploads',
-            'uploads-url' => $url . '/uploads',
+            'asset-path' => $webRoot.'/assets',
+            'asset-url' => $url.'/assets',
+            'themes-path' => $webRoot.'/themes',
+            'themes-url' => $url.'/themes',
+            'adminthemes-path' => $webRoot.'/modules/system/themes',
+            'adminthemes-url' => $url.'/modules/system/themes',
+            'media-path' => $webRoot.'/media',
+            'media-url' => $url.'/media',
+            'uploads-path' => $webRoot.'/uploads',
+            'uploads-url' => $url.'/uploads',
             'cookie-domain' => '',
             'cookie-path' => '/',
-            'smarty-cache' => $baseDir . '/xoops_data/caches/smarty_cache',
-            'smarty-compile' => $baseDir . '/xoops_data/caches/smarty_compile',
-            'smarty-xoops-plugins' => $baseDir . '/xoops_lib/smarty/xoops_plugins',
+            'smarty-cache' => $baseDir.'/xoops_data/caches/smarty_cache',
+            'smarty-compile' => $baseDir.'/xoops_data/caches/smarty_compile',
+            'smarty-xoops-plugins' => $baseDir.'/xoops_lib/smarty/xoops_plugins',
             'db-type' => 'pdo_mysql',
             'db-charset' => 'utf8mb4',
             'db-prefix' => 'x300',
@@ -121,8 +122,9 @@ EOT;
         $mainfile = $XContainer->get('mainfile');
         $baseDir = dirname($mainfile, 2);
         if (!file_exists($configFile)) {
-            if ($this->createConfigFile($configFile, $baseDir) === false) {
+            if (false === $this->createConfigFile($configFile, $baseDir)) {
                 $output->writeln(sprintf('<error>Could not write file %s!</error>', $configFile));
+
                 return;
             }
             $output->writeln(sprintf('<info>Created config file %s.</info>', $configFile));
@@ -131,8 +133,9 @@ EOT;
         }
 
         if (!file_exists($mainfile)) {
-            if ($this->createMainfile($configFile, $mainfile) === false) {
+            if (false === $this->createMainfile($configFile, $mainfile)) {
                 $output->writeln(sprintf('<error>Could not write %s!</error>', $mainfile));
+
                 return;
             }
             $output->writeln(sprintf('<info>Wrote mainfile %s</info>', $mainfile));
@@ -141,7 +144,7 @@ EOT;
         }
 
         if (!class_exists('\XoopsBaseConfig', false)) {
-            include $baseDir . '/htdocs/class/XoopsBaseConfig.php';
+            include $baseDir.'/htdocs/class/XoopsBaseConfig.php';
             XoopsBaseConfig::getInstance($configFile);
         }
         CacheManager::createDefaultConfig();

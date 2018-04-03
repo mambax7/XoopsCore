@@ -14,20 +14,19 @@ use Xoops\Core\Kernel\CriteriaCompo;
 use Xoops\Core\Kernel\Handlers\XoopsGroup;
 
 /**
- * Group Form Class
+ * Group Form Class.
  *
  * @category  Modules/system/class/form
- * @package   SystemGroupForm
  * @author    Andricq Nicolas (AKA MusS)
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class SystemGroupForm extends Xoops\Form\ThemeForm
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param XoopsGroup $obj group object
      */
@@ -70,12 +69,12 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
 
         $s_cat_checkbox = new Xoops\Form\Checkbox('', 'system_catids', $s_cat_value);
         //$s_cat_checkbox->columns = 6;
-        $admin_dir = \XoopsBaseConfig::get('root-path') . '/modules/system/admin/';
+        $admin_dir = \XoopsBaseConfig::get('root-path').'/modules/system/admin/';
         $dirlist = XoopsLists::getDirListAsArray($admin_dir);
         foreach ($dirlist as $file) {
-            include \XoopsBaseConfig::get('root-path') . '/modules/system/admin/' . $file . '/xoops_version.php';
+            include \XoopsBaseConfig::get('root-path').'/modules/system/admin/'.$file.'/xoops_version.php';
             if (!empty($modversion['category'])) {
-                if ($xoops->getModuleConfig('active_' . $file, 'system') === 1) {
+                if (1 === $xoops->getModuleConfig('active_'.$file, 'system')) {
                     $s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
                 }
             }
@@ -124,7 +123,7 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
 
         $block_handler = $xoops->getHandlerBlock();
         $blocks_obj = $block_handler->getDistinctObjects(
-            new Criteria('mid', "('" . implode("', '", array_keys($module_list)) . "')", 'IN'),
+            new Criteria('mid', "('".implode("', '", array_keys($module_list))."')", 'IN'),
             true
         );
 
@@ -145,12 +144,12 @@ class SystemGroupForm extends Xoops\Form\ThemeForm
         foreach (array_keys($blocks_module) as $mid) {
             $new_blocks_array = [];
             foreach ($blocks_module[$mid] as $key => $value) {
-                $new_blocks_array[$key] = "<a href='" . \XoopsBaseConfig::get('url')
-                    . "/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid={$key}' "
-                    . "title='ID: {$key}' rel='external'>{$value}</a>";
+                $new_blocks_array[$key] = "<a href='".\XoopsBaseConfig::get('url')
+                    ."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid={$key}' "
+                    ."title='ID: {$key}' rel='external'>{$value}</a>";
             }
             $r_block_checkbox = new Xoops\Form\Checkbox(
-                '<strong>' . $module_list[$mid] . '</strong><br />',
+                '<strong>'.$module_list[$mid].'</strong><br />',
                 'read_bids[]',
                 $r_block_value
             );

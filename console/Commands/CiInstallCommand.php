@@ -13,7 +13,7 @@ use XoopsLoad;
 class CiInstallCommand extends Command
 {
     /**
-     * establish the command configuration
+     * establish the command configuration.
      */
     protected function configure()
     {
@@ -31,20 +31,20 @@ EOT
     }
 
     /**
-     * execute the command
+     * execute the command.
      *
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         // install the 'system' module
         $xoops = Xoops::getInstance();
         $module = 'system';
         $output->writeln(sprintf('Installing %s', $module));
-        if ($xoops->getModuleByDirname($module) !== false) {
+        if (false !== $xoops->getModuleByDirname($module)) {
             $output->writeln(sprintf('<error>%s module is already installed!</error>', $module));
+
             return;
         }
         $xoops->setTpl(new XoopsTpl());
@@ -62,7 +62,7 @@ EOT
                 $output->writeln(strip_tags($message));
             }
         }
-        if ($result === false) {
+        if (false === $result) {
             $output->writeln(sprintf('<error>Install of %s module failed!</error>', $module));
         } else {
             $output->writeln(sprintf('<info>Install of %s module completed.</info>', $module));

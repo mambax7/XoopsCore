@@ -12,7 +12,7 @@
 namespace Xoops\Core\Service;
 
 /**
- * Null Service Provider object
+ * Null Service Provider object.
  *
  * This provider will be used whenever there is no provider defined
  * for the service name requested. This will allow service consumers
@@ -24,12 +24,11 @@ namespace Xoops\Core\Service;
  * isset() will return false.
  *
  * @category  Xoops\Core\Service\NullProvider
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class NullProvider extends Provider
@@ -38,7 +37,7 @@ class NullProvider extends Provider
     private $response = null;
 
     /**
-     * __construct
+     * __construct.
      *
      *
      * @param string $service service name (case sensitive)
@@ -51,7 +50,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * Any property writes will go here
+     * Any property writes will go here.
      *
      * @param string $name  not used
      * @param mixed  $value not used
@@ -61,7 +60,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * Any property reads will go here and return null
+     * Any property reads will go here and return null.
      *
      * @param string $name not used
      */
@@ -71,7 +70,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * Any isset() or empty() on a property will go here and return false
+     * Any isset() or empty() on a property will go here and return false.
      *
      * @param string $name not used
      *
@@ -83,7 +82,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * Any property unset() will go here
+     * Any property unset() will go here.
      *
      * @param string $name not used
      */
@@ -92,7 +91,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * All non-static methods go here and will return null response
+     * All non-static methods go here and will return null response.
      *
      * @param string $name      not used
      * @param mixed  $arguments not used
@@ -105,7 +104,7 @@ class NullProvider extends Provider
     }
 
     /**
-     * All static methods go here and will return null response
+     * All static methods go here and will return null response.
      *
      * @param string $name      not used
      * @param mixed  $arguments not used
@@ -116,13 +115,14 @@ class NullProvider extends Provider
     {
         $response = new Response();
         $response->setSuccess(false)->addErrorMessage(sprintf('No provider installed for %s', get_called_class()));
+
         return $response;
     }
 
     /**
-     * isAvailable - indicate the (lack of) availability of an actual provider
+     * isAvailable - indicate the (lack of) availability of an actual provider.
      *
-     * @return boolean false to indicate no provider is available
+     * @return bool false to indicate no provider is available
      */
     public function isAvailable()
     {

@@ -17,14 +17,13 @@ use Xoops\Core\Locale\Punic\Calendar;
 use Xoops\Core\Locale\Time;
 
 /**
- * XOOPS localization abstract
+ * XOOPS localization abstract.
  *
  * @category  Xoops\Locale
- * @package   Xoops\Locale\Abstract
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class AbstractLocale
 {
@@ -47,11 +46,11 @@ abstract class AbstractLocale
      */
     public static function isRtl()
     {
-        return Misc::getCharacterOrder() === 'right-to-left';
+        return 'right-to-left' === Misc::getCharacterOrder();
     }
 
     /**
-     * todo, do not forget to set this on locale load
+     * todo, do not forget to set this on locale load.
      */
     public static function setLocale()
     {
@@ -59,7 +58,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * getCharset - return current character set, always UTF-8
+     * getCharset - return current character set, always UTF-8.
      *
      * @return string character set
      */
@@ -69,7 +68,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * getLocale - return the current locale
+     * getLocale - return the current locale.
      *
      * @return string
      */
@@ -79,7 +78,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * getLangCode - return language code for the current locale (locale with '-' separator)
+     * getLangCode - return language code for the current locale (locale with '-' separator).
      *
      * @return string
      */
@@ -89,12 +88,13 @@ abstract class AbstractLocale
     }
 
     /**
-     * getLegacyLanguage - return legacy language code for the current locale
+     * getLegacyLanguage - return legacy language code for the current locale.
      * @return string
      */
     public static function getLegacyLanguage()
     {
         $legacyLanguages = \Xoops\Core\Locale\LegacyCodes::getLegacyName(\Xoops\Locale::getCurrent());
+
         return reset($legacyLanguages);
     }
 
@@ -112,7 +112,7 @@ abstract class AbstractLocale
      *  - fantasy
      *  - monospace
      *  - sans-serif
-     *  - serif
+     *  - serif.
      *
      * @return string[]
      */
@@ -135,7 +135,7 @@ abstract class AbstractLocale
      *        font-size: 150%;
      *    }
      * Then classes can be relative to that base em
-     * CJK fonts may need to be shown in a larger size due to complex glyphs
+     * CJK fonts may need to be shown in a larger size due to complex glyphs.
      *
      * @return array
      */
@@ -161,21 +161,22 @@ abstract class AbstractLocale
     }
 
     /**
-     * @param mixed   $str
-     * @param integer $start
-     * @param integer $length
-     * @param string  $ellipsis
+     * @param mixed  $str
+     * @param int    $start
+     * @param int    $length
+     * @param string $ellipsis
      *
      * @return string
      */
     public static function substr($str, $start, $length, $ellipsis = '…')
     {
         $str2 = mb_strcut($str, $start, $length - strlen($ellipsis));
-        return $str2 . (mb_strlen($str) - $start !== mb_strlen($str2) ? $ellipsis : '');
+
+        return $str2.(mb_strlen($str) - $start !== mb_strlen($str2) ? $ellipsis : '');
     }
 
     /**
-     *  filter to UTF-8, converts invalid $text as CP1252 and forces NFC normalization
+     *  filter to UTF-8, converts invalid $text as CP1252 and forces NFC normalization.
      *
      * @param mixed $text
      *
@@ -201,7 +202,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * XoopsLocalAbstract::trim()
+     * XoopsLocalAbstract::trim().
      *
      * @param mixed $text
      *
@@ -215,7 +216,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * Function to display formatted times in user timezone
+     * Function to display formatted times in user timezone.
      *
      * @param mixed  $time
      * @param string $format Format codes ()
@@ -253,7 +254,7 @@ abstract class AbstractLocale
             case 'custom':
             case 'c':
                 $specialName = Calendar::getDateRelativeName($workingTime, true);
-                if ($specialName !== '') {
+                if ('' !== $specialName) {
                     return $specialName;
                 }
                 // no break - fall through
@@ -287,17 +288,21 @@ abstract class AbstractLocale
 
             case 'rss':
                 $workingTime->setTimezone(new \DateTimeZone('UTC'));
+
                 return $workingTime->format($workingTime::RSS);
 
             case 'mysql':
                 $workingTime->setTimezone(new \DateTimeZone('UTC'));
+
                 return $workingTime->format('Y-m-d H:i:s');
 
             default:
-                if ($format !== '') {
+                if ('' !== $format) {
                     return $workingTime->format($format);
                 }
+
                 return Time::formatDateTime($workingTime, 'long');
+
                 break;
         }
     }
@@ -330,7 +335,7 @@ abstract class AbstractLocale
     }
 
     /**
-     * Sort array values according to current locale rules, maintaining index association
+     * Sort array values according to current locale rules, maintaining index association.
      *
      * @param array $array to sort
      */

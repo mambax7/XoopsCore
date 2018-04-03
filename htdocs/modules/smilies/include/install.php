@@ -10,21 +10,20 @@
 */
 
 /**
- * smilies module - install supplement for smilies module
+ * smilies module - install supplement for smilies module.
  *
  * @copyright XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package   smilies
  * @since     2.6.0
  * @author    Richard Griffith <richard@geekwright.com>
  */
 
 /**
- * xoops_module_install_smilies - install supplement for smilies module
+ * xoops_module_install_smilies - install supplement for smilies module.
  *
  * @param object &$module module object
  *
- * @return boolean true on success
+ * @return bool true on success
  */
 function xoops_module_install_smilies(&$module)
 {
@@ -59,5 +58,6 @@ function xoops_module_install_smilies(&$module)
         ];
         $db->insertPrefix('smilies', $smiley, $types);
     }
+
     return true;
 }

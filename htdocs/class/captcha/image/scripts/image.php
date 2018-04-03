@@ -10,22 +10,20 @@
 */
 
 /**
- * CAPTCHA class For XOOPS
+ * CAPTCHA class For XOOPS.
  *
  * PHP 5.3
  *
  * @category  Xoops\Class\Captcha\CaptchaImage
- * @package   CaptchaImage
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   $Id$
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
-
-require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
-require_once __DIR__ . '/imageclass.php';
+require dirname(dirname(dirname(dirname(__DIR__)))).'/mainfile.php';
+require_once __DIR__.'/imageclass.php';
 Xoops::getInstance()->disableErrorReporting();
 $image_handler = new XoopsCaptchaImageHandler();
 $image_handler->loadImage();

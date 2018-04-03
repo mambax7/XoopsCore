@@ -12,10 +12,8 @@
 /**
  * @copyright XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package   qrcode
  * @author    Laurent JEN - aka DuGris
  */
-
 $modversion = [];
 $modversion['name'] = _MI_QRCODE_NAME;
 $modversion['description'] = _MI_QRCODE_DSC;

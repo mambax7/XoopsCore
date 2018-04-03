@@ -21,12 +21,11 @@ use Xmf\Language;
  * helper methods.
  *
  * @category  Xmf\Module\Helper\GenericHelper
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 abstract class GenericHelper extends AbstractHelper
 {
@@ -60,13 +59,13 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * get the module object
+     * get the module object.
      *
      * @return \XoopsModule
      */
     public function getModule()
     {
-        if ($this->object === null) {
+        if (null === $this->object) {
             $this->initObject();
         }
         if (!is_object($this->object)) {
@@ -77,7 +76,7 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * get a module config item
+     * get a module config item.
      *
      * @param string $name    name of config item, or blank for all items
      * @param mixed  $default default value to return if config $name is not set
@@ -87,7 +86,7 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function getConfig($name = null, $default = null)
     {
-        if ($this->configs === null) {
+        if (null === $this->configs) {
             $this->initConfig();
         }
         if (empty($name)) {
@@ -98,16 +97,17 @@ abstract class GenericHelper extends AbstractHelper
 
         if (!isset($this->configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
+
             return $default;
         }
 
-        $this->addLog("Getting config '{$name}' : " . $this->serializeForHelperLog($this->configs[$name]));
+        $this->addLog("Getting config '{$name}' : ".$this->serializeForHelperLog($this->configs[$name]));
 
         return $this->configs[$name];
     }
 
     /**
-     * Get an Object Handler
+     * Get an Object Handler.
      *
      * @param string $name name of handler to load
      *
@@ -132,7 +132,7 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * load a language file for this module
+     * load a language file for this module.
      *
      * @param string $name basename of language file (i.e. 'admin')
      *
@@ -175,7 +175,7 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * Return absolute URL for a module relative URL
+     * Return absolute URL for a module relative URL.
      *
      * @param string $url module relative URL
      *
@@ -183,11 +183,11 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function url($url = '')
     {
-        return XOOPS_URL . '/modules/' . $this->dirname . '/' . $url;
+        return XOOPS_URL.'/modules/'.$this->dirname.'/'.$url;
     }
 
     /**
-     * Return absolute filesystem path for a module relative path
+     * Return absolute filesystem path for a module relative path.
      *
      * @param string $path module relative file system path
      *
@@ -195,11 +195,11 @@ abstract class GenericHelper extends AbstractHelper
      */
     public function path($path = '')
     {
-        return XOOPS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $path;
+        return XOOPS_ROOT_PATH.'/modules/'.$this->dirname.'/'.$path;
     }
 
     /**
-     * Redirect the user to a page within this module
+     * Redirect the user to a page within this module.
      *
      * @param string $url     module relative url (i.e. index.php)
      * @param int    $time    time in seconds to show redirect message
@@ -211,7 +211,7 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * get a module object
+     * get a module object.
      */
     protected function initObject()
     {
@@ -229,7 +229,7 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * get module configs
+     * get module configs.
      */
     protected function initConfig()
     {
@@ -248,21 +248,21 @@ abstract class GenericHelper extends AbstractHelper
     }
 
     /**
-     * get a handler instance and store in $this->_handlers
+     * get a handler instance and store in $this->_handlers.
      *
      * @param string $name name of handler to load
      */
     protected function initHandler($name)
     {
-        $this->addLog('INIT ' . $name . ' HANDLER');
+        $this->addLog('INIT '.$name.' HANDLER');
 
         if (!isset($this->handlers[$name])) {
-            $hnd_file = XOOPS_ROOT_PATH . "/modules/{$this->dirname}/class/{$name}.php";
+            $hnd_file = XOOPS_ROOT_PATH."/modules/{$this->dirname}/class/{$name}.php";
             if (file_exists($hnd_file)) {
                 include_once $hnd_file;
             }
             $class = ucfirst(strtolower($this->dirname))
-                . ucfirst(strtolower($name)) . 'Handler';
+                .ucfirst(strtolower($name)).'Handler';
             if (class_exists($class)) {
                 $db = \XoopsDatabaseFactory::getDatabaseConnection();
                 $this->handlers[$name] = new $class($db);

@@ -12,16 +12,14 @@
 use Xmf\Request;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
-
 include_once 'header.php';
 $xoops->logger()->quiet();
 
@@ -31,14 +29,14 @@ if ($xoops->security()->check()) {
     $time = time();
     $content_id = Request::getInt('content_id', 0);
     $option = Request::getInt('option', 0);
-    if (!isset($_SESSION['page_rating' . $content_id]) || $_SESSION['page_rating' . $content_id] < $time) {
-        $_SESSION['page_rating' . $content_id] = $time + $interval;
+    if (!isset($_SESSION['page_rating'.$content_id]) || $_SESSION['page_rating'.$content_id] < $time) {
+        $_SESSION['page_rating'.$content_id] = $time + $interval;
 
         // Test if the page exist
         $contentObj = $content_Handler->get($content_id);
-        if (($contentObj === null)
+        if ((null === $contentObj)
 //            || $contentObj->getVar('content_author') == $uid
-            || $contentObj->getVar('content_status') === 0 || $contentObj->getVar('content_dorating') === 0) {
+            || 0 === $contentObj->getVar('content_status') || 0 === $contentObj->getVar('content_dorating')) {
             echo json_encode($ret);
             exit();
         }

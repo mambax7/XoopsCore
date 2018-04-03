@@ -18,22 +18,20 @@
  * PHP version 5.3
  *
  * @category   Xoops\Class\Database\MySQLDatabaseProxy
- * @package    MySQLDatabaseProxy
  * @author     Kazumi Ono <onokazu@xoops.org>
  * @author     readheadedrod <redheadedrod@hotmail.com>
  * @author     Richard Griffith <richard@geekwright.com>
  * @copyright  2013 XOOPS Project (http://xoops.org)
  * @license    GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version    Release: 2.6
- * @link       http://xoops.org
+ * @see       http://xoops.org
  * @since      2.6.0
  * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
  */
-
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 {
     /**
-     * perform a query on the database
+     * perform a query on the database.
      *
      * this method allows only SELECT queries for safety.
      *
@@ -48,10 +46,11 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     {
         $this->deprecated();
         $sql = ltrim($sql);
-        if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) !== 'select') {
+        if (!$this->allowWebChanges && 'select' !== strtolower(substr($sql, 0, 6))) {
             //trigger_error('Database updates are not allowed during processing of a GET request', E_USER_WARNING);
             return false;
         }
+
         return $this->queryF($sql, $limit, $start);
     }
 }

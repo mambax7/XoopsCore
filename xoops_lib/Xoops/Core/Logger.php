@@ -34,12 +34,11 @@ use Psr\Log\LogLevel;
  * preloads) or other sources and gain access to detailed debugging information.
  *
  * @category  Xoops\Core\Logger
- * @package   Logger
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Logger implements LoggerInterface
@@ -50,14 +49,14 @@ class Logger implements LoggerInterface
     private $loggers = [];
 
     /**
-     * @var boolean do we have active loggers?
+     * @var bool do we have active loggers?
      */
     private $logging_active = false;
 
     // Deprecated uses
 
     /**
-     * Keep deprecated calls from failing
+     * Keep deprecated calls from failing.
      *
      * @param string $var property
      * @param string $val value
@@ -69,13 +68,13 @@ class Logger implements LoggerInterface
     {
         $this->deprecatedMessage();
         // legacy compatibility: turn off logger display for $xoopsLogger->activated = false; usage
-        if ($var === 'activated' && !$val) {
+        if ('activated' === $var && !$val) {
             $this->quiet();
         }
     }
 
     /**
-     * Keep deprecated calls from failing
+     * Keep deprecated calls from failing.
      *
      * @param string $var property
      *
@@ -88,7 +87,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * Keep deprecated calls from failing
+     * Keep deprecated calls from failing.
      *
      * @param string $method method
      * @param string $args   arguments
@@ -102,12 +101,12 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * @var boolean just to prevent fatal legacy errors. Does nothing. Stop it!
+     * @var bool just to prevent fatal legacy errors. Does nothing. Stop it!
      */
     //public $activated = false;
 
     /**
-     * Get the Xoops\Core\Logger instance
+     * Get the Xoops\Core\Logger instance.
      *
      * @return Logger object
      */
@@ -131,19 +130,18 @@ class Logger implements LoggerInterface
      *
      * This will
      *
-     * @param integer $errorNumber error number
-     * @param string  $errorString error message
-     * @param string  $errorFile   file
-     * @param integer $errorLine   line number
+     * @param int    $errorNumber error number
+     * @param string $errorString error message
+     * @param string $errorFile   file
+     * @param int    $errorLine   line number
      */
     public function handleError($errorNumber, $errorString, $errorFile, $errorLine)
     {
         if ($this->logging_active && ($errorNumber & error_reporting())) {
-
             // if an error occurs before a locale is established,
             // we still need messages, so check and deal with it
 
-            $msg = ': ' . sprintf(
+            $msg = ': '.sprintf(
                 (class_exists('\XoopsLocale', false) ? \XoopsLocale::EF_LOGGER_FILELINE : '%s in file %s line %s'),
                 $this->sanitizePath($errorString),
                 $this->sanitizePath($errorFile),
@@ -152,35 +150,41 @@ class Logger implements LoggerInterface
 
             switch ($errorNumber) {
                 case E_USER_NOTICE:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_ERROR : '*Error:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_ERROR : '*Error:').$msg;
                     $this->log(LogLevel::NOTICE, $msg);
+
                     break;
                 case E_NOTICE:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_NOTICE : '*Notice:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_NOTICE : '*Notice:').$msg;
                     $this->log(LogLevel::NOTICE, $msg);
+
                     break;
                 case E_WARNING:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_WARNING : '*Warning:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_WARNING : '*Warning:').$msg;
                     $this->log(LogLevel::WARNING, $msg);
+
                     break;
                 case E_STRICT:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_STRICT : '*Strict:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_STRICT : '*Strict:').$msg;
                     $this->log(LogLevel::WARNING, $msg);
+
                     break;
                 case E_USER_ERROR:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_ERROR : '*Error:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_ERROR : '*Error:').$msg;
                     @$this->log(LogLevel::CRITICAL, $msg);
+
                     break;
                 default:
-                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_UNKNOWN : '*Unknown:') . $msg;
+                    $msg = (class_exists('\XoopsLocale', false) ? \XoopsLocale::E_LOGGER_UNKNOWN : '*Unknown:').$msg;
                     $this->log(LogLevel::ERROR, $msg);
+
                     break;
             }
         }
 
-        if ($errorNumber === E_USER_ERROR) {
+        if (E_USER_ERROR === $errorNumber) {
             $trace = true;
-            if (substr($errorString, 0, '8') === 'notrace:') {
+            if ('notrace:' === substr($errorString, 0, '8')) {
                 $trace = false;
                 $errorString = substr($errorString, 8);
             }
@@ -195,7 +199,7 @@ class Logger implements LoggerInterface
                         }
                     }
                 } else {
-                    echo "<div style='color:#f0f0f0;background-color:#f0f0f0'>" . _XOOPS_FATAL_BACKTRACE . ':<br />';
+                    echo "<div style='color:#f0f0f0;background-color:#f0f0f0'>"._XOOPS_FATAL_BACKTRACE.':<br />';
                     foreach ($trace as $step) {
                         if (isset($step['file'])) {
                             printf("%s (%d)\n<br />", $this->sanitizePath($step['file']), $step['line']);
@@ -222,7 +226,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * clean a path to remove sensitive details
+     * clean a path to remove sensitive details.
      *
      * @param string $message text to sanitize
      *
@@ -231,18 +235,18 @@ class Logger implements LoggerInterface
     public function sanitizePath($message)
     {
         $cleaners = [
-            ['\\', '/', ],
-            [\XoopsBaseConfig::get('var-path'), 'VAR', ],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('var-path'))), 'VAR', ],
-            [\XoopsBaseConfig::get('lib-path'), 'LIB', ],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('lib-path'))), 'LIB', ],
-            [\XoopsBaseConfig::get('root-path'), 'ROOT', ],
-            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('root-path'))), 'ROOT', ],
-            [\XoopsBaseConfig::get('db-name') . '.', '', ],
-            [\XoopsBaseConfig::get('db-name'), '', ],
-            [\XoopsBaseConfig::get('db-prefix') . '_', '', ],
-            [\XoopsBaseConfig::get('db-user'), '***', ],
-            [\XoopsBaseConfig::get('db-pass'), '***', ],
+            ['\\', '/'],
+            [\XoopsBaseConfig::get('var-path'), 'VAR'],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('var-path'))), 'VAR'],
+            [\XoopsBaseConfig::get('lib-path'), 'LIB'],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('lib-path'))), 'LIB'],
+            [\XoopsBaseConfig::get('root-path'), 'ROOT'],
+            [str_replace('\\', '/', realpath(\XoopsBaseConfig::get('root-path'))), 'ROOT'],
+            [\XoopsBaseConfig::get('db-name').'.', ''],
+            [\XoopsBaseConfig::get('db-name'), ''],
+            [\XoopsBaseConfig::get('db-prefix').'_', ''],
+            [\XoopsBaseConfig::get('db-user'), '***'],
+            [\XoopsBaseConfig::get('db-pass'), '***'],
         ];
         $stringsToClean = array_column($cleaners, 0);
         $replacementStings = array_column($cleaners, 1);
@@ -253,7 +257,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * add a PSR-3 compatible logger to the chain
+     * add a PSR-3 compatible logger to the chain.
      *
      * @param object $logger a PSR-3 compatible logger object
      */
@@ -410,7 +414,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * Determine if an object implements Throwable (or is an Exception that would under PHP 7.)
+     * Determine if an object implements Throwable (or is an Exception that would under PHP 7.).
      *
      * @param mixed $e Expected to be an object related to Exception or Throwable
      *
@@ -419,11 +423,12 @@ class Logger implements LoggerInterface
     protected function isThrowable($e)
     {
         $type = interface_exists('\Throwable', false) ? '\Throwable' : '\Exception';
+
         return $e instanceof $type;
     }
 
     /**
-     * Announce fatal error, attempt to log
+     * Announce fatal error, attempt to log.
      *
      * @param string $msg error message to report
      */
@@ -443,7 +448,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * issue a deprecated warning
+     * issue a deprecated warning.
      */
     private function deprecatedMessage()
     {

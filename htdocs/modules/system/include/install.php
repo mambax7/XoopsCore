@@ -14,18 +14,17 @@ use Xoops\Core\FixedGroups;
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * System install module
+ * System install module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
- * @package         system
  * @version         $Id$
  */
 
 /**
- * xoops_module_install_system - initialize on install
+ * xoops_module_install_system - initialize on install.
  *
  * @param XoopsModule $module module object
  */

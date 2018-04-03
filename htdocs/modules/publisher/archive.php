@@ -17,7 +17,6 @@ use Xoops\Core\Lists\Month;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          Bandit-X
  * @author          trabis <lusopoemas@gmail.com>
@@ -29,7 +28,7 @@ use Xoops\Core\Lists\Month;
 // # [11-may-2001] Kenneth Lee - http://www.nexgear.com/
 // ######################################################################
 
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $publisher = Publisher::getInstance();
@@ -52,12 +51,12 @@ if ($fromyear && $frommonth) {
 
 $dateformat = $publisher->getConfig('format_date');
 
-if ($dateformat === '') {
+if ('' === $dateformat) {
     $dateformat = 'm';
 }
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-$xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars(_MD_PUBLISHER_ARCHIVES) . $pgtitle . ' - ' . $myts->htmlSpecialChars($xoopsModule->getVar('name')));
+$xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars(_MD_PUBLISHER_ARCHIVES).$pgtitle.' - '.$myts->htmlSpecialChars($xoopsModule->getVar('name')));
 
 $useroffset = '';
 if ($xoops->isUser()) {
@@ -93,7 +92,7 @@ if (!($itemsCount > 0)) {
             if (empty($lastyear)) {
                 $lastyear = $this_year;
             }
-            if ($lastmonth === 0) {
+            if (0 === $lastmonth) {
                 $lastmonth = $this_month;
                 $months[$lastmonth]['string'] = $months_arr[$lastmonth];
                 $months[$lastmonth]['number'] = $lastmonth;
@@ -119,7 +118,7 @@ if (!($itemsCount > 0)) {
 }
 unset($items);
 
-if ($fromyear !== 0 && $frommonth !== 0) {
+if (0 !== $fromyear && 0 !== $frommonth) {
     $xoopsTpl->assign('show_articles', true);
     $xoopsTpl->assign('lang_articles', _MD_PUBLISHER_ITEM);
     $xoopsTpl->assign('currentmonth', $months_arr[$frommonth]);
@@ -142,7 +141,7 @@ if ($fromyear !== 0 && $frommonth !== 0) {
     $itemhandler->field_object = 'categoryid';
     // Categories for which user has access
     $categoriesGranted = $publisher->getPermissionHandler()->getGrantedItems('category_read');
-    $grantedCategories = new Criteria('l.categoryid', '(' . implode(',', $categoriesGranted) . ')', 'IN');
+    $grantedCategories = new Criteria('l.categoryid', '('.implode(',', $categoriesGranted).')', 'IN');
     $criteria = new CriteriaCompo();
     $criteria->add($grantedCategories, 'AND');
     $criteria->add(new Criteria('o.status', 2), 'AND');
@@ -161,25 +160,25 @@ if ($fromyear !== 0 && $frommonth !== 0) {
         foreach ($storyarray as $item) {
             $story = [];
             $htmltitle = '';
-            $story['title'] = "<a href='" . \XoopsBaseConfig::get('url') . '/modules/publisher/category.php?categoryid='
-                              . $item->getVar('categoryid') . "'>"
-                              . $item->getCategoryName() . "</a>: <a href='"
-                              . $item->getItemUrl() . "'" . $htmltitle . '>'
-                              . $item->title() . '</a>';
+            $story['title'] = "<a href='".\XoopsBaseConfig::get('url').'/modules/publisher/category.php?categoryid='
+                              .$item->getVar('categoryid')."'>"
+                              .$item->getCategoryName()."</a>: <a href='"
+                              .$item->getItemUrl()."'".$htmltitle.'>'
+                              .$item->title().'</a>';
             $story['counter'] = $item->getVar('counter');
             $story['date'] = $item->datesub();
-            $story['print_link'] = \XoopsBaseConfig::get('url') . '/modules/publisher/print.php?itemid=' . $item->getVar('itemid');
+            $story['print_link'] = \XoopsBaseConfig::get('url').'/modules/publisher/print.php?itemid='.$item->getVar('itemid');
             $story['mail_link'] = 'mailto:?subject='
-                                  . sprintf(_CO_PUBLISHER_INTITEM, $xoops->getConfig('sitename'))
-                                  . '&amp;body=' . sprintf(_CO_PUBLISHER_INTITEMFOUND, $xoops->getConfig('sitename'))
-                                  . ':  ' . $item->getItemUrl();
+                                  .sprintf(_CO_PUBLISHER_INTITEM, $xoops->getConfig('sitename'))
+                                  .'&amp;body='.sprintf(_CO_PUBLISHER_INTITEMFOUND, $xoops->getConfig('sitename'))
+                                  .':  '.$item->getItemUrl();
 
             $xoopsTpl->append('stories', $story);
         }
     }
     $xoopsTpl->assign('lang_printer', _MD_PUBLISHER_PRINTERFRIENDLY);
     $xoopsTpl->assign('lang_sendstory', _MD_PUBLISHER_SENDSTORY);
-    $xoopsTpl->assign('lang_storytotal', _MD_PUBLISHER_TOTAL_ITEMS . ' ' . $count);
+    $xoopsTpl->assign('lang_storytotal', _MD_PUBLISHER_TOTAL_ITEMS.' '.$count);
 } else {
     $xoopsTpl->assign('show_articles', false);
 }

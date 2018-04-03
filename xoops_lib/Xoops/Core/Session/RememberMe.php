@@ -16,7 +16,7 @@ use Xmf\Request;
 use Xoops\Core\HttpRequest;
 
 /**
- * Provide Remember Me functionality to restore a user's login state in a new session
+ * Provide Remember Me functionality to restore a user's login state in a new session.
  *
  * This incorporates ideas from Barry Jaspan's article found here:
  * http://jaspan.com/improved_persistent_login_cookie_best_practice
@@ -47,11 +47,10 @@ use Xoops\Core\HttpRequest;
  * be saved to require authentication confirmation as appropriate.
  *
  * @category  Xoops\Core\Session
- * @package   RememberMe
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class RememberMe
 {
@@ -76,7 +75,7 @@ class RememberMe
     protected $now = 0;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
@@ -87,13 +86,13 @@ class RememberMe
     /**
      * Recall a user id from the "remember me" cookie.
      *
-     * @return integer|false user id, or false if non-exisiting or invalid cookie
+     * @return int|false user id, or false if non-exisiting or invalid cookie
      */
     public function recall()
     {
         $this->now = time();
         $cookieData = $this->readUserCookie();
-        if ($cookieData === false) {
+        if (false === $cookieData) {
             return false;   // no or invalid cookie
         }
         list($userId, $series, $token) = $cookieData;
@@ -128,6 +127,7 @@ class RememberMe
             $return = false;
         }
         $this->writeUserTokens($userId);
+
         return $return;
     }
 
@@ -140,7 +140,7 @@ class RememberMe
     {
         $this->now = time();
         $cookieData = $this->readUserCookie();
-        if ($cookieData !== false) {
+        if (false !== $cookieData) {
             list($userId, $series, $token) = $cookieData;
             $this->readUserTokens($userId);
             $this->unsetSeries($series);
@@ -150,11 +150,11 @@ class RememberMe
     }
 
     /**
-     * Invalidate all existing "remember me" cookie by deleting all the series/tokens
+     * Invalidate all existing "remember me" cookie by deleting all the series/tokens.
      *
      * This should be called during a password change.
      *
-     * @param integer $userId id of user associated with the sessions/tokens to be invalidated
+     * @param int $userId id of user associated with the sessions/tokens to be invalidated
      */
     public function invalidateAllForUser($userId)
     {
@@ -164,9 +164,9 @@ class RememberMe
     }
 
     /**
-     * Create a new user cookie, usually in response to login with "remember me" selected
+     * Create a new user cookie, usually in response to login with "remember me" selected.
      *
-     * @param integer $userId id of user to be remembered
+     * @param int $userId id of user to be remembered
      *
      **/
     public function createUserCookie($userId)
@@ -182,11 +182,11 @@ class RememberMe
     }
 
     /**
-     * Check if the given series exists
+     * Check if the given series exists.
      *
      * @param string $series series identifier
      *
-     * @return boolean true if series exists, otherwise false
+     * @return bool true if series exists, otherwise false
      */
     protected function hasSeries($series)
     {
@@ -194,7 +194,7 @@ class RememberMe
     }
 
     /**
-     * Unset an entire series
+     * Unset an entire series.
      *
      * @param string $series series identifier
      */
@@ -204,12 +204,12 @@ class RememberMe
     }
 
     /**
-     * Get the values associated with a given series and token
+     * Get the values associated with a given series and token.
      *
      * @param string $series series identifier
      * @param string $token  token to check
      *
-     * @return boolean true if series and token combination exists, otherwise false
+     * @return bool true if series and token combination exists, otherwise false
      */
     protected function hasSeriesToken($series, $token)
     {
@@ -217,7 +217,7 @@ class RememberMe
     }
 
     /**
-     * Get the values associated with a given series and token
+     * Get the values associated with a given series and token.
      *
      * @param string $series series identifier
      * @param string $token  token to check
@@ -229,11 +229,12 @@ class RememberMe
         if (isset($this->userTokens[$series][$token])) {
             return $this->userTokens[$series][$token];
         }
+
         return false;
     }
 
     /**
-     * Get the values associated with a given series and token
+     * Get the values associated with a given series and token.
      *
      * @param string $series series identifier
      * @param string $token  token to check
@@ -245,7 +246,7 @@ class RememberMe
     }
 
     /**
-     * Get the values associated with a given series and token
+     * Get the values associated with a given series and token.
      *
      * @param string $series series identifier
      * @param string $token  token to check
@@ -256,24 +257,24 @@ class RememberMe
     }
 
     /**
-     * read existing user tokens from persistent storage
+     * read existing user tokens from persistent storage.
      *
-     * @param integer $userId id of user to read tokens for
+     * @param int $userId id of user to read tokens for
      */
     protected function readUserTokens($userId)
     {
         $key = "user/{$userId}/usercookie";
         $this->userTokens = $this->xoops->cache()->read($key);
-        if ($this->userTokens === false) {
+        if (false === $this->userTokens) {
             $this->clearUserTokens();
         }
         $this->removeExpiredTokens();
     }
 
     /**
-     * write the existing user tokens to persistent storage
+     * write the existing user tokens to persistent storage.
      *
-     * @param integer $userId id of user to write tokens for
+     * @param int $userId id of user to write tokens for
      */
     protected function writeUserTokens($userId)
     {
@@ -282,7 +283,7 @@ class RememberMe
     }
 
     /**
-     * Remove any expired tokens
+     * Remove any expired tokens.
      */
     protected function removeExpiredTokens()
     {
@@ -304,7 +305,7 @@ class RememberMe
     }
 
     /**
-     * Clear all tokens for this user
+     * Clear all tokens for this user.
      */
     protected function clearUserTokens()
     {
@@ -312,7 +313,7 @@ class RememberMe
     }
 
     /**
-     * Generate a new series
+     * Generate a new series.
      *
      * @return string a new series key
      */
@@ -322,7 +323,7 @@ class RememberMe
     }
 
     /**
-     * Generate a new token
+     * Generate a new token.
      *
      * @return string a new token
      */
@@ -332,7 +333,7 @@ class RememberMe
     }
 
     /**
-     * Update cookie status for current session
+     * Update cookie status for current session.
      *
      **/
     protected function clearUserCookie()
@@ -341,7 +342,7 @@ class RememberMe
     }
 
     /**
-     * Read the user cookie
+     * Read the user cookie.
      *
      * @return array|false the cookie data as array(userid, series, token), or
      *                     false if cookie does not exist (or not configured)
@@ -358,20 +359,22 @@ class RememberMe
         $cookieData = Request::getString($usercookie, $notFound, 'COOKIE');
         if ($cookieData !== $notFound) {
             $temp = explode('-', $cookieData);
-            if (count($temp) === 3) {
+            if (3 === count($temp)) {
                 $temp[0] = (int) $temp[0];
+
                 return $temp;
             }
             $this->clearUserCookie(); // clean up garbage cookie
         }
+
         return false;
     }
 
     /**
-     * Update cookie status for current session
+     * Update cookie status for current session.
      *
      * @param array|string $cookieData usercookie value
-     * @param integer      $expire     seconds until usercookie expires
+     * @param int          $expire     seconds until usercookie expires
      *
      **/
     protected function writeUserCookie($cookieData, $expire = 2592000)

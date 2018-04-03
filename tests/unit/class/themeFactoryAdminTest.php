@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
 class themeFactoryAdminTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,6 +33,7 @@ class themeFactoryAdminTest extends \PHPUnit\Framework\TestCase
         while (ob_get_level() > $level) {
             @ob_end_flush();
         }
+
         return $value;
     }
 

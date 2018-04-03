@@ -15,17 +15,16 @@ use Xoops\Core\Text\Sanitizer\Configuration;
 use Xoops\Core\Text\Sanitizer\SanitizerConfigurable;
 
 /**
- * Class to "clean up" text for various uses
+ * Class to "clean up" text for various uses.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Goghs Cheng (http://www.eqiao.com, http://www.devbeez.com/)
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Sanitizer extends SanitizerConfigurable
 {
@@ -80,7 +79,7 @@ class Sanitizer extends SanitizerConfigurable
      */
     public static function getInstance()
     {
-        if (static::$instance === null) {
+        if (null === static::$instance) {
             static::$instance = new static();
         }
 
@@ -102,7 +101,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * get our ShortCodes instance, but make sure extensions are loaded so caller can extend and override
+     * get our ShortCodes instance, but make sure extensions are loaded so caller can extend and override.
      *
      * @return ShortCodes
      *
@@ -111,11 +110,12 @@ class Sanitizer extends SanitizerConfigurable
     public function getShortCodes()
     {
         $this->registerExtensions();
+
         return $this->shortcodes;
     }
 
     /**
-     * Add a preg_replace_callback pattern and callback
+     * Add a preg_replace_callback pattern and callback.
      *
      * @param string   $pattern  a pattern as used in preg_replace_callback
      * @param callable $callback callback to do processing as used in preg_replace_callback
@@ -126,7 +126,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Replace emoticons in a string with smiley images
+     * Replace emoticons in a string with smiley images.
      *
      * @param string $text text to filter
      *
@@ -135,11 +135,12 @@ class Sanitizer extends SanitizerConfigurable
     public function smiley($text)
     {
         $response = \Xoops::getInstance()->service('emoji')->renderEmoji($text);
+
         return $response->isSuccess() ? $response->getValue() : $text;
     }
 
     /**
-     * Turn bare URLs and email addresses into links
+     * Turn bare URLs and email addresses into links.
      *
      * @param string $text text to filter
      *
@@ -151,7 +152,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Convert linebreaks to <br /> tags
+     * Convert linebreaks to <br /> tags.
      *
      * This is used instead of PHP's built-in nl2br() because it removes the line endings, replacing them
      * with br tags, while the built in just adds br tags and leaves the line endings. We don't want to leave
@@ -167,7 +168,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Convert special characters to HTML entities
+     * Convert special characters to HTML entities.
      *
      * Character set is locked to 'UTF-8', double_encode to true
      *
@@ -179,6 +180,7 @@ class Sanitizer extends SanitizerConfigurable
     public function htmlSpecialChars($text, $quote_style = ENT_QUOTES)
     {
         $text = htmlspecialchars($text, $quote_style | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+
         return $text;
     }
 
@@ -195,11 +197,12 @@ class Sanitizer extends SanitizerConfigurable
     public function escapeForJavascript($text)
     {
         $text = str_replace(["'", '"'], ['\x27', '\x22'], $text);
+
         return $this->htmlSpecialChars($text);
     }
 
     /**
-     * Escape any brackets ([]) to make them invisible to ShortCodes
+     * Escape any brackets ([]) to make them invisible to ShortCodes.
      *
      * @param string $text string to escape
      *
@@ -208,11 +211,12 @@ class Sanitizer extends SanitizerConfigurable
     public function escapeShortCodes($text)
     {
         $text = str_replace(['[', ']'], ['&#91;', '&#93;'], $text);
+
         return $text;
     }
 
     /**
-     * Reverses htmlSpecialChars()
+     * Reverses htmlSpecialChars().
      *
      * @param string $text htmlSpecialChars encoded text
      *
@@ -224,7 +228,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Filters data for display
+     * Filters data for display.
      *
      * @param string $text   text to filter for display
      * @param bool   $html   allow html?
@@ -272,7 +276,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Filters textarea form data submitted for preview
+     * Filters textarea form data submitted for preview.
      *
      * @param string $text   text to filter for display
      * @param bool   $html   allow html?
@@ -291,7 +295,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Filters textarea form data submitted for preview
+     * Filters textarea form data submitted for preview.
      *
      * @param string $text   text to filter for preview
      * @param int    $html   allow html?
@@ -310,7 +314,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Replaces banned words in a string with their replacements
+     * Replaces banned words in a string with their replacements.
      *
      * @param string $text text to censor
      *
@@ -322,7 +326,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * listExtensions() - get list of active extensions
+     * listExtensions() - get list of active extensions.
      *
      * @return string[]
      */
@@ -330,15 +334,16 @@ class Sanitizer extends SanitizerConfigurable
     {
         $list = [];
         foreach ($this->config as $name => $configs) {
-            if (((bool) $configs['enabled']) && $configs['type'] === 'extension') {
+            if (((bool) $configs['enabled']) && 'extension' === $configs['type']) {
                 $list[] = $name;
             }
         }
+
         return $list;
     }
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $extension  extension name
      * @param string $textAreaId dom element id
@@ -351,7 +356,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * getConfig() - get the configuration for a component (extension, filter, sanitizer)
+     * getConfig() - get the configuration for a component (extension, filter, sanitizer).
      *
      * @param string $componentName get the configuration for component of this name
      *
@@ -363,7 +368,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * execute a filter
+     * execute a filter.
      *
      * @param string $name extension name
      *
@@ -373,11 +378,12 @@ class Sanitizer extends SanitizerConfigurable
     {
         $filter = $this->loadFilter($name);
         $args = array_slice(func_get_args(), 1);
+
         return call_user_func_array([$filter, 'applyFilter'], $args);
     }
 
     /**
-     * Filter out possible malicious text with the textfilter filter
+     * Filter out possible malicious text with the textfilter filter.
      *
      * @param string $text  text to filter
      * @param bool   $force force filtering
@@ -390,9 +396,9 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Filter out possible malicious text with the xss filter
+     * Filter out possible malicious text with the xss filter.
      *
-     * @param string $text  text to filter
+     * @param string $text text to filter
      *
      * @return string filtered text
      */
@@ -423,11 +429,12 @@ class Sanitizer extends SanitizerConfigurable
             }
         } else {
             foreach ($enumSet as $enum) {
-                if (strcasecmp($text, $enum) === 0) {
+                if (0 === strcasecmp($text, $enum)) {
                     return $enum;
                 }
             }
         }
+
         return $default;
     }
 
@@ -450,7 +457,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Apply extension specified transformation, such as ShortCodes, to the supplied text
+     * Apply extension specified transformation, such as ShortCodes, to the supplied text.
      *
      * @param string $text       text to filter
      * @param bool   $allowImage Allow images in the text? On FALSE, uses links to images.
@@ -464,7 +471,7 @@ class Sanitizer extends SanitizerConfigurable
 
         $this->registerExtensions();
 
-        /**
+        /*
          * this should really be eliminated, and standardize with shortcodes and filters
          * Currently, only Wiki needs this. The syntax '[[xxx]]' interferes with escaped shortcodes
          */
@@ -477,11 +484,12 @@ class Sanitizer extends SanitizerConfigurable
         $this->config['image']['allowimage'] = $holdAllowImage;
 
         $text = $this->executeFilter('quote', $text);
+
         return $text;
     }
 
     /**
-     * Encode [code] elements as base64 to prevent processing of contents by other filters
+     * Encode [code] elements as base64 to prevent processing of contents by other filters.
      *
      * @param string $text text to filter
      *
@@ -493,7 +501,7 @@ class Sanitizer extends SanitizerConfigurable
         $text = preg_replace_callback(
             $patterns,
             function ($matches) {
-                return '[code' . $matches[1] . ']' . base64_encode($matches[2]) . '[/code]';
+                return '[code'.$matches[1].']'.base64_encode($matches[2]).'[/code]';
             },
             $text
         );
@@ -502,7 +510,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * convert code blocks, previously processed by prefilterCodeBlocks(), for display
+     * convert code blocks, previously processed by prefilterCodeBlocks(), for display.
      *
      * @param string $text text to filter
      *
@@ -514,12 +522,12 @@ class Sanitizer extends SanitizerConfigurable
         $text = preg_replace_callback(
             $patterns,
             function ($matches) {
-                return '<div class=\"xoopsCode\">' .
+                return '<div class=\"xoopsCode\">'.
                 $this->executeFilter(
                     'syntaxhighlight',
                     str_replace('\\\"', '\"', base64_decode($matches[2], true)),
                     $matches[1]
-                ) . '</div>';
+                ).'</div>';
             },
             $text
         );
@@ -528,7 +536,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * registerExtensions()
+     * registerExtensions().
      *
      * This sets up the shortcode processing that will be applied to text to be displayed
      */
@@ -540,7 +548,7 @@ class Sanitizer extends SanitizerConfigurable
 
             // we need xoopscode to be called first
             $key = array_search('xoopscode', $extensions, true);
-            if ($key !== false) {
+            if (false !== $key) {
                 unset($extensions[$key]);
             }
             $this->registerExtension('xoopscode');
@@ -549,7 +557,7 @@ class Sanitizer extends SanitizerConfigurable
                 $this->registerExtension($extension);
             }
 
-            /**
+            /*
              * Register any custom shortcodes
              *
              * Listeners will be passed the ShortCodes object as the single argument, and should
@@ -564,7 +572,7 @@ class Sanitizer extends SanitizerConfigurable
     }
 
     /**
-     * Load a named component from specification in configuration
+     * Load a named component from specification in configuration.
      *
      * @param string $name name of component to load
      *
@@ -577,11 +585,12 @@ class Sanitizer extends SanitizerConfigurable
         if (isset($config['configured_class']) && class_exists($config['configured_class'])) {
             $component = new $config['configured_class']($this);
         }
+
         return $component;
     }
 
     /**
-     * Load an extension by name
+     * Load an extension by name.
      *
      * @param string $name extension name
      *
@@ -593,11 +602,12 @@ class Sanitizer extends SanitizerConfigurable
         if (!($extension instanceof Sanitizer\ExtensionAbstract)) {
             $extension = new Sanitizer\NullExtension($this);
         }
+
         return $extension;
     }
 
     /**
-     * Load a filter by name
+     * Load a filter by name.
      *
      * @param string $name name of filter to load
      *
@@ -609,11 +619,12 @@ class Sanitizer extends SanitizerConfigurable
         if (!($filter instanceof Sanitizer\FilterAbstract)) {
             $filter = new Sanitizer\NullFilter($this);
         }
+
         return $filter;
     }
 
     /**
-     * execute an extension
+     * execute an extension.
      *
      * @param string $name extension name
      *
@@ -623,6 +634,7 @@ class Sanitizer extends SanitizerConfigurable
     {
         $extension = $this->loadExtension($name);
         $args = array_slice(func_get_args(), 1);
+
         return call_user_func_array([$extension, 'registerExtensionProcessing'], $args);
     }
 }

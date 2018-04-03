@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class ColorPickerTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,7 +49,7 @@ class ColorPickerTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new ColorPicker('mycaption', 'myname');
-        $newWay = new ColorPicker(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname', ]);
+        $newWay = new ColorPicker(['caption' => 'mycaption', 'type' => 'text', 'name' => 'myname']);
 
         $this->assertSame(substr($oldWay->render(), 0, 18), substr($newWay->render(), 0, 18));
         $this->assertSame(substr($oldWay->render(), -40), substr($newWay->render(), -40));

@@ -10,20 +10,18 @@
  */
 
 /**
- * Database manager for XOOPS
+ * Database manager for XOOPS.
  *
  * PHP version 5.3
  *
  * @category  Xoops\Class\Database\Manager
- * @package   Manager
  * @author    Haruki Setoyama  <haruki@planewave.org>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
-
 use XoopsBaseConfig;
 
 class XoopsDatabaseManager
@@ -54,7 +52,7 @@ class XoopsDatabaseManager
     private $f_tables = [];
 
     /**
-     *Construct declaration
+     *Construct declaration.
      */
     public function __construct()
     {
@@ -84,21 +82,21 @@ class XoopsDatabaseManager
      */
     public function isConnectable()
     {
-        return ($this->xoopsDatabase->connect(false) !== false) ? true : false;
+        return (false !== $this->xoopsDatabase->connect(false)) ? true : false;
     }
 
     /**
-     * Checks if a database exists
+     * Checks if a database exists.
      *
      * @return bool returns if exists
      */
     public function dbExists()
     {
-        return ($this->xoopsDatabase->connect() !== false) ? true : false;
+        return (false !== $this->xoopsDatabase->connect()) ? true : false;
     }
 
     /**
-     * creates a database table
+     * creates a database table.
      *
      * @return bool return if successful
      */
@@ -106,13 +104,13 @@ class XoopsDatabaseManager
     {
         $this->xoopsDatabase->connect(false);
 
-        $result = $this->xoopsDatabase->query('CREATE DATABASE ' . XoopsBaseConfig::get('db-name'));
+        $result = $this->xoopsDatabase->query('CREATE DATABASE '.XoopsBaseConfig::get('db-name'));
 
-        return ($result !== false) ? true : false;
+        return (false !== $result) ? true : false;
     }
 
     /**
-     * Loads a query from a file
+     * Loads a query from a file.
      *
      * @param string $sql_file_path name of file to read
      * @param bool   $force         weither to force the query or not
@@ -133,9 +131,9 @@ class XoopsDatabaseManager
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
             $prefixed_query = SqlUtility::prefixQuery($piece, $this->xoopsDatabase->prefix());
-            if ($prefixed_query !== false) {
+            if (false !== $prefixed_query) {
                 $table = $this->xoopsDatabase->prefix($prefixed_query[4]);
-                if ($prefixed_query[1] === 'CREATE TABLE') {
+                if ('CREATE TABLE' === $prefixed_query[1]) {
                     if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
@@ -146,7 +144,7 @@ class XoopsDatabaseManager
                         }
                     }
                 } else {
-                    if ($prefixed_query[1] === 'INSERT INTO') {
+                    if ('INSERT INTO' === $prefixed_query[1]) {
                         if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
                             if (!isset($this->s_tables['insert'][$table])) {
                                 $this->s_tables['insert'][$table] = 1;
@@ -161,7 +159,7 @@ class XoopsDatabaseManager
                             }
                         }
                     } else {
-                        if ($prefixed_query[1] === 'ALTER TABLE') {
+                        if ('ALTER TABLE' === $prefixed_query[1]) {
                             if ($this->xoopsDatabase->{$queryFunc}($prefixed_query[0]) !== false) {
                                 if (!isset($this->s_tables['alter'][$table])) {
                                     $this->s_tables['alter'][$table] = 1;
@@ -172,8 +170,8 @@ class XoopsDatabaseManager
                                 }
                             }
                         } else {
-                            if ($prefixed_query[1] === 'DROP TABLE') {
-                                if ($this->xoopsDatabase->{$queryFunc}('DROP TABLE ' . $table) !== false) {
+                            if ('DROP TABLE' === $prefixed_query[1]) {
+                                if ($this->xoopsDatabase->{$queryFunc}('DROP TABLE '.$table) !== false) {
                                     if (!isset($this->s_tables['drop'][$table])) {
                                         $this->s_tables['drop'][$table] = 1;
                                     }
@@ -188,11 +186,12 @@ class XoopsDatabaseManager
                 }
             }
         }
+
         return true;
     }
 
     /**
-     * returns a report
+     * returns a report.
      *
      * @return string
      */
@@ -204,7 +203,7 @@ class XoopsDatabaseManager
             if (!@empty($this->s_tables[$cmd])) {
                 foreach ($this->s_tables[$cmd] as $key => $val) {
                     $content .= '<li class="success">';
-                    $content .= ($cmd !== 'insert')
+                    $content .= ('insert' !== $cmd)
                         ? sprintf($this->successStrings[$cmd], $key)
                         : sprintf($this->successStrings[$cmd], $val, $key);
                     $content .= "</li>\n";
@@ -215,7 +214,7 @@ class XoopsDatabaseManager
             if (!@empty($this->f_tables[$cmd])) {
                 foreach ($this->f_tables[$cmd] as $key => $val) {
                     $content .= '<li class="failure">';
-                    $content .= ($cmd !== 'insert')
+                    $content .= ('insert' !== $cmd)
                         ? sprintf($this->failureStrings[$cmd], $key)
                         : sprintf($this->failureStrings[$cmd], $val, $key);
                     $content .= "</li>\n";
@@ -223,11 +222,12 @@ class XoopsDatabaseManager
             }
         }
         $content .= '</ul>';
+
         return $content;
     }
 
     /**
-     * runs a query
+     * runs a query.
      *
      * @param string $sql sql statement to perform
      *
@@ -236,11 +236,12 @@ class XoopsDatabaseManager
     public function query($sql)
     {
         $this->xoopsDatabase->connect();
+
         return $this->xoopsDatabase->query($sql);
     }
 
     /**
-     * Setup prefix table
+     * Setup prefix table.
      *
      * @param string $table table to prefix
      *
@@ -249,11 +250,12 @@ class XoopsDatabaseManager
     public function prefix($table)
     {
         $this->xoopsDatabase->connect();
+
         return $this->xoopsDatabase->prefix($table);
     }
 
     /**
-     * fetches an array
+     * fetches an array.
      *
      * @param string $ret resource that was returned from query
      *
@@ -262,11 +264,12 @@ class XoopsDatabaseManager
     public function fetchArray($ret)
     {
         $this->xoopsDatabase->connect();
+
         return $this->xoopsDatabase->fetchArray($ret);
     }
 
     /**
-     * Inserts into a table
+     * Inserts into a table.
      *
      * @param string $table table to insert into
      * @param string $query query to use to insert
@@ -277,13 +280,14 @@ class XoopsDatabaseManager
     {
         $this->xoopsDatabase->connect();
         $table = $this->xoopsDatabase->prefix($table);
-        $query = 'INSERT INTO ' . $table . ' ' . $query;
+        $query = 'INSERT INTO '.$table.' '.$query;
         if (!$this->xoopsDatabase->queryF($query)) {
             if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
             } else {
                 $this->f_tables['insert'][$table]++;
             }
+
             return false;
         }
         if (!isset($this->s_tables['insert'][$table])) {
@@ -291,11 +295,12 @@ class XoopsDatabaseManager
         } else {
             $this->s_tables['insert'][$table]++;
         }
+
         return $this->xoopsDatabase->getInsertId();
     }
 
     /**
-     * return the error
+     * return the error.
      *
      * @return bool
      */
@@ -305,7 +310,7 @@ class XoopsDatabaseManager
     }
 
     /**
-     * Deletes tables
+     * Deletes tables.
      *
      * No callers found in core. foreach loop is suspect, using key and value for
      * a list of tables? No docs or examples about what it is supposed to do.
@@ -320,15 +325,16 @@ class XoopsDatabaseManager
         $this->xoopsDatabase->connect();
         foreach ($tables as $key => $val) {
             //was: if (!$this->db->query("DROP TABLE " . $this->db->prefix($key))) {
-            if (!$this->xoopsDatabase->query('DROP TABLE ' . $this->xoopsDatabase->prefix($val))) {
+            if (!$this->xoopsDatabase->query('DROP TABLE '.$this->xoopsDatabase->prefix($val))) {
                 $deleted[] = $val;
             }
         }
+
         return $deleted;
     }
 
     /**
-     * Checks to see if table exists
+     * Checks to see if table exists.
      *
      * @param string $table name of database table looking for
      *
@@ -338,18 +344,19 @@ class XoopsDatabaseManager
     {
         $table = trim($table);
         $ret = false;
-        if ($table !== '') {
+        if ('' !== $table) {
             $this->xoopsDatabase->connect();
-            $sql = 'SELECT COUNT(*) FROM ' . $this->xoopsDatabase->prefix($table);
-            $ret = ($this->xoopsDatabase->query($sql) !== false) ? true : false;
+            $sql = 'SELECT COUNT(*) FROM '.$this->xoopsDatabase->prefix($table);
+            $ret = (false !== $this->xoopsDatabase->query($sql)) ? true : false;
         }
+
         return $ret;
     }
 
     /**
-     * This method allows to copy fields from one table to another
+     * This method allows to copy fields from one table to another.
      *
-     * @param array  $fieldsMap  Map of the fields
+     * @param array $fieldsMap Map of the fields
      *                           ex: array('oldfieldname' => 'newfieldname');
      * @param string $oTableName Old Table
      * @param string $nTableName New Table
@@ -359,22 +366,22 @@ class XoopsDatabaseManager
      */
     public function copyFields($fieldsMap, $oTableName, $nTableName, $dropTable = false)
     {
-        $sql = 'SHOW COLUMNS FROM ' . $this->xoopsDatabase->prefix($oTableName);
+        $sql = 'SHOW COLUMNS FROM '.$this->xoopsDatabase->prefix($oTableName);
         $result = $this->xoopsDatabase->queryF($sql);
         if (($rows = $this->xoopsDatabase->getRowsNum($result)) === count($fieldsMap)) {
-            $sql = 'SELECT * FROM ' . $this->xoopsDatabase->prefix($oTableName);
+            $sql = 'SELECT * FROM '.$this->xoopsDatabase->prefix($oTableName);
             $result = $this->xoopsDatabase->queryF($sql);
-            while (($myrow = $this->xoopsDatabase->fetchArray($result)) !== false) {
+            while (false !== ($myrow = $this->xoopsDatabase->fetchArray($result))) {
                 ksort($fieldsMap);
                 ksort($myrow);
-                $sql = 'INSERT INTO `' . $this->xoopsDatabase->prefix($nTableName)
-                    . '` ' . '(`' . implode('`,`', $fieldsMap) . '`)' .
-                    " VALUES ('" . implode("','", $myrow) . "')";
+                $sql = 'INSERT INTO `'.$this->xoopsDatabase->prefix($nTableName)
+                    .'` '.'(`'.implode('`,`', $fieldsMap).'`)'.
+                    " VALUES ('".implode("','", $myrow)."')";
 
                 $this->xoopsDatabase->queryF($sql);
             }
             if ($dropTable) {
-                $sql = 'DROP TABLE ' . $this->xoopsDatabase->prefix($oTableName);
+                $sql = 'DROP TABLE '.$this->xoopsDatabase->prefix($oTableName);
                 $this->xoopsDatabase->queryF($sql);
             }
         }

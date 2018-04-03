@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MD_SEARCH', 'Search');
 define('_MD_SEARCH_PLZENTER', 'Please enter all required data!');
 define('_MD_SEARCH_SEARCHRESULTS', 'Search Results');

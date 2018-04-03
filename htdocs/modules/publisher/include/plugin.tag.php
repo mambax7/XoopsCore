@@ -12,8 +12,6 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Include
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
@@ -35,7 +33,7 @@ function publisher_tag_iteminfo(&$items)
         }
     }
     $item_handler = $publisher->getItemHandler();
-    $criteria = new Criteria('itemid', '(' . implode(', ', $items_id) . ')', 'IN');
+    $criteria = new Criteria('itemid', '('.implode(', ', $items_id).')', 'IN');
     $items_obj = $item_handler->getItemObjects($criteria, 'itemid');
 
     /* @var $item_obj PublisherItem */

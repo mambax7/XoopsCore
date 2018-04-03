@@ -12,15 +12,14 @@
 namespace Xoops\Core\Service\Contract;
 
 /**
- * HtmlToPdf service interface
+ * HtmlToPdf service interface.
  *
  * @category  Xoops\Core\Service\Contract\HtmlToPdfInterface
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 interface HtmlToPdfInterface
@@ -28,14 +27,14 @@ interface HtmlToPdfInterface
     public const MODE = \Xoops\Core\Service\Manager::MODE_EXCLUSIVE;
 
     /**
-     * startPdf - start a new pdf
+     * startPdf - start a new pdf.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */
     public function startPdf($response);
 
     /**
-     * setPageOrientation - set page orientation
+     * setPageOrientation - set page orientation.
      *
      * @param Response $response        \Xoops\Core\Service\Response object
      * @param string   $pageOrientation page orientation, 'P' for portrait, 'L' for landscape
@@ -43,7 +42,7 @@ interface HtmlToPdfInterface
     public function setPageOrientation($response, $pageOrientation);
 
     /**
-     * setPageSize - set standard page size
+     * setPageSize - set standard page size.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pageSize standard named page size, i.e. 'LETTER', 'A4', etc.
@@ -60,7 +59,7 @@ interface HtmlToPdfInterface
     public function setBaseUnit($response, $unit);
 
     /**
-     * setMargins - set margin sizes
+     * setMargins - set margin sizes.
      *
      * @param Response $response     \Xoops\Core\Service\Response object
      * @param float    $leftMargin   left margin in base units, @see setBaseUnits()
@@ -71,7 +70,7 @@ interface HtmlToPdfInterface
     public function setMargins($response, $leftMargin, $topMargin, $rightMargin, $bottomMargin);
 
     /**
-     * setBaseFont - set the base font used in rendering
+     * setBaseFont - set the base font used in rendering.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $fontFamily font family
@@ -81,7 +80,7 @@ interface HtmlToPdfInterface
     public function setBaseFont($response, $fontFamily, $fontStyle = '', $fontSize = null);
 
     /**
-     * setDefaultMonospacedFont - default monotype font used in rendering
+     * setDefaultMonospacedFont - default monotype font used in rendering.
      *
      * @param Response $response       \Xoops\Core\Service\Response object
      * @param string   $monoFontFamily font family
@@ -89,7 +88,7 @@ interface HtmlToPdfInterface
     public function setDefaultMonospacedFont($response, $monoFontFamily);
 
     /**
-     * setAuthor - set author in pdf meta data
+     * setAuthor - set author in pdf meta data.
      *
      * @param Response $response  \Xoops\Core\Service\Response object
      * @param string   $pdfAuthor author name
@@ -97,7 +96,7 @@ interface HtmlToPdfInterface
     public function setAuthor($response, $pdfAuthor);
 
     /**
-     * setTitle - set title in pdf meta data
+     * setTitle - set title in pdf meta data.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $pdfTitle document title
@@ -105,7 +104,7 @@ interface HtmlToPdfInterface
     public function setTitle($response, $pdfTitle);
 
     /**
-     * setSubject - set subject in pdf meta data
+     * setSubject - set subject in pdf meta data.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $pdfSubject document subject
@@ -113,7 +112,7 @@ interface HtmlToPdfInterface
     public function setSubject($response, $pdfSubject);
 
     /**
-     * setKeywords - set keywords in pdf meta data
+     * setKeywords - set keywords in pdf meta data.
      *
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string[] $pdfKeywords array of keywords pertaining to document
@@ -121,7 +120,7 @@ interface HtmlToPdfInterface
     public function setKeywords($response, $pdfKeywords);
 
     /**
-     * addHtml - add HTML formatted text to document. This may be called multiple times
+     * addHtml - add HTML formatted text to document. This may be called multiple times.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $html     HTML formated text to include in document
@@ -130,7 +129,7 @@ interface HtmlToPdfInterface
     public function addHtml($response, $html);
 
     /**
-     * outputPdfInline - output a named pdf document file inline
+     * outputPdfInline - output a named pdf document file inline.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
@@ -138,7 +137,7 @@ interface HtmlToPdfInterface
     public function outputPdfInline($response, $name);
 
     /**
-     * outputPdfDownload - output a named pdf document file for download
+     * outputPdfDownload - output a named pdf document file for download.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $name     filename for file
@@ -146,7 +145,7 @@ interface HtmlToPdfInterface
     public function outputPdfDownload($response, $name);
 
     /**
-     * fetchPdf - fetch rendered document as a string
+     * fetchPdf - fetch rendered document as a string.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */

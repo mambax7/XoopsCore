@@ -12,25 +12,24 @@
 namespace Xoops\Form;
 
 /**
- * Password - a password entry element
+ * Password - a password entry element.
  *
  * @category  Xoops\Form\Password
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Password extends Element
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption      Caption or array of all attributes
      * @param string       $name         name attribute
-     * @param integer      $size         Size of the field
-     * @param integer      $maxlength    Maximum length of the text
+     * @param int          $size         Size of the field
+     * @param int          $maxlength    Maximum length of the text
      * @param string       $value        Initial value of the field - *Warning:* readable in cleartext in the page!
      * @param string       $autoComplete Turn autoComplete in browser 'on' or 'off'
      * @param string       $placeholder  placeholder for this element.
@@ -65,7 +64,7 @@ class Password extends Element
     }
 
     /**
-     * Get the field size
+     * Get the field size.
      *
      * @return int
      */
@@ -75,7 +74,7 @@ class Password extends Element
     }
 
     /**
-     * Get the max length
+     * Get the max length.
      *
      * @return int
      */
@@ -85,7 +84,7 @@ class Password extends Element
     }
 
     /**
-     * Prepare HTML for output
+     * Prepare HTML for output.
      *
      * @return string HTML
      */
@@ -94,6 +93,7 @@ class Password extends Element
         $this->themeDecorateElement();
 
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . $this->getExtra() . ' >';
+
+        return '<input '.$attributes.$this->getExtra().' >';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class ThemeFormTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,22 +33,22 @@ class ThemeFormTest extends \PHPUnit\Framework\TestCase
     {
         $this->object->insertBreak();
         $value = $this->object->render();
-        $this->assertTrue(strpos($value, 'class="break"') !== false);
-        $this->assertTrue(strpos($value, '>&nbsp;<') !== false);
+        $this->assertTrue(false !== strpos($value, 'class="break"'));
+        $this->assertTrue(false !== strpos($value, '>&nbsp;<'));
 
         $this->object->insertBreak('extra', 'class');
         $value = $this->object->render();
-        $this->assertTrue(strpos($value, 'class="class"') !== false);
-        $this->assertTrue(strpos($value, '>extra<') !== false);
+        $this->assertTrue(false !== strpos($value, 'class="class"'));
+        $this->assertTrue(false !== strpos($value, '>extra<'));
     }
 
     public function testRender()
     {
         $value = $this->object->render();
-        $this->assertTrue(strpos($value, '<form') !== false);
-        $this->assertTrue(strpos($value, 'name="name"') !== false);
-        $this->assertTrue(strpos($value, 'id="name"') !== false);
-        $this->assertTrue(strpos($value, 'action="action"') !== false);
-        $this->assertTrue(strpos($value, '<legend>Caption</legend>') !== false);
+        $this->assertTrue(false !== strpos($value, '<form'));
+        $this->assertTrue(false !== strpos($value, 'name="name"'));
+        $this->assertTrue(false !== strpos($value, 'id="name"'));
+        $this->assertTrue(false !== strpos($value, 'action="action"'));
+        $this->assertTrue(false !== strpos($value, '<legend>Caption</legend>'));
     }
 }

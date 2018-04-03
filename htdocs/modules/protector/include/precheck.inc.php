@@ -10,19 +10,17 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-require_once __DIR__ . '/precheck_functions.php';
+require_once __DIR__.'/precheck_functions.php';
 
 define('PROTECTOR_PRECHECK_INCLUDED', 1);
-define('PROTECTOR_VERSION', file_get_contents(__DIR__ . '/version.txt'));
+define('PROTECTOR_VERSION', file_get_contents(__DIR__.'/version.txt'));
 
 // set $_SERVER['REQUEST_URI'] for IIS
 if (empty($_SERVER['REQUEST_URI'])) { // Not defined by IIS
@@ -31,7 +29,7 @@ if (empty($_SERVER['REQUEST_URI'])) { // Not defined by IIS
         $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
     }
     if (isset($_SERVER['QUERY_STRING'])) {
-        $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+        $_SERVER['REQUEST_URI'] .= '?'.$_SERVER['QUERY_STRING'];
     }
 }
 

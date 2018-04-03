@@ -12,7 +12,7 @@
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * XXX
+ * XXX.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -20,7 +20,6 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id: $
  */
-
 function xoops_module_update_search(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();
@@ -48,5 +47,6 @@ function xoops_module_update_search(XoopsModule $module)
             }
         }
     }
+
     return true;
 }

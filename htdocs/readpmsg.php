@@ -13,16 +13,14 @@ use Xmf\Request;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * XOOPS message list
+ * XOOPS message list.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @version         $Id$
  */
-
-include __DIR__ . '/mainfile.php';
+include __DIR__.'/mainfile.php';
 $xoops = Xoops::getInstance();
 $xoops->events()->triggerEvent('core.readpmsg.start');
 
@@ -40,7 +38,6 @@ $pm_handler = $xoops->getHandlerPrivateMessage();
 $xoops->header('module:system/system_readpmsg.tpl');
 
 switch ($op) {
-
     case 'list':
     default:
 
@@ -58,7 +55,7 @@ switch ($op) {
         if (empty($pm_arr)) {
             $xoops->tpl()->assign('error_msg', $xoops->alert('error', XoopsLocale::E_YOU_DO_NOT_HAVE_ANY_PRIVATE_MESSAGE));
         } else {
-            if ($pm_arr[0]->getVar('read_msg') === 0) {
+            if (0 === $pm_arr[0]->getVar('read_msg')) {
                 $pm_handler->setRead($pm_arr[0]);
             }
             $poster = new XoopsUser($pm_arr[0]->getVar('from_userid'));
@@ -81,11 +78,12 @@ switch ($op) {
             $xoops->tpl()->assign('read', true);
             $xoops->tpl()->assign('token', $xoops->security()->getTokenHTML());
         }
+
         break;
 
     case 'delete':
         $obj = $pm_handler->get($id);
-        if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+        if (isset($_POST['ok']) && 1 === $_POST['ok']) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('viewpmsg.php', 3, implode(',', $xoops->security()->getErrors()));
             }
@@ -96,8 +94,9 @@ switch ($op) {
             }
         } else {
             $xoops->tpl()->assign('subject', $obj->getVar('subject'));
-            echo $xoops->confirm(['ok' => 1, 'msg_id' => $id, 'op' => 'delete'], 'readpmsg.php', XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES . '<br />' . $obj->getVar('subject'));
+            echo $xoops->confirm(['ok' => 1, 'msg_id' => $id, 'op' => 'delete'], 'readpmsg.php', XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_MESSAGES.'<br />'.$obj->getVar('subject'));
         }
+
         break;
 }
 $xoops->footer();

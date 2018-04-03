@@ -15,7 +15,6 @@
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  */
-
 use Xmf\Debug;
 use Xmf\Highlighter;
 use Xmf\Metagen;
@@ -23,7 +22,7 @@ use Xmf\Module\Helper\Permission;
 use Xmf\Module\Helper\Session;
 use Xmf\Request;
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -34,11 +33,11 @@ $sessionHelper = new Session();
 if ($sessionHelper) {
     $var = $sessionHelper->get('fred');
     if ($var) {
-        echo sprintf('Clearing session variable value of "%s"', $var) . '<br />';
+        echo sprintf('Clearing session variable value of "%s"', $var).'<br />';
         $sessionHelper->destroy();
     } else {
         $var = date('Y-m-d H:i:s');
-        echo sprintf('Session variable not set. Setting as: %s', $var) . '<br />';
+        echo sprintf('Session variable not set. Setting as: %s', $var).'<br />';
         $sessionHelper->set('fred', $var);
     }
 }
@@ -51,7 +50,7 @@ if ($permissionHelper) {
     $permissionItemId = 1;
 
     // if this is a post operation get the input and save it
-    if (Request::getMethod() === 'POST') {
+    if ('POST' === Request::getMethod()) {
         echo $xoops->alert('success', 'Permission updated');
         // save the data
         $name = $permissionHelper->defaultFieldName($permissionName, $permissionItemId);
@@ -82,7 +81,7 @@ if ($permissionHelper) {
     if ($permissionHelper->checkPermission($permissionName, $permissionItemId)) {
         echo "<p>You have the <strong>'${permissionName}'</strong> permission for the 'codex' module.</p>";
     } else {
-        echo "<p>You <em>DO NOT</em> have the <strong>'${permissionName}'</strong> " .
+        echo "<p>You <em>DO NOT</em> have the <strong>'${permissionName}'</strong> ".
             "permission for the 'codex' module.</p>";
     }
 }
@@ -122,11 +121,11 @@ EOT;
 echo '<h4>Extracted Description</h4>';
 // get the intro of the article to use as the description
 $description = Metagen::generateDescription($article, 50);
-echo '<p>' . $description . '</p>';
+echo '<p>'.$description.'</p>';
 
 echo '<h4>SEO Slug</h4>';
 // turn title into a slug
-echo '<p>' . Metagen::generateSeoTitle($title) . '</p>';
+echo '<p>'.Metagen::generateSeoTitle($title).'</p>';
 
 // highlight keywords in article
 echo '<h4>Article with Top 25 Keywords Highlighted</h4>';

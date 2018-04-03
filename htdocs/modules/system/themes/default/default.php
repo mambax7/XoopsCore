@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-
 /*
  * Xoops Cpanel default GUI class
  *
@@ -47,7 +46,7 @@ class XoopsGuiDefault
 
         $xoops->theme()->addBaseStylesheetAssets('@jqueryuicss');
         $xoops->theme()->addStylesheet('media/xoops/css/moduladmin.css');
-        $xoops->theme()->addStylesheet(\XoopsBaseConfig::get('adminthemes-url') . '/default/css/style.css');
+        $xoops->theme()->addStylesheet(\XoopsBaseConfig::get('adminthemes-url').'/default/css/style.css');
 
         // $xoops->theme()->addBaseScriptAssets('@jquery');
         // bootstrap has to come before jquery.ui or dialog close buttons are blank
@@ -55,15 +54,15 @@ class XoopsGuiDefault
         $xoops->theme()->addBaseScriptAssets('@jqueryui');
         $xoops->theme()->addBaseScriptAssets('@jgrowl');
         // ddsmoothmenu
-        $xoops->theme()->addScript(\XoopsBaseConfig::get('adminthemes-url') . '/default/js/ddsmoothmenu.js');
-        $xoops->theme()->addScript(\XoopsBaseConfig::get('adminthemes-url') . '/default/js/tooltip.js');
+        $xoops->theme()->addScript(\XoopsBaseConfig::get('adminthemes-url').'/default/js/ddsmoothmenu.js');
+        $xoops->theme()->addScript(\XoopsBaseConfig::get('adminthemes-url').'/default/js/tooltip.js');
 
         $quick = [];
-        $quick[] = ['title' => SystemLocale::CONTROL_PANEL, 'link' => \XoopsBaseConfig::get('url') . '/admin.php'];
+        $quick[] = ['title' => SystemLocale::CONTROL_PANEL, 'link' => \XoopsBaseConfig::get('url').'/admin.php'];
         $quick[] = ['title' => XoopsLocale::HOME_PAGE, 'link' => \XoopsBaseConfig::get('url')];
-        $quick[] = ['title' => DefaultThemeLocale::XOOPS_NEWS, 'link' => \XoopsBaseConfig::get('url') . '/admin.php?xoopsorgnews=1'];
+        $quick[] = ['title' => DefaultThemeLocale::XOOPS_NEWS, 'link' => \XoopsBaseConfig::get('url').'/admin.php?xoopsorgnews=1'];
         $quick[] = ['title' => 'separator'];
-        $quick[] = ['title' => XoopsLocale::A_LOGOUT, 'link' => \XoopsBaseConfig::get('url') . '/user.php?op=logout'];
+        $quick[] = ['title' => XoopsLocale::A_LOGOUT, 'link' => \XoopsBaseConfig::get('url').'/user.php?op=logout'];
         $xoops->tpl()->assign('quick_menu', $quick);
 
         XoopsLoad::load('module', 'system');
@@ -72,9 +71,9 @@ class XoopsGuiDefault
         $system_extension = new SystemExtension();
 
         $adminmenu = null;
-        include __DIR__ . '/menu.php';
-        if (!$xoops->isModule() || $xoops->module->getVar('dirname', 'n') === 'system') {
-            $modpath = \XoopsBaseConfig::get('url') . '/admin.php';
+        include __DIR__.'/menu.php';
+        if (!$xoops->isModule() || 'system' === $xoops->module->getVar('dirname', 'n')) {
+            $modpath = \XoopsBaseConfig::get('url').'/admin.php';
             $modname = DefaultThemeLocale::SYSTEM_OPTIONS;
             $modid = 1;
             $moddir = 'system';
@@ -82,29 +81,29 @@ class XoopsGuiDefault
             $mod_options = $adminmenu;
             foreach (array_keys($mod_options) as $item) {
                 $mod_options[$item]['link'] = empty($mod_options[$item]['absolute'])
-                    ? \XoopsBaseConfig::get('url') . '/modules/' . $moddir . '/' . $mod_options[$item]['link']
+                    ? \XoopsBaseConfig::get('url').'/modules/'.$moddir.'/'.$mod_options[$item]['link']
                     : $mod_options[$item]['link'];
                 $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? ''
-                    : \XoopsBaseConfig::get('adminthemes-url') . '/default/' . $mod_options[$item]['icon'];
+                    : \XoopsBaseConfig::get('adminthemes-url').'/default/'.$mod_options[$item]['icon'];
                 unset($mod_options[$item]['icon_small']);
             }
         } else {
             $moddir = $xoops->module->getVar('dirname', 'n');
-            $modpath = \XoopsBaseConfig::get('url') . '/modules/' . $moddir;
+            $modpath = \XoopsBaseConfig::get('url').'/modules/'.$moddir;
             $modname = $xoops->module->getVar('name');
             $modid = $xoops->module->getVar('mid');
 
             $mod_options = $xoops->module->getAdminMenu();
             foreach (array_keys($mod_options) as $item) {
                 $mod_options[$item]['link'] = empty($mod_options[$item]['absolute'])
-                    ? \XoopsBaseConfig::get('url') . "/modules/{$moddir}/" . $mod_options[$item]['link']
+                    ? \XoopsBaseConfig::get('url')."/modules/{$moddir}/".$mod_options[$item]['link']
                     : $mod_options[$item]['link'];
-                if (XoopsLoad::fileExists($xoops->path('media/xoops/images/icons/32/' . $mod_options[$item]['icon']))) {
-                    $mod_options[$item]['icon'] = $xoops->url('media/xoops/images/icons/32/' . $mod_options[$item]['icon']);
-                } elseif (XoopsLoad::fileExists($xoops->path('modules/' . $xoops->module->dirname() . '/assets/icons/32/' . $mod_options[$item]['icon']))) {
-                    $mod_options[$item]['icon'] = $xoops->url('modules/' . $xoops->module->dirname() . '/assets/icons/32/' . $mod_options[$item]['icon']);
+                if (XoopsLoad::fileExists($xoops->path('media/xoops/images/icons/32/'.$mod_options[$item]['icon']))) {
+                    $mod_options[$item]['icon'] = $xoops->url('media/xoops/images/icons/32/'.$mod_options[$item]['icon']);
+                } elseif (XoopsLoad::fileExists($xoops->path('modules/'.$xoops->module->dirname().'/assets/icons/32/'.$mod_options[$item]['icon']))) {
+                    $mod_options[$item]['icon'] = $xoops->url('modules/'.$xoops->module->dirname().'/assets/icons/32/'.$mod_options[$item]['icon']);
                 } else {
-                    $mod_options[$item]['icon'] = $xoops->url('modules/' . $xoops->module->dirname() . '/icons/32/' . $mod_options[$item]['icon']);
+                    $mod_options[$item]['icon'] = $xoops->url('modules/'.$xoops->module->dirname().'/icons/32/'.$mod_options[$item]['icon']);
                 }
             }
             $xoops->tpl()->assign('modhasconfig', $xoops->module->getVar('hasconfig'));
@@ -134,13 +133,13 @@ class XoopsGuiDefault
         $OPT = [];
 
         $menu[] = [
-            'link' => \XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=preferences', 'title' => XoopsLocale::PREFERENCES,
-            'absolute' => 1, 'url' => \XoopsBaseConfig::get('url') . '/modules/system/', 'options' => $OPT,
+            'link' => \XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=preferences', 'title' => XoopsLocale::PREFERENCES,
+            'absolute' => 1, 'url' => \XoopsBaseConfig::get('url').'/modules/system/', 'options' => $OPT,
         ];
         $menu[] = ['title' => 'separator'];
 
         // Module adminmenu
-        if ($xoops->isModule() && $xoops->module->getVar('dirname') !== 'system') {
+        if ($xoops->isModule() && 'system' !== $xoops->module->getVar('dirname')) {
             if ($xoops->module->getInfo('system_menu')) {
                 //$xoops->theme()->addStylesheet('modules/system/css/menu.css');
 
@@ -150,34 +149,34 @@ class XoopsGuiDefault
                 $menu_handler = $xoops->getModuleHandler('menu', 'system');
                 // Define top navigation
                 if ($xoops->module->getVar('hasconfig')) {
-                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoops->module->getVar('mid', 'e'), XoopsLocale::PREFERENCES);
+                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='.$xoops->module->getVar('mid', 'e'), XoopsLocale::PREFERENCES);
                 }
                 if ($xoops->module->getInfo('extension')) {
-                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=extensions&amp;op=update&amp;module=' . $xoops->module->getVar('dirname', 'e'), XoopsLocale::A_UPDATE);
+                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=extensions&amp;op=update&amp;module='.$xoops->module->getVar('dirname', 'e'), XoopsLocale::A_UPDATE);
                 } else {
-                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $xoops->module->getVar('dirname', 'e'), XoopsLocale::A_UPDATE);
+                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module='.$xoops->module->getVar('dirname', 'e'), XoopsLocale::A_UPDATE);
                 }
                 if ($xoops->module->getInfo('blocks')) {
-                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url') . '/modules/system/admin.php?fct=blocksadmin&amp;op=list&amp;filter=1&amp;selgen=' . $xoops->module->getVar('mid', 'e') . '&amp;selmod=-2&amp;selgrp=-1&amp;selvis=-1', XoopsLocale::BLOCKS);
+                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url').'/modules/system/admin.php?fct=blocksadmin&amp;op=list&amp;filter=1&amp;selgen='.$xoops->module->getVar('mid', 'e').'&amp;selmod=-2&amp;selgrp=-1&amp;selvis=-1', XoopsLocale::BLOCKS);
                 }
                 if ($xoops->module->getInfo('hasMain')) {
-                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'e') . '/', SystemLocale::GO_TO_MODULE);
+                    $menu_handler->addMenuTop(\XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'e').'/', SystemLocale::GO_TO_MODULE);
                 }
                 // Define main tab navigation
                 $i = 0;
                 $current = $i;
                 foreach ($xoops->module->adminmenu as $menu) {
-                    if (stripos($_SERVER['REQUEST_URI'], $menu['link']) !== false) {
+                    if (false !== stripos($_SERVER['REQUEST_URI'], $menu['link'])) {
                         $current = $i;
                     }
-                    $menu_handler->addMenuTabs($xoops->url('modules/' . $xoops->module->getVar('dirname') . '/' . $menu['link']), $menu['title']);
+                    $menu_handler->addMenuTabs($xoops->url('modules/'.$xoops->module->getVar('dirname').'/'.$menu['link']), $menu['title']);
                     ++$i;
                 }
                 if ($xoops->module->getInfo('help')) {
-                    if (stripos($_SERVER['REQUEST_URI'], 'admin/' . $xoops->module->getInfo('help')) !== false) {
+                    if (false !== stripos($_SERVER['REQUEST_URI'], 'admin/'.$xoops->module->getInfo('help'))) {
                         $current = $i;
                     }
-                    $menu_handler->addMenuTabs('../../system/help.php?mid=' . $xoops->module->getVar('mid', 's') . '&amp;' . $xoops->module->getInfo('help'), XoopsLocale::HELP);
+                    $menu_handler->addMenuTabs('../../system/help.php?mid='.$xoops->module->getVar('mid', 's').'&amp;'.$xoops->module->getInfo('help'), XoopsLocale::HELP);
                 }
 
                 // Display navigation tabs

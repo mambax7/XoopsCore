@@ -17,7 +17,7 @@
  */
 
 /**
- * Localize the mail functions
+ * Localize the mail functions.
  *
  * The English localization is solely for demonstration
  */

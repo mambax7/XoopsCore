@@ -12,11 +12,10 @@
 use Xoops\Module\Plugin;
 
 /**
- * usermenu module
+ * usermenu module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         usermenu
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -60,7 +59,7 @@ function b_usermenu_usermenu_show()
 
                     //Handle active
                     $activeUrl = \Xoops\Core\HttpRequest::getInstance()->getUrl();
-                    $res['isActive'] = strpos($activeUrl, $res['link']) === 0;
+                    $res['isActive'] = 0 === strpos($activeUrl, $res['link']);
 
                     $res['dirName'] = $dirName;
                     $block['usermenu'][] = $res;
@@ -69,5 +68,6 @@ function b_usermenu_usermenu_show()
         }
     }
     $block['count'] = count($block['usermenu']);
+
     return $block['count'] ? $block : false;
 }

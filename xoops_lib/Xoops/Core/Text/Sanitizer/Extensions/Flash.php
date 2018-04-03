@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * Sanitizer extension for flash content
+ * Sanitizer extension for flash content.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Flash extends ExtensionAbstract
 {
@@ -38,7 +37,7 @@ class Flash extends ExtensionAbstract
     ];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -88,12 +87,12 @@ EOF;
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
         $function = function ($attributes, $content, $tagName) {
-            if (array_key_exists(0, $attributes) && substr($attributes[0], 0, 1) === '=') {
+            if (array_key_exists(0, $attributes) && '=' === substr($attributes[0], 0, 1)) {
                 $args = ltrim($attributes[0], '=');
                 list($width, $height) = explode(',', $args);
                 $url = $content;
@@ -110,7 +109,7 @@ EOF;
             }
             if ((empty($width) || empty($height)) && (bool) $this->config['detect_dimension']) {
                 $dimension = @getimagesize($content);
-                if ($dimension !== false) {
+                if (false !== $dimension) {
                     list($width, $height) = $dimension;
                 }
             }
@@ -121,6 +120,7 @@ EOF;
 
             $template = $this->config['template'];
             $newcontent = sprintf($template, $url, $width, $height);
+
             return $newcontent;
         };
 

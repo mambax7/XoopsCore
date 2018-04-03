@@ -12,21 +12,20 @@
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
 /**
- * Get {@link Xoops\Form\ThemeForm} for registering new users
+ * Get {@link Xoops\Form\ThemeForm} for registering new users.
  *
  *
- * @param null $step
+ * @param  null                 $step
  * @return Xoops\Form\ThemeForm
  */
 function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
@@ -41,7 +40,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $reg_form->addElement(new Xoops\Form\Label('', $step['step_desc']));
     }
 
-    if ($step_no === 1) {
+    if (1 === $step_no) {
         //$uname_size = $GLOBALS['xoopsConfigUser']['maxuname'] < 35 ? $GLOBALS['xoopsConfigUser']['maxuname'] : 35;
 
         $elements[0][] = [
@@ -94,9 +93,9 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     }
     //end of Dynamic User fields
     $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-    if ($step_no === 1 && $xoops->getConfig('reg_dispdsclmr') !== 0 && $xoops->getConfig('reg_disclaimer') !== '') {
+    if (1 === $step_no && 0 !== $xoops->getConfig('reg_dispdsclmr') && '' !== $xoops->getConfig('reg_disclaimer')) {
         $disc_tray = new Xoops\Form\ElementTray(XoopsLocale::DISCLAIMER, '<br />');
-        $disc_text = new Xoops\Form\Label('', '<div class="pad5">' . $myts->displayTarea($xoops->getConfig('reg_disclaimer'), 1) . '</div>');
+        $disc_text = new Xoops\Form\Label('', '<div class="pad5">'.$myts->displayTarea($xoops->getConfig('reg_disclaimer'), 1).'</div>');
         $disc_tray->addElement($disc_text);
         $agree_chk = new Xoops\Form\Checkbox('', 'agree_disc');
         $agree_chk->addOption(1, XoopsLocale::I_AGREE_TO_THE_ABOVE);
@@ -104,30 +103,30 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $reg_form->addElement($disc_tray);
     }
 
-    if ($step_no === 1) {
+    if (1 === $step_no) {
         $reg_form->addElement(new Xoops\Form\Captcha(), true);
     }
 
     $reg_form->addElement(new Xoops\Form\Hidden('uid', $user->getVar('uid')));
     $reg_form->addElement(new Xoops\Form\Hidden('step', $step_no));
     $reg_form->addElement(new Xoops\Form\Button('', 'submitButton', XoopsLocale::A_SUBMIT, 'submit'));
+
     return $reg_form;
 }
 
-
 /**
- * Get {@link Xoops\Form\ThemeForm} for editing a user
+ * Get {@link Xoops\Form\ThemeForm} for editing a user.
  *
  *
- * @param ProfileProfile|null $profile
- * @param bool $action
+ * @param  ProfileProfile|null  $profile
+ * @param  bool                 $action
  * @return Xoops\Form\ThemeForm
  */
 function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $action = false)
 {
     $xoops = Xoops::getInstance();
 
-    if ($action === false) {
+    if (false === $action) {
         $action = $_SERVER['REQUEST_URI'];
     }
 
@@ -168,7 +167,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         //If the user is an admin and is editing someone else
         $pwd_text = new Xoops\Form\Password('', 'password');
         $pwd_text2 = new Xoops\Form\Password('', 'vpass');
-        $pwd_tray = new Xoops\Form\ElementTray(XoopsLocale::PASSWORD . '<br />' . XoopsLocale::TYPE_NEW_PASSWORD_TWICE_TO_CHANGE_IT);
+        $pwd_tray = new Xoops\Form\ElementTray(XoopsLocale::PASSWORD.'<br />'.XoopsLocale::TYPE_NEW_PASSWORD_TWICE_TO_CHANGE_IT);
         $pwd_tray->addElement($pwd_text);
         $pwd_tray->addElement($pwd_text2);
         $elements[0][] = ['element' => $pwd_tray, 'required' => 0]; //cannot set an element tray required
@@ -197,12 +196,12 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
             // Set default value for user fields if available
             if ($user->isNew()) {
                 $default = $field->getVar('field_default');
-                if ($default !== '' && $default !== null) {
+                if ('' !== $default && null !== $default) {
                     $user->setVar($field->getVar('field_name'), $default);
                 }
             }
 
-            if ($profile->getVar($field->getVar('field_name'), 'n') === null) {
+            if (null === $profile->getVar($field->getVar('field_name'), 'n')) {
                 $default = $field->getVar('field_default', 'n');
                 $profile->setVar($field->getVar('field_name'), $default);
             }
@@ -237,8 +236,8 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $title = isset($categories[$k]) ? $categories[$k]['cat_title'] : _PROFILE_MA_DEFAULT;
         $desc = isset($categories[$k]) ? $categories[$k]['cat_description'] : '';
         //$form->addElement(new Xoops\Form\Label("<div class='break'>{$title}</div>", $desc), false);
-        $desc = ($desc !== '' ? ' - ' . $desc : '');
-        $form->insertBreak($title . $desc);
+        $desc = ('' !== $desc ? ' - '.$desc : '');
+        $form->insertBreak($title.$desc);
         foreach (array_keys($elements[$k]) as $i) {
             $form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
         }
@@ -246,5 +245,6 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
 
     $form->addElement(new Xoops\Form\Hidden('uid', $user->getVar('uid')));
     $form->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::SAVE_CHANGES, 'submit'));
+
     return $form;
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 use Xoops\Core\Cache\Access;
 
@@ -61,6 +61,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
     {
         $regenFunction = function ($args) {
             $vars = func_get_args();
+
             return $vars[0];
         };
         $key = 'testCacheRead';
@@ -70,7 +71,7 @@ class AccessTest extends \PHPUnit\Framework\TestCase
         $ret = $this->object->cacheRead($key, $regenFunction, 60, $value);
         $this->assertSame($ret, $value);
         // this should return cached value, not current regenFunction result
-        $ret = $this->object->cacheRead($key, $regenFunction, 60, 'not' . $value);
+        $ret = $this->object->cacheRead($key, $regenFunction, 60, 'not'.$value);
         $this->assertSame($ret, $value);
 
         $ret = $this->object->read($key);

@@ -10,16 +10,15 @@
 */
 
 /**
- * Class to "clean up" text for various uses
+ * Class to "clean up" text for various uses.
  *
  * @category  Core
- * @package   Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Goghs Cheng
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
 {
@@ -35,7 +34,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
      */
     public static function getInstance()
     {
-        if (static::$instance === null) {
+        if (null === static::$instance) {
             static::$instance = new static();
         }
 
@@ -58,7 +57,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
     }
 
     /**
-     * if magic_quotes_gpc is on, strip back slashes
+     * if magic_quotes_gpc is on, strip back slashes.
      *
      * @param string $text text to not process
      *
@@ -73,7 +72,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
     }
 
     /**
-     * Filters textarea form data in DB for display
+     * Filters textarea form data in DB for display.
      *
      * @param string $text   string to filter
      * @param int    $html   allow html?
@@ -90,7 +89,7 @@ class MyTextSanitizer extends Xoops\Core\Text\Sanitizer
     }
 
     /**
-     * Filters textarea form data submitted for preview
+     * Filters textarea form data submitted for preview.
      *
      * @param string $text   string to filter
      * @param int    $html   allow html?

@@ -12,22 +12,21 @@
 namespace Xoops\Form;
 
 /**
- * Raw - raw form element
+ * Raw - raw form element.
  *
  * This class has special treatment by xoopsforms, it will render the raw
  * value provided without wrapping in HTML
  *
  * @category  Xoops\Form\Raw
- * @package   Xoops\Form
  * @author    trabis <trabisdementia@gmail.com>
  * @copyright 2012-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Raw extends Element
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $value raw value to insert into form, or array of attributes
      */
@@ -42,7 +41,7 @@ class Raw extends Element
     }
 
     /**
-     * render
+     * render.
      *
      * @return string rendered form element
      */

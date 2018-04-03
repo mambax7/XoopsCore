@@ -14,14 +14,13 @@ use Xoops\Core\Service\Contract\UserRankInterface;
 use Xoops\Core\Service\Response;
 
 /**
- * UserRank provider for service manager
+ * UserRank provider for service manager.
  *
  * @category  class
- * @package   UserRankProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class UserRankProvider extends AbstractContract implements UserRankInterface
@@ -38,7 +37,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -48,7 +47,7 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
     }
 
     /**
-     * getUserRank - given user info return array of rank information for the user
+     * getUserRank - given user info return array of rank information for the user.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param mixed    $userinfo Xoops\Core\Kernel\Handlers\XoopsUser object for user (preferred) or
@@ -62,8 +61,9 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
         $uid = isset($userinfo['uid']) ? (int) $userinfo['uid'] : null;
         $posts = isset($userinfo['posts']) ? (int) $userinfo['posts'] : null;
         $rank = isset($userinfo['rank']) ? (int) $userinfo['rank'] : null;
-        if ($uid === null || $posts === null || $rank === null) {
+        if (null === $uid || null === $posts || null === $rank) {
             $response->setSuccess(false)->addErrorMessage('User info is invalid');
+
             return;
         }
 
@@ -71,10 +71,10 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
         $db = \Xoops::getInstance()->db();
         $qb = $db->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('r.rank_title AS title')
+        $qb->select('r.rank_title AS title')
             ->addSelect('r.rank_image AS image')
             ->fromPrefix('userrank_rank', 'r');
-        if ($rank !== 0) {
+        if (0 !== $rank) {
             $qb->where($eb->eq('r.rank_id', ':rank'))
                 ->setParameter(':rank', $rank, \PDO::PARAM_INT);
         } else {
@@ -87,14 +87,14 @@ class UserRankProvider extends AbstractContract implements UserRankInterface
         $rank = $result->fetch(\PDO::FETCH_ASSOC);
 
         $rank['title'] = isset($rank['title']) ? $myts->htmlSpecialChars($rank['title']) : '';
-        $rank['image'] = \XoopsBaseConfig::get('uploads-url') .
-            (isset($rank['image']) ? '/' . $rank['image'] : '/blank.gif');
+        $rank['image'] = \XoopsBaseConfig::get('uploads-url').
+            (isset($rank['image']) ? '/'.$rank['image'] : '/blank.gif');
 
         $response->setValue($rank);
     }
 
     /**
-     * getAssignableUserRankList - return a list of ranks that can be assigned
+     * getAssignableUserRankList - return a list of ranks that can be assigned.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      */

@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class RawTest extends \PHPUnit\Framework\TestCase
 {
@@ -38,7 +38,7 @@ class RawTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new Raw('myvalue');
-        $newWay = new Raw(['value' => 'myvalue', ]);
+        $newWay = new Raw(['value' => 'myvalue']);
         $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

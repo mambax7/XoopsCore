@@ -12,16 +12,13 @@
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * Ranks Form Class
+ * Ranks Form Class.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Andricq Nicolas (AKA MusS)
- * @package         system
- * @subpackage      userrank
  * @version         $Id$
  */
-
 class UserrankRanksForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -54,9 +51,9 @@ class UserrankRanksForm extends Xoops\Form\ThemeForm
         $imageselect_img = new Xoops\Form\Select($imgpath_img, 'rank_image', $blank_img);
         $imageselect_img->addOption($blank_img, $blank_img);
         \Xoops\Core\Lists\ImageFile::setOptionsArray($imageselect_img, $xoops->path('uploads/ranks'));
-        $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"" . \XoopsBaseConfig::get('uploads-url') . "\")'");
+        $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"".\XoopsBaseConfig::get('uploads-url')."\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new Xoops\Form\Label('', "<br /><img src='" . \XoopsBaseConfig::get('uploads-url') . '/ranks/' . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
+        $imgtray_img->addElement(new Xoops\Form\Label('', "<br /><img src='".\XoopsBaseConfig::get('uploads-url').'/ranks/'.$blank_img."' name='image_img' id='xo-ranks-img' alt='' />"));
 
         $fileseltray_img = new Xoops\Form\ElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new Xoops\Form\File(_AM_USERRANK_UPLOAD, 'rank_image'), false);

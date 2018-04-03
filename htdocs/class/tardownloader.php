@@ -10,20 +10,18 @@
 */
 
 /**
- * Send tar files through a http socket
+ * Send tar files through a http socket.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     class
  * @since       2.0.0
  * @author      Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
  * @version     $Id$
  */
-
 class XoopsTarDownloader extends XoopsDownloader
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $ext      file extension
      * @param string $mimyType Mimetype
@@ -36,7 +34,7 @@ class XoopsTarDownloader extends XoopsDownloader
     }
 
     /**
-     * Add a file to the archive
+     * Add a file to the archive.
      *
      * @param string $filepath    Full path to the file
      * @param string $newfilename Filename (if you don't want to use the original)
@@ -46,14 +44,15 @@ class XoopsTarDownloader extends XoopsDownloader
     public function addFile($filepath, $newfilename = null)
     {
         $result = $this->archiver->addFile($filepath);
-        if ($result === false) {
+        if (false === $result) {
             return false;
         }
         if (isset($newfilename)) {
             // dirty, but no other way
             for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-                if ($filepath === $this->archiver->files[$i]['name']) {
+                if ($this->archiver->files[$i]['name'] === $filepath) {
                     $this->archiver->files[$i]['name'] = trim($newfilename);
+
                     break;
                 }
             }
@@ -61,7 +60,7 @@ class XoopsTarDownloader extends XoopsDownloader
     }
 
     /**
-     * Add a binary file to the archive
+     * Add a binary file to the archive.
      *
      * @param string $filepath    Full path to the file
      * @param string $newfilename Filename (if you don't want to use the original)
@@ -71,14 +70,15 @@ class XoopsTarDownloader extends XoopsDownloader
     public function addBinaryFile($filepath, $newfilename = null)
     {
         $result = $this->archiver->addFile($filepath, true);
-        if ($result === false) {
+        if (false === $result) {
             return false;
         }
         if (isset($newfilename)) {
             // dirty, but no other way
             for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-                if ($filepath === $this->archiver->files[$i]['name']) {
+                if ($this->archiver->files[$i]['name'] === $filepath) {
                     $this->archiver->files[$i]['name'] = trim($newfilename);
+
                     break;
                 }
             }
@@ -86,86 +86,88 @@ class XoopsTarDownloader extends XoopsDownloader
     }
 
     /**
-     * Add a dummy file to the archive
+     * Add a dummy file to the archive.
      *
-     * @param string  &$data    Data to write
-     * @param string  $filename Name for the file in the archive
-     * @param integer $time     time
+     * @param string &$data    Data to write
+     * @param string $filename Name for the file in the archive
+     * @param int    $time     time
      *
      * @return false|null
      */
     public function addFileData(&$data, $filename, $time = 0)
     {
-        $dummyfile = \XoopsBaseConfig::get('caches-path') . '/dummy_' . time() . '.html';
+        $dummyfile = \XoopsBaseConfig::get('caches-path').'/dummy_'.time().'.html';
         $fp = @fopen($dummyfile, 'w');
-        if ($fp === false) {
+        if (false === $fp) {
             return false;
         }
         fwrite($fp, $data);
         fclose($fp);
         $result = $this->archiver->addFile($dummyfile);
         unlink($dummyfile);
-        if ($result === false) {
+        if (false === $result) {
             return false;
         }
         // dirty, but no other way
         for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-            if ($dummyfile === $this->archiver->files[$i]['name']) {
+            if ($this->archiver->files[$i]['name'] === $dummyfile) {
                 $this->archiver->files[$i]['name'] = $filename;
-                if ($time !== 0) {
+                if (0 !== $time) {
                     $this->archiver->files[$i]['time'] = $time;
                 }
+
                 break;
             }
         }
     }
 
     /**
-     * Add a binary dummy file to the archive
+     * Add a binary dummy file to the archive.
      *
-     * @param string  &$data    Data to write
-     * @param string  $filename Name for the file in the archive
-     * @param integer $time     time
+     * @param string &$data    Data to write
+     * @param string $filename Name for the file in the archive
+     * @param int    $time     time
      *
      * @return false|null
      */
     public function addBinaryFileData(&$data, $filename, $time = 0)
     {
-        $dummyfile = \XoopsBaseConfig::get('caches-path') . '/dummy_' . time() . '.html';
+        $dummyfile = \XoopsBaseConfig::get('caches-path').'/dummy_'.time().'.html';
         $fp = @fopen($dummyfile, 'wb');
-        if ($fp === false) {
+        if (false === $fp) {
             return false;
         }
         fwrite($fp, $data);
         fclose($fp);
         $result = $this->archiver->addFile($dummyfile, true);
         unlink($dummyfile);
-        if ($result === false) {
+        if (false === $result) {
             return false;
         }
         // dirty, but no other way
         for ($i = 0; $i < $this->archiver->numFiles; ++$i) {
-            if ($dummyfile === $this->archiver->files[$i]['name']) {
+            if ($this->archiver->files[$i]['name'] === $dummyfile) {
                 $this->archiver->files[$i]['name'] = $filename;
-                if ($time !== 0) {
+                if (0 !== $time) {
                     $this->archiver->files[$i]['time'] = $time;
                 }
+
                 break;
             }
         }
     }
 
     /**
-     * Send the file to the client
+     * Send the file to the client.
      *
-     * @param string  $name Filename
-     * @param boolean $gzip Use GZ compression
+     * @param string $name Filename
+     * @param bool   $gzip Use GZ compression
      */
     public function download($name, $gzip = true)
     {
-        $this->_header($name . $this->ext);
-        $str = $this->archiver->toTarOutput($name . $this->ext, $gzip);
-        if ($str !== false) {
+        $this->_header($name.$this->ext);
+        $str = $this->archiver->toTarOutput($name.$this->ext, $gzip);
+        if (false !== $str) {
             echo $str;
         }
     }

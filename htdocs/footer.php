@@ -10,15 +10,13 @@
 */
 
 /**
- * Xoops footer
+ * Xoops footer.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @version         $Id$
  */
-
 $xoops = Xoops::getInstance();
 $xoops->events()->triggerEvent('core.include.footer');
 $xoops->deprecated("include 'footer.php' is deprecated since 2.6.0, use Xoops::getInstance()->footer(); instead");

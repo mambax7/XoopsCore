@@ -12,16 +12,14 @@
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 include_once 'header.php';
 
 $xoops->header('module:page/page_index.tpl');
@@ -64,7 +62,7 @@ if ($content_count > 0) {
 
 // Metas
 //description
-$xoTheme->addMeta('meta', 'description', strip_tags($helper->getModule()->name()) . ', ' . implode(',', $keywords));
+$xoTheme->addMeta('meta', 'description', strip_tags($helper->getModule()->name()).', '.implode(',', $keywords));
 //keywords
 $xoTheme->addMeta('meta', 'keywords', implode(',', $keywords));
 unset($keywords);

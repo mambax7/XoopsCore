@@ -11,7 +11,7 @@
 
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
-/**
+/*
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package     installer
@@ -22,7 +22,7 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon'] = true;
 
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 $xoops = Xoops::getInstance();
 
@@ -30,10 +30,10 @@ $xoops = Xoops::getInstance();
 $wizard = $_SESSION['wizard'];
 $pageHasForm = true;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $xoops->loadLocale('system');
-    include_once XOOPS_ROOT_PATH . '/modules/system/class/module.php';
-    include_once XOOPS_ROOT_PATH . '/modules/system/class/system.php';
+    include_once XOOPS_ROOT_PATH.'/modules/system/class/module.php';
+    include_once XOOPS_ROOT_PATH.'/modules/system/class/system.php';
 
     $system = System::getInstance();
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pageHasForm = false;
 
     if (count($msgs) > 0) {
-        $content = "<div class='x2-note successMsg'>" . INSTALLED_EXTENSION . "</div><ul class='log'>";
+        $content = "<div class='x2-note successMsg'>".INSTALLED_EXTENSION."</div><ul class='log'>";
         foreach ($msgs as $msg) {
             if ($msg instanceof XoopsModule) {
                 $tempvar = $msg->modinfo['name'];
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $content .= '</ul>';
     } else {
-        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_EXTENSION . '</div>';
+        $content = "<div class='x2-note confirmMsg'>".NO_INSTALLED_EXTENSION.'</div>';
     }
 
     //Reset module lists in cache folder
@@ -69,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $xoops->setConfig('locale', $_COOKIE['xo_install_lang']);
     }
     $xoops->loadLocale('system');
-    include_once XOOPS_ROOT_PATH . '/modules/system/class/module.php';
-    include_once XOOPS_ROOT_PATH . '/modules/system/class/extension.php';
-    include_once XOOPS_ROOT_PATH . '/modules/system/class/system.php';
+    include_once XOOPS_ROOT_PATH.'/modules/system/class/module.php';
+    include_once XOOPS_ROOT_PATH.'/modules/system/class/extension.php';
+    include_once XOOPS_ROOT_PATH.'/modules/system/class/system.php';
 
     $system = System::getInstance();
 
@@ -96,15 +96,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $form = new Xoops\Form\ThemeForm('', 'modules', 'index.php', 'post');
-        $moduleYN = new Xoops\Form\RadioYesNo('', 'modules[' . $ext->getInfo('dirname') . ']', $value, XoopsLocale::YES, XoopsLocale::NO);
-        $moduleYN->setExtra("onclick='selectModule(\"" . $ext->getInfo('dirname') . "\", this)'");
+        $moduleYN = new Xoops\Form\RadioYesNo('', 'modules['.$ext->getInfo('dirname').']', $value, XoopsLocale::YES, XoopsLocale::NO);
+        $moduleYN->setExtra("onclick='selectModule(\"".$ext->getInfo('dirname')."\", this)'");
         $form->addElement($moduleYN);
 
-        $content .= "<tr id='" . $ext->getInfo('dirname') . "'" . $style . ">\n";
-        $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $ext->getInfo('dirname') . '/' . $ext->getInfo('image') . "' alt='" . $ext->getInfo('name') . "'/></td>\n";
+        $content .= "<tr id='".$ext->getInfo('dirname')."'".$style.">\n";
+        $content .= "    <td class='img' ><img src='".XOOPS_URL.'/modules/'.$ext->getInfo('dirname').'/'.$ext->getInfo('image')."' alt='".$ext->getInfo('name')."'/></td>\n";
         $content .= '    <td>';
-        $content .= '        ' . $ext->getInfo('name') . '&nbsp;' . number_format(round($ext->getInfo('version'), 2), 2) . '&nbsp;(' . $ext->getInfo('dirname') . ')';
-        $content .= '        <br />' . $ext->getInfo('description');
+        $content .= '        '.$ext->getInfo('name').'&nbsp;'.number_format(round($ext->getInfo('version'), 2), 2).'&nbsp;('.$ext->getInfo('dirname').')';
+        $content .= '        <br />'.$ext->getInfo('description');
         $content .= "    </td>\n";
         $content .= "    <td class='yesno'>";
         $content .= $moduleYN->render();
@@ -112,13 +112,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ++$toinstal;
     }
     $content .= '</table>';
-    $content .= "</li></ul><script type='text/javascript'>" . $javascript . '</script>';
-    if ($toinstal === 0) {
+    $content .= "</li></ul><script type='text/javascript'>".$javascript.'</script>';
+    if (0 === $toinstal) {
         $pageHasForm = false;
-        $content = "<div class='x2-note confirmMsg'>" . NO_EXTENSION_FOUND . '</div>';
+        $content = "<div class='x2-note confirmMsg'>".NO_EXTENSION_FOUND.'</div>';
     }
 }
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = $pageHasForm;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

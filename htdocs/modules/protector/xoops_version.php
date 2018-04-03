@@ -10,22 +10,20 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $xoops = Xoops::getInstance();
 /*
  General settings
  */
 $modversion['name'] = _MI_PROTECTOR_NAME;
 $modversion['description'] = constant('_MI_PROTECTOR_DESC');
-$modversion['version'] = file_get_contents(__DIR__ . '/include/version.txt');
+$modversion['version'] = file_get_contents(__DIR__.'/include/version.txt');
 $modversion['credits'] = 'PEAK Corp.';
 $modversion['author'] = 'GIJ=CHECKMATE PEAK Corp.(http://www.peak.ne.jp/)';
 $modversion['help'] = 'page=help';

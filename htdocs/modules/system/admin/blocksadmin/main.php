@@ -14,13 +14,11 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * Blocks Administration
+ * Blocks Administration.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Kazumi Ono (AKA onokazu)
- * @package         system
- * @subpackage      blocksadmin
  * @version         $Id$
  */
 
@@ -52,25 +50,24 @@ $sel = [
     'selvis' => -1,
 ];
 foreach ($sel as $key => $value) {
-    $_{$key} = isset($_COOKIE[$key]) ? (int) ($_COOKIE[$key]) : $value;
-    ${$key} = $system->cleanVars($method, $key, $_{$key}, 'int');
+    $_[$key] = isset($_COOKIE[$key]) ? (int) ($_COOKIE[$key]) : $value;
+    ${$key} = $system->cleanVars($method, $key, $_[$key], 'int');
     setcookie($key, ${$key});
 }
 
 $type = $system->cleanVars($method, 'type', '', 'string');
-if ($type === 'preview') {
+if ('preview' === $type) {
     $op = 'preview';
 }
 
 if (isset($_GET['op'])) {
-    if ($_GET['op'] === 'edit' || $_GET['op'] === 'delete' || $_GET['op'] === 'delete_ok' || $_GET['op'] === 'clone') {
+    if ('edit' === $_GET['op'] || 'delete' === $_GET['op'] || 'delete_ok' === $_GET['op'] || 'clone' === $_GET['op']) {
         $op = $_GET['op'];
         $bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
     }
 }
 
 switch ($op) {
-
     case 'list':
         // Call Header
         $xoops->header('admin:system/system_blocks.tpl');
@@ -81,7 +78,7 @@ switch ($op) {
         $xoops->theme()->addScript('modules/system/js/blocks.js');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::BLOCKS_ADMINISTRATION,
             $system->adminVersion('blocksadmin', 'adminpath')
@@ -164,9 +161,9 @@ switch ($op) {
         /* Get blocks */
         $selvis = ($selvis === -1) ? null : $selvis;
         $selmod = ($selmod === -2) ? null : $selmod;
-        $order_block = (isset($selvis) ? '' : 'b.visible DESC, ') . 'b.side,b.weight,b.bid';
+        $order_block = (isset($selvis) ? '' : 'b.visible DESC, ').'b.side,b.weight,b.bid';
 
-        if ($selgrp === 0) {
+        if (0 === $selgrp) {
             // get blocks that are not assigned to any groups
             $blocks_arr = $block_handler->getNonGroupedBlocks($selmod, $toponlyblock = false, $selvis, $order_block);
         } else {
@@ -190,6 +187,7 @@ switch ($op) {
         }
         // Call Footer
         $xoops->footer();
+
         break;
 
     case 'add':
@@ -203,7 +201,7 @@ switch ($op) {
         $xoops->theme()->addScript('modules/system/js/blocks.js');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::BLOCKS_ADMINISTRATION,
             $system->adminVersion('blocksadmin', 'adminpath')
@@ -218,6 +216,7 @@ switch ($op) {
         $form->display();
         // Call Footer
         $xoops->footer();
+
         break;
 
     case 'display':
@@ -233,6 +232,7 @@ switch ($op) {
                 $error = true;
             }
         }
+
         break;
 
     case 'drag':
@@ -248,6 +248,7 @@ switch ($op) {
                 $error = true;
             }
         }
+
         break;
 
     case 'order':
@@ -267,6 +268,7 @@ switch ($op) {
             }
         }
         exit;
+
         break;
 
     case 'preview':
@@ -282,8 +284,9 @@ switch ($op) {
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
         $myts = \Xoops\Core\Text\Sanitizer::getInstance();
-        echo '<div id="xo-preview-dialog" title="' . $block->getVar('title', 's')
-            . '">' . $block->getContent('s', $block->getVar('c_type')) . '</div>';
+        echo '<div id="xo-preview-dialog" title="'.$block->getVar('title', 's')
+            .'">'.$block->getContent('s', $block->getVar('c_type')).'</div>';
+
         break;
 
     case 'save':
@@ -327,15 +330,19 @@ switch ($op) {
             switch ($block->getVar('c_type')) {
                 case 'H':
                     $name = SystemLocale::CUSTOM_BLOCK_HTML;
+
                     break;
                 case 'P':
                     $name = SystemLocale::CUSTOM_BLOCK_PHP;
+
                     break;
                 case 'S':
                     $name = SystemLocale::CUSTOM_BLOCK_AUTO_FORMAT_SMILIES;
+
                     break;
                 default:
                     $name = SystemLocale::CUSTOM_BLOCK_AUTO_FORMAT;
+
                     break;
             }
         }
@@ -351,7 +358,7 @@ switch ($op) {
             $xoops->footer();
             exit();
         }
-        if ($newid !== 0) {
+        if (0 !== $newid) {
             $blockmodulelink_handler = $xoops->getHandlerBlockModuleLink();
             // Delete old link
             $criteria = new CriteriaCompo(new Criteria('block_id', $newid));
@@ -393,6 +400,7 @@ switch ($op) {
             }
         }
         $xoops->redirect('admin.php?fct=blocksadmin', 1, XoopsLocale::S_DATABASE_UPDATED);
+
         break;
 
     case 'edit':
@@ -409,7 +417,7 @@ switch ($op) {
             $xoops->theme()->addScript('modules/system/js/admin.js');
             // Define Breadcrumb and tips
             $admin_page = new \Xoops\Module\Admin();
-            $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+            $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
             $admin_page->addBreadcrumbLink(
                 SystemLocale::BLOCKS_ADMINISTRATION,
                 $system->adminVersion('blocksadmin', 'adminpath')
@@ -426,6 +434,7 @@ switch ($op) {
         } else {
             $xoops->redirect('admin.php?fct=blocksadmin', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'delete':
@@ -435,7 +444,7 @@ switch ($op) {
         $xoops->theme()->addStylesheet('modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::BLOCKS_ADMINISTRATION,
             $system->adminVersion('blocksadmin', 'adminpath')
@@ -448,10 +457,10 @@ switch ($op) {
         $block_id = $system->cleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
-            if ($block->getVar('block_type') === XoopsBlock::BLOCK_TYPE_SYSTEM) {
+            if (XoopsBlock::BLOCK_TYPE_SYSTEM === $block->getVar('block_type')) {
                 $xoops->redirect('admin.php?fct=blocksadmin', 4, SystemLocale::E_SYSTEM_BLOCKS_CANNOT_BE_DELETED);
                 exit();
-            } elseif ($block->getVar('block_type') === XoopsBlock::BLOCK_TYPE_MODULE) {
+            } elseif (XoopsBlock::BLOCK_TYPE_MODULE === $block->getVar('block_type')) {
                 // Fix for duplicated blocks created in 2.0.9 module update
                 // A module block can be deleted if there is more than 1 that
                 // has the same func_num/show_func which is mostly likely
@@ -476,6 +485,7 @@ switch ($op) {
             // Call Footer
             $xoops->footer();
         }
+
         break;
 
     case 'delete_ok':
@@ -507,7 +517,7 @@ switch ($op) {
                     $groupperm_handler->delete($perm, true);
                 }
                 // Delete template
-                if ($block->getVar('template') !== '') {
+                if ('' !== $block->getVar('template')) {
                     $tplfile_handler = $xoops->getHandlerTplFile();
                     $btemplate = $tplfile_handler->find($xoops->getConfig('template_set'), 'block', $block_id);
                     if (count($btemplate) > 0) {
@@ -519,6 +529,7 @@ switch ($op) {
         } else {
             $xoops->redirect('admin.php?fct=blocksadmin', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'clone':
@@ -550,5 +561,6 @@ switch ($op) {
         } else {
             $xoops->redirect('admin.php?fct=blocksadmin', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 }

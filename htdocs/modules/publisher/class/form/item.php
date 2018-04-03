@@ -15,19 +15,18 @@ use Xoops\Form\ContainerInterface;
 use Xoops\Form\Tab;
 use Xoops\Form\TabTray;
 
-include_once dirname(dirname(__DIR__)) . '/include/common.php';
+include_once dirname(dirname(__DIR__)).'/include/common.php';
 
 $publisher = Publisher::getInstance();
 
 /**
- *  Publisher form class
+ *  Publisher form class.
  *
  * @category  PublisherItemForm
- * @package   Publisher
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 The XUUPS Project (http://sourceforge.net/projects/xuups/)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class PublisherItemForm extends Xoops\Form\SimpleForm
 {
@@ -57,7 +56,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     ];
 
     /**
-     * __construct
+     * __construct.
      *
      * @param PublisherItem $obj source object for form variables
      */
@@ -118,9 +117,9 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * setCheckPermissions
+     * setCheckPermissions.
      *
-     * @param boolean $checkperm true to check permissions, false to ignore permissions
+     * @param bool $checkperm true to check permissions, false to ignore permissions
      */
     public function setCheckPermissions($checkperm)
     {
@@ -128,7 +127,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * Build the main tab
+     * Build the main tab.
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
@@ -186,7 +185,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $available_wrap_pages_text = [];
             foreach ($wrap_pages as $page) {
                 $available_wrap_pages_text[] = "<span onclick='publisherPageWrap(\"body\", \"[pagewrap=${page}] \");'"
-                    . " onmouseover='style.cursor=\"pointer\"'>${page}</span>";
+                    ." onmouseover='style.cursor=\"pointer\"'>${page}</span>";
             }
             $available_wrap_pages = new Xoops\Form\Label(
                 _CO_PUBLISHER_AVAILABLE_PAGE_WRAP,
@@ -239,7 +238,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
         // Datesub
         if ($this->isGranted(_PUBLISHER_DATESUB)) {
-            $datesub = ($obj->getVar('datesub') === 0) ? time() : $obj->getVar('datesub');
+            $datesub = (0 === $obj->getVar('datesub')) ? time() : $obj->getVar('datesub');
             $datesub_datetime = new Xoops\Form\DateTimeSelect(_CO_PUBLISHER_DATESUB, 'datesub', $datesub);
             $datesub_datetime->setDescription(_CO_PUBLISHER_DATESUB_DSC);
             $mainTab->addElement($datesub_datetime);
@@ -253,7 +252,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * Build the summary and body editors
+     * Build the summary and body editors.
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
@@ -267,7 +266,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
         $allowed_editors = PublisherUtils::getEditors($publisher->getPermissionHandler()->getGrantedItems('editors'));
 
         $nohtml = false;
-        if (count($allowed_editors) === 1) {
+        if (1 === count($allowed_editors)) {
             $editor = $allowed_editors[0];
         } else {
             if (count($allowed_editors) > 0) {
@@ -320,7 +319,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * Build the option selectors for Text\Sanitizer display processing
+     * Build the option selectors for Text\Sanitizer display processing.
      *
      * @param PublisherItem      $obj     data source
      * @param ContainerInterface $mainTab add elements to this tab/form
@@ -352,7 +351,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * Build the files tab
+     * Build the files tab.
      *
      * @param PublisherItem      $obj      data source
      * @param ContainerInterface $filesTab add elements to this tab/form
@@ -396,36 +395,36 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
                     $table .= '<tr>';
                     $table .= "<td width='50' class='bg3' align='center'><strong>ID</strong></td>";
                     $table .= "<td width='150' class='bg3' align='left'><strong>"
-                        . _AM_PUBLISHER_FILENAME . '</strong></td>';
+                        ._AM_PUBLISHER_FILENAME.'</strong></td>';
                     $table .= "<td class='bg3' align='left'><strong>"
-                        . _AM_PUBLISHER_DESCRIPTION . '</strong></td>';
+                        ._AM_PUBLISHER_DESCRIPTION.'</strong></td>';
                     $table .= "<td width='60' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_HITS . '</strong></td>';
+                        ._AM_PUBLISHER_HITS.'</strong></td>';
                     $table .= "<td width='100' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_UPLOADED_DATE . '</strong></td>';
+                        ._AM_PUBLISHER_UPLOADED_DATE.'</strong></td>';
                     $table .= "<td width='60' class='bg3' align='center'><strong>"
-                        . _AM_PUBLISHER_ACTION . '</strong></td>';
+                        ._AM_PUBLISHER_ACTION.'</strong></td>';
                     $table .= '</tr>';
 
                     /* @var $fileObj PublisherFile */
                     foreach ($filesObj as $fileObj) {
-                        $modify = "<a href='file.php?op=mod&fileid=" . $fileObj->getVar('fileid')
-                            . "'><img src='" . PUBLISHER_URL . "/images/links/edit.gif' title='"
-                            . _CO_PUBLISHER_EDITFILE . "' alt='" . _CO_PUBLISHER_EDITFILE . "' /></a>";
-                        $delete = "<a href='file.php?op=del&fileid=" . $fileObj->getVar('fileid')
-                            . "'><img src='" . PUBLISHER_URL . "/images/links/delete.png' title='"
-                            . _CO_PUBLISHER_DELETEFILE . "' alt='" . _CO_PUBLISHER_DELETEFILE . "'/></a>";
-                        if ($fileObj->getVar('status') === 0) {
-                            $notVisible = "<img src='" . PUBLISHER_URL . "/images/no.gif'/>";
+                        $modify = "<a href='file.php?op=mod&fileid=".$fileObj->getVar('fileid')
+                            ."'><img src='".PUBLISHER_URL."/images/links/edit.gif' title='"
+                            ._CO_PUBLISHER_EDITFILE."' alt='"._CO_PUBLISHER_EDITFILE."' /></a>";
+                        $delete = "<a href='file.php?op=del&fileid=".$fileObj->getVar('fileid')
+                            ."'><img src='".PUBLISHER_URL."/images/links/delete.png' title='"
+                            ._CO_PUBLISHER_DELETEFILE."' alt='"._CO_PUBLISHER_DELETEFILE."'/></a>";
+                        if (0 === $fileObj->getVar('status')) {
+                            $notVisible = "<img src='".PUBLISHER_URL."/images/no.gif'/>";
                         } else {
                             $notVisible = '';
                         }
                         $table .= '<tr>';
-                        $table .= "<td class='head' align='center'>" . $fileObj->getVar('fileid') . '</td>';
-                        $table .= "<td class='odd' align='left'>" . $notVisible . $fileObj->getFileLink() . '</td>';
-                        $table .= "<td class='even' align='left'>" . $fileObj->getVar('description') . '</td>';
-                        $table .= "<td class='even' align='center'>" . $fileObj->getVar('counter') . '';
-                        $table .= "<td class='even' align='center'>" . $fileObj->datesub() . '</td>';
+                        $table .= "<td class='head' align='center'>".$fileObj->getVar('fileid').'</td>';
+                        $table .= "<td class='odd' align='left'>".$notVisible.$fileObj->getFileLink().'</td>';
+                        $table .= "<td class='even' align='left'>".$fileObj->getVar('description').'</td>';
+                        $table .= "<td class='even' align='center'>".$fileObj->getVar('counter').'';
+                        $table .= "<td class='even' align='center'>".$fileObj->datesub().'</td>';
                         $table .= "<td class='even' align='center'> {$modify} {$delete} </td>";
                         $table .= '</tr>';
                     }
@@ -440,7 +439,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
     }
 
     /**
-     * Build the images tab
+     * Build the images tab.
      *
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $imagesTab add elements to this tab/form
@@ -469,7 +468,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
 
             $imageObjs = [];
             if (!empty($catids)) {
-                $criteria = new CriteriaCompo(new Criteria('imgcat_id', '(' . implode(',', $catids) . ')', 'IN'));
+                $criteria = new CriteriaCompo(new Criteria('imgcat_id', '('.implode(',', $catids).')', 'IN'));
                 $criteria->add(new Criteria('image_display', 1));
                 $criteria->setSort('image_nicename');
                 $criteria->setOrder('ASC');
@@ -488,7 +487,7 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $image_select->set(
                 'onchange',
                 'showImgSelected("image_display", "image_notused", "uploads/", "", "'
-                . \XoopsBaseConfig::get('url') . '")'
+                .\XoopsBaseConfig::get('url').'")'
             );
             unset($image_array);
 
@@ -497,22 +496,22 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $image_select2->set(
                 'onchange',
                 'publisher_updateSelectOption("image_item", "image_featured"), '
-                . 'showImgSelected("image_display", "image_item", "uploads/", "", "'
-                . \XoopsBaseConfig::get('url') . '");'
+                .'showImgSelected("image_display", "image_item", "uploads/", "", "'
+                .\XoopsBaseConfig::get('url').'");'
             );
 
             $buttonadd = new Xoops\Form\Button('', 'buttonadd', _CO_PUBLISHER_ADD);
             $buttonadd->set(
                 'onclick',
                 'publisher_appendSelectOption("image_notused", "image_item"), '
-                . 'publisher_updateSelectOption("image_item", "image_featured");'
+                .'publisher_updateSelectOption("image_item", "image_featured");'
             );
 
             $buttonremove = new Xoops\Form\Button('', 'buttonremove', _CO_PUBLISHER_REMOVE);
             $buttonremove->set(
                 'onclick',
                 'publisher_appendSelectOption("image_item", "image_notused"), '
-                . 'publisher_updateSelectOption("image_item", "image_featured");'
+                .'publisher_updateSelectOption("image_item", "image_featured");'
             );
 
             $opentable = new Xoops\Form\Label('', '<table><tr><td>');
@@ -520,20 +519,20 @@ class PublisherItemForm extends Xoops\Form\SimpleForm
             $addbreak = new Xoops\Form\Label('', '<br />');
             $closetable = new Xoops\Form\Label('', '</td></tr></table>');
 
-            $xoops->theme()->addScript(PUBLISHER_URL . '/js/ajaxupload.3.9.js');
+            $xoops->theme()->addScript(PUBLISHER_URL.'/js/ajaxupload.3.9.js');
             //todo, find replacement for error class
             $js_data = new Xoops\Form\Label('', '
 <script type= "text/javascript">/*<![CDATA[*/
 $(document).ready(function(){
     var button = $("#publisher_upload_button"), interval;
     new AjaxUpload(button,{
-        action: "' . PUBLISHER_URL . '/include/ajax_upload.php", // I disabled uploads in this example for security reasons
+        action: "'.PUBLISHER_URL.'/include/ajax_upload.php", // I disabled uploads in this example for security reasons
         responseType: "text/html",
         name: "publisher_upload_file",
         onSubmit : function(file, ext){
             // change button text, when user selects file
             $("#publisher_upload_message").html(" ");
-            button.html("<img src=\'' . PUBLISHER_URL . '/images/loadingbar.gif\'/>"); this.setData({
+            button.html("<img src=\''.PUBLISHER_URL.'/images/loadingbar.gif\'/>"); this.setData({
                 "image_nicename": $("#image_nicename").val(),
                 "imgcat_id" : $("#imgcat_id").val()
             });
@@ -544,7 +543,7 @@ $(document).ready(function(){
             }, 200);
         },
         onComplete: function(file, response){
-            button.text("' . _CO_PUBLISHER_IMAGE_UPLOAD_NEW . '");
+            button.text("'._CO_PUBLISHER_IMAGE_UPLOAD_NEW.'");
             window.clearInterval(interval);
             // enable upload button
             this.enable();
@@ -553,7 +552,7 @@ $(document).ready(function(){
             if (result[0] == "success") {
                  $("#image_item").append("<option value=\'" + result[1] + "\' selected=\'selected\'>" + result[2] + "</option>");
                  publisher_updateSelectOption(\'image_item\', \'image_featured\');
-                 showImgSelected(\'image_display\', \'image_item\', \'uploads/\', \'\', \'' . \XoopsBaseConfig::get('url') . '\')
+                 showImgSelected(\'image_display\', \'image_item\', \'uploads/\', \'\', \''.\XoopsBaseConfig::get('url').'\')
             } else {
                  $("#publisher_upload_message").html("<div class=\'errorMsg\'>" + result[1] + "</div>");
             }
@@ -565,7 +564,7 @@ $(document).ready(function(){
             $messages = new Xoops\Form\Label('', "<div id='publisher_upload_message'></div>");
             $button = new Xoops\Form\Label(
                 '',
-                "<div id='publisher_upload_button'>" . _CO_PUBLISHER_IMAGE_UPLOAD_NEW . '</div>'
+                "<div id='publisher_upload_button'>"._CO_PUBLISHER_IMAGE_UPLOAD_NEW.'</div>'
             );
             $nicename = new Xoops\Form\Text('', 'image_nicename', 30, 30, _CO_PUBLISHER_IMAGE_NICENAME);
 
@@ -609,25 +608,24 @@ $(document).ready(function(){
             $imagesTab->addElement($image_tray);
 
             $imagename = is_object($objimages['main']) ? $objimages['main']->getVar('image_name') : '';
-            $imageforpath = ($imagename !== '') ? $imagename : 'blank.gif';
+            $imageforpath = ('' !== $imagename) ? $imagename : 'blank.gif';
 
             $image_select3 = new Xoops\Form\Select(_CO_PUBLISHER_IMAGE_ITEM, 'image_featured', $imagename, 1);
             $image_select3->addOptionArray($objimage_array);
             $image_select3->set(
                 'onchange',
                 'showImgSelected("image_display", "image_featured", "uploads/", "", "'
-                . \XoopsBaseConfig::get('url') . '");'
+                .\XoopsBaseConfig::get('url').'");'
             );
             $image_select3->setDescription(_CO_PUBLISHER_IMAGE_ITEM_DSC);
             $imagesTab->addElement($image_select3);
 
             $imgTag = new Xoops\Html\Img([
-                'src' => $xoops->url('uploads/' . $imageforpath),
+                'src' => $xoops->url('uploads/'.$imageforpath),
                 'width' => 500,
                 'name' => 'image_display',
                 'id' => 'image_display',
                 'alt' => '',
-
             ]);
             $image_preview = new Xoops\Form\Label(_CO_PUBLISHER_IMAGE_PREVIEW, $imgTag->render());
             $imagesTab->addElement($image_preview);
@@ -635,7 +633,7 @@ $(document).ready(function(){
     }
 
     /**
-     * Build the others tab
+     * Build the others tab.
      *
      * @param PublisherItem      $obj       data source
      * @param ContainerInterface $othersTab add elements to this tab/form
@@ -652,7 +650,7 @@ $(document).ready(function(){
                 60
             );
             $text_meta_keywords->setDescription(_CO_PUBLISHER_ITEM_META_KEYWORDS_DSC);
-            $othersTab ->addElement($text_meta_keywords);
+            $othersTab->addElement($text_meta_keywords);
         }
 
         // Meta Description
@@ -665,7 +663,7 @@ $(document).ready(function(){
                 60
             );
             $text_meta_description->setDescription(_CO_PUBLISHER_ITEM_META_DESCRIPTION_DSC);
-            $othersTab ->addElement($text_meta_description);
+            $othersTab->addElement($text_meta_description);
         }
 
         // COMMENTS
@@ -675,19 +673,19 @@ $(document).ready(function(){
                 'allowcomments',
                 $obj->getVar('cancomment')
             );
-            $othersTab ->addElement($addcomments_radio);
+            $othersTab->addElement($addcomments_radio);
         }
 
         // WEIGHT
         if ($this->isGranted(_PUBLISHER_WEIGHT)) {
-            $othersTab ->addElement(
+            $othersTab->addElement(
                 new Xoops\Form\Text(_CO_PUBLISHER_WEIGHT, 'weight', 5, 5, $obj->getVar('weight'))
             );
         }
     }
 
     /**
-     * isGranted
+     * isGranted.
      *
      * @param int $item permission item to check
      *
@@ -700,11 +698,12 @@ $(document).ready(function(){
         if (!$this->checkperm || $publisher->getPermissionHandler()->isGranted('form_view', $item)) {
             $ret = true;
         }
+
         return $ret;
     }
 
     /**
-     * hasTab
+     * hasTab.
      *
      * @param string $tab tab name
      *

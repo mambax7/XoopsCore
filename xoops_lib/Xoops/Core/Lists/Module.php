@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * Module - provide list of available modules from the modules directory
+ * Module - provide list of available modules from the modules directory.
  *
  * @category  Xoops\Core\Lists\Module
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Module extends ListAbstract
 {
     /**
-     * gets list of all files in a directory
+     * gets list of all files in a directory.
      *
      * @return array
      */

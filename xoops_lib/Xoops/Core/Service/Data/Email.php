@@ -10,7 +10,7 @@
  *
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 
 namespace Xoops\Core\Service\Data;
@@ -32,11 +32,10 @@ use Xmf\Assert;
  * The Email data object is used for message and mailer services
  *
  * @category  Xoops\Core\Service\Data
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Email
 {
@@ -121,22 +120,23 @@ class Email
         ?EmailAddress $fromAddress = null,
         ?EmailAddress $toAddress = null
     ) {
-        if ($subject !== null) {
+        if (null !== $subject) {
             $subject = trim($subject);
             Assert::stringNotEmpty($subject, static::MESSAGE_SUBJECT);
             $this->subject = $subject;
         }
-        if ($body !== null) {
+        if (null !== $body) {
             $body = trim($body);
             Assert::stringNotEmpty($body, static::MESSAGE_BODY);
             $this->body = $body;
         }
+
         try {
-            if ($fromAddress !== null) {
+            if (null !== $fromAddress) {
                 $fromAddress->getEmail();
                 $this->fromAddress = $fromAddress;
             }
-            if ($toAddress !== null) {
+            if (null !== $toAddress) {
                 $toAddress->getEmail();
                 $this->toAddresses = new EmailAddressList([$toAddress]);
             }
@@ -146,7 +146,7 @@ class Email
     }
 
     /**
-     * Return a new object with a the specified body
+     * Return a new object with a the specified body.
      *
      *
      * @param string $body message body
@@ -159,11 +159,12 @@ class Email
         Assert::stringNotEmpty($body, static::MESSAGE_BODY);
         $new = clone $this;
         $new->body = $body;
+
         return $new;
     }
 
     /**
-     * Return a new object with a the specified HTML body
+     * Return a new object with a the specified HTML body.
      *
      * The htmlBody is optional, while a body (plain text) is required, and must always be specified.
      *
@@ -178,11 +179,12 @@ class Email
         Assert::stringNotEmpty($body, static::MESSAGE_BODY);
         $new = clone $this;
         $new->htmlBody = $body;
+
         return $new;
     }
 
     /**
-     * Return a new object with a the specified fromAddress
+     * Return a new object with a the specified fromAddress.
      *
      * @param EmailAddress $fromAddress the sending/from email address
      *
@@ -200,11 +202,12 @@ class Email
 
         $new = clone $this;
         $new->fromAddress = $fromAddress;
+
         return $new;
     }
 
     /**
-     * Return a new object with a the specified subject
+     * Return a new object with a the specified subject.
      *
      *
      * @param string $subject message subject
@@ -217,11 +220,12 @@ class Email
         Assert::stringNotEmpty($subject, static::MESSAGE_SUBJECT);
         $new = clone $this;
         $new->subject = $subject;
+
         return $new;
     }
 
     /**
-     * Return a new object with a the specified bccAddresses
+     * Return a new object with a the specified bccAddresses.
      *
      *
      * @param EmailAddressList $bccAddresses the addresses to be BCC'ed
@@ -234,7 +238,7 @@ class Email
     }
 
     /**
-     * Return a new object with a the specified ccAddresses
+     * Return a new object with a the specified ccAddresses.
      *
      *
      * @param EmailAddressList $ccAddresses the addresses to be CC'ed
@@ -247,7 +251,7 @@ class Email
     }
 
     /**
-     * Return a new object with a the specified replyToAddresses
+     * Return a new object with a the specified replyToAddresses.
      *
      *
      * @param EmailAddressList $replyToAddresses the addresses to receive replies
@@ -260,7 +264,7 @@ class Email
     }
 
     /**
-     * Return a new object with a the specified toAddresses
+     * Return a new object with a the specified toAddresses.
      *
      *
      * @param EmailAddressList $toAddresses the addresses to receive the message
@@ -273,7 +277,7 @@ class Email
     }
 
     /**
-     * Return a new object with a the specified fromAddress
+     * Return a new object with a the specified fromAddress.
      *
      * @param EmailAddress $readReceiptAddress requests a read receipt to this address
      *
@@ -291,11 +295,12 @@ class Email
 
         $new = clone $this;
         $new->readReceiptAddress = $readReceiptAddress;
+
         return $new;
     }
 
     /**
-     * withAttachments - return a new object with a the specified set of attachments
+     * withAttachments - return a new object with a the specified set of attachments.
      *
      *
      * @throws \InvalidArgumentException
@@ -310,11 +315,12 @@ class Email
 
         $new = clone $this;
         $new->attachmentSet = $attachmentSet;
+
         return $new;
     }
 
     /**
-     * getBody
+     * getBody.
      *
      * @return string the message body
      *
@@ -327,11 +333,12 @@ class Email
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->body;
     }
 
     /**
-     * getHtmlBody
+     * getHtmlBody.
      *
      * @return string the message body
      *
@@ -344,11 +351,12 @@ class Email
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->htmlBody;
     }
 
     /**
-     * getFromAddress
+     * getFromAddress.
      *
      * @return EmailAddress the fromAddress
      *
@@ -363,11 +371,12 @@ class Email
         } catch (\InvalidArgumentException | \LogicException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->fromAddress;
     }
 
     /**
-     * getSubject
+     * getSubject.
      *
      * @return string the message subject
      *
@@ -385,7 +394,7 @@ class Email
     }
 
     /**
-     * getBccAddresses
+     * getBccAddresses.
      *
      * @return EmailAddressList|null the BCC address list or null if not set
      *
@@ -397,7 +406,7 @@ class Email
     }
 
     /**
-     * getCcAddresses
+     * getCcAddresses.
      *
      * @return EmailAddressList|null the CC address list or null if not set
      *
@@ -409,7 +418,7 @@ class Email
     }
 
     /**
-     * getReplyToAddresses
+     * getReplyToAddresses.
      *
      * @return EmailAddressList|null the ReplyTo address list or null if not set
      *
@@ -421,7 +430,7 @@ class Email
     }
 
     /**
-     * getToAddresses
+     * getToAddresses.
      *
      * @return EmailAddressList the To addresses
      *
@@ -434,11 +443,12 @@ class Email
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->getAddresses(static::PROPERTY_ADDRESS_TO, static::MESSAGE_TO);
     }
 
     /**
-     * getReadReceiptAddress
+     * getReadReceiptAddress.
      *
      * @return EmailAddress|null the readReceiptAddress or null if not set
      *
@@ -446,7 +456,7 @@ class Email
      */
     public function getReadReceiptAddress(): ?EmailAddress
     {
-        if ($this->readReceiptAddress !== null) {
+        if (null !== $this->readReceiptAddress) {
             try {
                 Assert::isInstanceOf($this->readReceiptAddress, EmailAddress::class, static::MESSAGE_RR);
                 $this->readReceiptAddress->getEmail();
@@ -454,11 +464,12 @@ class Email
                 throw new \LogicException($e->getMessage(), $e->getCode(), $e);
             }
         }
+
         return $this->readReceiptAddress;
     }
 
     /**
-     * getAttachments
+     * getAttachments.
      *
      * @return EmailAttachmentSet|null the set of attachments or null if not set
      *
@@ -466,18 +477,19 @@ class Email
      */
     public function getAttachments(): ?EmailAttachmentSet
     {
-        if ($this->attachmentSet !== null) {
+        if (null !== $this->attachmentSet) {
             try {
                 $this->attachmentSet->getAttachments();
             } catch (\LogicException $e) {
                 throw new \LogicException($e->getMessage(), $e->getCode(), $e);
             }
         }
+
         return $this->attachmentSet;
     }
 
     /**
-     * withAddresses - utility method to validate and assign a set of addresses
+     * withAddresses - utility method to validate and assign a set of addresses.
      *
      * @param string           $property  property to set, one of VALID_ADDRESS_PROPERTIES
      * @param EmailAddressList $addresses addresses to be assigned to property
@@ -489,6 +501,7 @@ class Email
     protected function withAddresses(string $property, EmailAddressList $addresses): self
     {
         Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
+
         try {
             $addresses->getAddresses();
         } catch (\LogicException $e) {
@@ -497,11 +510,12 @@ class Email
 
         $new = clone $this;
         $new->{$property} = $addresses;
+
         return $new;
     }
 
     /**
-     * getAddresses
+     * getAddresses.
      *
      * @param string $property addresses property to get, one of VALID_ADDRESS_PROPERTIES
      * @param string $message  message for any Assert exception
@@ -514,12 +528,13 @@ class Email
     {
         try {
             Assert::oneOf($property, static::VALID_ADDRESS_PROPERTIES);
-            if ($this->{$property} !== null) {
+            if (null !== $this->{$property}) {
                 Assert::allIsInstanceOf($this->{$property}->getAddresses(), EmailAddress::class, $message);
             }
         } catch (\InvalidArgumentException | \LogicException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->{$property};
     }
 }

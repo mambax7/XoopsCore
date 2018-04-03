@@ -14,13 +14,12 @@ use Xoops\Core\PreloadItem;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         publisher
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
 
 /**
- * Publisher core preloads
+ * Publisher core preloads.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -32,10 +31,10 @@ class PublisherPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'publishermetagen' => $path . '/class/metagen.php',
-            'publisher' => $path . '/class/helper.php',
-            'publisherutils' => $path . '/class/utils.php',
-            'publisherblockform' => $path . '/class/blockform.php',
+            'publishermetagen' => $path.'/class/metagen.php',
+            'publisher' => $path.'/class/helper.php',
+            'publisherutils' => $path.'/class/utils.php',
+            'publisherblockform' => $path.'/class/blockform.php',
         ]);
     }
 }

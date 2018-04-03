@@ -10,19 +10,17 @@
 */
 
 /**
- *  Xoops MailerLocal
+ *  Xoops MailerLocal.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      Xoops Mailer Local Language
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
 
 /**
- * Localize the mail functions
+ * Localize the mail functions.
  *
  * The English localization is solely for demonstration
  */
@@ -30,7 +28,7 @@
 class Xoops_Locale_Mailer_Abstract extends XoopsMailer
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @return Xoops_Locale_Mailer_Abstract
      */
@@ -44,9 +42,9 @@ class Xoops_Locale_Mailer_Abstract extends XoopsMailer
     }
 
     /**
-     * Multibyte languages are encouraged to make their proper method for encoding FromName
+     * Multibyte languages are encouraged to make their proper method for encoding FromName.
      *
-     * @param string $text
+     * @param  string $text
      * @return string
      */
     public function encodeFromName($text)
@@ -57,9 +55,9 @@ class Xoops_Locale_Mailer_Abstract extends XoopsMailer
     }
 
     /**
-     * Multibyte languages are encouraged to make their proper method for encoding FromName
+     * Multibyte languages are encouraged to make their proper method for encoding FromName.
      *
-     * @param string $text
+     * @param  string $text
      * @return string
      */
     public function encodeSubject($text)

@@ -21,16 +21,15 @@ use Xmf\Language;
  * (introduced in 2.6) and other convenience methods useful in transition
  *
  * @category  Xmf\Module\Admin
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Admin
 {
     /**
-     * The real ModuleAdmin object
+     * The real ModuleAdmin object.
      *
      * @var object
      */
@@ -41,14 +40,14 @@ class Admin
     protected static $paypal = '';
 
     /**
-     * Constructor
+     * Constructor.
      */
     protected function __construct()
     {
     }
 
     /**
-     * Retrieve a module admin instance
+     * Retrieve a module admin instance.
      *
      * If we are on a next generation system this will be the a native Xoops\Module\Admin instance.
      * Older systems with the Frameworks based admin class will get an instance of this class which
@@ -60,7 +59,7 @@ class Admin
     {
         static $instance;
 
-        if ($instance === null) {
+        if (null === $instance) {
             if (class_exists('\Xoops\Module\Admin', true)) {
                 $instance = new \Xoops\Module\Admin();
                 static::$ModuleAdmin = $instance;
@@ -76,7 +75,7 @@ class Admin
     }
 
     /**
-     * Add config line
+     * Add config line.
      *
      * @param string $value message to include in config box
      * @param string $type  type of line to add
@@ -93,23 +92,25 @@ class Admin
      */
     public function addConfigBoxLine($value = '', $type = 'default')
     {
-        if ($type === 'module') {
+        if ('module' === $type) {
             $mod = (is_array($value)) ? $value[0] : $value;
             if (xoops_isActiveModule($mod)) {
                 return $this->addConfigAccept(sprintf(_AM_XMF_MODULE_INSTALLED, $mod));
             }
             $nomod = (is_array($value)) ? $value[1] : 'error';
             $line = sprintf(_AM_XMF_MODULE_NOT_INSTALLED, $mod);
-            if ($nomod === 'warning') {
+            if ('warning' === $nomod) {
                 return $this->addConfigWarning($line);
             }
+
             return $this->addConfigError($line);
         }
+
         return static::$ModuleAdmin->addConfigBoxLine($value, $type);
     }
 
     /**
-     * Add Info box
+     * Add Info box.
      *
      * @param string $title info box title
      * @param string $type  for compatibility only
@@ -125,7 +126,7 @@ class Admin
     }
 
     /**
-     * Add line to the info box
+     * Add line to the info box.
      *
      * @param string $text  text to add to info box
      * @param string $type  type of infobox line
@@ -145,7 +146,7 @@ class Admin
     }
 
     /**
-     * Add Item button
+     * Add Item button.
      *
      * @param string $title title of button
      * @param string $link  link for button
@@ -160,7 +161,7 @@ class Admin
     }
 
     /**
-     * Render all items buttons
+     * Render all items buttons.
      *
      * @param string $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
@@ -169,7 +170,7 @@ class Admin
      */
     public function renderButton($position = null, $delimiter = '&nbsp;')
     {
-        if ($position === null) {
+        if (null === $position) {
             $position = 'right';
         }
 
@@ -177,7 +178,7 @@ class Admin
     }
 
     /**
-     * Display all item buttons
+     * Display all item buttons.
      *
      * @param string $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
@@ -188,7 +189,7 @@ class Admin
     }
 
     /**
-     * Render InfoBox
+     * Render InfoBox.
      *
      * @return string HTML rendered info box
      */
@@ -198,7 +199,7 @@ class Admin
     }
 
     /**
-     * Display InfoBox
+     * Display InfoBox.
      */
     public function displayInfoBox()
     {
@@ -206,7 +207,7 @@ class Admin
     }
 
     /**
-     * Render index page for admin
+     * Render index page for admin.
      *
      * @return string HTML rendered info box
      */
@@ -216,7 +217,7 @@ class Admin
     }
 
     /**
-     * Display index page for admin
+     * Display index page for admin.
      */
     public function displayIndex()
     {
@@ -224,7 +225,7 @@ class Admin
     }
 
     /**
-     * Display the navigation menu
+     * Display the navigation menu.
      *
      * @param string $menu menu key (script name, i.e. index.php)
      */
@@ -234,7 +235,7 @@ class Admin
     }
 
     /**
-     * Render about page
+     * Render about page.
      *
      * @param bool $logo_xoops display XOOPS logo
      *
@@ -246,7 +247,7 @@ class Admin
     }
 
     /**
-     * Display about page
+     * Display about page.
      *
      * @param bool $logo_xoops display XOOPS logo
      */
@@ -256,7 +257,7 @@ class Admin
     }
 
     /**
-     * Add error to config box
+     * Add error to config box.
      *
      * @param string $value the error message
      *
@@ -264,10 +265,10 @@ class Admin
      */
     public function addConfigError($value = '')
     {
-        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
+        $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
         $line .= "<span style='color : red; font-weight : bold;'>";
-        $line .= "<img src='" . $path . "0.png' >";
+        $line .= "<img src='".$path."0.png' >";
         $line .= $value;
         $line .= '</span>';
         $value = $line;
@@ -277,7 +278,7 @@ class Admin
     }
 
     /**
-     * Add accept (OK) message to config box
+     * Add accept (OK) message to config box.
      *
      * @param string $value the OK message
      *
@@ -285,10 +286,10 @@ class Admin
      */
     public function addConfigAccept($value = '')
     {
-        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
+        $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
         $line .= "<span style='color : green;'>";
-        $line .= "<img src='" . $path . "1.png' >";
+        $line .= "<img src='".$path."1.png' >";
         $line .= $value;
         $line .= '</span>';
         $value = $line;
@@ -298,7 +299,7 @@ class Admin
     }
 
     /**
-     * Add warning to config box
+     * Add warning to config box.
      *
      * @param string $value the warning message
      *
@@ -306,10 +307,10 @@ class Admin
      */
     public function addConfigWarning($value = '')
     {
-        $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
+        $path = XOOPS_URL.'/Frameworks/moduleclasses/icons/16/';
         $line = '';
         $line .= "<span style='color : orange; font-weight : bold;'>";
-        $line .= "<img src='" . $path . "warning.png' >";
+        $line .= "<img src='".$path."warning.png' >";
         $line .= $value;
         $line .= '</span>';
         $value = $line;
@@ -319,10 +320,10 @@ class Admin
     }
 
     /**
-     * Check for installed module and version and do addConfigBoxLine()
+     * Check for installed module and version and do addConfigBoxLine().
      *
-     * @param string  $moddir     - module directory name
-     * @param integer $minversion - minimum acceptable module version (100 = V1.00)
+     * @param string $moddir     - module directory name
+     * @param int    $minversion - minimum acceptable module version (100 = V1.00)
      *
      * @return bool true if requested version of the module is available
      */
@@ -376,7 +377,7 @@ class Admin
         }
         $path = '../../Frameworks/moduleclasses/icons/32/';
 
-        return $path . $image;
+        return $path.$image;
     }
 
     /**
@@ -400,27 +401,30 @@ class Admin
         switch ($size) {
             case '16':
                 $path = '16/';
+
                 break;
             case '/':
                 $path = '';
+
                 break;
             case '32':
             default:
                 $path = '32/';
+
                 break;
         }
 
         if (static::isXng()) {
-            $path = '/media/xoops/images/icons/' . $path;
+            $path = '/media/xoops/images/icons/'.$path;
         } else {
-            $path = '/Frameworks/moduleclasses/icons/' . $path;
+            $path = '/Frameworks/moduleclasses/icons/'.$path;
         }
 
-        return XOOPS_URL . $path . $name;
+        return XOOPS_URL.$path.$name;
     }
 
     /**
-     * set paypal for 2.5.x renderAbout
+     * set paypal for 2.5.x renderAbout.
      *
      * not part of next generation Xoops\Module\Admin
      *

@@ -17,7 +17,6 @@ namespace Xoops\Module;
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class Helper
 {
     /**
@@ -36,7 +35,7 @@ class Helper
             if ($xoops->isActiveModule($dirname)) {
                 //Load Module helper if available
                 if (\XoopsLoad::loadFile($xoops->path("modules/{$dirname}/class/helper.php"))) {
-                    $className = '\\' . ucfirst($dirname);
+                    $className = '\\'.ucfirst($dirname);
                     if (class_exists($className)) {
                         $class = new $className();
                         if ($class instanceof \Xoops\Module\Helper\HelperAbstract) {
@@ -52,6 +51,7 @@ class Helper
                 }
             }
         }
+
         return $modules[$dirname];
     }
 }

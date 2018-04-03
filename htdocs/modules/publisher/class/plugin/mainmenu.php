@@ -33,6 +33,7 @@ class PublisherMainmenuPlugin implements MainmenuPluginInterface
             'link' => $helper->url(),
             'subMenu' => $subMenu,
         ];
+
         return $ret;
     }
 }

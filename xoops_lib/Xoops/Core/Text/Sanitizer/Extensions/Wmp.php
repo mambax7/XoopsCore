@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Wmp extends ExtensionAbstract
 {
@@ -32,7 +31,7 @@ class Wmp extends ExtensionAbstract
     protected static $defaultConfiguration = ['enabled' => false];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -68,11 +67,12 @@ class Wmp extends ExtensionAbstract
                 domobj.focus();
             }
 EOH;
+
         return [$buttonCode, $javascript];
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -84,13 +84,14 @@ EOH;
                 $url = $content;
 
                 $template = '<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6"'
-                    . ' id="WindowsMediaPlayer" width="%2$s" height="%3$s">' . "\n"
-                    . '<param name="URL" value="%1$s">' . "\n"
-                    . '<param name="AutoStart" value="0">' . "\n"
-                    . '<embed autostart="0" src="%1$s" type="video/x-ms-wmv" width="%2$s" height="%3$s"'
-                    . ' controls="ImageWindow" console="cons"> </embed>' . "\n"
-                    . '</object>' . "\n";
+                    .' id="WindowsMediaPlayer" width="%2$s" height="%3$s">'."\n"
+                    .'<param name="URL" value="%1$s">'."\n"
+                    .'<param name="AutoStart" value="0">'."\n"
+                    .'<embed autostart="0" src="%1$s" type="video/x-ms-wmv" width="%2$s" height="%3$s"'
+                    .' controls="ImageWindow" console="cons"> </embed>'."\n"
+                    .'</object>'."\n";
                 $newContent = sprintf($template, $url, $width, $height);
+
                 return $newContent;
             }
         );

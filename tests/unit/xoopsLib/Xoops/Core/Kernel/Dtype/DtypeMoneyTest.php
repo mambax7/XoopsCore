@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 use Money\Currency;
 use Money\Money;
@@ -10,7 +10,7 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * Test XoopsObject with a Dtype::TYPE_MONEY var
+ * Test XoopsObject with a Dtype::TYPE_MONEY var.
  */
 class DtypeMoneyObject extends XoopsObject
 {

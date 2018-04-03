@@ -14,9 +14,8 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- *  Publisher class
+ *  Publisher class.
  *
- * @package   Publisher
  * @since     1.0
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Nazar Aziz <nazar@panthersoftware.com>
@@ -25,7 +24,7 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  */
 
 /**
- * PublisherMimetype class
+ * PublisherMimetype class.
  */
 class PublisherMimetype extends XoopsObject
 {
@@ -43,7 +42,7 @@ class PublisherMimetype extends XoopsObject
 class PublisherMimetypeHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * PublisherMimetypeHandler
+     * PublisherMimetypeHandler.
      *
      * @param null|Connection $db database connection
      */

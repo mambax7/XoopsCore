@@ -15,12 +15,12 @@ namespace Xoops\Module\Helper;
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Dummy extends HelperAbstract
 {
     /**
-     * Init the module
+     * Init the module.
      *
      * @return null|void
      */

@@ -10,9 +10,8 @@
 */
 
 /**
- * XOOPS Editor Abstract class
+ * XOOPS Editor Abstract class.
  *
- * @package         Xoopseditor
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -21,7 +20,7 @@
 class XoopsEditor extends Xoops\Form\TextArea
 {
     /**
-     *  make cache key available as XoopsEditor::CACHE_KEY_EDITOR_LIST
+     *  make cache key available as XoopsEditor::CACHE_KEY_EDITOR_LIST.
      */
     public const CACHE_KEY_EDITOR_LIST = 'system/editorlist';
 
@@ -41,21 +40,21 @@ class XoopsEditor extends Xoops\Form\TextArea
     public $rootPath;
 
     /**
-     * number of columns
+     * number of columns.
      *
      * @var int
      */
     protected $cols;
 
     /**
-     * number of rows
+     * number of rows.
      *
      * @var int
      */
     protected $rows;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -84,7 +83,7 @@ class XoopsEditor extends Xoops\Form\TextArea
         // TODO: switch to property_exists() as of PHP 5.1.0
         $vars = get_class_vars(__CLASS__);
         foreach ($configs as $key => $val) {
-            $method = 'set' . ucfirst($key);
+            $method = 'set'.ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->{$method}($val);
             } else {
@@ -108,6 +107,7 @@ class XoopsEditor extends Xoops\Form\TextArea
     public function isActive()
     {
         $this->isEnabled = true;
+
         return $this->isEnabled;
     }
 
@@ -123,11 +123,10 @@ class XoopsEditor extends Xoops\Form\TextArea
 }
 
 /**
- * Editor handler
+ * Editor handler.
  *
  * @copyright XOOPS Project (http://xoops.org)
  * @license GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package core
  * @since 2.3.0
  * @author Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -149,15 +148,15 @@ class XoopsEditorHandler
     public $allowed_editors = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     private function __construct()
     {
-        $this->root_path = \XoopsBaseConfig::get('root-path') . '/class/xoopseditor';
+        $this->root_path = \XoopsBaseConfig::get('root-path').'/class/xoopseditor';
     }
 
     /**
-     * Access the only instance of this class
+     * Access the only instance of this class.
      *
      * @return XoopsEditorHandler
      * @static
@@ -170,15 +169,16 @@ class XoopsEditorHandler
             $class = __CLASS__;
             $instance = new $class();
         }
+
         return $instance;
     }
 
     /**
-     * @param string $name Editor name which is actually the folder name
-     * @param array $options editor options: $key => $val
-     * @param bool $noHtml
+     * @param string $name      Editor name which is actually the folder name
+     * @param array  $options   editor options: $key => $val
+     * @param bool   $noHtml
      * @param string $OnFailure a pre-validated editor that will be used if the required editor is failed to create
-     * @param bool $noHtml dohtml disabled
+     * @param bool   $noHtml    dohtml disabled
      *
      * @return \XoopsEditor
      */
@@ -192,6 +192,7 @@ class XoopsEditorHandler
             $OnFailure = $list[0];
         }
         $editor = $this->_loadEditor($OnFailure, $options);
+
         return $editor;
     }
 
@@ -202,17 +203,17 @@ class XoopsEditorHandler
     {
         $list = [];
         $order = [];
-        $fileList = XoopsLists::getDirListAsArray($this->root_path . '/');
+        $fileList = XoopsLists::getDirListAsArray($this->root_path.'/');
 
         foreach ($fileList as $item) {
-            if (XoopsLoad::fileExists($file = $this->root_path . '/' . $item . '/language/' . XoopsLocale::getLegacyLanguage() . '.php')) {
+            if (XoopsLoad::fileExists($file = $this->root_path.'/'.$item.'/language/'.XoopsLocale::getLegacyLanguage().'.php')) {
                 include_once $file;
             } else {
-                if (XoopsLoad::fileExists($file = $this->root_path . '/' . $item . '/language/english.php')) {
+                if (XoopsLoad::fileExists($file = $this->root_path.'/'.$item.'/language/english.php')) {
                     include_once $file;
                 }
             }
-            if (XoopsLoad::fileExists($file = $this->root_path . '/' . $item . '/editor_registry.php')) {
+            if (XoopsLoad::fileExists($file = $this->root_path.'/'.$item.'/editor_registry.php')) {
                 include $file;
                 if (empty($config['order'])) {
                     continue;
@@ -222,11 +223,12 @@ class XoopsEditorHandler
             }
         }
         array_multisort($order, $list);
+
         return $list;
     }
 
     /**
-     * @param bool $noHtml
+     * @param  bool  $noHtml
      * @return array
      */
     public function getList($noHtml = false)
@@ -247,6 +249,7 @@ class XoopsEditorHandler
             }
             $returnList[$name] = $list[$name]['title'];
         }
+
         return $returnList;
     }
 
@@ -259,10 +262,10 @@ class XoopsEditorHandler
     }
 
     /**
-     * XoopsEditorHandler::_loadEditor()
+     * XoopsEditorHandler::_loadEditor().
      *
-     * @param string $name
-     * @param mixed $options
+     * @param  string           $name
+     * @param  mixed            $options
      * @return XoopsEditor|null
      */
     private function _loadEditor($name, $options = null)
@@ -272,15 +275,15 @@ class XoopsEditorHandler
         if (empty($name) || !array_key_exists($name, $this->getList())) {
             return $editor;
         }
-        $editor_path = $this->root_path . '/' . $name;
-        if (XoopsLoad::fileExists($file = $editor_path . '/language/' . XoopsLocale::getLegacyLanguage() . '.php')) {
+        $editor_path = $this->root_path.'/'.$name;
+        if (XoopsLoad::fileExists($file = $editor_path.'/language/'.XoopsLocale::getLegacyLanguage().'.php')) {
             include_once $file;
         } else {
-            if (XoopsLoad::fileExists($file = $editor_path . '/language/english.php')) {
+            if (XoopsLoad::fileExists($file = $editor_path.'/language/english.php')) {
                 include_once $file;
             }
         }
-        if (XoopsLoad::fileExists($file = $editor_path . '/editor_registry.php')) {
+        if (XoopsLoad::fileExists($file = $editor_path.'/editor_registry.php')) {
             include $file;
         } else {
             return $editor;
@@ -290,6 +293,7 @@ class XoopsEditorHandler
         }
         include_once $config['file'];
         $editor = new $config['class']($options);
+
         return $editor;
     }
 }

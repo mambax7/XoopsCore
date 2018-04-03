@@ -14,19 +14,18 @@ namespace Xoops\Core\Lists;
 use Xoops\Core\Locale\Punic\Calendar;
 
 /**
- * Month - provide list of month names
+ * Month - provide list of month names.
  *
  * @category  Xoops\Core\Lists\Month
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Month extends ListAbstract
 {
     /**
-     * Get a list of localized month names
+     * Get a list of localized month names.
      *
      * @param string $width The format name; it can be 'wide' (eg 'January'),
      *                      'abbreviated' (eg 'Jan') or 'narrow' (eg 'J').
@@ -39,6 +38,7 @@ class Month extends ListAbstract
         for ($month = 1; $month <= 12; ++$month) {
             $months[$month] = Calendar::getMonthName($month, $width);
         }
+
         return $months;
     }
 }

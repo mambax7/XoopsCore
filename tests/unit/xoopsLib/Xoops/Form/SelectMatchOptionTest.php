@@ -2,9 +2,9 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
-require_once(XOOPS_TU_ROOT_PATH . '/include/defines.php');
+require_once XOOPS_TU_ROOT_PATH.'/include/defines.php';
 
 class SelectMatchOptionTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,15 +35,15 @@ class SelectMatchOptionTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<select') !== false);
-        $this->assertTrue(strpos($value, 'name="name"') !== false);
-        $this->assertTrue(strpos($value, 'size="1"') !== false);
-        $this->assertTrue(strpos($value, 'title="Caption"') !== false);
-        $this->assertTrue(strpos($value, 'id="name"') !== false);
+        $this->assertTrue(false !== strpos($value, '<select'));
+        $this->assertTrue(false !== strpos($value, 'name="name"'));
+        $this->assertTrue(false !== strpos($value, 'size="1"'));
+        $this->assertTrue(false !== strpos($value, 'title="Caption"'));
+        $this->assertTrue(false !== strpos($value, 'id="name"'));
 
-        $this->assertTrue(strpos($value, '<option') !== false);
-        $this->assertTrue(strpos($value, 'value="0"') !== false);
-        $this->assertTrue(strpos($value, '</option>') !== false);
+        $this->assertTrue(false !== strpos($value, '<option'));
+        $this->assertTrue(false !== strpos($value, 'value="0"'));
+        $this->assertTrue(false !== strpos($value, '</option>'));
     }
 
     public function test__construct()

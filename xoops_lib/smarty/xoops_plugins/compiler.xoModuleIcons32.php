@@ -9,33 +9,33 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 /**
- * xoModuleIcons32 Smarty compiler plug-in
+ * xoModuleIcons32 Smarty compiler plug-in.
  *
  * @copyright      XOOPS Project (http://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Andricq Nicolas (AKA MusS)
  * @since          2.5.2
  */
-
 function smarty_compiler_xoModuleIcons32($argStr, &$smarty)
 {
     $xoops = Xoops::getInstance();
     $icons = $xoops->getModuleConfig('typeicons', 'system');
-    if ($icons === '') {
+    if ('' === $icons) {
         $icons = 'default';
     }
 
     $arg = reset($params);
     $ico = trim($arg, " '\"\t\n\r\0\x0B");
 
-    if (XoopsLoad::fileExists($xoops->path('media/xoops/images/icons/32/' . $icons . '/index.html'))) {
-        $url = $xoops->url('media/xoops/images/icons/32/' . $icons . '/' . $ico);
+    if (XoopsLoad::fileExists($xoops->path('media/xoops/images/icons/32/'.$icons.'/index.html'))) {
+        $url = $xoops->url('media/xoops/images/icons/32/'.$icons.'/'.$ico);
     } else {
-        if (XoopsLoad::fileExists($xoops->path('modules/system/images/icons/default/' . $ico))) {
-            $url = $xoops->url('modules/system/images/icons/default/' . $ico);
+        if (XoopsLoad::fileExists($xoops->path('modules/system/images/icons/default/'.$ico))) {
+            $url = $xoops->url('modules/system/images/icons/default/'.$ico);
         } else {
             $url = $xoops->url('modules/system/images/icons/default/xoops/xoops.png');
         }
     }
-    return "<?php echo '" . addslashes($url) . "'; ?>";
+
+    return "<?php echo '".addslashes($url)."'; ?>";
 }

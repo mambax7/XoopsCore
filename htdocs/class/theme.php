@@ -9,21 +9,19 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 /**
- * XoopsTheme component class file
+ * XoopsTheme component class file.
  *
  * @copyright XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @since     2.3.0
- * @package   class
  * @version   $Id$
  */
 
 /**
- * XoopsThemeFactory
+ * XoopsThemeFactory.
  *
  * @author Skalpa Keo
  * @since  2.3.0
@@ -33,7 +31,7 @@ class XoopsThemeFactory extends \Xoops\Core\Theme\Factory
 }
 
 /**
- * XoopsAdminThemeFactory
+ * XoopsAdminThemeFactory.
  *
  * @author Andricq Nicolas (AKA MusS)
  * @author trabis

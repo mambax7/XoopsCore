@@ -16,26 +16,25 @@ use Stash\Invalidation;
 use Stash\Pool;
 
 /**
- * Provides a standardized cache access
+ * Provides a standardized cache access.
  *
  * @category  Xoops\Core\Cache
- * @package   Cache
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 The XOOPS Project https://github.com/XOOPS
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Access
 {
     /**
-     * Cache pools
+     * Cache pools.
      *
      * @var PoolInterface
      */
     protected $pool = null;
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct(PoolInterface $pool)
     {
@@ -51,11 +50,12 @@ class Access
      *                                  DateTime object to expire at a specific time,
      *                                  or null for
      *
-     * @return boolean True if the data was successfully cached, false on failure
+     * @return bool True if the data was successfully cached, false on failure
      */
     public function write($key, $value, $ttl = null)
     {
         $item = $this->pool->getItem($key);
+
         return $this->pool->save($item->set($value)->setTTL($ttl));
     }
 
@@ -71,6 +71,7 @@ class Access
         $item = $this->pool->getItem($key);
         $item->setInvalidationMethod(Invalidation::NONE);
         $value = $item->get();
+
         return ($item->isMiss()) ? false : $value;
     }
 
@@ -79,16 +80,17 @@ class Access
      *
      * @param string|string[] $key Identifier for the cache item
      *
-     * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
+     * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      */
     public function delete($key)
     {
         $item = $this->pool->getItem($key);
+
         return $item->clear();
     }
 
     /**
-     * cache block wrapper using Invalidation::PRECOMPUTE
+     * cache block wrapper using Invalidation::PRECOMPUTE.
      *
      * If the cache read for $key is a miss, call the $regenFunction to update it.
      * With the PRECOMPUTE strategy, it  will trigger a miss on a read on one caller
@@ -99,13 +101,13 @@ class Access
      * @param int|DateTime|null $ttl           time to live, number ofseconds as integer,
      *                                         DateTime to expire at a specific time,
      *                                         or null for default
-     * @param mixed          ...$args          variable argument list for $regenFunction
+     * @param mixed ...$args variable argument list for $regenFunction
      *
      * @return mixed
      */
     public function cacheRead($cacheKey, $regenFunction, $ttl = null, $args = null)
     {
-        if ($args === null) {
+        if (null === $args) {
             $varArgs = [];
         } else {
             $varArgs = func_get_args();
@@ -137,7 +139,7 @@ class Access
     }
 
     /**
-     * Garbage collection - remove all expired and deleted data
+     * Garbage collection - remove all expired and deleted data.
      */
     public function garbageCollect()
     {
@@ -147,7 +149,7 @@ class Access
     /**
      * clear all keys and data from the cache.
      *
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @return bool True if the cache was successfully cleared, false otherwise
      */
     public function clear()
     {
@@ -155,7 +157,7 @@ class Access
     }
 
     /**
-     * direct access to pool
+     * direct access to pool.
      *
      * WARNING: this is intended for diagnostics and similar advanced uses.
      * Depending on direct access to the pool may break future compatibility.

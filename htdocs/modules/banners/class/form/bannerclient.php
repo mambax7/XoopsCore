@@ -10,16 +10,14 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class BannersBannerclientForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -36,7 +34,7 @@ class BannersBannerclientForm extends Xoops\Form\ThemeForm
         if ($obj->isNew()) {
             $user = 'N';
         } else {
-            if ($obj->getVar('bannerclient_uid') === 0) {
+            if (0 === $obj->getVar('bannerclient_uid')) {
                 $user = 'N';
             } else {
                 $user = 'Y';

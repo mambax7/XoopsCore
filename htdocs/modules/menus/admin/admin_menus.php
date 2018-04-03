@@ -14,13 +14,11 @@ use Xmf\Request;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $helper = Menus::getInstance();
@@ -37,7 +35,6 @@ $id = Request::getInt('id', 0);
 $limit = Request::getInt('limit', 15);
 $start = Request::getInt('start', 0);
 
-
 switch ($op) {
     case 'add':
         $admin_page->addItemButton(_AM_MENUS_LIST_MENUS, 'admin_menus.php', 'application-view-detail');
@@ -46,6 +43,7 @@ switch ($op) {
         $obj = $helper->getHandlerMenus()->create();
         $form = $helper->getForm($obj, 'menus_menus');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -56,6 +54,7 @@ switch ($op) {
         $obj = $helper->getHandlerMenus()->get($id);
         $form = $helper->getForm($obj, 'menus_menus');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'save':
@@ -66,7 +65,7 @@ switch ($op) {
         $msg[] = _AM_MENUS_SAVE;
 
         $id = Request::getInt('id', 0);
-        if (isset($id) && $id !== 0) {
+        if (isset($id) && 0 !== $id) {
             $obj = $helper->getHandlerMenus()->get($id);
         } else {
             $obj = $helper->getHandlerMenus()->create();
@@ -80,13 +79,14 @@ switch ($op) {
         echo $xoops->alert('error', $obj->getHtmlErrors());
         $form = $helper->getForm($obj, 'menus_menus');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'del':
         $ok = Request::getInt('ok', 0);
         $obj = $helper->getHandlerMenus()->get($id);
 
-        if ($ok === 1) {
+        if (1 === $ok) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('admin_menus.php', 3, implode(',', $xoops->security()->getErrors()));
             }
@@ -102,9 +102,10 @@ switch ($op) {
             echo $xoops->confirm(
                 ['ok' => 1, 'id' => $id, 'op' => 'del'],
                 $helper->url('admin/admin_menus.php'),
-                _AM_MENUS_MSG_SUREDEL . '<br /><strong>' . $obj->getVar('title') . '</strong>'
+                _AM_MENUS_MSG_SUREDEL.'<br /><strong>'.$obj->getVar('title').'</strong>'
             );
         }
+
         break;
 
     case 'list':
@@ -120,8 +121,8 @@ switch ($op) {
         $xoops->tpl()->assign('query', $query);
 
         $criteria = new CriteriaCompo();
-        if ($query !== '') {
-            $crit = new CriteriaCompo(new Criteria('title', $query . '%', 'LIKE'));
+        if ('' !== $query) {
+            $crit = new CriteriaCompo(new Criteria('title', $query.'%', 'LIKE'));
             $criteria->add($crit);
         }
 
@@ -148,6 +149,7 @@ switch ($op) {
         } else {
             $xoops->tpl()->assign('error_message', _AM_MENUS_MSG_NOTFOUND);
         }
+
         break;
 }
 $xoops->footer();

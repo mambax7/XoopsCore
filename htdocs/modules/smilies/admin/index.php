@@ -10,16 +10,15 @@
 */
 
 /**
- * smilies module
+ * smilies module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         smilies
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 $xoops->header();
 
@@ -37,15 +36,15 @@ $smilies_display = $helper->getHandlerSmilies()->getCount($criteria);
 $smilies_total = $smilies_notdisplay + $smilies_display;
 
 // folder path
-$folder_path = \XoopsBaseConfig::get('root-path') . '/uploads/smilies';
+$folder_path = \XoopsBaseConfig::get('root-path').'/uploads/smilies';
 
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->displayNavigation('index.php');
 
 $admin_page->addInfoBox(_MI_SMILIES_SMILIES);
 $admin_page->addInfoBoxLine(sprintf(_AM_SMILIES_NBTOTAL, $smilies_total));
-$admin_page->addInfoBoxLine(sprintf(_AM_SMILIES_NBDISPLAY, '<span class="green">' . $smilies_display . '</span>'));
-$admin_page->addInfoBoxLine(sprintf(_AM_SMILIES_NBNOTDISPLAY, '<span class="red">' . $smilies_notdisplay . '</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_SMILIES_NBDISPLAY, '<span class="green">'.$smilies_display.'</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_SMILIES_NBNOTDISPLAY, '<span class="red">'.$smilies_notdisplay.'</span>'));
 
 $admin_page->addConfigBoxLine($folder_path, 'folder');
 $admin_page->addConfigBoxLine([$folder_path, '777'], 'chmod');

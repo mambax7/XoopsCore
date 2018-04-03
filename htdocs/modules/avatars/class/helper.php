@@ -15,11 +15,10 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class Avatars extends Xoops\Module\Helper\HelperAbstract
 {
     /**
-     * Init the module
+     * Init the module.
      *
      * @return null|void
      */

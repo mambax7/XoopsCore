@@ -10,14 +10,13 @@
  */
 
 /**
- * Logger core preloads
+ * Logger core preloads.
  *
  * @category  Logger
- * @package   Logger
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class LoggerUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract implements UserconfigsPluginInterface
 {
@@ -39,6 +38,7 @@ class LoggerUserconfigsPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
             'name' => _MI_LOGGER_UCONF_CAT_OPT,
             'title' => _MI_LOGGER_UCONF_CAT_OPT_DESC,
         ];
+
         return $categories;
     }
 

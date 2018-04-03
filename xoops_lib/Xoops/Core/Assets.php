@@ -23,15 +23,14 @@ use Assetic\FilterManager;
 use Xmf\Yaml;
 
 /**
- * Provides a standardized asset strategy
+ * Provides a standardized asset strategy.
  *
  * @category  Assets
- * @package   Assets
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014-2017 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Assets
@@ -39,7 +38,7 @@ class Assets
     /** @var array */
     protected $assetPrefs;
 
-    /** @var boolean */
+    /** @var bool */
     private $debug = false;
 
     /** @var array of default filter strings - may be overridden by prefs */
@@ -102,7 +101,7 @@ class Assets
     private $filterInterface = '\Assetic\Filter\FilterInterface';
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
@@ -118,7 +117,7 @@ class Assets
     }
 
     /**
-     * getUrlToAssets
+     * getUrlToAssets.
      *
      * Create an asset file from a list of assets
      *
@@ -126,7 +125,7 @@ class Assets
      * @param array        $assets  list of source files to process
      * @param string|array $filters either a comma separated list of known namsed filters
      *                              or an array of named filters and/or filter object
-     * @param string       $target  target path, will default to assets directory
+     * @param string $target target path, will default to assets directory
      *
      * @return string URL to asset file
      */
@@ -136,7 +135,7 @@ class Assets
             $assets = [$assets]; // just a single path name
         }
 
-        if ($filters === 'default') {
+        if ('default' === $filters) {
             if (isset($this->default_filters[$type])) {
                 $filters = $this->default_filters[$type];
             } else {
@@ -177,27 +176,35 @@ class Assets
                     switch (ltrim($filter, '?')) {
                         case 'cssembed':
                             $fm->set('cssembed', new Filter\PhpCssEmbedFilter());
+
                             break;
                         case 'cssmin':
                             $fm->set('cssmin', new Filter\CssMinFilter());
+
                             break;
                         case 'cssimport':
                             $fm->set('cssimport', new Filter\CssImportFilter());
+
                             break;
                         case 'cssrewrite':
                             $fm->set('cssrewrite', new Filter\CssRewriteFilter());
+
                             break;
                         case 'lessphp':
                             $fm->set('lessphp', new Filter\LessphpFilter());
+
                             break;
                         case 'scssphp':
                             $fm->set('scssphp', new Filter\ScssphpFilter());
+
                             break;
                         case 'jsmin':
                             $fm->set('jsmin', new Filter\JSMinFilter());
+
                             break;
                         case 'jsqueeze':
                             $fm->set('jsqueeze', new Filter\JSqueezeFilter());
+
                             break;
                         default:
                             throw new \Exception(sprintf('%s filter not implemented.', $filter));
@@ -221,7 +228,7 @@ class Assets
             $translated_assets = [];
             foreach ($assets as $k => $v) {
                 // translate path if not a reference or absolute path
-                if (preg_match('/^\\/|^\\\\|^[a-zA-Z]:|^@/', $v) === 0) {
+                if (0 === preg_match('/^\\/|^\\\\|^[a-zA-Z]:|^@/', $v)) {
                     $v = $xoops->path($v);
                 }
                 if (!in_array($v, $translated_assets, true)) {
@@ -235,8 +242,8 @@ class Assets
                 $filters
             );
             $asset_path = $asset->getTargetPath();
-            if (!is_readable($target_path . $asset_path)) {
-                $assetKey = 'Asset ' . $asset_path;
+            if (!is_readable($target_path.$asset_path)) {
+                $assetKey = 'Asset '.$asset_path;
                 $xoops->events()->triggerEvent('debug.timer.start', $assetKey);
                 $oldumask = umask(0002);
                 $writer->writeAsset($asset);
@@ -244,34 +251,36 @@ class Assets
                 $xoops->events()->triggerEvent('debug.timer.stop', $assetKey);
             }
 
-            return $xoops->url('assets/' . $asset_path);
+            return $xoops->url('assets/'.$asset_path);
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
+
             return null;
         }
     }
 
     /**
-     * setDebug enable debug mode, will skip filters prefixed with '?'
+     * setDebug enable debug mode, will skip filters prefixed with '?'.
      *
      * @return true
      */
     public function setDebug()
     {
         $this->debug = true;
+
         return true;
     }
 
     /**
-     * Add an asset reference to the asset manager
+     * Add an asset reference to the asset manager.
      *
-     * @param string       $name    the name of the reference to be added
-     * @param mixed        $assets  a string asset path, or an array of asset paths,
+     * @param string $name   the name of the reference to be added
+     * @param mixed  $assets a string asset path, or an array of asset paths,
      *                              may include wildcard
      * @param string|array $filters either a comma separated list of known named filters
      *                              or an array of named filters and/or filter object
      *
-     * @return boolean true if asset registers, false on error
+     * @return bool true if asset registers, false on error
      */
     public function registerAssetReference($name, $assets, $filters = null)
     {
@@ -286,11 +295,11 @@ class Assets
             }
             foreach ($assets as $a) {
                 // translate path if not a reference or absolute path
-                if ((substr_compare($a, '@', 0, 1) !== 0)
-                    && (substr_compare($a, '/', 0, 1) !== 0)) {
+                if ((0 !== substr_compare($a, '@', 0, 1))
+                    && (0 !== substr_compare($a, '/', 0, 1))) {
                     $a = $xoops->path($a);
                 }
-                if (strpos($a, '*') === false) {
+                if (false === strpos($a, '*')) {
                     $assetArray[] = new FileAsset($a); // single file
                 } else {
                     $assetArray[] = new GlobAsset($a);  // wild card match
@@ -311,27 +320,35 @@ class Assets
                     switch (ltrim($filter, '?')) {
                         case 'cssembed':
                             $filterArray[] = new Filter\PhpCssEmbedFilter();
+
                             break;
                         case 'cssmin':
                             $filterArray[] = new Filter\CssMinFilter();
+
                             break;
                         case 'cssimport':
                             $filterArray[] = new Filter\CssImportFilter();
+
                             break;
                         case 'cssrewrite':
                             $filterArray[] = new Filter\CssRewriteFilter();
+
                             break;
                         case 'lessphp':
                             $filterArray[] = new Filter\LessphpFilter();
+
                             break;
                         case 'scssphp':
                             $filterArray[] = new Filter\ScssphpFilter();
+
                             break;
                         case 'jsmin':
                             $filterArray[] = new Filter\JSMinFilter();
+
                             break;
                         case 'jsqueeze':
                             $filterArray[] = new Filter\JSqueezeFilter();
+
                             break;
                         default:
                             throw new \Exception(sprintf('%s filter not implemented.', $filter));
@@ -346,6 +363,7 @@ class Assets
             return true;
         } catch (\Exception $e) {
             $xoops->events()->triggerEvent('core.exception', $e);
+
             return false;
         }
     }
@@ -374,9 +392,9 @@ class Assets
     {
         $xoops = \Xoops::getInstance();
 
-        $fromPath = $xoops->path($fromPath) . '/';
-        $toPath = $xoops->path('assets') . '/' . $output . '/';
-        $from = glob($fromPath . '/' . $pattern);
+        $fromPath = $xoops->path($fromPath).'/';
+        $toPath = $xoops->path('assets').'/'.$output.'/';
+        $from = glob($fromPath.'/'.$pattern);
 
         if (!is_dir($toPath)) {
             $oldUmask = umask(0);
@@ -390,9 +408,9 @@ class Assets
             foreach ($from as $filepath) {
                 $xoops->events()->triggerEvent('debug.timer.start', $filepath);
                 $filename = basename($filepath);
-                $status = copy($filepath, $toPath . $filename);
-                if ($status === false) {
-                    $xoops->logger()->warning('Failed to copy asset ' . $filename);
+                $status = copy($filepath, $toPath.$filename);
+                if (false === $status) {
+                    $xoops->logger()->warning('Failed to copy asset '.$filename);
                 } else {
                     //$xoops->logger()->debug('Copied asset '.$filename);
                     ++$count;
@@ -400,14 +418,16 @@ class Assets
                 $xoops->events()->triggerEvent('debug.timer.stop', $filepath);
             }
             umask($oldUmask);
+
             return $count;
         }
-        $xoops->logger()->warning('Asset directory is not writable. ' . $output);
+        $xoops->logger()->warning('Asset directory is not writable. '.$output);
+
         return false;
     }
 
     /**
-     * readAssetsPrefs - read configured asset preferences
+     * readAssetsPrefs - read configured asset preferences.
      *
      * @return array of assets preferences
      */
@@ -419,7 +439,7 @@ class Assets
             $assetsPrefs = $xoops->cache()->read($this->assetsPrefsCacheKey);
             $file = $xoops->path($this->assetsPrefsFilename);
             $mtime = filemtime($file);
-            if ($assetsPrefs === false || !isset($assetsPrefs['mtime']) || !$mtime
+            if (false === $assetsPrefs || !isset($assetsPrefs['mtime']) || !$mtime
                 || (isset($assetsPrefs['mtime']) && $assetsPrefs['mtime'] < $mtime)) {
                 if ($mtime) {
                     $assetsPrefs = Yaml::read($file);
@@ -456,12 +476,13 @@ class Assets
             $xoops->events()->triggerEvent('core.exception', $e);
             $assetsPrefs = [];
         }
+
         return $assetsPrefs;
     }
 
     /**
      * saveAssetsPrefs - record array of assets preferences in config file, and
-     * update cache
+     * update cache.
      *
      * @param array $assets_prefs array of asset preferences to save
      */
@@ -469,6 +490,7 @@ class Assets
     {
         if (is_array($assets_prefs)) {
             $xoops = \Xoops::getInstance();
+
             try {
                 Yaml::save($assets_prefs, $xoops->path($this->assetsPrefsFilename));
                 $xoops->cache()->write($this->assetsPrefsCacheKey, $assets_prefs);

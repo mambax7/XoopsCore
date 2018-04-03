@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../../init_new.php');
+require_once __DIR__.'/../../../../../init_new.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
@@ -100,7 +100,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     public function test_rank()
     {
         $value = $this->object->rank();
-        $this->assertTrue($value === null || is_array($value));
+        $this->assertTrue(null === $value || is_array($value));
     }
 
     public function test_isActive()

@@ -14,16 +14,15 @@ namespace Xoops\Core\Kernel;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
- * A single criteria for database query
+ * A single criteria for database query.
  *
  * @category  Xoops\Core\Kernel\Criteria
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Nathan Dial <ndial@trillion21.com>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0.0
  */
 class Criteria extends CriteriaElement
@@ -54,7 +53,7 @@ class Criteria extends CriteriaElement
     public $value;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $column   column criteria applies to
      * @param string $value    value to compare to column
@@ -72,24 +71,24 @@ class Criteria extends CriteriaElement
     }
 
     /**
-     * Make a sql condition string
+     * Make a sql condition string.
      *
      * @return string
      */
     public function render()
     {
-        $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $this->column;
+        $clause = (!empty($this->prefix) ? "{$this->prefix}." : '').$this->column;
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
         if (in_array(strtoupper($this->operator), ['IS NULL', 'IS NOT NULL'], true)) {
-            $clause .= ' ' . $this->operator;
+            $clause .= ' '.$this->operator;
         } else {
-            if (($value = trim($this->value)) === '') {
+            if ('' === ($value = trim($this->value))) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), ['IN', 'NOT IN'], true)) {
-                if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
+                if (('`' !== substr($value, 0, 1)) && ('`' !== substr($value, -1))) {
                     $value = "'{$value}'";
                 } else {
                     if (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
@@ -104,7 +103,7 @@ class Criteria extends CriteriaElement
     }
 
     /**
-     * Generate an LDAP filter from criteria
+     * Generate an LDAP filter from criteria.
      *
      * @return string
      * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
@@ -112,44 +111,46 @@ class Criteria extends CriteriaElement
     public function renderLdap()
     {
         $clause = '';
-        if ($this->operator === '>') {
+        if ('>' === $this->operator) {
             $this->operator = '>=';
         }
-        if ($this->operator === '<') {
+        if ('<' === $this->operator) {
             $this->operator = '<=';
         }
 
-        if ($this->operator === '!=' || $this->operator === '<>') {
+        if ('!=' === $this->operator || '<>' === $this->operator) {
             $operator = '=';
-            $clause = '(!(' . $this->column . $operator . $this->value . '))';
+            $clause = '(!('.$this->column.$operator.$this->value.'))';
         } else {
-            if ($this->operator === 'IN') {
+            if ('IN' === $this->operator) {
                 $newvalue = str_replace(['(', ')'], '', $this->value);
                 $tab = explode(',', $newvalue);
                 foreach ($tab as $uid) {
                     $clause .= "({$this->column}={$uid})";
                 }
-                $clause = '(|' . $clause . ')';
+                $clause = '(|'.$clause.')';
             } else {
-                $clause = '(' . $this->column . ' ' . $this->operator . ' ' . $this->value . ')';
+                $clause = '('.$this->column.' '.$this->operator.' '.$this->value.')';
             }
         }
+
         return $clause;
     }
 
     /**
-     * Make a SQL "WHERE" clause
+     * Make a SQL "WHERE" clause.
      *
      * @return string
      */
     public function renderWhere()
     {
         $cond = $this->render();
+
         return empty($cond) ? '' : "WHERE {$cond}";
     }
 
     /**
-     * Render criteria as Doctrine QueryBuilder instructions
+     * Render criteria as Doctrine QueryBuilder instructions.
      *
      * @param QueryBuilder $qb        query builder instance
      * @param string       $whereMode how does this fit in the passed in QueryBuilder?
@@ -159,7 +160,7 @@ class Criteria extends CriteriaElement
      */
     public function renderQb(QueryBuilder $qb = null, $whereMode = '')
     {
-        if ($qb === null) { // initialize query builder if not passed in
+        if (null === $qb) { // initialize query builder if not passed in
             $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
             $whereMode = ''; // first entry in new instance must be where
         }
@@ -168,16 +169,19 @@ class Criteria extends CriteriaElement
         switch (strtolower($whereMode)) {
             case 'and':
                 $qb->andWhere($expr);
+
                 break;
             case 'or':
                 $qb->orWhere($expr);
+
                 break;
             case '':
                 $qb->where($expr);
+
                 break;
         }
 
-        if ($this->limit !== 0 || $this->start !== 0) {
+        if (0 !== $this->limit || 0 !== $this->start) {
             $qb->setFirstResult($this->start)
                 ->setMaxResults($this->limit);
         }
@@ -209,7 +213,7 @@ class Criteria extends CriteriaElement
     {
         $eb = $qb->expr();
 
-        $column = (empty($this->prefix) ? '' : $this->prefix . '.') . $this->column;
+        $column = (empty($this->prefix) ? '' : $this->prefix.'.').$this->column;
 
         // this should be done using portability functions
         if (!empty($this->function)) {
@@ -226,22 +230,26 @@ class Criteria extends CriteriaElement
             switch ($operator) {
                 case 'is null':
                     $expr = $eb->isNull($column);
+
                     break;
                 case 'is not null':
                     $expr = $eb->isNotNull($column);
+
                     break;
                 case 'in':
-                    if (!empty($value) && $value !== '()') {
-                        $expr = $column . ' IN ' . $value;
+                    if (!empty($value) && '()' !== $value) {
+                        $expr = $column.' IN '.$value;
                     } else {
                         // odd case of a null set - this won't match anything
                         $expr = $eb->neq($column, $column);
                     }
+
                     break;
                 case 'not in':
-                    if (!empty($value) && $value !== '()') {
-                        $expr = $column . ' NOT IN ' . $value;
+                    if (!empty($value) && '()' !== $value) {
+                        $expr = $column.' NOT IN '.$value;
                     }
+
                     break;
             }
         } elseif (!empty($column)) { // no value is a nop (bug: this should be a valid value)
@@ -250,41 +258,51 @@ class Criteria extends CriteriaElement
                 case '=':
                 case 'eq':
                     $expr = $eb->eq($column, $columnValue);
+
                     break;
                 case '!=':
                 case '<>':
                 case 'neq':
                     $expr = $eb->neq($column, $columnValue);
+
                     break;
                 case '<':
                 case 'lt':
                     $expr = $eb->lt($column, $columnValue);
+
                     break;
                 case '<=':
                 case 'lte':
                     $expr = $eb->lte($column, $columnValue);
+
                     break;
                 case '>':
                 case 'gt':
                     $expr = $eb->gt($column, $columnValue);
+
                     break;
                 case '>=':
                 case 'gte':
                     $expr = $eb->gte($column, $columnValue);
+
                     break;
                 case 'like':
                     $expr = $eb->like($column, $columnValue);
+
                     break;
                 case 'not like':
                     $expr = $eb->notLike($column, $columnValue);
+
                     break;
                 default:
                     $expr = $eb->comparison($column, strtoupper($operator), $columnValue);
+
                     break;
             }
         } else {
             $expr = '(1)';
         }
+
         return $expr;
     }
 }

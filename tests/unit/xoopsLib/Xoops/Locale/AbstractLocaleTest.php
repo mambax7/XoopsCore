@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class Xoops_Locale_AbstractTestInstance extends Xoops\Locale\AbstractLocale
 {
@@ -36,7 +36,7 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
         $instance = $this->myClass;
 
         $x = $instance::setLocale();
-        if ($x === false) {
+        if (false === $x) {
             $this->markTestSkipped('setlocale() returned false');
         }
         $y = $instance::getLocale();
@@ -227,9 +227,9 @@ class Xoops_Locale_AbstractTest extends \PHPUnit\Framework\TestCase
 
         $dateTime = new \DateTime();
         $interval = new \DateInterval($interval);
-        if ($op === 'add') {
+        if ('add' === $op) {
             $dateTime->add($interval);
-        } elseif ($op === 'sub') {
+        } elseif ('sub' === $op) {
             $dateTime->sub($interval);
         }
 

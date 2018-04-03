@@ -10,36 +10,32 @@
 */
 
 /**
- * XOOPS dhtmltextarea class
+ * XOOPS dhtmltextarea class.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xoopseditor
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 class FormDhtmlTextArea extends XoopsEditor
 {
     /**
-     * Hidden text
+     * Hidden text.
      *
      * @var string
-     * @access private
      */
     private $_hiddenText = 'xoopsHiddenText';
 
     /**
-     * FormDhtmlTextArea::__construct()
+     * FormDhtmlTextArea::__construct().
      *
      * @param array $options
      */
     public function __construct($options = [])
     {
         parent::__construct($options);
-        $this->rootPath = '/class/xoopseditor/' . basename(__DIR__);
+        $this->rootPath = '/class/xoopseditor/'.basename(__DIR__);
         $hiddenText = isset($this->configs['hiddenText']) ? $this->configs['hiddenText'] : $this->_hiddenText;
         $this->renderer = new Xoops\Form\DhtmlTextArea('', $this->getName(), $this->getValue(), $this->getRows(), $this->getCols(), $hiddenText, $this->configs);
     }

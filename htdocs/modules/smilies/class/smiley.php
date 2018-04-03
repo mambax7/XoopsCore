@@ -17,19 +17,18 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * SmiliesSmiley object
+ * SmiliesSmiley object.
  *
  * @category  Modules\Smilies
- * @package   Modules
  * @author    Unknown <nobody@localhost.local>
  * @copyright 2013-2015 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SmiliesSmiley extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -42,19 +41,18 @@ class SmiliesSmiley extends XoopsObject
 }
 
 /**
- * SmiliesSmileyHandler
+ * SmiliesSmileyHandler.
  *
  * @category  Modules\Smilies
- * @package   Modules
  * @author    Unknown <nobody@localhost.local>
  * @copyright 2013-2015 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */
@@ -64,7 +62,7 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * get array of smilies
+     * get array of smilies.
      *
      * @param int  $start          offset of first row to return
      * @param int  $limit          max number of row to return
@@ -79,11 +77,12 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
         $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+
         return $this->getAll($criteria, false, $fetchAsObjects);
     }
 
     /**
-     * get array of active smilies
+     * get array of active smilies.
      *
      * @param bool $fetchAsObjects fetch as objects
      *
@@ -95,9 +94,9 @@ class SmiliesSmileyHandler extends XoopsPersistableObjectHandler
         $criteria->setSort('smiley_id');
         $criteria->setOrder('ASC');
         $results = $this->getAll($criteria, false, $fetchAsObjects);
-        $uploadPath = \XoopsBaseConfig::get('uploads-url') . '/';
+        $uploadPath = \XoopsBaseConfig::get('uploads-url').'/';
         foreach ($results as $i => $smile) {
-            $results[$i]['smiley_url'] = $uploadPath . $smile['smiley_url'];
+            $results[$i]['smiley_url'] = $uploadPath.$smile['smiley_url'];
         }
 
         return $results;

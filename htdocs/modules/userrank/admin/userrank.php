@@ -10,16 +10,15 @@
 */
 
 /**
- * User rank Manager
+ * User rank Manager.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userrank
  * @since           2.6.0
  * @author          Cointin Maxime (AKA Kraven30)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get main instance
 $system = System::getInstance();
@@ -41,7 +40,6 @@ $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('userrank.php');
 
 switch ($op) {
-
     case 'list':
     default:
         // Add Scripts
@@ -74,7 +72,7 @@ switch ($op) {
                 $userrank['rank_max'] = $userrank_arr[$i]->getVar('rank_max');
                 $userrank['rank_special'] = $userrank_arr[$i]->getVar('rank_special');
                 $rank_img = ($userrank_arr[$i]->getVar('rank_image')) ? $userrank_arr[$i]->getVar('rank_image') : 'blank.gif';
-                $userrank['rank_image'] = '<img src="' . \XoopsBaseConfig::get('uploads-url') . '/' . $rank_img . '" alt="" />';
+                $userrank['rank_image'] = '<img src="'.\XoopsBaseConfig::get('uploads-url').'/'.$rank_img.'" alt="" />';
                 $xoops->tpl()->appendByRef('userrank', $userrank);
                 unset($userrank);
             }
@@ -84,11 +82,12 @@ switch ($op) {
             $nav = new XoopsPageNav($userrank_count, $nb_rank, $start, 'start', 'userrank.php');
             $xoops->tpl()->assign('nav_menu', $nav->renderNav(4));
         }
+
         break;
 
     // New userrank
     case 'userrank_new':
-        $admin_page->addTips(sprintf(_AM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_USERRANK_TIPS_FORM2, $upload_size / 1000));
+        $admin_page->addTips(sprintf(_AM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)).sprintf(_AM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $admin_page->addItemButton(_AM_USERRANK_LIST, './userrank.php', 'application-view-detail');
         $admin_page->renderTips();
         $admin_page->renderButton();
@@ -96,11 +95,12 @@ switch ($op) {
         $obj = $userrank_Handler->create();
         $form = $xoops->getModuleForm($obj, 'ranks');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     // Edit userrank
     case 'userrank_edit':
-        $admin_page->addTips(sprintf(_AM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_USERRANK_TIPS_FORM2, $upload_size / 1000));
+        $admin_page->addTips(sprintf(_AM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)).sprintf(_AM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $admin_page->addItemButton(_AM_USERRANK_ADD, './userrank.php?op=userrank_new', 'add');
         $admin_page->addItemButton(_AM_USERRANK_LIST, './userrank.php', 'application-view-detail');
         $admin_page->renderTips();
@@ -109,6 +109,7 @@ switch ($op) {
         $obj = $userrank_Handler->get($system->cleanVars($_REQUEST, 'rank_id', 0, 'int'));
         $form = $xoops->getModuleForm($obj, 'ranks');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     // Save rank
@@ -125,10 +126,10 @@ switch ($op) {
         $obj->setVar('rank_title', $_POST['rank_title']);
         $obj->setVar('rank_min', $_POST['rank_min']);
         $obj->setVar('rank_max', $_POST['rank_max']);
-        $verif_rank_special = ($_POST['rank_special'] === 1) ? '1' : '0';
+        $verif_rank_special = (1 === $_POST['rank_special']) ? '1' : '0';
         $obj->setVar('rank_special', $verif_rank_special);
 
-        $uploader_rank_img = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-url') . '/ranks', $mimetypes, $upload_size, null, null);
+        $uploader_rank_img = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-url').'/ranks', $mimetypes, $upload_size, null, null);
 
         if ($uploader_rank_img->fetchMedia('rank_image')) {
             $uploader_rank_img->setPrefix('rank');
@@ -137,15 +138,16 @@ switch ($op) {
                 $errors = $uploader_rank_img->getErrors();
                 $xoops->redirect('javascript:history.go(-1)', 3, $errors);
             } else {
-                $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
+                $obj->setVar('rank_image', 'ranks/'.$uploader_rank_img->getSavedFileName());
             }
         } else {
-            $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
+            $obj->setVar('rank_image', 'ranks/'.$_POST['rank_image']);
         }
 
         if ($userrank_Handler->insert($obj)) {
             $xoops->redirect('userrank.php', 2, _AM_USERRANK_SAVE);
         }
+
         break;
 
     // Delete userrank
@@ -155,12 +157,12 @@ switch ($op) {
         $admin_page->renderButton();
         $rank_id = $system->cleanVars($_REQUEST, 'rank_id', 0, 'int');
         $obj = $userrank_Handler->get($rank_id);
-        if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+        if (isset($_POST['ok']) && 1 === $_POST['ok']) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('userrank.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($userrank_Handler->delete($obj)) {
-                $urlfile = \XoopsBaseConfig::get('uploads-url') . '/' . $obj->getVar('rank_image');
+                $urlfile = \XoopsBaseConfig::get('uploads-url').'/'.$obj->getVar('rank_image');
                 if (is_file($urlfile)) {
                     chmod($urlfile, 0777);
                     unlink($urlfile);
@@ -173,8 +175,9 @@ switch ($op) {
             $rank_img = ($obj->getVar('rank_image')) ? $obj->getVar('rank_image') : 'blank.gif';
             echo $xoops->confirm([
                 'ok' => 1, 'rank_id' => $_REQUEST['rank_id'], 'op' => 'userrank_delete',
-            ], $_SERVER['REQUEST_URI'], sprintf(_AM_USERRANK_SUREDEL) . '<br \><img src="' . \XoopsBaseConfig::get('uploads-url') . '/' . $rank_img . '" alt="" /><br \>');
+            ], $_SERVER['REQUEST_URI'], sprintf(_AM_USERRANK_SUREDEL).'<br \><img src="'.\XoopsBaseConfig::get('uploads-url').'/'.$rank_img.'" alt="" /><br \>');
         }
+
         break;
 
     // Update userrank status
@@ -190,8 +193,8 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
-        break;
 
+        break;
 }
 // Call Footer
 $xoops->footer();

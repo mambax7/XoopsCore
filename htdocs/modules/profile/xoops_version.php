@@ -10,11 +10,10 @@
 */
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -44,7 +43,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [
     'business' => 'xoopsfoundation@gmail.com',
-    'item_name' => 'Donation : ' . _PROFILE_MI_DESC,
+    'item_name' => 'Donation : '._PROFILE_MI_DESC,
     'amount' => 0,
     'currency_code' => 'USD',
 ];

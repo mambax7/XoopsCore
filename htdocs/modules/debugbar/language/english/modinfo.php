@@ -14,7 +14,6 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Richard Griffith <richard@geekwright.com>
  */
-
 define('_MI_DEBUGBAR_NAME', 'DebugBar');
 define('_MI_DEBUGBAR_DSC', 'Error reporting and performance analysis');
 

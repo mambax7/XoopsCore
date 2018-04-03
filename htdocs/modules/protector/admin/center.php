@@ -10,18 +10,16 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
+include_once __DIR__.'/header.php';
 
-include_once __DIR__ . '/header.php';
-
-require_once dirname(__DIR__) . '/class/gtickets.php';
+require_once dirname(__DIR__).'/class/gtickets.php';
 
 $xoops->db();
 global $xoopsDB;
@@ -35,7 +33,7 @@ $num = empty($_GET['num']) ? 20 : (int) ($_GET['num']);
 $log_table = $db->prefix('protector_log');
 
 // Protector object
-require_once dirname(__DIR__) . '/class/protector.php';
+require_once dirname(__DIR__).'/class/protector.php';
 $protector = Protector::getInstance($db->conn);
 $conf = $protector->getConf();
 
@@ -44,13 +42,12 @@ $conf = $protector->getConf();
 //
 
 if (!empty($_POST['action'])) {
-
     // Ticket check
     if (!$xoopsGTicket->check(true, 'protector_admin')) {
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/', 3, $xoopsGTicket->getErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/', 3, $xoopsGTicket->getErrors());
     }
 
-    if ($_POST['action'] === 'update_ips') {
+    if ('update_ips' === $_POST['action']) {
         $error_msg = '';
 
         $lines = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
@@ -70,7 +67,7 @@ if (!empty($_POST['action'])) {
         $fp = @fopen($protector->get_filepath4group1ips(), 'w');
         if ($fp) {
             @flock($fp, LOCK_EX);
-            fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
+            fwrite($fp, serialize(array_unique($group1_ips))."\n");
             @flock($fp, LOCK_UN);
             fclose($fp);
         } else {
@@ -80,7 +77,7 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ? $error_msg : _AM_MSG_IPFILESUPDATED;
         $xoops->redirect('center.php', 2, $redirect_msg);
     } else {
-        if ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+        if ('delete' === $_POST['action'] && isset($_POST['ids']) && is_array($_POST['ids'])) {
             // remove selected records
             foreach ($_POST['ids'] as $lid) {
                 $lid = (int) ($lid);
@@ -88,24 +85,24 @@ if (!empty($_POST['action'])) {
             }
             $xoops->redirect('center.php', 2, _AM_MSG_REMOVED);
         } else {
-            if ($_POST['action'] === 'deleteall') {
+            if ('deleteall' === $_POST['action']) {
                 // remove all records
                 $db->query("DELETE FROM ${log_table}");
                 $xoops->redirect('center.php', 2, _AM_MSG_REMOVED);
             } else {
-                if ($_POST['action'] === 'compactlog') {
+                if ('compactlog' === $_POST['action']) {
                     // compactize records (removing duplicated records (ip,type)
                     $result = $db->query("SELECT `lid`,`ip`,`type` FROM ${log_table} ORDER BY lid DESC");
                     $buf = [];
                     $ids = [];
                     while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
-                        if (isset($buf[$ip . $type])) {
+                        if (isset($buf[$ip.$type])) {
                             $ids[] = $lid;
                         } else {
-                            $buf[$ip . $type] = true;
+                            $buf[$ip.$type] = true;
                         }
                     }
-                    $db->query("DELETE FROM ${log_table} WHERE lid IN (" . implode(',', $ids) . ')');
+                    $db->query("DELETE FROM ${log_table} WHERE lid IN (".implode(',', $ids).')');
                     $xoops->redirect('center.php', 2, _AM_MSG_REMOVED);
                 }
             }
@@ -123,9 +120,9 @@ $bad_ips = $protector->get_bad_ips(true);
 uksort($bad_ips, 'protector_ip_cmp');
 $bad_ips4disp = '';
 foreach ($bad_ips as $bad_ip => $jailed_time) {
-    $line = $jailed_time ? $bad_ip . ':' . $jailed_time : $bad_ip;
+    $line = $jailed_time ? $bad_ip.':'.$jailed_time : $bad_ip;
     $line = str_replace(':2147483647', '', $line); // remove :0x7fffffff
-    $bad_ips4disp .= htmlspecialchars($line, ENT_QUOTES) . "\n";
+    $bad_ips4disp .= htmlspecialchars($line, ENT_QUOTES)."\n";
 }
 
 // group1_ips
@@ -142,7 +139,7 @@ $form->render();
 // query for listing
 $rs = $db->query("SELECT count(lid) FROM ${log_table}");
 list($numrows) = $db->fetchRow($rs);
-$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM ${log_table} l LEFT JOIN " . $db->prefix('system_user') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT ${pos},${num}");
+$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM ${log_table} l LEFT JOIN ".$db->prefix('system_user')." u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT ${pos},${num}");
 // Number selection
 $num_options = '';
 $num_array = [20, 100, 500, 2000];
@@ -161,7 +158,7 @@ $xoops->tpl()->assign('nav_html', $nav_html);
 // body of log listing
 $oddeven = 'odd';
 while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs))) {
-    $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
+    $oddeven = ('odd' === $oddeven ? 'even' : 'odd');
 
     $ip = htmlspecialchars($ip, ENT_QUOTES);
     $type = htmlspecialchars($type, ENT_QUOTES);
@@ -170,16 +167,16 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
 
     // make agents shorter
     if (preg_match('/MSIE\s+([0-9.]+)/', $agent, $regs)) {
-        $agent_short = 'IE ' . $regs[1];
+        $agent_short = 'IE '.$regs[1];
     } else {
-        if (stristr($agent, 'Gecko') !== false) {
+        if (false !== stristr($agent, 'Gecko')) {
             $agent_short = strrchr($agent, ' ');
         } else {
             $agent_short = substr($agent, 0, strpos($agent, ' '));
         }
     }
     $agent4disp = htmlspecialchars($agent, ENT_QUOTES);
-    $agent_desc = $agent === $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES) . "<img src='../images/dotdotdot.gif' alt='${agent4disp}' title='${agent4disp}' />";
+    $agent_desc = $agent === $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES)."<img src='../images/dotdotdot.gif' alt='${agent4disp}' title='${agent4disp}' />";
 
     $log_arr['lid'] = $lid;
     $log_arr['date'] = XoopsLocale::formatTimestamp($timestamp);

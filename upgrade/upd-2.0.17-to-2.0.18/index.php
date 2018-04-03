@@ -16,13 +16,14 @@ class upgrade_2018 extends xoopsUpgrade
     {
         $xoops = Xoops::getInstance();
         $db = $xoops->db();
-        $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
+        $sql = 'SHOW COLUMNS FROM '.$db->prefix('config')." LIKE 'conf_title'";
         $result = $db->queryF($sql);
-        while (($row = $db->fetchArray($result)) !== false) {
-            if (strtolower(trim($row['Type'])) === 'varchar(255)') {
+        while (false !== ($row = $db->fetchArray($result))) {
+            if ('varchar(255)' === strtolower(trim($row['Type']))) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -48,13 +49,15 @@ class upgrade_2018 extends xoopsUpgrade
 
         foreach ($this->fields as $table => $data) {
             foreach ($data as $field => $property) {
-                $sql = 'ALTER TABLE ' . $db->prefix($table) . " CHANGE `${field}` `${field}` ${property}";
+                $sql = 'ALTER TABLE '.$db->prefix($table)." CHANGE `${field}` `${field}` ${property}";
                 $this->query($sql);
             }
         }
+
         return true;
     }
 }
 
 $upg = new upgrade_2018();
+
 return $upg;

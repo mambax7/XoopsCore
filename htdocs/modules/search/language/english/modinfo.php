@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MI_SEARCH_NAME', 'Search');
 define('_MI_SEARCH_DSC', 'Provides search ability for modules');
 

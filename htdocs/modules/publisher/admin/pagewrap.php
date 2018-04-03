@@ -12,14 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $xoops = Xoops::getInstance();
 PublisherUtils::cpHeader();
@@ -30,15 +28,15 @@ PublisherUtils::openCollapsableBar('pagewraptable', 'pagewrapicon', _AM_PUBLISHE
 $dir = PublisherUtils::getUploadDir(true, 'content');
 
 if (!preg_match('/777/i', decoct(fileperms($dir)))) {
-    echo "<font color='FF0000'><h4>" . _AM_PUBLISHER_PERMERROR . '</h4></font>';
+    echo "<font color='FF0000'><h4>"._AM_PUBLISHER_PERMERROR.'</h4></font>';
 }
 
 // Upload File
 echo "<form name='form_name2' id='form_name2' action='pw_upload_file.php' method='post' enctype='multipart/form-data'>";
 echo "<table cellspacing='1' width='100%' class='outer'>";
-echo "<tr><th colspan='2'>" . _AM_PUBLISHER_UPLOAD_FILE . '</th></tr>';
-echo "<tr valign='top' align='left'><td class='head'>" . _AM_PUBLISHER_SEARCH . "</td><td class='even'><input type='file' name='fileupload' id='fileupload' size='30' /></td></tr>";
-echo "<tr valign='top' align='left'><td class='head'><input type='hidden' name='MAX_FILE_SIZE' id='op' value='500000' /></td><td class='even'><input type='submit' name='submit' value='" . _AM_PUBLISHER_UPLOAD . "' /></td></tr>";
+echo "<tr><th colspan='2'>"._AM_PUBLISHER_UPLOAD_FILE.'</th></tr>';
+echo "<tr valign='top' align='left'><td class='head'>"._AM_PUBLISHER_SEARCH."</td><td class='even'><input type='file' name='fileupload' id='fileupload' size='30' /></td></tr>";
+echo "<tr valign='top' align='left'><td class='head'><input type='hidden' name='MAX_FILE_SIZE' id='op' value='500000' /></td><td class='even'><input type='submit' name='submit' value='"._AM_PUBLISHER_UPLOAD."' /></td></tr>";
 echo '</table>';
 echo '</form>';
 
@@ -48,7 +46,7 @@ $form = new Xoops\Form\ThemeForm(_CO_PUBLISHER_DELETEFILE, 'form_name', 'pw_dele
 $pWrap_select = new Xoops\Form\Select(PublisherUtils::getUploadDir(true, 'content'), 'address');
 $folder = dir($dir);
 while ($file = $folder->read()) {
-    if ($file !== '.' && $file !== '..') {
+    if ('.' !== $file && '..' !== $file) {
         $pWrap_select->addOption($file, $file);
     }
 }

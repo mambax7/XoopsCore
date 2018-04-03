@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class XoopsXmlRpcIntTest extends \PHPUnit\Framework\TestCase
 {
@@ -20,6 +20,6 @@ class XoopsXmlRpcIntTest extends \PHPUnit\Framework\TestCase
         $instance = new $this->myclass($value);
 
         $result = $instance->render();
-        $this->assertSame('<value><int>' . $value . '</int></value>', $result);
+        $this->assertSame('<value><int>'.$value.'</int></value>', $result);
     }
 }

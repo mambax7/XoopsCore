@@ -17,11 +17,11 @@ use Xmf\Request;
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 
 // this is located in include, otherwise normal/anon users do not have authority to run
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+include dirname(dirname(dirname(__DIR__))).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();
@@ -36,16 +36,20 @@ $ecChar = $configs['qrcode_ecl'];
 switch (strtoupper($ecChar)) {
     case 'H':
         $ec = ErrorCorrectionLevel::HIGH;
+
         break;
     case 'Q':
         $ec = ErrorCorrectionLevel::QUARTILE;
+
         break;
     case 'M':
         $ec = ErrorCorrectionLevel::MEDIUM;
+
         break;
     case 'L':
     default:
         $ec = ErrorCorrectionLevel::LOW;
+
         break;
 }
 $qrCode->setWriterByName('png');
@@ -70,15 +74,15 @@ try {
 
 $mimetype = \Xoops\Core\MimeTypes::findType('png');
 $expires = 60 * 60 * 24 * 15; // seconds, minutes, hours, days
-header('Cache-Control: public, max-age=' . $expires);
-header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
+header('Cache-Control: public, max-age='.$expires);
+header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expires).' GMT');
 //header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', $mtime));
-header('Content-type: ' . $mimetype);
+header('Content-type: '.$mimetype);
 echo $qrData;
 exit;
 
 /**
- * normalizeColor
+ * normalizeColor.
  *
  * @param string $color 24 bit RGB color as hex digit (i.e. 'FFFFFF')
  *
@@ -87,12 +91,13 @@ exit;
 function normalizeColor($color)
 {
     $color = preg_replace('/[^a-fA-F0-9]+/', '', $color); // only hex digits
-    $color = substr('000000' . $color, -6); // only 6 digits, pad with leading zeros
+    $color = substr('000000'.$color, -6); // only 6 digits, pad with leading zeros
     $rgb = [
         'r' => hexdec(substr($color, 0, 2)),
         'g' => hexdec(substr($color, 2, 2)),
         'b' => hexdec(substr($color, 4, 2)),
         'a' => 0,
     ];
+
     return $rgb;
 }

@@ -15,6 +15,5 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MI_PDF_NAME', 'Pdf');
 define('_MI_PDF_DSC', 'Support for pdf creation');

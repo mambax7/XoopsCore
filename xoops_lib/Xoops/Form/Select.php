@@ -12,33 +12,32 @@
 namespace Xoops\Form;
 
 /**
- * Select - a select element
+ * Select - a select element.
  *
  * @category  Xoops\Form\Select
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Select extends OptionElement
 {
     /**
-     * Pre-selected values
+     * Pre-selected values.
      *
      * @var array
      */
     protected $value = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption  Caption or array of all attributes
      * @param string       $name     name" attribute
      * @param mixed        $value    Pre-selected value (or array of them).
-     * @param integer      $size     Number or rows. "1" makes a drop-down-list
-     * @param boolean      $multiple Allow multiple selections?
+     * @param int          $size     Number or rows. "1" makes a drop-down-list
+     * @param bool         $multiple Allow multiple selections?
      */
     public function __construct($caption, $name = null, $value = null, $size = 1, $multiple = false)
     {
@@ -67,7 +66,7 @@ class Select extends OptionElement
     }
 
     /**
-     * Get the size
+     * Get the size.
      *
      * @return int
      */
@@ -77,7 +76,7 @@ class Select extends OptionElement
     }
 
     /**
-     * Add multiple optgroup
+     * Add multiple optgroup.
      *
      * @param string $name     name attribute
      * @param array  $optgroup Associative array of value->name pairs
@@ -88,7 +87,7 @@ class Select extends OptionElement
     }
 
     /**
-     * Prepare HTML for output
+     * Prepare HTML for output.
      *
      * @return string HTML
      */
@@ -98,15 +97,15 @@ class Select extends OptionElement
 
         $ele_options = $this->getOptions();
 
-        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
+        $extra = ('' !== $this->getExtra() ? ' '.$this->getExtra() : '');
         $this->themeDecorateElement();
         $attributes = $this->renderAttributeString();
-        $rendered = '<select ' . $attributes . $extra . ' >' . "\n";
+        $rendered = '<select '.$attributes.$extra.' >'."\n";
 
         if (empty($ele_optgroup)) {
             foreach ($ele_options as $value => $display) {
                 if (is_array($display)) {
-                    $rendered .= '<optgroup label="' . $value . '">' . "\n";
+                    $rendered .= '<optgroup label="'.$value.'">'."\n";
                     foreach ($display as $optvalue => $optdisplay) {
                         $rendered .= $this->renderOption($optvalue, $optdisplay, $selected);
                     }
@@ -115,13 +114,13 @@ class Select extends OptionElement
                 }
             }
         }
-        $rendered .= '</select>' . "\n";
+        $rendered .= '</select>'."\n";
 
         return $rendered;
     }
 
     /**
-     * Render custom javascript validation code
+     * Render custom javascript validation code.
      *
      * @return string
      */
@@ -138,17 +137,19 @@ class Select extends OptionElement
                 ? sprintf(\XoopsLocale::F_ENTER, $eltname)
                 : sprintf(\XoopsLocale::F_ENTER, $eltcaption);
             $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+
             return "\nvar hasSelected = false; var selectBox = myform.{$eltname};"
-                . 'for (i = 0; i < selectBox.options.length; i++ ) { '
-                . "if (selectBox.options[i].selected == true && selectBox.options[i].value != '') "
-                . '{ hasSelected = true; break; } }' . 'if (!hasSelected) '
-                . "{ window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
+                .'for (i = 0; i < selectBox.options.length; i++ ) { '
+                ."if (selectBox.options[i].selected == true && selectBox.options[i].value != '') "
+                .'{ hasSelected = true; break; } }'.'if (!hasSelected) '
+                ."{ window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
         }
+
         return '';
     }
 
     /**
-     * render a single option
+     * render a single option.
      *
      * @param string   $optionValue   option element value
      * @param string   $optionDisplay displayed text
@@ -158,11 +159,11 @@ class Select extends OptionElement
      */
     protected function renderOption($optionValue, $optionDisplay, $selected)
     {
-        $rendered = '<option value="' . htmlspecialchars($optionValue, ENT_QUOTES) . '"';
+        $rendered = '<option value="'.htmlspecialchars($optionValue, ENT_QUOTES).'"';
         if (in_array($optionValue, $selected, true)) {
             $rendered .= ' selected="selected"';
         }
-        $rendered .= '>' . $optionDisplay . '</option>' . "\n";
+        $rendered .= '>'.$optionDisplay.'</option>'."\n";
 
         return $rendered;
     }

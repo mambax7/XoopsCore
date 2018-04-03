@@ -125,7 +125,7 @@
 //define('_CURRCHAR','Current chars length: ');
 //define('_PLZCOMPLETE','Please complete the subject and message fields.');
 //define('_MESSAGETOOLONG','Your message is too long.');
-/**
+/*
 * xoops smilie
 */
 //define('_AM_ADDSMILE',' Add a new smilie');
@@ -146,7 +146,7 @@
 //define('_DATESTRING','Y/n/j G:i:s');
 //define('_MEDIUMDATESTRING','Y/n/j G:i');
 //define('_SHORTDATESTRING','Y/n/j');
-/**
+/*
 * The following characters are recognized in the format string:
 * a - 'am' or 'pm'
 * A - 'AM' or 'PM'
@@ -180,13 +180,13 @@
 //define('_LANGCODE','en_US');
 // change 0 to 1 if this language is a multi-bytes language
 //define('XOOPS_USE_MULTIBYTES','0');
-/**
+/*
 * Additions to 2.4.0
 **/
 //define('_RESET','Reset');
 //define('_RE','Re:');
 
-/**
+/*
 * Additions to 2.6.0
 **/
 //define('_FORM_VALID_URL','Starting with http or https');

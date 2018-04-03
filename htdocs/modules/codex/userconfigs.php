@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -26,7 +25,7 @@ if ($xoops->isUser() && $helper = $xoops->getModuleHelper('userconfigs')) {
     $configs = $config_handler->getConfigsByUser($xoops->user->getVar('uid'), $xoops->module->getVar('mid'));
     \Xoops\Utils::dumpVar($configs);
     $url = $xoops->url('modules/userconfigs');
-    echo '<a href="' . $url . '">Change your settings</a>';
+    echo '<a href="'.$url.'">Change your settings</a>';
 } else {
     echo 'Please login and install userconfigs module';
 }

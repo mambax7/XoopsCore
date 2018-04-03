@@ -10,15 +10,13 @@
 */
 
 /**
- * Filemanager settings
+ * Filemanager settings.
  *
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Maxime Cointin (AKA Kraven30)
- * @package     system
  * @version     $Id$
  */
-
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 $modversion['name'] = _AM_SYSTEM_FILEMANAGER;
 $modversion['version'] = '1.0';

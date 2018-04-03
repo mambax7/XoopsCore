@@ -10,11 +10,10 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id: $
@@ -34,14 +33,14 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
             $blank_img = 'blank.gif';
             $html_banner = 0;
         } else {
-            if (substr_count($obj->getVar('banner_imageurl'), $xoops_upload_url . '/banners/') === 0) {
+            if (0 === substr_count($obj->getVar('banner_imageurl'), $xoops_upload_url.'/banners/')) {
                 $blank_img = 'blank.gif';
             } else {
                 $namefile =
-                    substr_replace($obj->getVar('banner_imageurl'), '', 0, strlen($xoops_upload_url . '/banners/'));
-                $pathfile = $xoops->path('uploads/banners/') . $namefile;
+                    substr_replace($obj->getVar('banner_imageurl'), '', 0, strlen($xoops_upload_url.'/banners/'));
+                $pathfile = $xoops->path('uploads/banners/').$namefile;
                 if (is_file($pathfile)) {
-                    $blank_img = str_replace($xoops_upload_url . '/banners/', '', $obj->getVar('banner_imageurl', 'e'));
+                    $blank_img = str_replace($xoops_upload_url.'/banners/', '', $obj->getVar('banner_imageurl', 'e'));
                 } else {
                     $blank_img = 'blank.gif';
                 }
@@ -73,14 +72,14 @@ class BannersBannerForm extends Xoops\Form\ThemeForm
         \Xoops\Core\Lists\ImageFile::setOptionsArray($imageselect_img, $xoops->path('uploads/banners'));
         $imageselect_img->setExtra(
             'onchange="showImgSelected(\'xo-banners-img\', \'banners_imageurl\', \'banners\', \'\', \''
-            . $xoops_upload_url . '\' )"'
+            .$xoops_upload_url.'\' )"'
         );
         $imgtray_img->addElement($imageselect_img, false);
         $imgtray_img->addElement(
             new Xoops\Form\Label(
                 '',
-                "<br /><img src='" . $xoops_upload_url . '/banners/' . $blank_img
-                . "' name='image_img' id='xo-banners-img' alt='' />"
+                "<br /><img src='".$xoops_upload_url.'/banners/'.$blank_img
+                ."' name='image_img' id='xo-banners-img' alt='' />"
             )
         );
         $fileseltray_img = new Xoops\Form\ElementTray('<br />', '<br /><br />');

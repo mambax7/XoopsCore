@@ -14,19 +14,18 @@ namespace Xoops\Core\Session;
 use Xoops\Core\AttributeInterface;
 
 /**
- * Session management
+ * Session management.
  *
  * @category  Xoops\Core\Session
- * @package   FingerprintInterface
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 interface FingerprintInterface
 {
     /**
-     * This method manages a fingerprint
+     * This method manages a fingerprint.
      *
      * Check current client Fingerprint against the values saved in the AttributeInterface object.
      * Save the current Fingerprint to the AttributeInterface object

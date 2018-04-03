@@ -4,7 +4,6 @@ namespace XoopsConsole\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xoops;
@@ -14,7 +13,7 @@ use Xoops\Core\Kernel\CriteriaCompo;
 class SetConfigCommand extends Command
 {
     /**
-     * establish the command configuration
+     * establish the command configuration.
      */
     protected function configure()
     {
@@ -31,7 +30,7 @@ EOT
     }
 
     /**
-     * execute the command
+     * execute the command.
      *
      * @param InputInterface  $input  input handler
      * @param OutputInterface $output output handler
@@ -45,6 +44,7 @@ EOT
         $sysmodule = $xoops->getModuleByDirname('system');
         if (empty($sysmodule)) {
             $output->writeln('<error>Module system is not installed!</error>');
+
             return;
         }
         $mid = $sysmodule->mid();
@@ -55,11 +55,12 @@ EOT
         $configItem = reset($objArray);
         if (empty($configItem)) {
             $output->writeln(sprintf('<error>Config item %s not found!</error>', $name));
+
             return;
         }
         $configItem->setConfValueForInput($value);
         $result = $configHandler->insertConfig($configItem);
-        if ($result === false) {
+        if (false === $result) {
             $output->writeln(sprintf('<error>Could not set %s!</error>', $name));
         }
         $output->writeln(sprintf('Set %s', $name));

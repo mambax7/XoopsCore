@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../../init_new.php');
+require_once __DIR__.'/../../../../../init_new.php';
 
 class WriteTest_XoopsObjectInstance extends Xoops\Core\Kernel\XoopsObject
 {

@@ -13,19 +13,17 @@ use Xmf\Request;
 use Xoops\Core\FixedGroups;
 
 /**
- * XOOPS User
+ * XOOPS User.
  *
  * See the enclosed file license.txt for licensing information. If you did not
  * receive this file, get it at GNU http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         core
  * @since           2.0.0
  * @author          Kazumi Ono <webmaster@myweb.ne.jp>
  */
-
-include __DIR__ . '/mainfile.php';
+include __DIR__.'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops_url = \XoopsBaseConfig::get('url');
@@ -33,7 +31,7 @@ $xoops->events()->triggerEvent('core.user.start');
 
 $xoops->loadLanguage('user');
 
-if (Request::getMethod() === 'POST') {
+if ('POST' === Request::getMethod()) {
     // from $_POST we use keys: op, ok
     $op = Request::getCmd('op', 'main', 'POST');
     $ok = Request::getBool('ok', false, 'POST');
@@ -46,24 +44,24 @@ if (Request::getMethod() === 'POST') {
     $actKey = Request::getString('actkey', '', 'GET');
 }
 
-if ($op === 'login') {
+if ('login' === $op) {
     include_once $xoops->path('include/checklogin.php');
     exit();
 }
 
-if ($op === 'main') {
+if ('main' === $op) {
     if (!$xoops->isUser()) {
         $xoops->header('module:system/system_userform.tpl');
         $xoops->tpl()->assign('xoops_pagetitle', XoopsLocale::A_LOGIN);
         $xoops->theme()->addMeta(
             'meta',
             'keywords',
-            XoopsLocale::USERNAME . ', ' . XoopsLocale::PASSWORD . ', ' . XoopsLocale::Q_LOST_YOUR_PASSWORD
+            XoopsLocale::USERNAME.', '.XoopsLocale::PASSWORD.', '.XoopsLocale::Q_LOST_YOUR_PASSWORD
         );
         $xoops->theme()->addMeta(
             'meta',
             'description',
-            XoopsLocale::Q_LOST_YOUR_PASSWORD . ' ' . XoopsLocale::NO_PROBLEM_ENTER_EMAIL_WE_HAVE_ON_FILE
+            XoopsLocale::Q_LOST_YOUR_PASSWORD.' '.XoopsLocale::NO_PROBLEM_ENTER_EMAIL_WE_HAVE_ON_FILE
         );
         $xoops->tpl()->assign('lang_login', XoopsLocale::A_LOGIN);
         $xoops->tpl()->assign('lang_username', XoopsLocale::C_USERNAME);
@@ -91,28 +89,28 @@ if ($op === 'main') {
             }
         }
         if (!$isExternal) {
-            header('Location: ' . $redirect);
+            header('Location: '.$redirect);
             exit();
         }
     }
-    header('Location: ' . $xoops_url . '/userinfo.php?uid=' . $xoopsUser->getVar('uid'));
+    header('Location: '.$xoops_url.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
     exit();
 }
 
-if ($op === 'logout') {
+if ('logout' === $op) {
     $message = '';
     $xoops->session()->user()->recordUserLogout();
     // clear entry from online users table
     if ($xoops->isUser()) {
         $xoops->getHandlerOnline()->destroy($xoops->user->getVar('uid'));
     }
-    $message = XoopsLocale::S_YOU_ARE_NOW_LOGGED_OUT . '<br />' . XoopsLocale::S_THANK_YOU_FOR_VISITING_OUR_SITE;
-    $xoops->redirect($xoops_url . '/', 1, $message);
+    $message = XoopsLocale::S_YOU_ARE_NOW_LOGGED_OUT.'<br />'.XoopsLocale::S_THANK_YOU_FOR_VISITING_OUR_SITE;
+    $xoops->redirect($xoops_url.'/', 1, $message);
 }
 
-if ($op === 'delete') {
+if ('delete' === $op) {
     $xoopsConfigUser = $xoops->getConfigs();
-    if (!$xoops->isUser() || $xoopsConfigUser['self_delete'] !== 1) {
+    if (!$xoops->isUser() || 1 !== $xoopsConfigUser['self_delete']) {
         $xoops->redirect('index.php', 5, XoopsLocale::E_NO_ACTION_PERMISSION);
     } else {
         $groups = $xoops->user->getGroups();
@@ -125,13 +123,13 @@ if ($op === 'delete') {
             echo $xoops->confirm(
                 ['op' => 'delete', 'ok' => 1],
                 'user.php',
-                XoopsLocale::Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT . '<br/>' . XoopsLocale::THIS_WILL_REMOVE_ALL_YOUR_INFO
+                XoopsLocale::Q_ARE_YOU_SURE_TO_DELETE_ACCOUNT.'<br/>'.XoopsLocale::THIS_WILL_REMOVE_ALL_YOUR_INFO
             );
             $xoops->footer();
         } else {
             $del_uid = $xoops->user->getVar('uid');
             $member_handler = $xoops->getHandlerMember();
-            if ($member_handler->deleteUser($xoops->user) !== false) {
+            if (false !== $member_handler->deleteUser($xoops->user)) {
                 $xoops->getHandlerOnline()->destroy($del_uid);
                 //todo, use preload here?
                 if ($xoops->isActiveModule('notifications')) {

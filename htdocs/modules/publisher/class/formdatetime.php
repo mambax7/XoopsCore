@@ -9,27 +9,25 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 /**
- *  Publisher class
+ *  Publisher class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 class PublisherFormDateTime extends Xoops\Form\ElementTray
 {
     /**
-     * __construct
+     * __construct.
      *
-     * @param string  $caption
-     * @param string  $name
-     * @param integer $size
-     * @param integer $value
+     * @param string $caption
+     * @param string $name
+     * @param int    $size
+     * @param int    $value
      */
     public function __construct($caption, $name, $size = 15, $value = 0)
     {
@@ -37,16 +35,16 @@ class PublisherFormDateTime extends Xoops\Form\ElementTray
         $value = (int) ($value);
         $value = ($value > 0) ? $value : time();
         $datetime = getdate($value);
-        $this->addElement(new Xoops\Form\DateSelect('', $name . '[date]', $value));
+        $this->addElement(new Xoops\Form\DateSelect('', $name.'[date]', $value));
         $timearray = [];
         for ($i = 0; $i < 24; ++$i) {
             for ($j = 0; $j < 60; $j = $j + 10) {
                 $key = ($i * 3600) + ($j * 60);
-                $timearray[$key] = ($j !== 0) ? $i . ':' . $j : $i . ':0' . $j;
+                $timearray[$key] = (0 !== $j) ? $i.':'.$j : $i.':0'.$j;
             }
         }
         ksort($timearray);
-        $timeselect = new Xoops\Form\Select('', $name . '[time]', $datetime['hours'] * 3600 + 600 * floor($datetime['minutes'] / 10));
+        $timeselect = new Xoops\Form\Select('', $name.'[time]', $datetime['hours'] * 3600 + 600 * floor($datetime['minutes'] / 10));
         $timeselect->addOptionArray($timearray);
         $this->addElement($timeselect);
     }

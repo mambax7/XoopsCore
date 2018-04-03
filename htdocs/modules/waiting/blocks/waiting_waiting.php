@@ -12,11 +12,10 @@
 use Xoops\Module\Plugin;
 
 /**
- * waiting module
+ * waiting module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         waiting
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -28,7 +27,6 @@ function b_waiting_waiting_show()
     $plugins = Plugin::getPlugins('waiting');
     /* @var $plugin WaitingPluginInterface */
     foreach ($plugins as $dirName => $plugin) {
-
         //No permissions, no links
         $helper = \Xoops::getModuleHelper($dirName);
         if (!$helper->isUserAdmin()) {
@@ -55,5 +53,6 @@ function b_waiting_waiting_show()
         }
     }
     $block['count'] = count($block['waiting']);
+
     return $block['count'] ? $block : false;
 }

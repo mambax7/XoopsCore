@@ -18,12 +18,11 @@ namespace Xmf\Module\Helper;
  * any arbitrary data (i.e. array, object) can be stored.
  *
  * @category  Xmf\Module\Helper\Cache
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Cache extends AbstractHelper
 {
@@ -42,12 +41,12 @@ class Cache extends AbstractHelper
      */
     public function init()
     {
-        $this->prefix = 'module/' . $this->module->getVar('dirname');
+        $this->prefix = 'module/'.$this->module->getVar('dirname');
         $this->cache = \Xoops::getInstance()->cache();
     }
 
     /**
-     * Write a value for a key to the cache
+     * Write a value for a key to the cache.
      *
      * @param string                      $key   Identifier for the data
      * @param mixed                       $value Data to be cached - anything except a resource
@@ -63,7 +62,7 @@ class Cache extends AbstractHelper
     }
 
     /**
-     * Read value for a key from the cache
+     * Read value for a key from the cache.
      *
      * @param string $key     Identifier for the data
      * @param mixed  $default default value to return if config $key is not set
@@ -73,11 +72,12 @@ class Cache extends AbstractHelper
     public function read($key, $default = false)
     {
         $value = $this->cache->read($this->prefix($key));
-        return ($value !== false) ? $value : $default;
+
+        return (false !== $value) ? $value : $default;
     }
 
     /**
-     * Delete a key from the cache
+     * Delete a key from the cache.
      *
      * @param string $key Identifier for the data
      */
@@ -87,7 +87,7 @@ class Cache extends AbstractHelper
     }
 
     /**
-     * cache block wrapper
+     * cache block wrapper.
      *
      * If the cache read for $key is a miss, call the $regenFunction to update it.
      * With the PRECOMPUTE strategy, it  will trigger a miss on a read on one caller
@@ -98,7 +98,7 @@ class Cache extends AbstractHelper
      * @param int|DateTime|null $ttl           time to live, number ofseconds as integer,
      *                                         DateTime to expire at a specific time,
      *                                         or null for default
-     * @param mixed          ...$args          variable argument list for $regenFunction
+     * @param mixed ...$args variable argument list for $regenFunction
      *
      * @return mixed
      */
@@ -111,7 +111,7 @@ class Cache extends AbstractHelper
      * clear all keys and data from the module's cache. This will do a hierarchical
      * delete on our module specific prefix.
      *
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @return bool True if the cache was successfully cleared, false otherwise
      */
     public function clear()
     {
@@ -119,7 +119,7 @@ class Cache extends AbstractHelper
     }
 
     /**
-     * Add our module prefix to a name
+     * Add our module prefix to a name.
      *
      * @param string $name name to prefix
      *
@@ -127,6 +127,6 @@ class Cache extends AbstractHelper
      */
     protected function prefix($name)
     {
-        return $this->prefix . '/' . $name;
+        return $this->prefix.'/'.$name;
     }
 }

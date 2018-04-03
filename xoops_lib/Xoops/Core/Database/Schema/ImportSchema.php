@@ -23,12 +23,11 @@ use Doctrine\DBAL\Schema\Table;
  * a XOOPS_DB_PREFIX prefixed Schema object.
  *
  * @category  Xoops\Core\Database\Schema\ImportSchema
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class ImportSchema
@@ -40,16 +39,16 @@ class ImportSchema
     private $schemaArray = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix') . '_');
+        $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix').'_');
         $this->xDbName = strtolower(\XoopsBaseConfig::get('db-name'));
     }
 
     /**
-     * Import an array into a schema
+     * Import an array into a schema.
      *
      * @param array $schemaArray array version of a schema object
      *
@@ -64,17 +63,20 @@ class ImportSchema
             switch ($type) {
                 case 'tables':
                     $tables = $this->importTables($entity);
+
                     break;
                 case 'sequence':
                     $sequences = $this->importSequences($entity);
+
                     break;
             }
         }
+
         return new Schema($tables, $sequences);
     }
 
     /**
-     * Build array of Table objects to add to the schema
+     * Build array of Table objects to add to the schema.
      *
      * @param array $tableArray array of table definitions
      *
@@ -86,7 +88,7 @@ class ImportSchema
         foreach ($tableArray as $name => $tabledef) {
             //echo '<h2>Table: ' . $name . '</h2>';
             //Debug::dump($tabledef);
-            $tableName = $this->xPrefix . $name;
+            $tableName = $this->xPrefix.$name;
             $columns = [];
             $indexes = [];
             $fkConstraints = [];
@@ -133,11 +135,12 @@ class ImportSchema
                 $options
             );
         }
+
         return $tables;
     }
 
     /**
-     * Build array of Sequence objects to add to the schema
+     * Build array of Sequence objects to add to the schema.
      *
      * @param array $sequenceArray array of table definitions
      *
@@ -156,6 +159,7 @@ class ImportSchema
                 $sequenceDef['initialvalue']
             );
         }
+
         return $sequences;
     }
 }

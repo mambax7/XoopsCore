@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -25,12 +24,12 @@
 function protector_precheck()
 {
     // check the access is from install/index.php
-    if (defined('_INSTALL_CHARSET') && !is_writable(\XoopsBaseConfig::get('root-path') . '/mainfile.php')) {
+    if (defined('_INSTALL_CHARSET') && !is_writable(\XoopsBaseConfig::get('root-path').'/mainfile.php')) {
         die('To use installer, remove protector\'s lines from mainfile.php first.');
     }
 
     // Protector class
-    require_once dirname(__DIR__) . '/class/protector.php';
+    require_once dirname(__DIR__).'/class/protector.php';
 
     // Protector object
     $protector = Protector::getInstance();
@@ -68,7 +67,7 @@ function protector_precheck()
     }
     $is_reliable = false;
     foreach ($reliable_ips as $reliable_ip) {
-        if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
+        if (!empty($reliable_ip) && preg_match('/'.$reliable_ip.'/', $_SERVER['REMOTE_ADDR'])) {
             $is_reliable = true;
         }
     }
@@ -120,5 +119,6 @@ function protector_precheck()
     if (!empty($conf['disable_features'])) {
         $protector->disable_features();
     }
+
     return true;
 }

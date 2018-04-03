@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
 {
@@ -59,12 +59,12 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $arr = [1 => '1', 2 => '2'];
         $instance->setImagesData($arr);
         $x = $instance->getImagesData();
-        $this->assertTrue(is_array($x) and (count($x) === 1));
+        $this->assertTrue(is_array($x) and (1 === count($x)));
 
         $arr = [1 => '1', 2 => '2'];
         $instance->setImagesData($arr);
         $x = $instance->getImagesData();
-        $this->assertTrue(is_array($x) and (count($x) === 2));
+        $this->assertTrue(is_array($x) and (2 === count($x)));
     }
 
     public function test_getTemplatesData()
@@ -74,12 +74,12 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
         $arr = [1 => '1', 2 => '2'];
         $instance->setTemplatesData($arr);
         $x = $instance->getTemplatesData();
-        $this->assertTrue(is_array($x) and (count($x) === 1));
+        $this->assertTrue(is_array($x) and (1 === count($x)));
 
         $arr = [1 => '1', 2 => '2'];
         $instance->setTemplatesData($arr);
         $x = $instance->getTemplatesData();
-        $this->assertTrue(is_array($x) and (count($x) === 2));
+        $this->assertTrue(is_array($x) and (2 === count($x)));
     }
 
     public function test_getTempArr()
@@ -101,7 +101,7 @@ class XoopsThemeSetParserTest extends \PHPUnit\Framework\TestCase
 
         $instance->setTempArr($name, $value, $delim);
         $x = $instance->getTempArr($name);
-        $this->assertSame($value . $delim . $value, $x);
+        $this->assertSame($value.$delim.$value, $x);
     }
 
     public function test_resetTempArr()

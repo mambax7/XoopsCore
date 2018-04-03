@@ -10,20 +10,17 @@
 */
 
 /**
- * Upgrade interface class
+ * Upgrade interface class.
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
  * @since       2.3.0
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id$
  */
-
-
 class xoopsUpgrade
 {
     public $usedFiles = [];
@@ -54,6 +51,7 @@ class xoopsUpgrade
                 }
             }
         }
+
         return empty($_SESSION['xoops_upgrade'][$step]) ? true : false;
     }
 
@@ -68,6 +66,7 @@ class xoopsUpgrade
             }
             array_shift($_SESSION['xoops_upgrade'][$step]);
         }
+
         return true;
     }
 

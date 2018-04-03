@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
-require_once(XOOPS_TU_ROOT_PATH . '/kernel/membership.php');
+require_once XOOPS_TU_ROOT_PATH.'/kernel/membership.php';
 
 class legacy_membershipHandlerTest extends \PHPUnit\Framework\TestCase
 {

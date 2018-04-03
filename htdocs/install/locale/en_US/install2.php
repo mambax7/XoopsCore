@@ -6,7 +6,7 @@
 // Translator: XOOPS Translation Team
 
 /**
- * New Group types
+ * New Group types.
  */
 define('_INSTALL_BANNEDUSERS', 'Banned Users');
 define('_INSTALL_BANNEDUSERSD', 'Banned user group');

@@ -24,12 +24,11 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  * (not object) version of a schema.
  *
  * @category  Xoops\Core\Database\Schema\ExportVisitor
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class ExportVisitor implements Visitor
@@ -37,7 +36,7 @@ class ExportVisitor implements Visitor
     protected $schemaArray;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -45,7 +44,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * return the generated Schema
+     * return the generated Schema.
      *
      * @return Schema the generated schema object
      */
@@ -55,7 +54,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept an entire schema. Do nothing in this visitor
+     * Accept an entire schema. Do nothing in this visitor.
      *
      * @param Schema $schema schema object
      */
@@ -64,7 +63,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept a table
+     * Accept a table.
      *
      * @param Table $table a table object
      */
@@ -74,7 +73,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept a column in a table
+     * Accept a column in a table.
      *
      * @param Table  $table  a table object
      * @param Column $column a column object
@@ -87,7 +86,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept a foreign key for a table
+     * Accept a foreign key for a table.
      *
      * @param Table                $localTable   a table object
      * @param ForeignKeyConstraint $fkConstraint a constraint object
@@ -107,7 +106,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept an index on in a table
+     * Accept an index on in a table.
      *
      * @param Table $table a table object
      * @param Index $index a column object
@@ -123,7 +122,7 @@ class ExportVisitor implements Visitor
     }
 
     /**
-     * Accept an sequence
+     * Accept an sequence.
      *
      * @param Sequence $sequence a sequence object
      */

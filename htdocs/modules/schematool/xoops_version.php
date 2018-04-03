@@ -14,7 +14,6 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Richard Griffith <richard@geekwright.com>
  */
-
 $modversion['dirname'] = basename(__DIR__);
 $modversion['name'] = _MI_SCHEMATOOL_NAME;
 $modversion['version'] = '1.0';
@@ -58,11 +57,10 @@ $modversion['adminmenu'] = 'admin/menu.php';
 // paypal
 $modversion['paypal'] = [
     'business' => 'xoopsfoundation@gmail.com',
-    'item_name' => 'Donation : ' . _MI_SCHEMATOOL_DESC,
+    'item_name' => 'Donation : '._MI_SCHEMATOOL_DESC,
     'amount' => 0,
     'currency_code' => 'USD',
 ];
-
 
 /*
 // Preferences

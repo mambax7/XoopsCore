@@ -16,20 +16,19 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Private message module
+ * Private message module.
  *
- * @package   pm
  * @author    Jan Pedersen
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright 2000-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class PmMessage extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -49,7 +48,7 @@ class PmMessage extends XoopsObject
 }
 
 /**
- * Class PmMessageHandler persistence of PmMessages
+ * Class PmMessageHandler persistence of PmMessages.
  */
 class PmMessageHandler extends XoopsPersistableObjectHandler
 {
@@ -59,10 +58,10 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Mark a message as read
+     * Mark a message as read.
      *
      *
-     * @param int $val
+     * @param  int  $val
      * @return bool
      */
     public function setRead(PmMessage $pm, $val = 1)
@@ -71,40 +70,42 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Mark a message as from_delete = 1 or removes it if the recipient has also deleted it
+     * Mark a message as from_delete = 1 or removes it if the recipient has also deleted it.
      *
      *
-     * @param int $val
+     * @param  int  $val
      * @return bool
      */
     public function setFromDelete(PmMessage $pm, $val = 1)
     {
-        if ($pm->getVar('to_delete') === 0) {
+        if (0 === $pm->getVar('to_delete')) {
             return $this->updateAll('from_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
         }
+
         return parent::delete($pm);
     }
 
     /**
-     * Mark a message as to_delete = 1 or removes it if the sender has also deleted it or sent by anonymous
+     * Mark a message as to_delete = 1 or removes it if the sender has also deleted it or sent by anonymous.
      *
      *
-     * @param int $val
+     * @param  int  $val
      * @return bool
      */
     public function setTodelete(PmMessage $pm, $val = 1)
     {
-        if ($pm->getVar('from_delete') === 0 && $pm->getVar('from_userid') === 0) {
+        if (0 === $pm->getVar('from_delete') && 0 === $pm->getVar('from_userid')) {
             return $this->updateAll('to_delete', (int) ($val), new Criteria('msg_id', $pm->getVar('msg_id')));
         }
+
         return parent::delete($pm);
     }
 
     /**
-     * Mark a message as from_save = 1
+     * Mark a message as from_save = 1.
      *
      *
-     * @param int $val
+     * @param  int  $val
      * @return bool
      */
     public function setFromsave(PmMessage $pm, $val = 1)
@@ -113,10 +114,10 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Mark a message as to_save = 1
+     * Mark a message as to_save = 1.
      *
      *
-     * @param int $val
+     * @param  int  $val
      * @return bool
      */
     public function setTosave(PmMessage $pm, $val = 1)
@@ -125,9 +126,9 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * get user's message count in savebox
+     * get user's message count in savebox.
      *
-     * @param XoopsUser|null $user
+     * @param  XoopsUser|null $user
      * @return int
      */
     public function getSavecount(XoopsUser $user = null)
@@ -144,11 +145,12 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $criteriaFrom->add(new Criteria('from_userid', $user->getVar('uid')));
         $criteria = new CriteriaCompo($criteriaTo);
         $criteria->add($criteriaFrom, 'OR');
+
         return $this->getCount($criteria);
     }
 
     /**
-     * Send a message to user's email
+     * Send a message to user's email.
      *
      * @return bool
      */
@@ -164,19 +166,19 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $msg .= "\n";
         $from = new XoopsUser($pm->getVar('from_userid'));
         $to = new XoopsUser($pm->getVar('to_userid'));
-        $msg .= sprintf(_PM_EMAIL_FROM, $from->getVar('uname') . ' (' . \XoopsBaseConfig::get('url')
-            . '/userinfo.php?uid=' . $pm->getVar('from_userid') . ')');
+        $msg .= sprintf(_PM_EMAIL_FROM, $from->getVar('uname').' ('.\XoopsBaseConfig::get('url')
+            .'/userinfo.php?uid='.$pm->getVar('from_userid').')');
         $msg .= "\n";
-        $msg .= sprintf(_PM_EMAIL_TO, $to->getVar('uname') . ' (' . \XoopsBaseConfig::get('url')
-            . '/userinfo.php?uid=' . $pm->getVar('to_userid') . ')');
+        $msg .= sprintf(_PM_EMAIL_TO, $to->getVar('uname').' ('.\XoopsBaseConfig::get('url')
+            .'/userinfo.php?uid='.$pm->getVar('to_userid').')');
         $msg .= "\n";
-        $msg .= _PM_EMAIL_MESSAGE . ":\n";
-        $msg .= "\n" . $pm->getVar('subject') . "\n";
-        $msg .= "\n" . strip_tags(str_replace([
+        $msg .= _PM_EMAIL_MESSAGE.":\n";
+        $msg .= "\n".$pm->getVar('subject')."\n";
+        $msg .= "\n".strip_tags(str_replace([
             '<p>', '</p>', '<br />', '<br />',
-        ], "\n", $pm->getVar('msg_text'))) . "\n\n";
+        ], "\n", $pm->getVar('msg_text')))."\n\n";
         $msg .= "--------------\n";
-        $msg .= $xoops->getConfig('sitename') . ': ' . \XoopsBaseConfig::get('url') . "\n";
+        $msg .= $xoops->getConfig('sitename').': '.\XoopsBaseConfig::get('url')."\n";
 
         $xoopsMailer = $xoops->getMailer();
         $xoopsMailer->useMail();
@@ -185,11 +187,12 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $xoopsMailer->setFromName($xoops->getConfig('sitename'));
         $xoopsMailer->setSubject(sprintf(_PM_EMAIL_SUBJECT, $pm->getVar('subject')));
         $xoopsMailer->setBody($msg);
+
         return $xoopsMailer->send();
     }
 
     /**
-     * Get form for setting prune criteria
+     * Get form for setting prune criteria.
      *
      * @return Xoops\Form\ThemeForm
      **/

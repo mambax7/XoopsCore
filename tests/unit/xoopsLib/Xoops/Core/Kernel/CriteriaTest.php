@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
 {
@@ -156,6 +156,6 @@ class Kernel_CriteriaTest extends \PHPUnit\Framework\TestCase
         $criteria = new $this->myclass($column, $value, $operator, $prefix, $function);
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $x = $criteria->buildExpressionQb($qb);
-        $this->assertSame("${prefix}.${column} " . strtoupper($operator) . " ${value}", $x);
+        $this->assertSame("${prefix}.${column} ".strtoupper($operator)." ${value}", $x);
     }
 }

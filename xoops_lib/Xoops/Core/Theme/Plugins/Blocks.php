@@ -17,14 +17,13 @@ use Xoops\Core\Theme\XoopsTheme;
 use Xoops\Core\XoopsTpl;
 
 /**
- * XoopsThemeBlocksPlugin component class file
+ * XoopsThemeBlocksPlugin component class file.
  *
  * @category  Xoops\Core
- * @package   Theme
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @copyright 2008-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Blocks extends PluginAbstract
 {
@@ -39,7 +38,7 @@ class Blocks extends PluginAbstract
     public $blocks = [];
 
     /**
-     * Blocks::xoInit()
+     * Blocks::xoInit().
      *
      * @return boolean
      */
@@ -57,11 +56,12 @@ class Blocks extends PluginAbstract
                 || !empty($this->blocks['page_topright'])
             );
         }
+
         return true;
     }
 
     /**
-     * Called before a specific zone is rendered
+     * Called before a specific zone is rendered.
      *
      * @param string $zone zone being rendered
      */
@@ -70,7 +70,7 @@ class Blocks extends PluginAbstract
     }
 
     /**
-     * Called after a specific zone is rendered
+     * Called after a specific zone is rendered.
      *
      * @param string $zone zone being rendered
      */
@@ -79,7 +79,7 @@ class Blocks extends PluginAbstract
     }
 
     /**
-     * Blocks::retrieveBlocks()
+     * Blocks::retrieveBlocks().
      */
     public function retrieveBlocks()
     {
@@ -87,7 +87,7 @@ class Blocks extends PluginAbstract
 
         if ($xoops->isModule()) {
             $mid = $xoops->module->getVar('mid');
-            $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php'
+            $isStart = ('index.php' === substr($_SERVER['PHP_SELF'], -9)
                 && $xoops->getConfig('startpage') === $xoops->module->getVar('dirname')
                 && empty($_SERVER['QUERY_STRING']));
         } else {
@@ -135,7 +135,7 @@ class Blocks extends PluginAbstract
     }
 
     /**
-     * Blocks::generateCacheId()
+     * Blocks::generateCacheId().
      *
      * @param string $cache_id cache identifier
      *
@@ -146,11 +146,12 @@ class Blocks extends PluginAbstract
         if ($this->theme) {
             $cache_id = $this->theme->generateCacheId($cache_id);
         }
+
         return $cache_id;
     }
 
     /**
-     * Blocks::buildBlock()
+     * Blocks::buildBlock().
      *
      * @param XoopsBlock $xobject  block to render
      * @param XoopsTpl   $template template engine
@@ -181,7 +182,7 @@ class Blocks extends PluginAbstract
                 : 'module:system/system_block_dummy.tpl';
         //$tplName = str_replace('.html', '.tpl', $tplName);
 
-        $cacheid = $this->generateCacheId('blk_' . $xobject->getVar('bid'));
+        $cacheid = $this->generateCacheId('blk_'.$xobject->getVar('bid'));
 
         $xoops->events()->triggerEvent(
             'core.themeblocks.buildblock.start',
@@ -189,7 +190,6 @@ class Blocks extends PluginAbstract
         );
 
         if (!$bcachetime || !$template->isCached($tplName, $cacheid)) {
-
             //Get theme metas
             $old = [];
             if ($this->theme && $bcachetime) {
@@ -232,6 +232,7 @@ class Blocks extends PluginAbstract
             }
         }
         $template->setCompileId();
+
         return $block;
     }
 }

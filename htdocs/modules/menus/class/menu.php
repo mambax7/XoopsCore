@@ -17,16 +17,14 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusMenu extends XoopsObject
 {
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
@@ -55,26 +53,26 @@ class MenusMenuHandler extends XoopsPersistableObjectHandler
 
     public function update_weights(MenusMenu $obj)
     {
-        $sql = 'UPDATE ' . $this->table
-        . ' SET weight = weight+1'
-        . ' WHERE weight >= ' . $obj->getVar('weight')
-        . ' AND id <> ' . $obj->getVar('id')
+        $sql = 'UPDATE '.$this->table
+        .' SET weight = weight+1'
+        .' WHERE weight >= '.$obj->getVar('weight')
+        .' AND id <> '.$obj->getVar('id')
         /*. " AND pid = " . $obj->getVar('pid')*/
-        . ' AND mid = ' . $obj->getVar('mid')
+        .' AND mid = '.$obj->getVar('mid')
         ;
         $this->db->queryF($sql);
 
-        $sql = 'SELECT id FROM ' . $this->table
-        . ' WHERE mid = ' . $obj->getVar('mid')
+        $sql = 'SELECT id FROM '.$this->table
+        .' WHERE mid = '.$obj->getVar('mid')
         /*. " AND pid = " . $obj->getVar('pid')*/
-        . ' ORDER BY weight ASC'
+        .' ORDER BY weight ASC'
         ;
         $result = $this->db->query($sql);
         $i = 1;  //lets start at 1 please!
         while (false !== (list($id) = $this->db->fetchRow($result))) {
-            $sql = 'UPDATE ' . $this->table
-            . " SET weight = {$i}"
-            . " WHERE id = {$id}"
+            $sql = 'UPDATE '.$this->table
+            ." SET weight = {$i}"
+            ." WHERE id = {$id}"
             ;
             $this->db->queryF($sql);
             ++$i;

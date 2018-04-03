@@ -12,11 +12,9 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         logger
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $modversion = [];
 $modversion['name'] = _MI_SEARCH_NAME;
 $modversion['description'] = _MI_SEARCH_DSC;

@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -32,9 +31,9 @@ class ProtectorFilterAbstract
         $language = $xoops->getConfig('language');
         $this->protector = Protector::getInstance();
         $lang = !$language ? @$this->protector->_conf['default_lang'] : $language;
-        @include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
+        @include_once dirname(__DIR__).'/language/'.$lang.'/main.php';
         if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
-            include_once dirname(__DIR__) . '/language/english/main.php';
+            include_once dirname(__DIR__).'/language/english/main.php';
         }
     }
 
@@ -43,12 +42,14 @@ class ProtectorFilterAbstract
         if (class_exists('Wizin_User')) {
             // WizMobile (gusagi)
             $user = Wizin_User::getSingleton();
+
             return $user->bIsMobile;
         }
         if (defined('HYP_K_TAI_RENDER') && HYP_K_TAI_RENDER) {
             // hyp_common ktai-renderer (nao-pon)
             return true;
         }
+
         return false;
     }
 }
@@ -63,7 +64,7 @@ class ProtectorFilterHandler
     public function ProtectorFilterHandler()
     {
         $this->protector = Protector::getInstance();
-        $this->filters_base = dirname(__DIR__) . '/filters_enabled';
+        $this->filters_base = dirname(__DIR__).'/filters_enabled';
     }
 
     public static function getInstance()
@@ -72,6 +73,7 @@ class ProtectorFilterHandler
         if (!isset($instance)) {
             $instance = new self();
         }
+
         return $instance;
     }
 
@@ -81,10 +83,10 @@ class ProtectorFilterHandler
         $ret = 0;
 
         $dh = opendir($this->filters_base);
-        while (($file = readdir($dh)) !== false) {
-            if (strncmp($file, $type . '_', strlen($type) + 1) === 0) {
-                include_once $this->filters_base . '/' . $file;
-                $plugin_name = 'protector_' . substr($file, 0, -4);
+        while (false !== ($file = readdir($dh))) {
+            if (0 === strncmp($file, $type.'_', strlen($type) + 1)) {
+                include_once $this->filters_base.'/'.$file;
+                $plugin_name = 'protector_'.substr($file, 0, -4);
                 if (function_exists($plugin_name)) {
                     // old way
                     $ret |= call_user_func($plugin_name);

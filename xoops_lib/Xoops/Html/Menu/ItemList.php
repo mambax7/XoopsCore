@@ -12,19 +12,18 @@
 namespace Xoops\Html\Menu;
 
 /**
- * ItemList - a list of menu items
+ * ItemList - a list of menu items.
  *
  * @category  Xoops\Html\Menu
- * @package   Link
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ItemList extends Item
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param array $attributes array of attribute name => value pairs
      *
@@ -45,7 +44,7 @@ class ItemList extends Item
     }
 
     /**
-     * Add an item to the ItemList
+     * Add an item to the ItemList.
      *
      * @param Item $item item to add
      *
@@ -54,6 +53,7 @@ class ItemList extends Item
     public function addItem(Item $item)
     {
         $this['items'][] = $item;
+
         return $this;
     }
 }

@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $skinversion['template'] = 'templates/template.tpl';
 
 $skinversion['css'] = [
@@ -31,13 +29,13 @@ $skinversion['js'] = [
     '../../js/superfish.js',
 ];
 
-$header = "\n" . '<script type="text/javascript">';
-$header .= "\n" . '  var $sfnav = jQuery.noConflict()';
-$header .= "\n" . '  $sfnav(function(){';
-$header .= "\n" . '    $sfnav(\'ul.sf-menu\').superfish({';
-$header .= "\n" . '       pathClass:  \'current\'';
-$header .= "\n" . '    });';
-$header .= "\n" . '  });';
-$header .= "\n" . '</script>';
+$header = "\n".'<script type="text/javascript">';
+$header .= "\n".'  var $sfnav = jQuery.noConflict()';
+$header .= "\n".'  $sfnav(function(){';
+$header .= "\n".'    $sfnav(\'ul.sf-menu\').superfish({';
+$header .= "\n".'       pathClass:  \'current\'';
+$header .= "\n".'    });';
+$header .= "\n".'  });';
+$header .= "\n".'</script>';
 
 $skinversion['header'] = $header;

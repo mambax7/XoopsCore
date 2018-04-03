@@ -10,14 +10,14 @@
 */
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsOnline extends Xoops\Core\Kernel\Handlers\XoopsOnline
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsOnlineHandler extends Xoops\Core\Kernel\Handlers\XoopsOnlineHandler
 {

@@ -20,7 +20,7 @@ mb_internal_encoding('UTF-8');
 //    |   |   |   |- responsivefilemanager
 //    |   |   |   |   |- plugin.min.js
 
-$base_url = 'http://' . $_SERVER['HTTP_HOST'];  // DON'T TOUCH (base url (only domain) of site (without final /)).
+$base_url = 'http://'.$_SERVER['HTTP_HOST'];  // DON'T TOUCH (base url (only domain) of site (without final /)).
 $upload_dir = '/source/'; // path from base_url to base of upload folder (with start and final /)
 $current_path = '../source/'; // relative path from filemanager folder to upload folder (with final /)
 //thumbs folder can't put inside upload folder
@@ -89,7 +89,6 @@ $duplicate_files = true;
 $copy_cut_files = true; // for copy/cut files
 $copy_cut_dirs = true; // for copy/cut directories
 
-
 // defines size limit for paste in MB / operation
 // set 'FALSE' for no limit
 $copy_cut_max_size = 100;
@@ -118,7 +117,6 @@ $aviary_secret = 'm6xaym5q42rpw433';
 $aviary_version = 3;
 $aviary_language = 'en';
 
-
 //The filter and sorter are managed through both javascript and php scripts because if you have a lot of
 //file in a folder the javascript script can't sort all or filter all, so the filemanager switch to php script.
 //The plugin automatic swich javascript to php when the current folder exceeds the below limit of files number
@@ -138,11 +136,9 @@ $hidden_files = ['config.php'];
 $java_upload = true;
 $JAVAMaxSizeUpload = 200; //Gb
 
-
 //************************************
 //Thumbnail for external use creation
 //************************************
-
 
 // New image resized creation with fixed path from filemanager folder after uploading (thumbnails in fixed mode)
 // If you want create images resized out of upload folder for use with external script you can choose this method,
@@ -156,7 +152,6 @@ $fixed_image_creation_name_to_prepend = ['', 'test_']; //name to prepend on file
 $fixed_image_creation_to_append = ['_test', '']; //name to appendon filename
 $fixed_image_creation_width = [300, 400]; //width of image (you can leave empty if you set height)
 $fixed_image_creation_height = [200, '']; //height of image (you can leave empty if you set width)
-
 
 // New image resized creation with relative path inside to upload folder after uploading (thumbnails in relative mode)
 // With Responsive filemanager you can create automatically resized image inside the upload folder, also more than one at a time

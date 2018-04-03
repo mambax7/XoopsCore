@@ -12,13 +12,11 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_category_items_sel_show($options)
 {
@@ -28,7 +26,7 @@ function publisher_category_items_sel_show($options)
 
     $categories = $publisher->getCategoryHandler()->getCategories(0, 0, -1);
 
-    if (count($categories) === 0) {
+    if (0 === count($categories)) {
         return $block;
     }
 
@@ -50,7 +48,7 @@ function publisher_category_items_sel_show($options)
         $items = $publisher->getItemHandler()->getItems($limit, $start, [_PUBLISHER_STATUS_PUBLISHED], -1, $sort, $order, '', true, $criteria, true);
         unset($criteria);
 
-        if (count($items) === 0) {
+        if (0 === count($items)) {
             continue;
         }
 

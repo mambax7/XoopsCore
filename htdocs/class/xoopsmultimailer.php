@@ -12,7 +12,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 
 /**
- * Xoops MultiMailer Base Class
+ * Xoops MultiMailer Base Class.
  *
  * Mailer Class.
  *
@@ -27,24 +27,23 @@ use PHPMailer\PHPMailer\PHPMailer;
  * PHP 5.3
  *
  * @category  Xoops\Class\Cache\MultiMailer
- * @package   MultiMailer
  * @author    Author: Jochen Bünnagel <job@buennagel.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class xoopsmultimailer extends PHPMailer
 {
     /**
-     * 'from' address
+     * 'from' address.
      *
      * @var string from address
      */
     public $From = '';
 
     /**
-     * 'from' name
+     * 'from' name.
      *
      * @var string from name
      */
@@ -68,7 +67,7 @@ class xoopsmultimailer extends PHPMailer
     public $Mailer = 'mail';
 
     /**
-     * set if $Mailer is 'sendmail'
+     * set if $Mailer is 'sendmail'.
      *
      * Only used if {@link $Mailer} is set to 'sendmail'.
      * Contains the full path to your sendmail program or replacement.
@@ -89,7 +88,7 @@ class xoopsmultimailer extends PHPMailer
     /**
      * Does your SMTP host require SMTPAuth authentication?
      *
-     * @var boolean authorized?
+     * @var bool authorized?
      */
     public $SMTPAuth = false;
 
@@ -112,18 +111,18 @@ class xoopsmultimailer extends PHPMailer
     public $Password = '';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
         $xoops = Xoops::getInstance();
         $this->From = $xoops->getConfig('from');
-        if ($this->From === '') {
+        if ('' === $this->From) {
             $this->From = $xoops->getConfig('adminmail');
         }
         $this->Sender = $this->From;
-        if ($xoops->getConfig('mailmethod') === 'smtpauth') {
+        if ('smtpauth' === $xoops->getConfig('mailmethod')) {
             $this->Mailer = 'smtp';
             $this->SMTPAuth = true;
             $this->Username = $xoops->getConfig('smtpuser');

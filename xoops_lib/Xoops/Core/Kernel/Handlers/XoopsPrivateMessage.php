@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Kernel Class
+ * XOOPS Kernel Class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package   kernel
  * @since     2.0.0
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
@@ -22,19 +21,18 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * Private Messages
+ * Private Messages.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsPrivateMessage
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsPrivateMessage extends XoopsObject
 {
     /**
-     * constructor
+     * constructor.
      **/
     public function __construct()
     {
@@ -49,7 +47,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -61,7 +59,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -73,7 +71,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -85,7 +83,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -97,7 +95,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -109,7 +107,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -121,7 +119,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -133,7 +131,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -145,7 +143,7 @@ class XoopsPrivateMessage extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *

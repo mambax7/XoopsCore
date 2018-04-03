@@ -15,11 +15,10 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class SearchSearchForm extends Xoops\Form\ThemeForm
 {
     /**
-     * We are not using this for objects but we need to override the constructor
+     * We are not using this for objects but we need to override the constructor.
      */
     public function __construct($obj = null)
     {
@@ -51,9 +50,9 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
 
             //todo, would be nice to have the module ids availabe also
             $criteria = new CriteriaCompo();
-            $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
+            $criteria->add(new Criteria('dirname', "('".implode("','", array_keys($available_plugins))."')", 'IN'));
             if (isset($available_modules) && !empty($available_modules)) {
-                $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
+                $criteria->add(new Criteria('mid', '('.implode(',', $available_modules).')', 'IN'));
             }
             $module_handler = $xoops->getHandlerModule();
             $mods_checkbox->addOptionArray($module_handler->getNameList($criteria));
@@ -72,12 +71,13 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('action', 'results'));
         $this->addElement(new Xoops\Form\Token('id'));
         $this->addElement(new Xoops\Form\Button('', 'submit', _MD_SEARCH, 'submit'));
+
         return $this;
     }
 
     /**
      * queryArrayToString - convert array of query terms to string respecting quoting
-     * conventions
+     * conventions.
      *
      * @param string[] $queries query terms
      *
@@ -87,13 +87,14 @@ class SearchSearchForm extends Xoops\Form\ThemeForm
     {
         $query = '';
         foreach ($queries as $term) {
-            if (strpos($term, ' ') === false) {
-                $query .= $term . ' ';
+            if (false === strpos($term, ' ')) {
+                $query .= $term.' ';
             } else {
-                $query .= '"' . $term . '" ';
+                $query .= '"'.$term.'" ';
             }
         }
         $query = trim($query);
+
         return $query;
     }
 }

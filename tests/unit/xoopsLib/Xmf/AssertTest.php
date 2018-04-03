@@ -255,16 +255,16 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             ['lengthBetween', ['äbcdef', 3, 5], false, true],
             ['fileExists', [__FILE__], true],
             ['fileExists', [__DIR__], true],
-            ['fileExists', [__DIR__ . '/foobar'], false],
+            ['fileExists', [__DIR__.'/foobar'], false],
             ['file', [__FILE__], true],
             ['file', [__DIR__], false],
-            ['file', [__DIR__ . '/foobar'], false],
+            ['file', [__DIR__.'/foobar'], false],
             ['directory', [__DIR__], true],
             ['directory', [__FILE__], false],
-            ['directory', [__DIR__ . '/foobar'], false],
+            ['directory', [__DIR__.'/foobar'], false],
             // no tests for readable()/writable() for now
             ['classExists', [__CLASS__], true],
-            ['classExists', [__NAMESPACE__ . '\Foobar'], false],
+            ['classExists', [__NAMESPACE__.'\Foobar'], false],
             ['subclassOf', [__CLASS__, 'PHPUnit\Framework\TestCase'], true],
             ['subclassOf', [__CLASS__, 'stdClass'], false],
             ['implementsInterface', ['ArrayIterator', 'Traversable'], true],
@@ -379,11 +379,11 @@ class AssertTest extends \PHPUnit\Framework\TestCase
             return;
         }
 
-        if (!$success && reset($args) !== null) {
+        if (!$success && null !== reset($args)) {
             $this->expectException('\InvalidArgumentException');
         }
 
-        call_user_func_array(['Xmf\Assert', 'nullOr' . ucfirst($method)], $args);
+        call_user_func_array(['Xmf\Assert', 'nullOr'.ucfirst($method)], $args);
         self::assertTrue(true, 'Return type ensures this assertion is never reached on failure');
     }
 
@@ -392,7 +392,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
      */
     public function testNullOrAcceptsNull($method)
     {
-        call_user_func(['Xmf\Assert', 'nullOr' . ucfirst($method)], null);
+        call_user_func(['Xmf\Assert', 'nullOr'.ucfirst($method)], null);
         self::assertTrue(true, 'Return type ensures this assertion is never reached on failure');
     }
 
@@ -419,7 +419,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
         $arg = array_shift($args);
         array_unshift($args, [$arg]);
 
-        call_user_func_array(['Xmf\Assert', 'all' . ucfirst($method)], $args);
+        call_user_func_array(['Xmf\Assert', 'all'.ucfirst($method)], $args);
         self::assertTrue(true, 'Return type ensures this assertion is never reached on failure');
     }
 
@@ -446,7 +446,7 @@ class AssertTest extends \PHPUnit\Framework\TestCase
         $arg = array_shift($args);
         array_unshift($args, new ArrayIterator([$arg]));
 
-        call_user_func_array(['Xmf\Assert', 'all' . ucfirst($method)], $args);
+        call_user_func_array(['Xmf\Assert', 'all'.ucfirst($method)], $args);
         self::assertTrue(true, 'Return type ensures this assertion is never reached on failure');
     }
 

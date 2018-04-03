@@ -12,21 +12,20 @@
 namespace Xoops\Form;
 
 /**
- * BlockForm - Form that will output formatted as a HTML table
+ * BlockForm - Form that will output formatted as a HTML table.
  *
  * No styles and no JavaScript to check for required fields.
  *
  * @category  Xoops\Form\BlockForm
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class BlockForm extends Form
 {
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
@@ -34,7 +33,7 @@ class BlockForm extends Form
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -48,17 +47,18 @@ class BlockForm extends Form
             }
             if (!$ele->isHidden()) {
                 $ret .= '<div class="form-group">';
-                $ret .= '<label>' . $ele->getCaption();
-                $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '') . '</label>';
+                $ret .= '<label>'.$ele->getCaption();
+                $ret .= ($ele->isRequired() ? '<span class="caption-required">*</span>' : '').'</label>';
                 $ret .= $ele->render();
-                $ret .= '<small class="text-muted">' . $ele->getDescription() . '</small>';
-                $ret .= '<p class="dsc_pattern_vertical">' . $ele->getPatternDescription() . '</p>';
-                $ret .= '</div>' . "\n";
+                $ret .= '<small class="text-muted">'.$ele->getDescription().'</small>';
+                $ret .= '<p class="dsc_pattern_vertical">'.$ele->getPatternDescription().'</p>';
+                $ret .= '</div>'."\n";
             } else {
-                $ret .= $ele->render() . "\n";
+                $ret .= $ele->render()."\n";
             }
         }
         $ret .= '</div>';
+
         return $ret;
     }
 }

@@ -14,13 +14,11 @@ use Xmf\Request;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $helper = Menus::getInstance();
@@ -37,7 +35,6 @@ $id = Request::getInt('id', 0);
 $pid = Request::getInt('pid', 0);
 $weight = Request::getInt('weight', 0);
 $visible = Request::getInt('visible', 0);
-
 
 $menus_handler = $helper->getHandlerMenus();
 $criteria = new CriteriaCompo();
@@ -74,6 +71,7 @@ switch ($op) {
         $obj->setVar('mid', $menu_id);
         $form = $helper->getForm($obj, 'menus_menu');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -84,6 +82,7 @@ switch ($op) {
         $obj = $helper->getHandlerMenu()->get($id);
         $form = $helper->getForm($obj, 'menus_menu');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'save':
@@ -94,7 +93,7 @@ switch ($op) {
         $msg[] = _AM_MENUS_SAVE;
 
         $id = Request::getInt('id', 0);
-        if (isset($id) && $id !== 0) {
+        if (isset($id) && 0 !== $id) {
             $obj = $helper->getHandlerMenu()->get($id);
         } else {
             $obj = $helper->getHandlerMenu()->create();
@@ -119,23 +118,24 @@ switch ($op) {
 
         if ($helper->getHandlerMenu()->insert($obj)) {
             $this_handler->update_weights($obj);
-            $xoops->redirect('admin_menu.php?op=list&amp;menu_id=' . $obj->getVar('mid'), 2, implode('<br />', $msg));
+            $xoops->redirect('admin_menu.php?op=list&amp;menu_id='.$obj->getVar('mid'), 2, implode('<br />', $msg));
         }
         echo $xoops->alert('error', $obj->getHtmlErrors());
         $form = $helper->getForm($obj, 'menus_menu');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'del':
         $ok = Request::getInt('ok', 0);
         $obj = $helper->getHandlerMenu()->get($id);
 
-        if ($ok === 1) {
+        if (1 === $ok) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('admin_menu.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($helper->getHandlerMenu()->delete($obj)) {
-                $xoops->redirect('admin_menu.php?menu_id=' . $menu_id, 2, _AM_MENUS_MSG_SUCCESS);
+                $xoops->redirect('admin_menu.php?menu_id='.$menu_id, 2, _AM_MENUS_MSG_SUCCESS);
             } else {
                 echo $xoops->alert('error', $obj->getHtmlErrors());
             }
@@ -143,9 +143,10 @@ switch ($op) {
             echo $xoops->confirm(
                 ['ok' => 1, 'id' => $id, 'op' => 'del', 'menu_id' => $menu_id],
                 $helper->url('admin/admin_menu.php'),
-                _AM_MENUS_MSG_SUREDEL . '<br /><strong>' . $obj->getVar('title') . '</strong>'
+                _AM_MENUS_MSG_SUREDEL.'<br /><strong>'.$obj->getVar('title').'</strong>'
             );
         }
+
         break;
 
     case 'move':
@@ -154,21 +155,23 @@ switch ($op) {
         $obj->setVar('weight', $weight);
         $this_handler->insert($obj);
         $this_handler->update_weights($obj);
-        $xoops->redirect('admin_menu.php?op=list&amp;menu_id=' . $obj->getVar('mid'), 2, _AM_MENUS_SAVE);
+        $xoops->redirect('admin_menu.php?op=list&amp;menu_id='.$obj->getVar('mid'), 2, _AM_MENUS_SAVE);
+
         break;
 
     case 'toggle':
-        $visible = ($visible === 1) ? 0 : 1;
+        $visible = (1 === $visible) ? 0 : 1;
         $this_handler = Menus::getInstance()->getHandlerMenu();
         $obj = $this_handler->get($id);
         $obj->setVar('visible', $visible);
         $this_handler->insert($obj);
-        $xoops->redirect('admin_menu.php?op=list&amp;menu_id=' . $obj->getVar('mid'), 2, _AM_MENUS_SAVE);
+        $xoops->redirect('admin_menu.php?op=list&amp;menu_id='.$obj->getVar('mid'), 2, _AM_MENUS_SAVE);
+
         break;
 
     case 'list':
     default:
-        $admin_page->addItemButton(_AM_MENUS_ADD_MENUS, 'admin_menu.php?op=add&amp;menu_id=' . $menu_id, 'add');
+        $admin_page->addItemButton(_AM_MENUS_ADD_MENUS, 'admin_menu.php?op=add&amp;menu_id='.$menu_id, 'add');
         $admin_page->renderButton();
 
         $this_handler = $helper->getHandlerMenu();
@@ -193,6 +196,7 @@ switch ($op) {
         } else {
             $xoops->tpl()->assign('error_message', _AM_MENUS_MSG_NOTFOUND);
         }
+
         break;
 }
 $xoops->footer();

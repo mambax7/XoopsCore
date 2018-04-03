@@ -2,8 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
-
+require_once __DIR__.'/../../../init_new.php';
 
 class ElementTest extends \PHPUnit\Framework\TestCase
 {
@@ -110,7 +109,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $result = $instance->getAccessString($str);
 
         $expected = '<span style="text-decoration: underline;">n</span>ame';
-        $this->assertTrue(strpos($result, $expected) !== false);
+        $this->assertTrue(false !== strpos($result, $expected));
 
         $str = 'this sentence contains no access string';
         $result = $instance->getAccessString($str);
@@ -167,9 +166,9 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $instance->setDatalist($data);
 
         $result = $instance->renderDatalist();
-        $expected = "\n" . '<datalist id="list_' . $name . '">' . "\n";
-        $expected .= '<option value="' . htmlspecialchars($data, ENT_QUOTES) . '">' . "\n";
-        $expected .= '</datalist>' . "\n";
+        $expected = "\n".'<datalist id="list_'.$name.'">'."\n";
+        $expected .= '<option value="'.htmlspecialchars($data, ENT_QUOTES).'">'."\n";
+        $expected .= '</datalist>'."\n";
 
         $this->assertSame($expected, $result);
     }
@@ -184,15 +183,15 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $name = 'name';
         $instance->setName($name);
 
-        $data = ['key1' => 'value1', 'key2' => 'value2', ];
+        $data = ['key1' => 'value1', 'key2' => 'value2'];
         $instance->setDatalist($data);
 
         $result = $instance->renderDatalist();
-        $expected = "\n" . '<datalist id="list_' . $name . '">' . "\n";
+        $expected = "\n".'<datalist id="list_'.$name.'">'."\n";
         foreach ($data as $item) {
-            $expected .= '<option value="' . htmlspecialchars($item, ENT_QUOTES) . '">' . "\n";
+            $expected .= '<option value="'.htmlspecialchars($item, ENT_QUOTES).'">'."\n";
         }
-        $expected .= '</datalist>' . "\n";
+        $expected .= '</datalist>'."\n";
 
         $this->assertSame($expected, $result);
     }
@@ -234,7 +233,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $desc = 'description';
         $this->object->set(':pattern_description', $desc);
         $value = $this->object->getTitle();
-        $this->assertSame($name . ' - ' . $desc, $value);
+        $this->assertSame($name.' - '.$desc, $value);
     }
 
     public function testGetDescription()

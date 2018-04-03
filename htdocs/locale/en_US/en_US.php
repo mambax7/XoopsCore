@@ -38,7 +38,7 @@
  * - Special cases:
  *   CONF_ Configs, prepend this for your module configs.
  *      Config keys are stored in database, try to make them as short as possible!
- *   _DESC Description, append this for configs description
+ *   _DESC Description, append this for configs description.
  */
 class XoopsLocaleEn_US extends Xoops\Locale\AbstractLocale
 {

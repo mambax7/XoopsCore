@@ -14,14 +14,13 @@ use Xoops\Core\Service\AbstractContract;
 use Xoops\Core\Service\Contract\AvatarInterface;
 
 /**
- * Avatars provider for service manager
+ * Avatars provider for service manager.
  *
  * @category  class
- * @package   AvatarsProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class AvatarsProvider extends AbstractContract implements AvatarInterface
@@ -48,7 +47,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -58,7 +57,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     }
 
     /**
-     * getAvatarUrl - given user info return absolute URL to avatar image
+     * getAvatarUrl - given user info return absolute URL to avatar image.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param mixed    $userinfo XoopsUser object for user or
@@ -70,24 +69,24 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
         if (is_object($userinfo)) {
             if ($userinfo instanceof XoopsUser) {
                 if ($userinfo->getVar('user_avatar')
-                    && $userinfo->getVar('user_avatar') !== 'blank.gif'
+                    && 'blank.gif' !== $userinfo->getVar('user_avatar')
                 ) {
-                    $response->setValue($this->xoops_upload_url . '/' . $userinfo->getVar('user_avatar'));
+                    $response->setValue($this->xoops_upload_url.'/'.$userinfo->getVar('user_avatar'));
                 }
                 $noInfo = false;
             }
         } elseif (is_array($userinfo)) {
-            if (!empty($userinfo['user_avatar']) && $userinfo['user_avatar'] !== 'blank.gif') {
-                $response->setValue($this->xoops_upload_url . '/' . $userinfo['user_avatar']);
+            if (!empty($userinfo['user_avatar']) && 'blank.gif' !== $userinfo['user_avatar']) {
+                $response->setValue($this->xoops_upload_url.'/'.$userinfo['user_avatar']);
                 $noInfo = false;
             }
         } elseif (is_scalar($userinfo)) {
             $user = $this->getUserById((int) $userinfo);
             if (is_object($user) && ($user instanceof XoopsUser)) {
                 if ($user->getVar('user_avatar')
-                    && $user->getVar('user_avatar') !== 'blank.gif'
+                    && 'blank.gif' !== $user->getVar('user_avatar')
                 ) {
-                    $response->setValue($this->xoops_upload_url . '/' . $user->getVar('user_avatar'));
+                    $response->setValue($this->xoops_upload_url.'/'.$user->getVar('user_avatar'));
                 }
                 $noInfo = false;
             }
@@ -98,7 +97,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     }
 
     /**
-     * getAvatarEditUrl - given user info return absolute URL to edit avatar data
+     * getAvatarEditUrl - given user info return absolute URL to edit avatar data.
      *
      * @param Response  $response \Xoops\Core\Service\Response object
      * @param XoopsUser $userinfo XoopsUser object for user
@@ -107,7 +106,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     {
         $noInfo = true;
         if ($userinfo instanceof XoopsUser) {
-            $link = $this->xoops_url . '/modules/avatars/include/editavatar.php';
+            $link = $this->xoops_url.'/modules/avatars/include/editavatar.php';
             $response->setValue($link);
             $noInfo = false;
         }
@@ -117,7 +116,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     }
 
     /**
-     * getUserById - get a user object from a user id
+     * getUserById - get a user object from a user id.
      *
      * @param int $uid a user id
      *
@@ -126,6 +125,7 @@ class AvatarsProvider extends AbstractContract implements AvatarInterface
     private function getUserById($uid)
     {
         $user = \Xoops::getInstance()->getHandlerMember()->getUser((int) $uid);
+
         return (is_object($user)) ? $user : null;
     }
 }

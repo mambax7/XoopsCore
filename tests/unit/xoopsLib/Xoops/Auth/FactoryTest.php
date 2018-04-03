@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class Xoops_Auth_FactoryTest extends \PHPUnit\Framework\TestCase
 {

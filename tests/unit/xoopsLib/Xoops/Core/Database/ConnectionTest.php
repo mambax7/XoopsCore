@@ -1,7 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
-
+require_once __DIR__.'/../../../../init_new.php';
 
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
@@ -65,7 +64,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
 
         $table = 'toto';
         $x = $this->object->prefix($table);
-        $this->assertSame($db_prefix . '_' . $table, $x);
+        $this->assertSame($db_prefix.'_'.$table, $x);
     }
 
     public function test_insertPrefix()

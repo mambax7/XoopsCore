@@ -14,15 +14,12 @@ use Xmf\Request;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $publisher = Publisher::getInstance();
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -30,7 +27,7 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $itemid = Request::getInt('itemid');
 $item_page_id = Request::getInt('page', -1);
 
-if ($itemid === 0) {
+if (0 === $itemid) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
@@ -46,9 +43,9 @@ if (!$itemObj) {
 $xoops->header('module:publisher/publisher_item.tpl');
 $xoopsTpl = $xoops->tpl();
 $xoTheme = $xoops->theme();
-$xoTheme->addStylesheet(PUBLISHER_URL . '/css/jquery.popeye.style.css');
+$xoTheme->addStylesheet(PUBLISHER_URL.'/css/jquery.popeye.style.css');
 $xoTheme->addBaseScriptAssets('@jquery');
-$xoTheme->addScript(PUBLISHER_URL . '/js/jquery.popeye-2.0.4.js');
+$xoTheme->addScript(PUBLISHER_URL.'/js/jquery.popeye-2.0.4.js');
 $xoTheme->addBaseScriptAssets('modules/publisher/js/publisher.js');
 
 XoopsLoad::loadFile($publisher->path('footer.php'));
@@ -62,7 +59,7 @@ if (!$itemObj->accessGranted()) {
 }
 
 // Update the read counter of the selected item
-if (!$xoops->isUser() || (PublisherUtils::IsUserAdmin() && $publisher->getConfig('item_admin_hits') === 1) || ($xoops->isUser() && !PublisherUtils::IsUserAdmin())) {
+if (!$xoops->isUser() || (PublisherUtils::IsUserAdmin() && 1 === $publisher->getConfig('item_admin_hits')) || ($xoops->isUser() && !PublisherUtils::IsUserAdmin())) {
     $itemObj->updateCounter();
 }
 
@@ -71,20 +68,23 @@ switch ($publisher->getConfig('format_order_by')) {
     case 'title':
         $sort = 'title';
         $order = 'ASC';
+
         break;
 
     case 'date':
         $sort = 'datesub';
         $order = 'DESC';
+
         break;
 
     default:
         $sort = 'weight';
         $order = 'ASC';
+
         break;
 }
 
-if ($publisher->getConfig('item_other_items_type') === 'previous_next') {
+if ('previous_next' === $publisher->getConfig('item_other_items_type')) {
     // Retrieving the next and previous object
     $previous_item_link = '';
     $previous_item_url = '';
@@ -110,7 +110,7 @@ if ($publisher->getConfig('item_other_items_type') === 'previous_next') {
 }
 
 //CAREFUL!! with many items this will exhaust memory
-if ($publisher->getConfig('item_other_items_type') === 'all') {
+if ('all' === $publisher->getConfig('item_other_items_type')) {
     $itemsObj = $publisher->getItemHandler()->getAllPublished(0, 0, $categoryObj->getVar('categoryid'), $sort, $order, '', true, true);
     $items = [];
     /* @var $theitemObj PublisherItem */
@@ -136,7 +136,7 @@ if ($itemObj->getVar('pagescount') > 0) {
     if ($item_page_id === -1) {
         $item_page_id = 0;
     }
-    $pagenav = new XoopsPageNav($itemObj->getVar('pagescount'), 1, $item_page_id, 'page', 'itemid=' . $itemObj->getVar('itemid'));
+    $pagenav = new XoopsPageNav($itemObj->getVar('pagescount'), 1, $item_page_id, 'page', 'itemid='.$itemObj->getVar('itemid'));
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 }
 
@@ -160,10 +160,10 @@ foreach ($filesObj as $fileObj) {
         $file['mod'] = true;
     }
 
-    if ($fileObj->getVar('mimetype') === 'application/x-shockwave-flash') {
+    if ('application/x-shockwave-flash' === $fileObj->getVar('mimetype')) {
         $file['content'] = $fileObj->displayFlash();
-        if (strpos($item['maintext'], '[flash-' . $fileObj->getVar('fileid') . ']')) {
-            $item['maintext'] = str_replace('[flash-' . $fileObj->getVar('fileid') . ']', $file['content'], $item['maintext']);
+        if (strpos($item['maintext'], '[flash-'.$fileObj->getVar('fileid').']')) {
+            $item['maintext'] = str_replace('[flash-'.$fileObj->getVar('fileid').']', $file['content'], $item['maintext']);
         } else {
             $embeded_files[] = $file;
         }
@@ -184,12 +184,12 @@ $item['embeded_files'] = $embeded_files;
 unset($file, $embeded_files, $filesObj, $fileObj);
 
 // Language constants
-$xoopsTpl->assign('mail_link', 'mailto:?subject=' . sprintf(_CO_PUBLISHER_INTITEM, $xoops->getConfig('sitename')) . '&amp;body=' . sprintf(_CO_PUBLISHER_INTITEMFOUND, $xoops->getConfig('sitename')) . ': ' . $itemObj->getItemUrl());
+$xoopsTpl->assign('mail_link', 'mailto:?subject='.sprintf(_CO_PUBLISHER_INTITEM, $xoops->getConfig('sitename')).'&amp;body='.sprintf(_CO_PUBLISHER_INTITEMFOUND, $xoops->getConfig('sitename')).': '.$itemObj->getItemUrl());
 $xoopsTpl->assign('itemid', $itemObj->getVar('itemid'));
 $xoopsTpl->assign('sectionname', $publisher->getModule()->getVar('name'));
 $xoopsTpl->assign('modulename', $publisher->getModule()->getVar('dirname'));
 $xoopsTpl->assign('module_home', PublisherUtils::moduleHome($publisher->getConfig('format_linked_path')));
-$xoopsTpl->assign('categoryPath', $item['categoryPath'] . ' > ' . $item['title']);
+$xoopsTpl->assign('categoryPath', $item['categoryPath'].' > '.$item['title']);
 $xoopsTpl->assign('commentatarticlelevel', $publisher->getConfig('perm_com_art_level'));
 $xoopsTpl->assign('com_rule', $publisher->getConfig('com_rule'));
 $xoopsTpl->assign('other_items', $publisher->getConfig('item_other_items_type'));
@@ -198,18 +198,18 @@ $xoopsTpl->assign('perm_author_items', $publisher->getConfig('perm_author_items'
 
 // tags support
 if ($xoops->isActiveModule('tag')) {
-    include_once \XoopsBaseConfig::get('root-path') . '/modules/tag/include/tagbar.php';
+    include_once \XoopsBaseConfig::get('root-path').'/modules/tag/include/tagbar.php';
     $xoopsTpl->assign('tagbar', tagBar($itemid, $catid = 0));
 }
 
 /**
- * Generating meta information for this page
+ * Generating meta information for this page.
  */
 $publisher_metagen = new PublisherMetagen($itemObj->getVar('title'), $itemObj->getVar('meta_keywords', 'n'), $itemObj->getVar('meta_description', 'n'), $itemObj->getCategoryPath());
 $publisher_metagen->createMetaTags();
 
 // Include the comments if the selected ITEM supports comments
-if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') === 1) || !$publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') !== 0)) {
+if ($xoops->isActiveModule('comments') && ((1 === $itemObj->getVar('cancomment')) || !$publisher->getConfig('perm_com_art_level')) && (0 !== $publisher->getConfig('com_rule'))) {
     $xoopsTpl->assign('canComment', true);
     //Comments::getInstance()->renderView();
     // Problem with url_rewrite and posting comments :
@@ -226,8 +226,8 @@ if ($xoops->isActiveModule('comments') && (($itemObj->getVar('cancomment') === 1
 if ($publisher->getConfig('perm_rating')) {
     $xoopsTpl->assign('rating_enabled', true);
     $item['ratingbar'] = PublisherUtils::ratingBar($itemid);
-    $xoTheme->addScript(PUBLISHER_URL . '/js/behavior.js');
-    $xoTheme->addScript(PUBLISHER_URL . '/js/rating.js');
+    $xoTheme->addScript(PUBLISHER_URL.'/js/behavior.js');
+    $xoTheme->addScript(PUBLISHER_URL.'/js/rating.js');
 }
 
 $xoopsTpl->assign('item', $item);

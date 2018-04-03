@@ -21,8 +21,7 @@ use Xoops\Form\ThemeForm;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Laurent JEN - aka DuGris
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -32,7 +31,7 @@ if (!$xoops->service('email')->isAvailable()) {
 }
 
 if ($xoops->isUser()) {
-    if (Request::getMethod() === 'POST') {
+    if ('POST' === Request::getMethod()) {
         try {
             $fromAddress = new EmailAddress($xoops->getConfig('from'), $xoops->getConfig('fromname'));
             $name = empty($xoops->user->name()) ? $xoops->user->uname() : $xoops->user->name();
@@ -55,7 +54,7 @@ if ($xoops->isUser()) {
                 echo $errors;
             }
         } catch (\InvalidArgumentException $e) {
-            echo 'Message was not sent. ' . $e->getMessage();
+            echo 'Message was not sent. '.$e->getMessage();
         }
     } else {
         $form = new ThemeForm('Email Service Example', 'example', '', 'post', true, 'horizontal');

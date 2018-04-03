@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer database configuration page
+ * Installer database configuration page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,8 +22,7 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
@@ -49,37 +47,47 @@ foreach ($driver_params as $param) {
         switch ($param) {
             case 'host':
                 $default = empty($settings[$name]) ? 'localhost' : $settings[$name];
+
                 break;
             case 'user':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'password':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'port':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'unix_socket':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'path':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'service':
                 $default = empty($settings[$name]) ? false : $settings[$name];
+
                 break;
             case 'pooled':
                 $default = empty($settings[$name]) ? false : $settings[$name];
+
                 break;
             case 'protocol':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
             case 'dbname':
                 $default = empty($settings[$name]) ? '' : $settings[$name];
+
                 break;
         }
         $value = $default;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $value = empty($_POST[$name]) ? $default : $_POST[$name];
         }
         $settings[$name] = $value;
@@ -90,7 +98,7 @@ $_SESSION['settings'] = $settings;
 
 // if a POST, try to connect to the database using the parameters
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $instance = getDbConnection($error);
     if ($instance && empty($error)) {
         $_SESSION['settings'] = $settings;
@@ -102,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
+    echo '<div class="x2-note errorMsg">'.$error."</div>\n";
 } ?>
 <fieldset>
     <legend><?php echo LEGEND_CONNECTION; ?>
@@ -115,22 +123,22 @@ foreach ($driver_params as $param) {
         echo xoFormField(
             $name,
             $settings[$name],
-            constant($name . '_LABEL'),
-            constant($name . '_HELP')
+            constant($name.'_LABEL'),
+            constant($name.'_HELP')
         );
     } elseif ($wizard->configs['db_param_types'][$param] === 'boolean') {
         echo xoBoolField(
             $name,
             $settings[$name],
-            constant($name . '_LABEL'),
-            constant($name . '_HELP')
+            constant($name.'_LABEL'),
+            constant($name.'_HELP')
         );
     } elseif ($wizard->configs['db_param_types'][$param] === 'password') {
         echo xoPassField(
             $name,
             $settings[$name],
-            constant($name . '_LABEL'),
-            constant($name . '_HELP')
+            constant($name.'_LABEL'),
+            constant($name.'_HELP')
         );
     }
 }
@@ -154,4 +162,4 @@ $_SESSION['pageHasHelp'] = true;
 $_SESSION['pageHasForm'] = true;
 $_SESSION['content'] = $content;
 $_SESSION['settings'] = $settings;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

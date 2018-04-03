@@ -12,16 +12,15 @@
 namespace Xoops\Core;
 
 /**
- * Xoops Event processing, including preload mechanism
+ * Xoops Event processing, including preload mechanism.
  *
  * @category  Xoops\Core\Events
- * @package   Xoops\Core
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 class Events
@@ -38,12 +37,12 @@ class Events
     protected $eventListeners = [];
 
     /**
-     * @type bool
+     * @var bool
      */
     protected $eventsEnabled = true;
 
     /**
-     * Constructor
+     * Constructor.
      */
     protected function __construct()
     {
@@ -67,7 +66,7 @@ class Events
     }
 
     /**
-     * Trigger a specific event
+     * Trigger a specific event.
      *
      * @param string $eventName Name of the event to trigger
      * @param mixed  $args      Method arguments
@@ -99,7 +98,7 @@ class Events
     }
 
     /**
-     * getEvents - for debugging only, return list of event listeners
+     * getEvents - for debugging only, return list of event listeners.
      *
      * @return array of events and listeners
      */
@@ -109,15 +108,16 @@ class Events
     }
 
     /**
-     * hasListeners - for debugging only, return list of event listeners
+     * hasListeners - for debugging only, return list of event listeners.
      *
      * @param string $eventName event name
      *
-     * @return boolean true if one or more listeners are registered for the event
+     * @return bool true if one or more listeners are registered for the event
      */
     public function hasListeners($eventName)
     {
         $eventName = $this->toInternalEventName($eventName);
+
         return array_key_exists($eventName, $this->eventListeners);
     }
 
@@ -141,7 +141,7 @@ class Events
     }
 
     /**
-     * Get list of all available preload files
+     * Get list of all available preload files.
      */
     protected function setPreloads()
     {
@@ -157,7 +157,7 @@ class Events
             $this->preloadList = [];
             $i = 0;
             foreach ($modules_list as $module) {
-                if (is_dir($dir = \XoopsBaseConfig::get('root-path') . "/modules/{$module}/preloads/")) {
+                if (is_dir($dir = \XoopsBaseConfig::get('root-path')."/modules/{$module}/preloads/")) {
                     $file_list = Lists\File::getList($dir);
                     foreach ($file_list as $file) {
                         if (preg_match('/(\.php)$/i', $file)) {
@@ -174,7 +174,7 @@ class Events
     }
 
     /**
-     * Load all preload files and add all listener methods to eventListeners
+     * Load all preload files and add all listener methods to eventListeners.
      *
      * Preload classes contain methods based on event names. We extract those method
      * names and store to compare against when an event is triggered.
@@ -199,17 +199,17 @@ class Events
     {
         $xoops = \Xoops::getInstance();
         foreach ($this->preloadList as $preload) {
-            $path = $xoops->path('modules/' . $preload['module'] . '/preloads/' . $preload['file'] . '.php');
+            $path = $xoops->path('modules/'.$preload['module'].'/preloads/'.$preload['file'].'.php');
             include_once $path;
             $class_name = ucfirst($preload['module'])
-                . ($preload['file'] === 'preload' ? '' : ucfirst($preload['file']))
-                . 'Preload';
+                .('preload' === $preload['file'] ? '' : ucfirst($preload['file']))
+                .'Preload';
             if (!class_exists($class_name)) {
                 continue;
             }
             $class_methods = get_class_methods($class_name);
             foreach ($class_methods as $method) {
-                if (strpos($method, 'event') === 0) {
+                if (0 === strpos($method, 'event')) {
                     $eventName = strtolower(str_replace('event', '', $method));
                     $event = [$class_name, $method];
                     $this->eventListeners[$eventName][] = $event;
@@ -220,7 +220,7 @@ class Events
 
     /**
      * toInternalEventName - convert event name to internal form
-     * i.e. core.include.common.end becomes coreincludecommonend
+     * i.e. core.include.common.end becomes coreincludecommonend.
      *
      * @param string $eventName the event name
      *

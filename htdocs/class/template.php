@@ -10,16 +10,15 @@
 */
 
 /**
- * XOOPS template engine class
+ * XOOPS template engine class.
  *
  * @category  Xoops\Core
- * @package   Template
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsTpl extends \Xoops\Core\XoopsTpl
 {

@@ -10,11 +10,10 @@
 */
 
 /**
- * System menu
+ * System menu.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     system
  * @author      Kazumi Ono (AKA onokazu)
  * @version     $Id$
  */
@@ -354,7 +353,7 @@ $modversion['config'][] = [
     'category' => 'general',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => 'xoops_user_' . dechex(time()),
+    'default' => 'xoops_user_'.dechex(time()),
 ];
 
 $modversion['config'][] = [
@@ -364,7 +363,7 @@ $modversion['config'][] = [
     'category' => 'general',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => 'xoops_session_' . dechex(time()),
+    'default' => 'xoops_session_'.dechex(time()),
 ];
 
 $modversion['config'][] = [
@@ -1052,7 +1051,7 @@ $modversion['config'][] = [
     'default' => 1,
 ];
 
-$icons = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/modules/system/images/icons');
+$icons = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/modules/system/images/icons');
 $modversion['config'][] = [
     'name' => 'typeicons',
     'title' => 'CONF_ICONS',
@@ -1063,7 +1062,7 @@ $modversion['config'][] = [
     'options' => $icons,
 ];
 
-$breadcrumb = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/modules/system/images/breadcrumb');
+$breadcrumb = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/modules/system/images/breadcrumb');
 $modversion['config'][] = [
     'name' => 'typebreadcrumb',
     'title' => 'CONF_BREADCRUMB',
@@ -1074,7 +1073,7 @@ $modversion['config'][] = [
     'options' => $breadcrumb,
 ];
 
-$jquery_theme = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/media/jquery/ui/themes');
+$jquery_theme = XoopsLists::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/media/jquery/ui/themes');
 $modversion['config'][] = [
     'name' => 'jquery_theme',
     'title' => 'CONF_JQUERY_THEME',

@@ -27,7 +27,7 @@ class SystemUsermenuPlugin implements UsermenuPluginInterface
             // View Account
             $ret[] = [
                 'name' => XoopsLocale::VIEW_ACCOUNT,
-                'link' => $xoops->url('userinfo.php?uid=' . $xoops->user->getVar('uid')),
+                'link' => $xoops->url('userinfo.php?uid='.$xoops->user->getVar('uid')),
                 'icon' => 'glyphicon-user',
             ];
 
@@ -57,7 +57,7 @@ class SystemUsermenuPlugin implements UsermenuPluginInterface
 
             $name = XoopsLocale::INBOX;
             if ($pm_count = $pm_handler->getCount($criteria)) {
-                $name = XoopsLocale::INBOX . ' <span class="badge">' . $pm_count . '</span>';
+                $name = XoopsLocale::INBOX.' <span class="badge">'.$pm_count.'</span>';
             }
 
             $ret[] = [

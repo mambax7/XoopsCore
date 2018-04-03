@@ -4,9 +4,8 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
-
 define('_CO_PUBLISHER_MESSAGE_FILE_ERROR', 'Erreur : Impossible de charger le fichier pour les raisons suivantes: <br />%s');
 define('_CO_PUBLISHER_MESSAGE_WRONG_MIMETYPE', 'Erreur : Type de fichier non permis. Essayez à nouveau.');
 
@@ -105,7 +104,7 @@ define('_CO_PROJETS_IMAGE_NICENAME', 'Nom de l&#39;image');
 define('_CO_PUBLISHER_IMAGE_CAT_NONE', 'Avant, vous devez créer une catégorie-image dans Admin-system-Images');
 define('_CO_PUBLISHER_IMAGE_CAT_NOPERM', "Vous n'avez pas les permissions d'utiliser cette catégorie d'image");
 
-/**
+/*
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) <http://www.afux.org/>
  * @translation     grandoc 2010-02-06
  * @specification   _LANGCODE: fr

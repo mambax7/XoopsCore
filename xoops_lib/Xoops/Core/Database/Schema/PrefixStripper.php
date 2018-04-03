@@ -23,12 +23,11 @@ use Doctrine\DBAL\Schema\Table;
  * filered by a table list
  *
  * @category  Xoops\Core\Database\Schema\PrefixStripper
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class PrefixStripper extends Schema
@@ -40,17 +39,17 @@ class PrefixStripper extends Schema
     private $tableList = [];
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct(array $tables = [], array $sequences = [], SchemaConfig $schemaConfig = null)
     {
-        $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix') . '_');
+        $this->xPrefix = strtolower(\XoopsBaseConfig::get('db-prefix').'_');
         $this->xDbName = strtolower(\XoopsBaseConfig::get('db-name'));
         parent::__construct($tables, $sequences, $schemaConfig);
     }
 
     /**
-     * set list of tables to limit schema
+     * set list of tables to limit schema.
      *
      * If no list is specified, all tables will be included
      *
@@ -62,7 +61,7 @@ class PrefixStripper extends Schema
     }
 
     /**
-     * Add a table object to the schema
+     * Add a table object to the schema.
      *
      * @param Table $table table object to add
      */
@@ -72,7 +71,7 @@ class PrefixStripper extends Schema
         try {
             $name = $table->getName();
             $len = strlen($this->xPrefix);
-            if (substr_compare($name, $this->xPrefix, 0, $len) === 0) {
+            if (0 === substr_compare($name, $this->xPrefix, 0, $len)) {
                 $name = substr($name, $len);
                 if (empty($this->tableList) || in_array($name, $this->tableList, true)) {
                     $idGeneratorType = 0; // how should we handle this?
@@ -90,12 +89,13 @@ class PrefixStripper extends Schema
             //Debug::dump($table);
         } catch (\Exception $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+
             throw $e;
         }
     }
 
     /**
-     * Add a sequence to the schema
+     * Add a sequence to the schema.
      */
     public function addSequence(Sequence $sequence)
     {
@@ -105,6 +105,7 @@ class PrefixStripper extends Schema
             //Debug::dump($sequence);
         } catch (\Exception $e) {
             \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+
             throw $e;
         }
     }

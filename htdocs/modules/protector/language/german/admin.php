@@ -13,7 +13,6 @@ define('_AM_ADV_TRUSTPATHPUBLICLINK', 'Check php files inside TRUST_PATH are pri
 define('_AM_ADV_TRUSTPATHPUBLIC', 'Wenn Sie eine Grafik aufrufen bzw. sehen können oder der Link zeigt Ihnen eine normale Website an, scheint der sog. trust_path nicht korrekt plaziert zu sein, z.B. innerhalb des Rootverzeichnisses! Der trust_path muss auserhalb liegen, andernfalls ist ihr System nicht ausreichend geschützt! In manchen Fällen kann kein trust_path außerhalb des Rootverzeichnisses gesetzt werden, in dem Fall können Sie eine .htaccess Datei mit dem Inhalt DENY FROM ALL erstellen und in das Verzeichnis kopieren. Dies ist zumindest eine Ersatzlösung, wenn auch abweichend.');
 define('_AM_ADV_TRUSTPATHPUBLICLINK', 'Überprüfen Sie PHP Dateien innerhalb des trust_Path, dass sie als Privat gesetzt sind (sie müssen eine 404,403 oder 500 Fehlermeldung erhalten, und wenn Fehlerseiten seitens des Providers nicht erlaubt sind, dann eine weisse Seite.');
 
-
 // Appended by Xoops Language Checker -GIJOE- in 2007-10-18 05:36:24
 define('_AM_LABEL_COMPACTLOG', 'Komprimierter Bericht : ');
 define('_AM_BUTTON_COMPACTLOG', 'komprimieren');
@@ -49,13 +48,11 @@ define('_AM_MSG_BADIPSCANTOPEN', 'Die Datei für schlechte IPs kann nicht geöff
 define('_AM_MSG_GROUP1IPSCANTOPEN', 'The file for allowing group=1 cannot be opened');
 define('_AM_MSG_REMOVED', 'Einträge wurden entfernt.');
 
-
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'Prefix Manager');
 define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!');
 define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?');
 define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix ändern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
-
 
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'Nicht sicher');

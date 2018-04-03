@@ -12,35 +12,34 @@
 namespace Xoops\Form;
 
 /**
- * Checkbox - a checkbox form element
+ * Checkbox - a checkbox form element.
  *
  * @category  Xoops\Form\Checkbox
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Checkbox extends OptionElement
 {
     /**
-     * pre-selected values in array
+     * pre-selected values in array.
      *
      * @var array
      */
     protected $value = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      *                               Control attributes:
      *                                   :inline true to render with inline style
-     * @param string       $name    element name
-     * @param mixed        $value   value(s) to be set on display, either one value or an array of them.
-     * @param boolean      $inline  true for inline arrangement
+     * @param string $name   element name
+     * @param mixed  $value  value(s) to be set on display, either one value or an array of them.
+     * @param bool   $inline true for inline arrangement
      */
     public function __construct($caption, $name = null, $value = null, $inline = true)
     {
@@ -58,7 +57,7 @@ class Checkbox extends OptionElement
     }
 
     /**
-     * prepare HTML for output
+     * prepare HTML for output.
      *
      * @return string
      */
@@ -70,12 +69,12 @@ class Checkbox extends OptionElement
         if (!is_array($elementValue)) {
             $elementValue = (array) $elementValue;
         }
-        $extra = ($this->getExtra() !== '' ? ' ' . $this->getExtra() : '');
+        $extra = ('' !== $this->getExtra() ? ' '.$this->getExtra() : '');
 
         $elementName = $this->getName();
         $elementId = $elementName;
-        if (count($elementOptions) > 1 && substr($elementName, -2, 2) !== '[]') {
-            $elementName = $elementName . '[]';
+        if (count($elementOptions) > 1 && '[]' !== substr($elementName, -2, 2)) {
+            $elementName = $elementName.'[]';
             $this->setName($elementName);
             // If required is set, all checkboxes will be required by the browser,
             // which is not usually useful. We stash the value of required above
@@ -97,14 +96,14 @@ class Checkbox extends OptionElement
             }
             $this->set('value', $value);
             ++$idCount;
-            $this->set('id', $elementId . $idCount);
+            $this->set('id', $elementId.$idCount);
             if ($inline) {
                 $ret .= '<label class="checkbox-inline">';
-                $ret .= '<input ' . $this->renderAttributeString() . $extra . '>' . $name . "\n";
+                $ret .= '<input '.$this->renderAttributeString().$extra.'>'.$name."\n";
                 $ret .= "</label>\n";
             } else {
                 $ret .= "<div class=\"checkbox\">\n<label>";
-                $ret .= '<input ' . $this->renderAttributeString() . $extra . '>' . $name . "\n";
+                $ret .= '<input '.$this->renderAttributeString().$extra.'>'.$name."\n";
                 $ret .= "</label>\n</div>\n";
             }
         }
@@ -114,11 +113,12 @@ class Checkbox extends OptionElement
         if ($inline) {
             $ret .= '</div>';
         }
+
         return $ret;
     }
 
     /**
-     * Render custom javascript validation code
+     * Render custom javascript validation code.
      *
      * @return string
      */
@@ -135,14 +135,16 @@ class Checkbox extends OptionElement
                 ? sprintf(\XoopsLocale::F_ENTER, $eltname)
                 : sprintf(\XoopsLocale::F_ENTER, $eltcaption);
             $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+
             return "\n"
-            . "var hasChecked = false; var checkBox = myform.elements['{$eltname}'];"
-            . ' if (checkBox.length) {for (var i = 0; i < checkBox.length; i++)'
-            . ' {if (checkBox[i].checked == true) {hasChecked = true; break;}}}'
-            . 'else{if (checkBox.checked == true) {hasChecked = true;}}'
-            . "if (!hasChecked) {window.alert(\"{$eltmsg}\");if (checkBox.length)"
-            . ' {checkBox[0].focus();}else{checkBox.focus();}return false;}';
+            ."var hasChecked = false; var checkBox = myform.elements['{$eltname}'];"
+            .' if (checkBox.length) {for (var i = 0; i < checkBox.length; i++)'
+            .' {if (checkBox[i].checked == true) {hasChecked = true; break;}}}'
+            .'else{if (checkBox.checked == true) {hasChecked = true;}}'
+            ."if (!hasChecked) {window.alert(\"{$eltmsg}\");if (checkBox.length)"
+            .' {checkBox[0].focus();}else{checkBox.focus();}return false;}';
         }
+
         return '';
     }
 }

@@ -50,6 +50,7 @@ class ProfileMainmenuPlugin implements MainmenuPluginInterface
             'link' => $helper->url(),
             'subMenu' => $subMenu,
         ];
+
         return $ret;
     }
 }

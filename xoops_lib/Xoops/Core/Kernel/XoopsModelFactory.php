@@ -15,24 +15,22 @@ namespace Xoops\Core\Kernel;
  * Object factory class.
  *
  * @category  Xoops\Core\Kernel\XoopsModelFactory
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 class XoopsModelFactory
 {
     /**
-     * static private
+     * static private.
      */
     private static $handlers = [];
 
     /**
-     * Get singleton instance
+     * Get singleton instance.
      *
-     * @access public
      * @return XoopsModelFactory
      */
     public static function getInstance()
@@ -42,11 +40,12 @@ class XoopsModelFactory
             $class = __CLASS__;
             $instance = new $class();
         }
+
         return $instance;
     }
 
     /**
-     * Load object handler
+     * Load object handler.
      *
      * @param XoopsPersistableObjectHandler $oHandler handler to load
      * @param string                        $name     name
@@ -58,10 +57,11 @@ class XoopsModelFactory
     {
         if (!isset(self::$handlers[$name])) {
             $handler = null;
-            $className = '\Xoops\Core\Kernel\Model\\' . ucfirst($name);
+            $className = '\Xoops\Core\Kernel\Model\\'.ucfirst($name);
             @$handler = new $className();
             if (!is_object($handler)) {
-                trigger_error('Handler ' . $className . ' not found in file ' . __FILE__, E_USER_WARNING);
+                trigger_error('Handler '.$className.' not found in file '.__FILE__, E_USER_WARNING);
+
                 return null;
             }
             self::$handlers[$name] = $handler;
@@ -72,6 +72,7 @@ class XoopsModelFactory
         if (!empty($args) && is_array($args) && is_a($handler, 'Xoops\Core\Kernel\XoopsModelAbstract')) {
             $handler->setVars($args);
         }
+
         return $handler;
     }
 }

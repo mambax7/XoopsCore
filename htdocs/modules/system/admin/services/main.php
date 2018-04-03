@@ -12,13 +12,12 @@
 use Xoops\Core\Service\Manager;
 
 /**
- * Service Provider Manager
+ * Service Provider Manager.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Andricq Nicolas (AKA MusS)
  * @author          Richard Griffith <richard@geekwright.com>
- * @package         system
  * @version         $Id$
  */
 
@@ -33,7 +32,7 @@ if (!$xoops->isUser() || !$xoops->isModule() || !$xoops->user->isAdmin($xoops->m
 }
 
 // any ajax requests land here
-if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' === $_SERVER['HTTP_X_REQUESTED_WITH']) {
     $xoops->logger()->quiet();
     // ajax post requests should have a valid token, but we don't clear it since the
     // token is set on page load and we may need to make multiple requests from it.
@@ -41,7 +40,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
     // we need to decide how to handle that. Right now, some js will redirect us from
     // provider sort to service select just before the token should expire.
     if (isset($_POST['token']) && $security->validateToken($_POST['token'], false)) {
-        if (isset($_POST['op']) && $_POST['op'] === 'order') {
+        if (isset($_POST['op']) && 'order' === $_POST['op']) {
             if (isset($_POST['service'])) {
                 $service = $_POST['service'];
                 if (isset($_POST[$service]) && is_array($_POST[$service])) {
@@ -66,7 +65,7 @@ $xoops->theme()->addBaseScriptAssets('@jqueryui', '@jgrowl', 'modules/system/js/
 $xoops->header('admin:system/system_services.tpl');
 
 $admin_page = new \Xoops\Module\Admin();
-$admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+$admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
 $admin_page->addBreadcrumbLink(
     SystemLocale::SERVICES_MANAGER,
     $system->adminVersion('services', 'adminpath')
@@ -88,11 +87,10 @@ $eventList = $xoops->events()->getEvents();
 $l = strlen($filter);
 $filteredList = [];
 foreach ($eventList as $k => $v) {
-    if (strncasecmp($filter, $k, $l) === 0) {
+    if (0 === strncasecmp($filter, $k, $l)) {
         $filteredList[] = strtolower(substr($k, $l));
     }
 }
-
 
 $service_list = [];
 sort($filteredList);
@@ -115,16 +113,20 @@ if (!empty($selected_service) && in_array($selected_service, $filteredList, true
     switch ($mode) {
         case Manager::MODE_EXCLUSIVE:
             $modeDesc = 'This is an <em>Exclusive</em> mode service. Only the first provider on the list will be used.';
+
             break;
         case Manager::MODE_CHOICE:
             $modeDesc = 'This is an <em>Choice</em> mode service. The first provider on the list will be the default.';
+
             break;
         case Manager::MODE_PREFERENCE:
             $modeDesc = 'User Preference';
+
             break;
         case Manager::MODE_MULTIPLE:
             $modeDesc = 'This is an <em>Multiple</em> mode service. '
-                . 'Each provider will be called in the sequence shown.';
+                .'Each provider will be called in the sequence shown.';
+
             break;
     }
     $xoops->tpl()->assign('message', $xoops->alert('info', $modeDesc, 'Service Mode'));

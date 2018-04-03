@@ -1,7 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../../init_new.php');
-
+require_once __DIR__.'/../../../../../init_new.php';
 
 class ConfigItemHandlerTest extends \PHPUnit\Framework\TestCase
 {

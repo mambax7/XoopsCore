@@ -34,6 +34,7 @@ class PublisherWaitingPlugin implements WaitingPluginInterface
                 'link' => $publisher->url('admin/item.php'),
             ];
         }
+
         return $ret;
     }
 }

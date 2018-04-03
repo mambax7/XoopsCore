@@ -9,9 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsConfigHandler extends Xoops\Core\Kernel\Handlers\XoopsConfigHandler
 {

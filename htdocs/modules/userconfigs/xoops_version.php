@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU Public License
- * @package         Userconfigs
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $modversion = [];
 $modversion['name'] = _MI_USERCONFIGS_NAME;
 $modversion['description'] = _MI_USERCONFIGS_DSC;
@@ -43,7 +41,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [
     'business' => 'xoopsfoundation@gmail.com',
-    'item_name' => 'Donation : ' . _MI_USERCONFIGS_NAME,
+    'item_name' => 'Donation : '._MI_USERCONFIGS_NAME,
     'amount' => 0,
     'currency_code' => 'USD',
 ];

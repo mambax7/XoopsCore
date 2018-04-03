@@ -12,18 +12,17 @@
 namespace Xoops\Core\Service;
 
 /**
- * Service Provider object
+ * Service Provider object.
  *
  * All provider classes should extend this class, and implement the appropriate
  * contract interface.
  *
  * @category  Xoops\Core\Service\Provider
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  *
  * @method Response getAvatarUrl(mixed $userinfo);
  * @method Response getAvatarEditUrl(\XoopsUser $userinfo);
@@ -62,7 +61,7 @@ class Provider
     protected $providers = [];
 
     /**
-     * __construct
+     * __construct.
      *
      *
      * @param string $service service name (case sensitive)
@@ -74,7 +73,7 @@ class Provider
     }
 
     /**
-     * All contract specified methods go here
+     * All contract specified methods go here.
      *
      * @param string $name      method to call
      * @param mixed  $arguments any arguments
@@ -101,11 +100,12 @@ class Provider
         } else {
             $response->setSuccess(false)->addErrorMessage(sprintf('No method %s', $name));
         }
+
         return $response;
     }
 
     /**
-     * All static methods go here and will return null
+     * All static methods go here and will return null.
      *
      * @param string $name      not used
      * @param mixed  $arguments not used
@@ -116,7 +116,7 @@ class Provider
     }
 
     /**
-     * getProviderMode
+     * getProviderMode.
      *
      * @return Manager MODE constant
      */
@@ -124,25 +124,26 @@ class Provider
     {
         static $ret = null;
 
-        if ($ret === null) {
+        if (null === $ret) {
             if (count($this->providers)) {
                 $ret = reset($this->providers)->getMode();
             } else {
                 return Manager::MODE_EXCLUSIVE;
             }
         }
+
         return $ret;
     }
 
     /**
-     * registerProvider - register a provider of a named service
+     * registerProvider - register a provider of a named service.
      *
      * @param AbstractContract $object instantiated object that provides the service
      */
     public function register(AbstractContract $object)
     {
         // verify this is the proper type of object
-        $contract = '\Xoops\Core\Service\Contract\\' . $this->service . 'Interface';
+        $contract = '\Xoops\Core\Service\Contract\\'.$this->service.'Interface';
 
         if (is_a($object, '\Xoops\Core\Service\AbstractContract')
             && $object instanceof $contract
@@ -152,7 +153,7 @@ class Provider
     }
 
     /**
-     * getRegistered - access list of registered providers
+     * getRegistered - access list of registered providers.
      *
      * @return array of registered providers managed by this instance
      */
@@ -162,7 +163,7 @@ class Provider
     }
 
     /**
-     * sortProviders - sort providers into priority order
+     * sortProviders - sort providers into priority order.
      */
     public function sortProviders()
     {
@@ -171,19 +172,20 @@ class Provider
             if ($a->getPriority() !== $b->getPriority()) {
                 return ($a->getPriority() > $b->getPriority()) ? 1 : -1;
             }
+
             return 0;
         });
         $this->providers = $sortable;
     }
 
     /**
-     * isAvailable - indicate the availability of an actual provider
+     * isAvailable - indicate the availability of an actual provider.
      *
      * In many cases a null provider can be called without changing the flow of the calling
      * program. In some cases, the availability of a provider may need to be reflected in
      * the caller, i.e. adding a UI button or menu item.
      *
-     * @return boolean true if actual provider is available, otherwise false
+     * @return bool true if actual provider is available, otherwise false
      */
     public function isAvailable()
     {

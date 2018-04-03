@@ -12,14 +12,13 @@
 namespace Xoops\Core\Theme;
 
 /**
- * XoopsTheme component class file
+ * XoopsTheme component class file.
  *
  * @category  Xoops\Core
- * @package   Theme
  * @author    Skalpa Keo <skalpa@xoops.org>
  * @copyright 2008-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Factory
 {
@@ -29,28 +28,28 @@ class Factory
     public $xoBundleIdentifier = 'XoopsThemeFactory';
 
     /**
-     * Currently enabled themes (if empty, all the themes in themes/ are allowed)
+     * Currently enabled themes (if empty, all the themes in themes/ are allowed).
      *
      * @var array
      */
     public $allowedThemes = [];
 
     /**
-     * Default theme to instantiate if none specified
+     * Default theme to instantiate if none specified.
      *
      * @var string
      */
     public $defaultTheme = 'default';
 
     /**
-     * If users are allowed to choose a custom theme
+     * If users are allowed to choose a custom theme.
      *
      * @var bool
      */
     public $allowUserSelection = true;
 
     /**
-     * Instantiate the specified theme
+     * Instantiate the specified theme.
      *
      * @param array $options options array
      *
@@ -77,17 +76,18 @@ class Factory
             }
             $xoops->setConfig('theme_set', $options['folderName']);
         }
-        $options['path'] = \XoopsBaseConfig::get('themes-path') . '/' . $options['folderName'];
+        $options['path'] = \XoopsBaseConfig::get('themes-path').'/'.$options['folderName'];
         $inst = new XoopsTheme();
         foreach ($options as $k => $v) {
             $inst->{$k} = $v;
         }
         $inst->xoInit();
+
         return $inst;
     }
 
     /**
-     * Checks if the specified theme is enabled or not
+     * Checks if the specified theme is enabled or not.
      *
      * @param string $name theme name
      *

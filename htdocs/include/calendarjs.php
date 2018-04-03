@@ -2,7 +2,7 @@
 $xoops_url = \XoopsBaseConfig::get('url');
 ?>
 <link rel="stylesheet" type="text/css" media="all" href="<?php echo $xoops_url; ?>/include/calendar-blue.css"/>
-<script type="text/javascript" src="<?php echo $xoops_url . '/include/calendar.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $xoops_url.'/include/calendar.js'; ?>"></script>
 <script type="text/javascript">
     <!--
     var calendar = null;

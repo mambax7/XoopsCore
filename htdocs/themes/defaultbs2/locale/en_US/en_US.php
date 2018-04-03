@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class Defaultbs2ThemeLocaleEn_US
 {
     public const QUICK_LINKS = 'Quick links';

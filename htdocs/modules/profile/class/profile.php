@@ -16,11 +16,10 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -42,7 +41,7 @@ class ProfileProfile extends XoopsObject
     }
 
     /**
-     * Initiate variables
+     * Initiate variables.
      *
      * @param array $fields field information array of {@link ProfileField} objects
      */
@@ -65,7 +64,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     private $_fHandler;
 
     /**
-     * Array of {@link ProfileField} objects
+     * Array of {@link ProfileField} objects.
      *
      * @var array
      */
@@ -79,7 +78,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * create a new {@link ProfileProfile}
+     * create a new {@link ProfileProfile}.
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
@@ -90,14 +89,15 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         /* @var $obj ProfileProfile */
         $obj = new $this->className($this->loadFields());
         $obj->handler = $this;
-        if ($isNew === true) {
+        if (true === $isNew) {
             $obj->setNew();
         }
+
         return $obj;
     }
 
     /**
-     * Get a {@link ProfileProfile}
+     * Get a {@link ProfileProfile}.
      *
      *
      * @param bool $createOnFailure create a new {@link ProfileProfile} if none is fetched
@@ -110,11 +110,12 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if (!is_object($obj) && $createOnFailure) {
             $obj = $this->create();
         }
+
         return $obj;
     }
 
     /**
-     * Create new {@link ProfileField} object
+     * Create new {@link ProfileField} object.
      *
      * @param bool $isNew
      *
@@ -123,24 +124,26 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public function createField($isNew = true)
     {
         $return = $this->_fHandler->create($isNew);
+
         return $return;
     }
 
     /**
-     * Load field information
+     * Load field information.
      *
      * @return array
      */
     public function loadFields()
     {
-        if (count($this->_fields) === 0) {
+        if (0 === count($this->_fields)) {
             $this->_fields = $this->_fHandler->loadFields();
         }
+
         return $this->_fields;
     }
 
     /**
-     * Fetch fields
+     * Fetch fields.
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement} object
      * @param bool            $id_as_key return array with field IDs as key?
@@ -154,7 +157,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Insert a field in the database
+     * Insert a field in the database.
      *
      *
      * @param bool $force
@@ -167,7 +170,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Delete a field from the database
+     * Delete a field from the database.
      *
      *
      * @param bool $force
@@ -180,9 +183,9 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Save a new field in the database
+     * Save a new field in the database.
      *
-     * @param array $vars array of variables, taken from $module->loadInfo('profile')['field']
+     * @param array $vars   array of variables, taken from $module->loadInfo('profile')['field']
      * @param int   $weight
      *
      * @return string
@@ -227,16 +230,17 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             $field->setVar('field_options', []);
         }
         if ($this->insertField($field)) {
-            $msg = '&nbsp;&nbsp;Field <strong>' . $vars['name'] . '</strong> added to the database';
+            $msg = '&nbsp;&nbsp;Field <strong>'.$vars['name'].'</strong> added to the database';
         } else {
-            $msg = '&nbsp;&nbsp;<span class="red">ERROR: Could not insert field <strong>' . $vars['name'] . '</strong> into the database. ' . implode(' ', $field->getErrors()) . $this->db2->errorInfo() . '</span>';
+            $msg = '&nbsp;&nbsp;<span class="red">ERROR: Could not insert field <strong>'.$vars['name'].'</strong> into the database. '.implode(' ', $field->getErrors()).$this->db2->errorInfo().'</span>';
         }
         unset($field);
+
         return $msg;
     }
 
     /**
-     * insert a new object in the database
+     * insert a new object in the database.
      *
      * @param XoopsObject|ProfileProfile $obj   reference to the object
      * @param bool                       $force whether to force the query execution despite security settings
@@ -249,14 +253,15 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         foreach ($uservars as $var) {
             unset($obj->vars[$var]);
         }
-        if (count($obj->vars) === 0) {
+        if (0 === count($obj->vars)) {
             return true;
         }
+
         return parent::insert($obj, $force);
     }
 
     /**
-     * Get array of standard variable names (user table)
+     * Get array of standard variable names (user table).
      *
      * @return array
      */
@@ -266,11 +271,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Search profiles and users
+     * Search profiles and users.
      *
      *
      * @param array $searchvars Fields to be fetched
-     * @param array $groups for Usergroups is selected (only admin!)
+     * @param array $groups     for Usergroups is selected (only admin!)
      *
      * @return array
      */
@@ -283,10 +288,10 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $searchvars_profile = array_diff($searchvars, $uservars);
         $sv = ['u.uid, u.uname, u.email, u.user_viewemail'];
         if (!empty($searchvars_user)) {
-            $sv[0] .= ',u.' . implode(', u.', $searchvars_user);
+            $sv[0] .= ',u.'.implode(', u.', $searchvars_user);
         }
         if (!empty($searchvars_profile)) {
-            $sv[] = 'p.' . implode(', p.', $searchvars_profile);
+            $sv[] = 'p.'.implode(', p.', $searchvars_profile);
         }
 
         $qb = $xoops->db()->createXoopsQueryBuilder();

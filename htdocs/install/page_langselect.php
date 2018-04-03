@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer language selection page
+ * Installer language selection page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -24,15 +23,14 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
 $_SESSION['settings'] = [];
 
 setcookie('xo_install_lang', 'en_US', null, null, null);
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
+if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_REQUEST['lang'])) {
     $lang = $_REQUEST['lang'];
     setcookie('xo_install_lang', $lang, null, null, null);
 
@@ -57,4 +55,4 @@ $content .= '</div>';
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = true;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

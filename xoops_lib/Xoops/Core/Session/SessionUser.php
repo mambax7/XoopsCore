@@ -14,14 +14,13 @@ namespace Xoops\Core\Session;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * Manage the session representation of a the current User
+ * Manage the session representation of a the current User.
  *
  * @category  Xoops\Core\Session
- * @package   SessionUser
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SessionUser
 {
@@ -36,7 +35,7 @@ class SessionUser
     protected $xoops = null;
 
     /**
-     * constructor
+     * constructor.
      * @param Manager $session the session manager object
      */
     public function __construct(Manager $session)
@@ -57,13 +56,14 @@ class SessionUser
         // is user already set in session?
         if ($session->has('xoopsUserId')) {
             $this->addUserToSession($session->get('xoopsUserId'));
+
             return;
         }
 
         // is the usercookie available?
         $remember = new RememberMe();
         $userId = $remember->recall();
-        if ($userId !== false) {
+        if (false !== $userId) {
             $this->setNeedsConfirmed();
             $this->addUserToSession($userId);
         }
@@ -74,8 +74,8 @@ class SessionUser
      * process, i.e. the user has entered the name and password, and that
      * combination was found valid.
      *
-     * @param integer $userId     id of user to establish in the session
-     * @param boolean $rememberMe add a persistent login cookie
+     * @param int  $userId     id of user to establish in the session
+     * @param bool $rememberMe add a persistent login cookie
      */
     public function recordUserLogin($userId, $rememberMe = false)
     {
@@ -100,9 +100,9 @@ class SessionUser
     }
 
     /**
-     * Check the we have a remember me cookie, and apply if valid
+     * Check the we have a remember me cookie, and apply if valid.
      *
-     * @param integer $userId id of user to establish in the session
+     * @param int $userId id of user to establish in the session
      */
     public function addUserToSession($userId)
     {
@@ -123,11 +123,12 @@ class SessionUser
         }
         // invalid user - clear everything
         $session->clearSession();
+
         return;
     }
 
     /**
-     * set authorization status to needs confirmed
+     * set authorization status to needs confirmed.
      */
     public function setNeedsConfirmed()
     {
@@ -135,7 +136,7 @@ class SessionUser
     }
 
     /**
-     * set authorization status to is confirmed
+     * set authorization status to is confirmed.
      */
     public function setConfirmed()
     {
@@ -143,13 +144,13 @@ class SessionUser
     }
 
     /**
-     * verify the authorization status is confirmed
+     * verify the authorization status is confirmed.
      *
-     * @return boolean true if confirmed, otherwise false
+     * @return bool true if confirmed, otherwise false
      */
     public function checkConfirmed()
     {
         return $this->session->has('xoopsUserId') &&
-                ($this->session->get('SESSION_AUTHSTATUS', 'failed') === 'ok');
+                ('ok' === $this->session->get('SESSION_AUTHSTATUS', 'failed'));
     }
 }

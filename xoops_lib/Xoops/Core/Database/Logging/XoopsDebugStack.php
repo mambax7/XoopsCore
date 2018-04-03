@@ -14,15 +14,14 @@ namespace Xoops\Core\Database\Logging;
 use Doctrine\DBAL\Logging\DebugStack;
 
 /**
- * Extend Doctrine DebugStack to trigger XOOPS event
+ * Extend Doctrine DebugStack to trigger XOOPS event.
  *
  * @category  Xoops\Core\Database\Logging
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @see       www.doctrine-project.org
  */
 class XoopsDebugStack extends DebugStack
@@ -30,9 +29,9 @@ class XoopsDebugStack extends DebugStack
     /**
      * Logs a SQL statement somewhere.
      *
-     * @param string $sql The SQL to be executed.
-     * @param array $params The SQL parameters.
-     * @param array $types The SQL parameter types.
+     * @param string $sql    The SQL to be executed.
+     * @param array  $params The SQL parameters.
+     * @param array  $types  The SQL parameter types.
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
@@ -44,7 +43,7 @@ class XoopsDebugStack extends DebugStack
     }
 
     /**
-     * stopQuery
+     * stopQuery.
      *
      * Perform usual Doctrine DebugStack stopQuery() and trigger event for loggers
      *

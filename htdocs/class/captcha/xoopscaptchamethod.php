@@ -10,7 +10,7 @@
 */
 
 /**
- * Abstract class for CAPTCHA method
+ * Abstract class for CAPTCHA method.
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
@@ -21,12 +21,11 @@
  * PHP 5.3
  *
  * @category  Xoops\Class\Captcha\CaptchaMethod
- * @package   CaptchaMethod
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   $Id$
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 abstract class Abstractxoopscaptchamethod
@@ -47,7 +46,7 @@ abstract class Abstractxoopscaptchamethod
     public $code;
 
     /**
-     * XoopsCaptchaMethod::__construct()
+     * XoopsCaptchaMethod::__construct().
      *
      * @param mixed $handler
      */
@@ -57,7 +56,7 @@ abstract class Abstractxoopscaptchamethod
     }
 
     /**
-     * XoopsCaptchaMethod::isActive()
+     * XoopsCaptchaMethod::isActive().
      *
      * @return bool
      */
@@ -67,7 +66,7 @@ abstract class Abstractxoopscaptchamethod
     }
 
     /**
-     * XoopsCaptchaMethod::loadConfig()
+     * XoopsCaptchaMethod::loadConfig().
      *
      * @param string $name
      *
@@ -85,7 +84,7 @@ abstract class Abstractxoopscaptchamethod
     }
 
     /**
-     * XoopsCaptchaMethod::getCode()
+     * XoopsCaptchaMethod::getCode().
      *
      * @return string
      */
@@ -95,7 +94,7 @@ abstract class Abstractxoopscaptchamethod
     }
 
     /**
-     * XoopsCaptchaMethod::render()
+     * XoopsCaptchaMethod::render().
      *
      * @return string
      */
@@ -113,7 +112,7 @@ abstract class Abstractxoopscaptchamethod
     }
 
     /**
-     * XoopsCaptchaMethod::verify()
+     * XoopsCaptchaMethod::verify().
      *
      * @param string $sessionName
      *
@@ -126,6 +125,7 @@ abstract class Abstractxoopscaptchamethod
             $func = !empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
             $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
         }
+
         return $is_valid;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Psr\Log\LogLevel;
 use Xoops\Core\Logger;
@@ -9,7 +9,7 @@ class MY_Logger
 {
     public function log($level, $message, array $context = [], $echo = true)
     {
-        $str = $level . ':' . $message . ':' . var_export($context, true);
+        $str = $level.':'.$message.':'.var_export($context, true);
         if ($echo) {
             echo $str;
         } else {
@@ -78,10 +78,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(strpos($result, 'notice:') !== false);
-        $this->assertTrue(strpos($result, 'errstr') !== false);
-        $this->assertTrue(strpos($result, 'errfile') !== false);
-        $this->assertTrue(strpos($result, 'errline') !== false);
+        $this->assertTrue(false !== strpos($result, 'notice:'));
+        $this->assertTrue(false !== strpos($result, 'errstr'));
+        $this->assertTrue(false !== strpos($result, 'errfile'));
+        $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
     public function test_handleError120()
@@ -97,10 +97,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(strpos($result, 'notice:') !== false);
-        $this->assertTrue(strpos($result, 'errstr') !== false);
-        $this->assertTrue(strpos($result, 'errfile') !== false);
-        $this->assertTrue(strpos($result, 'errline') !== false);
+        $this->assertTrue(false !== strpos($result, 'notice:'));
+        $this->assertTrue(false !== strpos($result, 'errstr'));
+        $this->assertTrue(false !== strpos($result, 'errfile'));
+        $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
     public function test_handleError140()
@@ -116,10 +116,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(strpos($result, 'warning:') !== false);
-        $this->assertTrue(strpos($result, 'errstr') !== false);
-        $this->assertTrue(strpos($result, 'errfile') !== false);
-        $this->assertTrue(strpos($result, 'errline') !== false);
+        $this->assertTrue(false !== strpos($result, 'warning:'));
+        $this->assertTrue(false !== strpos($result, 'errstr'));
+        $this->assertTrue(false !== strpos($result, 'errfile'));
+        $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
     public function test_handleError160()
@@ -138,10 +138,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(strpos($result, 'warning:') !== false);
-        $this->assertTrue(strpos($result, 'errstr') !== false);
-        $this->assertTrue(strpos($result, 'errfile') !== false);
-        $this->assertTrue(strpos($result, 'errline') !== false);
+        $this->assertTrue(false !== strpos($result, 'warning:'));
+        $this->assertTrue(false !== strpos($result, 'errstr'));
+        $this->assertTrue(false !== strpos($result, 'errfile'));
+        $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
     public function test_handleError200()
@@ -157,10 +157,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $instance->handleError($errno, $errstr, $errfile, $errline);
         $result = ob_get_clean();
 
-        $this->assertTrue(strpos($result, 'error:') !== false);
-        $this->assertTrue(strpos($result, 'errstr') !== false);
-        $this->assertTrue(strpos($result, 'errfile') !== false);
-        $this->assertTrue(strpos($result, 'errline') !== false);
+        $this->assertTrue(false !== strpos($result, 'error:'));
+        $this->assertTrue(false !== strpos($result, 'errstr'));
+        $this->assertTrue(false !== strpos($result, 'errfile'));
+        $this->assertTrue(false !== strpos($result, 'errline'));
     }
 
     public function test_handleException()
@@ -330,7 +330,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         if (!class_exists('', false)) {
             $path = \XoopsBaseConfig::get('root-path');
             XoopsLoad::addMap([
-                'debugbarlogger' => $path . '/modules/debugbar/class/debugbarlogger.php',
+                'debugbarlogger' => $path.'/modules/debugbar/class/debugbarlogger.php',
             ]);
         }
 

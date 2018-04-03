@@ -2,7 +2,7 @@
 
 namespace Xoops\Core\Theme;
 
-require_once __DIR__ . '/../../../../init_new.php';
+require_once __DIR__.'/../../../../init_new.php';
 
 class PluginAbstractTest extends \PHPUnit\Framework\TestCase
 {

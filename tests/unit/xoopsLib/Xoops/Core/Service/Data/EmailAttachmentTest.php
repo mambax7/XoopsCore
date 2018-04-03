@@ -6,7 +6,7 @@ use Xoops\Core\Service\Data\EmailAttachment;
 
 class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
 {
-    protected const TEST_FILE = __DIR__ . '/test.png';
+    protected const TEST_FILE = __DIR__.'/test.png';
 
     /**
      * @var EmailAttachment
@@ -57,7 +57,7 @@ class EmailAttachmentTest extends \PHPUnit\Framework\TestCase
     public function testNewBadFilename()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $attachment = new EmailAttachment(__DIR__ . '/bogus.file');
+        $attachment = new EmailAttachment(__DIR__.'/bogus.file');
     }
 
     public function testWithFilename()

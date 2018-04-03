@@ -14,27 +14,26 @@ namespace Xoops\Form;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * OptionElement - Abstract base class for form elements with options (i.e. Select)
+ * OptionElement - Abstract base class for form elements with options (i.e. Select).
  *
  * @category  Xoops\Form\OptionElement
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class OptionElement extends Element
 {
     /**
-     * Add an option
+     * Add an option.
      *
      * @param string $value value attribute
      * @param string $name  name attribute
      */
     public function addOption($value, $name = null)
     {
-        if ($name === null || $name === '') {
+        if (null === $name || '' === $name) {
             $this->setArrayItem('option', $value, $value);
         } else {
             $this->setArrayItem('option', $value, $name);
@@ -42,7 +41,7 @@ abstract class OptionElement extends Element
     }
 
     /**
-     * Add multiple options
+     * Add multiple options.
      *
      * @param array $options Associative array of value->name pairs
      */
@@ -56,9 +55,9 @@ abstract class OptionElement extends Element
     }
 
     /**
-     * Get an array with all the options
+     * Get an array with all the options.
      *
-     * @param integer $encode encode special characters, potential values:
+     * @param int $encode encode special characters, potential values:
      *                        0 - skip
      *                        1 - only for value
      *                        2 - for both value and name
@@ -77,6 +76,7 @@ abstract class OptionElement extends Element
             $value[(bool) $encode ? $myts->htmlSpecialChars($val) : $val] = ($encode > 1)
                 ? $myts->htmlSpecialChars($name) : $name;
         }
+
         return $value;
     }
 }

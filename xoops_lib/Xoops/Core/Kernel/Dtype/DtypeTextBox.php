@@ -15,20 +15,19 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeTextBox
+ * DtypeTextBox.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeTextBox
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class DtypeTextBox extends DtypeAbstract
 {
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -58,7 +57,7 @@ class DtypeTextBox extends DtypeAbstract
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -68,12 +67,14 @@ class DtypeTextBox extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        if ($obj->vars[$key]['required'] && $value !== '0' && $value === '') {
+        if ($obj->vars[$key]['required'] && '0' !== $value && '' === $value) {
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
+
             return $value;
         }
         if (isset($obj->vars[$key]['maxlength']) && mb_strlen($value) > (int) ($obj->vars[$key]['maxlength'])) {
             $obj->setErrors(sprintf(\XoopsLocale::F_MUST_BE_SHORTER_THAN, $key, (int) ($obj->vars[$key]['maxlength'])));
+
             return $value;
         }
 

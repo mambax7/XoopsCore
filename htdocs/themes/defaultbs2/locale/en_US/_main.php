@@ -10,23 +10,20 @@
 */
 
 /**
- * Default language
+ * Default language.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         themes
  * @since           2.6.0
  * @author          Andricq Nicolas (AKA MusS)
  * @version         $Id$
  */
-
 define('_THEME_LOGIN', 'Login');
 define('_THEME_REGISTER', 'Register');
 
 define('_THEME_HOME', 'Home');
 
 define('_THEME_WELCOME', 'Welcome');
-
 
 define('_THEME_QUICK', 'Quick links');
 define('_THEME_ADMIN', 'Administration');

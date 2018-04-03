@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS addBaseStylesheetAssets() via Smarty template
+ * XOOPS addBaseStylesheetAssets() via Smarty template.
  *
  * @copyright   2015 XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -8,7 +8,7 @@
  */
 
 /**
- * Add one or more stylesheets to the base stylesheet asset
+ * Add one or more stylesheets to the base stylesheet asset.
  *
  * @param string                   $params commas separated list of script assets
  * @param Smarty_Internal_Template $smarty passed by smarty
@@ -25,5 +25,6 @@ function smarty_function_addBaseStylesheet($params, Smarty_Internal_Template $sm
     if (!empty($assets)) {
         $xoops->theme()->addBaseStylesheetAssets($assets);
     }
+
     return '';
 }

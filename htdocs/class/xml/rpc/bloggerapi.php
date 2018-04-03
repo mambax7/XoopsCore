@@ -12,8 +12,6 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xml
  * @since           1.0.0
  * @author          Kazumi Ono (AKA onokazu)
  * @version         $Id $
@@ -41,7 +39,7 @@ class bloggerapi extends XoopsXmlRpcApi
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     $data = $this->_getTagCdata($this->params[4], $maptag, true);
-                    if (trim($data) === '') {
+                    if ('' === trim($data)) {
                         if ($detail['required']) {
                             $missing[] = $maptag;
                         }
@@ -52,7 +50,7 @@ class bloggerapi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<' . $m . '> ';
+                        $msg .= '<'.$m.'> ';
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
@@ -86,7 +84,7 @@ class bloggerapi extends XoopsXmlRpcApi
                 $post = [];
                 foreach ($fields as $tag => $detail) {
                     $data = $this->_getTagCdata($this->params[4], $tag, true);
-                    if (trim($data) === '') {
+                    if ('' === trim($data)) {
                         if ($detail['required']) {
                             $missing[] = $tag;
                         }
@@ -97,7 +95,7 @@ class bloggerapi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<' . $m . '> ';
+                        $msg .= '<'.$m.'> ';
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
@@ -151,15 +149,19 @@ class bloggerapi extends XoopsXmlRpcApi
                     switch ($maptag) {
                         case 'userid':
                             $struct->add('userid', new XoopsXmlRpcString($value));
+
                             break;
                         case 'dateCreated':
                             $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+
                             break;
                         case 'postid':
                             $struct->add('postid', new XoopsXmlRpcString($value));
+
                             break;
                         default:
-                            $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                            $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
+
                             break;
                     }
                 }
@@ -184,7 +186,7 @@ class bloggerapi extends XoopsXmlRpcApi
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 $count = count($ret);
-                if ($count === 0) {
+                if (0 === $count) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
@@ -195,15 +197,19 @@ class bloggerapi extends XoopsXmlRpcApi
                             switch ($maptag) {
                                 case 'userid':
                                     $struct->add('userid', new XoopsXmlRpcString($value));
+
                                     break;
                                 case 'dateCreated':
                                     $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+
                                     break;
                                 case 'postid':
                                     $struct->add('postid', new XoopsXmlRpcString($value));
+
                                     break;
                                 default:
-                                    $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                                    $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
+
                                     break;
                             }
                         }
@@ -227,7 +233,7 @@ class bloggerapi extends XoopsXmlRpcApi
             $arr = new XoopsXmlRpcArray();
             $struct = new XoopsXmlRpcStruct();
             $xoops_url = \XoopsBaseConfig::get('url');
-            $struct->add('url', new XoopsXmlRpcString($xoops_url . '/modules/' . $this->module->getVar('dirname') . '/'));
+            $struct->add('url', new XoopsXmlRpcString($xoops_url.'/modules/'.$this->module->getVar('dirname').'/'));
             $struct->add('blogid', new XoopsXmlRpcString($this->module->getVar('mid')));
             $struct->add('blogName', new XoopsXmlRpcString('XOOPS Blog'));
             $arr->add($struct);
@@ -259,12 +265,15 @@ class bloggerapi extends XoopsXmlRpcApi
             switch ($this->params[5]) {
                 case 'main':
                     $this->response->add(new XoopsXmlRpcFault(107));
+
                     break;
                 case 'archiveIndex':
                     $this->response->add(new XoopsXmlRpcFault(107));
+
                     break;
                 default:
                     $this->response->add(new XoopsXmlRpcFault(107));
+
                     break;
             }
         }

@@ -16,14 +16,13 @@ use Xmf\Key\FileStorage;
 use Xmf\Key\StorageInterface;
 
 /**
- * Build a key to be used for JSON Web Token processing
+ * Build a key to be used for JSON Web Token processing.
  *
  * @category  Xmf\Jwt\KeyFactory
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class KeyFactory
 {
@@ -43,7 +42,7 @@ class KeyFactory
         if (empty($keyName) || !is_string($keyName)) {
             throw new \InvalidArgumentException('keyName must be a non-empty string');
         }
-        $storage = ($storage === null) ? new FileStorage() : $storage;
+        $storage = (null === $storage) ? new FileStorage() : $storage;
         $key = new Basic($storage, $keyName);
         $key->create(); // will automatically skip if key has already been generated
         return $key;

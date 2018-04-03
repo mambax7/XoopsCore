@@ -31,7 +31,7 @@ class PmUsermenuPlugin implements UsermenuPluginInterface
 
         $name = XoopsLocale::INBOX;
         if ($pm_count = $pm_handler->getCount($criteria)) {
-            $name = XoopsLocale::INBOX . ' <span class="badge">' . $pm_count . '</span>';
+            $name = XoopsLocale::INBOX.' <span class="badge">'.$pm_count.'</span>';
         }
 
         $ret[] = [

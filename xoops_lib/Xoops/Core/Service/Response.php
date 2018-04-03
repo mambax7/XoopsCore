@@ -12,19 +12,18 @@
 namespace Xoops\Core\Service;
 
 /**
- * Xoops service manager response object
+ * Xoops service manager response object.
  *
  * An instance of this object is passed as the first argument to all contract provider methods.
  * The contract provider should return values and error data in this object. The object is then
  * the return value from the provider.
  *
  * @category  Xoops\Core\Service\Response
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 The XOOPS Project https://github.com/XOOPS/XoopsCore
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Response
@@ -32,30 +31,30 @@ class Response
     /** @var mixed $value - return value from Provider */
     protected $value = null;
 
-    /** @var boolean $success - success as determined by service manager or provider */
+    /** @var bool $success - success as determined by service manager or provider */
     protected $success = true;
 
     /** @var mixed $errorMessage - error description(s) as returned by service manager or provider */
     protected $errorMessage = null;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param mixed   $value        - value returned by provider
-     * @param boolean $success      - true if service request was successful
-     * @param mixed   $errorMessage - string or array of strings of any errors to be reported
+     * @param mixed $value        - value returned by provider
+     * @param bool  $success      - true if service request was successful
+     * @param mixed $errorMessage - string or array of strings of any errors to be reported
      */
     public function __construct($value = null, $success = true, $errorMessage = null)
     {
         $this->value = $value;
         $this->success = $success;
-        if ($errorMessage !== null) {
+        if (null !== $errorMessage) {
             $this->addErrorMessage($errorMessage);
         }
     }
 
     /**
-     * getValue - get return value from provider
+     * getValue - get return value from provider.
      *
      * @return mixed
      */
@@ -65,7 +64,7 @@ class Response
     }
 
     /**
-     * isSuccess - success of service request as determined by service manager or provider
+     * isSuccess - success of service request as determined by service manager or provider.
      *
      * @return boolean
      */
@@ -75,7 +74,7 @@ class Response
     }
 
     /**
-     * getErrorMessage - get any messages set by service manager or provider
+     * getErrorMessage - get any messages set by service manager or provider.
      *
      * @return mixed
      */
@@ -85,7 +84,7 @@ class Response
     }
 
     /**
-     * setValue - set value returned by request
+     * setValue - set value returned by request.
      *
      * @param mixed $value value returned from provider
      *
@@ -99,9 +98,9 @@ class Response
     }
 
     /**
-     * setSuccess - record success of request
+     * setSuccess - record success of request.
      *
-     * @param boolean $success - success of service request as determined by manager or provider
+     * @param bool $success - success of service request as determined by manager or provider
      *
      * @return Response object
      */
@@ -113,7 +112,7 @@ class Response
     }
 
     /**
-     * addErrorMessage - add a message
+     * addErrorMessage - add a message.
      *
      * @param mixed $errorMessage - message, or array of messages to be added
      *

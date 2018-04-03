@@ -10,17 +10,15 @@
 */
 
 /**
- * User Rank module
+ * User Rank module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         userrank
  * @since           2.6.0
  * @author          Cointin Maxime (AKA Kraven30)
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -33,13 +31,13 @@ $userrank_handler = $xoops->getModuleHandler('rank', 'userrank');
 $admin_page->addInfoBox(_USERRANK_MI_USERRANK);
 
 $count_all = $userrank_handler->getCount();
-$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBTOTAL, '<span class="red">' . $count_all . '</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBTOTAL, '<span class="red">'.$count_all.'</span>'));
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('rank_special', 1));
 $count_special = $userrank_handler->getCount($criteria);
 
-$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBSPECIAL, '<span class="red">' . $count_special . '</span>'));
+$admin_page->addInfoBoxLine(sprintf(_AM_USERRANK_NBSPECIAL, '<span class="red">'.$count_special.'</span>'));
 
 $admin_page->displayIndex();
 

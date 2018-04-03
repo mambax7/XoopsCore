@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('_MD_COMMENTS_TITLE', 'Title');
 define('_MD_COMMENTS_MESSAGE', 'Message');
 define('_MD_COMMENTS_DOSMILEY', 'Enable Smiley Icons');

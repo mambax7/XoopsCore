@@ -14,14 +14,11 @@ use Xoops\Core\XoopsTpl;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
@@ -36,7 +33,7 @@ if ($categoryid !== -1) {
     $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
 }
 
-header('Content-Type:text/xml; charset=' . XoopsLocale::getCharset());
+header('Content-Type:text/xml; charset='.XoopsLocale::getCharset());
 $tpl = new XoopsTpl();
 $tpl->caching = 2;
 $tpl->cache_lifetime = 0;
@@ -53,14 +50,14 @@ if (!$tpl->isCached('module:publisher/publisher_rss.tpl')) {
     $tpl->assign('channel_editor', $xoops->getConfig('adminmail'));
 
     if ($categoryid !== -1) {
-        $channel_category .= ' > ' . $categoryObj->getVar('name');
+        $channel_category .= ' > '.$categoryObj->getVar('name');
     }
 
     $tpl->assign('channel_category', htmlspecialchars($channel_category));
     $tpl->assign('channel_generator', $publisher->getModule()->getVar('name'));
     $tpl->assign('channel_language', XoopsLocale::getLangCode());
-    $tpl->assign('image_url', \XoopsBaseConfig::get('url') . '/images/logo.gif');
-    $dimention = getimagesize(\XoopsBaseConfig::get('root-path') . '/images/logo.gif');
+    $tpl->assign('image_url', \XoopsBaseConfig::get('url').'/images/logo.gif');
+    $dimention = getimagesize(\XoopsBaseConfig::get('root-path').'/images/logo.gif');
     if (empty($dimention[0])) {
         $width = 140;
         $height = 140;

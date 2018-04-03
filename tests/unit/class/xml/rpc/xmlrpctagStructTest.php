@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class XoopsXmlRpcStructTest extends \PHPUnit\Framework\TestCase
 {
@@ -23,9 +23,9 @@ class XoopsXmlRpcStructTest extends \PHPUnit\Framework\TestCase
         $instance->add('instance', clone $instance);
         $value = $instance->render();
         $expected = '<value><struct>'
-            . '<member><name>instance</name>'
-            . '<value><struct></struct></value>'
-            . '</member></struct></value>';
+            .'<member><name>instance</name>'
+            .'<value><struct></struct></value>'
+            .'</member></struct></value>';
         $this->assertSame($expected, $value);
     }
 }

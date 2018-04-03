@@ -18,7 +18,6 @@ while (ob_get_level()) {
     ob_end_flush();
 }
 
-
 /*
 <!--
  1. Put your tests in a folder called "tests" (with an .htaccess "deny from all")

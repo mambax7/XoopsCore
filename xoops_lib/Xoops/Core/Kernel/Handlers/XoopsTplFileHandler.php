@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS kernel class
+ * XOOPS kernel class.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
@@ -31,16 +30,15 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
  * of XOOPS template file class objects.
  *
  * @category  Xoops\Core\Kernel\XoopsTplFileHandler
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsTplFileHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db database
      */
@@ -50,7 +48,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * retrieve a specific XoopsTplFile
+     * retrieve a specific XoopsTplFile.
      *
      * @param int  $id        tpl_id of the block to retrieve
      * @param bool $getsource true = also return source
@@ -82,16 +80,17 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
                 return $tplfile;
             }
             $allrows = $result->fetchAll();
-            if (count($allrows) === 1) {
+            if (1 === count($allrows)) {
                 $tplfile = new XoopsTplFile();
                 $tplfile->assignVars(reset($allrows));
             }
         }
+
         return $tplfile;
     }
 
     /**
-     * loadSource
+     * loadSource.
      *
      * @param XoopsTplFile $tplfile object
      *
@@ -112,11 +111,12 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
             $myrow = $result->fetch(\PDO::FETCH_ASSOC);
             $tplfile->assignVar('tpl_source', $myrow['tpl_source']);
         }
+
         return true;
     }
 
     /**
-     * write a new TplFile into the database
+     * write a new TplFile into the database.
      *
      * @param XoopsTplFile $tplfile object
      *
@@ -167,13 +167,14 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
             if (empty($tpl_id)) {
                 $tpl_id = $this->db2->lastInsertId();
             }
-            if (isset($tpl_source) && $tpl_source !== '') {
+            if (isset($tpl_source) && '' !== $tpl_source) {
                 $values = [
                     'tpl_id' => $tpl_id,
                     'tpl_source' => $tpl_source,
                 ];
                 if (!$this->db2->insertPrefix('system_tplsource', $values)) {
                     $this->db2->deletePrefix('system_tplfile', ['tpl_id' => $tpl_id]);
+
                     return false;
                 }
             }
@@ -194,7 +195,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
                 return false;
             }
 
-            if (isset($tpl_source) && $tpl_source !== '') {
+            if (isset($tpl_source) && '' !== $tpl_source) {
                 $values = [
                     // 'tpl_id' => $tpl_id,
                     'tpl_source' => $tpl_source,
@@ -209,7 +210,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * forceUpdate
+     * forceUpdate.
      *
      * @param XoopsTplFile $tplfile object
      *
@@ -255,7 +256,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
                 return false;
             }
 
-            if (isset($tpl_source) && $tpl_source !== '') {
+            if (isset($tpl_source) && '' !== $tpl_source) {
                 $tpl_id = 0;
                 $values = [
                     // 'tpl_id' => $tpl_id,
@@ -268,11 +269,12 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
 
             return true;
         }
+
         return false;
     }
 
     /**
-     * delete a block from the database
+     * delete a block from the database.
      *
      * @param XoopsTplFile $tplfile object
      *
@@ -285,11 +287,12 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
             return false;
         }
         $this->db2->deletePrefix('system_tplsource', ['tpl_id' => $tpl_id]);
+
         return true;
     }
 
     /**
-     * getTplObjects
+     * getTplObjects.
      *
      * @param CriteriaElement|null $criteria  criteria to match
      * @param bool                 $getsource include the source
@@ -330,11 +333,12 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
             }
             unset($tplfile);
         }
+
         return $ret;
     }
 
     /**
-     * getModuleTplCount
+     * getModuleTplCount.
      *
      * @param string $tplset tpl set name
      *
@@ -358,15 +362,16 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
             return $ret;
         }
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
-            if ($myrow['tpl_module'] !== '') {
+            if ('' !== $myrow['tpl_module']) {
                 $ret[$myrow['tpl_module']] = $myrow['count'];
             }
         }
+
         return $ret;
     }
 
     /**
-     * Find Template File
+     * Find Template File.
      *
      * @param string|null $tplset    template set
      * @param string|null $type      template type
@@ -403,11 +408,12 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
                 $criteria->add(new Criteria('tpl_type', $type));
             }
         }
+
         return $this->getTplObjects($criteria, $getsource, false);
     }
 
     /**
-     * Template Exists
+     * Template Exists.
      *
      * @param string $tplname     template name
      * @param string $tplset_name set name
@@ -421,6 +427,7 @@ class XoopsTplFileHandler extends XoopsPersistableObjectHandler
         if ($this->getCount($criteria) > 0) {
             return true;
         }
+
         return false;
     }
 }

@@ -14,36 +14,35 @@ namespace Xoops\Core\Kernel;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
- * Collection of multiple CriteriaElement objects
+ * Collection of multiple CriteriaElement objects.
  *
  * @category  Xoops\Core\Kernel\CriteriaCompo
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Nathan Dial <ndial@trillion21.com>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0.0
  */
 class CriteriaCompo extends CriteriaElement
 {
     /**
-     * The elements of the collection
+     * The elements of the collection.
      *
      * @var CriteriaElement[] array of objects
      */
     protected $criteriaElements = [];
 
     /**
-     * Conditions
+     * Conditions.
      *
      * @var array
      */
     protected $conditions = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param CriteriaElement|null $ele       a criteria element to start the compo
      * @param string               $condition joining condition for element, AND or OR
@@ -56,7 +55,7 @@ class CriteriaCompo extends CriteriaElement
     }
 
     /**
-     * add a criteria element
+     * add a criteria element.
      *
      * @param CriteriaElement $criteriaElement a criteria element to add to the compo
      * @param string          $condition       joining condition for element, AND or OR
@@ -67,11 +66,12 @@ class CriteriaCompo extends CriteriaElement
     {
         $this->criteriaElements[] = $criteriaElement;
         $this->conditions[] = $condition;
+
         return $this;
     }
 
     /**
-     * Make the criteria into a query string
+     * Make the criteria into a query string.
      *
      * @return string
      */
@@ -83,34 +83,36 @@ class CriteriaCompo extends CriteriaElement
                 continue;
             }
             /* @var $element CriteriaElement */
-            if ($i === 0) {
+            if (0 === $i) {
                 $ret = $element->render();
             } else {
                 if (!$render = $element->render()) {
                     continue;
                 }
-                $ret .= ' ' . $this->conditions[$i] . ' (' . $render . ')';
+                $ret .= ' '.$this->conditions[$i].' ('.$render.')';
             }
             $ret = "({$ret})";
         }
-        $ret = ($ret === '()') ? '(1)' : $ret;
+        $ret = ('()' === $ret) ? '(1)' : $ret;
+
         return $ret;
     }
 
     /**
-     * Make the criteria into a SQL "WHERE" clause
+     * Make the criteria into a SQL "WHERE" clause.
      *
      * @return string
      */
     public function renderWhere()
     {
         $ret = $this->render();
-        $ret = ($ret !== '') ? 'WHERE ' . $ret : $ret;
+        $ret = ('' !== $ret) ? 'WHERE '.$ret : $ret;
+
         return $ret;
     }
 
     /**
-     * Generate an LDAP filter from criteria
+     * Generate an LDAP filter from criteria.
      *
      * @return string
      * @author Nathan Dial ndial@trillion21.com
@@ -120,19 +122,20 @@ class CriteriaCompo extends CriteriaElement
         $ret = '';
         foreach ($this->criteriaElements as $i => $element) {
             /* @var $element CriteriaElement */
-            if ($i === 0) {
+            if (0 === $i) {
                 $ret = $element->renderLdap();
             } else {
                 $cond = strtoupper($this->conditions[$i]);
-                $op = ($cond === 'OR') ? '|' : '&';
-                $ret = "({$op}{$ret}" . $element->renderLdap() . ')';
+                $op = ('OR' === $cond) ? '|' : '&';
+                $ret = "({$op}{$ret}".$element->renderLdap().')';
             }
         }
+
         return $ret;
     }
 
     /**
-     * Render as Doctrine QueryBuilder instructions
+     * Render as Doctrine QueryBuilder instructions.
      *
      * @param QueryBuilder $qb        query builder instance
      * @param string       $whereMode how does this fit in the passed in QueryBuilder?
@@ -142,7 +145,7 @@ class CriteriaCompo extends CriteriaElement
      */
     public function renderQb(QueryBuilder $qb = null, $whereMode = '')
     {
-        if ($qb === null) {
+        if (null === $qb) {
             $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
             $whereMode = ''; // first entry in new instance must be where
         }
@@ -150,32 +153,35 @@ class CriteriaCompo extends CriteriaElement
         $expr = '';
         foreach ($this->criteriaElements as $i => $element) {
             $expr_part = $element->buildExpressionQb($qb);
-            if ($expr_part !== false) {
-                if ($i === 0) {
+            if (false !== $expr_part) {
+                if (0 === $i) {
                     $expr = $expr_part;
                 } else {
-                    $expr .= ' ' . strtoupper($this->conditions[$i]) . ' ' . $expr_part;
+                    $expr .= ' '.strtoupper($this->conditions[$i]).' '.$expr_part;
                 }
             }
         }
 
         if (!empty($expr)) {
-            $expr = '(' . $expr . ')'; // group all conditions in this compo
+            $expr = '('.$expr.')'; // group all conditions in this compo
 
             switch (strtolower($whereMode)) {
                 case 'and':
                     $qb->andWhere($expr);
+
                     break;
                 case 'or':
                     $qb->orWhere($expr);
+
                     break;
                 case '':
                     $qb->where($expr);
+
                     break;
             }
         }
 
-        if ($this->limit !== 0 || $this->start !== 0) {
+        if (0 !== $this->limit || 0 !== $this->start) {
             $qb->setFirstResult($this->start)
                 ->setMaxResults($this->limit);
         }
@@ -187,6 +193,7 @@ class CriteriaCompo extends CriteriaElement
         if (!empty($this->sort)) {
             $qb->orderBy($this->sort, $this->order);
         }
+
         return $qb;
     }
 
@@ -207,18 +214,19 @@ class CriteriaCompo extends CriteriaElement
         $expr = false;
         foreach ($this->criteriaElements as $i => $element) {
             $expr_part = $element->buildExpressionQb($qb);
-            if ($expr_part !== false) {
-                if ($i === 0) {
+            if (false !== $expr_part) {
+                if (0 === $i) {
                     $expr = $expr_part;
                 } else {
-                    $expr .= ' ' . strtoupper($this->conditions[$i]) . ' ' . $expr_part;
+                    $expr .= ' '.strtoupper($this->conditions[$i]).' '.$expr_part;
                 }
             }
         }
 
         if (!empty($expr)) {
-            $expr = '(' . $expr . ')'; // group all conditions in this compo
+            $expr = '('.$expr.')'; // group all conditions in this compo
         }
+
         return $expr;
     }
 }

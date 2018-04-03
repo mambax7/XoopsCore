@@ -10,15 +10,13 @@
 */
 
 /**
- * DebugbarLogger core preloads
+ * DebugbarLogger core preloads.
  *
- * @package   Debugbar
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
-
 $modversion = [];
 $modversion['name'] = _MI_DEBUGBAR_NAME;
 $modversion['description'] = _MI_DEBUGBAR_DSC;

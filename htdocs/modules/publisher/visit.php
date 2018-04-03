@@ -14,15 +14,12 @@ use Xmf\Request;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 
 $xoops = Xoops::getInstance();
 $publisher = Publisher::getInstance();
@@ -32,7 +29,7 @@ $fileId = Request::getInt('fileid');
 /* @var $fileObj PublisherFile */
 $fileObj = $publisher->getFileHandler()->get($fileId);
 
-if ($fileObj->getVar('status') !== _PUBLISHER_STATUS_FILE_ACTIVE) {
+if (_PUBLISHER_STATUS_FILE_ACTIVE !== $fileObj->getVar('status')) {
     $xoops->redirect('javascript:history.go(-1)', 1, XoopsLocale::E_NO_ACCESS_PERMISSION);
 }
 
@@ -49,10 +46,10 @@ $categoryObj = $itemObj->category();
 $fileObj->updateCounter();
 
 if (!preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {
-    header('Location: ' . $fileObj->getFileUrl());
+    header('Location: '.$fileObj->getFileUrl());
 }
 
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 echo '<html><head><meta http-equiv="Refresh" content="0; URL='
-    . $myts->htmlSpecialChars($fileObj->getFileUrl()) . '"></head><body></body></html>';
+    .$myts->htmlSpecialChars($fileObj->getFileUrl()).'"></head><body></body></html>';
 exit();

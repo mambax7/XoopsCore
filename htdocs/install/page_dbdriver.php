@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer database configuration page
+ * Installer database configuration page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,8 +22,7 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 /* @var $wizard XoopsInstallWizard */
 $wizard = $_SESSION['wizard'];
@@ -36,7 +34,7 @@ if (array_key_exists('DB_PARAMETERS', $settings)) {
     unset($settings['DB_PARAMETERS']);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $params = ['DB_DRIVER', 'DB_PREFIX'];
     foreach ($params as $name) {
         $settings[$name] = $_POST[$name];
@@ -45,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($settings['DB_DRIVER'])) {
+if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($settings['DB_DRIVER'])) {
     $_SESSION['settings'] = $settings;
     $wizard->redirectToPage('+1');
     exit();
@@ -57,7 +55,7 @@ if (@empty($settings['DB_DRIVER'])) {
         $settings,
         [
             'DB_DRIVER' => 'pdo_mysql',
-            'DB_PREFIX' => 'x' . substr(md5(time()), 0, 3),
+            'DB_PREFIX' => 'x'.substr(md5(time()), 0, 3),
         ]
     );
 }
@@ -65,7 +63,7 @@ ob_start();
 ?>
 <?php
 if (!empty($error)) {
-    echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
+    echo '<div class="x2-note errorMsg">'.$error."</div>\n";
 }
 ?>
 <fieldset>
@@ -93,4 +91,4 @@ $_SESSION['pageHasHelp'] = true;
 $_SESSION['pageHasForm'] = true;
 $_SESSION['content'] = $content;
 $_SESSION['settings'] = $settings;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

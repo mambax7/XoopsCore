@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Xmf\Database\Tables;
 use Xoops\Core\Database\Factory;
@@ -356,7 +356,7 @@ class TablesTest extends \PHPUnit\Framework\TestCase
 
         $queue = $this->object->dumpQueue();
         $this->assertTrue(is_array($queue));
-        $this->assertTrue(count($queue) === 1);
+        $this->assertTrue(1 === count($queue));
         $this->assertSame($expected, reset($queue));
 
         $this->object->resetQueue();
@@ -367,6 +367,6 @@ class TablesTest extends \PHPUnit\Framework\TestCase
 
     protected function prefix($table)
     {
-        return $this->prefix . '_' . $table;
+        return $this->prefix.'_'.$table;
     }
 }

@@ -4,7 +4,7 @@ namespace Xmf\Test;
 
 use Xmf\Metagen;
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class MetagenTest extends \PHPUnit\Framework\TestCase
 {
@@ -142,7 +142,7 @@ EOT;
         $expected = 'XOOPS-generates-SEO-titles';
         $actual = Metagen::generateSeoTitle($title);
         $this->assertSame($expected, $actual, $actual);
-        $expected = $expected . '.html';
+        $expected = $expected.'.html';
         $actual = Metagen::generateSeoTitle($title, '.html');
         $this->assertSame($expected, $actual, $actual);
         $title = 'catégorie. 2 xmarticle';
@@ -161,43 +161,43 @@ significant keywords.
 EOT;
 
         $needles = [];
-        $expected = 'Testing this method will require a long' . $ellipsis;
+        $expected = 'Testing this method will require a long'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['testing'];
-        $expected = 'Testing this method will require a long' . $ellipsis;
+        $expected = 'Testing this method will require a long'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['significant'];
-        $expected = $ellipsis . 'very different significant keywords.';
+        $expected = $ellipsis.'very different significant keywords.';
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['one hundred'];
-        $expected = $ellipsis . 'that will exceed one hundred twenty' . $ellipsis;
+        $expected = $ellipsis.'that will exceed one hundred twenty'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['testing', 'significant', 'one hundred'];
-        $expected = 'Testing this method will require a long' . $ellipsis;
+        $expected = 'Testing this method will require a long'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['significant', 'one hundred', 'testing'];
-        $expected = 'Testing this method will require a long' . $ellipsis;
+        $expected = 'Testing this method will require a long'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $needles = ['will'];
-        $expected = 'Testing this method will require a long' . $ellipsis;
+        $expected = 'Testing this method will require a long'.$ellipsis;
         $actual = Metagen::getSearchSummary($haystack, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
 
         $nowhitespace = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0abcdefghijklmnopqrstuvwxyz';
         $needles = ['0'];
-        $expected = $ellipsis . 'GHIJKLMNOPQRSTUVWXYZ0abcdefghijklmnopqrs' . $ellipsis;
+        $expected = $ellipsis.'GHIJKLMNOPQRSTUVWXYZ0abcdefghijklmnopqrs'.$ellipsis;
         $actual = Metagen::getSearchSummary($nowhitespace, $needles, 40);
         $this->assertSame($expected, $actual, $actual);
     }

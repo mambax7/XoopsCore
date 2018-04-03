@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $skinversion['template'] = 'templates/template.tpl';
 
 $skinversion['css'] = 'css/superfish.css';
@@ -27,15 +25,15 @@ $skinversion['js'] = ['../../js/jquery-1.3.2.min.js',
     '../../js/superfish.js',
 ];
 
-$header = "\n" . '<script type="text/javascript">';
-$header .= "\n" . '  var $sf = jQuery.noConflict()';
-$header .= "\n" . '  $sf(function(){';
-$header .= "\n" . '    $sf(\'ul.sf-menu\').superfish({';
-$header .= "\n" . '       delay:       1000,';
-$header .= "\n" . '       animation:   {opacity:\'show\',height:\'show\'},';
-$header .= "\n" . '       speed:       \'fast\'';
-$header .= "\n" . '    });';
-$header .= "\n" . '  });';
-$header .= "\n" . '</script>';
+$header = "\n".'<script type="text/javascript">';
+$header .= "\n".'  var $sf = jQuery.noConflict()';
+$header .= "\n".'  $sf(function(){';
+$header .= "\n".'    $sf(\'ul.sf-menu\').superfish({';
+$header .= "\n".'       delay:       1000,';
+$header .= "\n".'       animation:   {opacity:\'show\',height:\'show\'},';
+$header .= "\n".'       speed:       \'fast\'';
+$header .= "\n".'    });';
+$header .= "\n".'  });';
+$header .= "\n".'</script>';
 
 $skinversion['header'] = $header;

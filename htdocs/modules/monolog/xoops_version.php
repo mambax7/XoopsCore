@@ -10,15 +10,13 @@
 */
 
 /**
- * Monolog module definitions
+ * Monolog module definitions.
  *
- * @package   Monolog
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
-
 $modversion = [];
 $modversion['name'] = _MI_MONOLOG_NAME;
 $modversion['description'] = _MI_MONOLOG_DSC;
@@ -154,7 +152,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype' => 'textbox',
     'valuetype' => 'text',
-    'default' => \XoopsBaseConfig::get('var-path') . '/logs/xoops_monolog.log',
+    'default' => \XoopsBaseConfig::get('var-path').'/logs/xoops_monolog.log',
     'options' => [],
 ];
 

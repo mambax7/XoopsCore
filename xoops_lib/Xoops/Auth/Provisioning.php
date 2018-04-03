@@ -15,16 +15,15 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 /**
- * Authentication provisioning class
+ * Authentication provisioning class.
  *
  * This class is responsible to provide synchronisation method to Xoops User Database
  *
  * @category  Xoops\Auth
- * @package   Provisioning
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class Provisioning
@@ -40,7 +39,7 @@ class Provisioning
     public $ldap_provisioning_upd;
 
     /**
-     * var array
+     * var array.
      */
     public $ldap_field_mapping;
 
@@ -55,7 +54,7 @@ class Provisioning
     protected $auth_instance;
 
     /**
-     * Authentication Service constructor
+     * Authentication Service constructor.
      *
      * @param AuthAbstract $auth_instance auth instance
      */
@@ -70,7 +69,7 @@ class Provisioning
     }
 
     /**
-     * getInstance()
+     * getInstance().
      *
      * @param AuthAbstract $auth_instance auth instance
      *
@@ -87,7 +86,7 @@ class Provisioning
     }
 
     /**
-     * Return a Xoops User Object
+     * Return a Xoops User Object.
      *
      * @param string $uname username
      *
@@ -99,14 +98,15 @@ class Provisioning
         $member_handler = $xoops->getHandlerMember();
         $criteria = new Criteria('uname', $uname);
         $getuser = $member_handler->getUsers($criteria);
-        if (count($getuser) === 1) {
+        if (1 === count($getuser)) {
             return $getuser[0];
         }
+
         return false;
     }
 
     /**
-     * Launch the synchronisation process
+     * Launch the synchronisation process.
      *
      * @param string $data  data
      * @param string $uname username
@@ -136,7 +136,7 @@ class Provisioning
     }
 
     /**
-     * Add a new user to the system
+     * Add a new user to the system.
      *
      * @param string $data  data
      * @param string $uname username
@@ -171,13 +171,13 @@ class Provisioning
 
             return $newuser;
         }
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $newuser->getHtmlErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/user.php', 5, $newuser->getHtmlErrors());
 
         return $ret;
     }
 
     /**
-     * Modify user information
+     * Modify user information.
      *
      * @param XoopsUser $xoopsUser user object
      * @param string    $data      data
@@ -198,13 +198,13 @@ class Provisioning
         if ($member_handler->insertUser($xoopsUser)) {
             return $xoopsUser;
         }
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/user.php', 5, $xoopsUser->getHtmlErrors());
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/user.php', 5, $xoopsUser->getHtmlErrors());
 
         return $ret;
     }
 
     /**
-     * Modify a user
+     * Modify a user.
      *
      * @return boolean|null
      */
@@ -213,7 +213,7 @@ class Provisioning
     }
 
     /**
-     * Suspend a user
+     * Suspend a user.
      *
      * @return boolean|null
      */
@@ -222,7 +222,7 @@ class Provisioning
     }
 
     /**
-     * Restore a user
+     * Restore a user.
      *
      * @return boolean|null
      */
@@ -231,7 +231,7 @@ class Provisioning
     }
 
     /**
-     * Add a new user to the system
+     * Add a new user to the system.
      *
      * @return boolean|null
      */
@@ -240,7 +240,7 @@ class Provisioning
     }
 
     /**
-     * setVarsMapping
+     * setVarsMapping.
      *
      * @param object $object user object
      * @param array  $data   data

@@ -1,6 +1,6 @@
 <?php
 /**
- * images extension module
+ * images extension module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         images
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 define('_IMAGES_TINYMCE_TITLE', 'Insert image form Images module');
 define('_IMAGES_TINYMCE_BROWSER', 'Images');
 define('_IMAGES_TINYMCE_ADD', 'Add image');

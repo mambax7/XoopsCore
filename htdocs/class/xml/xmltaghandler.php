@@ -1,6 +1,6 @@
 <?php
 /**
- * Location: xml/XmlTagHandler
+ * Location: xml/XmlTagHandler.
  *
  * XmlTagHandler
  *

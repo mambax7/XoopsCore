@@ -1,22 +1,22 @@
 <?php
 
-include('config/config.php');
+include 'config/config.php';
 if ($_SESSION['RF']['verify'] !== 'RESPONSIVEfilemanager') {
     die('forbiden');
 }
-include('include/utils.php');
+include 'include/utils.php';
 
-if (strpos($_POST['path'], '/') === 0
-    || strpos($_POST['path'], '../') !== false
-    || strpos($_POST['path'], './') === 0) {
+if (0 === strpos($_POST['path'], '/')
+    || false !== strpos($_POST['path'], '../')
+    || 0 === strpos($_POST['path'], './')) {
     die('wrong path');
 }
 
-if (strpos($_POST['name'], '/') !== false) {
+if (false !== strpos($_POST['name'], '/')) {
     die('wrong path');
 }
 
-$path = $current_path . $_POST['path'];
+$path = $current_path.$_POST['path'];
 $name = $_POST['name'];
 
 $info = pathinfo($name);
@@ -27,8 +27,8 @@ if (!in_array(fix_strtolower($info['extension']), $ext, true)) {
 header('Pragma: private');
 header('Cache-control: private, must-revalidate');
 header('Content-Type: application/octet-stream');
-header('Content-Length: ' . (string) (filesize($path . $name)));
-header('Content-Disposition: attachment; filename="' . ($name) . '"');
-readfile($path . $name);
+header('Content-Length: '.(string) (filesize($path.$name)));
+header('Content-Disposition: attachment; filename="'.($name).'"');
+readfile($path.$name);
 
 exit;

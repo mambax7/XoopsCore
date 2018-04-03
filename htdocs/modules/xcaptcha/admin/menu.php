@@ -1,6 +1,6 @@
 <?php
 /**
- * Xcaptcha extension module
+ * Xcaptcha extension module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xcaptcha
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $cpt = 1;
 $adminmenu[$cpt]['title'] = _MI_XCAPTCHA_INDEX;
 $adminmenu[$cpt]['link'] = 'admin/index.php';
@@ -24,7 +22,7 @@ $adminmenu[$cpt]['icon'] = 'home.png';
 
 static $xcaptcha_handler;
 if (!isset($xcaptcha_handler)) {
-    include_once dirname(__DIR__) . '/class/xcaptcha.php';
+    include_once dirname(__DIR__).'/class/xcaptcha.php';
     $xcaptcha_handler = new Xcaptcha();
 }
 
@@ -34,8 +32,8 @@ foreach (array_keys($xcaptcha_handler->getPluginList()) as $key) {
     ++$cpt;
     $xoops->loadLanguage($key, 'xcaptcha');
 
-    $adminmenu[$cpt]['title'] = constant('_MI_XCAPTCHA_ADMENU_' . strtoupper($key));
-    $adminmenu[$cpt]['link'] = 'admin/index.php?type=' . $key;
+    $adminmenu[$cpt]['title'] = constant('_MI_XCAPTCHA_ADMENU_'.strtoupper($key));
+    $adminmenu[$cpt]['link'] = 'admin/index.php?type='.$key;
     $adminmenu[$cpt]['icon'] = 'administration.png';
 }
 

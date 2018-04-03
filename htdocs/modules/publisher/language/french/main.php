@@ -4,7 +4,7 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
 
 //define("_MD_PUBLISHER_ADD_FILE_INTRO", "s'il vous plaît veuillez remplir ce formulaire afin de joindre un fichier à ce présent article: %s'.");
@@ -103,8 +103,7 @@ define('_MD_PUBLISHER_CLOSE', 'Fermer');
 define('_MD_PUBLISHER_ENLARGEIMG', 'Agrandir');
 define('_MD_PUBLISHER_OF', ' de ');
 
-
-/**
+/*
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) <http://www.afux.org/>
  * @translation     grandoc 2010-02-06
  * @specification   _LANGCODE: fr

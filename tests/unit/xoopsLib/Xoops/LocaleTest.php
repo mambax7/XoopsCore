@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 {
@@ -56,12 +56,12 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
         $path = \XoopsBaseConfig::get('root-path');
         if (!class_exists('Comments', false)) {
             \XoopsLoad::addMap([
-                'comments' => $path . '/modules/comments/class/helper.php',
+                'comments' => $path.'/modules/comments/class/helper.php',
             ]);
         }
         if (!class_exists('MenusDecorator', false)) {
             \XoopsLoad::addMap([
-                'menusdecorator' => $path . '/modules/menus/class/decorator.php',
+                'menusdecorator' => $path.'/modules/menus/class/decorator.php',
             ]);
         }
 
@@ -79,7 +79,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $dirname = 'xoops';
         $x = $class::getClassFromDirname($dirname);
-        $this->assertSame(ucfirst($dirname) . 'Locale', $x);
+        $this->assertSame(ucfirst($dirname).'Locale', $x);
     }
 
     public function test_getThemeClassFromDirname()
@@ -89,7 +89,7 @@ class Xoops_LocaleTest extends \PHPUnit\Framework\TestCase
 
         $dirname = 'xoops';
         $x = $class::getThemeClassFromDirname($dirname);
-        $this->assertSame(ucfirst($dirname) . 'ThemeLocale', $x);
+        $this->assertSame(ucfirst($dirname).'ThemeLocale', $x);
     }
 
     public function test_getUserLocales()

@@ -10,13 +10,12 @@
 */
 
 /**
- * maintenance extensions
+ * maintenance extensions.
  *
- * @package   Maintenance
  * @author    Mage Grégory (AKA Mage), Cointin Maxime (AKA Kraven30)
  * @copyright 2000-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class maintenance
 {
@@ -31,17 +30,17 @@ class maintenance
     public $prefix;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
         $this->db = $db;
-        $this->prefix = $this->db->prefix . '_';
+        $this->prefix = $this->db->prefix.'_';
     }
 
     /**
-     * Display Tables
+     * Display Tables.
      *
      * @param bool $array true to return as array, false to return as comma delimited string
      *
@@ -51,7 +50,7 @@ class maintenance
     {
         $tables = [];
         $result = $this->db->queryF('SHOW TABLES');
-        while (($myrow = $this->db->fetchArray($result)) !== false) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value = array_values($myrow);
             $value = substr($value[0], strlen($this->prefix));
             $tables[$value] = $value;
@@ -59,11 +58,12 @@ class maintenance
         if ($array) {
             return $tables;
         }
+
         return implode(',', $tables);
     }
 
     /**
-     * Dump table structure
+     * Dump table structure.
      *
      * @param string $table table name
      * @param int    $drop  1 to include drop table if exists
@@ -74,25 +74,26 @@ class maintenance
     {
         $sql_text = '';
         $verif = false;
-        $result = $this->db->queryF('SHOW create table `' . $table . '`;');
+        $result = $this->db->queryF('SHOW create table `'.$table.'`;');
         if ($result) {
             if ($row = $this->db->fetchArray($result)) {
-                $sql_text .= '# Table structure for table `' . $table . "` \n\n";
-                if ($drop === 1) {
-                    $sql_text .= 'DROP TABLE IF EXISTS `' . $table . "`;\n\n";
+                $sql_text .= '# Table structure for table `'.$table."` \n\n";
+                if (1 === $drop) {
+                    $sql_text .= 'DROP TABLE IF EXISTS `'.$table."`;\n\n";
                 }
                 $verif = true;
-                $sql_text .= $row['Create Table'] . ";\n\n";
+                $sql_text .= $row['Create Table'].";\n\n";
             }
         }
         $this->db->freeRecordSet($result);
         $ret['sql_text'] = $sql_text;
         $ret['structure'] = $verif;
+
         return $ret;
     }
 
     /**
-     * Dump table data
+     * Dump table data.
      *
      * @param string $table table name
      *
@@ -102,7 +103,7 @@ class maintenance
     {
         $sql_text = '';
         $count = 0;
-        $result = $this->db->queryF('SELECT * FROM ' . $table . ';');
+        $result = $this->db->queryF('SELECT * FROM '.$table.';');
         if ($result) {
             $num_rows = $this->db->getRowsNum($result);
             $num_fields = $this->db->getFieldsNum($result);
@@ -115,21 +116,22 @@ class maintenance
                     ++$i;
                 }
 
-                $sql_text .= 'INSERT INTO `' . $table . "` values\n";
+                $sql_text .= 'INSERT INTO `'.$table."` values\n";
                 $index = 0;
                 while ($row = $this->db->fetchRow($result)) {
                     ++$count;
                     $sql_text .= '(';
                     for ($i = 0; $i < $num_fields; ++$i) {
-                        if ($row[$i] === null) {
+                        if (null === $row[$i]) {
                             $sql_text .= 'null';
                         } else {
                             switch ($field_type[$i]) {
                                 case 'int':
                                     $sql_text .= $row[$i];
+
                                     break;
                                 default:
-                                    $sql_text .= "'" . $this->db->escape($row[$i]) . "'";
+                                    $sql_text .= "'".$this->db->escape($row[$i])."'";
                             }
                         }
                         if ($i < $num_fields - 1) {
@@ -149,13 +151,14 @@ class maintenance
             }
         }
         $this->db->freeRecordSet($result);
-        $ret['sql_text'] = $sql_text . "\n\n";
+        $ret['sql_text'] = $sql_text."\n\n";
         $ret['records'] = $count;
+
         return $ret;
     }
 
     /**
-     * Dump Write
+     * Dump Write.
      *
      * @param string $sql_text SQL to write
      *
@@ -163,8 +166,8 @@ class maintenance
      */
     public function dump_write($sql_text)
     {
-        $file_name = 'dump_' . date('Y.m.d') . '_' . date('H.i.s') . '.sql';
-        $path_file = '../dump/' . $file_name;
+        $file_name = 'dump_'.date('Y.m.d').'_'.date('H.i.s').'.sql';
+        $path_file = '../dump/'.$file_name;
         if (file_put_contents($path_file, $sql_text)) {
             $write = true;
         } else {
@@ -172,6 +175,7 @@ class maintenance
         }
         $ret['file_name'] = $file_name;
         $ret['write'] = $write;
+
         return $ret;
     }
 }

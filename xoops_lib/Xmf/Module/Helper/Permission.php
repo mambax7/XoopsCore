@@ -16,15 +16,14 @@ use Xoops\Core\Handler\Factory;
 use Xoops\Form\SelectGroup;
 
 /**
- * Methods to help manage permissions within a module
+ * Methods to help manage permissions within a module.
  *
  * @category  Xmf\Module\Helper\Permission
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Permission extends AbstractHelper
 {
@@ -54,13 +53,13 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Check if the user has permission for an item
+     * Check if the user has permission for an item.
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
      * @param bool   $trueifadmin  true to always return true for admin groups
      *
-     * @return bool   true if user has access, false if not
+     * @return bool true if user has access, false if not
      **/
     public function checkPermission($gperm_name, $gperm_itemid, $trueifadmin = true)
     {
@@ -77,7 +76,7 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Redirect to a url if user does not have permission for an item
+     * Redirect to a url if user does not have permission for an item.
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
@@ -111,27 +110,28 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Get array of groups with named permission to an item
+     * Get array of groups with named permission to an item.
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
      *
-     * @return array  groups with permission for item
+     * @return array groups with permission for item
      **/
     public function getGroupsForItem($gperm_name, $gperm_itemid)
     {
         $gperm_itemid = (int) $gperm_itemid;
+
         return $this->permissionHandler->getGroupIds($gperm_name, $gperm_itemid, $this->mid);
     }
 
     /**
-     * Save group permissions for an item
+     * Save group permissions for an item.
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
      * @param array  $groups       group ids to grant permission to
      *
-     * @return bool   true if no errors
+     * @return bool true if no errors
      **/
     public function savePermissionForItem($gperm_name, $gperm_itemid, $groups)
     {
@@ -161,12 +161,12 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Delete all permissions for an item and a specific name or array of names
+     * Delete all permissions for an item and a specific name or array of names.
      *
      * @param string|string[] $gperm_name   name(s) of the permission to delete
      * @param int             $gperm_itemid id of the object to check
      *
-     * @return bool   true if no errors
+     * @return bool true if no errors
      */
     public function deletePermissionForItem($gperm_name, $gperm_itemid)
     {
@@ -178,6 +178,7 @@ class Permission extends AbstractHelper
         foreach ($gperm_name as $pname) {
             $return = $return && $this->permissionHandler->deleteByModule($this->mid, $pname, $gperm_itemid);
         }
+
         return $return;
     }
 
@@ -224,7 +225,7 @@ class Permission extends AbstractHelper
 
     /**
      * Generate a default name for a Xoops\Form\SelectGroup based on
-     * module, gperm_name and gperm_itemid
+     * module, gperm_name and gperm_itemid.
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
@@ -234,8 +235,8 @@ class Permission extends AbstractHelper
     public function defaultFieldName($gperm_name, $gperm_itemid)
     {
         $gperm_itemid = (int) $gperm_itemid;
-        $name = $this->module->getVar('dirname') . '_' .
-            $gperm_name . '_' . $gperm_itemid;
+        $name = $this->module->getVar('dirname').'_'.
+            $gperm_name.'_'.$gperm_itemid;
 
         return $name;
     }

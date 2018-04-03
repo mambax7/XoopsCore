@@ -10,17 +10,16 @@
  */
 
 /**
- * Abstract base class for Database access classes
+ * Abstract base class for Database access classes.
  *
  * PHP version 5.3
  *
  * @category   Xoops\Class\Database\Database
- * @package    Database
  * @author     Kazumi Ono <onokazu@xoops.org>
  * @copyright  2013 XOOPS Project (http://xoops.org)
  * @license    GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version    Release:2.6
- * @link       http://xoops.org
+ * @see       http://xoops.org
  * @since      2.6.0
  * @abstract
  * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
@@ -28,28 +27,28 @@
 abstract class AbstractXoopsDatabase
 {
     /**
-     * Database connection
+     * Database connection.
      *
      * @var resource
      */
     public $conn;
 
     /**
-     * Prefix for tables in the database
+     * Prefix for tables in the database.
      *
      * @var string
      */
     public $prefix = '';
 
     /**
-     * If statements that modify the database are selected
+     * If statements that modify the database are selected.
      *
      * @var boolean
      */
     public $allowWebChanges = false;
 
     /**
-     * set the prefix for tables in the database
+     * set the prefix for tables in the database.
      *
      * @param string $value table prefix
      *
@@ -62,7 +61,7 @@ abstract class AbstractXoopsDatabase
     }
 
     /**
-     * public function prefix($tablename = '')
+     * public function prefix($tablename = '').
      *
      * attach the prefix.'_' to a given tablename
      * if tablename is empty, only prefix will be returned
@@ -74,14 +73,15 @@ abstract class AbstractXoopsDatabase
      */
     public function prefix($tablename = '')
     {
-        if ($tablename !== '') {
-            return $this->prefix . '_' . $tablename;
+        if ('' !== $tablename) {
+            return $this->prefix.'_'.$tablename;
         }
+
         return $this->prefix;
     }
 
     /**
-     * connect to the database
+     * connect to the database.
      *
      * @param bool $selectdb select the database now?
      *
@@ -92,7 +92,7 @@ abstract class AbstractXoopsDatabase
     abstract public function connect($selectdb = true);
 
     /**
-     * generate an ID for a new row
+     * generate an ID for a new row.
      *
      * This is for compatibility only. Will always return 0, because MySQL supports
      * autoincrement for primary keys.
@@ -106,7 +106,7 @@ abstract class AbstractXoopsDatabase
     abstract public function genId($sequence);
 
     /**
-     * Get a result row as an enumerated array
+     * Get a result row as an enumerated array.
      *
      * @param resource $result resource to get result from
      *
@@ -117,7 +117,7 @@ abstract class AbstractXoopsDatabase
     abstract public function fetchRow($result);
 
     /**
-     * Fetch a result row as an associative array
+     * Fetch a result row as an associative array.
      *
      * @param resource $result resource to get result from
      *
@@ -128,7 +128,7 @@ abstract class AbstractXoopsDatabase
     abstract public function fetchArray($result);
 
     /**
-     * Fetch a result row as an associative array
+     * Fetch a result row as an associative array.
      *
      * @param resource $result resource to get result from
      *
@@ -139,7 +139,7 @@ abstract class AbstractXoopsDatabase
     abstract public function fetchBoth($result);
 
     /**
-     * Fetch a result row as an object
+     * Fetch a result row as an object.
      *
      * @param resource $result resource to get result from
      *
@@ -150,7 +150,7 @@ abstract class AbstractXoopsDatabase
     abstract public function fetchObject($result);
 
     /**
-     * Get the ID generated from the previous INSERT operation
+     * Get the ID generated from the previous INSERT operation.
      *
      * @return int
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
@@ -159,7 +159,7 @@ abstract class AbstractXoopsDatabase
     abstract public function getInsertId();
 
     /**
-     * Get number of rows in result
+     * Get number of rows in result.
      *
      * @param resource $result the resource containing the number of rows
      *
@@ -170,7 +170,7 @@ abstract class AbstractXoopsDatabase
     abstract public function getRowsNum($result);
 
     /**
-     * Get number of affected rows
+     * Get number of affected rows.
      *
      * @return int
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
@@ -179,7 +179,7 @@ abstract class AbstractXoopsDatabase
     abstract public function getAffectedRows();
 
     /**
-     * Close MySQL connection
+     * Close MySQL connection.
      *
      * @deprecated since version 2.6.0 - alpha 3. Switch to doctrine connector.
      * @abstract
@@ -198,7 +198,7 @@ abstract class AbstractXoopsDatabase
     abstract public function freeRecordSet($result);
 
     /**
-     * Returns the text of the error message from previous MySQL operation
+     * Returns the text of the error message from previous MySQL operation.
      *
      * @return bool Returns the error text from the last MySQL function,
      * or '' (the empty string) if no error occurred.
@@ -209,7 +209,7 @@ abstract class AbstractXoopsDatabase
 
     /**
      * Returns the numerical value of the error message from previous
-     * MySQL operation
+     * MySQL operation.
      *
      * @return int Returns the error number from the last MySQL function
      * , or 0 (zero) if no error occurred.
@@ -220,7 +220,7 @@ abstract class AbstractXoopsDatabase
 
     /**
      * Returns escaped string text with single
-     * quotes around it to be safely stored in database
+     * quotes around it to be safely stored in database.
      *
      * @param string $str unescaped string text
      *
@@ -242,7 +242,7 @@ abstract class AbstractXoopsDatabase
     abstract public function quote($string);
 
     /**
-     * Returns escaped string text without quotes around it
+     * Returns escaped string text without quotes around it.
      *
      * @param string $string unescaped string text
      *
@@ -253,7 +253,7 @@ abstract class AbstractXoopsDatabase
     abstract public function escape($string);
 
     /**
-     * perform a query on the database
+     * perform a query on the database.
      *
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
@@ -267,7 +267,7 @@ abstract class AbstractXoopsDatabase
     abstract public function queryF($sql, $limit = 0, $start = 0);
 
     /**
-     * perform a query
+     * perform a query.
      *
      * This method is empty and does nothing! It should therefore only be
      * used if nothing is exactly what you want done! ;-)
@@ -283,7 +283,7 @@ abstract class AbstractXoopsDatabase
     abstract public function query($sql, $limit = 0, $start = 0);
 
     /**
-     * perform queries from SQL dump file in a batch
+     * perform queries from SQL dump file in a batch.
      *
      * @param string $file file path to an SQL dump file
      *
@@ -295,7 +295,7 @@ abstract class AbstractXoopsDatabase
     abstract public function queryFromFile($file);
 
     /**
-     * Get field name
+     * Get field name.
      *
      * @param resource $result query result
      * @param int      $offset numerical field index
@@ -307,7 +307,7 @@ abstract class AbstractXoopsDatabase
     abstract public function getFieldName($result, $offset);
 
     /**
-     * Get field type
+     * Get field type.
      *
      * @param resource $result query result
      * @param int      $offset numerical field index
@@ -319,7 +319,7 @@ abstract class AbstractXoopsDatabase
     abstract public function getFieldType($result, $offset);
 
     /**
-     * Get number of fields in result
+     * Get number of fields in result.
      *
      * @param resource $result query result
      *

@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class HiddenTest extends \PHPUnit\Framework\TestCase
 {
@@ -32,14 +32,14 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input') !== false);
-        $this->assertTrue(strpos($value, 'type="hidden"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input'));
+        $this->assertTrue(false !== strpos($value, 'type="hidden"'));
     }
 
     public function test__construct()
     {
         $oldWay = new Hidden('myname', 'myvalue');
-        $newWay = new Hidden(['name' => 'myname', 'value' => 'myvalue', ]);
+        $newWay = new Hidden(['name' => 'myname', 'value' => 'myvalue']);
         $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

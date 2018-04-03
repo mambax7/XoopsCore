@@ -10,11 +10,10 @@
 */
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
@@ -40,4 +39,4 @@ define('_MD_BANNERS_INDEX_MAIL_OK', 'Available Banner statistics for the selecte
 define('_MD_BANNERS_INDEX_MAIL_SUBJECT', 'Your Banner Statistics at %s');
 define('_MD_BANNERS_INDEX_NOMAIL', 'Failed to send: E-Mail address does not exist.');
 define('_MD_BANNERS_INDEX_NOBANNER', 'You have no banners');
-include_once('admin.php');
+include_once 'admin.php';

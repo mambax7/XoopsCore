@@ -12,18 +12,17 @@
 namespace Xoops\Core\Database;
 
 /**
- * Connection wrapper for Doctrine DBAL Connection
+ * Connection wrapper for Doctrine DBAL Connection.
  *
  * PHP version 5.3
  *
  * @category  Xoops\Core\Database\QueryBuilder
- * @package   QueryBuilder
  * @author    readheadedrod <redheadedrod@hotmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
@@ -34,7 +33,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     private $connection = null;
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct(Connection $connection)
     {
@@ -55,19 +54,20 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
      *
      * @param string $delete The table whose rows are subject to the deletion.
      * Adds table prefix to table.
-     * @param string $alias  The table alias used in the constructed query.
+     * @param string $alias The table alias used in the constructed query.
      *
      * @return QueryBuilder This QueryBuilder instance.
      */
     public function deletePrefix($delete = null, $alias = null)
     {
         $delete = $this->connection->prefix($delete);
+
         return $this->delete($delete, $alias);
     }
 
     /**
      * Turns the query being built into a bulk update query that ranges over
-     * a certain table
+     * a certain table.
      *
      * <code>
      *     $qb = $conn->createQueryBuilder()
@@ -78,19 +78,20 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
      *
      * @param string $update The table whose rows are subject to the update.
      * Adds table prefix to table.
-     * @param string $alias  The table alias used in the constructed query.
+     * @param string $alias The table alias used in the constructed query.
      *
      * @return QueryBuilder This QueryBuilder instance.
      */
     public function updatePrefix($update = null, $alias = null)
     {
         $update = $this->connection->prefix($update);
+
         return $this->update($update, $alias);
     }
 
     /**
      * Turns the query being built into an insert query that inserts into
-     * a certain table
+     * a certain table.
      *
      * <code>
      *     $qb = $conn->createQueryBuilder()
@@ -111,6 +112,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function insertPrefix($insert = null)
     {
         $insert = $this->connection->prefix($insert);
+
         return $this->insert($insert);
     }
 
@@ -132,6 +134,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function fromPrefix($from, $alias = null)
     {
         $from = $this->connection->prefix($from);
+
         return $this->from($from, $alias);
     }
 
@@ -155,6 +158,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function joinPrefix($fromAlias, $join, $alias, $condition = null)
     {
         $join = $this->connection->prefix($join);
+
         return $this->join($fromAlias, $join, $alias, $condition);
     }
 
@@ -178,6 +182,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function innerJoinPrefix($fromAlias, $join, $alias, $condition = null)
     {
         $join = $this->connection->prefix($join);
+
         return $this->innerJoin($fromAlias, $join, $alias, $condition);
     }
 
@@ -201,6 +206,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function leftJoinPrefix($fromAlias, $join, $alias, $condition = null)
     {
         $join = $this->connection->prefix($join);
+
         return $this->leftJoin($fromAlias, $join, $alias, $condition);
     }
 
@@ -224,6 +230,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder
     public function rightJoinPrefix($fromAlias, $join, $alias, $condition = null)
     {
         $join = $this->connection->prefix($join);
+
         return $this->rightJoin($fromAlias, $join, $alias, $condition);
     }
 }

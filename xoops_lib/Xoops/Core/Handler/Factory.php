@@ -17,14 +17,13 @@ use Xoops\Core\Handler\Scheme\SchemeInterface;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
- * Factory to build handlers
+ * Factory to build handlers.
  *
  * @category  Xoops\Core\Handler\Factory
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Factory
 {
@@ -76,7 +75,7 @@ class Factory
      */
     public static function getInstance()
     {
-        if (static::$instance === null) {
+        if (null === static::$instance) {
             static::$instance = new static();
             static::$db = \Xoops::getInstance()->db();
         }
@@ -85,7 +84,7 @@ class Factory
     }
 
     /**
-     * creates a new object
+     * creates a new object.
      *
      * @return XoopsObjectHandler handler object
      *
@@ -94,7 +93,7 @@ class Factory
      */
 
     /**
-     * @param string      $name     Handler name
+     * @param string $name Handler name
      *                                - well known kernel handler name
      *                                - FQN of handler class, PSR4 loadable
      *                                - Full class name, to be located in a module namespace
@@ -109,28 +108,32 @@ class Factory
     {
         // have colon assume form of scheme:name
         $foundColon = strpos($name, ':');
-        if ($foundColon !== false) {
+        if (false !== $foundColon) {
             $scheme = substr($name, 0, $foundColon);
             $baseName = substr($name, $foundColon + 1);
             $handler = $this->newSpec()->scheme($scheme)->name($baseName)->optional($optional)->build();
+
             return $handler;
         }
 
         // have namespace separator, assume fully qualified name
-        $foundNS = (strpos($name, '\\') !== false);
+        $foundNS = (false !== strpos($name, '\\'));
         if ($foundNS) {
             $handler = $this->newSpec()->scheme('fqn')->name($name)->optional($optional)->build();
+
             return $handler;
         }
 
         // no dirname, assume kernel class
-        if ($dirname === null) {
+        if (null === $dirname) {
             $handler = $this->newSpec()->scheme('kernel')->name($name)->optional($optional)->build();
+
             return $handler;
         }
 
         // must be module handler
         $handler = $this->newSpec()->scheme('legacy')->name($name)->dirname($dirname)->optional($optional)->build();
+
         return $handler;
     }
 
@@ -151,12 +154,13 @@ class Factory
     {
         $instance = self::getInstance();
         $spec = FactorySpec::getInstance($instance);
+
         return $spec;
     }
 
     /**
      * Build dispatches the appropriate scheme class to instantiate a
-     * handler based on the specification
+     * handler based on the specification.
      *
      * @param FactorySpec $spec specification for requested handler
      *
@@ -168,11 +172,12 @@ class Factory
     public function build(FactorySpec $spec)
     {
         $scheme = $this->getSchemeObject($spec);
-        if ($scheme === null) {
+        if (null === $scheme) {
             return null;
         }
 
         $handler = $scheme->build($spec);
+
         return $handler;
     }
 
@@ -185,7 +190,7 @@ class Factory
     }
 
     /**
-     * @param FactorySpec $spec specification
+     * @param  FactorySpec     $spec specification
      * @return SchemeInterface
      */
     private function getSchemeObject(FactorySpec $spec)
@@ -199,6 +204,7 @@ class Factory
         if (!($scheme instanceof SchemeInterface)) {
             throw new InvalidHandlerSpecException(sprintf('Unknown scheme %s', $schemeName));
         }
+
         return $scheme;
     }
 }

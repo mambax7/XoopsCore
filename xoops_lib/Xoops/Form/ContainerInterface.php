@@ -12,36 +12,35 @@
 namespace Xoops\Form;
 
 /**
- * ContainerInterface - Form container
+ * ContainerInterface - Form container.
  *
  * @category  Xoops\Form\ContainerInterface
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 interface ContainerInterface
 {
     /**
-     * Add an element to the group
+     * Add an element to the group.
      *
      * @param Element $formElement Element to add
-     * @param boolean $required    true = entry required
+     * @param bool    $required    true = entry required
      */
     public function addElement(Element $formElement, $required = false);
 
     /**
-     * getRequired - get an array of required form elements
+     * getRequired - get an array of required form elements.
      *
      * @return array array of Xoops\Form\Element
      */
     public function getRequired();
 
     /**
-     * getElements - get an array of forms elements
+     * getElements - get an array of forms elements.
      *
-     * @param boolean $recurse true to get elements recursively
+     * @param bool $recurse true to get elements recursively
      *
      * @return array of Xoops\Form\Element
      */

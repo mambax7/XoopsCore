@@ -10,7 +10,7 @@
 */
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -18,7 +18,6 @@
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
@@ -66,7 +65,7 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
     public function update($item_id, $total_num)
     {
         $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('page_content') . ' SET content_comments = ' . (int) ($total_num) . ' WHERE content_id = ' . (int) ($item_id);
+        $sql = 'UPDATE '.$db->prefix('page_content').' SET content_comments = '.(int) ($total_num).' WHERE content_id = '.(int) ($item_id);
         $db->query($sql);
     }
 
@@ -77,7 +76,7 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
      *      'title' => 'My Article Title',
      *      'text' => 'Content of the article');
      *      'timestamp' => time(); //Date of the article in unix format
-     *      'uid' => Id of the article author
+     *      'uid' => Id of the article author.
      *
      * @param int $item_id The unique ID of an item
      *
@@ -89,11 +88,11 @@ class PageCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements C
         // Get handler
         $content_Handler = \Xoops::getModuleHelper('page')->getContentHandler();
         $view_content = $content_Handler->get($item_id);
-        if (count($view_content) === 0 || $view_content->getVar('content_status') === 0) {
+        if (0 === count($view_content) || 0 === $view_content->getVar('content_status')) {
             return $ret;
         }
         $ret['title'] = $view_content->getVar('content_title');
-        $ret['text'] = $view_content->getVar('content_shorttext') . $view_content->getVar('content_text');
+        $ret['text'] = $view_content->getVar('content_shorttext').$view_content->getVar('content_text');
         $ret['uid'] = $view_content->getVar('content_author');
         $ret['timestamp'] = $view_content->getVar('content_create');
 

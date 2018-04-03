@@ -10,13 +10,11 @@
 */
 
 /**
- * @package   thumbs
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL v2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
-
 $modversion = [];
 $modversion['name'] = _MI_THUMBS_NAME;
 $modversion['description'] = _MI_THUMBS_DESC;

@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract
 {
     public $purifier;
@@ -44,6 +42,7 @@ class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
         if (is_array($data)) {
             return array_map([$this, 'purify_recursive'], $data);
         }
+
         return strlen($data) > 32 ? call_user_func([$this->purifier, $this->method], $data) : $data;
     }
 }

@@ -10,20 +10,18 @@
 */
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
-
 class Page extends Xoops\Module\Helper\HelperAbstract
 {
     /**
-     * Init the module
+     * Init the module.
      *
      * @return null|void
      */
@@ -85,6 +83,7 @@ class Page extends Xoops\Module\Helper\HelperAbstract
         if ($this->xoops()->isUser()) {
             return $this->xoops()->user->getVar('uid');
         }
+
         return 0;
     }
 }

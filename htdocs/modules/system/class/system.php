@@ -10,9 +10,8 @@
 */
 
 /**
- * System module
+ * System module.
  *
- * @package     System
  * @author      Andricq Nicolas (AKA MusS)
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -30,7 +29,7 @@ class system
     private $xoops = null;
 
     /**
-     * Actual System Module
+     * Actual System Module.
      */
     private function __construct()
     {
@@ -38,7 +37,7 @@ class system
     }
 
     /**
-     * Access the only instance of this class
+     * Access the only instance of this class.
      *
      * @return System
      */
@@ -49,6 +48,7 @@ class system
             $class = __CLASS__;
             $instance = new $class();
         }
+
         return $instance;
     }
 
@@ -65,12 +65,13 @@ class system
         } else {
             return false;
         }
+
         return true;
     }
 
     /**
-     * @param string $default
-     * @param string $type
+     * @param  string           $default
+     * @param  string           $type
      * @return int|mixed|string
      */
     public function cleanVars(&$global, $key, $default = '', $type = 'int')
@@ -78,81 +79,89 @@ class system
         switch ($type) {
             case 'array':
                 $ret = (isset($global[$key]) && is_array($global[$key])) ? $global[$key] : $default;
+
                 break;
             case 'date':
                 $ret = (isset($global[$key])) ? strtotime($global[$key]) : $default;
+
                 break;
             case 'string':
                 $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
+
                 break;
             case 'int':
             default:
                 $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_NUMBER_INT) : $default;
+
                 break;
         }
-        if ($ret === false) {
+        if (false === $ret) {
             return $default;
         }
+
         return $ret;
     }
 
     /**
-     * System language loader wrapper
+     * System language loader wrapper.
      *
-     * @param string $name     Name of language file to be loaded, without extension
-     * @param string $domain   Module dirname; global language file will be loaded
+     * @param string $name   Name of language file to be loaded, without extension
+     * @param string $domain Module dirname; global language file will be loaded
      *                         if $domain is set to 'global' or not specified
      * @param string $language Language to be loaded, current language content will
      *                         be loaded if not specified
-     * @return  boolean
+     * @return boolean
      * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
      */
     public function loadLanguage($name, $domain = '', $language = null)
     {
         $xoops = Xoops::getInstance();
-        /**
+        /*
          * We must check later for an empty value. As xoops_getPageOption could be empty
          */
         if (empty($name)) {
             return false;
         }
         $language = empty($language) ? $xoops->getConfig('language') : $language;
-        $path = 'modules/' . $domain . '/language/';
-        if (XoopsLoad::fileExists($file = $xoops->path($path . $language . '/admin/' . $name . '.php'))) {
+        $path = 'modules/'.$domain.'/language/';
+        if (XoopsLoad::fileExists($file = $xoops->path($path.$language.'/admin/'.$name.'.php'))) {
             $ret = include_once $file;
         } else {
-            $ret = include_once $xoops->path($path . 'english/admin/' . $name . '.php');
+            $ret = include_once $xoops->path($path.'english/admin/'.$name.'.php');
         }
+
         return $ret;
     }
 
     /**
-     * @param string $version
-     * @param string $value
+     * @param  string $version
+     * @param  string $value
      * @return string
      */
     public function adminVersion($version, $value = '')
     {
         static $tblVersion = [];
-        if (is_array($tblVersion) && array_key_exists($version . '.' . $value, $tblVersion)) {
-            return $tblVersion[$version . '.' . $value];
+        if (is_array($tblVersion) && array_key_exists($version.'.'.$value, $tblVersion)) {
+            return $tblVersion[$version.'.'.$value];
         }
         $xoops = Xoops::getInstance();
-        $path = $xoops->path('modules/system/admin/' . $version . '/xoops_version.php');
+        $path = $xoops->path('modules/system/admin/'.$version.'/xoops_version.php');
         if (XoopsLoad::fileExists($path)) {
             $modversion = [];
             include $path;
             $retvalue = $modversion[$value];
-            $tblVersion[$version . '.' . $value] = $retvalue;
+            $tblVersion[$version.'.'.$value] = $retvalue;
+
             return $retvalue;
         }
+
         return '';
     }
 
     /**
-     * System Clean cache 'xoops_data/caches/'
+     * System Clean cache 'xoops_data/caches/'.
      *
-     * @param integer[] $cache cache caches to be cleaned
+     * @param int[] $cache cache caches to be cleaned
      *                                - 1 = Smarty cache
      *                                - 2 = Smarty compile
      *                                - 3 = cache
@@ -169,7 +178,7 @@ class system
      */
     public function cleanCache($cache)
     {
-        $cachePath = \XoopsBaseConfig::get('var-path') . '/caches/';
+        $cachePath = \XoopsBaseConfig::get('var-path').'/caches/';
         $total_smarty_cache = 0;
         $total_smarty_compile = 0;
         $total_xoops_cache = 0;
@@ -177,48 +186,53 @@ class system
             for ($i = 0; $i < count($cache); ++$i) {
                 switch ($cache[$i]) {
                     case 1:
-                        $files = glob($cachePath . 'smarty_cache/*.*');
+                        $files = glob($cachePath.'smarty_cache/*.*');
                         $total_smarty_cache = 0;
                         foreach ($files as $filename) {
-                            if (basename(strtolower($filename)) !== 'index.html') {
+                            if ('index.html' !== basename(strtolower($filename))) {
                                 unlink($filename);
                                 ++$total_smarty_cache;
                             }
                         }
+
                         break;
 
                     case 2:
-                        $files = glob($cachePath . 'smarty_compile/*.*');
+                        $files = glob($cachePath.'smarty_compile/*.*');
                         $total_smarty_compile = 0;
                         foreach ($files as $filename) {
-                            if (basename(strtolower($filename)) !== 'index.html') {
+                            if ('index.html' !== basename(strtolower($filename))) {
                                 unlink($filename);
                                 ++$total_smarty_compile;
                             }
                         }
+
                         break;
 
                     case 3:
                         // ask the cache to clear itself
                         $status = Xoops::getInstance()->cache()->delete('system');
                         // this section captures legacy cache use only
-                        $files = glob($cachePath . 'xoops_cache/*.*');
+                        $files = glob($cachePath.'xoops_cache/*.*');
                         $total_xoops_cache = 0;
                         foreach ($files as $filename) {
-                            if (basename(strtolower($filename)) !== 'index.html') {
+                            if ('index.html' !== basename(strtolower($filename))) {
                                 unlink($filename);
                                 ++$total_xoops_cache;
                             }
                         }
                         $total_xoops_cache = $status || ($total_xoops_cache > 0);
+
                         break;
                 }
             }
             $ret['smarty_cache'] = $total_smarty_cache;
             $ret['smarty_compile'] = $total_smarty_compile;
             $ret['xoops_cache'] = $total_xoops_cache;
+
             return $ret;
         }
+
         return false;
     }
 }

@@ -4,7 +4,7 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
 
 //define("_MD_PUBLISHER_ADD_FILE_INTRO", "Please fill this form in order to attach a file to this this article : '%s'.");

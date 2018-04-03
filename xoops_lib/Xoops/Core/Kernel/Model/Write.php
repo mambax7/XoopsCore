@@ -20,24 +20,22 @@ use Xoops\Core\Kernel\XoopsObject;
  * Object write handler class.
  *
  * @category  Xoops\Core\Kernel\Model\Write
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Simon Roberts <simon@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  */
 class Write extends XoopsModelAbstract
 {
     /**
      * Clean values of all variables of the object for storage.
-     * also add slashes and quote string wherever needed
+     * also add slashes and quote string wherever needed.
      *
      * @param XoopsObject $object object to act on
      *
      * @return bool true if successful
-     * @access public
      */
     public function cleanVars(XoopsObject $object)
     {
@@ -51,11 +49,12 @@ class Write extends XoopsModelAbstract
         }
         $object->unsetDirty();
         $errors = $object->getErrors();
+
         return empty($errors) ? true : false;
     }
 
     /**
-     * insert an object into the database
+     * insert an object into the database.
      *
      * @param XoopsObject $object object to persist
      * @param bool        $force  flag to force the query execution despite security settings
@@ -66,32 +65,36 @@ class Write extends XoopsModelAbstract
     {
         if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
-                "Object '" . get_class($object) . "' is not an instance of '" . $this->handler->className . "'",
+                "Object '".get_class($object)."' is not an instance of '".$this->handler->className."'",
                 E_USER_NOTICE
             );
+
             return false;
         }
         if (!$object->isDirty()) {
             trigger_error(
-                "Data entry is not inserted - the object '" . get_class($object) . "' is not dirty",
+                "Data entry is not inserted - the object '".get_class($object)."' is not dirty",
                 E_USER_NOTICE
             );
+
             return false;
         }
         if (!$this->cleanVars($object)) {
             trigger_error(
-                "Insert failed in method 'cleanVars' of object '" . get_class($object) . "'" . $object->getHtmlErrors(),
+                "Insert failed in method 'cleanVars' of object '".get_class($object)."'".$object->getHtmlErrors(),
                 E_USER_WARNING
             );
+
             return false;
         }
 
         if ($object->isNew()) {
             if (empty($object->cleanVars)) {
                 trigger_error(
-                    "Data entry is not inserted - no variable is changed in object of '" . get_class($object) . "'",
+                    "Data entry is not inserted - no variable is changed in object of '".get_class($object)."'",
                     E_USER_NOTICE
                 );
+
                 return false;
             }
             if ($force) {
@@ -116,11 +119,12 @@ class Write extends XoopsModelAbstract
                 }
             }
         }
+
         return $object->getVar($this->handler->keyName);
     }
 
     /**
-     * delete an object from the database
+     * delete an object from the database.
      *
      * @param XoopsObject $object object to delete
      * @param bool        $force  force to delete
@@ -131,9 +135,10 @@ class Write extends XoopsModelAbstract
     {
         if (!(class_exists($this->handler->className) && $object instanceof $this->handler->className)) {
             trigger_error(
-                "Object '" . get_class($object) . "' is not an instance of '" . $this->handler->className . "'",
+                "Object '".get_class($object)."' is not an instance of '".$this->handler->className."'",
                 E_USER_NOTICE
             );
+
             return false;
         }
 
@@ -143,7 +148,7 @@ class Write extends XoopsModelAbstract
         $qb->delete($this->handler->table);
         if (is_array($this->handler->keyName)) {
             for ($i = 0; $i < count($this->handler->keyName); ++$i) {
-                if ($i === 0) {
+                if (0 === $i) {
                     $qb->where(
                         $eb->eq(
                             $this->handler->keyName[$i],
@@ -171,11 +176,12 @@ class Write extends XoopsModelAbstract
             $this->handler->db2->setForce($force);
         }
         $result = $qb->execute();
+
         return empty($result) ? false : true;
     }
 
     /**
-     * delete all objects matching the conditions
+     * delete all objects matching the conditions.
      *
      * @param CriteriaElement|null $criteria criteria to match
      * @param bool                 $force    force to delete
@@ -192,6 +198,7 @@ class Write extends XoopsModelAbstract
                 $num += $this->delete($objects[$key], $force) ? 1 : 0;
             }
             unset($objects);
+
             return $num;
         }
         //$queryFunc = empty($force) ? 'query' : 'queryF';
@@ -203,11 +210,12 @@ class Write extends XoopsModelAbstract
         if ($force) {
             $this->handler->db2->setForce($force);
         }
+
         return $qb->execute();
     }
 
     /**
-     * Change a field for objects with a certain criteria
+     * Change a field for objects with a certain criteria.
      *
      * @param string               $fieldName  Name of the field
      * @param mixed                $fieldValue Value to write
@@ -229,6 +237,7 @@ class Write extends XoopsModelAbstract
         if ($force) {
             $this->handler->db2->setForce($force);
         }
+
         return $qb->execute();
     }
 }

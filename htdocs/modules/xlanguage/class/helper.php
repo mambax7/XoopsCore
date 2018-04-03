@@ -12,26 +12,24 @@
 /**
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 class Xlanguage extends Xoops\Module\Helper\HelperAbstract
 {
     /**
-     * Init the module
+     * Init the module.
      *
      * @return null|void
      */
     public function init()
     {
-        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php')) {
+        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path').'/modules/xlanguage/include/vars.php')) {
             include_once $hnd_file;
         }
 
-        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/functions.php')) {
+        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path').'/modules/xlanguage/include/functions.php')) {
             include_once $hnd_file;
         }
         $this->setDirname('xlanguage');

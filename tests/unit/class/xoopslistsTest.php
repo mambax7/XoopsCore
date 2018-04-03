@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
 class xoopslistsTest extends \PHPUnit\Framework\TestCase
 {
@@ -29,7 +29,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $theme_path = \XoopsBaseConfig::get('themes-path');
-        $list_ref = $class::getDirListAsArray($theme_path . '/');
+        $list_ref = $class::getDirListAsArray($theme_path.'/');
         $value = $class::getThemesList();
         $this->assertSame($list_ref, $value);
 
@@ -42,7 +42,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $list_ref = $class::getDirListAsArray($xoops_root_path . '/modules/');
+        $list_ref = $class::getDirListAsArray($xoops_root_path.'/modules/');
         $value = $class::getModulesList();
         $this->assertSame($list_ref, $value);
     }
@@ -51,7 +51,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $list_ref = $class::getDirListAsArray($xoops_root_path . '/class/xoopseditor/');
+        $list_ref = $class::getDirListAsArray($xoops_root_path.'/class/xoopseditor/');
         $value = $class::getEditorList();
         $this->assertSame($list_ref, $value);
     }
@@ -60,11 +60,11 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $value = $class::getFileListAsArray($xoops_root_path . '/class/xoopseditor/');
+        $value = $class::getFileListAsArray($xoops_root_path.'/class/xoopseditor/');
         $this->assertTrue(is_array($value));
         $this->assertTrue(count($value) > 0);
         $prefix = 'toto';
-        $value = $class::getFileListAsArray($xoops_root_path . '/class/xoopseditor/', $prefix);
+        $value = $class::getFileListAsArray($xoops_root_path.'/class/xoopseditor/', $prefix);
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
@@ -72,11 +72,11 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $value = $class::getImgListAsArray($xoops_root_path . '/images/');
+        $value = $class::getImgListAsArray($xoops_root_path.'/images/');
         $this->assertTrue(is_array($value));
         $this->assertTrue(count($value) > 0);
         $prefix = 'toto';
-        $value = $class::getImgListAsArray($xoops_root_path . '/images/', $prefix);
+        $value = $class::getImgListAsArray($xoops_root_path.'/images/', $prefix);
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
@@ -84,11 +84,11 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $value = $class::getHtmlListAsArray($xoops_root_path . '/themes/');
+        $value = $class::getHtmlListAsArray($xoops_root_path.'/themes/');
         $this->assertTrue(is_array($value));
         $this->assertTrue(count($value) > 0);
         $prefix = 'toto';
-        $value = $class::getHtmlListAsArray($xoops_root_path . '/themes/', $prefix);
+        $value = $class::getHtmlListAsArray($xoops_root_path.'/themes/', $prefix);
         $this->assertSame(0, strncmp(array_shift($value), $prefix, strlen($prefix)));
     }
 
@@ -96,7 +96,7 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
     {
         $class = $this->myClass;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
-        $d_subject = $xoops_root_path . '/images/subject/';
+        $d_subject = $xoops_root_path.'/images/subject/';
         $is_dir = is_dir($d_subject);
         if (!$is_dir) {
             mkdir($d_subject);
@@ -105,14 +105,14 @@ class xoopslistsTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($value));
         $this->assertTrue(count($value) > 0);
         $sdir = 'test_getSubjectsList';
-        $is_sdir = is_dir($d_subject . $sdir);
+        $is_sdir = is_dir($d_subject.$sdir);
         if (!$is_dir) {
-            mkdir($d_subject . $sdir);
+            mkdir($d_subject.$sdir);
         }
         $value = $class::getSubjectsList($sdir);
         $this->assertTrue(is_array($value));
 
-        @rmdir($d_subject . $sdir);
+        @rmdir($d_subject.$sdir);
         @rmdir($d_subject);
     }
 

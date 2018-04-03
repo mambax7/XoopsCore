@@ -12,17 +12,15 @@
 use Xmf\Request;
 
 /**
- * banners module
+ * banners module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         banners
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id: $
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $helper = Banners::getInstance();
@@ -37,7 +35,6 @@ $nb_banners = $helper->getConfig('banners_pager');
 $op = Request::getCmd('op', 'list');
 
 switch ($op) {
-
     case 'list':
     default:
         $access = false;
@@ -47,20 +44,20 @@ switch ($op) {
         } else {
             $uid = 0;
         }
-        if ($uid === 0) {
+        if (0 === $uid) {
             $access = false;
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('bannerclient_uid', $uid));
         $client_count = $client_Handler->getCount($criteria);
-        if ($client_count !== 0) {
+        if (0 !== $client_count) {
             $access = true;
         }
         if ($xoops->userIsAdmin) {
             $access = true;
             $admin = true;
         }
-        if ($access === false) {
+        if (false === $access) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
         // Get start pager
@@ -76,7 +73,7 @@ switch ($op) {
         $xoops->theme()->addScript('modules/system/js/admin.js');
 
         // Display banner
-        if ($admin === false) {
+        if (false === $admin) {
             $client_arr = $client_Handler->getAll($criteria);
             foreach (array_keys($client_arr) as $i) {
                 $cid[] = $client_arr[$i]->getVar('bannerclient_cid');
@@ -86,8 +83,8 @@ switch ($op) {
         // Display banner
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('banner_status', 0, '!='));
-        if ($admin === false) {
-            $criteria->add(new Criteria('banner_cid', '(' . implode(',', $cid) . ')', 'IN'));
+        if (false === $admin) {
+            $criteria->add(new Criteria('banner_cid', '('.implode(',', $cid).')', 'IN'));
         }
         $criteria->setSort('banner_cid');
         $criteria->setOrder('ASC');
@@ -115,13 +112,13 @@ switch ($op) {
                     $client_name = '';
                     $client_uid = 0;
                 }
-                if ($impmade === 0) {
+                if (0 === $impmade) {
                     $percent = 0;
                 } else {
                     $percent = substr(100 * $clicks / $impmade, 0, 5);
                 }
-                if ($imptotal === 0) {
-                    $left = '' . _AM_BANNERS_BANNERS_UNLIMIT . '';
+                if (0 === $imptotal) {
+                    $left = ''._AM_BANNERS_BANNERS_UNLIMIT.'';
                 } else {
                     $left = $imptotal - $impmade;
                 }
@@ -131,9 +128,9 @@ switch ($op) {
                 } else {
                     $img = '';
                     if (stristr($imageurl, '.swf')) {
-                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="'.$imageurl.'" style="z-index:100;">'.'<param name="movie" value="'.$imageurl.'" />'.'<param name="wmode" value="opaque" />'.'</object>';
                     } else {
-                        $img .= '<img src="' . $imageurl . '" alt="" />';
+                        $img .= '<img src="'.$imageurl.'" alt="" />';
                     }
                 }
 
@@ -145,7 +142,7 @@ switch ($op) {
                 $banner['imageurl'] = $img;
                 $banner['name'] = $client_name;
                 $banner['uid'] = $client_uid;
-                if ($banner_arr[$i]->getVar('banner_clickurl') === '') {
+                if ('' === $banner_arr[$i]->getVar('banner_clickurl')) {
                     $banner['clickurl'] = '#';
                 } else {
                     $banner['clickurl'] = $banner_arr[$i]->getVar('banner_clickurl');
@@ -159,15 +156,15 @@ switch ($op) {
         }
         // Display Page Navigation
         if ($banner_count > $nb_banners) {
-            $nav = new XoopsPageNav($banner_count, $nb_banners, $start, 'start', 'startF=' . $startF);
+            $nav = new XoopsPageNav($banner_count, $nb_banners, $start, 'start', 'startF='.$startF);
             $xoops->tpl()->assign('nav_menu_banner', $nav->renderNav(4));
         }
         // Display Finished Banners
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('banner_status', 0));
-        if ($admin === false) {
-            $criteria->add(new Criteria('banner_cid', '(' . implode(',', $cid) . ')', 'IN'));
+        if (false === $admin) {
+            $criteria->add(new Criteria('banner_cid', '('.implode(',', $cid).')', 'IN'));
         }
         $criteria->setSort('banner_datestart');
         $criteria->setOrder('DESC');
@@ -195,7 +192,7 @@ switch ($op) {
                     $client_name = '';
                     $client_uid = 0;
                 }
-                if ($impressions !== 0) {
+                if (0 !== $impressions) {
                     $percent = substr(100 * $clicks / $impressions, 0, 5);
                 } else {
                     $percent = 0;
@@ -206,9 +203,9 @@ switch ($op) {
                 } else {
                     $img = '<div id="xo-bannerfix">';
                     if (stristr($imageurl, '.swf')) {
-                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                        $img .= '<object type="application/x-shockwave-flash" width="468" height="60" data="'.$imageurl.'" style="z-index:100;">'.'<param name="movie" value="'.$imageurl.'" />'.'<param name="wmode" value="opaque" />'.'</object>';
                     } else {
-                        $img .= '<img src="' . $imageurl . '" alt="" />';
+                        $img .= '<img src="'.$imageurl.'" alt="" />';
                     }
 
                     $img .= '</div>';
@@ -230,10 +227,11 @@ switch ($op) {
         }
         // Display Page Navigation
         if ($banner_finish_count > $nb_banners) {
-            $nav = new XoopsPageNav($banner_finish_count, $nb_banners, $startF, 'startF', 'start=' . $start);
+            $nav = new XoopsPageNav($banner_finish_count, $nb_banners, $startF, 'startF', 'start='.$start);
             $xoops->tpl()->assign('nav_menu_bannerF', $nav->renderNav(4));
         }
         $xoops->footer();
+
         break;
 
     case 'edit':
@@ -244,20 +242,20 @@ switch ($op) {
         } else {
             $uid = 0;
         }
-        if ($uid === 0) {
+        if (0 === $uid) {
             $access = false;
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('bannerclient_uid', $uid));
         $client_count = $client_Handler->getCount($criteria);
-        if ($client_count !== 0) {
+        if (0 !== $client_count) {
             $access = true;
         }
         if ($xoops->userIsAdmin) {
             $access = true;
             $admin = true;
         }
-        if ($access === false) {
+        if (false === $access) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
         $bid = Request::getInt('bid', 0);
@@ -275,6 +273,7 @@ switch ($op) {
         } else {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 1, _MD_BANNERS_INDEX_DBERROR);
         }
+
         break;
 
     case 'save':
@@ -285,14 +284,14 @@ switch ($op) {
         } else {
             $uid = 0;
         }
-        if ($uid === 0) {
+        if (0 === $uid) {
             $access = false;
         }
         if ($xoops->userIsAdmin) {
             $access = true;
             $admin = true;
         }
-        if ($access === false) {
+        if (false === $access) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
         if (!$xoops->security()->check()) {
@@ -305,7 +304,7 @@ switch ($op) {
             $criteria->add(new Criteria('bannerclient_cid', $obj->getVar('banner_cid')));
             $client_arr = $client_Handler->getAll($criteria);
             foreach (array_keys($client_arr) as $i) {
-                if ($admin === false) {
+                if (false === $admin) {
                     if ($client_arr[$i]->getVar('uid') !== $uid) {
                         $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
                     }
@@ -319,6 +318,7 @@ switch ($op) {
         } else {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 1, _MD_BANNERS_INDEX_NO_ID);
         }
+
         break;
 
     case 'EmailStats':
@@ -329,14 +329,14 @@ switch ($op) {
         } else {
             $uid = 0;
         }
-        if ($uid === 0) {
+        if (0 === $uid) {
             $access = false;
         }
         if ($xoops->userIsAdmin) {
             $access = true;
             $admin = true;
         }
-        if ($access === false) {
+        if (false === $access) {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
         }
         $bid = Request::getInt('bid', 0);
@@ -346,7 +346,7 @@ switch ($op) {
             $criteria->add(new Criteria('bannerclient_cid', $banner->getVar('banner_cid')));
             $client_arr = $client_Handler->getAll($criteria);
             foreach (array_keys($client_arr) as $i) {
-                if ($admin === false) {
+                if (false === $admin) {
                     if ($client_arr[$i]->getVar('bannerclient_uid') !== $uid) {
                         $xoops->redirect(\XoopsBaseConfig::get('url'), 2, XoopsLocale::E_NO_ACCESS_PERMISSION);
                     }
@@ -356,13 +356,13 @@ switch ($op) {
             }
             $user = $member_handler->getUser($client_arr[$i]->getVar('bannerclient_uid'));
             $email = $user->getVar('email', 'n');
-            if ($email !== '') {
-                if ($banner->getVar('banner_impmade') === 0) {
+            if ('' !== $email) {
+                if (0 === $banner->getVar('banner_impmade')) {
                     $percent = 0;
                 } else {
                     $percent = substr(100 * $banner->getVar('banner_clicks') / $banner->getVar('banner_impmade'), 0, 5);
                 }
-                if ($banner->getVar('banner_imptotal') === 0) {
+                if (0 === $banner->getVar('banner_imptotal')) {
                     $left = _AM_BANNERS_BANNERS_UNLIMIT;
                     $banner->setVar('banner_imptotal', _AM_BANNERS_BANNERS_UNLIMIT);
                 } else {
@@ -388,6 +388,7 @@ switch ($op) {
         } else {
             $xoops->redirect(\XoopsBaseConfig::get('url'), 1, _MD_BANNERS_INDEX_NO_ID);
         }
+
         break;
 
     case 'click':
@@ -398,7 +399,7 @@ switch ($op) {
                 if ($xoops->security()->checkReferer()) {
                     $banner->setVar('banner_clicks', $banner->getVar('banner_clicks') + 1);
                     $banner_Handler->insert($banner);
-                    header('Location: ' . $banner->getVar('banner_clickurl'));
+                    header('Location: '.$banner->getVar('banner_clickurl'));
                     exit();
                 }
                 //No valid referer found so some javascript error or direct access found
@@ -406,5 +407,6 @@ switch ($op) {
             }
         }
         $xoops->redirect(\XoopsBaseConfig::get('url'), 3, _MD_BANNERS_INDEX_NO_ID);
+
         break;
 }

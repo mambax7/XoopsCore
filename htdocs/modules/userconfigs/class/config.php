@@ -16,43 +16,39 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
- * Userconfigs
+ * Userconfigs.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class UserconfigsConfigHandler extends XoopsObjectHandler
 {
     /**
-     * holds reference to config item handler(DAO) class
+     * holds reference to config item handler(DAO) class.
      *
-     * @var       UserconfigsItemHandler
-     * @access    private
+     * @var UserconfigsItemHandler
      */
     private $_iHandler;
 
     /**
-     * holds reference to config option handler(DAO) class
+     * holds reference to config option handler(DAO) class.
      *
-     * @var       UserconfigsOptionHandler
-     * @access    private
+     * @var UserconfigsOptionHandler
      */
     private $_oHandler;
 
     /**
      * holds an array of cached references to config value arrays,
-     *  indexed on module id and user id
+     *  indexed on module id and user id.
      *
-     * @var     array
-     * @access  private
+     * @var array
      */
     private $_cachedConfigs = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -62,37 +58,39 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Create a config
+     * Create a config.
      *
      * @see     UserconfigsItem
-     * @return  UserconfigsItem {@link UserconfigsItem}
+     * @return UserconfigsItem {@link UserconfigsItem}
      */
     public function createConfig()
     {
         $instance = $this->_iHandler->create();
+
         return $instance;
     }
 
     /**
-     * Get a config
+     * Get a config.
      *
      * @param int  $id          ID of the config
      * @param bool $withoptions load the config's options now?
      *
-     * @return   UserconfigsItem {@link UserconfigsItem}
+     * @return UserconfigsItem {@link UserconfigsItem}
      */
     public function getConfig($id, $withoptions = false)
     {
         /* @var $config UserconfigsItem */
         $config = $this->_iHandler->get($id);
-        if ($withoptions === true) {
+        if (true === $withoptions) {
             $config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
         }
+
         return $config;
     }
 
     /**
-     * insert a new config in the database
+     * insert a new config in the database.
      *
      * @param UserconfigsItem $config {@link UserconfigsItem}
      *
@@ -117,11 +115,12 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
             unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')]);
         }
+
         return true;
     }
 
     /**
-     * Delete a config from the database
+     * Delete a config from the database.
      *
      * @param UserconfigsItem $config {@link UserconfigsItem}
      *
@@ -134,7 +133,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         }
         $options = $config->getConfOptions();
         $count = count($options);
-        if ($count === 0) {
+        if (0 === $count) {
             $options = $this->getConfigOptions(new Criteria('conf_id', $config->getVar('conf_id')));
             $count = count($options);
         }
@@ -146,16 +145,17 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
         if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')])) {
             unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_uid')]);
         }
+
         return true;
     }
 
     /**
-     * get one or more Configs
+     * get one or more Configs.
      *
      * @param CriteriaElement|null $criteria  {@link CriteriaElement}
      * @param bool                 $id_as_key Use the configs' ID as keys?
      *
-     * @return    array   Array of {@link UserconfigsItem} objects
+     * @return array Array of {@link UserconfigsItem} objects
      */
     public function getConfigs(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -170,11 +170,12 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
             $criteria2->setSort('conf_order');
             $criteria2->setOrder('ASC');
         }
+
         return $this->_iHandler->getObjects($criteria2, $id_as_key);
     }
 
     /**
-     * Count some configs
+     * Count some configs.
      *
      * @param CriteriaElement|null $criteria {@link CriteriaElement}
      *
@@ -186,11 +187,11 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get configs from a certain module
+     * Get configs from a certain module.
      *
      * @param int $module ID of a module
      *
-     * @return    array   array of {@link UserconfigsConfig}s
+     * @return array array of {@link UserconfigsConfig}s
      */
     public function getConfigsByModule($module = 0)
     {
@@ -203,11 +204,12 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
             }
         }
         $_cachedConfigs[$module] = $ret;
+
         return $_cachedConfigs[$module];
     }
 
     /**
-     * Deletes configs from a certain module
+     * Deletes configs from a certain module.
      *
      * @param int $module
      *
@@ -221,18 +223,20 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
             foreach (array_keys($configs) as $i) {
                 $this->deleteConfig($configs[$i]);
             }
+
             return true;
         }
+
         return false;
     }
 
     /**
-     * Get configs from a certain user
+     * Get configs from a certain user.
      *
      * @param int $uid      ID of a user
      * @param int $moduleId ID of a module
      *
-     * @return    array   array of {@link UserconfigsConfig}s
+     * @return array array of {@link UserconfigsConfig}s
      */
     public function getConfigsByUser($uid, $moduleId)
     {
@@ -250,40 +254,43 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
             }
         }
         $_cachedConfigs[$moduleId][$uid] = $ret;
+
         return $_cachedConfigs[$moduleId][$uid];
     }
 
     /**
-     * Make a new {@link UserconfigsOption}
+     * Make a new {@link UserconfigsOption}.
      *
      * @return UserconfigsOption {@link UserconfigsOption}
      */
     public function createConfigOption()
     {
         $inst = $this->_oHandler->create();
+
         return $inst;
     }
 
     /**
-     * Get a {@link UserconfigsOption}
+     * Get a {@link UserconfigsOption}.
      *
      * @param int $id ID of the config option
      *
-     * @return   UserconfigsOption  {@link UserconfigsOption}
+     * @return UserconfigsOption {@link UserconfigsOption}
      */
     public function getConfigOption($id)
     {
         $inst = $this->_oHandler->get($id);
+
         return $inst;
     }
 
     /**
-     * Get one or more {@link UserconfigsOption}s
+     * Get one or more {@link UserconfigsOption}s.
      *
      * @param CriteriaElement|null $criteria  {@link CriteriaElement}
      * @param bool                 $id_as_key Use IDs as keys in the array?
      *
-     * @return    array   Array of {@link UserconfigsOption}s
+     * @return array Array of {@link UserconfigsOption}s
      */
     public function getConfigOptions(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -291,11 +298,11 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Count some {@link UserconfigsOption}s
+     * Count some {@link UserconfigsOption}s.
      *
      * @param CriteriaElement|null $criteria {@link CriteriaElement}
      *
-     * @return    int     Count of {@link UserconfigsOption}s matching $criteria
+     * @return int Count of {@link UserconfigsOption}s matching $criteria
      */
     public function getConfigOptionsCount(CriteriaElement $criteria = null)
     {
@@ -303,12 +310,12 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get a list of configs
+     * Get a list of configs.
      *
      * @param int $conf_modid ID of the modules
      * @param int $conf_uid   ID of the user
      *
-     * @return    array   Associative array of name=>value pairs.
+     * @return array Associative array of name=>value pairs.
      */
     public function getConfigList($conf_modid, $conf_uid = 0)
     {
@@ -328,6 +335,7 @@ class UserconfigsConfigHandler extends XoopsObjectHandler
             $ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
         }
         $this->_cachedConfigs[$conf_modid][$conf_uid] = $ret;
+
         return $ret;
     }
 

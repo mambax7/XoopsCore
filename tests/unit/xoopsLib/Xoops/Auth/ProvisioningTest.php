@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 use Xoops\Auth\AuthAbstract;
 use Xoops\Auth\Provisioning;

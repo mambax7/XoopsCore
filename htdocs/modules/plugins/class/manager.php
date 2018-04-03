@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-
 /**
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -31,7 +30,7 @@ class PluginsManager
                 //Make sure to load the interface
                 if (\XoopsLoad::loadFile($xoops->path("modules/{$caller}/class/plugin/interface.php"))) {
                     if (\XoopsLoad::loadFile($xoops->path("modules/{$listener}/class/plugin/{$caller}.php"))) {
-                        $interfaceName = '\\' . ucfirst($caller) . 'PluginInterface';
+                        $interfaceName = '\\'.ucfirst($caller).'PluginInterface';
                         if ($ref = new ReflectionClass($interfaceName)) {
                             if ($ref->implementsInterface($interfaceName)) {
                                 $listeners[$listener][] = $caller;
@@ -41,11 +40,12 @@ class PluginsManager
                 }
             }
         }
+
         return $listeners;
     }
 
     /**
-     * Checks if new plugins are available and adds them to database
+     * Checks if new plugins are available and adds them to database.
      *
      * @return bool
      */

@@ -12,17 +12,15 @@
 use Xoops\Html\Menu\Link;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 
 // If not a user, redirect
@@ -34,9 +32,9 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'editprofile';
 $xoops->getConfigs();
 
-if ($op === 'save') {
+if ('save' === $op) {
     if (!$xoops->security()->check()) {
-        $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/', 3, XoopsLocale::E_NO_ACTION_PERMISSION . '<br />' . implode('<br />', $xoops->security()->getErrors()));
+        $xoops->redirect(\XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'n').'/', 3, XoopsLocale::E_NO_ACTION_PERMISSION.'<br />'.implode('<br />', $xoops->security()->getErrors()));
         exit();
     }
     $uid = $xoops->user->getVar('uid');
@@ -51,7 +49,6 @@ if ($op === 'save') {
     if (!empty($stop)) {
         $op = 'editprofile';
     } else {
-
         // Dynamic fields
         /* @var $profile_handler ProfileProfileHandler */
         $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
@@ -85,14 +82,14 @@ if ($op === 'save') {
             $profile->setVar('profile_id', $edituser->getVar('uid'));
             $profile_handler->insert($profile);
             unset($_SESSION['xoopsUserTheme']);
-            $xoops->redirect(\XoopsBaseConfig::get('url') . '/modules/' . $xoops->module->getVar('dirname', 'n') . '/userinfo.php?uid=' . $edituser->getVar('uid'), 2, XoopsLocale::S_YOUR_PROFILE_UPDATED);
+            $xoops->redirect(\XoopsBaseConfig::get('url').'/modules/'.$xoops->module->getVar('dirname', 'n').'/userinfo.php?uid='.$edituser->getVar('uid'), 2, XoopsLocale::S_YOUR_PROFILE_UPDATED);
         }
     }
 }
 
-if ($op === 'editprofile') {
+if ('editprofile' === $op) {
     $xoops->header('module:profile/profile_editprofile.tpl');
-    include_once __DIR__ . '/include/forms.php';
+    include_once __DIR__.'/include/forms.php';
     $form = profile_getUserForm($xoops->user);
     $form->assign($xoops->tpl());
     if (!empty($stop)) {
@@ -103,4 +100,4 @@ if ($op === 'editprofile') {
         new Link(['caption' => XoopsLocale::EDIT_PROFILE])
     );
 }
-include __DIR__ . '/footer.php';
+include __DIR__.'/footer.php';

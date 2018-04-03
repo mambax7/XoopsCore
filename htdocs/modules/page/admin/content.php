@@ -12,16 +12,15 @@
 use Xmf\Request;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Call header
 $xoops->header('admin:page/page_admin_content.tpl');
@@ -30,7 +29,6 @@ $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('content.php');
 
 switch ($op) {
-
     case 'list':
     default:
         $admin_page->addTips(PageLocale::CONTENT_TIPS);
@@ -58,6 +56,7 @@ switch ($op) {
         } else {
             $xoops->tpl()->assign('error_message', PageLocale::E_NO_CONTENT);
         }
+
         break;
 
     case 'new':
@@ -66,6 +65,7 @@ switch ($op) {
         $obj = $content_Handler->create();
         $form = $helper->getForm($obj, 'page_content');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -77,6 +77,7 @@ switch ($op) {
         $obj = $content_Handler->get($content_id);
         $form = $helper->getForm($obj, 'page_content');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'save':
@@ -101,9 +102,9 @@ switch ($op) {
         $obj->setVar('content_mdescription', Request::getString('content_mdescription', ''));
 
         $date_create = Request::getArray('content_create', []);
-        if (count($date_create) === 1) {
+        if (1 === count($date_create)) {
             $content_create = strtotime($date_create['date']);
-        } elseif (count($date_create) === 2) {
+        } elseif (2 === count($date_create)) {
             $content_create = strtotime($date_create['date']) + $date_create['time'];
         } else {
             $content_create = time();
@@ -128,14 +129,14 @@ switch ($op) {
         $obj->setVar('content_dotitle', in_array('title', $content_option, true));
         $obj->setVar('content_donotifications', in_array('notifications', $content_option, true));
 
-        if (preg_match('/^\d+$/', Request::getInt('content_weight', 0)) === false) {
+        if (false === preg_match('/^\d+$/', Request::getInt('content_weight', 0))) {
             $error = true;
-            $error_message .= PageLocale::E_WEIGHT . '<br />';
+            $error_message .= PageLocale::E_WEIGHT.'<br />';
             $obj->setVar('content_weight', 0);
         } else {
             $obj->setVar('content_weight', Request::getInt('content_weight', 0));
         }
-        if ($error === true) {
+        if (true === $error) {
             $xoops->tpl()->assign('error_message', $error_message);
         } else {
             if ($newcontent_id = $content_Handler->insert($obj)) {
@@ -145,12 +146,12 @@ switch ($op) {
                 $gperm_Handler->updatePerms($perm_id, $groups_view_item);
 
                 //notifications
-                if ($content_id === 0 && $xoops->isActiveModule('notifications')) {
+                if (0 === $content_id && $xoops->isActiveModule('notifications')) {
                     $notification_handler = Notifications::getInstance()->getHandlerNotification();
                     $tags = [];
                     $tags['MODULE_NAME'] = 'page';
                     $tags['ITEM_NAME'] = Request::getString('content_title', '');
-                    $tags['ITEM_URL'] = \XoopsBaseConfig::get('url') . '/modules/page/viewpage.php?id=' . $newcontent_id;
+                    $tags['ITEM_URL'] = \XoopsBaseConfig::get('url').'/modules/page/viewpage.php?id='.$newcontent_id;
                     $notification_handler->triggerEvent('global', 0, 'newcontent', $tags);
                     $notification_handler->triggerEvent('item', $newcontent_id, 'newcontent', $tags);
                 }
@@ -160,6 +161,7 @@ switch ($op) {
         }
         $form = $helper->getForm($obj, 'page_content');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
@@ -171,7 +173,7 @@ switch ($op) {
         $ok = Request::getInt('ok', 0);
 
         $obj = $content_Handler->get($content_id);
-        if ($ok === 1) {
+        if (1 === $ok) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('content.php', 3, implode(',', $xoops->security()->getErrors()));
             }
@@ -200,9 +202,10 @@ switch ($op) {
                 ['ok' => 1, 'content_id' => $content_id, 'op' => 'delete'],
                 'content.php',
                 XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM
-                . '<br /><span class="red">' . $obj->getvar('content_title') . '<span>'
+                .'<br /><span class="red">'.$obj->getvar('content_title').'<span>'
             );
         }
+
         break;
 
     case 'update_status':
@@ -216,6 +219,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 
     case 'update_display':
@@ -229,6 +233,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 
     case 'clone':
@@ -241,6 +246,7 @@ switch ($op) {
             $xoops->redirect('content.php', 2, XoopsLocale::S_DATABASE_UPDATED);
         }
         echo $xoops->alert('error', $obj->getHtmlErrors());
+
         break;
 }
 $xoops->footer();

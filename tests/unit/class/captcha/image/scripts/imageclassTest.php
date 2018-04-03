@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
 {
@@ -55,7 +55,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $image_handler = new XoopsCaptchaImageHandler();
         $image_handler->loadFont();
         $this->assertTrue(is_string($image_handler->font));
-        $this->assertTrue(strpos($image_handler->font, '.ttf') !== false);
+        $this->assertTrue(false !== strpos($image_handler->font, '.ttf'));
     }
 
     public function test_setImageSize()
@@ -72,7 +72,7 @@ class scripts_imageclassTest extends \PHPUnit\Framework\TestCase
         $image_handler = new XoopsCaptchaImageHandler();
         $value = $image_handler->loadBackground();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, 'image/backgrounds/') !== false);
+        $this->assertTrue(false !== strpos($value, 'image/backgrounds/'));
     }
 
     public function test_createFromFile()

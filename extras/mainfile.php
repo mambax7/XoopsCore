@@ -1,6 +1,6 @@
 <?php
 /**
- * This is a dummy placeholder for mainfile.php, the XOOPS configuration file
+ * This is a dummy placeholder for mainfile.php, the XOOPS configuration file.
  *
  * This is only needed for installation on servers that cannot write a file directly
  * into the main XOOPS root directory. On these servers, the install will stop

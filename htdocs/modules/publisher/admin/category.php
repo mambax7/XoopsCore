@@ -14,14 +14,12 @@ use Xmf\Request;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $xoops = Xoops::getInstance();
 $op = Request::getCmd('op');
@@ -36,7 +34,6 @@ $startcategory = Request::getInt('startcategory');
 $categoryid = Request::getInt('categoryid');
 
 switch ($op) {
-
     case 'del':
         /* @var $categoryObj PublisherCategory */
         $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
@@ -49,9 +46,10 @@ switch ($op) {
             $xoops->redirect('category.php', 1, sprintf(_AM_PUBLISHER_COLISDELETED, $name));
         } else {
             $xoops->header();
-            echo $xoops->confirm(['op' => 'del', 'categoryid' => $categoryObj->getVar('categoryid'), 'confirm' => 1, 'name' => $categoryObj->getVar('name')], 'category.php', _AM_PUBLISHER_DELETECOL . " '" . $categoryObj->getVar('name') . "'. <br /> <br />" . _AM_PUBLISHER_DELETE_CAT_CONFIRM, _AM_PUBLISHER_DELETE);
+            echo $xoops->confirm(['op' => 'del', 'categoryid' => $categoryObj->getVar('categoryid'), 'confirm' => 1, 'name' => $categoryObj->getVar('name')], 'category.php', _AM_PUBLISHER_DELETECOL." '".$categoryObj->getVar('name')."'. <br /> <br />"._AM_PUBLISHER_DELETE_CAT_CONFIRM, _AM_PUBLISHER_DELETE);
             $xoops->footer();
         }
+
         break;
 
     case 'mod':
@@ -62,6 +60,7 @@ switch ($op) {
 
         PublisherUtils::cpHeader();
         publisher_editCat(true, $categoryid, $nb_subcats);
+
         break;
 
     case 'addcategory':
@@ -69,7 +68,7 @@ switch ($op) {
 
         $parentid = Request::getInt('parentid');
         /* @var $categoryObj PublisherCategory */
-        if ($categoryid !== 0) {
+        if (0 !== $categoryid) {
             $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
         } else {
             $categoryObj = $publisher->getCategoryHandler()->create();
@@ -79,7 +78,7 @@ switch ($op) {
         // Retreive the filename to be uploaded
         if (isset($_FILES['image_file']['name']) && $_FILES['image_file']['name'] !== '') {
             $filename = $_POST['xoops_upload_file'][0];
-            if (!empty($filename) || $filename !== '') {
+            if (!empty($filename) || '' !== $filename) {
                 // TODO : implement publisher mimetype management
                 $max_size = $publisher->getConfig('maximum_filesize');
                 $max_imgwidth = $publisher->getConfig('maximum_image_width');
@@ -94,7 +93,7 @@ switch ($op) {
                 if ($uploader->fetchMedia($filename) && $uploader->upload()) {
                     $categoryObj->setVar('image', $uploader->getSavedFileName());
                 } else {
-                    $xoops->redirect('javascript:history.go(-1)', 2, _AM_PUBLISHER_FILEUPLOAD_ERROR . $uploader->getErrors());
+                    $xoops->redirect('javascript:history.go(-1)', 2, _AM_PUBLISHER_FILEUPLOAD_ERROR.$uploader->getErrors());
                 }
             }
         } else {
@@ -111,7 +110,6 @@ switch ($op) {
         $grpread = isset($_POST['groups_read']) ? $_POST['groups_read'] : [];
         $grpsubmit = isset($_POST['groups_submit']) ? $_POST['groups_submit'] : [];
         $grpmoderation = isset($_POST['groups_moderation']) ? $_POST['groups_moderation'] : [];
-
 
         $categoryObj->setVar('name', $_POST['name']);
 
@@ -145,13 +143,12 @@ switch ($op) {
         }
 
         if (!$categoryObj->store()) {
-            $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_CATEGORY_SAVE_ERROR . PublisherUtils::formatErrors($categoryObj->getErrors()));
+            $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_CATEGORY_SAVE_ERROR.PublisherUtils::formatErrors($categoryObj->getErrors()));
         }
         // TODO : put this function in the category class
         PublisherUtils::saveCategoryPermissions($grpread, $categoryObj->getVar('categoryid'), 'category_read');
         PublisherUtils::saveCategoryPermissions($grpsubmit, $categoryObj->getVar('categoryid'), 'item_submit');
         PublisherUtils::saveCategoryPermissions($grpmoderation, $categoryObj->getVar('categoryid'), 'category_moderation');
-
 
         //Added by fx2024
         $parentCat = $categoryObj->getVar('categoryid');
@@ -163,7 +160,7 @@ switch ($op) {
                 $categoryObj->setVar('parentid', $parentCat);
 
                 if (!$categoryObj->store()) {
-                    $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_SUBCATEGORY_SAVE_ERROR . PublisherUtils::formatErrors($categoryObj->getErrors()));
+                    $xoops->redirect('javascript:history.go(-1)', 3, _AM_PUBLISHER_SUBCATEGORY_SAVE_ERROR.PublisherUtils::formatErrors($categoryObj->getErrors()));
                 }
                 // TODO : put this function in the category class
                 PublisherUtils::saveCategoryPermissions($grpread, $categoryObj->getVar('categoryid'), 'category_read');
@@ -173,6 +170,7 @@ switch ($op) {
         }
         //end of fx2024 code
         $xoops->redirect($redirect_to, 2, $redirect_msg);
+
         break;
 
     //Added by fx2024
@@ -198,6 +196,7 @@ switch ($op) {
 
     case 'cancel':
         $xoops->redirect('category.php', 1, sprintf(_AM_PUBLISHER_BACK2IDX, ''));
+
         break;
     case 'default':
     default:
@@ -206,7 +205,7 @@ switch ($op) {
 
         echo "<br />\n";
         echo '<form><div style="margin-bottom: 12px;">';
-        echo "<input type='button' name='button' onclick=\"location='category.php?op=mod'\" value='" . _AM_PUBLISHER_CATEGORY_CREATE . "'>&nbsp;&nbsp;";
+        echo "<input type='button' name='button' onclick=\"location='category.php?op=mod'\" value='"._AM_PUBLISHER_CATEGORY_CREATE."'>&nbsp;&nbsp;";
         //echo "<input type='button' name='button' onclick=\"location='item.php?op=mod'\" value='" . _AM_PUBLISHER_CREATEITEM . "'>&nbsp;&nbsp;";
         echo '</div></form>';
 
@@ -217,9 +216,9 @@ switch ($op) {
 
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
         echo '<tr>';
-        echo "<td class='bg3' align='left'><strong>" . _AM_PUBLISHER_ITEMCATEGORYNAME . '</strong></td>';
-        echo "<td width='60' class='bg3' width='65' align='center'><strong>" . _CO_PUBLISHER_WEIGHT . '</strong></td>';
-        echo "<td width='60' class='bg3' align='center'><strong>" . _AM_PUBLISHER_ACTION . '</strong></td>';
+        echo "<td class='bg3' align='left'><strong>"._AM_PUBLISHER_ITEMCATEGORYNAME.'</strong></td>';
+        echo "<td width='60' class='bg3' width='65' align='center'><strong>"._CO_PUBLISHER_WEIGHT.'</strong></td>';
+        echo "<td width='60' class='bg3' align='center'><strong>"._AM_PUBLISHER_ACTION.'</strong></td>';
         echo '</tr>';
         $totalCategories = $publisher->getCategoryHandler()->getCategoriesCount(0);
         if (count($categoriesObj) > 0) {
@@ -228,13 +227,13 @@ switch ($op) {
             }
         } else {
             echo '<tr>';
-            echo "<td class='head' align='center' colspan= '7'>" . _AM_PUBLISHER_NOCAT . '</td>';
+            echo "<td class='head' align='center' colspan= '7'>"._AM_PUBLISHER_NOCAT.'</td>';
             echo '</tr>';
             $categoryid = '0';
         }
         echo "</table>\n";
         $pagenav = new XoopsPageNav($totalCategories, $publisher->getConfig('idxcat_perpage'), $startcategory, 'startcategory');
-        echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
+        echo '<div style="text-align:right;">'.$pagenav->renderNav().'</div>';
         echo '<br />';
         PublisherUtils::closeCollapsableBar('createdcategories', 'createdcategoriesicon');
         echo '<br>';
@@ -251,11 +250,11 @@ function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0)
     $description = $categoryObj->getVar('description');
     if (!XoopsLocale::isMultiByte()) {
         if (strlen($description) >= 100) {
-            $description = substr($description, 0, (100 - 1)) . '...';
+            $description = substr($description, 0, (100 - 1)).'...';
         }
     }
-    $modify = "<a href='category.php?op=mod&amp;categoryid=" . $categoryObj->getVar('categoryid') . '&amp;parentid=' . $categoryObj->getVar('parentid') . "'><img src='" . PUBLISHER_URL . "/images/links/edit.gif' title='" . _AM_PUBLISHER_EDITCOL . "' alt='" . _AM_PUBLISHER_EDITCOL . "' /></a>";
-    $delete = "<a href='category.php?op=del&amp;categoryid=" . $categoryObj->getVar('categoryid') . "'><img src='" . PUBLISHER_URL . "/images/links/delete.png' title='" . _AM_PUBLISHER_DELETECOL . "' alt='" . _AM_PUBLISHER_DELETECOL . "' /></a>";
+    $modify = "<a href='category.php?op=mod&amp;categoryid=".$categoryObj->getVar('categoryid').'&amp;parentid='.$categoryObj->getVar('parentid')."'><img src='".PUBLISHER_URL."/images/links/edit.gif' title='"._AM_PUBLISHER_EDITCOL."' alt='"._AM_PUBLISHER_EDITCOL."' /></a>";
+    $delete = "<a href='category.php?op=del&amp;categoryid=".$categoryObj->getVar('categoryid')."'><img src='".PUBLISHER_URL."/images/links/delete.png' title='"._AM_PUBLISHER_DELETECOL."' alt='"._AM_PUBLISHER_DELETECOL."' /></a>";
 
     $spaces = '';
     for ($j = 0; $j < $level; ++$j) {
@@ -263,8 +262,8 @@ function publisher_displayCategory(PublisherCategory $categoryObj, $level = 0)
     }
 
     echo '<tr>';
-    echo "<td class='even' align='left'>" . $spaces . "<a href='" . PUBLISHER_URL . '/category.php?categoryid=' . $categoryObj->getVar('categoryid') . "'><img src='" . PUBLISHER_URL . "/images/links/subcat.gif' alt='' />&nbsp;" . $categoryObj->getVar('name') . '</a></td>';
-    echo "<td class='even' align='center'>" . $categoryObj->getVar('weight') . '</td>';
+    echo "<td class='even' align='left'>".$spaces."<a href='".PUBLISHER_URL.'/category.php?categoryid='.$categoryObj->getVar('categoryid')."'><img src='".PUBLISHER_URL."/images/links/subcat.gif' alt='' />&nbsp;".$categoryObj->getVar('name').'</a></td>';
+    echo "<td class='even' align='center'>".$categoryObj->getVar('weight').'</td>';
     echo "<td class='even' align='center'> ${modify} ${delete} </td>";
     echo '</tr>';
     $subCategoriesObj = $publisher->getCategoryHandler()->getCategories(0, 0, $categoryObj->getVar('categoryid'));
@@ -284,7 +283,7 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
     /* @var $categoryObj PublisherCategory */
 
     // if there is a parameter, and the id exists, retrieve data: we're editing a category
-    if ($categoryid !== 0) {
+    if (0 !== $categoryid) {
         // Creating the category object for the selected category
         $categoryObj = $publisher->getCategoryHandler()->get($categoryid);
         if ($categoryObj->notLoaded()) {
@@ -296,7 +295,7 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
         }
     }
 
-    if ($categoryid !== 0) {
+    if (0 !== $categoryid) {
         if ($showmenu) {
             //publisher_adminMenu(1, _AM_PUBLISHER_CATEGORIES . " > " . _AM_PUBLISHER_EDITING);
         }
@@ -333,26 +332,26 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
 
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
         echo '<tr>';
-        echo "<td width='60' class='bg3' align='left'><strong>" . _AM_PUBLISHER_CATID . '</strong></td>';
-        echo "<td width='20%' class='bg3' align='left'><strong>" . _AM_PUBLISHER_CATCOLNAME . '</strong></td>';
-        echo "<td class='bg3' align='left'><strong>" . _AM_PUBLISHER_SUBDESCRIPT . '</strong></td>';
-        echo "<td width='60' class='bg3' align='right'><strong>" . _AM_PUBLISHER_ACTION . '</strong></td>';
+        echo "<td width='60' class='bg3' align='left'><strong>"._AM_PUBLISHER_CATID.'</strong></td>';
+        echo "<td width='20%' class='bg3' align='left'><strong>"._AM_PUBLISHER_CATCOLNAME.'</strong></td>';
+        echo "<td class='bg3' align='left'><strong>"._AM_PUBLISHER_SUBDESCRIPT.'</strong></td>';
+        echo "<td width='60' class='bg3' align='right'><strong>"._AM_PUBLISHER_ACTION.'</strong></td>';
         echo '</tr>';
         if ($totalsubs > 0) {
             /* @var $subcat PublisherCategory */
             foreach ($subcatsObj as $subcat) {
-                $modify = "<a href='category.php?op=mod&amp;categoryid=" . $subcat->getVar('categoryid') . "'><img src='" . \XoopsBaseConfig::get('url') . '/modules/' . $publisher->getModule()->dirname() . "/images/links/edit.gif' title='" . _AM_PUBLISHER_MODIFY . "' alt='" . _AM_PUBLISHER_MODIFY . "' /></a>";
-                $delete = "<a href='category.php?op=del&amp;categoryid=" . $subcat->getVar('categoryid') . "'><img src='" . \XoopsBaseConfig::get('url') . '/modules/' . $publisher->getModule()->dirname() . "/images/links/delete.png' title='" . _AM_PUBLISHER_DELETE . "' alt='" . _AM_PUBLISHER_DELETE . "' /></a>";
+                $modify = "<a href='category.php?op=mod&amp;categoryid=".$subcat->getVar('categoryid')."'><img src='".\XoopsBaseConfig::get('url').'/modules/'.$publisher->getModule()->dirname()."/images/links/edit.gif' title='"._AM_PUBLISHER_MODIFY."' alt='"._AM_PUBLISHER_MODIFY."' /></a>";
+                $delete = "<a href='category.php?op=del&amp;categoryid=".$subcat->getVar('categoryid')."'><img src='".\XoopsBaseConfig::get('url').'/modules/'.$publisher->getModule()->dirname()."/images/links/delete.png' title='"._AM_PUBLISHER_DELETE."' alt='"._AM_PUBLISHER_DELETE."' /></a>";
                 echo '<tr>';
-                echo "<td class='head' align='left'>" . $subcat->getVar('categoryid') . '</td>';
-                echo "<td class='even' align='left'><a href='" . \XoopsBaseConfig::get('url') . '/modules/' . $publisher->getModule()->dirname() . '/category.php?categoryid=' . $subcat->getVar('categoryid') . '&amp;parentid=' . $subcat->getVar('parentid') . "'>" . $subcat->getVar('name') . '</a></td>';
-                echo "<td class='even' align='left'>" . $subcat->getVar('description') . '</td>';
+                echo "<td class='head' align='left'>".$subcat->getVar('categoryid').'</td>';
+                echo "<td class='even' align='left'><a href='".\XoopsBaseConfig::get('url').'/modules/'.$publisher->getModule()->dirname().'/category.php?categoryid='.$subcat->getVar('categoryid').'&amp;parentid='.$subcat->getVar('parentid')."'>".$subcat->getVar('name').'</a></td>';
+                echo "<td class='even' align='left'>".$subcat->getVar('description').'</td>';
                 echo "<td class='even' align='right'> {$modify} {$delete} </td>";
                 echo '</tr>';
             }
         } else {
             echo '<tr>';
-            echo "<td class='head' align='center' colspan= '7'>" . _AM_PUBLISHER_NOSUBCAT . '</td>';
+            echo "<td class='head' align='center' colspan= '7'>"._AM_PUBLISHER_NOSUBCAT.'</td>';
             echo '</tr>';
         }
         echo "</table>\n";
@@ -369,28 +368,28 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
         $allcats = $publisher->getCategoryHandler()->getObjects(null, true);
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
         echo '<tr>';
-        echo "<td width='40' class='bg3' align='center'><strong>" . _AM_PUBLISHER_ITEMID . '</strong></td>';
-        echo "<td width='20%' class='bg3' align='left'><strong>" . _AM_PUBLISHER_ITEMCOLNAME . '</strong></td>';
-        echo "<td class='bg3' align='left'><strong>" . _AM_PUBLISHER_ITEMDESC . '</strong></td>';
-        echo "<td width='90' class='bg3' align='center'><strong>" . _AM_PUBLISHER_CREATED . '</strong></td>';
-        echo "<td width='60' class='bg3' align='center'><strong>" . _AM_PUBLISHER_ACTION . '</strong></td>';
+        echo "<td width='40' class='bg3' align='center'><strong>"._AM_PUBLISHER_ITEMID.'</strong></td>';
+        echo "<td width='20%' class='bg3' align='left'><strong>"._AM_PUBLISHER_ITEMCOLNAME.'</strong></td>';
+        echo "<td class='bg3' align='left'><strong>"._AM_PUBLISHER_ITEMDESC.'</strong></td>';
+        echo "<td width='90' class='bg3' align='center'><strong>"._AM_PUBLISHER_CREATED.'</strong></td>';
+        echo "<td width='60' class='bg3' align='center'><strong>"._AM_PUBLISHER_ACTION.'</strong></td>';
         echo '</tr>';
         if ($totalitems > 0) {
             for ($i = 0; $i < $totalitemsOnPage; ++$i) {
                 $categoryObj = $allcats[$itemsObj[$i]->getVar('categoryid')];
-                $modify = "<a href='item.php?op=mod&amp;itemid=" . $itemsObj[$i]->getVar('itemid') . "'><img src='" . \XoopsBaseConfig::get('url') . '/modules/' . $publisher->getModule()->dirname() . "/images/links/edit.gif' title='" . _AM_PUBLISHER_EDITITEM . "' alt='" . _AM_PUBLISHER_EDITITEM . "' /></a>";
-                $delete = "<a href='item.php?op=del&amp;itemid=" . $itemsObj[$i]->getVar('itemid') . "'><img src='" . \XoopsBaseConfig::get('url') . '/modules/' . $publisher->getModule()->dirname() . "/images/links/delete.png' title='" . _AM_PUBLISHER_DELETEITEM . "' alt='" . _AM_PUBLISHER_DELETEITEM . "'/></a>";
+                $modify = "<a href='item.php?op=mod&amp;itemid=".$itemsObj[$i]->getVar('itemid')."'><img src='".\XoopsBaseConfig::get('url').'/modules/'.$publisher->getModule()->dirname()."/images/links/edit.gif' title='"._AM_PUBLISHER_EDITITEM."' alt='"._AM_PUBLISHER_EDITITEM."' /></a>";
+                $delete = "<a href='item.php?op=del&amp;itemid=".$itemsObj[$i]->getVar('itemid')."'><img src='".\XoopsBaseConfig::get('url').'/modules/'.$publisher->getModule()->dirname()."/images/links/delete.png' title='"._AM_PUBLISHER_DELETEITEM."' alt='"._AM_PUBLISHER_DELETEITEM."'/></a>";
                 echo '<tr>';
-                echo "<td class='head' align='center'>" . $itemsObj[$i]->getVar('itemid') . '</td>';
-                echo "<td class='even' align='left'>" . $categoryObj->getVar('name') . '</td>';
-                echo "<td class='even' align='left'>" . $itemsObj[$i]->getitemLink() . '</td>';
-                echo "<td class='even' align='center'>" . $itemsObj[$i]->datesub('s') . '</td>';
+                echo "<td class='head' align='center'>".$itemsObj[$i]->getVar('itemid').'</td>';
+                echo "<td class='even' align='left'>".$categoryObj->getVar('name').'</td>';
+                echo "<td class='even' align='left'>".$itemsObj[$i]->getitemLink().'</td>';
+                echo "<td class='even' align='center'>".$itemsObj[$i]->datesub('s').'</td>';
                 echo "<td class='even' align='center'> ${modify} ${delete} </td>";
                 echo '</tr>';
             }
         } else {
             echo '<tr>';
-            echo "<td class='head' align='center' colspan= '7'>" . _AM_PUBLISHER_NOITEMS . '</td>';
+            echo "<td class='head' align='center' colspan= '7'>"._AM_PUBLISHER_NOITEMS.'</td>';
             echo '</tr>';
         }
         echo "</table>\n";
@@ -398,8 +397,8 @@ function publisher_editCat($showmenu = false, $categoryid = 0, $nb_subcats = 4, 
         $parentid = Request::getInt('parentid');
         $pagenav_extra_args = "op=mod&categoryid=${sel_cat}&parentid=${parentid}";
         $pagenav = new XoopsPageNav($totalitems, $publisher->getConfig('idxcat_perpage'), $startitem, 'startitem', $pagenav_extra_args);
-        echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
-        echo "<input type='button' name='button' onclick=\"location='item.php?op=mod&categoryid=" . $sel_cat . "'\" value='" . _AM_PUBLISHER_CREATEITEM . "'>&nbsp;&nbsp;";
+        echo '<div style="text-align:right;">'.$pagenav->renderNav().'</div>';
+        echo "<input type='button' name='button' onclick=\"location='item.php?op=mod&categoryid=".$sel_cat."'\" value='"._AM_PUBLISHER_CREATEITEM."'>&nbsp;&nbsp;";
         echo '</div>';
     }
     //end of fx2024 code

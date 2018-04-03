@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * YouTube extension
+ * YouTube extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class YouTube extends ExtensionAbstract
 {
@@ -39,7 +38,7 @@ class YouTube extends ExtensionAbstract
     ];
 
     /**
-     * Provide button and javascript code used by the DhtmlTextArea
+     * Provide button and javascript code used by the DhtmlTextArea.
      *
      * @param string $textAreaId dom element id
      *
@@ -87,14 +86,14 @@ EOH;
     }
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
         $this->shortcodes->addShortcode(
             'youtube',
             function ($attributes, $content, $tagName) {
-                if (array_key_exists(0, $attributes) && substr($attributes[0], 0, 1) === '=') {
+                if (array_key_exists(0, $attributes) && '=' === substr($attributes[0], 0, 1)) {
                     $args = ltrim($attributes[0], '=');
                     list($width, $height) = explode(',', $args);
                     $url = $content;
@@ -112,7 +111,7 @@ EOH;
 
                 // from: http://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
                 $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
-                    . '([^"&?/ ]{11})%i';
+                    .'([^"&?/ ]{11})%i';
 
                 if (preg_match($youtubeRegex, $url, $match)) {
                     $videoId = $match[1];
@@ -125,9 +124,11 @@ EOH;
                 switch ($width) {
                     case 4:
                         $height = 3;
+
                         break;
                     case 16:
                         $height = 9;
+
                         break;
                 }
 
@@ -141,6 +142,7 @@ EOH;
 
                 $template = $this->config['template'];
                 $newContent = sprintf($template, $videoId, $width, $height, $responsiveAspect);
+
                 return $newContent;
             }
         );

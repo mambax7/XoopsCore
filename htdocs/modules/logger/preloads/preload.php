@@ -12,22 +12,21 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * LegacyLogger core preloads
+ * LegacyLogger core preloads.
  *
  * @category  LegacyLogger
- * @package   LegacyLogger
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 class LoggerPreload extends PreloadItem
 {
     /**
-     * eventCoreException
+     * eventCoreException.
      *
      * @param Exception $e an exception
      */
@@ -38,7 +37,7 @@ class LoggerPreload extends PreloadItem
 
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -46,12 +45,12 @@ class LoggerPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'legacylogger' => $path . '/class/legacylogger.php',
+            'legacylogger' => $path.'/class/legacylogger.php',
         ]);
     }
 
     /**
-     * eventCoreIncludeCommonStart
+     * eventCoreIncludeCommonStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -65,7 +64,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * core.database.noconn
+     * core.database.noconn.
      *
      * @param array $args arguments
      */
@@ -80,7 +79,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDatabaseNodb
+     * eventCoreDatabaseNodb.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -95,7 +94,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDatabaseQueryComplete
+     * eventCoreDatabaseQueryComplete.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -107,7 +106,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonConfigsSuccess
+     * eventCoreIncludeCommonConfigsSuccess.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -128,7 +127,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonAuthSuccess
+     * eventCoreIncludeCommonAuthSuccess.
      */
     public static function eventCoreIncludeCommonAuthSuccess()
     {
@@ -146,7 +145,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeCommonEnd
+     * eventCoreIncludeCommonEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -158,7 +157,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreTemplateConstructStart
+     * eventCoreTemplateConstructStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -175,7 +174,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderStart
+     * eventCoreThemeRenderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -185,7 +184,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeRenderEnd
+     * eventCoreThemeRenderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -195,7 +194,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeCheckcacheSuccess
+     * eventCoreThemeCheckcacheSuccess.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -208,7 +207,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreThemeblocksBuildblockStart
+     * eventCoreThemeblocksBuildblockStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -221,7 +220,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDeprecated
+     * eventCoreDeprecated.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -232,7 +231,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreDisableerrorreporting
+     * eventCoreDisableerrorreporting.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -242,7 +241,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderStart
+     * eventCoreHeaderStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -254,7 +253,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreHeaderEnd
+     * eventCoreHeaderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -266,7 +265,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterStart
+     * eventCoreFooterStart.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -277,7 +276,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreFooterEnd
+     * eventCoreFooterEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -288,7 +287,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreIncludeFunctionsRedirectheaderEnd
+     * eventCoreIncludeFunctionsRedirectheaderEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -297,7 +296,7 @@ class LoggerPreload extends PreloadItem
         $xoops = Xoops::getInstance();
         $logger = LegacyLogger::getInstance();
         $debug_mode = $xoops->getModuleConfig('debug_mode', 'logger');
-        if ($debug_mode === 2) {
+        if (2 === $debug_mode) {
             //Should we give extra time ?
             //$xoops->tpl()->assign('time', 300);
             $xoops->tpl()->assign('xoops_logdump', $logger->dump());
@@ -305,7 +304,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreSecurityValidatetokenEnd
+     * eventCoreSecurityValidatetokenEnd.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -319,7 +318,7 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * eventCoreModuleAddlog
+     * eventCoreModuleAddlog.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
@@ -329,17 +328,17 @@ class LoggerPreload extends PreloadItem
     }
 
     /**
-     * system.preferences.save
+     * system.preferences.save.
      *
      * @param mixed $args arguments supplied to triggerEvent
      */
     public static function eventSystemPreferencesSave($args)
     {
-        XoopsLoad::addMap(['legacylogger' => dirname(__DIR__) . '/class/legacylogger.php']);
+        XoopsLoad::addMap(['legacylogger' => dirname(__DIR__).'/class/legacylogger.php']);
     }
 
     /**
-     * getConfigs
+     * getConfigs.
      *
      * @return array of config options
      */
@@ -347,7 +346,7 @@ class LoggerPreload extends PreloadItem
     {
         static $configs = null;
 
-        if ($configs === null) {
+        if (null === $configs) {
             $xoops = Xoops::getInstance();
             $user_groups = $xoops->getUserGroups();
             $moduleperm_handler = $xoops->getHandlerGroupPermission();

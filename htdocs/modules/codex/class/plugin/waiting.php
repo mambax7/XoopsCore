@@ -27,6 +27,7 @@ class CodexWaitingPlugin implements WaitingPluginInterface
             'name' => $xoops->getHandlerModule()->getByDirname('codex')->getVar('name'),
             'link' => $xoops->url('modules/codex/'),
         ];
+
         return $ret;
     }
 }

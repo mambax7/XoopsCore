@@ -12,16 +12,15 @@
  use Xmf\Request;
 
  /**
- * avatars module
+ * avatars module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         avatar
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $xoops = Xoops::getInstance();
 $helper = Avatars::getInstance();
@@ -52,7 +51,6 @@ $info_msg = [
 ];
 
 switch ($op) {
-
     case 'list':
     default:
         // Add Scripts
@@ -89,6 +87,7 @@ switch ($op) {
             $nav = new XoopsPageNav($avatar_count, $nb_avatars, $start, 'start', 'op=list');
             $xoops->tpl()->assign('nav_menu', $nav->renderNav(4));
         }
+
         break;
 
     // New
@@ -101,6 +100,7 @@ switch ($op) {
         $form = $xoops->getModuleForm($obj, 'avatar');
         // Assign form
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     // Edit
@@ -113,6 +113,7 @@ switch ($op) {
         $form = $xoops->getModuleForm($obj, 'avatar');
         // Assign form
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     // Save
@@ -122,7 +123,7 @@ switch ($op) {
             $xoops->redirect('avatar_system.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
         $uploader_avatars_img =
-            new XoopsMediaUploader($xoops_upload_path . '/avatars', $mimetypes, $upload_size, $width, $height);
+            new XoopsMediaUploader($xoops_upload_path.'/avatars', $mimetypes, $upload_size, $width, $height);
         // Get avatar id
         $avatar_id = Request::getInt('avatar_id', 0);
         if ($avatar_id > 0) {
@@ -132,8 +133,8 @@ switch ($op) {
         }
         $error_msg = '';
         $obj->setVars($_POST);
-        if (preg_match('/^\d+$/', $_POST['avatar_weight']) === false) {
-            $error_msg .= XoopsLocale::E_YOU_NEED_A_POSITIVE_INTEGER . '<br />';
+        if (false === preg_match('/^\d+$/', $_POST['avatar_weight'])) {
+            $error_msg .= XoopsLocale::E_YOU_NEED_A_POSITIVE_INTEGER.'<br />';
             $obj->setVar('avatar_weight', 0);
         } else {
             $obj->setVar('avatar_weight', Request::getInt('avatar_weight', 0));
@@ -147,13 +148,13 @@ switch ($op) {
                 $obj->setVar('avatar_file', 'avatars/blank.gif');
             } else {
                 $obj->setVar('avatar_mimetype', $uploader_avatars_img->getMediaType());
-                $obj->setVar('avatar_file', 'avatars/' . $uploader_avatars_img->getSavedFileName());
+                $obj->setVar('avatar_file', 'avatars/'.$uploader_avatars_img->getSavedFileName());
             }
         } else {
             $file = Request::getString('avatar_file', 'blank.gif');
-            $obj->setVar('avatar_file', 'avatars/' . $file);
+            $obj->setVar('avatar_file', 'avatars/'.$file);
         }
-        if ($error_msg === '') {
+        if ('' === $error_msg) {
             if ($avatar_Handler->insert($obj)) {
                 $xoops->redirect('avatar_system.php', 2, XoopsLocale::S_ITEM_SAVED);
             }
@@ -165,21 +166,22 @@ switch ($op) {
         $xoops->tpl()->assign('error_msg', $xoops->alert('error', $error_msg, XoopsLocale::ERRORS));
         $form = $xoops->getModuleForm($obj, 'avatar');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     //Delete
     case 'delete':
         $avatar_id = Request::getInt('avatar_id', 0);
         $obj = $avatar_Handler->get($avatar_id);
-        if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+        if (isset($_POST['ok']) && 1 === $_POST['ok']) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('avatar_system.php', 3, implode(',', $xoops->security()->getErrors()));
             }
             if ($avatar_Handler->delete($obj)) {
                 // Delete file
                 $file = $obj->getVar('avatar_file');
-                if ($file !== 'avatars/blank.gif') {
-                    $fullname = $xoops_upload_path . '/' . $file;
+                if ('avatars/blank.gif' !== $file) {
+                    $fullname = $xoops_upload_path.'/'.$file;
                     if (is_file($fullname)) {
                         chmod($fullname, 0777);
                         unlink($fullname);
@@ -201,11 +203,11 @@ switch ($op) {
             if ($avatar_id > 0) {
                 // Define Stylesheet
                 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
-                $msg = '<div class="spacer"><img src="' . $xoops_upload_url . '/'
-                    . $obj->getVar('avatar_file', 's')
-                    . '" alt="" /></div><div class="txtcenter bold">'
-                    . $obj->getVar('avatar_name', 's') . '</div>'
-                    . XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM;
+                $msg = '<div class="spacer"><img src="'.$xoops_upload_url.'/'
+                    .$obj->getVar('avatar_file', 's')
+                    .'" alt="" /></div><div class="txtcenter bold">'
+                    .$obj->getVar('avatar_name', 's').'</div>'
+                    .XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM;
                 // Display message
                 echo $xoops->confirm(
                     ['ok' => 1, 'op' => 'delete', 'avatar_id' => $avatar_id],
@@ -216,6 +218,7 @@ switch ($op) {
                 $xoops->redirect('avatar_system.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
             }
         }
+
         break;
 
     case 'update_display':
@@ -229,6 +232,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 }
 $xoops->footer();

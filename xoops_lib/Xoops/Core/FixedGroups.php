@@ -12,14 +12,13 @@
 namespace Xoops\Core;
 
 /**
- * FixedGroups provides constants for group ids that are fixed, and cannot be changed
+ * FixedGroups provides constants for group ids that are fixed, and cannot be changed.
  *
  * @category  Xoops\Core
- * @package   FixedGroups
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class FixedGroups
 {

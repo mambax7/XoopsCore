@@ -12,13 +12,11 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Notifications
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $helper = Notifications::getInstance();
@@ -94,11 +92,11 @@ $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
     if ($first_arg) {
-        $argstring .= '?' . $arg . '=' . $redirect_args[$arg];
+        $argstring .= '?'.$arg.'='.$redirect_args[$arg];
         $first_arg = 0;
     } else {
-        $argstring .= '&' . $arg . '=' . $redirect_args[$arg];
+        $argstring .= '&'.$arg.'='.$redirect_args[$arg];
     }
 }
 
-$xoops->redirect($_POST['not_redirect'] . $argstring, 3, _MD_NOTIFICATIONS_UPDATEOK);
+$xoops->redirect($_POST['not_redirect'].$argstring, 3, _MD_NOTIFICATIONS_UPDATEOK);

@@ -26,7 +26,7 @@ class ProfileUsermenuPlugin implements UsermenuPluginInterface
         // View Account
         $ret[] = [
             'name' => XoopsLocale::VIEW_ACCOUNT,
-            'link' => $helper->url('userinfo.php?uid=' . $helper->xoops()->user->getVar('uid')),
+            'link' => $helper->url('userinfo.php?uid='.$helper->xoops()->user->getVar('uid')),
             'icon' => 'glyphicon-user',
         ];
 

@@ -16,7 +16,7 @@ use Xoops\Module\Plugin;
 use Xoops\Module\Plugin\ConfigCollector;
 
 /**
- * Notifications core preloads
+ * Notifications core preloads.
  *
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2015 XOOPS Project (http://xoops.org)
@@ -26,7 +26,7 @@ class NotificationsPreload extends PreloadItem
 {
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -34,7 +34,7 @@ class NotificationsPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'notifications' => $path . '/class/helper.php',
+            'notifications' => $path.'/class/helper.php',
         ]);
     }
 
@@ -91,23 +91,26 @@ class NotificationsPreload extends PreloadItem
                     'lang_checkall' => _MD_NOTIFICATIONS_CHECKALL,
                     'lang_notificationmethodis' => _MD_NOTIFICATIONS_NOTIFICATIONMETHODIS,
                     'lang_change' => _MD_NOTIFICATIONS_CHANGE,
-                    'editprofile_url' => XOOPS_URL . '/edituser.php?uid=' . $xoops->user->getVar('uid'),
+                    'editprofile_url' => XOOPS_URL.'/edituser.php?uid='.$xoops->user->getVar('uid'),
                 ]);
                 switch ($xoops->user->getVar('notify_method')) {
                     case NOTIFICATIONS_METHOD_DISABLE:
                         $xoops->tpl()->assign('user_method', _MD_NOTIFICATIONS_DISABLE);
+
                         break;
                     case NOTIFICATIONS_METHOD_PM:
                         $xoops->tpl()->assign('user_method', _MD_NOTIFICATIONS_PM);
+
                         break;
                     case NOTIFICATIONS_METHOD_EMAIL:
                         $xoops->tpl()->assign('user_method', _MD_NOTIFICATIONS_EMAIL);
+
                         break;
                 }
             } else {
                 $notifications['show'] = 0;
             }
-            if ($event_count === 0) {
+            if (0 === $event_count) {
                 $notifications['show'] = 0;
             }
         }
@@ -135,7 +138,7 @@ class NotificationsPreload extends PreloadItem
     }
 
     /**
-     * remove any notifications for module being uninstalled
+     * remove any notifications for module being uninstalled.
      *
      * @param XoopsModule $module module object
      */
@@ -154,7 +157,7 @@ class NotificationsPreload extends PreloadItem
     }
 
     /**
-     * core.include.checklogin.success
+     * core.include.checklogin.success.
      */
     public static function eventCoreIncludeCheckloginSuccess()
     {

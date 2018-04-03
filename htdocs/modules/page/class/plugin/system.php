@@ -15,7 +15,6 @@
  * @author          Laurent JEN (aka DuGris)
  * @version         $Id$
  */
-
 class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
     /**
@@ -28,6 +27,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('content_status', 0, '!='));
         $criteria->add(new Criteria('content_author', (int) $uid));
+
         return \Xoops::getModuleHelper('page')->getContentHandler()->getCount($criteria);
     }
 
@@ -42,13 +42,15 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
             $ret['count'] = $count;
             $ret['name'] = $page->getModule()->getVar('name');
             $ret['link'] = $page->url('admin/content.php');
+
             return $ret;
         }
+
         return [];
     }
 
     /**
-     * Used to populate backend
+     * Used to populate backend.
      *
      * @param int $limit : Number of item for backend
      *                   Expects an array containing:
@@ -66,10 +68,11 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
         $contents = $page->getContentHandler()->getPagePublished(0, $limit);
         foreach ($contents as $k => $content) {
             $ret[$k]['title'] = $content->getVar('content_title');
-            $ret[$k]['link'] = $page->url('viewpage.php') . '?id=' . $content->getVar('content_id');
-            $ret[$k]['content'] = $content->getVar('content_shorttext') . '<br />' . $content->getVar('content_text');
+            $ret[$k]['link'] = $page->url('viewpage.php').'?id='.$content->getVar('content_id');
+            $ret[$k]['content'] = $content->getVar('content_shorttext').'<br />'.$content->getVar('content_text');
             $ret[$k]['date'] = $content->getVar('content_create');
         }
+
         return $ret;
     }
 
@@ -78,7 +81,7 @@ class PageSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements Sys
      * Expects an array containing:
      *    name  : Name for the Link
      *    link  : Link relative to module
-     *    image : Url of image to display, please use 16px*16px image
+     *    image : Url of image to display, please use 16px*16px image.
      *
      * @return array
      */

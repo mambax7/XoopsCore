@@ -16,16 +16,15 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * XoopsBlock
+ * XoopsBlock.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsBlock
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author    Gregory Mage (AKA Mage)
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsBlock extends XoopsObject
 {
@@ -49,7 +48,7 @@ class XoopsBlock extends XoopsObject
     // E - cloned custom block, DON'T use it
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param int|array $id object id
      */
@@ -94,7 +93,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -106,7 +105,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -118,7 +117,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -130,7 +129,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -142,7 +141,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -154,7 +153,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -166,7 +165,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -178,7 +177,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -190,7 +189,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -202,7 +201,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -214,7 +213,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -226,7 +225,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -238,7 +237,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter custom block type XoopsBlock::CUSTOM_xxxx constant
+     * getter custom block type XoopsBlock::CUSTOM_xxxx constant.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -250,7 +249,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -262,7 +261,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -274,7 +273,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -286,7 +285,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -298,7 +297,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -310,7 +309,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -322,7 +321,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -334,7 +333,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -346,7 +345,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * return the content of the block for output
+     * return the content of the block for output.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      * @param string $c_type type of custom content, a XoopsBlock::CUSTOM_xxxx constant
@@ -374,28 +373,34 @@ class XoopsBlock extends XoopsObject
                         echo eval($content);
                         $content = ob_get_contents();
                         ob_end_clean();
+
                         return $this->convertSiteURL($content);
                     case self::CUSTOM_SMILIE:
                         $myts = Sanitizer::getInstance();
+
                         return $myts->filterForDisplay($this->convertSiteURL($content), 1, 1);
                     case self::CUSTOM_TEXT:
                     default:
                         $myts = Sanitizer::getInstance();
+
                         return $myts->filterForDisplay($this->convertSiteURL($content), 1, 0);
                 }
+
                 break;
             case Dtype::FORMAT_EDIT:
             case 'e':
                 return $this->getVar('content', Dtype::FORMAT_EDIT);
+
                 break;
             default:
                 return $this->getVar('content', Dtype::FORMAT_NONE);
+
                 break;
         }
     }
 
     /**
-     * (HTML-) form for setting the options of the block
+     * (HTML-) form for setting the options of the block.
      *
      * @return string|false HTML for the form, FALSE if not defined for this block
      */
@@ -408,7 +413,7 @@ class XoopsBlock extends XoopsObject
                 return false;
             }
             $funcFile = $xoops->path(
-                'modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')
+                'modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file')
             );
             if (\XoopsLoad::fileExists($funcFile)) {
                 $xoops->loadLanguage('blocks', $this->getVar('dirname'));
@@ -423,27 +428,30 @@ class XoopsBlock extends XoopsObject
                 } else {
                     return false;
                 }
+
                 return $edit_form;
             }
+
             return false;
         }
+
         return false;
     }
 
     /**
-     * Determine if this is a custom block
+     * Determine if this is a custom block.
      *
      * @return bool true if this is a custom block
      */
     public function isCustom()
     {
-        return $this->getVar('block_type') === self::BLOCK_TYPE_CUSTOM;
+        return self::BLOCK_TYPE_CUSTOM === $this->getVar('block_type');
     }
 
     /************ADDED**************/
 
     /**
-     * Build Block
+     * Build Block.
      *
      * @return array|bool
      */
@@ -459,7 +467,7 @@ class XoopsBlock extends XoopsObject
             }
             if (!\XoopsLoad::fileExists(
                 $func_file = $xoops->path(
-                    'modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')
+                    'modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file')
                 )
             )) {
                 return false;
@@ -487,11 +495,12 @@ class XoopsBlock extends XoopsObject
                 return false;
             }
         }
+
         return $block;
     }
 
     /**
-     * Convert {X_SITEURL} to actual site URL in content
+     * Convert {X_SITEURL} to actual site URL in content.
      *
      * @param string $content content to convert
      *
@@ -500,6 +509,7 @@ class XoopsBlock extends XoopsObject
     protected function convertSiteURL($content)
     {
         $content = str_replace('{X_SITEURL}', \Xoops::getInstance()->url('/'), $content);
+
         return $content;
     }
 }

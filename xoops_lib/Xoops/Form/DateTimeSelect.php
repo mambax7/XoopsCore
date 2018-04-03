@@ -12,14 +12,13 @@
 namespace Xoops\Form;
 
 /**
- * DateTimeSelect - date and time form element
+ * DateTimeSelect - date and time form element.
  *
  * @category  Xoops\Form\DateTimeSelect
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DateTimeSelect extends ElementTray
 {
@@ -30,12 +29,12 @@ class DateTimeSelect extends ElementTray
     public const SHOW_TIME = 2;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param string|array      $caption  Caption or array of all attributes
-     * @param string            $name     name
-     * @param integer|\DateTime $value    unix timestamp or DateTime object
-     * @param mixed             $showtime control display of date and time elements
+     * @param string|array  $caption  Caption or array of all attributes
+     * @param string        $name     name
+     * @param int|\DateTime $value    unix timestamp or DateTime object
+     * @param mixed         $showtime control display of date and time elements
      *                                     SHOW_BOTH, true  - show both date and time selectors
      *                                     SHOW_DATE, false - only show date selector
      *                                     SHOW_TIME        - only show time selector
@@ -59,16 +58,18 @@ class DateTimeSelect extends ElementTray
         switch ((int) $this->get(':showtime', static::SHOW_BOTH)) {
             case static::SHOW_DATE:
                 $displayTime = false;
+
                 break;
             case static::SHOW_TIME:
                 $displayDate = false;
+
                 break;
         }
 
         $dateDefinition = [
             'caption' => '',
-            'name' => $this->get('name') . '[date]',
-            'id' => $this->get('name') . '-date',
+            'name' => $this->get('name').'[date]',
+            'id' => $this->get('name').'-date',
             'size' => 15,
             'value' => $workingTime,
             ElementFactory::FORM_KEY => $this,
@@ -87,8 +88,8 @@ class DateTimeSelect extends ElementTray
 
         $timeDefinition = [
             'caption' => '',
-            'name' => $this->get('name') . '[time]',
-            'id' => $this->get('name') . '-time',
+            'name' => $this->get('name').'[time]',
+            'id' => $this->get('name').'-time',
             'size' => 1,
             'value' => \Xoops\Core\Locale\Time::formatTime(
                 $hours * 3600 + 60 * $minuteInterval * ceil($minutes / $minuteInterval),

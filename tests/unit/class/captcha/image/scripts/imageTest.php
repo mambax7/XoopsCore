@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class scripts_imageTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,7 +15,7 @@ class scripts_imageTest extends \PHPUnit\Framework\TestCase
         $save = $image_handler;
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         ob_start();
-        require_once $xoops_root_path . '/class/captcha/image/scripts/image.php';
+        require_once $xoops_root_path.'/class/captcha/image/scripts/image.php';
         $tmp = ob_end_clean();
         $this->assertInstanceOf('XoopsCaptchaImageHandler', $image_handler);
         $image_handler = $save;

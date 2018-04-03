@@ -22,8 +22,7 @@ use Xoops\Form\SelectLocale;
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -53,7 +52,6 @@ $form->addElement($buttonSubmit);
 
 $form->display();
 
-
 // Locale selection form
 $localePicker = new ThemeForm('Change Locale', 'form_locale', '', 'get');
 $localeSelect = new SelectLocale('Locale', 'lang', Request::getString('lang', 'en_US'));
@@ -78,7 +76,6 @@ echo $xoops->translate('YOU_LIKED_THIS', 'codex', ['likeCount' => 1]); echo '<br
 echo $xoops->translate('YOU_LIKED_THIS', 'codex', ['likeCount' => 2]); echo '<br>';
 echo $xoops->translate('YOU_LIKED_THIS', 'codex', ['likeCount' => 3]);
 
-
 echo '<br>'; echo '<br>';
 echo t::GENDER; echo '<br>';
 echo $xoops->translate('GENDER', 'codex', ['name' => 'Snoopy', 'gender' => 'dog']); echo '<br>';
@@ -87,7 +84,7 @@ echo $xoops->translate('GENDER', 'codex', ['name' => 'Susan', 'gender' => 'woman
 echo $xoops->translate('GENDER', 'codex', ['name' => 'Bob', 'gender' => 'sponge']); echo '<br>';
 
 echo '<br>Usage on template<br>';
-\Xoops\Utils::dumpFile(__DIR__ . '/templates/language.tpl');
+\Xoops\Utils::dumpFile(__DIR__.'/templates/language.tpl');
 $tpl = new \Xoops\Core\XoopsTpl();
 $tpl->display('module:codex/language.tpl');
 

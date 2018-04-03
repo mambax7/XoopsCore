@@ -13,7 +13,7 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Avatars module preloads
+ * Avatars module preloads.
  *
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright XOOPS Project (http://xoops.org)
@@ -23,7 +23,7 @@ class AvatarsPreload extends PreloadItem
 {
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -31,19 +31,19 @@ class AvatarsPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'avatars' => $path . '/class/helper.php',
+            'avatars' => $path.'/class/helper.php',
         ]);
     }
 
     /**
-     * listen for core.service.locate.avatar event
+     * listen for core.service.locate.avatar event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateAvatar(Provider $provider)
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
-            $path = dirname(__DIR__) . '/class/AvatarsProvider.php';
+            $path = dirname(__DIR__).'/class/AvatarsProvider.php';
             require $path;
             $object = new AvatarsProvider();
             $provider->register($object);

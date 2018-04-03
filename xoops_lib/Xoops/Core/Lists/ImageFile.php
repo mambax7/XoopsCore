@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * ImageFile - provide list of image file names from a directory
+ * ImageFile - provide list of image file names from a directory.
  *
  * @category  Xoops\Core\Lists\ImageFile
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ImageFile extends ListAbstract
 {
     /**
-     * gets list of image file names in a directory
+     * gets list of image file names in a directory.
      *
      * @param string $path   filesystem path
      * @param string $prefix prefix added to file names
@@ -35,9 +34,9 @@ class ImageFile extends ListAbstract
     {
         $fileList = [];
         if (is_dir($path) && $handle = opendir($path)) {
-            while (($file = readdir($handle)) !== false) {
+            while (false !== ($file = readdir($handle))) {
                 if (preg_match('/\.(gif|jpg|jpeg|png|swf)$/i', $file)) {
-                    $file = $prefix . $file;
+                    $file = $prefix.$file;
                     $fileList[$file] = $file;
                 }
             }

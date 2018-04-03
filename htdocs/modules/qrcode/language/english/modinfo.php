@@ -14,7 +14,6 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Laurent JEN - aka DuGris
  */
-
 define('_MI_QRCODE_NAME', 'QRCode');
 define('_MI_QRCODE_DSC', 'Support for QRCode creation');
 

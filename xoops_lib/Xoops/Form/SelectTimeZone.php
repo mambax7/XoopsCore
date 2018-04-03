@@ -12,25 +12,24 @@
 namespace Xoops\Form;
 
 /**
- * SelectTimeZone - a select box with time zones
+ * SelectTimeZone - a select box with time zones.
  *
  * @category  Xoops\Form\SelectTimeZone
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SelectTimeZone extends Select
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $name    name
      * @param mixed        $value   Pre-selected value (or array of them).
      *                               Must be \DateTimeZone supported timezone names, or a DateTimeZone object
-     * @param integer      $size    Number of rows. "1" makes a drop-down-box.
+     * @param int $size Number of rows. "1" makes a drop-down-box.
      */
     public function __construct($caption, $name = '', $value = null, $size = 1)
     {

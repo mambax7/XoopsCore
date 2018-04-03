@@ -32,13 +32,11 @@ define('_AM_MSG_GROUP1IPSCANTOPEN', 'Die IP-Einschlussdatei fur Administrationsg
 define('_AM_MSG_REMOVED', 'Aufzeichnungen wurden komprimiert / gelöscht');
 //define("_AM_FMT_CONFIGSNOTWRITABLE" , "Der Ordner: %s braucht Schreibberechtigung (777)" ) ;
 
-
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'Präfix Manager');
 define('_AM_MSG_DBUPDATED', 'Datenbank wurde erfolgreich aktualisiert!');
 define('_AM_CONFIRM_DELETE', 'Alle Daten werden gelöscht. OK?');
 define('_AM_TXT_HOWTOCHANGEDB', "Wenn Sie den Präfix andern wollen,<br /> bearbeiten Sie %s/mainfile.php manuell.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
-
 
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'Nicht sicher');

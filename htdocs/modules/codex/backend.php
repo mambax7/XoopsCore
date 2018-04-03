@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Laurent JEN (aka DuGris)
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -31,5 +30,5 @@ The new class \\Xoops\\Module\\Plugin is the class that makes using plugins simp
 </ul>
 ";
 
-\Xoops\Utils::dumpFile(__DIR__ . '/class/plugin/system.php');
+\Xoops\Utils::dumpFile(__DIR__.'/class/plugin/system.php');
 $xoops->footer();

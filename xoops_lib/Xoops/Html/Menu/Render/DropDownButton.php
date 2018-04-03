@@ -15,19 +15,18 @@ use Xoops\Html\Menu\Item;
 use Xoops\Html\Menu\ItemList;
 
 /**
- * DropDownButton - render a button dropdown menu
+ * DropDownButton - render a button dropdown menu.
  *
  * @category  Xoops\Html\Menu\Render
- * @package   DropDownButton
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DropDownButton extends RenderAbstract
 {
     /**
-     * render menu from ItemList
+     * render menu from ItemList.
      *
      * @param ItemList $menu menu items
      *
@@ -38,10 +37,10 @@ class DropDownButton extends RenderAbstract
         $dropdown = $menu->get('dropdown', 'dropdown');
         $renderedMenu = "<div class=\"{$dropdown}\">\n";
         $class = $menu->get('class', 'btn btn-default dropdown-toggle');
-        $id = ($menu->has('id')) ? ' id="' . $menu->get('id') . '"' : '';
-        $labeledId = ($menu->has('id')) ? ' aria-labelledby="' . $menu->get('id') . '"' : '';
+        $id = ($menu->has('id')) ? ' id="'.$menu->get('id').'"' : '';
+        $labeledId = ($menu->has('id')) ? ' aria-labelledby="'.$menu->get('id').'"' : '';
         $caption = $menu->get('caption', '');
-        $icon = $menu->has('icon') ? '<span class="' . $menu->get('icon') . '" aria-hidden="true"></span> ' : '';
+        $icon = $menu->has('icon') ? '<span class="'.$menu->get('icon').'" aria-hidden="true"></span> ' : '';
         $renderedMenu .= <<<EOT
 <button class="{$class}" type="button"{$id} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 {$icon}{$caption} <span class="caret"></span>
@@ -54,11 +53,12 @@ EOT;
         }
 
         $renderedMenu .= "  </ul>\n</div>\n";
+
         return $renderedMenu;
     }
 
     /**
-     * render items, call recursively to handle ItemList, skip unsupported types
+     * render items, call recursively to handle ItemList, skip unsupported types.
      *
      * @param Item $item Item to render
      *
@@ -74,26 +74,30 @@ EOT;
                 $anchorEnd = '';
                 $liClass = ' class="active"';
                 if ($item->has('link')) {
-                    $anchorStart = '<a href="' . $this->xoops->url($item->get('link')) . '">';
+                    $anchorStart = '<a href="'.$this->xoops->url($item->get('link')).'">';
                     $anchorEnd = '</a>';
                     $liClass = '';
                 }
                 $caption = $item->get('caption', '');
                 $icon = $item->has('icon') ?
-                    '<span class="' . $item->get('icon') . '" aria-hidden="true"></span> ' : '';
+                    '<span class="'.$item->get('icon').'" aria-hidden="true"></span> ' : '';
                 $renderedItems .= "<li{$liClass}>{$anchorStart}{$icon}{$caption}{$anchorEnd}</li>";
+
                 break;
             case Item::TYPE_LIST:
                 foreach ($item['items'] as $listItem) {
                     $renderedItems .= $this->renderItem($listItem);
                 }
+
                 break;
             case Item::TYPE_DIVIDER:
                 $renderedItems .= '<li role="separator" class="divider"></li>';
+
                 break;
             default:
                 break;
         }
+
         return $renderedItems;
     }
 }

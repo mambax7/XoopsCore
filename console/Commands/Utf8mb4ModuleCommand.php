@@ -41,8 +41,9 @@ EOT
         $output->writeln(sprintf('Updating %s tables', $dirname));
         $xoops = Xoops::getInstance();
         $module = $xoops->getModuleByDirname($dirname);
-        if ($module === false) {
+        if (false === $module) {
             $output->writeln(sprintf('<error>%s is not an installed module!</error>', $dirname));
+
             return;
         }
         $module->loadInfo($dirname, false);
@@ -52,8 +53,9 @@ EOT
         $sql = [];
         $manager = $xoops->db()->getSchemaManager();
         $platform = $xoops->db()->getDatabasePlatform();
-        if ($platform->getName() !== 'mysql') {
+        if ('mysql' !== $platform->getName()) {
             $output->writeln('<error>This command only works on a MySQL platform.</error>');
+
             return;
         }
 
@@ -63,7 +65,7 @@ EOT
             $columns = $manager->listTableColumns($table);
             foreach ($columns as $column) {
                 $type = $column->getType()->getName();
-                if ($type === Type::STRING || $type === Type::TEXT) {
+                if (Type::STRING === $type || Type::TEXT === $type) {
                     //$column->setPlatformOption('collation', 'utf8mb4_unicode_ci');
                     $sql[] = sprintf('ALTER TABLE %s MODIFY %s %s COLLATE utf8mb4_unicode_ci;', $platform->quoteIdentifier($table), $platform->quoteIdentifier($column->getName()), $column->getType()->getSQLDeclaration($column->toArray(), $platform));
                 }
@@ -74,7 +76,7 @@ EOT
             if (!$dryRun) {
                 $xoops->db()->setForce(true);
                 $result = $xoops->db()->query($alterSql);
-                if ($result === false) {
+                if (false === $result) {
                     $output->writeln(sprintf('<error>Execution failed: %d - %s</error>', $xoops->db()->errorCode(), implode(' - ', $xoops->db()->errorInfo())));
                     Kint::dump($xoops->db()->errorInfo());
                 }

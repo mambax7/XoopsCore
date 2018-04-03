@@ -12,32 +12,31 @@
 namespace Xoops\Form;
 
 /**
- * ElementTray - a group of form elements
+ * ElementTray - a group of form elements.
  *
  * @category  Xoops\Form\ElementTray
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ElementTray extends Element implements ContainerInterface
 {
     /**
-     * array of form element objects
+     * array of form element objects.
      *
      * @var Element[]
      */
     protected $elements = [];
 
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption caption or array of all attributes
      *                               Control attributes:
      *                                   :joiner joiner for elements in tray
-     * @param string       $joiner  joiner for elements in tray
-     * @param string       $name    name
+     * @param string $joiner joiner for elements in tray
+     * @param string $name   name
      */
     public function __construct($caption, $joiner = '&nbsp;', $name = '')
     {
@@ -64,14 +63,15 @@ class ElementTray extends Element implements ContainerInterface
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * Add an element to the tray
+     * Add an element to the tray.
      *
      * @param Element $formElement Element to add
-     * @param boolean $required    true = entry required
+     * @param bool    $required    true = entry required
      */
     public function addElement(Element $formElement, $required = false)
     {
@@ -84,7 +84,7 @@ class ElementTray extends Element implements ContainerInterface
     // ContainerInterface
 
     /**
-     * get an array of "required" form elements
+     * get an array of "required" form elements.
      *
      * @return array array of Element objects
      */
@@ -96,11 +96,12 @@ class ElementTray extends Element implements ContainerInterface
                 $required[] = $el;
             }
         }
+
         return $required;
     }
 
     /**
-     * Get an array of the elements in this group
+     * Get an array of the elements in this group.
      *
      * @param bool $recurse get elements recursively?
      *
@@ -126,11 +127,12 @@ class ElementTray extends Element implements ContainerInterface
             }
             unset($ele);
         }
+
         return $ret;
     }
 
     /**
-     * prepare HTML to output this group
+     * prepare HTML to output this group.
      *
      * @return string HTML output
      */
@@ -143,30 +145,32 @@ class ElementTray extends Element implements ContainerInterface
             if ($count > 0) {
                 $ret .= $this->getJoiner();
             }
-            if ($ele->getCaption() !== '') {
+            if ('' !== $ele->getCaption()) {
                 $ret .= '<div class="form-group">';
-                $ret .= '<label class="control-label">' . $ele->getCaption() . '</label>&nbsp;';
+                $ret .= '<label class="control-label">'.$ele->getCaption().'</label>&nbsp;';
                 $ret .= '</div>';
             }
-            $ret .= $ele->render() . "\n";
+            $ret .= $ele->render()."\n";
             if (!$ele->isHidden()) {
                 ++$count;
             }
         }
         $ret .= '</div>';
+
         return $ret;
     }
 
     /**
-     * Get the delimiter of this group
+     * Get the delimiter of this group.
      *
-     * @param boolean $encode True to encode special characters
+     * @param bool $encode True to encode special characters
      *
      * @return string The delimiter
      */
     protected function getJoiner($encode = false)
     {
         $joiner = $this->get(':joiner');
+
         return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $joiner)) : $joiner;
     }
 }

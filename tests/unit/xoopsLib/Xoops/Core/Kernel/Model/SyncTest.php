@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../../../init_new.php');
+require_once __DIR__.'/../../../../../init_new.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsMembershipHandler;
 
@@ -39,6 +39,6 @@ class SyncTest extends \PHPUnit\Framework\TestCase
 
         $values = $instance->cleanOrphan();
         $this->assertTrue(is_int($values));
-        $this->assertTrue($values === 0);
+        $this->assertTrue(0 === $values);
     }
 }

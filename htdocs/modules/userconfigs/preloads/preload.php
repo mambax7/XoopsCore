@@ -13,18 +13,17 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Core\PreloadItem;
 
 /**
- * Userconfigs
+ * Userconfigs.
  *
- * @package   UserConfigs
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class UserconfigsPreload extends PreloadItem
 {
     /**
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -32,12 +31,12 @@ class UserconfigsPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'userconfigs' => $path . '/class/helper.php',
+            'userconfigs' => $path.'/class/helper.php',
         ]);
     }
 
     /**
-     * remove any userconfigs for module being uninstalled
+     * remove any userconfigs for module being uninstalled.
      *
      * @param XoopsModule $module module object
      */

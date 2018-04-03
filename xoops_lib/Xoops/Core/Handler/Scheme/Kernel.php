@@ -15,14 +15,13 @@ use Xoops\Core\Handler\FactorySpec;
 use Xoops\Core\Kernel\XoopsObjectHandler;
 
 /**
- * Kernel - build
+ * Kernel - build.
  *
  * @category  Xoops\Core\Handler\Scheme
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Kernel implements SchemeInterface
 {
@@ -46,7 +45,7 @@ class Kernel implements SchemeInterface
     ];
 
     /**
-     * build a kernel handler
+     * build a kernel handler.
      *
      * @param FactorySpec $spec specification for requested handler
      *
@@ -57,22 +56,24 @@ class Kernel implements SchemeInterface
         $handler = null;
         $specName = strtolower($spec->getName());
         if (!isset($this->lookupTable[$specName])) {
-            if ($spec->getOptional() === false) {
+            if (false === $spec->getOptional()) {
                 throw new NoHandlerException(sprintf('Unknown handler %s', $specName));
             }
+
             return $handler;
         }
 
         $name = $this->lookupTable[$specName];
-        $class = '\Xoops\Core\Kernel\Handlers\Xoops' . $name . 'Handler';
+        $class = '\Xoops\Core\Kernel\Handlers\Xoops'.$name.'Handler';
         if (class_exists($class)) {
             $handler = new $class($spec->getFactory()->db());
         }
-        if ($handler === null) {
-            if ($spec->getOptional() === false) {
+        if (null === $handler) {
+            if (false === $spec->getOptional()) {
                 throw new NoHandlerException(sprintf('Class not found %s', $class));
             }
         }
+
         return $handler;
     }
 }

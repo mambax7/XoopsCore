@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
 {
@@ -97,7 +97,7 @@ class xoopscaptchaTest extends \PHPUnit\Framework\TestCase
         $filename = 'test.config';
         $x = $instance->writeConfig($filename, $instance->config);
         $this->assertTrue($x);
-        $file = $instance->configPath . $filename . '.php';
+        $file = $instance->configPath.$filename.'.php';
         $this->assertTrue(file_exists($file));
         @unlink($file);
     }

@@ -15,19 +15,18 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeTextArea
+ * DtypeTextArea.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeTextArea
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeTextArea extends DtypeAbstract
 {
     /**
-     * getVar get variable prepared according to format
+     * getVar get variable prepared according to format.
      *
      * @param XoopsObject $obj    object containing variable
      * @param string      $key    name of variable
@@ -46,6 +45,7 @@ class DtypeTextArea extends DtypeAbstract
                 $smiley = (!isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] === 1) ? 1 : 0;
                 $image = (!isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] === 1) ? 1 : 0;
                 $br = (!isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] === 1) ? 1 : 0;
+
                 return $this->ts->displayTarea($value, $html, $smiley, $xcode, $image, $br);
 
             case 'e':
@@ -58,6 +58,7 @@ class DtypeTextArea extends DtypeAbstract
                 $smiley = (!isset($obj->vars['dosmiley']['value']) || $obj->vars['dosmiley']['value'] === 1) ? 1 : 0;
                 $image = (!isset($obj->vars['doimage']['value']) || $obj->vars['doimage']['value'] === 1) ? 1 : 0;
                 $br = (!isset($obj->vars['dobr']['value']) || $obj->vars['dobr']['value'] === 1) ? 1 : 0;
+
                 return $this->ts->previewTarea($value, $html, $smiley, $xcode, $image, $br);
             case 'f':
             case Dtype::FORMAT_FORM_PREVIEW:
@@ -70,7 +71,7 @@ class DtypeTextArea extends DtypeAbstract
     }
 
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -80,8 +81,9 @@ class DtypeTextArea extends DtypeAbstract
     public function cleanVar(XoopsObject $obj, $key)
     {
         $value = $obj->vars[$key]['value'];
-        if ($obj->vars[$key]['required'] && $value !== '0' && $value === '') {
+        if ($obj->vars[$key]['required'] && '0' !== $value && '' === $value) {
             $obj->setErrors(sprintf(\XoopsLocale::F_IS_REQUIRED, $key));
+
             return $value;
         }
 

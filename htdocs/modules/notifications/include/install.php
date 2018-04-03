@@ -17,7 +17,6 @@ use Xoops\Module\Plugin;
  * @license   GNU GPL 2 or greater (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
 function xoops_module_install_notifications(XoopsModule $module)
 {
     $xoops = Xoops::getInstance();

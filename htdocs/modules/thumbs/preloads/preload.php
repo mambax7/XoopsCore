@@ -13,25 +13,24 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Thumbs module preloads
+ * Thumbs module preloads.
  *
- * @package   Thumbs
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL v2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ThumbsPreload extends PreloadItem
 {
     /**
-     * listen for core.service.locate.thumbnail event
+     * listen for core.service.locate.thumbnail event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateThumbnail(Provider $provider)
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
-            $path = dirname(__DIR__) . '/class/ThumbsProvider.php';
+            $path = dirname(__DIR__).'/class/ThumbsProvider.php';
             require $path;
             $object = new ThumbsProvider();
             $provider->register($object);

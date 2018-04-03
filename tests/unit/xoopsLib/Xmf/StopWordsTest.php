@@ -5,7 +5,7 @@ namespace Xmf\Test;
 use Xmf\StopWords;
 
 /**
- * Mock StopWords
+ * Mock StopWords.
  */
 class MockStopWords extends \Xmf\StopWords
 {

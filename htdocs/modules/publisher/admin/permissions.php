@@ -12,14 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $xoops = Xoops::getInstance();
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
@@ -32,7 +30,7 @@ $item_list_view = [];
 $block_view = [];
 
 $qb = $xoops->db()->createXoopsQueryBuilder();
-$qb ->select('categoryid', 'name')
+$qb->select('categoryid', 'name')
     ->fromPrefix('publisher_categories', '')
     ->orderBy('name');
 $result = $qb->execute();

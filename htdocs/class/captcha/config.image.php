@@ -10,19 +10,18 @@
 */
 
 /**
- * CAPTCHA configurations for Image mode
+ * CAPTCHA configurations for Image mode.
  *
  * Based on DuGris' SecurityImage
  *
  * PHP 5.3
  *
  * @category  Xoops\Class\Captcha\config.image
- * @package   config.image
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   $Id$
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 

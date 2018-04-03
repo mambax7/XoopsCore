@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/../../../../init_new.php');
-require_once(XOOPS_TU_ROOT_PATH . '/modules/avatars/class/AvatarsProvider.php');
+require_once __DIR__.'/../../../../init_new.php';
+require_once XOOPS_TU_ROOT_PATH.'/modules/avatars/class/AvatarsProvider.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Service\Manager;
@@ -91,6 +91,6 @@ class ProviderTest extends \PHPUnit\Framework\TestCase
     public function test__callStatic()
     {
         $result = Provider::staticDummyMethod();
-        $this->assertTrue($result === null);
+        $this->assertTrue(null === $result);
     }
 }

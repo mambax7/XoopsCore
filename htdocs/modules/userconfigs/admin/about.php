@@ -15,11 +15,10 @@
  * @author          Richard Griffith <richard@geekwright.com>
  * @version         $Id: about.php 8065 2011-11-06 02:02:32Z beckmi $
  */
-
-require __DIR__ . '/admin_header.php';
+require __DIR__.'/admin_header.php';
 
 $aboutAdmin = new \Xoops\Module\Admin();
 $aboutAdmin->displayNavigation('about.php');
 $aboutAdmin->displayAbout(true);
 
-require __DIR__ . '/admin_footer.php';
+require __DIR__.'/admin_footer.php';

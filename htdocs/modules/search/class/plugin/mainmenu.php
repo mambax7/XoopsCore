@@ -26,6 +26,7 @@ class SearchMainmenuPlugin implements MainmenuPluginInterface
             'name' => $helper->getModule()->getVar('name'),
             'link' => $helper->url(),
         ];
+
         return $ret;
     }
 }

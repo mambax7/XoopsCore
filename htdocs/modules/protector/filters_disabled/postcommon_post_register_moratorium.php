@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 define('PROTECTOR_POSTCOMMON_POST_REGISTER_MORATORIUM', 60); // minutes
 
 class protector_postcommon_post_register_moratorium extends ProtectorFilterAbstract
@@ -38,6 +36,7 @@ class protector_postcommon_post_register_moratorium extends ProtectorFilterAbstr
                 exit;
             }
         }
+
         return true;
     }
 }

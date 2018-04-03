@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -24,5 +23,5 @@
  */
 function get_writeoks_from_protector($xoops_root_path, $mytrustdirname)
 {
-    return [dirname(__DIR__) . '/configs'];
+    return [dirname(__DIR__).'/configs'];
 }

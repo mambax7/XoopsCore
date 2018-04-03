@@ -12,19 +12,18 @@
 namespace Xmf;
 
 /**
- * Generate UUID
+ * Generate UUID.
  *
  * @category  Xmf\Uuid
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2017 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Uuid
 {
     /**
-     * generate - generate a version 4 (random) UUID
+     * generate - generate a version 4 (random) UUID.
      *
      * Based on comment by pavel.volyntsev(at)gmail at http://php.net/manual/en/function.com-create-guid.php
      *

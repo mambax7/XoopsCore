@@ -19,12 +19,12 @@ use Xoops\Core\Service\Data\Message;
 use Xoops\Core\Service\Response;
 
 /**
- * phpmailer module
+ * phpmailer module.
  *
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Richard Griffith <richard@geekwright.com>
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class PhpMailerMessageProvider extends AbstractContract implements UserEmailMessageInterface
 {
@@ -40,7 +40,7 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -60,6 +60,7 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
             );
         } catch (\InvalidArgumentException | \LogicException $e) {
             $response->setSuccess(false)->addErrorMessage($e->getMessage());
+
             return;
         }
         // Relay to Email Service
@@ -79,6 +80,7 @@ class PhpMailerMessageProvider extends AbstractContract implements UserEmailMess
         $user = $userHandler->getUser($userid);
         Assert::isInstanceOf($user, XoopsUser::class);
         $name = empty($user->name()) ? $user->uname() : $user->name();
+
         return new EmailAddress($user->email(), $name);
     }
 }

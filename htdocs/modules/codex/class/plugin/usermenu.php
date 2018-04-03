@@ -14,7 +14,6 @@
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author          trabis <lusopoemas@gmail.com>
  */
-
 class CodexUsermenuPlugin implements UsermenuPluginInterface
 {
     /**

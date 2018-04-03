@@ -57,6 +57,7 @@ EOT
                     $migrate->renameTable($existingName, $newName);
                 }
             }
+
             return $status;
         };
         foreach ($tableNames as $oldName => $newName) {

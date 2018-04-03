@@ -17,25 +17,24 @@ namespace Xoops\Form;
  * A pair of radio buttons labelled YES and NO with values 1 and 0
  *
  * @category  Xoops\Form\RadioYesNo
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class RadioYesNo extends Radio
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      *                               Control attributes:
      *                                   :yes label for '1' response
      *                                   :no  label for '0' response
-     * @param string       $name    element name
-     * @param string|null  $value   Pre-selected value, can be "0" (No) or "1" (Yes)
-     * @param string       $yes     String for "Yes"
-     * @param string       $no      String for "No"
+     * @param string      $name  element name
+     * @param string|null $value Pre-selected value, can be "0" (No) or "1" (Yes)
+     * @param string      $yes   String for "Yes"
+     * @param string      $no    String for "No"
      */
     public function __construct($caption, $name = null, $value = null, $yes = \XoopsLocale::YES, $no = \XoopsLocale::NO)
     {

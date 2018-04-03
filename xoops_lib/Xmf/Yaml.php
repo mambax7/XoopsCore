@@ -14,7 +14,7 @@ namespace Xmf;
 use Symfony\Component\Yaml\Yaml as VendorYaml;
 
 /**
- * Yaml dump and parse methods
+ * Yaml dump and parse methods.
  *
  * YAML is a serialization format most useful when human readability
  * is a consideration. It can be useful for configuration files, as
@@ -27,21 +27,20 @@ use Symfony\Component\Yaml\Yaml as VendorYaml;
  * At present, this class expects the symfony/yaml package.
  *
  * @category  Xmf\Yaml
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  * @see       http://www.yaml.org/
  */
 class Yaml
 {
     /**
-     * Dump an PHP array as a YAML string
+     * Dump an PHP array as a YAML string.
      *
-     * @param mixed   $var    Variable which will be dumped
-     * @param integer $inline Nesting level where you switch to inline YAML
-     * @param integer $indent Number of spaces to indent for nested nodes
+     * @param mixed $var    Variable which will be dumped
+     * @param int   $inline Nesting level where you switch to inline YAML
+     * @param int   $indent Number of spaces to indent for nested nodes
      *
      * @return string|bool YAML string or false on error
      */
@@ -53,15 +52,16 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Load a YAML string into a PHP array
+     * Load a YAML string into a PHP array.
      *
      * @param string $yamlString YAML dump string
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function load($yamlString)
     {
@@ -71,15 +71,16 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Read a file containing YAML into a PHP array
+     * Read a file containing YAML into a PHP array.
      *
      * @param string $yamlFile filename of YAML file
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function read($yamlFile)
     {
@@ -90,18 +91,19 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Save a PHP array as a YAML file
+     * Save a PHP array as a YAML file.
      *
-     * @param array   $var      variable which will be dumped
-     * @param string  $yamlFile filename of YAML file
-     * @param integer $inline   Nesting level where you switch to inline YAML
-     * @param integer $indent   Number of spaces to indent for nested nodes
+     * @param array  $var      variable which will be dumped
+     * @param string $yamlFile filename of YAML file
+     * @param int    $inline   Nesting level where you switch to inline YAML
+     * @param int    $indent   Number of spaces to indent for nested nodes
      *
-     * @return integer|boolean number of bytes written, or false on error
+     * @return int|bool number of bytes written, or false on error
      */
     public static function save($var, $yamlFile, $inline = 4, $indent = 4)
     {
@@ -112,37 +114,39 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Dump an PHP array as a YAML string with a php wrapper
+     * Dump an PHP array as a YAML string with a php wrapper.
      *
      * The wrap is a php header that surrounds the yaml with section markers,
      * '---' and '...' along with php comment markers. The php wrapper keeps the
      * yaml file contents from being revealed by serving the file directly from
      * a poorly configured server.
      *
-     * @param mixed   $var    Variable which will be dumped
-     * @param integer $inline Nesting level where you switch to inline YAML
-     * @param integer $indent Number of spaces to indent for nested nodes
+     * @param mixed $var    Variable which will be dumped
+     * @param int   $inline Nesting level where you switch to inline YAML
+     * @param int   $indent Number of spaces to indent for nested nodes
      *
-     * @return string|boolean YAML string or false on error
+     * @return string|bool YAML string or false on error
      */
     public static function dumpWrapped($var, $inline = 4, $indent = 4)
     {
         try {
             $yamlString = VendorYaml::dump($var, $inline, $indent);
-            $ret = empty($yamlString) ? false : "<?php\n/*\n---\n" . $yamlString . "\n...\n*/\n";
+            $ret = empty($yamlString) ? false : "<?php\n/*\n---\n".$yamlString."\n...\n*/\n";
         } catch (\Exception $e) {
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Load a YAML string with a php wrapper into a PHP array
+     * Load a YAML string with a php wrapper into a PHP array.
      *
      * The wrap is a php header that surrounds the yaml with section markers,
      * '---' and '...' along with php comment markers. The php wrapper keeps the
@@ -151,7 +155,7 @@ class Yaml
      *
      * @param string $yamlString YAML dump string
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function loadWrapped($yamlString)
     {
@@ -159,15 +163,17 @@ class Yaml
             $lines = preg_split('/\R/', $yamlString);
             $count = count($lines);
             for ($index = $count; --$index > 0;) {
-                if ($lines[$index] === '...') {
+                if ('...' === $lines[$index]) {
                     array_splice($lines, $index);
+
                     break;
                 }
             }
             $count = count($lines);
             for ($index = 0; ++$index < $count;) {
-                if ($lines[$index] === '---') {
+                if ('---' === $lines[$index]) {
                     array_splice($lines, 0, $index);
+
                     break;
                 }
             }
@@ -177,11 +183,12 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Read a file containing YAML with a php wrapper into a PHP array
+     * Read a file containing YAML with a php wrapper into a PHP array.
      *
      * The wrap is a php header that surrounds the yaml with section markers,
      * '---' and '...' along with php comment markers. The php wrapper keeps the
@@ -190,7 +197,7 @@ class Yaml
      *
      * @param string $yamlFile filename of YAML file
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function readWrapped($yamlFile)
     {
@@ -201,23 +208,24 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 
     /**
-     * Save a PHP array as a YAML file with a php wrapper
+     * Save a PHP array as a YAML file with a php wrapper.
      *
      * The wrap is a php header that surrounds the yaml with section markers,
      * '---' and '...' along with php comment markers. The php wrapper keeps the
      * yaml file contents from being revealed by serving the file directly from
      * a poorly configured server.
      *
-     * @param array   $var      variable which will be dumped
-     * @param string  $yamlFile filename of YAML file
-     * @param integer $inline   Nesting level where you switch to inline YAML
-     * @param integer $indent   Number of spaces to indent for nested nodes
+     * @param array  $var      variable which will be dumped
+     * @param string $yamlFile filename of YAML file
+     * @param int    $inline   Nesting level where you switch to inline YAML
+     * @param int    $indent   Number of spaces to indent for nested nodes
      *
-     * @return integer|boolean number of bytes written, or false on error
+     * @return int|bool number of bytes written, or false on error
      */
     public static function saveWrapped($var, $yamlFile, $inline = 4, $indent = 4)
     {
@@ -228,6 +236,7 @@ class Yaml
             static::logError($e);
             $ret = false;
         }
+
         return $ret;
     }
 

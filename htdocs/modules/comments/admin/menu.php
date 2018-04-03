@@ -12,11 +12,9 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Comments
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $adminmenu = [];
 
 $i = 1;

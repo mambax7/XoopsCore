@@ -15,7 +15,7 @@
 class XoopsFormTextDateSelect extends Xoops\Form\DateSelect
 {
     /**
-     * Note change in arguments, removed size
+     * Note change in arguments, removed size.
      *
      * @param string $caption
      * @param string $name

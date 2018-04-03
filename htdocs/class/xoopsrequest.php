@@ -10,7 +10,7 @@
  */
 
 /**
- * XoopsRequest is a backward compatibility stub for Xmf\Request
+ * XoopsRequest is a backward compatibility stub for Xmf\Request.
  */
 class xoopsrequest extends Xmf\Request
 {

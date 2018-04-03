@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class XoopsLocale extends XoopsLocaleEn_US
 {
 }

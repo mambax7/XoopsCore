@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 global $config;
 $config = null;
@@ -13,8 +13,8 @@ class Textarea_Editor_registryTest extends \PHPUnit\Framework\TestCase
 
         $xoops_root_path = \XoopsBaseConfig::get('root-path');
         ob_start();
-        require_once($xoops_root_path . '/class/xoopseditor/textarea/language/english.php');
-        require_once($xoops_root_path . '/class/xoopseditor/textarea/editor_registry.php');
+        require_once $xoops_root_path.'/class/xoopseditor/textarea/language/english.php';
+        require_once $xoops_root_path.'/class/xoopseditor/textarea/editor_registry.php';
         $x = ob_get_clean();
         $this->assertTrue(is_array($config));
         $this->assertTrue(isset($config['class']));

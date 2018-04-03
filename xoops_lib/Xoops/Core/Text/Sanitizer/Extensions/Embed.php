@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\FilterAbstract;
 
 /**
- * TextSanitizer filter - clean up HTML text
+ * TextSanitizer filter - clean up HTML text.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Embed extends FilterAbstract
 {
@@ -35,7 +34,7 @@ class Embed extends FilterAbstract
     ];
 
     /**
-     * Make and URL's in the text clickable links
+     * Make and URL's in the text clickable links.
      *
      * @param string $text text string to filter
      *
@@ -59,7 +58,7 @@ class Embed extends FilterAbstract
     }
 
     /**
-     * decorate a bare url with the help of embed/embed
+     * decorate a bare url with the help of embed/embed.
      *
      * @param string $match string to be truncated
      *
@@ -78,6 +77,7 @@ class Embed extends FilterAbstract
             $key,
             function ($url) {
                 $return = null;
+
                 try {
                     $info = \Embed\Embed::create($url);
                 } catch (\Exception $e) {
@@ -92,17 +92,19 @@ class Embed extends FilterAbstract
                     $width = $info->getWidth();
                     if ($this->enableResponsive($return) && !empty($height) && !empty($width)) {
                         $ratio = (($width / $height) < 1.5) ? '4by3' : '16by9';
-                        $return = '<div class="embed-responsive embed-responsive-' . $ratio . '">' . $return . '</div>';
+                        $return = '<div class="embed-responsive embed-responsive-'.$ratio.'">'.$return.'</div>';
                     }
                 }
                 if (empty($return)) {
                     $return = $url;
                 }
+
                 return $return;
             },
             $this->config['cache_time'],
             $url
         );
+
         return $decorated;
     }
 
@@ -124,11 +126,12 @@ EOT;
             $imageSrc = \Xoops::getInstance()->url('media/xoops/images/icons/link-ext.svg');
         }
         $box = sprintf($htmlTemplate, $link, $imageSrc, $title, $description);
+
         return $box;
     }
 
     /**
-     * Check for know issues if wrapped in embed-responsive div
+     * Check for know issues if wrapped in embed-responsive div.
      *
      * @param string $code embed code to stest
      *
@@ -142,10 +145,11 @@ EOT;
         ];
 
         foreach ($excludeList as $test) {
-            if (stripos($code, $test) !== false) {
+            if (false !== stripos($code, $test)) {
                 return false;
             }
         }
+
         return true;
     }
 }

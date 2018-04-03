@@ -12,20 +12,18 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 
 $xoops = Xoops::getInstance();
 PublisherUtils::cpHeader();
 //publisher_adminMenu(-1, _AM_PUBLISHER_CLONE);
 PublisherUtils::openCollapsableBar('clone', 'cloneicon', _AM_PUBLISHER_CLONE, _AM_PUBLISHER_CLONE_DSC);
 
-if (@$_POST['op'] === 'submit') {
+if ('submit' === @$_POST['op']) {
     if (!$xoops->security()->check()) {
         $xoops->redirect('clone.php', 3, implode('<br />', $xoops->security()->getErrors()));
     }
@@ -39,7 +37,7 @@ if (@$_POST['op'] === 'submit') {
     }
 
     // Check wether the cloned module exists or not
-    if ($clone && is_dir(\XoopsBaseConfig::get('root-path') . '/modules/' . $clone)) {
+    if ($clone && is_dir(\XoopsBaseConfig::get('root-path').'/modules/'.$clone)) {
         $xoops->redirect('clone.php', 3, sprintf(_AM_PUBLISHER_CLONE_EXISTS, $clone));
     }
 
@@ -55,8 +53,8 @@ if (@$_POST['op'] === 'submit') {
     $logocreated = publisher_createLogo(strtolower($clone));
 
     $msg = '';
-    if (is_dir(\XoopsBaseConfig::get('root-path') . '/modules/' . strtolower($clone))) {
-        $msg .= sprintf(_AM_PUBLISHER_CLONE_CONGRAT, "<a href='" . \XoopsBaseConfig::get('url') . "/modules/system/admin.php?fct=modulesadmin'>" . ucfirst(strtolower($clone)) . '</a>') . "<br />\n";
+    if (is_dir(\XoopsBaseConfig::get('root-path').'/modules/'.strtolower($clone))) {
+        $msg .= sprintf(_AM_PUBLISHER_CLONE_CONGRAT, "<a href='".\XoopsBaseConfig::get('url')."/modules/system/admin.php?fct=modulesadmin'>".ucfirst(strtolower($clone)).'</a>')."<br />\n";
         if (!$logocreated) {
             $msg .= _AM_PUBLISHER_CLONE_IMAGEFAIL;
         }
@@ -104,7 +102,7 @@ function publisher_cloneFileFolder($path)
         // check all files in dir, and process it
         if ($handle = opendir($path)) {
             while ($file = readdir($handle)) {
-                if ($file !== '.' && $file !== '..' && $file !== '.svn') {
+                if ('.' !== $file && '..' !== $file && '.svn' !== $file) {
                     publisher_cloneFileFolder("{$path}/{$file}");
                 }
             }
@@ -135,7 +133,7 @@ function publisher_createLogo($dirname)
         }
     }
 
-    if (!XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png') || !XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/VeraBd.ttf')) {
+    if (!XoopsLoad::fileExists($imageBase = \XoopsBaseConfig::get('root-path').'/modules/'.$dirname.'/images/module_logo.png') || !XoopsLoad::fileExists($font = \XoopsBaseConfig::get('root-path').'/modules/'.$dirname.'/images/VeraBd.ttf')) {
         return false;
     }
 
@@ -154,7 +152,8 @@ function publisher_createLogo($dirname)
     $white = imagecolorallocatealpha($imageModule, 255, 255, 255, 127);
     imagefill($imageModule, 0, 0, $white);
     imagecolortransparent($imageModule, $white);
-    imagepng($imageModule, \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/images/module_logo.png');
+    imagepng($imageModule, \XoopsBaseConfig::get('root-path').'/modules/'.$dirname.'/images/module_logo.png');
     imagedestroy($imageModule);
+
     return true;
 }

@@ -28,8 +28,8 @@
 
 use Xoops\Core\FixedGroups;
 
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-include_once __DIR__ . '/common.php';
+include dirname(dirname(dirname(__DIR__))).'/mainfile.php';
+include_once __DIR__.'/common.php';
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
@@ -46,7 +46,7 @@ $group = $xoops->getUserGroups();
 
 $filename = basename($_FILES['publisher_upload_file']['name']);
 $image_nicename = isset($_POST['image_nicename']) ? trim($_POST['image_nicename']) : '';
-if ($image_nicename === '' || $image_nicename === _CO_PUBLISHER_IMAGE_NICENAME) {
+if ('' === $image_nicename || _CO_PUBLISHER_IMAGE_NICENAME === $image_nicename) {
     $image_nicename = $filename;
 }
 
@@ -72,8 +72,8 @@ if (!is_object($imgcat)) {
 }
 
 $image = null;
-if ($error === false) {
-    $uploader = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path') . '/images', [
+if (false === $error) {
+    $uploader = new XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path').'/images', [
         'image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png',
     ], $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
@@ -90,7 +90,7 @@ if ($error === false) {
             $image->setVar('image_display', 1);
             $image->setVar('image_weight', 0);
             $image->setVar('imgcat_id', $imgcat_id);
-            if ($imgcat->getVar('imgcat_storetype') === 'db') {
+            if ('db' === $imgcat->getVar('imgcat_storetype')) {
                 $fp = @fopen($uploader->getSavedDestination(), 'rb');
                 $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
                 @fclose($fp);
@@ -102,7 +102,7 @@ if ($error === false) {
             }
         }
     } else {
-        $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $filename) . '<br>' . implode('<br>', $uploader->getErrors(false));
+        $error = sprintf(_CO_PUBLISHER_FAILSAVEIMG, $filename).'<br>'.implode('<br>', $uploader->getErrors(false));
     }
 }
 

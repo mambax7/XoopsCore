@@ -12,16 +12,15 @@
 use Xoops\Core\FixedGroups;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $system = System::getInstance();
 $xoops = Xoops::getInstance();
@@ -38,6 +37,7 @@ $perm_desc = '';
 switch ($op) {
     case 'visibility':
         header('Location: visibility.php');
+
         break;
 
     case 'edit':
@@ -46,6 +46,7 @@ switch ($op) {
         $perm_name = 'profile_edit';
         $restriction = 'field_edit';
         $anonymous = false;
+
         break;
 
     case 'search':
@@ -53,6 +54,7 @@ switch ($op) {
         $perm_name = 'profile_search';
         $restriction = '';
         $anonymous = true;
+
         break;
 
     case 'access':
@@ -61,6 +63,7 @@ switch ($op) {
         $perm_desc = _PROFILE_AM_PROF_ACCESS_DESC;
         $restriction = '';
         $anonymous = true;
+
         break;
 }
 
@@ -75,13 +78,13 @@ $opform->addElement($op_select);
 $opform->display();
 
 $module_id = $xoops->module->getVar('mid');
-$form = new Xoops\Form\GroupPermissionForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php?op=' . $op, $anonymous);
+$form = new Xoops\Form\GroupPermissionForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php?op='.$op, $anonymous);
 
-if ($op === 'access') {
+if ('access' === $op) {
     $member_handler = $xoops->getHandlerMember();
     $glist = $member_handler->getGroupList();
     foreach (array_keys($glist) as $i) {
-        if ($i !== FixedGroups::ANONYMOUS) {
+        if (FixedGroups::ANONYMOUS !== $i) {
             $form->addItem($i, $glist[$i]);
         }
     }
@@ -90,9 +93,9 @@ if ($op === 'access') {
     $profile_handler = \Xoops::getModuleHelper('profile')->getHandler('profile');
     $fields = $profile_handler->loadFields();
 
-    if ($op !== 'search') {
+    if ('search' !== $op) {
         foreach (array_keys($fields) as $i) {
-            if ($restriction === '' || $fields[$i]->getVar($restriction)) {
+            if ('' === $restriction || $fields[$i]->getVar($restriction)) {
                 $form->addItem(
                     $fields[$i]->getVar('field_id'),
                     XoopsLocale::substr($fields[$i]->getVar('field_title'), 0, 25)

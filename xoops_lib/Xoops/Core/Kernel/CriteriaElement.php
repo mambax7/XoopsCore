@@ -19,19 +19,18 @@ use Doctrine\DBAL\Query\QueryBuilder;
  * This abstract base class should never be instantiated directly.
  *
  * @category  Xoops\Core\Kernel\CriteriaElement
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Nathan Dial <ndial@trillion21.com>
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0.0
  */
 abstract class CriteriaElement
 {
     /**
-     * Sort order
+     * Sort order.
      *
      * @var string
      */
@@ -43,14 +42,14 @@ abstract class CriteriaElement
     protected $sort = '';
 
     /**
-     * Number of records to retrieve
+     * Number of records to retrieve.
      *
      * @var int
      */
     protected $limit = 0;
 
     /**
-     * Offset of first record
+     * Offset of first record.
      *
      * @var int
      */
@@ -62,28 +61,28 @@ abstract class CriteriaElement
     protected $groupBy = '';
 
     /**
-     * Render the criteria element
+     * Render the criteria element.
      *
      * @return string
      */
     abstract public function render();
 
     /**
-     * Make the criteria into a SQL "WHERE" clause
+     * Make the criteria into a SQL "WHERE" clause.
      *
      * @return string
      */
     abstract public function renderWhere();
 
     /**
-     * Generate an LDAP filter from criteria
+     * Generate an LDAP filter from criteria.
      *
      * @return string
      */
     abstract public function renderLdap();
 
     /**
-     * Render as Doctrine QueryBuilder instructions
+     * Render as Doctrine QueryBuilder instructions.
      *
      * @param QueryBuilder $qb        query builder instance
      * @param string       $whereMode how does this fit in the passed in QueryBuilder?
@@ -108,7 +107,7 @@ abstract class CriteriaElement
     abstract public function buildExpressionQb(QueryBuilder $qb);
 
     /**
-     * set sort column
+     * set sort column.
      *
      * @param string $sort sort column
      */
@@ -118,7 +117,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * get sort column
+     * get sort column.
      *
      * @return string sort column
      */
@@ -128,7 +127,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * set sort order
+     * set sort order.
      *
      * @param string $order sort order ASC or DESC
      */
@@ -143,7 +142,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * get sort order
+     * get sort order.
      *
      * @return string sort order
      */
@@ -153,7 +152,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * set row limit
+     * set row limit.
      *
      * @param int $limit row limit
      */
@@ -163,7 +162,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * get row limit
+     * get row limit.
      *
      * @return int row limit
      */
@@ -173,7 +172,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * set first row offset
+     * set first row offset.
      *
      * @param int $start offset of first row
      */
@@ -183,7 +182,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * get first row offset
+     * get first row offset.
      *
      * @return int start row offset
      */
@@ -193,7 +192,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * set group by
+     * set group by.
      *
      * @param string $group group by
      */
@@ -203,7 +202,7 @@ abstract class CriteriaElement
     }
 
     /**
-     * get group by
+     * get group by.
      *
      * @return string group by
      */

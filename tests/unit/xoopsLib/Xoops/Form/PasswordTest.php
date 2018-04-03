@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class PasswordTest extends \PHPUnit\Framework\TestCase
 {
@@ -44,7 +44,7 @@ class PasswordTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input') !== false);
-        $this->assertTrue(strpos($value, 'type="password"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input'));
+        $this->assertTrue(false !== strpos($value, 'type="password"'));
     }
 }

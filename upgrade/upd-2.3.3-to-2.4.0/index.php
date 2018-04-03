@@ -12,23 +12,21 @@
 /**
  * Upgrader from 2.3.3 to 2.4.0
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html.
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
  * @since       2.4.0
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @author      trabis <lusopoemas@gmail.com>
  * @version     $Id$
  */
-
 class upgrade_240 extends xoopsUpgrade
 {
     public $tasks = ['keys'];
 
     /**
-     * Check if keys already exist
+     * Check if keys already exist.
      */
     public function check_keys()
     {
@@ -41,12 +39,12 @@ class upgrade_240 extends xoopsUpgrade
         $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
-            $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
+            $sql = 'SHOW KEYS FROM `'.$xoops->db()->prefix($table).'`';
             if (!$result = $xoops->db()->queryF($sql)) {
                 continue;
             }
             $existing_keys = [];
-            while (($row = $xoops->db()->fetchArray($result)) !== false) {
+            while (false !== ($row = $xoops->db()->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
@@ -55,11 +53,12 @@ class upgrade_240 extends xoopsUpgrade
                 }
             }
         }
+
         return true;
     }
 
     /**
-     * Apply keys that are missing
+     * Apply keys that are missing.
      */
     public function apply_keys()
     {
@@ -72,23 +71,24 @@ class upgrade_240 extends xoopsUpgrade
         $tables['xoopscomments'] = ['com_status'];
 
         foreach ($tables as $table => $keys) {
-            $sql = 'SHOW KEYS FROM `' . $xoops->db()->prefix($table) . '`';
+            $sql = 'SHOW KEYS FROM `'.$xoops->db()->prefix($table).'`';
             if (!$result = $xoops->db()->queryF($sql)) {
                 continue;
             }
             $existing_keys = [];
-            while (($row = $xoops->db()->fetchArray($result)) !== false) {
+            while (false !== ($row = $xoops->db()->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
                 if (!in_array($key, $existing_keys, true)) {
-                    $sql = 'ALTER TABLE `' . $xoops->db()->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
+                    $sql = 'ALTER TABLE `'.$xoops->db()->prefix($table)."` ADD INDEX `{$key}` (`{$key}`)";
                     if (!$result = $xoops->db()->queryF($sql)) {
                         return false;
                     }
                 }
             }
         }
+
         return true;
     }
 
@@ -99,4 +99,5 @@ class upgrade_240 extends xoopsUpgrade
 }
 
 $upg = new upgrade_240();
+
 return $upg;

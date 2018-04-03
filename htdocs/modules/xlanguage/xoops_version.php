@@ -1,6 +1,6 @@
 <?php
 /**
- * xlanguage extension module
+ * xlanguage extension module.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,12 +11,10 @@
  *
  * @copyright       2010-2014 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $modversion['name'] = _MI_XLANGUAGE_NAME;
 $modversion['description'] = _MI_XLANGUAGE_DESC;
 $modversion['version'] = '4.00';

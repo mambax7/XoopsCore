@@ -31,8 +31,9 @@ EOT
         $module = $input->getArgument('module');
         $output->writeln(sprintf('Uninstalling %s', $module));
         $xoops = Xoops::getInstance();
-        if ($xoops->getModuleByDirname($module) === false) {
+        if (false === $xoops->getModuleByDirname($module)) {
             $output->writeln(sprintf('<error>%s is not an installed module!</error>', $module));
+
             return;
         }
         $xoops->setTpl(new XoopsTpl());
@@ -50,7 +51,7 @@ EOT
                 $output->writeln(strip_tags($message));
             }
         }
-        if ($result === false) {
+        if (false === $result) {
             $output->writeln(sprintf('<error>Uninstall of %s failed!</error>', $module));
         } else {
             $output->writeln(sprintf('<info>Uninstall of %s completed.</info>', $module));

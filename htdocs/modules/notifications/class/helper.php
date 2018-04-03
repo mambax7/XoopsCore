@@ -17,11 +17,10 @@ use Xoops\Core\Kernel\Handlers\XoopsModule;
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class Notifications extends Xoops\Module\Helper\HelperAbstract
 {
     /**
-     * Init the module
+     * Init the module.
      *
      * @return null|void
      */
@@ -60,8 +59,8 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     }
 
     /**
-     * @param string       $style
-     * @param null|string  $module_dirname
+     * @param string      $style
+     * @param null|string $module_dirname
      *
      * @return bool
      */
@@ -78,10 +77,10 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 return false;
             }
         }
-        if (($style === 'block') && ($status === NOTIFICATIONS_ENABLEBLOCK || $status === NOTIFICATIONS_ENABLEBOTH)) {
+        if (('block' === $style) && (NOTIFICATIONS_ENABLEBLOCK === $status || NOTIFICATIONS_ENABLEBOTH === $status)) {
             return true;
         }
-        if (($style === 'inline') && ($status === NOTIFICATIONS_ENABLEINLINE || $status === NOTIFICATIONS_ENABLEBOTH)) {
+        if (('inline' === $style) && (NOTIFICATIONS_ENABLEINLINE === $status || NOTIFICATIONS_ENABLEBOTH === $status)) {
             return true;
         }
 
@@ -91,7 +90,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
     /**
      * @param string $category
      * @param int    $item_id
-     * @param string $dirname Module dirname
+     * @param string $dirname  Module dirname
      *
      * @return array|bool
      */
@@ -106,6 +105,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         if ($plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'notifications')) {
             return $plugin->item($category, (int) ($item_id));
         }
+
         return false;
     }
 
@@ -113,7 +113,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
      * @param string $category
      * @param int    $item_id
      * @param string $event
-     * @param string $dirname Module dirname
+     * @param string $dirname  Module dirname
      *
      * @return array|bool
      */
@@ -128,6 +128,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         if ($plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'notifications')) {
             return $plugin->tags($category, (int) ($item_id), $event, $dirname);
         }
+
         return [];
     }
 
@@ -160,6 +161,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 }
             }
         }
+
         return false;
     }
 
@@ -186,11 +188,12 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 continue;
             }
             foreach ($all_events as $event) {
-                if ($event['name'] === 'comment') {
+                if ('comment' === $event['name']) {
                     return $category;
                 }
             }
         }
+
         return $ret;
     }
 
@@ -229,20 +232,20 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
 
             foreach ($events as $event) {
                 if ($event['category'] === $category_name) {
-                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
-                        $dir = \XoopsBaseConfig::get('root-path') . '/modules/' . $dirname . '/locale/en_US/templates/';
+                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path').'/modules/'.$dirname.'/locale/'.$xoops->getConfig('locale').'/templates/')) {
+                        $dir = \XoopsBaseConfig::get('root-path').'/modules/'.$dirname.'/locale/en_US/templates/';
                     }
                     $event['mail_template_dir'] = $dir;
                     if (!$enabled_only || $this->eventEnabled($category, $event, $dirname)) {
                         $event_array[] = $event;
                     }
-                    if ($event['name'] === 'comment') {
+                    if ('comment' === $event['name']) {
                         $override_comment = true;
                     }
-                    if ($event['name'] === 'comment_submit') {
+                    if ('comment_submit' === $event['name']) {
                         $override_commentsubmit = true;
                     }
-                    if ($event['name'] === 'bookmark') {
+                    if ('bookmark' === $event['name']) {
                         $override_bookmark = true;
                     }
                 }
@@ -252,11 +255,11 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
             // Insert comment info if applicable
 
             /* @var $commentsPlugin CommentsPluginInterface */
-            if ($commentHelper !== false && $commentsPlugin = \Xoops\Module\Plugin::getPlugin($dirname, 'comments')) {
+            if (false !== $commentHelper && $commentsPlugin = \Xoops\Module\Plugin::getPlugin($dirname, 'comments')) {
                 //todo replace this
                 if (!empty($category['item_name']) && $category['item_name'] === $commentsPlugin->itemName()) {
-                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path') . '/locale/' . $xoops->getConfig('locale') . '/templates/')) {
-                        $dir = \XoopsBaseConfig::get('root-path') . '/locale/en_US/templates/';
+                    if (!is_dir($dir = \XoopsBaseConfig::get('root-path').'/locale/'.$xoops->getConfig('locale').'/templates/')) {
+                        $dir = \XoopsBaseConfig::get('root-path').'/locale/en_US/templates/';
                     }
                     $mail_template_dir = $dir;
 
@@ -276,6 +279,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                                 if (!$override_comment) {
                                     $insert_comment = true;
                                 }
+
                                 break;
                             case Comments::APPROVE_USER:
                             case Comments::APPROVE_ADMIN:
@@ -286,6 +290,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                                 if (!$override_commentsubmit) {
                                     $insert_submit = true;
                                 }
+
                                 break;
                         }
                     }
@@ -342,6 +347,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
 
             return $event_array;
         }
+
         return [];
     }
 
@@ -370,6 +376,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 return true;
             }
         }
+
         return false;
     }
 
@@ -391,6 +398,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 return $event;
             }
         }
+
         return false;
     }
 
@@ -415,7 +423,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
             // Check the script name
             $subscribe_from = $category['subscribe_from'];
             if (!is_array($subscribe_from)) {
-                if ($subscribe_from === '*') {
+                if ('*' === $subscribe_from) {
                     $subscribe_from = [
                         $script_name,
                     ];
@@ -437,13 +445,14 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 $sub_categories[] = $category;
             } else {
                 $item_name = $category['item_name'];
-                $id = ($item_name !== '' && isset($_GET[$item_name])) ? (int) ($_GET[$item_name]) : 0;
+                $id = ('' !== $item_name && isset($_GET[$item_name])) ? (int) ($_GET[$item_name]) : 0;
                 if ($id > 0) {
                     $category['item_id'] = $id;
                     $sub_categories[] = $category;
                 }
             }
         }
+
         return $sub_categories;
     }
 
@@ -465,13 +474,16 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         switch ($type) {
             case 'option_value':
             case 'name':
-                return 'notify:' . $category['name'] . '-' . $event['name'];
+                return 'notify:'.$category['name'].'-'.$event['name'];
+
                 break;
             case 'option_name':
-                return $category['name'] . '-' . $event['name'];
+                return $category['name'].'-'.$event['name'];
+
                 break;
             default:
                 return false;
+
                 break;
         }
     }
@@ -526,7 +538,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
         //Delete all configs
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('conf_modid', $module->getVar('mid')));
-        $criteria->add(new Criteria('conf_name', "('" . implode("','", $configNames) . "')", 'IN'));
+        $criteria->add(new Criteria('conf_name', "('".implode("','", $configNames)."')", 'IN'));
         $configs = $config_handler->getConfigs($criteria);
         /* @var $config XoopsConfigItem */
         foreach ($configs as $config) {
@@ -564,8 +576,8 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
                 if (!empty($event['invisible'])) {
                     continue;
                 }
-                $option_name = $category['title'] . ' : ' . $event['title'];
-                $option_value = $category['name'] . '-' . $event['name'];
+                $option_name = $category['title'].' : '.$event['title'];
+                $option_value = $category['name'].'-'.$event['name'];
                 $options[$option_name] = $option_value;
             }
             unset($events);
@@ -580,6 +592,7 @@ class Notifications extends Xoops\Module\Helper\HelperAbstract
             'default' => array_values($options),
             'options' => $options,
         ];
+
         return $configs;
     }
 }

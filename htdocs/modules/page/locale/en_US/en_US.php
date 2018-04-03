@@ -10,16 +10,14 @@
  */
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
-
 class PageLocaleEn_US /*extends XoopsLocaleEn_US*/
 {
     // Module

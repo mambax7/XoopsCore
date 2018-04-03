@@ -12,16 +12,14 @@
 /**
  * Upgrader from 2.3.0 to 2.3.1
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html.
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
  * @since       2.3.0
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id$
  */
-
 class upgrade_231 extends xoopsUpgrade
 {
     public $tasks = ['field'];
@@ -32,7 +30,7 @@ class upgrade_231 extends xoopsUpgrade
     }
 
     /**
-     * Check if field type already fixed for mysql strict mode
+     * Check if field type already fixed for mysql strict mode.
      */
     public function check_field()
     {
@@ -46,19 +44,20 @@ class upgrade_231 extends xoopsUpgrade
             'user_sig' => 'users', 'bio' => 'users',
         ];
         foreach ($fields as $field => $table) {
-            $sql = 'SHOW COLUMNS FROM `' . $db->prefix($table) . "` LIKE '{$field}'";
+            $sql = 'SHOW COLUMNS FROM `'.$db->prefix($table)."` LIKE '{$field}'";
             if (!$result = $db->queryF($sql)) {
                 return false;
             }
-            while (($row = $db->fetchArray($result)) !== false) {
+            while (false !== ($row = $db->fetchArray($result))) {
                 if ($row['Field'] !== $field) {
                     continue;
                 }
-                if (strtoupper($row['Null']) !== 'YES') {
+                if ('YES' !== strtoupper($row['Null'])) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 
@@ -68,11 +67,13 @@ class upgrade_231 extends xoopsUpgrade
         $db = $xoops->db();
         $allowWebChanges = $db->allowWebChanges;
         $db->allowWebChanges = true;
-        $result = $db->queryFromFile(dirname(__FILE__) . '/mysql.structure.sql');
+        $result = $db->queryFromFile(dirname(__FILE__).'/mysql.structure.sql');
         $db->allowWebChanges = $allowWebChanges;
+
         return $result;
     }
 }
 
 $upg = new upgrade_231();
+
 return $upg;

@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\FilterAbstract;
 
 /**
- * TextSanitizer filter
+ * TextSanitizer filter.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SyntaxHighlight extends FilterAbstract
 {
@@ -36,7 +35,7 @@ class SyntaxHighlight extends FilterAbstract
     ];
 
     /**
-     * apply syntax highlighting to a text string
+     * apply syntax highlighting to a text string.
      *
      * @param string $source   source code text to highlight
      * @param string $language of source code
@@ -51,7 +50,7 @@ class SyntaxHighlight extends FilterAbstract
         }
         $source = $this->ts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
-        if ($config['highlighter'] === 'geshi') {
+        if ('geshi' === $config['highlighter']) {
             $language = str_replace('=', '', $language);
             $language = ($language) ? $language : $config['language'];
             $language = strtolower($language);
@@ -60,11 +59,12 @@ class SyntaxHighlight extends FilterAbstract
             }
         }
         $source = self::php($source);
+
         return $source;
     }
 
     /**
-     * apply PHP highlight_string
+     * apply PHP highlight_string.
      *
      * @param string $text source string
      *
@@ -74,8 +74,8 @@ class SyntaxHighlight extends FilterAbstract
     {
         $text = trim($text);
         $addedOpenTag = false;
-        if (!strpos($text, '<?php') && (substr($text, 0, 5) !== '<?php')) {
-            $text = '<?php ' . $text;
+        if (!strpos($text, '<?php') && ('<?php' !== substr($text, 0, 5))) {
+            $text = '<?php '.$text;
             $addedOpenTag = true;
         }
 
@@ -101,12 +101,13 @@ class SyntaxHighlight extends FilterAbstract
         $length_open = ($addedOpenTag) ? $pos_open + 14 : 0;
         $str_internal = substr($buffer, $length_open);
 
-        $buffer = $str_open . $str_internal;
+        $buffer = $str_open.$str_internal;
+
         return $buffer;
     }
 
     /**
-     * apply geshi highlighting
+     * apply geshi highlighting.
      *
      * @param string $source   source code text to highlight
      * @param string $language of source code

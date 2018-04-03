@@ -10,11 +10,10 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
@@ -27,7 +26,7 @@ class protector_precommon_badip_redirection extends ProtectorFilterAbstract
 {
     public function execute()
     {
-        header('Location: ' . PROTECTOR_BADIP_REDIRECTION_URI);
+        header('Location: '.PROTECTOR_BADIP_REDIRECTION_URI);
         exit;
     }
 }

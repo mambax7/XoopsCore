@@ -16,8 +16,7 @@ use Xmf\Request;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 // Warning: code depending on Xoops\Core\HttpRequest may need to change
@@ -34,8 +33,8 @@ $result['uri'] = $request->getUri();
 $result['referer'] = $request->getReferer();
 $result['phpsessid_cookie'] = Request::getString('PHPSESSID', '', 'cookie');
 $result['ip'] = $request->getClientIp();
-$result['isget'] = Request::getMethod() === 'GET';
-$result['ispost'] = Request::getMethod() === 'POST';
+$result['isget'] = 'GET' === Request::getMethod();
+$result['ispost'] = 'POST' === Request::getMethod();
 $result['ismobile'] = $request->is('mobile');
 $result['isrobot'] = $request->is('robot');
 $result['files'] = Request::getArray('file_identifier', [], 'files');

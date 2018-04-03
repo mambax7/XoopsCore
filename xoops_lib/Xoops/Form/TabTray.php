@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * TabTray - a form tray for tabs
+ * TabTray - a form tray for tabs.
  *
  * @category  Xoops\Form\TabTray
- * @package   Xoops\Form
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2012-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class TabTray extends ElementTray
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $name    Unique identifier for this tray
@@ -41,7 +40,7 @@ class TabTray extends ElementTray
     }
 
     /**
-     * create HTML to output the form as a table
+     * create HTML to output the form as a table.
      *
      * @return string
      */
@@ -49,17 +48,17 @@ class TabTray extends ElementTray
     {
         $xoops = \Xoops::getInstance();
 
-        $ret = '<div id="tabs_' . $this->getName() . '">' . "\n";
-        $ret .= '<ul class="nav nav-tabs">' . "\n";
+        $ret = '<div id="tabs_'.$this->getName().'">'."\n";
+        $ret .= '<ul class="nav nav-tabs">'."\n";
         $active = ' active';
         foreach ($this->getElements() as $ele) {
             if ($ele instanceof Tab) {
-                $ret .= '<li class="nav' . $active . '"><a href="#tab_' . $ele->getName()
-                    . '" data-toggle="tab">' . $ele->getCaption() . '</a></li>' . "\n";
+                $ret .= '<li class="nav'.$active.'"><a href="#tab_'.$ele->getName()
+                    .'" data-toggle="tab">'.$ele->getCaption().'</a></li>'."\n";
                 $active = '';
             }
         }
-        $ret .= '</ul><br>' . "\n";
+        $ret .= '</ul><br>'."\n";
 
         $hidden = '';
         $extras = [];
@@ -72,9 +71,9 @@ class TabTray extends ElementTray
             if (!$ele->isHidden()) {
                 if (!$ele instanceof Raw) {
                     if ($ele instanceof Tab) {
-                        $ret .= '<div class="tab-pane fade' . $active . '" id="tab_' . $ele->getName() . '">';
+                        $ret .= '<div class="tab-pane fade'.$active.'" id="tab_'.$ele->getName().'">';
                         $ret .= $ele->render();
-                        $ret .= '</div>' . "\n";
+                        $ret .= '</div>'."\n";
                         $active = '';
                     } else {
                         $extras[] = $ele;
@@ -95,9 +94,10 @@ class TabTray extends ElementTray
             $ret .= "\n";
         }
 
-        $ret .= $hidden . "\n";
-        $ret .= '</div>' . "\n";
-        $ret .= '</div>' . "\n";
+        $ret .= $hidden."\n";
+        $ret .= '</div>'."\n";
+        $ret .= '</div>'."\n";
+
         return $ret;
     }
 }

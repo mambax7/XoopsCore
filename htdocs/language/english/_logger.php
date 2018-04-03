@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/**
+/*
  *  Xoops Language
  *
  * @copyright       XOOPS Project (http://xoops.org)

@@ -15,14 +15,13 @@ use Xoops\Core\Service\Response;
 use Xoops\Html\Img;
 
 /**
- * Qrcode provider for service manager
+ * Qrcode provider for service manager.
  *
  * @category  ServiceProvider
- * @package   QrcodeProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class QrcodeProvider extends AbstractContract implements QrcodeInterface
@@ -42,7 +41,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -52,7 +51,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
     }
 
     /**
-     * getImgUrl - get URL to QR Code image of supplied text
+     * getImgUrl - get URL to QR Code image of supplied text.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $qrText   text to encode in QR Code
@@ -63,7 +62,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
     }
 
     /**
-     * getImgTag - get a full HTML img tag to display a QR Code image of supplied text
+     * getImgTag - get a full HTML img tag to display a QR Code image of supplied text.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $qrText     text to encode in QR Code
@@ -76,13 +75,13 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
             $attributes = [];
         }
 
-        $imgTag = new Img(['src' => $url, ]);
+        $imgTag = new Img(['src' => $url]);
         $imgTag->setMerge($attributes);
         $response->setValue($imgTag->render());
     }
 
     /**
-     * getQRUrl
+     * getQRUrl.
      *
      * @param string $qrText text for QR code
      *
@@ -95,6 +94,7 @@ class QrcodeProvider extends AbstractContract implements QrcodeInterface
             'text' => (string) $qrText,
         ];
         $url = $xoops->buildUrl($xoops->url($this->renderScript), $params);
+
         return $url;
     }
 }

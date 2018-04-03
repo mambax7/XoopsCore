@@ -10,15 +10,13 @@
 */
 
 /**
- * Plugin manager config
+ * Plugin manager config.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Andricq Nicolas (AKA MusS)
- * @package         system
  * @version         $Id$
  */
-
 $modversion['name'] = XoopsLocale::EXTENSIONS;
 $modversion['version'] = '1.0';
 $modversion['description'] = SystemLocale::EXTENSIONS_DESC;

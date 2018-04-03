@@ -14,24 +14,23 @@ namespace Xoops\Core\Database;
 use Xoops\Core\Database\Logging\XoopsDebugStack;
 
 /**
- * Xoops Database Factory class
+ * Xoops Database Factory class.
  *
  * PHP version 5.3
  *
  * @category  Xoops\Class\Database\Factory
- * @package   Factory
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    readheadedrod <redheadedrod@hotmail.com>
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release:2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Factory
 {
     /**
-     * Get a reference to the only instance of database class and connects to DB
+     * Get a reference to the only instance of database class and connects to DB.
      *
      * if the class has not been instantiated yet, this will also take
      * care of that
@@ -58,7 +57,7 @@ class Factory
                 $connectionParams = $parameters;
                 $connectionParams['wrapperClass'] = '\Xoops\Core\Database\Connection';
             } else {
-                $driver = 'pdo_' . \XoopsBaseConfig::get('db-type');
+                $driver = 'pdo_'.\XoopsBaseConfig::get('db-type');
                 $connectionParams = [
                     'dbname' => \XoopsBaseConfig::get('db-name'),
                     'user' => \XoopsBaseConfig::get('db-user'),
@@ -77,7 +76,7 @@ class Factory
                 if (!empty($xoops_db_socket)) {
                     $connectionParams['unix_socket'] = $xoops_db_socket;
                 }
-                if ($options !== null && is_array($options)) {
+                if (null !== $options && is_array($options)) {
                     $connectionParams['driverOptions'] = $options;
                 }
             }
@@ -86,10 +85,11 @@ class Factory
                 $connectionParams,
                 $config
             );
-            if (!defined('XOOPS_DB_PROXY') || (\Xmf\Request::getMethod() !== 'GET') || (PHP_SAPI === 'cli')) {
+            if (!defined('XOOPS_DB_PROXY') || ('GET' !== \Xmf\Request::getMethod()) || (PHP_SAPI === 'cli')) {
                 $instance->setSafe(true);
             }
         }
+
         return $instance;
     }
 }

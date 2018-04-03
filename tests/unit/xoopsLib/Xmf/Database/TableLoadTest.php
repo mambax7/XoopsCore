@@ -2,7 +2,7 @@
 
 namespace Xmf\Database;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class TableLoadTest extends \PHPUnit\Framework\TestCase
 {

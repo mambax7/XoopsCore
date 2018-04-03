@@ -10,12 +10,11 @@
 */
 
 /**
- * Plugins Manager
+ * Plugins Manager.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Andricq Nicolas (AKA MusS)
- * @package         system
  * @version         $Id$
  */
 
@@ -46,7 +45,6 @@ if (in_array($op, ['install', 'update', 'uninstall'], true)) {
 $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 
 switch ($op) {
-
     case 'list':
         // Call Header
         $xoops->header('admin:system/system_extensions.tpl');
@@ -58,7 +56,7 @@ switch ($op) {
         $xoops->theme()->addScript('modules/system/js/module.js');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::EXTENSIONS_ADMINISTRATION,
             $system->adminVersion('extensions', 'adminpath')
@@ -76,6 +74,7 @@ switch ($op) {
         $xoops->tpl()->assign('extension_list', $extension);
         // Call Footer
         $xoops->footer();
+
         break;
 
     case 'install':
@@ -86,7 +85,7 @@ switch ($op) {
         $xoops->theme()->addStylesheet('modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::EXTENSIONS_ADMINISTRATION,
             $system->adminVersion('extensions', 'adminpath')
@@ -114,6 +113,7 @@ switch ($op) {
         $xoops->setActiveModules();
         // Call Footer
         $xoops->footer();
+
         break;
 
     case 'uninstall':
@@ -126,7 +126,7 @@ switch ($op) {
         $xoops->theme()->addStylesheet('modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::EXTENSIONS_ADMINISTRATION,
             $system->adminVersion('extensions', 'adminpath')
@@ -150,6 +150,7 @@ switch ($op) {
         $xoops->setActiveModules();
         // Call Footer
         $xoops->footer();
+
         break;
 
     case 'update':
@@ -163,7 +164,7 @@ switch ($op) {
         $xoops->theme()->addStylesheet('modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $admin_page = new \Xoops\Module\Admin();
-        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url') . '/admin.php', true);
+        $admin_page->addBreadcrumbLink(SystemLocale::CONTROL_PANEL, \XoopsBaseConfig::get('url').'/admin.php', true);
         $admin_page->addBreadcrumbLink(
             SystemLocale::EXTENSIONS_ADMINISTRATION,
             $system->adminVersion('extensions', 'adminpath')
@@ -188,5 +189,6 @@ switch ($op) {
         $xoops->setActiveModules();
         // Call Footer
         $xoops->footer();
+
         break;
 }

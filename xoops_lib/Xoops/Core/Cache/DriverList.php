@@ -12,9 +12,8 @@
 namespace Xoops\Core\Cache;
 
 /**
- * DriverList overrides for Stash
+ * DriverList overrides for Stash.
  *
- * @package Xoops\Core\Cache
  * @author  Richard Griffith <richard@geekwright.com>
  */
 class DriverList extends \Stash\DriverList
@@ -24,7 +23,7 @@ class DriverList extends \Stash\DriverList
      *
      * This overrides the Stash class to provide a case insensitive lookup
      *
-     * @param  string $name
+     * @param  string       $name
      * @return string|false class name or false if no matching class
      */
     public static function getDriverClass($name)
@@ -33,10 +32,11 @@ class DriverList extends \Stash\DriverList
             return self::$drivers[$name];
         }
         foreach (self::$drivers as $driverName => $className) {
-            if (strcasecmp($name, $driverName) === 0) {
+            if (0 === strcasecmp($name, $driverName)) {
                 return $className;
             }
         }
+
         return false;
     }
 }

@@ -10,11 +10,10 @@
 */
 
 /**
- * avatars extension
+ * avatars extension.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         avatar
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
@@ -43,7 +42,7 @@ $modversion['min_xoops'] = '2.6.0';
 // paypal
 $modversion['paypal'] = [
     'business' => 'xoopsfoundation@gmail.com',
-    'item_name' => 'Donation : ' . AvatarsLocale::MODULE_DESC,
+    'item_name' => 'Donation : '.AvatarsLocale::MODULE_DESC,
     'amount' => 0,
     'currency_code' => 'USD',
 ];

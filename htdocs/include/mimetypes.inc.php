@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS MIME types
+ * XOOPS MIME types.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,13 +11,12 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.0.0
  * @version         $Id$
  */
 
 /**
- * Return a list of file Mimetypes
+ * Return a list of file Mimetypes.
  *
  * This should really be replaced with a more accurate way of determining the actually mimetype
  */

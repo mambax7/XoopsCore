@@ -4,7 +4,6 @@
 
 // mymenu
 
-
 // Appended by Xoops Language Checker -GIJOE- in 2009-01-14 11:10:52
 define('_AM_ADV_DBFACTORYPATCHED', 'Su sistema está preparado para evitar inyecciones SQL por intercepción en la capa de base de datos.');
 define('_AM_ADV_DBFACTORYUNPATCHED', 'Su sistema no está preparado para evitar inyecciones SQL por intercepción en la capa de base de datos. Se necesitan algunos parches.');
@@ -48,13 +47,11 @@ define('_AM_MSG_BADIPSCANTOPEN', 'El archivo para IPs malos no puede ser abierto
 define('_AM_MSG_GROUP1IPSCANTOPEN', 'El archivo para permitir Grupo=1 no puede ser abierto');
 define('_AM_MSG_REMOVED', 'Registros eliminados');
 
-
 // prefix_manager.php
 define('_AM_H3_PREFIXMAN', 'Administrador de prefijos');
 define('_AM_MSG_DBUPDATED', '¡Base de datos actualizada exitosamente!');
 define('_AM_CONFIRM_DELETE', 'Todos los datos serán eliminados. ¿Es correcto?');
 define('_AM_TXT_HOWTOCHANGEDB', "Si desea cambiar el prefijo,<br /> edite %s/mainfile.php manualmente.<br /><br />define('XOOPS_DB_PREFIX','<b>%s</b>');");
-
 
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'No es seguro');

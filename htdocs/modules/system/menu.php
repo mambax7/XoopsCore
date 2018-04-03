@@ -12,15 +12,13 @@
 use Xoops\Core\FixedGroups;
 
 /**
- * System menu
+ * System menu.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 $xoops = Xoops::getInstance();
 $groups = [];
 if (is_object($xoops->user)) {
@@ -41,15 +39,15 @@ $admin_dir = $xoops->path('/modules/system/admin');
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 $index = 0;
 foreach ($dirlist as $file) {
-    if (XoopsLoad::fileExists($fileinc = $admin_dir . '/' . $file . '/xoops_version.php')) {
+    if (XoopsLoad::fileExists($fileinc = $admin_dir.'/'.$file.'/xoops_version.php')) {
         include $fileinc;
         unset($fileinc);
         if ($modversion['hasAdmin']) {
-            if ($xoops->getModuleConfig('active_' . $file, 'system')) {
+            if ($xoops->getModuleConfig('active_'.$file, 'system')) {
                 $category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
-                if ($all_ok !== false || in_array($modversion['category'], $ok_syscats, true)) {
+                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats, true)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
-                    $adminmenu[$index]['link'] = 'admin.php?fct=' . $file;
+                    $adminmenu[$index]['link'] = 'admin.php?fct='.$file;
                     $adminmenu[$index]['image'] = $modversion['image'];
                 }
             }

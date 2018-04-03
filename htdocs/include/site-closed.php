@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS Closed Site
+ * XOOPS Closed Site.
  *
  * Temporary solution for "site closed" status
  *
@@ -13,12 +13,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         include
  * @since           2.0.17
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 use Xoops\Core\FixedGroups;
 
 $xoops = Xoops::getInstance();
@@ -26,8 +24,9 @@ $xoops = Xoops::getInstance();
 $allowed = false;
 if ($xoops->isUser()) {
     foreach ($xoops->user->getGroups() as $group) {
-        if (in_array($group, $xoops->getConfig('closesite_okgrp'), true) || $group === FixedGroups::ADMIN) {
+        if (in_array($group, $xoops->getConfig('closesite_okgrp'), true) || FixedGroups::ADMIN === $group) {
             $allowed = true;
+
             break;
         }
     }
@@ -49,7 +48,7 @@ if (!$allowed) {
     $xoops->setTpl($xoops->theme()->template);
     $xoops->tpl()->assign([
         'xoops_theme' => $xoops->getConfig('theme_set'),
-        'xoops_imageurl' => \XoopsBaseConfig::get('themes-url') . '/' . $xoops->getConfig('theme_set') . '/',
+        'xoops_imageurl' => \XoopsBaseConfig::get('themes-url').'/'.$xoops->getConfig('theme_set').'/',
         'xoops_themecss' => $xoops->getCss($xoops->getConfig('theme_set')),
         'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
         'xoops_sitename' => htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES),
@@ -68,7 +67,7 @@ if (!$allowed) {
     foreach (array_keys($config) as $i) {
         $name = $config[$i]->getVar('conf_name', 'n');
         $value = $config[$i]->getVar('conf_value', 'n');
-        if (substr($name, 0, 5) === 'meta_') {
+        if ('meta_' === substr($name, 0, 5)) {
             $xoops->tpl()->assign("xoops_${name}", htmlspecialchars($value, ENT_QUOTES));
         } else {
             // prefix each tag with 'xoops_'

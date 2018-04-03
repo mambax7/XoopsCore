@@ -12,14 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once __DIR__ . '/admin_header.php';
+include_once __DIR__.'/admin_header.php';
 $xoops = Xoops::getInstance();
 
 $op = 'none';
@@ -32,12 +30,12 @@ if (isset($_POST['op'])) {
 }
 
 switch ($op) {
-
     case 'importExecute':
 
         $importfile = (isset($_POST['importfile'])) ? $_POST['importfile'] : 'nonselected';
-        $importfile_path = \XoopsBaseConfig::get('root-path') . '/modules/' . $publisher->getModule()->dirname() . '/admin/import/' . $importfile . '.php';
+        $importfile_path = \XoopsBaseConfig::get('root-path').'/modules/'.$publisher->getModule()->dirname().'/admin/import/'.$importfile.'.php';
         include_once $importfile_path;
+
         break;
 
     case 'default':
@@ -69,7 +67,7 @@ switch ($op) {
         if ($moduleObj) {
             $from_module_version = round($moduleObj->getVar('version') / 100, 2);
             if (($from_module_version >= 1.1)) {
-                $importfile_select_array['news'] = 'News ' . $from_module_version;
+                $importfile_select_array['news'] = 'News '.$from_module_version;
                 $news_version = $from_module_version;
             }
         }
@@ -80,7 +78,7 @@ switch ($op) {
         if ($moduleObj) {
             $from_module_version = round($moduleObj->getVar('version') / 100, 2);
             if (($from_module_version >= 1.1)) {
-                $importfile_select_array['smartsection'] = 'Smartsection ' . $from_module_version;
+                $importfile_select_array['smartsection'] = 'Smartsection '.$from_module_version;
                 $smartsection_version = $from_module_version;
             }
         }
@@ -95,7 +93,6 @@ switch ($op) {
         $xfs_version = $from_module_version;
         }
         } */
-
 
         if (isset($importfile_select_array) && count($importfile_select_array) > 0) {
             $sform = new Xoops\Form\ThemeForm(_AM_PUBLISHER_IMPORT_SELECTION, 'op', xoops_getenv('PHP_SELF'));
@@ -130,7 +127,7 @@ switch ($op) {
             $sform->display();
             unset($hidden);
         } else {
-            echo '<span style="color: #567; margin: 3px 0 12px 0; font-weight: bold; font-size: small; display: block; ">' . _AM_PUBLISHER_IMPORT_NO_MODULE . '</span>';
+            echo '<span style="color: #567; margin: 3px 0 12px 0; font-weight: bold; font-size: small; display: block; ">'._AM_PUBLISHER_IMPORT_NO_MODULE.'</span>';
         }
 
         // End of collapsable bar

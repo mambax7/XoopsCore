@@ -12,24 +12,23 @@
 namespace Xoops\Form;
 
 /**
- * Text - a simple text field
+ * Text - a simple text field.
  *
  * @category  Xoops\Form\Text
- * @package   Xoops\Form
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Text extends Element
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param string|array $caption     Caption or array of all attributes
      * @param string       $name        name attribute
-     * @param integer      $size        Size
-     * @param integer      $maxlength   Maximum length of text
+     * @param int          $size        Size
+     * @param int          $maxlength   Maximum length of text
      * @param string       $value       Initial text
      * @param string       $placeholder placeholder for this element.
      */
@@ -51,7 +50,7 @@ class Text extends Element
     }
 
     /**
-     * Get size
+     * Get size.
      *
      * @return int
      */
@@ -61,7 +60,7 @@ class Text extends Element
     }
 
     /**
-     * Get maximum text length
+     * Get maximum text length.
      *
      * @return int
      */
@@ -71,7 +70,7 @@ class Text extends Element
     }
 
     /**
-     * Get placeholder for this element
+     * Get placeholder for this element.
      *
      * @return string
      */
@@ -81,7 +80,7 @@ class Text extends Element
     }
 
     /**
-     * Prepare HTML for output
+     * Prepare HTML for output.
      *
      * @return string HTML
      */
@@ -90,10 +89,11 @@ class Text extends Element
         $this->themeDecorateElement();
         $dataList = $this->isDatalist();
         if (!empty($dataList)) {
-            $this->add('list', 'list_' . $this->getName());
+            $this->add('list', 'list_'.$this->getName());
         }
 
         $attributes = $this->renderAttributeString();
-        return '<input ' . $attributes . ' ' . $this->getExtra() . ' >';
+
+        return '<input '.$attributes.' '.$this->getExtra().' >';
     }
 }

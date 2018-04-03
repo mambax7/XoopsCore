@@ -15,14 +15,13 @@ use Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer\ExtensionAbstract;
 
 /**
- * TextSanitizer extension
+ * TextSanitizer extension.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    iHackCode <https://github.com/ihackcode>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsCode extends ExtensionAbstract
 {
@@ -32,7 +31,7 @@ class XoopsCode extends ExtensionAbstract
     protected static $defaultConfiguration = ['enabled' => true];
 
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {
@@ -43,7 +42,8 @@ class XoopsCode extends ExtensionAbstract
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $url = ltrim($attributes[0], '=');
                 $url = \Xoops::getInstance()->url($url);
-                $newcontent = '<a href="' . $url . '">' . $shortcodes->process($content) . '</a>';
+                $newcontent = '<a href="'.$url.'">'.$shortcodes->process($content).'</a>';
+
                 return $newcontent;
             }
         );
@@ -53,7 +53,8 @@ class XoopsCode extends ExtensionAbstract
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $url = ltrim($attributes[0], '=');
                 $url = \Xoops::getInstance()->url($url);
-                $newcontent = '<a href="' . $url . '">' . $shortcodes->process($content) . '</a>';
+                $newcontent = '<a href="'.$url.'">'.$shortcodes->process($content).'</a>';
+
                 return $newcontent;
             }
         );
@@ -62,8 +63,9 @@ class XoopsCode extends ExtensionAbstract
             'color',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $color = ltrim($attributes[0], '=');
-                $color = preg_match('/^[a-f0-9]{3}$|^[a-f0-9]{6}$/i', $color) ? '#' . $color : $color;
-                $newcontent = '<span style="color: ' . $color . '">' . $shortcodes->process($content) . '</span>';
+                $color = preg_match('/^[a-f0-9]{3}$|^[a-f0-9]{6}$/i', $color) ? '#'.$color : $color;
+                $newcontent = '<span style="color: '.$color.'">'.$shortcodes->process($content).'</span>';
+
                 return $newcontent;
             }
         );
@@ -72,7 +74,8 @@ class XoopsCode extends ExtensionAbstract
             'size',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $size = ltrim($attributes[0], '=');
-                $newcontent = '<span style="font-size: ' . $size . '">' . $shortcodes->process($content) . '</span>';
+                $newcontent = '<span style="font-size: '.$size.'">'.$shortcodes->process($content).'</span>';
+
                 return $newcontent;
             }
         );
@@ -81,7 +84,8 @@ class XoopsCode extends ExtensionAbstract
             'font',
             function ($attributes, $content, $tagName) use ($shortcodes) {
                 $font = ltrim($attributes[0], '=');
-                $newcontent = '<span style="font-family: ' . $font . '">' . $shortcodes->process($content) . '</span>';
+                $newcontent = '<span style="font-family: '.$font.'">'.$shortcodes->process($content).'</span>';
+
                 return $newcontent;
             }
         );
@@ -89,7 +93,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'email',
             function ($attributes, $content, $tagName) {
-                $newcontent = '<a href="mailto:' . trim($content) . '</a>';
+                $newcontent = '<a href="mailto:'.trim($content).'</a>';
+
                 return $newcontent;
             }
         );
@@ -97,7 +102,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'b',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<strong>' . $shortcodes->process($content) . '</strong>';
+                $newcontent = '<strong>'.$shortcodes->process($content).'</strong>';
+
                 return $newcontent;
             }
         );
@@ -105,7 +111,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'i',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<em>' . $shortcodes->process($content) . '</em>';
+                $newcontent = '<em>'.$shortcodes->process($content).'</em>';
+
                 return $newcontent;
             }
         );
@@ -113,7 +120,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'u',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<u>' . $shortcodes->process($content) . '</u>';
+                $newcontent = '<u>'.$shortcodes->process($content).'</u>';
+
                 return $newcontent;
             }
         );
@@ -121,7 +129,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'd',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<del>' . $shortcodes->process($content) . '</del>';
+                $newcontent = '<del>'.$shortcodes->process($content).'</del>';
+
                 return $newcontent;
             }
         );
@@ -129,7 +138,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'center',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<div style="text-align: center;">' . $shortcodes->process($content) . '</div>';
+                $newcontent = '<div style="text-align: center;">'.$shortcodes->process($content).'</div>';
+
                 return $newcontent;
             }
         );
@@ -137,7 +147,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'left',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<div style="text-align: left;">' . $shortcodes->process($content) . '</div>';
+                $newcontent = '<div style="text-align: left;">'.$shortcodes->process($content).'</div>';
+
                 return $newcontent;
             }
         );
@@ -145,7 +156,8 @@ class XoopsCode extends ExtensionAbstract
         $shortcodes->addShortcode(
             'right',
             function ($attributes, $content, $tagName) use ($shortcodes) {
-                $newcontent = '<div style="text-align: right;">' . $shortcodes->process($content) . '</div>';
+                $newcontent = '<div style="text-align: right;">'.$shortcodes->process($content).'</div>';
+
                 return $newcontent;
             }
         );

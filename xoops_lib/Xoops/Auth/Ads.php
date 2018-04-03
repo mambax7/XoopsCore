@@ -14,20 +14,19 @@ namespace Xoops\Auth;
 use Xoops\Core\Database\Connection;
 
 /**
- * Authentication class for Active Directory
+ * Authentication class for Active Directory.
  *
  * @category  Xoops\Auth
- * @package   Ldap
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class Ads extends Ldap
 {
     /**
-     * Authentication Service constructor
+     * Authentication Service constructor.
      *
      * @param Connection|null $dao database
      */
@@ -40,7 +39,7 @@ class Ads extends Ldap
      * Authenticate  user again LDAP directory (Bind)
      *         2 options :
      *         Authenticate directly with uname in the DN
-     *         Authenticate with manager, search the dn
+     *         Authenticate with manager, search the dn.
      *
      * @param string $uname Username
      * @param string $pwd   Password
@@ -52,6 +51,7 @@ class Ads extends Ldap
         $authenticated = false;
         if (!extension_loaded('ldap')) {
             $this->setErrors(0, \XoopsLocale::E_EXTENSION_PHP_LDAP_NOT_LOADED);
+
             return $authenticated;
         }
         $this->ds = ldap_connect($this->ldap_server, $this->ldap_port);
@@ -80,13 +80,15 @@ class Ads extends Ldap
                 if ($dn) {
                     return $this->loadXoopsUser($dn, $uname, $pwd);
                 }
+
                 return false;
             }
-            $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userUPN . ')');
+            $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)).'('.$userUPN.')');
         } else {
             $this->setErrors(0, \XoopsLocale::E_CANNOT_CONNECT_TO_SERVER);
         }
         @ldap_close($this->ds);
+
         return $authenticated;
     }
 
@@ -102,7 +104,8 @@ class Ads extends Ldap
      */
     public function getUPN($uname)
     {
-        $userDN = $uname . '@' . $this->ldap_domain_name;
+        $userDN = $uname.'@'.$this->ldap_domain_name;
+
         return $userDN;
     }
 }

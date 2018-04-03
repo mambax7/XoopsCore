@@ -2,7 +2,7 @@
 
 namespace Xoops\Html\Menu;
 
-require_once(__DIR__ . '/../../../../init_new.php');
+require_once __DIR__.'/../../../../init_new.php';
 
 class ItemListTest extends \PHPUnit\Framework\TestCase
 {

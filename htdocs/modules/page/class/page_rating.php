@@ -14,20 +14,18 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-
 class PagePage_rating extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -65,6 +63,7 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
         if (count($res) > 0) {
             return $res[0]->getVar('rating_rating');
         }
+
         return -1;
     }
 
@@ -81,6 +80,7 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
         $criteria2->add(new Criteria('rating_uid', $uid), 'OR');
         $criteria2->add(new Criteria('rating_ip', $ip), 'OR');
         $criteria->add($criteria2, 'AND');
+
         return parent::getCount($criteria);
     }
 
@@ -96,6 +96,7 @@ class PagePage_ratingHandler extends XoopsPersistableObjectHandler
             ++$i;
             $total += $v->getVar('rating_rating');
         }
+
         return ['voters' => $i, 'average' => $total / $i];
     }
 }

@@ -14,14 +14,13 @@ namespace Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * Configuration for Sanitizer Filters and Extensions
+ * Configuration for Sanitizer Filters and Extensions.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richrd Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class SanitizerConfigurable
 {
@@ -31,7 +30,7 @@ abstract class SanitizerConfigurable
     protected static $defaultConfiguration = [];
 
     /**
-     * get the default configuration for a component
+     * get the default configuration for a component.
      *
      * @return array [componentName] => [ ... configuration items ... ]
      */

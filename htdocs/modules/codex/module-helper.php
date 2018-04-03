@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -30,7 +29,7 @@ $xoops->header();
  * the Xoops\Module\Helper will load that class. If not, it will load the Xoops\Module\Helper\Dummy
  */
 
-/**
+/*
  * Using Xoops, the verbose way
  */
 if ($xoops->isActiveModule('search')) {
@@ -40,7 +39,7 @@ if ($xoops->isActiveModule('search')) {
     $obj = $xoops->getModuleByDirname('search');
     //etc
 }
-/**
+/*
  * Using the Helper
  */
 if ($helper = Xoops\Module\Helper::getHelper('search')) {

@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer site configuration page
+ * Installer site configuration page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -22,8 +21,7 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 set_time_limit(0); // don't want this to timeout
 
@@ -54,8 +52,8 @@ $xoops->loadLocale();
 $xoops->loadLocale('system');
 
 // Install system module
-include_once $root . '/modules/system/class/module.php';
-include_once $root . '/modules/system/class/system.php';
+include_once $root.'/modules/system/class/module.php';
+include_once $root.'/modules/system/class/system.php';
 
 $system_module = new SystemModule();
 $system = System::getInstance();
@@ -71,7 +69,7 @@ $siteconfig = $_SESSION['siteconfig'];
 
 $error = $_SESSION['error'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ('POST' === $_SERVER['REQUEST_METHOD']) {
     $siteconfig['adminname'] = $_POST['adminname'];
     $siteconfig['adminmail'] = $_POST['adminmail'];
     $siteconfig['adminpass'] = $_POST['adminpass'];
@@ -97,11 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = $error;
         $_SESSION['siteconfig'] = $siteconfig;
         $wizard->redirectToPage('+0');
+
         return 200;
     }
     $_SESSION['error'] = $error;
     $_SESSION['siteconfig'] = $siteconfig;
     $wizard->redirectToPage('+1');
+
     return 302;
 }
     $dbm = new XoopsDatabaseManager();
@@ -113,16 +113,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('system_user'));
+    $res = $dbm->query('SELECT COUNT(*) FROM '.$dbm->db->prefix('system_user'));
     list($isadmin) = $dbm->db->fetchRow($res);
-
 
 ob_start();
 
 if ($isadmin) {
     $pageHasForm = false;
     $pageHasHelp = false;
-    echo "<div class='x2-note errorMsg'>" . ADMIN_EXIST . "</div>\n";
+    echo "<div class='x2-note errorMsg'>".ADMIN_EXIST."</div>\n";
 } else {
     ?>
 <fieldset>
@@ -131,20 +130,20 @@ if ($isadmin) {
     <?php
             echo '<script type="text/javascript">
                 var desc = new Array();
-                desc[0] = "' . PASSWORD_DESC . '";
-                desc[1] = "' . PASSWORD_VERY_WEAK . '";
-                desc[2] = "' . PASSWORD_WEAK . '";
-                desc[3] = "' . PASSWORD_BETTER . '";
-                desc[4] = "' . PASSWORD_MEDIUM . '";
-                desc[5] = "' . PASSWORD_STRONG . '";
-                desc[6] = "' . PASSWORD_STRONGEST . '";
+                desc[0] = "'.PASSWORD_DESC.'";
+                desc[1] = "'.PASSWORD_VERY_WEAK.'";
+                desc[2] = "'.PASSWORD_WEAK.'";
+                desc[3] = "'.PASSWORD_BETTER.'";
+                desc[4] = "'.PASSWORD_MEDIUM.'";
+                desc[5] = "'.PASSWORD_STRONG.'";
+                desc[6] = "'.PASSWORD_STRONGEST.'";
         </script>';
 
     echo xoFormField('adminname', $siteconfig['adminname'], ADMIN_LOGIN_LABEL);
     if (!empty($error['name'])) {
         echo '<ul class="diags1">';
         foreach ($error['name'] as $errmsg) {
-            echo '<li class="failure">' . $errmsg . '</li>';
+            echo '<li class="failure">'.$errmsg.'</li>';
         }
         echo '</ul>';
     }
@@ -153,7 +152,7 @@ if ($isadmin) {
     if (!empty($error['email'])) {
         echo '<ul class="diags1">';
         foreach ($error['email'] as $errmsg) {
-            echo '<li class="failure">' . $errmsg . '</li>';
+            echo '<li class="failure">'.$errmsg.'</li>';
         }
         echo '</ul>';
     } ?>
@@ -166,7 +165,7 @@ if ($isadmin) {
     if (!empty($error['pass'])) {
         echo '<ul class="diags1">';
         foreach ($error['pass'] as $errmsg) {
-            echo '<li class="failure">' . $errmsg . '</li>';
+            echo '<li class="failure">'.$errmsg.'</li>';
         }
         echo '</ul>';
     } ?>
@@ -207,4 +206,4 @@ $_SESSION['siteconfig'] = $siteconfig;
 $_SESSION['pageHasHelp'] = $pageHasHelp;
 $_SESSION['pageHasForm'] = $pageHasForm;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

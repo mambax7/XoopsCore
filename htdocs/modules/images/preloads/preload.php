@@ -13,7 +13,7 @@ use Xmf\Request;
 use Xoops\Core\PreloadItem;
 
 /**
- * Images core preloads
+ * Images core preloads.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -25,7 +25,7 @@ class ImagesPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap([
-            'images' => $path . '/class/helper.php',
+            'images' => $path.'/class/helper.php',
         ]);
     }
 
@@ -33,14 +33,14 @@ class ImagesPreload extends PreloadItem
     {
         /* @var $dhtml Xoops\Form\DhtmlTextArea */
         $dhtml = $args[1];
-        $args[0] .= "<img src='" . \XoopsBaseConfig::get('url') . "/images/image.gif' alt='" . XoopsLocale::INSIDE_IMAGE . "' title='" . XoopsLocale::INSIDE_IMAGE . "' onclick='openWithSelfMain(\"" . \XoopsBaseConfig::get('url') . "/modules/images/imagemanager.php?target={$dhtml->getName()}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $args[0] .= "<img src='".\XoopsBaseConfig::get('url')."/images/image.gif' alt='".XoopsLocale::INSIDE_IMAGE."' title='".XoopsLocale::INSIDE_IMAGE."' onclick='openWithSelfMain(\"".\XoopsBaseConfig::get('url')."/modules/images/imagemanager.php?target={$dhtml->getName()}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
     }
 
     public static function eventCoreImage($args)
     {
         $uri = '';
         foreach (Request::get() as $k => $v) {
-            $uri .= urlencode($k) . '=' . urlencode($v) . '&';
+            $uri .= urlencode($k).'='.urlencode($v).'&';
         }
         Xoops::getInstance()->redirect("modules/images/image.php?{$uri}", 0);
     }
@@ -49,7 +49,7 @@ class ImagesPreload extends PreloadItem
     {
         $uri = '';
         foreach (Request::get() as $k => $v) {
-            $uri .= urlencode($k) . '=' . urlencode($v) . '&';
+            $uri .= urlencode($k).'='.urlencode($v).'&';
         }
         Xoops::getInstance()->redirect("modules/images/imagemanager.php?{$uri}", 0);
     }

@@ -10,13 +10,12 @@
 */
 
 /**
- * XOOPS main configuration file
+ * XOOPS main configuration file.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version     $Id$
  */
-
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     define('XOOPS_MAINFILE_INCLUDED', 1);
 
@@ -36,7 +35,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // URL Association for SSL and Protocol Compatibility
     $http = 'http://';
     if (!empty($_SERVER['HTTPS'])) {
-        $http = ($_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+        $http = ('on' === $_SERVER['HTTPS']) ? 'https://' : 'http://';
     }
     define('XOOPS_PROT', $http);
 
@@ -68,14 +67,14 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     }
 
     // Secure file
-    require XOOPS_VAR_PATH . '/data/secure.php';
+    require XOOPS_VAR_PATH.'/data/secure.php';
 
     if (!class_exists('XoopsBaseConfig', false)) {
-        include __DIR__ . '/class/XoopsBaseConfig.php';
+        include __DIR__.'/class/XoopsBaseConfig.php';
         XoopsBaseConfig::bootstrapTransition();
     }
 
     if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH !== '') {
-        include XOOPS_ROOT_PATH . '/include/common.php';
+        include XOOPS_ROOT_PATH.'/include/common.php';
     }
 }

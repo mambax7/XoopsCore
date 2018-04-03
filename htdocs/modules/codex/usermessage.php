@@ -20,8 +20,7 @@ use Xoops\Form\ThemeForm;
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Laurent JEN - aka DuGris
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -31,7 +30,7 @@ if (!$xoops->service('usermessage')->isAvailable()) {
 }
 
 if ($xoops->isUser()) {
-    if (Request::getMethod() === 'POST') {
+    if ('POST' === Request::getMethod()) {
         $body = Request::getString('body', '');
         $body = empty($body) ? 'Not Specified' : $body;
         $message = new Message(

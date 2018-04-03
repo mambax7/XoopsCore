@@ -12,8 +12,6 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xml
  * @since           1.0.0
  * @author          Kazumi Ono (AKA onokazu)
  * @version         $Id $
@@ -43,7 +41,7 @@ class metaweblogapi extends XoopsXmlRpcApi
                     $maptag = $this->_getXoopsTagMap($tag);
                     if (!isset($this->params[3][$maptag])) {
                         $data = $this->_getTagCdata($this->params[3]['description'], $maptag, true);
-                        if (trim($data) === '') {
+                        if ('' === trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $maptag;
                             }
@@ -57,7 +55,7 @@ class metaweblogapi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<' . $m . '> ';
+                        $msg .= '<'.$m.'> ';
                         echo $m;
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
@@ -98,7 +96,7 @@ class metaweblogapi extends XoopsXmlRpcApi
                     $maptag = $this->_getXoopsTagMap($tag);
                     if (!isset($this->params[3][$maptag])) {
                         $data = $this->_getTagCdata($this->params[3]['description'], $maptag, true);
-                        if (trim($data) === '') {
+                        if ('' === trim($data)) {
                             if ($detail['required']) {
                                 $missing[] = $tag;
                             }
@@ -112,7 +110,7 @@ class metaweblogapi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<' . $m . '> ';
+                        $msg .= '<'.$m.'> ';
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
@@ -156,20 +154,25 @@ class metaweblogapi extends XoopsXmlRpcApi
                     switch ($maptag) {
                         case 'userid':
                             $struct->add('userid', new XoopsXmlRpcString($value));
+
                             break;
                         case 'dateCreated':
                             $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+
                             break;
                         case 'postid':
                             $struct->add('postid', new XoopsXmlRpcString($value));
-                            $struct->add('link', new XoopsXmlRpcString($xoops_url . '/modules/xoopssections/item.php?item=' . $value));
-                            $struct->add('permaLink', new XoopsXmlRpcString($xoops_url . '/modules/xoopssections/item.php?item=' . $value));
+                            $struct->add('link', new XoopsXmlRpcString($xoops_url.'/modules/xoopssections/item.php?item='.$value));
+                            $struct->add('permaLink', new XoopsXmlRpcString($xoops_url.'/modules/xoopssections/item.php?item='.$value));
+
                             break;
                         case 'title':
                             $struct->add('title', new XoopsXmlRpcString($value));
+
                             break;
                         default:
-                            $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                            $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
+
                             break;
                     }
                 }
@@ -193,7 +196,7 @@ class metaweblogapi extends XoopsXmlRpcApi
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 $count = count($ret);
-                if ($count === 0) {
+                if (0 === $count) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
@@ -204,20 +207,25 @@ class metaweblogapi extends XoopsXmlRpcApi
                             switch ($maptag) {
                                 case 'userid':
                                     $struct->add('userid', new XoopsXmlRpcString($value));
+
                                     break;
                                 case 'dateCreated':
                                     $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+
                                     break;
                                 case 'postid':
                                     $struct->add('postid', new XoopsXmlRpcString($value));
-                                    $struct->add('link', new XoopsXmlRpcString($xoops_url . '/modules/news/article.php?item_id=' . $value));
-                                    $struct->add('permaLink', new XoopsXmlRpcString($xoops_url . '/modules/news/article.php?item_id=' . $value));
+                                    $struct->add('link', new XoopsXmlRpcString($xoops_url.'/modules/news/article.php?item_id='.$value));
+                                    $struct->add('permaLink', new XoopsXmlRpcString($xoops_url.'/modules/news/article.php?item_id='.$value));
+
                                     break;
                                 case 'title':
                                     $struct->add('title', new XoopsXmlRpcString($value));
+
                                     break;
                                 default:
-                                    $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                                    $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
+
                                     break;
                             }
                         }
@@ -247,7 +255,7 @@ class metaweblogapi extends XoopsXmlRpcApi
                 foreach ($ret as $id => $detail) {
                     $struct = new XoopsXmlRpcStruct();
                     $struct->add('description', new XoopsXmlRpcString($detail));
-                    $struct->add('htmlUrl', new XoopsXmlRpcString($xoops_url . '/modules/news/index.php?storytopic=' . $id));
+                    $struct->add('htmlUrl', new XoopsXmlRpcString($xoops_url.'/modules/news/index.php?storytopic='.$id));
                     $struct->add('rssUrl', new XoopsXmlRpcString(''));
                     $catstruct = new XoopsXmlRpcStruct();
                     $catstruct->add($detail['title'], $struct);

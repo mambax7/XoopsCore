@@ -12,19 +12,18 @@
 namespace Xoops\Form;
 
 /**
- * File - a file upload field
+ * File - a file upload field.
  *
  * @category  Xoops\Form\File
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class File extends Element
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $caption Caption or array of all attributes
      * @param string       $name    name attribute
@@ -42,7 +41,7 @@ class File extends Element
     }
 
     /**
-     * prepare HTML for output
+     * prepare HTML for output.
      *
      * @return string HTML
      */
@@ -50,8 +49,8 @@ class File extends Element
     {
         $attributes = $this->renderAttributeString();
 
-        return '<input ' . $attributes . ' ' . $this->getExtra() . ' />'
-            . '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'
-            . $this->getName() . '">';
+        return '<input '.$attributes.' '.$this->getExtra().' />'
+            .'<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'
+            .$this->getName().'">';
     }
 }

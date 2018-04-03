@@ -12,26 +12,25 @@
 namespace Xoops\Form;
 
 /**
- * Url - text element for URL
+ * Url - text element for URL.
  *
  * @category  Xoops\Form\Url
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Url extends Text
 {
     /**
-     * __construct
+     * __construct.
      *
-     * @param string  $caption     Caption
-     * @param string  $name        name attribute
-     * @param integer $size        Size
-     * @param integer $maxlength   Maximum length of text
-     * @param string  $value       Initial text
-     * @param string  $placeholder placeholder for this element.
+     * @param string $caption     Caption
+     * @param string $name        name attribute
+     * @param int    $size        Size
+     * @param int    $maxlength   Maximum length of text
+     * @param string $value       Initial text
+     * @param string $placeholder placeholder for this element.
      */
     public function __construct($caption, $name, $size, $maxlength, $value = '', $placeholder = '')
     {

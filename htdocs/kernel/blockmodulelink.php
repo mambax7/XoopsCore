@@ -10,14 +10,14 @@
 */
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsBlockmodulelink extends Xoops\Core\Kernel\Handlers\XoopsBlockModuleLink
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsBlockmodulelinkHandler extends Xoops\Core\Kernel\Handlers\XoopsBlockModuleLinkHandler
 {

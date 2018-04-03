@@ -12,7 +12,6 @@
 /**
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -21,7 +20,6 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  **/
-
 class XoopsPathController
 {
     /**
@@ -89,23 +87,23 @@ class XoopsPathController
             }
         } else {
             $path = str_replace('\\', '/', realpath('../'));
-            if (substr($path, -1) === '/') {
+            if ('/' === substr($path, -1)) {
                 $path = substr($path, 0, -1);
             }
             if (file_exists("${path}/mainfile.dist.php")) {
                 $this->xoopsPath['root'] = $path;
             }
             // Firstly, locate XOOPS lib folder out of XOOPS root folder
-            $this->xoopsPath['lib'] = dirname($path) . '/' . ($this->xoopsPathDefault['lib']);
+            $this->xoopsPath['lib'] = dirname($path).'/'.($this->xoopsPathDefault['lib']);
             // If the folder is not created, re-locate XOOPS lib folder inside XOOPS root folder
-            if (!is_dir($this->xoopsPath['lib'] . '/')) {
-                $this->xoopsPath['lib'] = $path . '/' . ($this->xoopsPathDefault['lib']);
+            if (!is_dir($this->xoopsPath['lib'].'/')) {
+                $this->xoopsPath['lib'] = $path.'/'.($this->xoopsPathDefault['lib']);
             }
             // Firstly, locate XOOPS data folder out of XOOPS root folder
-            $this->xoopsPath['data'] = dirname($path) . '/' . ($this->xoopsPathDefault['data']);
+            $this->xoopsPath['data'] = dirname($path).'/'.($this->xoopsPathDefault['data']);
             // If the folder is not created, re-locate XOOPS data folder inside XOOPS root folder
-            if (!is_dir($this->xoopsPath['data'] . '/')) {
-                $this->xoopsPath['data'] = $path . '/' . ($this->xoopsPathDefault['data']);
+            if (!is_dir($this->xoopsPath['data'].'/')) {
+                $this->xoopsPath['data'] = $path.'/'.($this->xoopsPathDefault['data']);
             }
         }
         if (isset($_SESSION['settings']['URL'])) {
@@ -125,7 +123,7 @@ class XoopsPathController
 
         $this->readRequest();
         $valid = $this->validate();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             foreach ($this->path_lookup as $req => $sess) {
                 $_SESSION['settings'][$sess] = $this->xoopsPath[$req];
             }
@@ -140,12 +138,12 @@ class XoopsPathController
 
     public function readRequest()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $request = $_POST;
             foreach ($this->path_lookup as $req => $sess) {
                 if (isset($request[$req])) {
                     $request[$req] = str_replace('\\', '/', trim($request[$req]));
-                    if (substr($request[$req], -1) === '/') {
+                    if ('/' === substr($request[$req], -1)) {
                         $request[$req] = substr($request[$req], 0, -1);
                     }
                     $this->xoopsPath[$req] = $request[$req];
@@ -153,7 +151,7 @@ class XoopsPathController
             }
             if (isset($request['URL'])) {
                 $request['URL'] = trim($request['URL']);
-                if (substr($request['URL'], -1) === '/') {
+                if ('/' === substr($request['URL'], -1)) {
                     $request['URL'] = substr($request['URL'], 0, -1);
                 }
                 $this->xoopsUrl = $request['URL'];
@@ -178,17 +176,19 @@ class XoopsPathController
             foreach ($errs as $status) {
                 if (empty($status)) {
                     $validPerms = false;
+
                     break;
                 }
             }
         }
+
         return $validPaths && $this->validUrl && $validPerms;
     }
 
     public function checkPath($PATH = '')
     {
         $ret = 1;
-        if ($PATH === 'root' || empty($PATH)) {
+        if ('root' === $PATH || empty($PATH)) {
             $path = 'root';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
                 @include_once "{$this->xoopsPath[$path]}/include/version.php";
@@ -198,20 +198,21 @@ class XoopsPathController
             }
             $ret *= $this->validPath[$path];
         }
-        if ($PATH === 'lib' || empty($PATH)) {
+        if ('lib' === $PATH || empty($PATH)) {
             $path = 'lib';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
                 $this->validPath[$path] = 1;
             }
             $ret *= $this->validPath[$path];
         }
-        if ($PATH === 'data' || empty($PATH)) {
+        if ('data' === $PATH || empty($PATH)) {
             $path = 'data';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
                 $this->validPath[$path] = 1;
             }
             $ret *= $this->validPath[$path];
         }
+
         return $ret;
     }
 
@@ -220,31 +221,32 @@ class XoopsPathController
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
                 if (is_string($item)) {
-                    $error[$parent . '/' . $item] = $this->makeWritable($parent . '/' . $item);
+                    $error[$parent.'/'.$item] = $this->makeWritable($parent.'/'.$item);
                     if (empty($path[$item])) {
                         continue;
                     }
                     foreach ($path[$item] as $child) {
-                        $this->setPermission($parent . '/' . $item, $child, $error);
+                        $this->setPermission($parent.'/'.$item, $child, $error);
                     }
                 } else {
-                    $error[$parent . '/' . $path[$item]] = $this->makeWritable($parent . '/' . $path[$item]);
+                    $error[$parent.'/'.$path[$item]] = $this->makeWritable($parent.'/'.$path[$item]);
                 }
             }
         } else {
-            $error[$parent . '/' . $path] = $this->makeWritable($parent . '/' . $path);
+            $error[$parent.'/'.$path] = $this->makeWritable($parent.'/'.$path);
         }
+
         return;
     }
 
     /**
-     * @param string $path
+     * @param  string $path
      * @return bool
      */
     public function checkPermissions($path)
     {
         $paths = [
-            'root' => ['mainfile.php', 'uploads', /*'templates_c', 'cache'*/], 'data' => $this->dataPath,
+            'root' => ['mainfile.php', 'uploads'/*'templates_c', 'cache'*/], 'data' => $this->dataPath,
         ];
         $errors = [
             'root' => null, 'data' => null,
@@ -260,14 +262,15 @@ class XoopsPathController
         if (in_array(false, $errors[$path], true)) {
             $this->permErrors[$path] = $errors[$path];
         }
+
         return true;
     }
 
     /**
-     * Write-enable the specified folder
+     * Write-enable the specified folder.
      *
-     * @param string $path
-     * @param bool $create
+     * @param  string       $path
+     * @param  bool         $create
      * @return false|string false on failure, method (u-ser,g-roup,w-orld) on success
      */
     public function makeWritable($path, $create = true)
@@ -290,8 +293,10 @@ class XoopsPathController
             } elseif ($info['mode'] & 0020) {
                 return 'g';
             }
+
             return 'u';
         }
+
         return false;
     }
 }

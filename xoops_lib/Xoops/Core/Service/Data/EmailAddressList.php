@@ -14,7 +14,7 @@ namespace Xoops\Core\Service\Data;
 use Xmf\Assert;
 
 /**
- * The EmailAddressList data object is a traversable list of EmailAddress objects
+ * The EmailAddressList data object is a traversable list of EmailAddress objects.
  *
  * This is an Immutable data object. That means any changes to the data (state)
  * return a new object, while the internal state of the original object is preserved.
@@ -25,11 +25,10 @@ use Xmf\Assert;
  * The EmailAddress data object is used for mailer services
  *
  * @category  Xoops\Core\Service\Data
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class EmailAddressList
 {
@@ -53,8 +52,9 @@ class EmailAddressList
      */
     public function __construct(?array $addresses = null)
     {
-        if ($addresses !== null) {
+        if (null !== $addresses) {
             Assert::allIsInstanceOf($addresses, EmailAddress::class, static::MESSAGE_ADDRESS);
+
             try {
                 /** @var EmailAddress $address */
                 foreach ($addresses as $address) {
@@ -68,7 +68,7 @@ class EmailAddressList
     }
 
     /**
-     * withAddedAddresses - return a new object with the supplied EmailAddress array added
+     * withAddedAddresses - return a new object with the supplied EmailAddress array added.
      *
      *
      * @param EmailAddress[] $addresses an array of EmailAddress objects
@@ -78,22 +78,24 @@ class EmailAddressList
     public function withAddedAddresses(array $addresses): self
     {
         Assert::allIsInstanceOf($addresses, EmailAddress::class, static::MESSAGE_ADDRESS);
+
         try {
             /** @var EmailAddress $address */
             foreach ($addresses as $address) {
                 $address->getEmail();
             }
-            $existingAddresses = ($this->addresses === null) ? [] : $this->getAddresses();
+            $existingAddresses = (null === $this->addresses) ? [] : $this->getAddresses();
         } catch (\LogicException $e) {
             throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
         $new = clone $this;
         $new->addresses = array_merge($existingAddresses, $addresses);
+
         return $new;
     }
 
     /**
-     * getAddresses
+     * getAddresses.
      *
      * @return EmailAddress[] an array of EmailAddress objects
      *
@@ -111,11 +113,12 @@ class EmailAddressList
         } catch (\InvalidArgumentException $e) {
             throw new \LogicException($e->getMessage(), $e->getCode(), $e);
         }
+
         return $this->addresses;
     }
 
     /**
-     * getEachAddress - return each EmailAddress in the list
+     * getEachAddress - return each EmailAddress in the list.
      *
      * @return \Generator|EmailAddress[]
      *

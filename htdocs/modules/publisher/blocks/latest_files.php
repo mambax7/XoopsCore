@@ -12,15 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_latest_files_show($options)
 {
@@ -29,7 +26,7 @@ function publisher_latest_files_show($options)
      * $options[0] : Category
      * $options[1] : Sort order - datesub | counter
      * $options[2] : Number of files to display
-     * $oprions[3] : bool TRUE to link to the file download, FALSE to link to the article
+     * $oprions[3] : bool TRUE to link to the file download, FALSE to link to the article.
      */
 
     $block = [];
@@ -45,11 +42,11 @@ function publisher_latest_files_show($options)
     foreach ($filesObj as $fileObj) {
         $aFile = [];
         $aFile['link'] = $directDownload ? $fileObj->getFileLink() : $fileObj->getItemLink();
-        if ($sort === 'datesub') {
+        if ('datesub' === $sort) {
             $aFile['new'] = $fileObj->datesub();
-        } elseif ($sort === 'counter') {
+        } elseif ('counter' === $sort) {
             $aFile['new'] = $fileObj->getVar('counter');
-        } elseif ($sort === 'weight') {
+        } elseif ('weight' === $sort) {
             $aFile['new'] = $fileObj->getVar('weight');
         }
         $block['files'][] = $aFile;

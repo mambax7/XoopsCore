@@ -13,15 +13,13 @@ use Xoops\Core\Kernel\Criteria;
 use Xoops\Core\Kernel\CriteriaCompo;
 
 /**
- * Blocks functions
+ * Blocks functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 function b_system_user_show()
 {
     $xoops = Xoops::getInstance();
@@ -40,7 +38,7 @@ function b_system_user_show()
 
         if (is_array($menu) && !empty($menu)) {
             $block['modules'][$i]['name'] = $menu['name'];
-            $block['modules'][$i]['link'] = $xoops->url('modules/' . $dirname . '/' . $menu['link']);
+            $block['modules'][$i]['link'] = $xoops->url('modules/'.$dirname.'/'.$menu['link']);
             $block['modules'][$i]['image'] = $menu['image'];
             $block['modules'][$i]['icon'] = 'glyphicon glyphicon-none';
             $block['modules'][$i]['dirname'] = $dirname;
@@ -54,7 +52,7 @@ function b_system_user_show()
                         $block['modules'][$i]['sublinks'][] = [
                             'name' => $sublink['name'],
                             'title' => $sublink['name'],
-                            'url' => $xoops->url('modules/' . $dirname . '/' . $sublink['url']),
+                            'url' => $xoops->url('modules/'.$dirname.'/'.$sublink['url']),
                         ];
                     }
                 }
@@ -66,7 +64,7 @@ function b_system_user_show()
     // View Account
     array_unshift($block['modules'], [
         'name' => XoopsLocale::VIEW_ACCOUNT,
-        'link' => $xoops->url('userinfo.php?uid=' . $xoops->user->getVar('uid')),
+        'link' => $xoops->url('userinfo.php?uid='.$xoops->user->getVar('uid')),
         'icon' => 'glyphicon glyphicon-user',
         'title' => XoopsLocale::VIEW_ACCOUNT,
     ]);
@@ -99,7 +97,7 @@ function b_system_user_show()
     $name = XoopsLocale::INBOX;
     $class = '';
     if ($pm_count = $pm_handler->getCount($criteria)) {
-        $name = XoopsLocale::INBOX . ' <span class="badge">' . $pm_count . '</span>';
+        $name = XoopsLocale::INBOX.' <span class="badge">'.$pm_count.'</span>';
         //$class = 'text-info';
     }
 
@@ -120,5 +118,6 @@ function b_system_user_show()
     ]);
 
     $block['active_url'] = \Xoops\Core\HttpRequest::getInstance()->getUrl();
+
     return $block;
 }

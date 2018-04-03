@@ -15,7 +15,6 @@
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  */
-
 define('_MD_DEBUGBAR_DEBUG', 'Debug');
 define('_MD_DEBUGBAR_INCLUDED_FILES', 'Included files');
 define('_MD_DEBUGBAR_PHP_VERSION', 'PHP Version');

@@ -12,18 +12,17 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @since           2.4.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
 
 /**
- * Protector core preloads
+ * Protector core preloads.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -55,7 +54,7 @@ class ProtectorCorePreload extends PreloadItem
     public static function eventCoreClassDatabaseDatabasefactoryConnection($args)
     {
         // Protector class
-        require_once dirname(__DIR__) . '/class/protector.php';
+        require_once dirname(__DIR__).'/class/protector.php';
 
         // Protector object
         $protector = Protector::getInstance();

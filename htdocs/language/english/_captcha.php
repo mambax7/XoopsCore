@@ -16,7 +16,7 @@
 // For text mode
 //define('_CAPTCHA_RULE_TEXT', 'Input the result from the expression');
 
-/**
+/*
  * Error defines
  */
 //define('_CAPTCHA_LOADFILEERROR', 'Error: Could not load file %u in file %s at line %s. ');

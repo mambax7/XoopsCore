@@ -15,7 +15,6 @@
  * @author          Laurent JEN (aka DuGris)
  * @version         $Id$
  */
-
 class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
     /**
@@ -28,6 +27,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('status', 2));
         $criteria->add(new Criteria('uid', (int) $uid));
+
         return Publisher::getInstance()->getItemHandler()->getCount($criteria);
     }
 
@@ -46,11 +46,12 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
             $ret['name'] = _MI_PUBLISHER_WAITING;
             $ret['link'] = $publisher->url('admin/item.php');
         }
+
         return $ret;
     }
 
     /**
-     * Used to populate backend
+     * Used to populate backend.
      *
      * @param int $limit : Number of item for backend
      *                   Expects an array containing:
@@ -71,7 +72,7 @@ class PublisherSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      * Expects an array containing:
      *    name  : Name for the Link
      *    link  : Link relative to module
-     *    image : Url of image to display, please use 16px*16px image
+     *    image : Url of image to display, please use 16px*16px image.
      *
      * @return array
      */

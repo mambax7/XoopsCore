@@ -31,7 +31,7 @@ return [
     // set to true to disable shortcode processing in theme
     //'disable_theme_shortcodes' => true,
 
-    /** XOOPS admin security warnings
+    /* XOOPS admin security warnings
      *
      * <ul>Display admin security warnings:
      *  <li> 0 - Disabled</li>

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class XoopsCacheMemcacheTest extends \PHPUnit\Framework\TestCase
 {

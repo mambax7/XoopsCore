@@ -10,19 +10,17 @@
 */
 
 /**
- * XOOPS Editor usage guide
+ * XOOPS Editor usage guide.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      xoopseditor
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
 
 /**
- * Edit form with selected editor
+ * Edit form with selected editor.
  */
 $xoops = Xoops::getInstance();
 $sample_form = new Xoops\Form\ThemeForm('', 'sample_form', 'action.php');
@@ -49,7 +47,6 @@ if (!empty($editor)) {
     $options['cols'] = 60; // default value = 50
     $options['width'] = '100%'; // default value = 100%
     $options['height'] = '400px'; // default value = 400px
-
 
     // "textarea": if the selected editor with name of $editor can not be created, the editor "textarea" will be used
     // if no $onFailure is set, then the first available editor will be used

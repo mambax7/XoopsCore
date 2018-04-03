@@ -14,22 +14,21 @@ namespace Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * Abstract class for sanitizer filters
+ * Abstract class for sanitizer filters.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Goghs Cheng (http://www.eqiao.com, http://www.devbeez.com/)
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class FilterAbstract extends SanitizerComponent
 {
     /**
-     * apply filter to a text string
+     * apply filter to a text string.
      *
      * @param string $text string to filter
      *

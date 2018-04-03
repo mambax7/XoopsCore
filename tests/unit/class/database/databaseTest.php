@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
 class XoopsDatabaseTestInstance extends XoopsDatabase
 {
@@ -131,7 +131,7 @@ class XoopsDatabaseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($prefix, $x);
         $table = 'table';
         $x = $instance->prefix($table);
-        $tmp = $prefix . '_' . $table;
+        $tmp = $prefix.'_'.$table;
         $this->assertSame($tmp, $x);
     }
 }

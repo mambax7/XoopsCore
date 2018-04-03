@@ -15,13 +15,13 @@
 class XoopsFormDateTime extends Xoops\Form\DateTimeSelect
 {
     /**
-     * Note change in arguments, removed size
+     * Note change in arguments, removed size.
      *
-     * @param string  $caption  form field caption
-     * @param string  $name     form variable name
-     * @param integer $size     size of date select
-     * @param integer $value    unix timestamp, defaults to now
-     * @param mixed   $showtime control display of date and time elements
+     * @param string $caption  form field caption
+     * @param string $name     form variable name
+     * @param int    $size     size of date select
+     * @param int    $value    unix timestamp, defaults to now
+     * @param mixed  $showtime control display of date and time elements
      *                           SHOW_BOTH, true  - show both date and time selectors
      *                           SHOW_DATE, false - only show date selector
      *                           SHOW_TIME        - only show time selector

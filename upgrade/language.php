@@ -1,6 +1,6 @@
 <?php
 /**
- * Language handler
+ * Language handler.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,14 +11,13 @@
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         upgrader
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
 
 /**
- * phpMyAdmin Language Loading File
+ * phpMyAdmin Language Loading File.
  */
 
 /**
@@ -96,14 +95,12 @@ $available_languages = [
     'zh-cn' => ['zh[-_]cn|chinese simplified', 'schinese'],
 ];
 
-
 /**
  * Analyzes some PHP environment variables to find the most probable language
- * that should be used
+ * that should be used.
  *
  * @global array    the list of available translations
  * @global string   the retained translation keyword
- * @access private
  */
 function xoops_analyzeLanguage($str = '', $envType = '')
 {
@@ -113,15 +110,17 @@ function xoops_analyzeLanguage($str = '', $envType = '')
         // $envType =  1 for the 'HTTP_ACCEPT_LANGUAGE' environment variable,
         //             2 for the 'HTTP_USER_AGENT' one
         $expr = $value[0];
-        if (strpos($expr, '[-_]') === false) {
+        if (false === strpos($expr, '[-_]')) {
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
-        if (($envType === 1 && eregi('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$', $str))
-            || ($envType === 2 && eregi('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
+        if ((1 === $envType && eregi('^('.$expr.')(;q=[0-9]\\.[0-9])?$', $str))
+            || (2 === $envType && eregi('(\(|\[|;[[:space:]])('.$expr.')(;|\]|\))', $str))) {
             $lang = $key;
+
             break;
         }
     }
+
     return $lang;
 }
 
@@ -160,5 +159,6 @@ function xoops_detectLanguage()
     if (!empty($lang)) {
         $xoops_lang = $available_languages[$lang][1];
     }
+
     return $xoops_lang;
 }

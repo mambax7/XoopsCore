@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class RpcMemberHandlerTest extends \PHPUnit\Framework\TestCase
 {

@@ -12,7 +12,7 @@
 namespace Xoops\Core\Locale;
 
 /**
- * Xoops\Core\Locale\LegacyCodes - locale code to/from XOOPS legacy language directory names
+ * Xoops\Core\Locale\LegacyCodes - locale code to/from XOOPS legacy language directory names.
  *
  * XOOPS 2.5.x and earlier used language defines for translations. These defines were stored in
  * in a directory structure in this form, where modulename is the module's "dirname" and
@@ -30,11 +30,10 @@ namespace Xoops\Core\Locale;
  * language name, so that language files in legacy modules can be loaded, if needed.
  *
  * @category  Xoops\Core\Locale\LegacyCodes
- * @package   Xoops
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class LegacyCodes
 {
@@ -76,8 +75,8 @@ class LegacyCodes
     private static $codesByName = null;
 
     /**
-     * Get legacy language directory name for a locale code
-     * @param string $localeCode locale code
+     * Get legacy language directory name for a locale code.
+     * @param  string   $localeCode locale code
      * @return string[] array of possible language directory names, empty if no mapping exists
      */
     public static function getLegacyName($localeCode)
@@ -104,8 +103,8 @@ class LegacyCodes
     }
 
     /**
-     * Get locale code representing a legacy language directory name
-     * @param string $languageDir legacy language directory name
+     * Get locale code representing a legacy language directory name.
+     * @param  string      $languageDir legacy language directory name
      * @return string|null locale code or null if no mapping exists
      */
     public static function getLocaleCode($languageDir)

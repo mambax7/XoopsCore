@@ -15,14 +15,11 @@ use Xoops\Core\XoopsTpl;
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Action
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Sina Asghari (AKA stranger) <stranger@impresscms.ir>
  */
-
-include_once __DIR__ . '/header.php';
+include_once __DIR__.'/header.php';
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
@@ -36,7 +33,7 @@ $myts = \Xoops\Core\Text\Sanitizer::getInstance();
 $itemid = Request::getInt('itemid');
 $item_page_id = Request::getInt('page', -1);
 
-if ($itemid === 0) {
+if (0 === $itemid) {
     $xoops->redirect('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
@@ -70,6 +67,6 @@ $xoops->service('htmltopdf')->setTitle($itemObj->getVar('title'));
 $xoops->service('htmltopdf')->setKeywords($itemObj->getVar('meta_keywords'));
 $xoops->service('htmltopdf')->setSubject($categoryObj->getVar('name'));
 $xoops->service('htmltopdf')->addHtml($content);
-$name = $itemObj->getVar('short_url') . '.pdf';
+$name = $itemObj->getVar('short_url').'.pdf';
 $xoops->service('htmltopdf')->outputPdfInline($name);
 exit();

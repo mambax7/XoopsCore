@@ -15,14 +15,13 @@ use Xoops\Core\Service\Response;
 use Xoops\Html\Img;
 
 /**
- * Thumbnail provider for service manager
+ * Thumbnail provider for service manager.
  *
  * @category  ServiceProvider
- * @package   ThumbsProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ThumbsProvider extends AbstractContract implements ThumbnailInterface
 {
@@ -41,7 +40,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -51,12 +50,12 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
     }
 
     /**
-     * getImgUrl - get URL to a thumbnail of the supplied image
+     * getImgUrl - get URL to a thumbnail of the supplied image.
      *
      * @param Response $response \Xoops\Core\Service\Response object
      * @param string   $imgPath  path to image to be thumbed
-     * @param integer  $width    maximum width of thumbnail in pixels, 0 to use default
-     * @param integer  $height   maximum height of thumbnail in pixels, 0 to use default
+     * @param int      $width    maximum width of thumbnail in pixels, 0 to use default
+     * @param int      $height   maximum height of thumbnail in pixels, 0 to use default
      */
     public function getImgUrl(Response $response, $imgPath, $width = 0, $height = 0)
     {
@@ -64,12 +63,12 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
     }
 
     /**
-     * getImgTag - get a full HTML img tag to display a thumbnail of the supplied image
+     * getImgTag - get a full HTML img tag to display a thumbnail of the supplied image.
      *
      * @param Response $response   \Xoops\Core\Service\Response object
      * @param string   $imgPath    path to image to be thumbed
-     * @param integer  $width      maximum width of thumbnail in pixels, 0 to use default
-     * @param integer  $height     maximum height of thumbnail in pixels, 0 to use default
+     * @param int      $width      maximum width of thumbnail in pixels, 0 to use default
+     * @param int      $height     maximum height of thumbnail in pixels, 0 to use default
      * @param array    $attributes array of attribute name => value pairs for img tag
      */
     public function getImgTag(
@@ -90,11 +89,11 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
     }
 
     /**
-     * getThumbnailUrl
+     * getThumbnailUrl.
      *
-     * @param string  $imgPath path to image to be thumbed
-     * @param integer $width   maximum width of thumbnail in pixels, 0 to use default
-     * @param integer $height  maximum height of thumbnail in pixels, 0 to use default
+     * @param string $imgPath path to image to be thumbed
+     * @param int    $width   maximum width of thumbnail in pixels, 0 to use default
+     * @param int    $height  maximum height of thumbnail in pixels, 0 to use default
      *
      * @return string URL to obtain QR Code image of $qrText
      */
@@ -106,7 +105,7 @@ class ThumbsProvider extends AbstractContract implements ThumbnailInterface
 
         $originalMtime = filemtime($xoops->path($imgPath));
         $thumbMtime = filemtime($xoops->path($thumbPath));
-        if ($thumbMtime === false || $originalMtime > $thumbMtime) {
+        if (false === $thumbMtime || $originalMtime > $thumbMtime) {
             $params = [
                 'img' => (string) $imgPath,
             ];

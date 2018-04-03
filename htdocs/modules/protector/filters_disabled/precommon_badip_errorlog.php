@@ -10,15 +10,13 @@
 */
 
 /**
- * Protector
+ * Protector.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         protector
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class protector_precommon_badip_errorlog extends ProtectorFilterAbstract
 {
     public function execute()
@@ -28,7 +26,7 @@ class protector_precommon_badip_errorlog extends ProtectorFilterAbstract
         if ($protector->ip_matched_info) {
             printf(_MD_PROTECTOR_FMT_JAILINFO, date(_MD_PROTECTOR_FMT_JAILTIME, $protector->ip_matched_info));
         }
-        error_log('Protector: badip ' . @$_SERVER['REMOTE_ADDR'], 0);
+        error_log('Protector: badip '.@$_SERVER['REMOTE_ADDR'], 0);
         exit;
     }
 }

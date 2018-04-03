@@ -12,7 +12,6 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -132,17 +131,17 @@ class MenusBuilder
     {
         //get the currentpage
         $sel = [];
-        $query_string = $_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : '';
-        $self = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $query_string;
+        $query_string = $_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '';
+        $self = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].$query_string;
 
         //set a default page in case we don't get matches
-        $default = \XoopsBaseConfig::get('url') . '/index.php';
+        $default = \XoopsBaseConfig::get('url').'/index.php';
 
         //get all matching links
         foreach ($this->output as $idx => $menu) {
             $selected = 0;
             if (!empty($menu['link'])) {
-                $selected = (stristr($self, $menu['link']) !== false) ? 1 : $selected;
+                $selected = (false !== stristr($self, $menu['link'])) ? 1 : $selected;
             }
             $selected = ($menu['link'] === $self) ? 1 : $selected;
             $selected = ($menu['link'] === $default) ? 1 : $selected;

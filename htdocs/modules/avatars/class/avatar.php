@@ -19,18 +19,15 @@ use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Avatars
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @version         $Id$
  */
 
 /**
- * A Avatar
+ * A Avatar.
  *
  * @author Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000 XOOPS.org
- *
- * @package kernel
  */
 class AvatarsAvatar extends XoopsObject
 {
@@ -40,7 +37,7 @@ class AvatarsAvatar extends XoopsObject
     private $userCount;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -55,7 +52,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_id
+     * get avatar_id.
      *
      * @param string $format return format code
      *
@@ -67,7 +64,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_id
+     * get avatar_id.
      *
      * @param string $format return format code
      *
@@ -79,7 +76,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_file
+     * get avatar_file.
      *
      * @param string $format return format code
      *
@@ -91,7 +88,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_name
+     * get avatar_name.
      *
      * @param string $format return format code
      *
@@ -103,7 +100,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_mimetype
+     * get avatar_mimetype.
      *
      * @param string $format return format code
      *
@@ -115,7 +112,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_created
+     * get avatar_created.
      *
      * @param string $format return format code
      *
@@ -127,7 +124,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_display
+     * get avatar_display.
      *
      * @param string $format return format code
      *
@@ -139,7 +136,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_weight
+     * get avatar_weight.
      *
      * @param string $format return format code
      *
@@ -151,7 +148,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * get avatar_type
+     * get avatar_type.
      *
      * @param string $format return format code
      *
@@ -163,7 +160,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * Set User Count
+     * Set User Count.
      *
      * @param int $value user count
      */
@@ -173,7 +170,7 @@ class AvatarsAvatar extends XoopsObject
     }
 
     /**
-     * Get User Count
+     * Get User Count.
      *
      * @return int
      */
@@ -186,12 +183,11 @@ class AvatarsAvatar extends XoopsObject
 /**
  * @author  Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000 XOOPS.org
- * @package kernel
  */
 class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Connection|null $db {@link Connection}
      */
@@ -201,7 +197,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Fetch a row of objects from the database
+     * Fetch a row of objects from the database.
      *
      * @param null|CriteriaElement $criteria  criteria object
      * @param bool                 $id_as_key if true, use avatar_id as array key
@@ -211,13 +207,13 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
     public function getObjectsWithCount(CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret = [];
-        if ($criteria === null) {
+        if (null === $criteria) {
             $criteria = new Criteria('');
         }
         $criteria->setGroupby('a.avatar_id');
         $criteria->setSort('avatar_weight, avatar_id');
         $qb = $this->db2->createXoopsQueryBuilder();
-        $qb ->select('a.*', 'COUNT(u.user_id) AS count')
+        $qb->select('a.*', 'COUNT(u.user_id) AS count')
             ->fromPrefix('avatars_avatar', 'a')
             ->leftJoinPrefix('l', 'avatars_user_link', 'u', 'u.avatar_id=a.avatar_id');
         $criteria->renderQb($qb);
@@ -236,11 +232,12 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
             }
             unset($avatar);
         }
+
         return $ret;
     }
 
     /**
-     * Add user to avatars_user_link
+     * Add user to avatars_user_link.
      *
      * @param int $avatar_id avatar id
      * @param int $user_id   user id
@@ -256,7 +253,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
         }
 
         $qb = $this->db2->createXoopsQueryBuilder();
-        $qb ->deletePrefix('avatars_user_link', 'l')
+        $qb->deletePrefix('avatars_user_link', 'l')
             ->where('l.user_id = :uid')
             ->setParameter(':uid', $user_id, \PDO::PARAM_INT);
         $result = $qb->execute();
@@ -265,7 +262,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
         }
 
         $qb = $this->db2->createXoopsQueryBuilder();
-        $qb ->insertPrefix('avatars_user_link')
+        $qb->insertPrefix('avatars_user_link')
             ->values(
                 [
                     'avatar_id' => ':aid',
@@ -283,7 +280,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * getUser - get avatars_user_link for an avatar
+     * getUser - get avatars_user_link for an avatar.
      *
      * @param AvatarsAvatar $avatar avatar object
      *
@@ -293,7 +290,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
     {
         $ret = [];
         $qb = $this->db2->createXoopsQueryBuilder();
-        $qb ->select('user_id')
+        $qb->select('user_id')
             ->fromPrefix('avatars_user_link', 'l')
             ->where('l.avatar_id = :bid')
             ->setParameter(':bid', $avatar->getVar('avatar_id'), \PDO::PARAM_INT);
@@ -304,11 +301,12 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
             $ret[] = $myrow['user_id'];
         }
+
         return $ret;
     }
 
     /**
-     * Get a list of Avatars
+     * Get a list of Avatars.
      *
      * @param string $avatar_type    'C' for custom, 'S' for system
      * @param bool   $avatar_display display avatar
@@ -319,7 +317,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
     {
         $criteria = new CriteriaCompo();
         if (isset($avatar_type)) {
-            $avatar_type = ($avatar_type === 'C') ? 'C' : 'S';
+            $avatar_type = ('C' === $avatar_type) ? 'C' : 'S';
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
@@ -332,6 +330,7 @@ class AvatarsAvatarHandler extends XoopsPersistableObjectHandler
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
         }
+
         return $ret;
     }
 }

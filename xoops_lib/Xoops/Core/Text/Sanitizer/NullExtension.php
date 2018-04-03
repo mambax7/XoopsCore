@@ -14,19 +14,18 @@ namespace Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Text\Sanitizer;
 
 /**
- * A null Text/Sanitizer extension that does nothing
+ * A null Text/Sanitizer extension that does nothing.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class NullExtension extends ExtensionAbstract
 {
     /**
-     * Register extension with the supplied sanitizer instance
+     * Register extension with the supplied sanitizer instance.
      */
     public function registerExtensionProcessing()
     {

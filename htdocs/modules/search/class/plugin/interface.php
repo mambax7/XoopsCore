@@ -14,11 +14,10 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
 interface SearchPluginInterface
 {
     /**
-     * search method
+     * search method.
      *
      * @param string[] $queries search term strings
      * @param string   $andor   $queries relation, either 'AND' or 'OR'

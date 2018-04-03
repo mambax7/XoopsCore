@@ -26,13 +26,11 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/header.php';
+include_once dirname(__DIR__).'/header.php';
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
@@ -54,7 +52,7 @@ $module_id = $publisher->getModule()->getVar('mid');
 
 //Checking permissions
 if (!$publisher->getConfig('perm_rating') || !$gperm_handler->checkRight('global', _PUBLISHER_RATE, $groups, $module_id)) {
-    $output = "unit_long${itemid}|" . XoopsLocale::E_NO_ACCESS_PERMISSION . "\n";
+    $output = "unit_long${itemid}|".XoopsLocale::E_NO_ACCESS_PERMISSION."\n";
     echo $output;
     exit();
 }
@@ -63,7 +61,7 @@ $rating_unitwidth = 30;
 $units = 5;
 
 if ($rating > 5 || $rating < 1) {
-    $output = "unit_long${itemid}|" . _MD_PUBLISHER_VOTE_BAD . "\n";
+    $output = "unit_long${itemid}|"._MD_PUBLISHER_VOTE_BAD."\n";
     echo $output;
     exit();
 }
@@ -85,7 +83,7 @@ foreach ($ratingObjs as $ratingObj) {
 }
 
 if ($voted) {
-    $output = "unit_long${itemid}|" . _MD_PUBLISHER_VOTE_ALREADY . "\n";
+    $output = "unit_long${itemid}|"._MD_PUBLISHER_VOTE_ALREADY."\n";
     echo $output;
     exit();
 }
@@ -104,13 +102,13 @@ $current_rating += $rating;
 $publisher->getItemHandler()->updateAll('rating', number_format($current_rating / $count, 4), $criteria, true);
 $publisher->getItemHandler()->updateAll('votes', $count, $criteria, true);
 
-$tense = $count === 1 ? _MD_PUBLISHER_VOTE_lVOTE : _MD_PUBLISHER_VOTE_lVOTES; //plural form votes/vote
+$tense = 1 === $count ? _MD_PUBLISHER_VOTE_lVOTE : _MD_PUBLISHER_VOTE_lVOTES; //plural form votes/vote
 
 // $new_back is what gets 'drawn' on your page after a successful 'AJAX/Javascript' vote
 $new_back = [];
 
-$new_back[] .= '<div class="publisher_unit-rating" style="width:' . $units * $rating_unitwidth . 'px;">';
-$new_back[] .= '<div class="publisher_current-rating" style="width:' . @number_format($current_rating / $count, 2) * $rating_unitwidth . 'px;">' . _MD_PUBLISHER_VOTE_RATING . '</div>';
+$new_back[] .= '<div class="publisher_unit-rating" style="width:'.$units * $rating_unitwidth.'px;">';
+$new_back[] .= '<div class="publisher_current-rating" style="width:'.@number_format($current_rating / $count, 2) * $rating_unitwidth.'px;">'._MD_PUBLISHER_VOTE_RATING.'</div>';
 $new_back[] .= '<div class="publisher_r1-unit">1</div>';
 $new_back[] .= '<div class="publisher_r2-unit">2</div>';
 $new_back[] .= '<div class="publisher_r3-unit">3</div>';
@@ -122,8 +120,8 @@ $new_back[] .= '<div class="publisher_r8-unit">8</div>';
 $new_back[] .= '<div class="publisher_r9-unit">9</div>';
 $new_back[] .= '<div class="publisher_r10-unit">10</div>';
 $new_back[] .= '</div>';
-$new_back[] .= '<div class="publisher_voted">' . _MD_PUBLISHER_VOTE_RATING . ' <strong>' . @number_format($current_rating / $count, 2) . '</strong>/' . $units . ' (' . $count . ' ' . $tense . ')</div>';
-$new_back[] .= '<div class="publisher_thanks">' . _MD_PUBLISHER_VOTE_THANKS . '</div>';
+$new_back[] .= '<div class="publisher_voted">'._MD_PUBLISHER_VOTE_RATING.' <strong>'.@number_format($current_rating / $count, 2).'</strong>/'.$units.' ('.$count.' '.$tense.')</div>';
+$new_back[] .= '<div class="publisher_thanks">'._MD_PUBLISHER_VOTE_THANKS.'</div>';
 
 $allnewback = join("\n", $new_back);
 

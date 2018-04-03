@@ -5,11 +5,11 @@
 <html>
 <head>
     <title><?php echo _XOOPS_UPGRADE; ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _UPGRADE_CHARSET ?>" />
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _UPGRADE_CHARSET; ?>" />
     <link rel="stylesheet" type="text/css" media="all" href="style.css" />
     <?php
-        if (file_exists('language/' . $upgrade_language . '/style.css')) {
-            echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $upgrade_language . '/style.css" />';
+        if (file_exists('language/'.$upgrade_language.'/style.css')) {
+            echo '<link rel="stylesheet" type="text/css" media="all" href="language/'.$upgrade_language.'/style.css" />';
         }
     ?>
 </head>

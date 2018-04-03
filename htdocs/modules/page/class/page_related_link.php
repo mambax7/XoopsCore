@@ -14,20 +14,18 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
-
 class PagePage_related_link extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -44,6 +42,7 @@ class PagePage_related_link extends XoopsObject
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $ret = parent::getValues($keys, $format, $maxDepth);
+
         return $ret;
     }
 
@@ -51,6 +50,7 @@ class PagePage_related_link extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         $new_id = $xoopsDB->getInsertId();
+
         return $new_id;
     }
 }
@@ -72,6 +72,7 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
         $criteria->add(new Criteria('link_related_id', $related_id));
         $criteria->setSort($sort);
         $criteria->setOrder($order);
+
         return parent::getByLink($criteria, null, false);
     }
 
@@ -87,6 +88,7 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
         foreach ($result as $k) {
             $ret[] = $k['link_content_id'];
         }
+
         return $ret;
     }
 
@@ -96,13 +98,15 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
         foreach ($result as $k) {
             $ret[] = $k['link_content_id'];
         }
+
         return $ret;
     }
 
     public function DeleteByIds($links_ids)
     {
         $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('link_id', '(' . implode(', ', $links_ids) . ')', 'IN'));
+        $criteria->add(new Criteria('link_id', '('.implode(', ', $links_ids).')', 'IN'));
+
         return parent::deleteAll($criteria);
     }
 
@@ -119,7 +123,7 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
             // create button prev / next
             $keys = array_keys($ret['related_links']);
             foreach ($keys as $k => $i) {
-                if ($content_id === $ret['related_links'][$i]['content_id']) {
+                if ($ret['related_links'][$i]['content_id'] === $content_id) {
                     if (($k - 1) >= 0) {
                         $ret['prev_id'] = $ret['related_links'][$keys[($k - 1)]]['content_id'];
                         $ret['prev_title'] = $ret['related_links'][$keys[($k - 1)]]['content_title'];
@@ -128,11 +132,14 @@ class PagePage_related_linkHandler extends XoopsPersistableObjectHandler
                         $ret['next_id'] = $ret['related_links'][$keys[($k + 1)]]['content_id'];
                         $ret['next_title'] = $ret['related_links'][$keys[($k + 1)]]['content_title'];
                     }
+
                     break;
                 }
             }
+
             return $ret;
         }
+
         return [];
     }
 }

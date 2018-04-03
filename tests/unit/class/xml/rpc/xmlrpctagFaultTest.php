@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class XoopsXmlRpcFaultTest extends \PHPUnit\Framework\TestCase
 {
@@ -23,11 +23,11 @@ class XoopsXmlRpcFaultTest extends \PHPUnit\Framework\TestCase
 
         $result = $instance->render();
         $expected = '<fault><value><struct><member><name>faultCode</name><value>'
-            . $code
-            . '</value></member><member><name>faultString</name><value>'
-            . 'Method response error' . "\n"
-            . $instance->encode($str)
-            . '</value></member></struct></value></fault>';
+            .$code
+            .'</value></member><member><name>faultString</name><value>'
+            .'Method response error'."\n"
+            .$instance->encode($str)
+            .'</value></member></struct></value></fault>';
 
         $this->assertSame($expected, $result);
     }

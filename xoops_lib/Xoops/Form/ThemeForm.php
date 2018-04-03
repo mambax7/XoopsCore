@@ -12,16 +12,15 @@
 namespace Xoops\Form;
 
 /**
- * ThemeForm - Form that will output as a theme-enabled HTML table
+ * ThemeForm - Form that will output as a theme-enabled HTML table.
  *
  * Also adds JavaScript to validate required fields
  *
  * @category  Xoops\Form\ThemeForm
- * @package   Xoops\Form
  * @author    Xoops Team
  * @copyright 2001-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class ThemeForm extends Form
 {
@@ -33,14 +32,14 @@ class ThemeForm extends Form
      */
     public function insertBreak($extra = '', $class = '')
     {
-        $class = ($class !== '' ? ' class="' . $class . '"' : ' class="break"');
+        $class = ('' !== $class ? ' class="'.$class.'"' : ' class="break"');
         // Fix for $extra tag not showing
         if ($extra) {
-            $value = '<div' . $class . '>' . $extra . '</div>';
+            $value = '<div'.$class.'>'.$extra.'</div>';
             $ele = new Raw($value);
             $this->addElement($ele);
         } else {
-            $value = '<div' . $class . '>&nbsp;</div>';
+            $value = '<div'.$class.'>&nbsp;</div>';
             $ele = new Raw($value);
             $this->addElement($ele);
         }
@@ -60,18 +59,22 @@ class ThemeForm extends Form
             case 'horizontal':
             default:
                 $xoops->tpl()->assign('type', 'horizontal');
+
                 break;
 
             case 'vertical':
                 $xoops->tpl()->assign('type', 'vertical');
+
                 break;
 
             case 'inline':
                 $xoops->tpl()->assign('type', 'inline');
+
                 break;
 
             case 'personalized':
                 $xoops->tpl()->assign('type', 'personalized');
+
                 break;
         }
         $xoops->tpl()->assign('title', $this->getTitle());
@@ -93,13 +96,14 @@ class ThemeForm extends Form
                 $xoops->tpl()->appendByRef('xo_input', $input);
                 unset($input);
             } else {
-                $hidden .= $ele->render() . "\n";
+                $hidden .= $ele->render()."\n";
             }
         }
         $xoops->tpl()->assign('hidden', $hidden);
         $xoops->tpl()->assign('validationJS', $this->renderValidationJS(true));
         $ret = $xoops->tpl()->fetch('module:system/system_form.tpl');
         $xoops->tpl()->clearAssign('xo_input');
+
         return $ret;
     }
 }

@@ -4,7 +4,7 @@ namespace Xoops\Core\Handler\Scheme;
 
 use Xoops\Core\Handler\Factory;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 class LegacyModuleTest extends \PHPUnit\Framework\TestCase
 {

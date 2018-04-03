@@ -14,19 +14,18 @@ namespace Xmf\Jwt;
 use Xmf\Key\KeyAbstract;
 
 /**
- * Build a token
+ * Build a token.
  *
  * @category  Xmf\Jwt\TokenFactory
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class TokenFactory
 {
     /**
-     * Create a JSON Web Token string
+     * Create a JSON Web Token string.
      *
      * @param KeyAbstract|string $key              the key to use to sign the token, or name of key to build
      * @param array|\Traversable $payload          traversable set of claims, claim => value
@@ -43,6 +42,7 @@ class TokenFactory
     {
         $key = ($key instanceof KeyAbstract) ? $key : KeyFactory::build($key);
         $token = new JsonWebToken($key);
+
         return $token->create($payload, $expirationOffset);
     }
 }

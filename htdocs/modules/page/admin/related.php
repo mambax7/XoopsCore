@@ -12,16 +12,15 @@
 use Xmf\Request;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Call header
 $xoops->header('admin:page/page_admin_related.tpl');
@@ -30,7 +29,6 @@ $admin_page = new \Xoops\Module\Admin();
 $admin_page->renderNavigation('related.php');
 
 switch ($op) {
-
     case 'list':
     default:
         $admin_page->addTips(PageLocale::RELATED_TIPS);
@@ -53,6 +51,7 @@ switch ($op) {
         } else {
             $xoops->tpl()->assign('error_message', PageLocale::E_NO_RELATED);
         }
+
         break;
 
     case 'new':
@@ -65,6 +64,7 @@ switch ($op) {
             $form = $helper->getForm($obj, 'page_related');
             $xoops->tpl()->assign('form', $form->render());
         }
+
         break;
 
     case 'edit':
@@ -76,6 +76,7 @@ switch ($op) {
         $obj = $related_Handler->get($related_id);
         $form = $helper->getForm($obj, 'page_related');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'save':
@@ -96,23 +97,23 @@ switch ($op) {
         $obj->setVar('related_navigation', Request::getInt('related_navigation', 1));
 
         if ($related_newid = $related_Handler->insert($obj)) {
-            $related_id = $related_id !== 0 ? $related_id : $related_newid;
+            $related_id = 0 !== $related_id ? $related_id : $related_newid;
             $datas = Request::getArray('datas');
             $datas_exists = $link_Handler->getContentByRelated($related_newid);
             $datas_delete = array_diff(array_values($datas_exists), $datas);
             $datas_add = array_diff($datas, array_values($datas_exists));
 
             // delete
-            if (count($datas_delete) !== 0) {
+            if (0 !== count($datas_delete)) {
                 $criteria = $criteria = new CriteriaCompo();
                 $criteria->add(new Criteria('link_related_id', $related_id));
-                $criteria->add(new Criteria('link_content_id', '(' . implode(', ', $datas_delete) . ')', 'IN'));
+                $criteria->add(new Criteria('link_content_id', '('.implode(', ', $datas_delete).')', 'IN'));
                 $links_ids = $link_Handler->getIds($criteria);
                 if (!$link_Handler->DeleteByIds($links_ids)) {
                 }
             }
             // Add
-            if (count($datas_add) !== 0) {
+            if (0 !== count($datas_add)) {
                 foreach ($datas_add as $weight => $content_id) {
                     $obj = $link_Handler->create();
                     $obj->setVar('link_related_id', $related_id);
@@ -123,7 +124,7 @@ switch ($op) {
                 }
             }
             //update
-            if (count($datas) !== 0) {
+            if (0 !== count($datas)) {
                 foreach ($datas as $weight => $content_id) {
                     $criteria = $criteria = new CriteriaCompo();
                     $criteria->add(new Criteria('link_related_id', $related_id));
@@ -143,6 +144,7 @@ switch ($op) {
         }
         $form = $helper->getForm($obj, 'page_related');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
@@ -154,7 +156,7 @@ switch ($op) {
         $ok = Request::getInt('ok', 0);
 
         $obj = $related_Handler->get($related_id);
-        if ($ok === 1) {
+        if (1 === $ok) {
             if (!$xoops->security()->check()) {
                 $xoops->redirect('related.php', 3, implode(',', $xoops->security()->getErrors()));
             }
@@ -172,9 +174,10 @@ switch ($op) {
                 ['ok' => 1, 'related_id' => $related_id, 'op' => 'delete'],
                 'related.php',
                 XoopsLocale::Q_ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ITEM
-                . '<br /><span class="red">' . $obj->getvar('related_name') . '<span>'
+                .'<br /><span class="red">'.$obj->getvar('related_name').'<span>'
             );
         }
+
         break;
 
     case 'update_status':
@@ -188,6 +191,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 
     case 'view':
@@ -201,6 +205,7 @@ switch ($op) {
             }
             echo $obj->getHtmlErrors();
         }
+
         break;
 }
 $xoops->footer();

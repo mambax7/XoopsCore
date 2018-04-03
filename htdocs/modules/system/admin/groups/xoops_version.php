@@ -10,15 +10,13 @@
 */
 
 /**
- * Groups Manager
+ * Groups Manager.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 $modversion['name'] = XoopsLocale::GROUPS;
 $modversion['version'] = '1.0';
 $modversion['description'] = SystemLocale::GROUPS_DESC;

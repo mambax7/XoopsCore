@@ -27,12 +27,11 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  * This depends on PrefixStripper to do a lot of the grunt work.
  *
  * @category  Xoops\Core\Database\Schema\RemovePrefixes
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class RemovePrefixes implements Visitor
@@ -40,7 +39,7 @@ class RemovePrefixes implements Visitor
     protected $newSchema;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -48,7 +47,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * return the generated Schema
+     * return the generated Schema.
      *
      * @return Schema the generated schema object
      */
@@ -58,7 +57,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * set list of tables to limit schema
+     * set list of tables to limit schema.
      *
      * If no list is specified, all tables will be included
      *
@@ -70,7 +69,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * Accept schema - not used in this context
+     * Accept schema - not used in this context.
      *
      * @param Schema $schema a schema object
      */
@@ -89,7 +88,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * accept a column in the schema - not used in this context
+     * accept a column in the schema - not used in this context.
      *
      * @param Table  $table  a table object to accept a column into
      * @param Column $column a column object to be accepted
@@ -99,7 +98,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * Accept a foreign key in the schema - not used in this context
+     * Accept a foreign key in the schema - not used in this context.
      *
      *
      * @param Table $localTable local table to have foreign key
@@ -109,7 +108,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * Accept an Index - not used in this context
+     * Accept an Index - not used in this context.
      *
      * @param Table $table indexed table
      * @param Index $index index to accept
@@ -119,7 +118,7 @@ class RemovePrefixes implements Visitor
     }
 
     /**
-     * Accept a sequence
+     * Accept a sequence.
      *
      * @param Sequence $sequence sequence to accept
      */

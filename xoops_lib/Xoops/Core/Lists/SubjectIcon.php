@@ -14,19 +14,18 @@ namespace Xoops\Core\Lists;
 use Xoops\Form\OptionElement;
 
 /**
- * ImageFiles - provide list of image file names from a directory
+ * ImageFiles - provide list of image file names from a directory.
  *
  * @category  Xoops\Core\Lists\ImageFiles
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SubjectIcon extends ListAbstract
 {
     /**
-     * gets list of image file names in a directory
+     * gets list of image file names in a directory.
      *
      * @param string $subDirectory subdirectory (deprecated)
      *
@@ -36,14 +35,14 @@ class SubjectIcon extends ListAbstract
     {
         $xoops = \Xoops::getInstance();
         $subDirectory = trim($subDirectory, '/');
-        $path = 'images/subject/' . $subDirectory;
-        $subjects = ImageFile::getList($xoops->path($path), $subDirectory . '/');
+        $path = 'images/subject/'.$subDirectory;
+        $subjects = ImageFile::getList($xoops->path($path), $subDirectory.'/');
 
         return $subjects;
     }
 
     /**
-     * add list to a Xoops\Form\OptionElement
+     * add list to a Xoops\Form\OptionElement.
      *
      * @param OptionElement $element      Form element to add options to
      * @param string        $subDirectory subdirectory (deprecated)
@@ -55,7 +54,7 @@ class SubjectIcon extends ListAbstract
         foreach (array_keys($subjects) as $name) {
             $element->addOption(
                 $name,
-                '<img src="' . $xoops->url('images/subject/') . $name . '" alt="' . $name . '" />'
+                '<img src="'.$xoops->url('images/subject/').$name.'" alt="'.$name.'" />'
             );
         }
     }

@@ -26,6 +26,7 @@ class SystemMainmenuPlugin implements MainmenuPluginInterface
             'link' => \Xoops::getInstance()->url(''),
             'icon' => 'glyphicon-home',
         ];
+
         return $ret;
     }
 }

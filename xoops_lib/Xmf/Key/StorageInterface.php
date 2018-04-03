@@ -12,31 +12,30 @@
 namespace Xmf\Key;
 
 /**
- * Xmf\Key\StorageInterface
+ * Xmf\Key\StorageInterface.
  *
  * load a database table
  *
  * @category  Xmf\Key\StorageInterface
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 interface StorageInterface
 {
     /**
-     * Save key data by name
+     * Save key data by name.
      *
      * @param string $name key name
      * @param string $data key data, serialized to string if required
      *
-     * @return boolean true if key saved, otherwise false
+     * @return bool true if key saved, otherwise false
      */
     public function save($name, $data);
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
@@ -45,20 +44,20 @@ interface StorageInterface
     public function fetch($name);
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
-     * @return boolean true if key exists, otherwise false
+     * @return bool true if key exists, otherwise false
      */
     public function exists($name);
 
     /**
-     * Delete a key
+     * Delete a key.
      *
      * @param string $name key name
      *
-     * @return boolean true if key deleted, otherwise false
+     * @return bool true if key deleted, otherwise false
      */
     public function delete($name);
 }

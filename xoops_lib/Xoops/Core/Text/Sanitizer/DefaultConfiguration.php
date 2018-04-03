@@ -14,14 +14,13 @@ namespace Xoops\Core\Text\Sanitizer;
 use Xoops\Core\Lists\File;
 
 /**
- * Derive default configuration for all sanitizer extensions
+ * Derive default configuration for all sanitizer extensions.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DefaultConfiguration extends ConfigurationAbstract
 {
@@ -34,7 +33,7 @@ class DefaultConfiguration extends ConfigurationAbstract
     protected $cacheKey = 'system/modules/sanitizer-defaults';
 
     /**
-     * Get defaults to initialize
+     * Get defaults to initialize.
      */
     public function __construct()
     {
@@ -50,24 +49,24 @@ class DefaultConfiguration extends ConfigurationAbstract
     }
 
     /**
-     * Ask each sanitizer extension for default configuration
+     * Ask each sanitizer extension for default configuration.
      *
      * @return array
      */
     public function buildDefaultConfiguration()
     {
         $this->registerComponent(\Xoops\Core\Text\Sanitizer::getDefaultConfig());
-        $extensions = File::getList(__DIR__ . '/Extensions');
+        $extensions = File::getList(__DIR__.'/Extensions');
         foreach ($extensions as $extensionFile) {
-            if (substr($extensionFile, -4) === '.php') {
-                $class = __NAMESPACE__ . '\Extensions\\' . substr($extensionFile, 0, -4);
+            if ('.php' === substr($extensionFile, -4)) {
+                $class = __NAMESPACE__.'\Extensions\\'.substr($extensionFile, 0, -4);
                 if (is_a($class, 'Xoops\Core\Text\Sanitizer\SanitizerConfigurable', true)) {
                     $this->registerComponent($class::getDefaultConfig());
                 }
             }
         }
 
-        /**
+        /*
          * Register any 3rd party extensions
          *
          * Listeners will be passed a Configuration object as the single argument, and should
@@ -86,7 +85,7 @@ class DefaultConfiguration extends ConfigurationAbstract
     }
 
     /**
-     * Add a component (i.e extension or filter) to the configuration with default values
+     * Add a component (i.e extension or filter) to the configuration with default values.
      *
      * @param array $configArray extension configuration
      */

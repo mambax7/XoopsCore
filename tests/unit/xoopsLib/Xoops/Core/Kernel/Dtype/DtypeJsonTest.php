@@ -2,13 +2,13 @@
 
 namespace Xoops\Core\Kernel\Dtype;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * Test XoopsObject with a Dtype::TYPE_JSON var
+ * Test XoopsObject with a Dtype::TYPE_JSON var.
  */
 class DtypeJsonObject extends XoopsObject
 {

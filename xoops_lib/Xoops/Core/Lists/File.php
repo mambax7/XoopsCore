@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * File - provide list of file names from a directory
+ * File - provide list of file names from a directory.
  *
  * @category  Xoops\Core\Lists\File
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class File extends ListAbstract
 {
     /**
-     * gets list of all files in a directory
+     * gets list of all files in a directory.
      *
      * @param string $path   filesystem path
      * @param string $prefix prefix added to file names
@@ -36,9 +35,9 @@ class File extends ListAbstract
         $fileList = [];
         $path = rtrim($path, '/');
         if (is_dir($path) && $handle = opendir($path)) {
-            while (($file = readdir($handle)) !== false) {
-                if (!preg_match('/^[\.]{1,2}$/', $file) && is_file($path . '/' . $file)) {
-                    $file = $prefix . $file;
+            while (false !== ($file = readdir($handle))) {
+                if (!preg_match('/^[\.]{1,2}$/', $file) && is_file($path.'/'.$file)) {
+                    $file = $prefix.$file;
                     $fileList[$file] = $file;
                 }
             }

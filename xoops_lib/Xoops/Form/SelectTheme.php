@@ -12,24 +12,23 @@
 namespace Xoops\Form;
 
 /**
- * SelectTheme - a select box with available themes
+ * SelectTheme - a select box with available themes.
  *
  * @category  Xoops\Form\SelectTheme
- * @package   Xoops\Form
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class SelectTheme extends Select
 {
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string  $caption caption
-     * @param string  $name    name
-     * @param mixed   $value   Pre-selected value (or array of them).
-     * @param integer $size    Number or rows. "1" makes a drop-down-list
+     * @param string $caption caption
+     * @param string $name    name
+     * @param mixed  $value   Pre-selected value (or array of them).
+     * @param int    $size    Number or rows. "1" makes a drop-down-list
      */
     public function __construct($caption, $name, $value = null, $size = 1)
     {

@@ -4,9 +4,8 @@
  * $Id$
  * Module: Publisher
  * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
+ * Licence: GNU.
  */
-
 define('_AM_PUBLISHER_ABOUT', 'About');
 define('_AM_PUBLISHER_ACTION', 'Action');
 define('_AM_PUBLISHER_ADD_OPT', 'Add %s  more sub categories');

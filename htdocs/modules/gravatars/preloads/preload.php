@@ -13,27 +13,26 @@ use Xoops\Core\PreloadItem;
 use Xoops\Core\Service\Provider;
 
 /**
- * Gravatars preloads
+ * Gravatars preloads.
  *
  * @category  preloads
- * @package   GravatarsPreload
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class GravatarsPreload extends PreloadItem
 {
     /**
-     * listen for core.service.locate.avatar event
+     * listen for core.service.locate.avatar event.
      *
      * @param Provider $provider - provider object for requested service
      */
     public static function eventCoreServiceLocateAvatar(Provider $provider)
     {
         if (is_a($provider, '\Xoops\Core\Service\Provider')) {
-            $path = dirname(__DIR__) . '/class/GravatarsProvider.php';
+            $path = dirname(__DIR__).'/class/GravatarsProvider.php';
             require $path;
             $object = new GravatarsProvider();
             $provider->register($object);

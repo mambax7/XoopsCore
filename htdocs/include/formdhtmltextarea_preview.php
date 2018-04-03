@@ -1,6 +1,6 @@
 <?php
 /**
- * Preview of dhtml editor content
+ * Preview of dhtml editor content.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,6 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         include
  * @since           2.3.0
  * @author          Vinod <smartvinu@gmail.com>
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -19,7 +18,7 @@
  */
 use Xmf\Request;
 
-include_once dirname(__DIR__) . '/mainfile.php';
+include_once dirname(__DIR__).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->logger()->quiet();
@@ -46,4 +45,4 @@ if (!headers_sent()) {
     header('Cache-Control: private, no-cache');
     header('Pragma: no-cache');
 }
-echo '<div>' . $content . '</div>';
+echo '<div>'.$content.'</div>';

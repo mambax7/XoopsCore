@@ -12,15 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
- * @subpackage      Blocks
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          The SmartFactory <www.smartfactory.ca>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 function publisher_items_recent_show($options)
 {
@@ -47,7 +44,7 @@ function publisher_items_recent_show($options)
         $criteria = null;
     } else {
         $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('categoryid', '(' . $options[0] . ')', 'IN'));
+        $criteria->add(new Criteria('categoryid', '('.$options[0].')', 'IN'));
     }
     $itemsObj = $publisher->getItemHandler()->getItems($limit, $start, [_PUBLISHER_STATUS_PUBLISHED], -1, $sort, $order, '', true, $criteria, true);
 
@@ -72,7 +69,7 @@ function publisher_items_recent_show($options)
         $block['lang_poster'] = _MB_PUBLISHER_POSTEDBY;
         $block['lang_date'] = _MB_PUBLISHER_DATE;
         $modulename = $myts->displayTarea($publisher->getModule()->getVar('name'));
-        $block['lang_visitItem'] = _MB_PUBLISHER_VISITITEM . ' ' . $modulename;
+        $block['lang_visitItem'] = _MB_PUBLISHER_VISITITEM.' '.$modulename;
     }
 
     return $block;

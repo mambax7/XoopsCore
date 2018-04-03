@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class GroupFormCheckboxTest extends \PHPUnit\Framework\TestCase
 {
@@ -42,10 +42,10 @@ class GroupFormCheckboxTest extends \PHPUnit\Framework\TestCase
         $this->object->setOptionTree($this->optionTree);
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input type="checkbox" name="name[groups][2][1]"') !== false);
-        $this->assertTrue(strpos($value, '<input type="checkbox" name="name[groups][2][10]"') !== false);
-        $this->assertTrue(strpos($value, 'value="item_name1"') !== false);
-        $this->assertTrue(strpos($value, 'value="item_name10"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input type="checkbox" name="name[groups][2][1]"'));
+        $this->assertTrue(false !== strpos($value, '<input type="checkbox" name="name[groups][2][10]"'));
+        $this->assertTrue(false !== strpos($value, 'value="item_name1"'));
+        $this->assertTrue(false !== strpos($value, 'value="item_name10"'));
     }
 
     protected function addItem($itemId, $itemName, $itemParent = 0)

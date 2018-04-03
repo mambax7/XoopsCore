@@ -10,7 +10,7 @@ use Xoops\Core\Service\Data\EmailAttachmentSet;
 
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
-    protected const TEST_FILE = __DIR__ . '/test.png';
+    protected const TEST_FILE = __DIR__.'/test.png';
 
     /**
      * @var Email

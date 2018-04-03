@@ -2,8 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
-
+require_once __DIR__.'/../../../init_new.php';
 
 class OptionElementTest extends \PHPUnit\Framework\TestCase
 {

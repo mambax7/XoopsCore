@@ -14,8 +14,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    trabis <lusopoemas@gmail.com>
  */
-
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include dirname(dirname(__DIR__)).'/mainfile.php';
 
 $xoops = Xoops::getInstance();
 $xoops->header();
@@ -90,7 +89,6 @@ $label = new Xoops\Form\Label('Label', 'label', 'label');
 $label->setDescription('Description Label');
 $tab3->addElement($label, true);
 
-
 $color = new Xoops\Form\ColorPicker('Color', 'color');
 $color->setDescription('Description Color');
 $tab3->addElement($color, true);
@@ -134,10 +132,9 @@ $select_tray->addOption(5, 'Select_tray 5');
 $select_tray->addOption(6, 'Select_tray 6');
 $select_tray->setDescription('Description Select_tray');
 $select_tray->setClass('span2');
-$testtray ->addElement($select_tray, true);
-$testtray ->addElement($select_tray);
+$testtray->addElement($select_tray, true);
+$testtray->addElement($select_tray);
 $tab3->addElement($testtray);
-
 
 //Now we can assign the tabs to our tab tray
 $tabTray->addElement($tab1);

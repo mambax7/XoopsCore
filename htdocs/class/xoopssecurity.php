@@ -10,15 +10,13 @@
 */
 
 /**
- * XOOPS security handler
+ * XOOPS security handler.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
  * @since           2.0.0
  * @version         $Id$
  */
-
 class xoopssecurity extends Xoops\Core\Security
 {
 }

@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer introduction page
+ * Installer introduction page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -23,8 +22,7 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  */
-
-require_once __DIR__ . '/include/common.inc.php';
+require_once __DIR__.'/include/common.inc.php';
 
 $_SESSION['error'] = [];
 //$_SESSION['settings'] = array();
@@ -43,7 +41,7 @@ $content = $_SESSION['content'];
 
 $writable = "<ul class='confirmMsg'>";
 foreach ($wizard->configs['writable'] as $key => $value) {
-    if (is_dir('../' . $value)) {
+    if (is_dir('../'.$value)) {
         $writable .= "<li class='directory'>${value}</li>";
     } else {
         $writable .= "<li class='files'>${value}</li>";
@@ -59,10 +57,10 @@ $xoops_trust .= '</ul>';
 
 $writable_trust = "<ul class='confirmMsg'>";
 foreach ($wizard->configs['dataPath'] as $key => $value) {
-    $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</li>';
+    $writable_trust .= "<li class='directory'>".$wizard->configs['xoopsPathDefault']['data'].'/'.$key.'</li>';
     if (is_array($value)) {
         foreach ($value as $key2 => $value2) {
-            $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</li>';
+            $writable_trust .= "<li class='directory'>".$wizard->configs['xoopsPathDefault']['data'].'/'.$key.'/'.$value2.'</li>';
         }
     }
 }
@@ -73,4 +71,4 @@ $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

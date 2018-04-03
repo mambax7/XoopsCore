@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
     public function hasAccess($menu, &$hasAccess)
@@ -54,7 +52,7 @@ class MenusSmartyDecorator extends MenusDecoratorAbstract implements MenusDecora
         $expression = $reg[0];
         list($validator, $value) = array_map('strtolower', explode('|', $reg[1]));
 
-        if ($validator === 'smarty') {
+        if ('smarty' === $validator) {
             if (isset($xoops->tpl()->_tpl_vars[$value])) {
                 $string = str_replace($expression, $xoops->tpl()->_tpl_vars[$value], $string);
             }

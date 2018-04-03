@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer db inserting page
+ * Installer db inserting page.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -22,9 +21,7 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  */
-
-require_once __DIR__ . '/include/common.inc.php';
-
+require_once __DIR__.'/include/common.inc.php';
 
 $xoops = Xoops::getInstance();
 
@@ -41,7 +38,7 @@ $xoops->setConfig('locale', $language);
 $xoops->loadLocale();
 
 $dbm = $xoops->db();
-$count = $dbm->fetchColumn('SELECT COUNT(*) FROM ' . $dbm->prefix('system_user'));
+$count = $dbm->fetchColumn('SELECT COUNT(*) FROM '.$dbm->prefix('system_user'));
 $process = $count ? false : true;
 $update = false;
 
@@ -49,7 +46,6 @@ $siteconfig = $_SESSION['siteconfig'];
 $adminname = $siteconfig['adminname'];
 $adminpass = $siteconfig['adminpass'];
 $adminmail = $siteconfig['adminmail'];
-
 
 $wizard->loadLangFile('install2');
 $temp = password_hash($adminpass, PASSWORD_DEFAULT);
@@ -92,7 +88,7 @@ if ($process) {
             'user_mailok' => 0,             // tinyint(1) unsigned NOT NULL default '1',
         ]
     );
-    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . '</div>';
+    $content = '<div class="x2-note successMsg">'.DATA_INSERTED.'</div>';
 } elseif ($update) {
     $dbm->updatePrefix(
         'system_user',
@@ -110,14 +106,14 @@ if ($process) {
     );
     $content = '';
 } else {
-    $content = "<div class='x2-note confirmMsg'>" . DATA_ALREADY_INSERTED . '</div>';
+    $content = "<div class='x2-note confirmMsg'>".DATA_ALREADY_INSERTED.'</div>';
 }
 
 setcookie('xo_install_user', '', null, null, null);
 if (isset($settings['authorized']) && !empty($adminname) && !empty($adminpass)) {
     setcookie(
         'xo_install_user',
-        addslashes($adminname) . '-' . md5($temp . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX),
+        addslashes($adminname).'-'.md5($temp.XOOPS_DB_NAME.XOOPS_DB_PASS.XOOPS_DB_PREFIX),
         null,
         null,
         null
@@ -127,4 +123,4 @@ if (isset($settings['authorized']) && !empty($adminname) && !empty($adminpass)) 
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 $_SESSION['content'] = $content;
-include XOOPS_INSTALL_PATH . '/include/install_tpl.php';
+include XOOPS_INSTALL_PATH.'/include/install_tpl.php';

@@ -10,16 +10,14 @@
 */
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 // Get main instance
 $system = System::getInstance();
 $xoops = Xoops::getInstance();
@@ -37,13 +35,14 @@ $admin_page->renderNavigation('category.php');
 switch ($op) {
     case 'list':
     default:
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->renderButton();
         $criteria = new CriteriaCompo();
         $criteria->setSort('cat_weight');
         $criteria->setOrder('ASC');
         $xoops->tpl()->assign('categories', $category_Handler->getObjects($criteria, true, false));
         $xoops->tpl()->assign('category', true);
+
         break;
 
     case 'new':
@@ -52,10 +51,11 @@ switch ($op) {
         $obj = $category_Handler->create();
         $form = $xoops->getModuleForm($obj, 'category');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_CATEGORY_LIST, 'category.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
@@ -66,6 +66,7 @@ switch ($op) {
         } else {
             $xoops->redirect('category.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 
     case 'save':
@@ -87,16 +88,17 @@ switch ($op) {
         echo $xoops->alert('error', $obj->getHtmlErrors());
         $form = $xoops->getModuleForm($obj, 'category');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'delete':
-        $admin_page->addItemButton(XoopsLocale::A_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
+        $admin_page->addItemButton(XoopsLocale::A_ADD.' '._PROFILE_AM_CATEGORY, 'category.php?op=new', 'add');
         $admin_page->addItemButton(_PROFILE_AM_CATEGORY_LIST, 'category.php', 'application-view-detail');
         $admin_page->renderButton();
         $id = $system->cleanVars($_REQUEST, 'id', 0, 'int');
         if ($id > 0) {
             $obj = $category_Handler->get($id);
-            if (isset($_POST['ok']) && $_POST['ok'] === 1) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('category.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
@@ -112,12 +114,13 @@ switch ($op) {
                 echo $xoops->confirm(
                     ['ok' => 1, 'id' => $id, 'op' => 'delete'],
                     'category.php',
-                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')) . '<br />'
+                    sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')).'<br />'
                 );
             }
         } else {
             $xoops->redirect('category.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
+
         break;
 }
 $xoops->footer();

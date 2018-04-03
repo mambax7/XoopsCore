@@ -1,14 +1,15 @@
 <?php
 
-require_once(__DIR__ . '/../../init_new.php');
+require_once __DIR__.'/../../init_new.php';
 
-require_once(XOOPS_TU_ROOT_PATH . '/class/utility/xoopsutility.php');
+require_once XOOPS_TU_ROOT_PATH.'/class/utility/xoopsutility.php';
 
 function myFunction($a)
 {
     if (is_array($a)) {
         return array_map('myFunction', $a);
     }
+
     return 2 * $a;
 }
 

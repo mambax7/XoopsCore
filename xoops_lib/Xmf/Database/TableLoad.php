@@ -15,21 +15,20 @@ use Xmf\Yaml;
 use Xoops\Core\Kernel\CriteriaElement;
 
 /**
- * Xmf\Database\TableLoad
+ * Xmf\Database\TableLoad.
  *
  * load a database table
  *
  * @category  Xmf\Database\TableLoad
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class TableLoad
 {
     /**
-     * loadTableFromArray
+     * loadTableFromArray.
      *
      * @param string $table name of table to load without prefix
      * @param array  $data  array of rows to insert
@@ -47,11 +46,12 @@ class TableLoad
             $count += $db->insertPrefix($table, $row);
         }
         $db->commit();
+
         return $count;
     }
 
     /**
-     * loadTableFromYamlFile
+     * loadTableFromYamlFile.
      *
      * @param string $table    name of table to load without prefix
      * @param string $yamlFile name of file containing data dump in YAML format
@@ -63,7 +63,7 @@ class TableLoad
         $count = 0;
 
         $data = Yaml::loadWrapped($yamlFile); // work with phpmyadmin YAML dumps
-        if ($data !== false) {
+        if (false !== $data) {
             $count = static::loadTableFromArray($table, $data);
         }
 
@@ -71,7 +71,7 @@ class TableLoad
     }
 
     /**
-     * truncateTable - empty a database table
+     * truncateTable - empty a database table.
      *
      * @param string $table name of table to truncate
      *
@@ -87,7 +87,7 @@ class TableLoad
     }
 
     /**
-     * countRows - get count of rows in a table
+     * countRows - get count of rows in a table.
      *
      * @param string          $table    name of table to count
      * @param CriteriaElement $criteria optional criteria
@@ -105,11 +105,12 @@ class TableLoad
         }
         $result = $qb->execute();
         $count = $result->fetchColumn();
+
         return (int) $count;
     }
 
     /**
-     * extractRows - get rows, all or a subset, from a table as an array
+     * extractRows - get rows, all or a subset, from a table as an array.
      *
      * @param string          $table       name of table to read
      * @param CriteriaElement $criteria    optional criteria
@@ -140,11 +141,11 @@ class TableLoad
     }
 
     /**
-     * Save table data to a YAML file
+     * Save table data to a YAML file.
      *
-     * @param string          $table name of table to load without prefix
-     * @param string          $yamlFile name of file containing data dump in YAML format
-     * @param CriteriaElement $criteria optional criteria
+     * @param string          $table       name of table to load without prefix
+     * @param string          $yamlFile    name of file containing data dump in YAML format
+     * @param CriteriaElement $criteria    optional criteria
      * @param string[]        $skipColumns do not include columns in this list
      *
      * @return bool true on success, false on error
@@ -155,6 +156,6 @@ class TableLoad
 
         $count = Yaml::save($rows, $yamlFile);
 
-        return $count !== false;
+        return false !== $count;
     }
 }

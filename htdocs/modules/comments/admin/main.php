@@ -10,16 +10,14 @@
 */
 
 /**
- * Comments Manager
+ * Comments Manager.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Kazumi Ono (AKA onokazu)
- * @package         comments
  * @version         $Id$
  */
-
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Get main instance
 $xoops = Xoops::getInstance();
@@ -38,9 +36,9 @@ $limit_array = [20, 50, 100];
 $status_array =
     [Comments::STATUS_PENDING => _MD_COMMENTS_PENDING, Comments::STATUS_ACTIVE => _MD_COMMENTS_ACTIVE, Comments::STATUS_HIDDEN => _MD_COMMENTS_HIDDEN];
 $status_array2 = [
-    Comments::STATUS_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _MD_COMMENTS_PENDING . '</span>',
-    Comments::STATUS_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _MD_COMMENTS_ACTIVE . '</span>',
-    Comments::STATUS_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _MD_COMMENTS_HIDDEN . '</span>',
+    Comments::STATUS_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">'._MD_COMMENTS_PENDING.'</span>',
+    Comments::STATUS_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">'._MD_COMMENTS_ACTIVE.'</span>',
+    Comments::STATUS_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">'._MD_COMMENTS_HIDDEN.'</span>',
 ];
 $start = 0;
 $status_array[0] = _AM_COMMENTS_FORM_ALL_STATUS;
@@ -55,7 +53,7 @@ $modules_array = [];
 $module_handler = $xoops->getHandlerModule();
 $available_plugins = \Xoops\Module\Plugin::getPlugins('comments');
 if (!empty($available_plugins)) {
-    $criteria = new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN');
+    $criteria = new Criteria('dirname', "('".implode("','", array_keys($available_plugins))."')", 'IN');
     $module_array = $module_handler->getNameList($criteria);
 }
 
@@ -64,7 +62,6 @@ $module_array[0] = _AM_COMMENTS_FORM_ALL_MODS;
 $comment_handler = $helper->getHandlerComment();
 
 switch ($op) {
-
     case 'comments_jump':
         $id = $system->cleanVars($_GET, 'item_id', 0, 'int');
         if ($id > 0) {
@@ -73,11 +70,12 @@ switch ($op) {
                 /* @var $plugin CommentsPluginInterface */
                 $module = $xoops->getModuleById($comment->getVar('modid'));
                 $plugin = Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'comments');
-                header('Location: ' . \XoopsBaseConfig::get('url') . '/modules/' . $module->getVar('dirname') . '/' . $plugin->pageName() . '?' . $plugin->itemName() . '=' . $comment->getVar('itemid') . '&id=' . $comment->getVar('id') . '&rootid=' . $comment->getVar('rootid') . '&mode=thread&' . str_replace('&amp;', '&', $comment->getVar('exparams')) . '#comment' . $comment->getVar('id'));
+                header('Location: '.\XoopsBaseConfig::get('url').'/modules/'.$module->getVar('dirname').'/'.$plugin->pageName().'?'.$plugin->itemName().'='.$comment->getVar('itemid').'&id='.$comment->getVar('id').'&rootid='.$comment->getVar('rootid').'&mode=thread&'.str_replace('&amp;', '&', $comment->getVar('exparams')).'#comment'.$comment->getVar('id'));
                 exit();
             }
         }
         $helper->redirect('admin/main.php', 1, _AM_COMMENTS_NO_COMMENTS);
+
         break;
 
     case 'comments_form_purge':
@@ -108,6 +106,7 @@ switch ($op) {
         $form_purge->addElement(new Xoops\Form\Hidden('op', 'comments_purge'));
         $form_purge->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
         $xoops->tpl()->assign('form', $form_purge->render());
+
         break;
 
     case 'comments_purge':
@@ -137,14 +136,14 @@ switch ($op) {
             $verif = true;
         }
         $comments_userid = $system->cleanVars($_POST, 'comments_userid', '', 'string');
-        if ($comments_userid !== '') {
+        if ('' !== $comments_userid) {
             foreach ($_REQUEST['comments_userid'] as $del) {
                 $criteria->add(new Criteria('uid', $del), 'OR');
             }
             $verif = true;
         }
         $comments_groupe = $system->cleanVars($_POST, 'comments_groupe', '', 'string');
-        if ($comments_groupe !== '') {
+        if ('' !== $comments_groupe) {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
                 $member_handler = $xoops->getHandlerMember();
                 $members = $member_handler->getUsersByGroup($u_name, true);
@@ -168,13 +167,14 @@ switch ($op) {
             }
             $verif = true;
         }
-        if ($verif === true) {
+        if (true === $verif) {
             if ($comment_handler->deleteAll($criteria)) {
                 $helper->redirect('admin/main.php', 3, XoopsLocale::S_DATABASE_UPDATED);
             }
         } else {
             $helper->redirect('admin/main.php', 3, XoopsLocale::S_DATABASE_UPDATED);
         }
+
         break;
 
     default:
@@ -221,7 +221,7 @@ switch ($op) {
         }
 
         $url = $helper->url('admin/main.php');
-        $form = '<form class="form-inline" action="' . $url . '" method="post">
+        $form = '<form class="form-inline" action="'.$url.'" method="post">
                 <select class="span2" name="comments_module">';
 
         foreach ($module_array as $k => $v) {
@@ -229,7 +229,7 @@ switch ($op) {
             if ($k === $module) {
                 $sel = ' selected="selected"';
             }
-            $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
+            $form .= '<option value="'.$k.'"'.$sel.'>'.$v.'</option>';
         }
         $form .= '</select>&nbsp;<select class="span2" name="comments_status">';
 
@@ -238,9 +238,8 @@ switch ($op) {
             if (isset($status) && $k === $status) {
                 $sel = ' selected="selected"';
             }
-            $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
+            $form .= '<option value="'.$k.'"'.$sel.'>'.$v.'</option>';
         }
-
 
         $form .= '</select>&nbsp;<select class="span2" name="comments_limit">';
         foreach ($limit_array as $k) {
@@ -248,12 +247,12 @@ switch ($op) {
             if (isset($limit) && $k === $limit) {
                 $sel = ' selected="selected"';
             }
-            $form .= '<option value="' . $k . '"' . $sel . '>' . $k . '</option>';
+            $form .= '<option value="'.$k.'"'.$sel.'>'.$k.'</option>';
         }
-        $form .= '</select>&nbsp;<input class ="btn" type="submit" value="' . XoopsLocale::A_GO . '" name="selsubmit" /></form>';
+        $form .= '</select>&nbsp;<input class ="btn" type="submit" value="'.XoopsLocale::A_GO.'" name="selsubmit" /></form>';
 
         $xoops->tpl()->assign('form_sort', $form);
-        $xoops->tpl()->assign('php_selft', $_SERVER['PHP_SELF'] . '?op=comments_purge');
+        $xoops->tpl()->assign('php_selft', $_SERVER['PHP_SELF'].'?op=comments_purge');
 
         if ($comments_count > 0) {
             foreach (array_keys($comments_arr) as $i) {
@@ -262,18 +261,18 @@ switch ($op) {
                 if ($comments_arr[$i]->getVar('uid') > 0) {
                     $poster = $member_handler->getUser($comments_arr[$i]->getVar('uid'));
                     if (is_object($poster)) {
-                        $comments_poster_uname = '<a href="' . \XoopsBaseConfig::get('url') . '/userinfo.php?uid=' . $comments_arr[$i]->getVar('uid') . '">' . $poster->getVar('uname') . '</a>';
+                        $comments_poster_uname = '<a href="'.\XoopsBaseConfig::get('url').'/userinfo.php?uid='.$comments_arr[$i]->getVar('uid').'">'.$poster->getVar('uname').'</a>';
                     }
                 }
 
-                $comments_icon = ($comments_arr[$i]->getVar('icon') === '') ? '/images/icons/no_posticon.gif'
-                    : '/images/subject/' . htmlspecialchars($comments_arr[$i]->getVar('icon'), ENT_QUOTES);
-                $comments_icon = '<img src="' . \XoopsBaseConfig::get('url') . $comments_icon . '" alt="" />';
+                $comments_icon = ('' === $comments_arr[$i]->getVar('icon')) ? '/images/icons/no_posticon.gif'
+                    : '/images/subject/'.htmlspecialchars($comments_arr[$i]->getVar('icon'), ENT_QUOTES);
+                $comments_icon = '<img src="'.\XoopsBaseConfig::get('url').$comments_icon.'" alt="" />';
 
                 $comments['comments_id'] = $id;
                 $comments['comments_poster'] = $comments_poster_uname;
                 $comments['comments_icon'] = $comments_icon;
-                $comments['comments_title'] = '<a href="main.php?op=comments_jump&amp;item_id=' . $comments_arr[$i]->getVar('id') . '">' . $comments_arr[$i]->getVar('title') . '</a>';
+                $comments['comments_title'] = '<a href="main.php?op=comments_jump&amp;item_id='.$comments_arr[$i]->getVar('id').'">'.$comments_arr[$i]->getVar('title').'</a>';
                 $comments['comments_ip'] = $comments_arr[$i]->getVar('ip');
                 $comments['comments_date'] = XoopsLocale::formatTimestamp($comments_arr[$i]->getVar('created'));
                 $comments['comments_text'] = $myts->undoHtmlSpecialChars($comments_arr[$i]->getVar('text'));
@@ -288,10 +287,11 @@ switch ($op) {
             }
 
             if ($comments_count > $comments_limit) {
-                $nav = new XoopsPageNav($comments_count, $comments_limit, $comments_start, 'comments_start', 'comments_module=' . $comments_module . '&amp;comments_status=' . $comments_status);
+                $nav = new XoopsPageNav($comments_count, $comments_limit, $comments_start, 'comments_start', 'comments_module='.$comments_module.'&amp;comments_status='.$comments_status);
                 $xoops->tpl()->assign('nav', $nav->renderNav());
             }
         }
+
         break;
 }
 // Call Footer

@@ -10,15 +10,13 @@
 */
 
 /**
- * Blocks functions
+ * Blocks functions.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Kazumi Ono (AKA onokazu)
- * @package     system
  * @version     $Id$
  */
-
 function b_system_login_show()
 {
     $xoops = Xoops::getInstance();
@@ -30,12 +28,14 @@ function b_system_login_show()
         $block['lang_login'] = XoopsLocale::A_LOGIN;
         $block['lang_lostpass'] = XoopsLocale::Q_LOST_YOUR_PASSWORD;
         $block['lang_registernow'] = XoopsLocale::REGISTER_NOW;
-        if ($xoops->getConfig('use_ssl') === 1 && $xoops->getConfig('sslloginlink') !== '') {
-            $block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('" . $xoops->getConfig('sslloginlink') . "', 'ssllogin', 300, 200);\">" . SystemLocale::SECURE_LOGIN . '</a>';
+        if (1 === $xoops->getConfig('use_ssl') && '' !== $xoops->getConfig('sslloginlink')) {
+            $block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('".$xoops->getConfig('sslloginlink')."', 'ssllogin', 300, 200);\">".SystemLocale::SECURE_LOGIN.'</a>';
         } elseif ($xoops->getConfig('usercookie')) {
             $block['lang_rememberme'] = XoopsLocale::REMEMBER_ME;
         }
+
         return $block;
     }
+
     return false;
 }

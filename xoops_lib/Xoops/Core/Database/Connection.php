@@ -17,16 +17,15 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver;
 
 /**
- * Connection wrapper for Doctrine DBAL Connection
+ * Connection wrapper for Doctrine DBAL Connection.
  *
  * @category  Xoops\Core\Database\Connection
- * @package   Connection
  * @author    readheadedrod <redheadedrod@hotmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 2.6
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class Connection extends \Doctrine\DBAL\Connection
@@ -78,7 +77,7 @@ class Connection extends \Doctrine\DBAL\Connection
     }
 
     /**
-     * this is a public setter for the safe variable
+     * this is a public setter for the safe variable.
      *
      * @param bool $safe set safe to true if safe to write data to database
      */
@@ -88,7 +87,7 @@ class Connection extends \Doctrine\DBAL\Connection
     }
 
     /**
-     * this is a public getter for the safe variable
+     * this is a public getter for the safe variable.
      *
      * @return boolean
      */
@@ -98,7 +97,7 @@ class Connection extends \Doctrine\DBAL\Connection
     }
 
     /**
-     * this is a public setter for the $force variable
+     * this is a public setter for the $force variable.
      *
      * @param bool $force when true will force a write to database when safe is false.
      */
@@ -108,7 +107,7 @@ class Connection extends \Doctrine\DBAL\Connection
     }
 
     /**
-     * this is a public getter for the $force variable
+     * this is a public getter for the $force variable.
      *
      * @return boolean
      */
@@ -128,9 +127,10 @@ class Connection extends \Doctrine\DBAL\Connection
     public function prefix($tablename = '')
     {
         $prefix = \XoopsBaseConfig::get('db-prefix');
-        if ($tablename !== '') {
-            return $prefix . '_' . $tablename;
+        if ('' !== $tablename) {
+            return $prefix.'_'.$tablename;
         }
+
         return $prefix;
     }
 
@@ -143,11 +143,12 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $data      An associative array containing column-value pairs.
      * @param array  $types     Types of the inserted data.
      *
-     * @return integer The number of affected rows.
+     * @return int The number of affected rows.
      */
     public function insertPrefix($tableName, array $data, array $types = [])
     {
         $tableName = $this->prefix($tableName);
+
         return $this->insert($tableName, $data, $types);
     }
 
@@ -160,14 +161,15 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $data       The data to update
      * @param array  $identifier The update criteria.
      * An associative array containing column-value pairs.
-     * @param array  $types      Types of the merged $data and
+     * @param array $types Types of the merged $data and
      * $identifier arrays in that order.
      *
-     * @return integer The number of affected rows.
+     * @return int The number of affected rows.
      */
     public function updatePrefix($tableName, array $data, array $identifier, array $types = [])
     {
         $tableName = $this->prefix($tableName);
+
         return $this->update($tableName, $data, $identifier, $types);
     }
 
@@ -180,11 +182,12 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $identifier The deletion criteria.
      * An associative array containing column-value pairs.
      *
-     * @return integer The number of affected rows.
+     * @return int The number of affected rows.
      */
     public function deletePrefix($tableName, array $identifier)
     {
         $tableName = $this->prefix($tableName);
+
         return $this->delete($tableName, $identifier);
     }
 
@@ -195,9 +198,9 @@ class Connection extends \Doctrine\DBAL\Connection
      * If an SQLLogger is configured, the execution is logged.
      *
      *
-     * @param string $query The SQL query to execute.
-     * @param array $params The parameters to bind to the query, if any.
-     * @param array $types The types the previous parameters are in.
+     * @param string $query  The SQL query to execute.
+     * @param array  $params The parameters to bind to the query, if any.
+     * @param array  $types  The types the previous parameters are in.
      *
      * @return \Doctrine\DBAL\Driver\Statement The executed statement.
      *
@@ -225,7 +228,7 @@ class Connection extends \Doctrine\DBAL\Connection
      * @param array  $params The query parameters.
      * @param array  $types  The parameter types.
      *
-     * @return integer The number of affected rows.
+     * @return int The number of affected rows.
      *
      * @internal PERF: Directly prepares a driver statement, not a wrapper.
      *
@@ -239,6 +242,7 @@ class Connection extends \Doctrine\DBAL\Connection
                 $this->force = false;
             }
             $events->triggerEvent('core.database.query.start');
+
             try {
                 $result = parent::executeUpdate($query, $params, $types);
             } catch (\Exception $e) {
@@ -250,7 +254,7 @@ class Connection extends \Doctrine\DBAL\Connection
             //$events->triggerEvent('core.database.query.failure', (array('Not safe:')));
             return (int) 0;
         }
-        if ($result !== 0) {
+        if (0 !== $result) {
             //$events->triggerEvent('core.database.query.success', (array($query)));
             return (int) $result;
         }
@@ -289,7 +293,7 @@ class Connection extends \Doctrine\DBAL\Connection
 
     /**
      * perform a safe query if allowed
-     * can receive variable number of arguments
+     * can receive variable number of arguments.
      *
      * @return mixed returns the value received or null if nothing received.
      *
@@ -303,13 +307,14 @@ class Connection extends \Doctrine\DBAL\Connection
         $events = \Xoops::getInstance()->events();
         if (!$this->safe && !$this->force) {
             $sql = ltrim(func_get_arg(0));
-            if (!$this->safe && strtolower(substr($sql, 0, 6)) !== 'select') {
+            if (!$this->safe && 'select' !== strtolower(substr($sql, 0, 6))) {
                 // $events->triggerEvent('core.database.query.failure', (array('Not safe:')));
                 return null;
             }
         }
         $this->force = false; // resets $force back to false
         $events->triggerEvent('core.database.query.start');
+
         try {
             $result = call_user_func_array(['parent', 'query'], func_get_args());
         } catch (\Exception $e) {
@@ -326,7 +331,7 @@ class Connection extends \Doctrine\DBAL\Connection
     }
 
     /**
-     * perform queries from SQL dump file in a batch
+     * perform queries from SQL dump file in a batch.
      *
      * @param string $file file path to an SQL dump file
      *
@@ -335,17 +340,19 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function queryFromFile($file)
     {
-        if (($fp = fopen($file, 'r')) !== false) {
+        if (false !== ($fp = fopen($file, 'r'))) {
             $sql_queries = trim(fread($fp, filesize($file)));
             \SqlUtility::splitMySqlFile($pieces, $sql_queries);
             foreach ($pieces as $query) {
                 $prefixed_query = \SqlUtility::prefixQuery(trim($query), $this->prefix());
-                if ($prefixed_query !== false) {
+                if (false !== $prefixed_query) {
                     $this->query($prefixed_query[0]);
                 }
             }
+
             return true;
         }
+
         return false;
     }
 

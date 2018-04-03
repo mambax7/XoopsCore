@@ -10,17 +10,15 @@
 */
 
 /**
- * Xoops locale
+ * Xoops locale.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         kernel
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  * @todo            To be handled by i18n/l10n
  */
-
 setlocale(LC_ALL, 'en_US');
 
 // !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
@@ -30,14 +28,12 @@ define('_YESTERDAY', "\Y\e\s\\t\e\\r\d\a\y G:i");
 define('_MONTHDAY', 'n/j G:i');
 define('_YEARMONTHDAY', 'Y/n/j G:i');
 define('_ELAPSE', '%s ago');
-define('_TIMEFORMAT_DESC', 'Valid formats: "s" - ' . _SHORTDATESTRING . '; "m" - ' . _MEDIUMDATESTRING . '; "l" - ' . _DATESTRING . ';<br />' . '"c" or "custom" - format determined according to interval to present; "e" - Elapsed; "mysql" - Y-m-d H:i:s;<br />' . 'specified string - Refer to <a href="http://php.net/manual/en/function.date.php" rel="external">PHP manual</a>.');
+define('_TIMEFORMAT_DESC', 'Valid formats: "s" - '._SHORTDATESTRING.'; "m" - '._MEDIUMDATESTRING.'; "l" - '._DATESTRING.';<br />'.'"c" or "custom" - format determined according to interval to present; "e" - Elapsed; "mysql" - Y-m-d H:i:s;<br />'.'specified string - Refer to <a href="http://php.net/manual/en/function.date.php" rel="external">PHP manual</a>.');
 define('_TIMEZONE_SET', 'Europe/London');
 
 /**
- * A Xoops Local
+ * A Xoops Local.
  *
- * @package     kernel
- * @subpackage  Language
  *
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright   copyright (c) 2000-2009 XOOPS.org
@@ -45,9 +41,9 @@ define('_TIMEZONE_SET', 'Europe/London');
 class XoopsLocal extends Xoops\Locale\AbstractLocale
 {
     /**
-     * Number Formats
+     * Number Formats.
      *
-     * @param unknown_type $number
+     * @param  unknown_type $number
      * @return string
      */
     public static function number_format($number)
@@ -56,15 +52,16 @@ class XoopsLocal extends Xoops\Locale\AbstractLocale
     }
 
     /**
-     * Money Format
+     * Money Format.
      *
-     * @param string $format
-     * @param string $number
+     * @param  string $format
+     * @param  string $number
      * @return string format
      */
     public static function money_format($format, $number)
     {
         setlocale(LC_MONETARY, 'en_US');
+
         return money_format($format, $number);
     }
 }

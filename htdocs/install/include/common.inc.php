@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer common include file
+ * Installer common include file.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -25,7 +24,7 @@
  **/
 
 /**
- * If non-empty, only this user can access this installer
+ * If non-empty, only this user can access this installer.
  */
 define('INSTALL_USER', '');
 define('INSTALL_PASSWORD', '');
@@ -33,14 +32,14 @@ define('XOOPS_INSTALL', 1);
 define('XOOPS_INSTALL_PATH', dirname(__DIR__));
 
 // options for mainfile.php
-if (date_default_timezone_set(@date_default_timezone_get()) === false) {
+if (false === date_default_timezone_set(@date_default_timezone_get())) {
     date_default_timezone_set('UTC'); // use this until properly set
 }
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
     session_start();
 }
-$mainfile = dirname(dirname(__DIR__)) . '/mainfile.php';
+$mainfile = dirname(dirname(__DIR__)).'/mainfile.php';
 if (file_exists($mainfile)) {
     include $mainfile;
 }
@@ -51,15 +50,15 @@ if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_URL', isset($_SESSION['settings']['URL']) ? $_SESSION['settings']['URL'] : '');
 }
 
-include XOOPS_INSTALL_PATH . '/class/installwizard.php';
-include_once XOOPS_ROOT_PATH . '/include/version.php';
-include_once XOOPS_INSTALL_PATH . '/include/functions.php';
+include XOOPS_INSTALL_PATH.'/class/installwizard.php';
+include_once XOOPS_ROOT_PATH.'/include/version.php';
+include_once XOOPS_INSTALL_PATH.'/include/functions.php';
 //include_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
 if (!class_exists('XoopsBaseConfig', false)) {
-    include_once XOOPS_ROOT_PATH . '/class/XoopsBaseConfig.php';
+    include_once XOOPS_ROOT_PATH.'/class/XoopsBaseConfig.php';
     XoopsBaseConfig::bootstrapTransition();
 }
-include_once XOOPS_ROOT_PATH . '/include/defines.php';
+include_once XOOPS_ROOT_PATH.'/include/defines.php';
 $_SESSION['pageHasHelp'] = false;
 $_SESSION['pageHasForm'] = false;
 

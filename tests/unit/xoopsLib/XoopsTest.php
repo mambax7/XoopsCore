@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
@@ -22,22 +22,22 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
             $this->assertSame(true, $value);
         }
 
-        $this->assertSame([\XoopsBaseConfig::get('lib-path'), \XoopsBaseConfig::get('url') . '/browse.php'], $instance->paths['XOOPS']);
+        $this->assertSame([\XoopsBaseConfig::get('lib-path'), \XoopsBaseConfig::get('url').'/browse.php'], $instance->paths['XOOPS']);
         $this->assertSame([\XoopsBaseConfig::get('root-path'), \XoopsBaseConfig::get('url')], $instance->paths['www']);
         $this->assertSame([\XoopsBaseConfig::get('var-path'), null], $instance->paths['var']);
-        $this->assertSame([\XoopsBaseConfig::get('lib-path'), \XoopsBaseConfig::get('url') . '/browse.php'], $instance->paths['lib']);
-        $this->assertSame([\XoopsBaseConfig::get('root-path') . '/modules', \XoopsBaseConfig::get('url') . '/modules'], $instance->paths['modules']);
-        $this->assertSame([\XoopsBaseConfig::get('root-path') . '/themes', \XoopsBaseConfig::get('url') . '/themes'], $instance->paths['themes']);
-        $this->assertSame([\XoopsBaseConfig::get('root-path') . '/media', \XoopsBaseConfig::get('url') . '/media'], $instance->paths['media']);
+        $this->assertSame([\XoopsBaseConfig::get('lib-path'), \XoopsBaseConfig::get('url').'/browse.php'], $instance->paths['lib']);
+        $this->assertSame([\XoopsBaseConfig::get('root-path').'/modules', \XoopsBaseConfig::get('url').'/modules'], $instance->paths['modules']);
+        $this->assertSame([\XoopsBaseConfig::get('root-path').'/themes', \XoopsBaseConfig::get('url').'/themes'], $instance->paths['themes']);
+        $this->assertSame([\XoopsBaseConfig::get('root-path').'/media', \XoopsBaseConfig::get('url').'/media'], $instance->paths['media']);
 
-        $this->assertTrue($instance->sessionManager === null);
-        $this->assertTrue($instance->module === null);
+        $this->assertTrue(null === $instance->sessionManager);
+        $this->assertTrue(null === $instance->module);
         $this->assertTrue(is_array($instance->config));
         $this->assertTrue(is_array($instance->moduleConfig));
         $this->assertTrue(is_string($instance->moduleDirname));
         $this->assertTrue(is_string($instance->user) || is_object($instance->user));
         $this->assertTrue(is_bool($instance->userIsAdmin));
-        $this->assertTrue($instance->option === null || is_array($instance->option));
+        $this->assertTrue(null === $instance->option || is_array($instance->option));
         $this->assertTrue(is_string($instance->tpl_name));
         $this->assertTrue(is_bool($instance->isAdminSide));
     }
@@ -142,8 +142,8 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $value = $instance->loadLocale('system/themes/default');
         $this->assertSame(true, $value);
 
-        require_once \XoopsBaseConfig::get('root-path') . '/modules/system/themes/default/locale/en_US/en_US.php';
-        require_once \XoopsBaseConfig::get('root-path') . '/modules/system/themes/default/locale/en_US/locale.php';
+        require_once \XoopsBaseConfig::get('root-path').'/modules/system/themes/default/locale/en_US/en_US.php';
+        require_once \XoopsBaseConfig::get('root-path').'/modules/system/themes/default/locale/en_US/locale.php';
 
         /*
         $instance->setTheme(null);
@@ -175,7 +175,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('http://localhost/tmp/', $value);
 
         $value = $instance->url('tmp');
-        $this->assertSame(\XoopsBaseConfig::get('url') . '/tmp', $value);
+        $this->assertSame(\XoopsBaseConfig::get('url').'/tmp', $value);
     }
 
     public function test_buildUrl()
@@ -194,11 +194,11 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $url = 'http://localhost/tmp/test.php?toto=1';
         $value = $instance->buildUrl($url, ['titi' => 2]);
-        $this->assertSame($url . '&titi=2', $value);
+        $this->assertSame($url.'&titi=2', $value);
 
         $url = 'http://localhost/tmp/test.php?toto=1';
         $value = $instance->buildUrl($url, ['titi' => 'space space']);
-        $this->assertSame($url . '&titi=space%20space', $value);
+        $this->assertSame($url.'&titi=space%20space', $value);
 
         $url = 'http://localhost/tmp/test.php?toto=1';
         $value = $instance->buildUrl($url, ['toto' => 2]);
@@ -206,7 +206,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException \PHPUnit_Framework_Error
      */
     public function test_pathExists()
     {
@@ -269,7 +269,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $_SERVER['QUERY_STRING'] = 'query=1';
         $_SERVER['PHP_SELF'] = 'toto';
         $instance->pathTranslation();
-        $this->assertSame($_SERVER['REQUEST_URI'], $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
+        $this->assertSame($_SERVER['REQUEST_URI'], $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
 
         $_SERVER = $save;
     }
@@ -507,7 +507,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException \PHPUnit_Framework_Error
      */
 
     /*
@@ -649,6 +649,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $callback =
             function ($buffer) use (&$output) {
                 $output = $buffer;
+
                 return '';
             };
 
@@ -826,7 +827,7 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         $url = 'localhost/xoops';
         $value = $instance->formatURL($url);
-        $this->assertSame('http://' . $url, $value);
+        $this->assertSame('http://'.$url, $value);
     }
 
     public function test_getBanner()
@@ -876,31 +877,31 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $this->markTestSkipped('');
         $_SERVER['HTTP_USER_AGENT'] = 'mac';
         $value = $instance->getCss();
-        $this->assertSame(\XoopsBaseConfig::get('themes-url') . '/default/css/style.css', $value);
+        $this->assertSame(\XoopsBaseConfig::get('themes-url').'/default/css/style.css', $value);
 
         $_SERVER['HTTP_USER_AGENT'] = 'MSIE 1.2';
         $value = $instance->getCss();
-        $this->assertSame(\XoopsBaseConfig::get('themes-url') . '/default/css/style.css', $value);
+        $this->assertSame(\XoopsBaseConfig::get('themes-url').'/default/css/style.css', $value);
 
         $_SERVER['HTTP_USER_AGENT'] = 'MSIE 1.2';
         $value = $instance->getCss('default');
-        $this->assertTrue(basename($value) === 'style.css');
-        $this->assertTrue(basename(dirname($value)) === 'css');
+        $this->assertTrue('style.css' === basename($value));
+        $this->assertTrue('css' === basename(dirname($value)));
 
         $_SERVER['HTTP_USER_AGENT'] = 'XXXX';
         $value = $instance->getCss('default');
-        $this->assertTrue(basename($value) === 'style.css');
-        $this->assertTrue(basename(dirname($value)) === 'css');
+        $this->assertTrue('style.css' === basename($value));
+        $this->assertTrue('css' === basename(dirname($value)));
 
         $_SERVER['HTTP_USER_AGENT'] = 'MSIE 1.2';
         $value = $instance->getCss('default/css');
-        $this->assertTrue(basename($value) === 'style.css');
-        $this->assertTrue(basename(dirname($value)) === 'css');
+        $this->assertTrue('style.css' === basename($value));
+        $this->assertTrue('css' === basename(dirname($value)));
 
         $_SERVER['HTTP_USER_AGENT'] = 'XXXX';
         $value = $instance->getCss('default/css');
-        $this->assertTrue(basename($value) === 'style.css');
-        $this->assertTrue(basename(dirname($value)) === 'css');
+        $this->assertTrue('style.css' === basename($value));
+        $this->assertTrue('css' === basename(dirname($value)));
 
         $_SERVER['HTTP_USER_AGENT'] = 'XXXX';
         $value = $instance->getCss('xxxx');
@@ -963,13 +964,13 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
         $value = $instance->getConfigs();
         $this->assertTrue(is_array($value));
         $this->assertTrue(isset($value['dummy']));
-        $this->assertTrue($value['dummy'] === 1);
+        $this->assertTrue(1 === $value['dummy']);
 
         $instance->addConfigs(['dummy' => 1], null);
         $value = $instance->getConfigs();
         $this->assertTrue(is_array($value));
         $this->assertTrue(isset($value['dummy']));
-        $this->assertTrue($value['dummy'] === 1);
+        $this->assertTrue(1 === $value['dummy']);
     }
 
     public function test_setConfig()
@@ -1048,35 +1049,34 @@ class XoopsTest extends \PHPUnit\Framework\TestCase
 
         // test cases url, expected base return (default), expected full return ($includeSubdomain==true)
         $urls = [
-            ['url' => 'http://user:pass@www.pref.okinawa.jp:8080/path/to/page.html?query=string#fragment', 'base' => 'pref.okinawa.jp', 'full' => 'www.pref.okinawa.jp', ],
-            ['url' => 'http://localhost/test/domain/', 'base' => 'localhost', 'full' => 'localhost', ],
-            ['url' => 'https://192.168.1.251/xoops/', 'base' => '192.168.1.251', 'full' => '192.168.1.251', ],
-            ['url' => 'http://WWW.PREF.OKINAWA.JP/', 'base' => 'pref.okinawa.jp', 'full' => 'www.pref.okinawa.jp', ],
-            ['url' => 'http://www.example.com/', 'base' => 'example.com', 'full' => 'www.example.com', ],
-            ['url' => 'http://fred.users.example.com/', 'base' => 'example.com', 'full' => 'fred.users.example.com', ],
-            ['url' => 'ftp://example.com', 'base' => 'example.com', 'full' => 'example.com', ],
-            ['url' => 'https://www.scottwills.co.uk/', 'base' => 'scottwills.co.uk', 'full' => 'www.scottwills.co.uk', ],
-            ['url' => 'http://co.uk/', 'base' => null, 'full' => null, ],
-            ['url' => 'http://xoops.consulting', 'base' => 'xoops.consulting', 'full' => 'xoops.consulting', ],
-            ['url' => 'https://okinawa.jp', 'base' => null, 'full' => null, ],
-            ['url' => 'okinawa.jp', 'base' => null, 'full' => null, ],
-            ['url' => 'http://இலங்கை.museum', 'base' => 'இலங்கை.museum', 'full' => 'இலங்கை.museum', ],
-            ['url' => 'http://россия.net', 'base' => 'россия.net', 'full' => 'россия.net', ],
-            ['url' => 'http://私の団体も.jp/', 'base' => '私の団体も.jp', 'full' => '私の団体も.jp', ],
-            ['url' => 'https://中国化工集团公司.公司:8080/test', 'base' => '中国化工集团公司.公司', 'full' => '中国化工集团公司.公司', ],
-            ['url' => '公司', 'base' => null, 'full' => null, ],
-            ['url' => 'http://321.4.1.512/', 'base' => '1.512', 'full' => '321.4.1.512', ],
+            ['url' => 'http://user:pass@www.pref.okinawa.jp:8080/path/to/page.html?query=string#fragment', 'base' => 'pref.okinawa.jp', 'full' => 'www.pref.okinawa.jp'],
+            ['url' => 'http://localhost/test/domain/', 'base' => 'localhost', 'full' => 'localhost'],
+            ['url' => 'https://192.168.1.251/xoops/', 'base' => '192.168.1.251', 'full' => '192.168.1.251'],
+            ['url' => 'http://WWW.PREF.OKINAWA.JP/', 'base' => 'pref.okinawa.jp', 'full' => 'www.pref.okinawa.jp'],
+            ['url' => 'http://www.example.com/', 'base' => 'example.com', 'full' => 'www.example.com'],
+            ['url' => 'http://fred.users.example.com/', 'base' => 'example.com', 'full' => 'fred.users.example.com'],
+            ['url' => 'ftp://example.com', 'base' => 'example.com', 'full' => 'example.com'],
+            ['url' => 'https://www.scottwills.co.uk/', 'base' => 'scottwills.co.uk', 'full' => 'www.scottwills.co.uk'],
+            ['url' => 'http://co.uk/', 'base' => null, 'full' => null],
+            ['url' => 'http://xoops.consulting', 'base' => 'xoops.consulting', 'full' => 'xoops.consulting'],
+            ['url' => 'https://okinawa.jp', 'base' => null, 'full' => null],
+            ['url' => 'okinawa.jp', 'base' => null, 'full' => null],
+            ['url' => 'http://இலங்கை.museum', 'base' => 'இலங்கை.museum', 'full' => 'இலங்கை.museum'],
+            ['url' => 'http://россия.net', 'base' => 'россия.net', 'full' => 'россия.net'],
+            ['url' => 'http://私の団体も.jp/', 'base' => '私の団体も.jp', 'full' => '私の団体も.jp'],
+            ['url' => 'https://中国化工集团公司.公司:8080/test', 'base' => '中国化工集团公司.公司', 'full' => '中国化工集团公司.公司'],
+            ['url' => '公司', 'base' => null, 'full' => null],
+            ['url' => 'http://321.4.1.512/', 'base' => '1.512', 'full' => '321.4.1.512'],
             // ipv6 examples from http://www.ietf.org/rfc/rfc2732.txt
-            ['url' => 'https://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html', 'base' => 'fedc:ba98:7654:3210:fedc:ba98:7654:3210', 'full' => 'fedc:ba98:7654:3210:fedc:ba98:7654:3210', ],
-            ['url' => 'http://[1080:0:0:0:8:800:200C:417A]/index.html', 'base' => '1080:0:0:0:8:800:200c:417a', 'full' => '1080:0:0:0:8:800:200c:417a', ],
-            ['url' => 'http://[3ffe:2a00:100:7031::1]', 'base' => '3ffe:2a00:100:7031::1', 'full' => '3ffe:2a00:100:7031::1', ],
-            ['url' => 'http://[1080::8:800:200C:417A]/foo', 'base' => '1080::8:800:200c:417a', 'full' => '1080::8:800:200c:417a', ],
-            ['url' => 'http://[::192.9.5.5]/ipng', 'base' => '::192.9.5.5', 'full' => '::192.9.5.5', ],
-            ['url' => 'http://[::FFFF:129.144.52.38]:80/index.html', 'base' => '::ffff:129.144.52.38', 'full' => '::ffff:129.144.52.38', ],
-            ['url' => 'http://[2010:836B:4179::836B:4179]', 'base' => '2010:836b:4179::836b:4179', 'full' => '2010:836b:4179::836b:4179', ],
+            ['url' => 'https://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html', 'base' => 'fedc:ba98:7654:3210:fedc:ba98:7654:3210', 'full' => 'fedc:ba98:7654:3210:fedc:ba98:7654:3210'],
+            ['url' => 'http://[1080:0:0:0:8:800:200C:417A]/index.html', 'base' => '1080:0:0:0:8:800:200c:417a', 'full' => '1080:0:0:0:8:800:200c:417a'],
+            ['url' => 'http://[3ffe:2a00:100:7031::1]', 'base' => '3ffe:2a00:100:7031::1', 'full' => '3ffe:2a00:100:7031::1'],
+            ['url' => 'http://[1080::8:800:200C:417A]/foo', 'base' => '1080::8:800:200c:417a', 'full' => '1080::8:800:200c:417a'],
+            ['url' => 'http://[::192.9.5.5]/ipng', 'base' => '::192.9.5.5', 'full' => '::192.9.5.5'],
+            ['url' => 'http://[::FFFF:129.144.52.38]:80/index.html', 'base' => '::ffff:129.144.52.38', 'full' => '::ffff:129.144.52.38'],
+            ['url' => 'http://[2010:836B:4179::836B:4179]', 'base' => '2010:836b:4179::836b:4179', 'full' => '2010:836b:4179::836b:4179'],
             // bare domain
-            ['url' => 'www.example.com', 'base' => 'example.com', 'full' => 'www.example.com', ],
-
+            ['url' => 'www.example.com', 'base' => 'example.com', 'full' => 'www.example.com'],
         ];
         foreach ($urls as $url) {
             $this->assertSame($url['base'], $xoops->getBaseDomain($url['url']), $url['url']);

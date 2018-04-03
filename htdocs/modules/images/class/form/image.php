@@ -10,7 +10,7 @@
 */
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -50,15 +50,15 @@ class ImagesImageForm extends Xoops\Form\ThemeForm
             $select->addOptionArray($categories);
             $tab1->addElement($select, true);
         } else {
-            $tab1->addElement(new Xoops\Form\Label(_AM_IMAGES_CAT_SELECT, '<span class="red bold">' . $helper->getHandlerCategories()->get($obj->getVar('imgcat_id'))->getVar('imgcat_name') . '</span>'));
+            $tab1->addElement(new Xoops\Form\Label(_AM_IMAGES_CAT_SELECT, '<span class="red bold">'.$helper->getHandlerCategories()->get($obj->getVar('imgcat_id'))->getVar('imgcat_name').'</span>'));
             $this->addElement(new Xoops\Form\Hidden('imgcat_id', $obj->getVar('imgcat_id')));
         }
 
         // warning
         $category = $helper->getHandlerCategories()->get($obj->getVar('imgcat_id'));
-        $upload_msg[] = _AM_IMAGES_CAT_SIZE . ' : ' . $category->getVar('imgcat_maxsize');
-        $upload_msg[] = _AM_IMAGES_CAT_WIDTH . ' : ' . $category->getVar('imgcat_maxwidth');
-        $upload_msg[] = _AM_IMAGES_CAT_HEIGHT . ' : ' . $category->getVar('imgcat_maxheight');
+        $upload_msg[] = _AM_IMAGES_CAT_SIZE.' : '.$category->getVar('imgcat_maxsize');
+        $upload_msg[] = _AM_IMAGES_CAT_WIDTH.' : '.$category->getVar('imgcat_maxwidth');
+        $upload_msg[] = _AM_IMAGES_CAT_HEIGHT.' : '.$category->getVar('imgcat_maxheight');
 
         $image_tray = new Xoops\Form\File(_AM_IMAGES_IMG_FILE, 'image_file');
         $image_tray->setDescription(self::message($upload_msg, ''));
@@ -75,7 +75,7 @@ class ImagesImageForm extends Xoops\Form\ThemeForm
         $this->addElement(new Xoops\Form\Hidden('image_id', $obj->getVar('image_id')));
 
         /**
-         * Buttons
+         * Buttons.
          */
         $buttonTray = new Xoops\Form\ElementTray('', '');
         $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
@@ -101,9 +101,9 @@ class ImagesImageForm extends Xoops\Form\ThemeForm
      */
     public function message($msg, $title = '', $class = 'errorMsg')
     {
-        $ret = "<div class='" . $class . "'>";
-        if ($title !== '') {
-            $ret .= '<strong>' . $title . '</strong>';
+        $ret = "<div class='".$class."'>";
+        if ('' !== $title) {
+            $ret .= '<strong>'.$title.'</strong>';
         }
         if (is_array($msg) || is_object($msg)) {
             $ret .= implode('<br />', $msg);
@@ -111,6 +111,7 @@ class ImagesImageForm extends Xoops\Form\ThemeForm
             $ret .= $msg;
         }
         $ret .= '</div>';
+
         return $ret;
     }
 }

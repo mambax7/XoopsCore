@@ -12,14 +12,12 @@
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Sudhaker Raj <http://xoops.biz>
  * @version         $Id$
  */
-
-include_once dirname(__DIR__) . '/include/common.php';
+include_once dirname(__DIR__).'/include/common.php';
 
 $publisher = Publisher::getInstance();
 
@@ -27,7 +25,6 @@ $seoOp = @$_GET['seoOp'];
 $seoArg = @$_GET['seoArg'];
 
 if (empty($seoOp) && @$_SERVER['PATH_INFO']) {
-
     // SEO mode is path-info
     /*
     Sample URL for path-info
@@ -53,21 +50,22 @@ if (!empty($seoOp) && isset($seoMap[$seoOp])) {
     // per their requirements.
 
     $url_arr = explode('/modules/', $_SERVER['PHP_SELF']);
-    $newUrl = $url_arr[0] . '/modules/' . PUBLISHER_DIRNAME . '/' . $seoMap[$seoOp];
+    $newUrl = $url_arr[0].'/modules/'.PUBLISHER_DIRNAME.'/'.$seoMap[$seoOp];
 
     $_ENV['PHP_SELF'] = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
     $_SERVER['PHP_SELF'] = $newUrl;
     switch ($seoOp) {
         case 'category':
-            $_SERVER['REQUEST_URI'] = $newUrl . '?categoryid=' . $seoArg;
+            $_SERVER['REQUEST_URI'] = $newUrl.'?categoryid='.$seoArg;
             $_GET['categoryid'] = $seoArg;
             $_REQUEST['categoryid'] = $seoArg;
+
             break;
         case 'item':
         case 'print':
         default:
-            $_SERVER['REQUEST_URI'] = $newUrl . '?itemid=' . $seoArg;
+            $_SERVER['REQUEST_URI'] = $newUrl.'?itemid='.$seoArg;
             $_GET['itemid'] = $seoArg;
             $_REQUEST['itemid'] = $seoArg;
     }

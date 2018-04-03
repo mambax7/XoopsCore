@@ -12,19 +12,18 @@
 use Xoops\Module\Helper\HelperAbstract;
 
 /**
- * Module helper for thumbs modue
+ * Module helper for thumbs modue.
  *
  * @category  Xoops\Module\Helper
- * @package   Thumbs
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Thumbs extends HelperAbstract
 {
     /**
-     * init
+     * init.
      */
     public function init()
     {
@@ -32,27 +31,27 @@ class Thumbs extends HelperAbstract
     }
 
     /**
-     * buildThumbPath
+     * buildThumbPath.
      *
-     * @param string  $imgPath xoops virtual path to image to be thumbed
-     * @param integer $width   maximum width of thumbnail in pixels, 0 to use default
-     * @param integer $height  maximum height of thumbnail in pixels, 0 to use default
+     * @param string $imgPath xoops virtual path to image to be thumbed
+     * @param int    $width   maximum width of thumbnail in pixels, 0 to use default
+     * @param int    $height  maximum height of thumbnail in pixels, 0 to use default
      *
      * @return string xoops virtual path for the thumbnail
      */
     public function buildThumbPath($imgPath, $width, $height)
     {
         //$xoops = \Xoops::getInstance();
-        if ($width === 0 && $height === 0) {
+        if (0 === $width && 0 === $height) {
             $width = $this->getConfig('thumbs_width');
             $height = $this->getConfig('thumbs_height');
         }
         $sizeDir = sprintf('/%01dx%01d/', $width, $height);
         $pathParts = pathinfo($imgPath);
-        if ($pathParts['dirname'] === '.') {
+        if ('.' === $pathParts['dirname']) {
             $pathParts['dirname'] = '';
         }
-        $thumbPath = 'assets/thumbs/' . $pathParts['dirname'] . $sizeDir . $pathParts['basename'];
+        $thumbPath = 'assets/thumbs/'.$pathParts['dirname'].$sizeDir.$pathParts['basename'];
 
         return $thumbPath;
     }

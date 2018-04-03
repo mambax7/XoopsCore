@@ -12,20 +12,19 @@
 namespace Xmf;
 
 /**
- * Debugging tools for developers
+ * Debugging tools for developers.
  *
  * @category  Xmf\Debug
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Debug extends \Kint
 {
     /**
-     * associative array of timers
+     * associative array of timers.
      *
      * @var float[]
      */
@@ -33,27 +32,27 @@ class Debug extends \Kint
 
     /**
      * indexed array of timer data in form
-     * array('label' => string, 'start' => float, 'elapsed' => float)
+     * array('label' => string, 'start' => float, 'elapsed' => float).
      *
      * @var array
      */
     private static $timerQueue = [];
 
     /**
-     * associative array of timer labels
+     * associative array of timer labels.
      *
      * @var string[]
      */
     private static $timerLabels = [];
 
     /**
-     * Force dump via debug.log event, if possible
+     * Force dump via debug.log event, if possible.
      * @var bool
      */
     private static $eventDumper = false;
 
     /**
-     * Dump one or more variables
+     * Dump one or more variables.
      *
      * @param mixed $data variable(s) to dump
      */
@@ -75,7 +74,7 @@ class Debug extends \Kint
     }
 
     /**
-     * Dump one or more variables to the log
+     * Dump one or more variables to the log.
      *
      * @param mixed $data variable(s) to dump
      */
@@ -92,7 +91,7 @@ class Debug extends \Kint
     }
 
     /**
-     * dump using debug.log event if possible (i.e. in debugbar, instead of in page)
+     * dump using debug.log event if possible (i.e. in debugbar, instead of in page).
      *
      * @param bool $value true to use event
      */
@@ -102,7 +101,7 @@ class Debug extends \Kint
     }
 
     /**
-     * Display debug backtrace
+     * Display debug backtrace.
      */
     public static function backtrace()
     {
@@ -110,7 +109,7 @@ class Debug extends \Kint
     }
 
     /**
-     * Start a timer
+     * Start a timer.
      *
      * @param string      $name  unique name for timer
      * @param string|null $label optional label for this timer
@@ -129,7 +128,7 @@ class Debug extends \Kint
     }
 
     /**
-     * Stop a timer
+     * Stop a timer.
      *
      * @param string $name unique name for timer
      */
@@ -140,7 +139,7 @@ class Debug extends \Kint
         if ($events->hasListeners($eventName)) {
             $events->triggerEvent($eventName, $name);
         } else {
-            echo $name . ' - ' . (int) (microtime(true) - self::$times[$name]) . " \n";
+            echo $name.' - '.(int) (microtime(true) - self::$times[$name])." \n";
         }
     }
 
@@ -161,7 +160,7 @@ class Debug extends \Kint
     }
 
     /**
-     * Stop a queued timer
+     * Stop a queued timer.
      *
      * @param string $name unique name for timer
      */
@@ -178,12 +177,12 @@ class Debug extends \Kint
     }
 
     /**
-     * dump and queued timer data and reset the queue
+     * dump and queued timer data and reset the queue.
      *
      * Note: The DebugBar logger will add any unprocessed queue data to its
      * timeline automatically, if you use queued timers and don't call this.
      *
-     * @param boolean $returnOnly if true do not dump queue, only return it
+     * @param bool $returnOnly if true do not dump queue, only return it
      *
      * @return array of time data see \Xmf\Debug::$timerQueue
      */
@@ -199,7 +198,7 @@ class Debug extends \Kint
     }
 
     /**
-     * start_trace - turn on xdebug trace
+     * start_trace - turn on xdebug trace.
      *
      * Requires xdebug extension
      *
@@ -214,15 +213,15 @@ class Debug extends \Kint
         if (function_exists('xdebug_start_trace')) {
             ini_set('xdebug.collect_params', $collect_params);
             ini_set('xdebug.collect_return', $collect_return);
-            if ($tracefile === '') {
-                $tracefile = \XoopsBaseConfig::get('var-path') . '/logs/php_trace';
+            if ('' === $tracefile) {
+                $tracefile = \XoopsBaseConfig::get('var-path').'/logs/php_trace';
             }
             xdebug_start_trace($tracefile);
         }
     }
 
     /**
-     * stop_trace - turn off xdebug trace
+     * stop_trace - turn off xdebug trace.
      *
      * Requires xdebug extension
      */
@@ -240,7 +239,7 @@ class Debug extends \Kint
     private static function doOnce()
     {
         static $done;
-        if ($done !== true) {
+        if (true !== $done) {
             $done = true;
             $class = get_called_class();
             parent::$aliases[] = [$class, 'dump'];

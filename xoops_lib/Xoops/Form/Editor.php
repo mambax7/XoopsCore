@@ -12,14 +12,13 @@
 namespace Xoops\Form;
 
 /**
- * Editor - an editor element
+ * Editor - an editor element.
  *
  * @category  Xoops\Form\Editor
- * @package   Xoops\Form
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2001-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0.0
  */
 class Editor extends TextArea
@@ -30,17 +29,17 @@ class Editor extends TextArea
     public $editor;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string     $caption   Caption
-     * @param string     $name      Name for textarea field
-     * @param array|null $configs   configuration - keys:
+     * @param string     $caption Caption
+     * @param string     $name    Name for textarea field
+     * @param array|null $configs configuration - keys:
      *                                 editor - editor identifier
      *                                 name - textarea field name
      *                                 width, height - dimensions for textarea
      *                                 value - text content
-     * @param bool       $nohtml    use non-WYSIWYG editor onfailure
-     * @param string     $OnFailure editor to be used if current one failed
+     * @param bool   $nohtml    use non-WYSIWYG editor onfailure
+     * @param string $OnFailure editor to be used if current one failed
      */
     public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
     {
@@ -62,7 +61,7 @@ class Editor extends TextArea
     /**
      * renderValidationJS
      * TEMPORARY SOLUTION to 'override' original renderValidationJS method
-     * with custom XoopsEditor's renderValidationJS method
+     * with custom XoopsEditor's renderValidationJS method.
      *
      * @return string|false
      */
@@ -74,15 +73,17 @@ class Editor extends TextArea
                 $this->editor->setCaption($this->getCaption());
                 $this->editor->setRequired($this->isRequired());
                 $ret = $this->editor->renderValidationJS();
+
                 return $ret;
             }
             parent::renderValidationJS();
         }
+
         return false;
     }
 
     /**
-     * render
+     * render.
      *
      * @return string
      */
@@ -91,6 +92,7 @@ class Editor extends TextArea
         if ($this->editor instanceof \XoopsEditor) {
             return $this->editor->render();
         }
+
         return '';
     }
 }

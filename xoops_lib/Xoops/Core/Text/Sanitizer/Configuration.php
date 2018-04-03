@@ -18,11 +18,10 @@ use Xmf\Yaml;
  * for attributes and parameters.
  *
  * @category  Sanitizer
- * @package   Xoops\Core\Text
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Configuration extends ConfigurationAbstract
 {
@@ -41,7 +40,7 @@ class Configuration extends ConfigurationAbstract
     }
 
     /**
-     * readSanitizerPreferences - read configured sanitizer preferences
+     * readSanitizerPreferences - read configured sanitizer preferences.
      *
      * If configuration file does not exist, create it.
      *
@@ -76,11 +75,12 @@ class Configuration extends ConfigurationAbstract
         if ($changed) {
             $this->saveSanitizerPrefrences($sanitizerPrefs);
         }
+
         return $sanitizerPrefs;
     }
 
     /**
-     * saveSanitizerPreferences - record array of sanitizer preferences in config file
+     * saveSanitizerPreferences - record array of sanitizer preferences in config file.
      *
      * @param array $sanitizerPrefs array of sanitizer preferences to save
      */
@@ -88,6 +88,7 @@ class Configuration extends ConfigurationAbstract
     {
         if (is_array($sanitizerPrefs)) {
             $xoops = \Xoops::getInstance();
+
             try {
                 Yaml::save($sanitizerPrefs, $xoops->path($this->sanitizerPrefsFilename));
             } catch (\Exception $e) {

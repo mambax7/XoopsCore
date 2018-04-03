@@ -10,14 +10,14 @@
 */
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsGroupPerm extends Xoops\Core\Kernel\Handlers\XoopsGroupPerm
 {
 }
 
 /**
- * This class is for compatibility with pre 2.6.0 code
+ * This class is for compatibility with pre 2.6.0 code.
  */
 class XoopsGroupPermHandler extends Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler
 {

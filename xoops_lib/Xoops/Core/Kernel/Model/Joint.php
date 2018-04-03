@@ -18,11 +18,10 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
  * Object joint handler class.
  *
  * @category  Xoops\Core\Kernel\Model\Joint
- * @package   Xoops\Core\Kernel
  * @author    Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.3.0
  *
  * Usage of methods provided by XoopsModelJoint:
@@ -42,14 +41,14 @@ use Xoops\Core\Kernel\XoopsModelAbstract;
 class Joint extends XoopsModelAbstract
 {
     /**
-     * get a list of objects matching a condition joint with another related object
+     * get a list of objects matching a condition joint with another related object.
      *
-     * @param CriteriaElement|null $criteria     criteria to match
-     * @param array                $fields       variables to fetch
-     * @param bool                 $asObject     flag indicating as object, otherwise as array
-     * @param string               $field_link   field of linked object for JOIN;
+     * @param CriteriaElement|null $criteria   criteria to match
+     * @param array                $fields     variables to fetch
+     * @param bool                 $asObject   flag indicating as object, otherwise as array
+     * @param string               $field_link field of linked object for JOIN;
      *                                            deprecated, for backward compatibility only
-     * @param string               $field_object field of current object for JOIN;
+     * @param string $field_object field of current object for JOIN;
      *                                            deprecated, for backward compatibility only
      *
      * @return false|array array as requested by $asObject
@@ -73,8 +72,8 @@ class Joint extends XoopsModelAbstract
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
         if (is_array($fields) && count($fields)) {
-            if (!in_array('o.' . $this->handler->keyName, $fields, true)) {
-                $fields[] = 'o.' . $this->handler->keyName;
+            if (!in_array('o.'.$this->handler->keyName, $fields, true)) {
+                $fields[] = 'o.'.$this->handler->keyName;
             }
             $first = true;
             foreach ($fields as $field) {
@@ -86,10 +85,10 @@ class Joint extends XoopsModelAbstract
                 }
             }
         } else {
-            $qb ->select('o.*')
+            $qb->select('o.*')
                 ->addSelect('l.*');
         }
-        $qb ->from($this->handler->table, 'o')
+        $qb->from($this->handler->table, 'o')
             ->leftJoin(
                 'o',
                 $this->handler->table_link,
@@ -116,11 +115,12 @@ class Joint extends XoopsModelAbstract
             }
             unset($object);
         }
+
         return $ret;
     }
 
     /**
-     * Count of objects matching a condition
+     * Count of objects matching a condition.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -134,7 +134,7 @@ class Joint extends XoopsModelAbstract
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
-        $qb ->select("COUNT(DISTINCT o.{$this->handler->keyName})")
+        $qb->select("COUNT(DISTINCT o.{$this->handler->keyName})")
             ->from($this->handler->table, 'o')
             ->leftJoin(
                 'o',
@@ -148,11 +148,12 @@ class Joint extends XoopsModelAbstract
         }
 
         $result = $qb->execute();
+
         return $result->fetchColumn(0);
     }
 
     /**
-     * array of count of objects matching a condition of, groupby linked object keyname
+     * array of count of objects matching a condition of, groupby linked object keyname.
      *
      * @param CriteriaElement $criteria criteria to match
      *
@@ -166,7 +167,7 @@ class Joint extends XoopsModelAbstract
 
         $qb = $this->handler->db2->createXoopsQueryBuilder();
 
-        $qb ->select("l.{$this->handler->field_link}")
+        $qb->select("l.{$this->handler->field_link}")
             ->addSelect('COUNT(*)')
             ->from($this->handler->table, 'o')
             ->leftJoin(
@@ -180,7 +181,7 @@ class Joint extends XoopsModelAbstract
             $criteria->renderQb($qb);
         }
 
-        $qb ->groupBy("l.{$this->handler->field_link}");
+        $qb->groupBy("l.{$this->handler->field_link}");
 
         $result = $qb->execute();
 
@@ -188,11 +189,12 @@ class Joint extends XoopsModelAbstract
         while (list($id, $count) = $result->fetch(\PDO::FETCH_NUM)) {
             $ret[$id] = $count;
         }
+
         return $ret;
     }
 
     /**
-     * update objects matching a condition against linked objects
+     * update objects matching a condition against linked objects.
      *
      * @param array                $data     array of key => value
      * @param CriteriaElement|null $criteria criteria to match
@@ -213,20 +215,20 @@ class Joint extends XoopsModelAbstract
 
         $set = [];
         foreach ($data as $key => $val) {
-            $set[] = "o.{$key}=" . $this->handler->db2->quote($val);
+            $set[] = "o.{$key}=".$this->handler->db2->quote($val);
         }
-        $sql = " UPDATE {$this->handler->table} AS o" . ' SET ' . implode(', ', $set)
-            . " LEFT JOIN {$this->handler->table_link} AS l "
-            . "ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
+        $sql = " UPDATE {$this->handler->table} AS o".' SET '.implode(', ', $set)
+            ." LEFT JOIN {$this->handler->table_link} AS l "
+            ."ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql .= ' '.$criteria->renderWhere();
         }
 
         return $this->handler->db2->executeUpdate($sql);
     }
 
     /**
-     * Delete objects matching a condition against linked objects
+     * Delete objects matching a condition against linked objects.
      *
      * @param CriteriaElement|null $criteria criteria to match
      *
@@ -245,17 +247,17 @@ class Joint extends XoopsModelAbstract
         }
 
         $sql = "DELETE FROM {$this->handler->table} AS o "
-            . "LEFT JOIN {$this->handler->table_link} AS l "
-            . "ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
+            ."LEFT JOIN {$this->handler->table_link} AS l "
+            ."ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && ($criteria instanceof CriteriaElement)) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql .= ' '.$criteria->renderWhere();
         }
 
         return $this->handler->db2->executeUpdate($sql);
     }
 
     /**
-     * Validate information for the linkage
+     * Validate information for the linkage.
      *
      * @return bool
      */
@@ -263,11 +265,13 @@ class Joint extends XoopsModelAbstract
     {
         if (empty($this->handler->table_link) || empty($this->handler->field_link)) {
             trigger_error('The linked table is not set yet.', E_USER_WARNING);
+
             return false;
         }
         if (empty($this->handler->field_object)) {
             $this->handler->field_object = $this->handler->field_link;
         }
+
         return true;
     }
 }

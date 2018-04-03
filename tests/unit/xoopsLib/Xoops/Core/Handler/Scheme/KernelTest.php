@@ -4,7 +4,7 @@ namespace Xoops\Core\Handler\Scheme;
 
 use Xoops\Core\Handler\Factory;
 
-require_once __DIR__ . '/../../../../../init_new.php';
+require_once __DIR__.'/../../../../../init_new.php';
 
 class KernelTest extends \PHPUnit\Framework\TestCase
 {
@@ -36,7 +36,7 @@ class KernelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $name that would be supplied to Xoops::getHandler()
+     * @param string $name         that would be supplied to Xoops::getHandler()
      * @param string $handlerClass FQN of expected handler class
      *
      * @dataProvider handlerValueProvider

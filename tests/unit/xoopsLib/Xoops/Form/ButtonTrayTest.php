@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class ButtonTrayTest extends \PHPUnit\Framework\TestCase
 {
@@ -38,19 +38,19 @@ class ButtonTrayTest extends \PHPUnit\Framework\TestCase
     {
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input type="button"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input type="button"'));
 
         $object = new ButtonTray('name2', '', '', '', true);
         $value = $object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<input type="submit"') !== false);
-        $this->assertTrue(strpos($value, '<input type="button"') !== false);
+        $this->assertTrue(false !== strpos($value, '<input type="submit"'));
+        $this->assertTrue(false !== strpos($value, '<input type="button"'));
     }
 
     public function test__construct()
     {
         $oldWay = new ButtonTray('myname', 'myvalue', 'button');
-        $newWay = new ButtonTray(['name' => 'myname', 'value' => 'myvalue', 'type' => 'button', ]);
+        $newWay = new ButtonTray(['name' => 'myname', 'value' => 'myvalue', 'type' => 'button']);
         $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

@@ -12,20 +12,18 @@
 use Xoops\Core\Kernel\Handlers\XoopsGroupPermHandler;
 
 /**
- * page module
+ * page module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         page
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
-
 class PageGroupPermHandler extends XoopsGroupPermHandler
 {
     /**
-     * Check permission
+     * Check permission.
      *
      * @param string    $gperm_name
      * @param int       $gperm_itemid
@@ -50,18 +48,18 @@ class PageGroupPermHandler extends XoopsGroupPermHandler
         $groups_add = array_diff($groups, array_values($groups_exists));
 
         // delete
-        if (count($groups_delete) !== 0) {
+        if (0 !== count($groups_delete)) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $content_id));
             $criteria->add(new Criteria('gperm_modid', $module_id));
             $criteria->add(new Criteria('gperm_name', 'page_view_item', '='));
-            $criteria->add(new Criteria('gperm_groupid', '(' . implode(', ', $groups_delete) . ')', 'IN'));
+            $criteria->add(new Criteria('gperm_groupid', '('.implode(', ', $groups_delete).')', 'IN'));
             if (parent::deleteAll($criteria)) {
             }
         }
 
         // Add
-        if (count($groups_add) !== 0) {
+        if (0 !== count($groups_add)) {
             foreach ($groups_add as $group_id) {
                 parent::addRight('page_view_item', $content_id, $group_id, $module_id);
             }

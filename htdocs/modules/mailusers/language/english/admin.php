@@ -10,11 +10,10 @@
 */
 
 /**
- * Mailusers Plugin
+ * Mailusers Plugin.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         mailusers
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
@@ -31,7 +30,6 @@
 // RMV-NOTIFY
 //define("_AM_MAILUSERS_THEMEOK", "Selectable themes");
 //define("_AM_MAILUSERS_THEMEOKDSC", "Choose themes that users can select as the default theme");
-
 
 //define("_AM_MAILUSERS_AMIFCHECKD", "If this is checked, all the above plus private messaging will be ignored");
 define('_AM_MAILUSERS_EMAIL', 'Email');

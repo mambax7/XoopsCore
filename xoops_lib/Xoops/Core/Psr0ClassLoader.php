@@ -20,14 +20,13 @@ namespace Xoops\Core;
  * @endcode
  *
  * @category Xoops\Core\Psr0ClassLoader
- * @package  Xoops
  * @author   Jonathan H. Wage <jonwage@gmail.com>
  * @author   Roman S. Borschel <roman@code-factory.org>
  * @author   Matthew Weier O'Phinney <matthew@zend.com>
  * @author   Kris Wallsmith <kris.wallsmith@gmail.com>
  * @author   Fabien Potencier <fabien.potencier@symfony-project.org>
  * @author   Richard Griffith <richard@geekwright.com>
- * @link     https://gist.github.com/jwage/221634
+ * @see     https://gist.github.com/jwage/221634
  * @see      http://www.php-fig.org/
  */
 class Psr0ClassLoader
@@ -54,7 +53,7 @@ class Psr0ClassLoader
     }
 
     /**
-     * addLoader sets all basic options and registers the autoloader
+     * addLoader sets all basic options and registers the autoloader.
      *
      * @param type $namespace namespace
      * @param type $path      path to the namespace's top directory
@@ -70,6 +69,7 @@ class Psr0ClassLoader
         $loader->setNamespaceSeparator($separator);
         $loader->setFileExtension($extension);
         $loader->register();
+
         return $loader;
     }
 
@@ -156,24 +156,24 @@ class Psr0ClassLoader
      */
     public function loadClass($className)
     {
-        if ($this->namespace === null
-            || $this->namespace . $this->namespaceSeparator
-            === substr($className, 0, strlen($this->namespace . $this->namespaceSeparator))
+        if (null === $this->namespace
+            || $this->namespace.$this->namespaceSeparator
+            === substr($className, 0, strlen($this->namespace.$this->namespaceSeparator))
         ) {
             $fileName = '';
             $namespace = '';
-            if (($lastNsPos = strripos($className, $this->namespaceSeparator)) !== false) {
+            if (false !== ($lastNsPos = strripos($className, $this->namespaceSeparator))) {
                 $namespace = substr($className, 0, $lastNsPos);
                 $className = substr($className, $lastNsPos + 1);
                 $fileName = str_replace(
                     $this->namespaceSeparator,
                     DIRECTORY_SEPARATOR,
                     $namespace
-                ) . DIRECTORY_SEPARATOR;
+                ).DIRECTORY_SEPARATOR;
             }
-            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->fileExtension;
+            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className).$this->fileExtension;
 
-            $absolute = ($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            $absolute = (null !== $this->includePath ? $this->includePath.DIRECTORY_SEPARATOR : '').$fileName;
             if (file_exists($absolute)) {
                 require $absolute;
             }

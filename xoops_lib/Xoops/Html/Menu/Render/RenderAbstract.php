@@ -14,14 +14,13 @@ namespace Xoops\Html\Menu\Render;
 use Xoops\Html\Menu\ItemList;
 
 /**
- * RenderAbstract - base render class
+ * RenderAbstract - base render class.
  *
  * @category  Xoops\Html\Menu\Render
- * @package   RenderAbstract
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 abstract class RenderAbstract
 {
@@ -37,7 +36,7 @@ abstract class RenderAbstract
     }
 
     /**
-     * render menu from ItemList
+     * render menu from ItemList.
      *
      * @param ItemList $menu menu items
      *

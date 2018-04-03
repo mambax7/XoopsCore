@@ -10,20 +10,18 @@
 */
 
 /**
- *  Xoops Form Class Elements
+ *  Xoops Form Class Elements.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         class
  * @since           2.3.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-
 class XoopsUserUtility
 {
     /**
-     * XoopsUserUtility::sendWelcome
+     * XoopsUserUtility::sendWelcome.
      *
      * @param int|XoopsUser $user id or user object
      *
@@ -46,10 +44,10 @@ class XoopsUserUtility
         }
 
         $xoopsMailer = $xoops->getMailer();
-        if ($xoops->getConfig('welcome_type') === 1 || $xoops->getConfig('welcome_type') === 3) {
+        if (1 === $xoops->getConfig('welcome_type') || 3 === $xoops->getConfig('welcome_type')) {
             $xoopsMailer->useMail();
         }
-        if ($xoops->getConfig('welcome_type') === 2 || $xoops->getConfig('welcome_type') === 3) {
+        if (2 === $xoops->getConfig('welcome_type') || 3 === $xoops->getConfig('welcome_type')) {
             $xoopsMailer->usePM();
         }
         $xoopsMailer->setTemplate('welcome.tpl');
@@ -60,11 +58,12 @@ class XoopsUserUtility
         } else {
             $xoopsMailer->assign('TERMSOFUSE', '');
         }
+
         return $xoopsMailer->send();
     }
 
     /**
-     * XoopsUserUtility::validate
+     * XoopsUserUtility::validate.
      *
      * @return false|string
      */
@@ -84,15 +83,19 @@ class XoopsUserUtility
         switch ($args_num) {
             case 1:
                 $user = $args[0];
+
                 break;
             case 2:
                 list($uname, $email) = $args;
+
                 break;
             case 3:
                 list($user, $pass, $vpass) = $args;
+
                 break;
             case 4:
                 list($uname, $email, $pass, $vpass) = $args;
+
                 break;
             default:
                 return false;
@@ -113,18 +116,19 @@ class XoopsUserUtility
         $stop = '';
         // Invalid email address
         if (!$xoops->checkEmail($email)) {
-            $stop .= XoopsLocale::E_INVALID_EMAIL . '<br />';
+            $stop .= XoopsLocale::E_INVALID_EMAIL.'<br />';
         }
         if (strrpos($email, ' ') > 0) {
-            $stop .= XoopsLocale::E_EMAIL_SHOULD_NOT_CONTAIN_SPACES . '<br />';
+            $stop .= XoopsLocale::E_EMAIL_SHOULD_NOT_CONTAIN_SPACES.'<br />';
         }
         // Check forbidden email address if current operator is not an administrator
         if (!$xoops->userIsAdmin) {
             $bad_emails = $xoops->getConfig('bad_emails');
             if (!empty($bad_emails)) {
                 foreach ($bad_emails as $be) {
-                    if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
-                        $stop .= XoopsLocale::E_INVALID_EMAIL . '<br />';
+                    if (!empty($be) && preg_match('/'.$be.'/i', $email)) {
+                        $stop .= XoopsLocale::E_INVALID_EMAIL.'<br />';
+
                         break;
                     }
                 }
@@ -133,23 +137,24 @@ class XoopsUserUtility
         // $uname = XoopsLocale::trim($uname);
         // no controls, puctuation, symbols, spaces or invisible separators
         if (!preg_match('/^[^\p{C}\p{P}\p{S}\p{Z}]+$/u', $uname)) {
-            $stop .= XoopsLocale::E_INVALID_USERNAME . '<br />';
+            $stop .= XoopsLocale::E_INVALID_USERNAME.'<br />';
         }
         // Check uname settings if current operator is not an administrator
         if (!$xoops->userIsAdmin) {
             $maxuname = $xoops->getConfig('maxuname');
             if (!empty($maxuname) && mb_strlen($uname) > $maxuname) {
-                $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_LESS_THAN, $maxuname) . '<br />';
+                $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_LESS_THAN, $maxuname).'<br />';
             }
             $minuname = $xoops->getConfig('minuname');
             if (!empty($minuname) && mb_strlen($uname) < $minuname) {
-                $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_MORE_THAN, $minuname) . '<br />';
+                $stop .= sprintf(XoopsLocale::EF_USERNAME_MUST_BE_MORE_THAN, $minuname).'<br />';
             }
             $bad_unames = $xoops->getConfig('bad_unames');
             if (!empty($bad_unames)) {
                 foreach ($bad_unames as $bu) {
-                    if (!empty($bu) && preg_match('/' . $bu . '/i', $uname)) {
-                        $stop .= XoopsLocale::E_NAME_IS_RESERVED . '<br />';
+                    if (!empty($bu) && preg_match('/'.$bu.'/i', $uname)) {
+                        $stop .= XoopsLocale::E_NAME_IS_RESERVED.'<br />';
+
                         break;
                     }
                 }
@@ -166,7 +171,7 @@ class XoopsUserUtility
         }
         $count = $user_handler->getCount($criteria);
         if ($count > 0) {
-            $stop .= XoopsLocale::E_USERNAME_TAKEN . '<br />';
+            $stop .= XoopsLocale::E_USERNAME_TAKEN.'<br />';
         }
 
         $criteria = new CriteriaCompo(new Criteria('email', $email));
@@ -175,30 +180,31 @@ class XoopsUserUtility
         }
         $count = $user_handler->getCount($criteria);
         if ($count > 0) {
-            $stop .= XoopsLocale::E_EMAIL_TAKEN . '<br />';
+            $stop .= XoopsLocale::E_EMAIL_TAKEN.'<br />';
         }
 
         // If password is not set, skip password validation
-        if ($pass === null && $vpass === null) {
+        if (null === $pass && null === $vpass) {
             return $stop;
         }
 
         if (empty($pass) || empty($vpass)) {
-            $stop .= XoopsLocale::E_MUST_PROVIDE_PASSWORD . '<br />';
+            $stop .= XoopsLocale::E_MUST_PROVIDE_PASSWORD.'<br />';
         }
         if (isset($pass) && isset($vpass) && ($pass !== $vpass)) {
-            $stop .= XoopsLocale::E_PASSWORDS_MUST_MATCH . '<br />';
+            $stop .= XoopsLocale::E_PASSWORDS_MUST_MATCH.'<br />';
         } else {
             $minpass = $xoops->getConfig('minpass');
-            if (($pass !== '') && (!empty($minpass)) && (mb_strlen($pass) < $minpass)) {
-                $stop .= sprintf(XoopsLocale::EF_PASSWORD_MUST_BE_GREATER_THAN, $minpass) . '<br />';
+            if (('' !== $pass) && (!empty($minpass)) && (mb_strlen($pass) < $minpass)) {
+                $stop .= sprintf(XoopsLocale::EF_PASSWORD_MUST_BE_GREATER_THAN, $minpass).'<br />';
             }
         }
+
         return $stop;
     }
 
     /**
-     * Get client IP
+     * Get client IP.
      *
      * Adapted from PMA_getIp() [phpmyadmin project]
      *
@@ -249,7 +255,7 @@ class XoopsUserUtility
     }
 
     /**
-     * XoopsUserUtility::getUnameFromIds()
+     * XoopsUserUtility::getUnameFromIds().
      *
      * @param array $uids    array of int ids
      * @param bool  $usereal use real names if true
@@ -269,7 +275,7 @@ class XoopsUserUtility
         $users = [];
         if (count($userids) > 0) {
             $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
-            $criteria->add(new Criteria('uid', "('" . implode(',', array_unique($userids)) . "')", 'IN'));
+            $criteria->add(new Criteria('uid', "('".implode(',', array_unique($userids))."')", 'IN'));
 
             $user_handler = $xoops->getHandlerUser();
             if (!$rows = $user_handler->getAll($criteria, ['uid', 'uname', 'name'], false, true)) {
@@ -282,19 +288,20 @@ class XoopsUserUtility
                     $users[$uid] = $myts->htmlSpecialChars($row['uname']);
                 }
                 if ($linked) {
-                    $users[$uid] = '<a href="' . \XoopsBaseConfig::get('url') . '/userinfo.php?uid='
-                        . $uid . '" title="' . $users[$uid] . '">' . $users[$uid] . '</a>';
+                    $users[$uid] = '<a href="'.\XoopsBaseConfig::get('url').'/userinfo.php?uid='
+                        .$uid.'" title="'.$users[$uid].'">'.$users[$uid].'</a>';
                 }
             }
         }
         if (in_array(0, $users, true)) {
             $users[0] = $myts->htmlSpecialChars($xoops->getConfig('anonymous'));
         }
+
         return $users;
     }
 
     /**
-     * XoopsUserUtility::getUnameFromId()
+     * XoopsUserUtility::getUnameFromId().
      *
      * @param int  $userid  id of user
      * @param bool $usereal use real name if true
@@ -318,14 +325,15 @@ class XoopsUserUtility
                     $username = $user->getVar('uname');
                 }
                 if (!empty($linked)) {
-                    $username = '<a href="' . \XoopsBaseConfig::get('url') . '/userinfo.php?uid='
-                        . $userid . '" title="' . $username . '">' . $username . '</a>';
+                    $username = '<a href="'.\XoopsBaseConfig::get('url').'/userinfo.php?uid='
+                        .$userid.'" title="'.$username.'">'.$username.'</a>';
                 }
             }
         }
         if (empty($username)) {
             $username = $myts->htmlSpecialChars($xoops->getConfig('anonymous'));
         }
+
         return $username;
     }
 }

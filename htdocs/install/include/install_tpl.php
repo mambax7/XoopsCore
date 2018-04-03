@@ -10,11 +10,10 @@
 */
 
 /**
- * Installer template file
+ * Installer template file.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     installer
  * @since       2.3.0
  * @author      Haruki Setoyama  <haruki@planewave.org>
  * @author      Kazumi Ono <webmaster@myweb.ne.jp>
@@ -24,7 +23,6 @@
  * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
  * @version     $Id$
  **/
-
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $pageHasHelp = $_SESSION['pageHasHelp'];
@@ -36,7 +34,7 @@ $wizard = $_SESSION['wizard'];
 
 $keys = array_keys($wizard->pages);
 $current = $wizard->pageIndex;
-if ($current === 0) {
+if (0 === $current) {
     $pages = [
         [
             'name' => $wizard->pages[$wizard->currentPage]['name'], 'index' => $wizard->pageIndex + 1,
@@ -88,15 +86,15 @@ if ($current === 0) {
 
 <head>
     <title>
-        <?php echo XOOPS_VERSION . ' : ' . XOOPS_INSTALL_WIZARD; ?>
-        (<?php echo($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)
+        <?php echo XOOPS_VERSION.' : '.XOOPS_INSTALL_WIZARD; ?>
+        (<?php echo($wizard->pageIndex + 1).'/'.count($wizard->pages); ?>)
     </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET; ?>"/>
     <link rel="shortcut icon" type="image/ico" href="../favicon.ico"/>
     <link charset="UTF-8" rel="stylesheet" type="text/css" media="all" href="css/style.css"/>
     <?php
-    if (file_exists('locale/' . $wizard->language . '/style.css')) {
-        echo '<link charset="UTF-8" rel="stylesheet" type="text/css" media="all" href="locale/' . $wizard->language . '/style.css" />';
+    if (file_exists('locale/'.$wizard->language.'/style.css')) {
+        echo '<link charset="UTF-8" rel="stylesheet" type="text/css" media="all" href="locale/'.$wizard->language.'/style.css" />';
     }
     ?>
 
@@ -126,7 +124,7 @@ if ($current === 0) {
           method='post'>
         <div id="xo-page-title">
             <?php if (@$pageHasHelp) {
-        echo '<img id="help_button" src="./img/help.png" alt="' . HELP_BUTTON_ALT . '" title="' . HELP_BUTTON_ALT . "\" onclick=\"document.body.className = 'show-help';\" />";
+        echo '<img id="help_button" src="./img/help.png" alt="'.HELP_BUTTON_ALT.'" title="'.HELP_BUTTON_ALT."\" onclick=\"document.body.className = 'show-help';\" />";
     } ?>
             <span class="index"><?php echo $wizard->pageIndex + 1; ?></span>
             <span class="setup"><?php echo XOOPS_INSTALL_WIZARD; ?></span>
@@ -136,7 +134,7 @@ if ($current === 0) {
             <?php echo $content; ?>
         </div>
         <div id="buttons">
-            <?php if ($wizard->pageIndex !== 0) {
+            <?php if (0 !== $wizard->pageIndex) {
         ?>
             <button type="button" class="buttong" accesskey="p"
                     onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'">

@@ -10,12 +10,10 @@
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         xcaptcha
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 class xcaptcha extends XoopsCaptcha
 {
     public $captchaHandler;
@@ -34,7 +32,7 @@ class xcaptcha extends XoopsCaptcha
         $this->config = $this->loadConfig();
         $this->plugin_List = $this->getPluginList();
         $this->plugin_config = $this->loadConfigPlugin();
-        $this->xcaptcha_path_plugin = \XoopsBaseConfig::get('root-path') . '/modules/xcaptcha/plugins';
+        $this->xcaptcha_path_plugin = \XoopsBaseConfig::get('root-path').'/modules/xcaptcha/plugins';
     }
 
     public static function getInstance()
@@ -44,6 +42,7 @@ class xcaptcha extends XoopsCaptcha
             $class = __CLASS__;
             $instance = new $class();
         }
+
         return $instance;
     }
 
@@ -71,10 +70,11 @@ class xcaptcha extends XoopsCaptcha
     {
         $ret = [];
 
-        foreach (glob($this->captchaHandler->path_basic . '/config.*.php') as $filename) {
+        foreach (glob($this->captchaHandler->path_basic.'/config.*.php') as $filename) {
             $plugin_List = preg_replace('/(config\.)(.*)(\.php)/', '$2', basename($filename));
             $ret[$plugin_List] = $plugin_List;
         }
+
         return $ret;
     }
 
@@ -84,6 +84,7 @@ class xcaptcha extends XoopsCaptcha
         foreach ($this->plugin_List as $key) {
             $config = $this->loadConfig($key);
         }
+
         return $config;
     }
 
@@ -99,18 +100,20 @@ class xcaptcha extends XoopsCaptcha
         foreach (array_keys($this->config) as $key) {
             $config[$key] = $_POST[$key];
         }
+
         return $config;
     }
 
     public function loadPluginHandler($name = null)
     {
         $name = empty($name) ? 'text' : $name;
-        $class = 'Xcaptcha' . ucfirst($name);
+        $class = 'Xcaptcha'.ucfirst($name);
         $this->Pluginhandler = null;
-        if (XoopsLoad::fileExists($file = $this->xcaptcha_path_plugin . '/' . $name . '.php')) {
+        if (XoopsLoad::fileExists($file = $this->xcaptcha_path_plugin.'/'.$name.'.php')) {
             require_once $file;
             $this->Pluginhandler = new $class($this);
         }
+
         return $this->Pluginhandler;
     }
 }

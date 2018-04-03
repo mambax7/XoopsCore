@@ -18,12 +18,11 @@ namespace Xmf\Module\Helper;
  * any arbitrary data (i.e. array) can be stored.
  *
  * @category  Xmf\Module\Helper\Session
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Session extends AbstractHelper
 {
@@ -37,11 +36,11 @@ class Session extends AbstractHelper
      */
     public function init()
     {
-        $this->prefix = $this->module->getVar('dirname') . '_';
+        $this->prefix = $this->module->getVar('dirname').'_';
     }
 
     /**
-     * Sets a named session variable respecting our module prefix
+     * Sets a named session variable respecting our module prefix.
      *
      * @param string $name  name of variable
      * @param mixed  $value value of variable
@@ -53,12 +52,12 @@ class Session extends AbstractHelper
     }
 
     /**
-     * Fetch a named session variable respecting our module prefix
+     * Fetch a named session variable respecting our module prefix.
      *
      * @param string $name    name of variable
      * @param mixed  $default default value to return if config $name is not set
      *
-     * @return mixed  $value value of session variable or false if not set
+     * @return mixed $value value of session variable or false if not set
      */
     public function get($name, $default = false)
     {
@@ -66,11 +65,12 @@ class Session extends AbstractHelper
         if (isset($_SESSION[$prefixedName])) {
             return unserialize($_SESSION[$prefixedName]);
         }
+
         return $default;
     }
 
     /**
-     * Deletes a named session variable respecting our module prefix
+     * Deletes a named session variable respecting our module prefix.
      *
      * @param string $name name of variable
      */
@@ -82,12 +82,12 @@ class Session extends AbstractHelper
     }
 
     /**
-     * Delete all session variable starting with our module prefix
+     * Delete all session variable starting with our module prefix.
      */
     public function destroy()
     {
         foreach ($_SESSION as $key => $value) {
-            if (substr_compare($key, $this->prefix, 0, strlen($this->prefix)) === 0) {
+            if (0 === substr_compare($key, $this->prefix, 0, strlen($this->prefix))) {
                 $_SESSION[$key] = null;
                 unset($_SESSION[$key]);
             }
@@ -95,7 +95,7 @@ class Session extends AbstractHelper
     }
 
     /**
-     * Add our module prefix to a name
+     * Add our module prefix to a name.
      *
      * @param string $name name to prefix
      *
@@ -103,7 +103,7 @@ class Session extends AbstractHelper
      */
     protected function prefix($name)
     {
-        $prefixedName = $this->prefix . $name;
+        $prefixedName = $this->prefix.$name;
 
         return $prefixedName;
     }

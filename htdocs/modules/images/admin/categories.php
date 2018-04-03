@@ -13,7 +13,7 @@ use Xmf\Request;
 use Xoops\Core\FixedGroups;
 
 /**
- * images module
+ * images module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -21,7 +21,7 @@ use Xoops\Core\FixedGroups;
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
-include __DIR__ . '/header.php';
+include __DIR__.'/header.php';
 
 // Call Header
 $xoops->header('admin:images/images_admin_categories.tpl');
@@ -36,7 +36,7 @@ switch ($op) {
         }
 
         $imgcat_id = Request::getInt('imgcat_id', 0);
-        if (isset($imgcat_id) && $imgcat_id !== 0) {
+        if (isset($imgcat_id) && 0 !== $imgcat_id) {
             $obj = $helper->getHandlerCategories()->get($imgcat_id);
             $isnew = false;
         } else {
@@ -81,13 +81,15 @@ switch ($op) {
             }
             $xoops->redirect('categories.php', 2, _AM_IMAGES_CAT_SAVE);
         }
-        $xoops->redirect('categories.php', 2, _AM_IMAGES_CAT_NOTSAVE . '<br />' . implode('<br />', $obj->getHtmlErrors()));
+        $xoops->redirect('categories.php', 2, _AM_IMAGES_CAT_NOTSAVE.'<br />'.implode('<br />', $obj->getHtmlErrors()));
+
         break;
 
     case 'add':
         $obj = $helper->getHandlerCategories()->create();
         $form = $helper->getForm($obj, 'category');
         $xoops->tpl()->assign('form', $form->render());
+
         break;
 
     case 'edit':
@@ -97,6 +99,7 @@ switch ($op) {
             $form = $helper->getForm($obj, 'category');
             $xoops->tpl()->assign('form', $form->render());
         }
+
         break;
 
     case 'del':
@@ -105,7 +108,7 @@ switch ($op) {
             $ok = Request::getInt('ok', 0);
             $obj = $helper->getHandlerCategories()->get($imgcat_id);
 
-            if ($ok === 1) {
+            if (1 === $ok) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('categories.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
@@ -114,10 +117,10 @@ switch ($op) {
                     $images = $helper->getHandlerImages()->getByCategory($obj->getVar('imgcat_id'));
                     foreach ($images as $image) {
                         if ($helper->getHandlerImages()->delete($image)) {
-                            if ($obj->getVar('imgcat_storetype') === 'db') {
+                            if ('db' === $obj->getVar('imgcat_storetype')) {
                                 $helper->getHandlerImagesBody()->delete($helper->getHandlerImagesBody()->get($image->getVar('image_id')));
                             } else {
-                                unlink(\XoopsBaseConfig::get('uploads-path') . '/' . $image->getVar('image_name'));
+                                unlink(\XoopsBaseConfig::get('uploads-path').'/'.$image->getVar('image_name'));
                             }
                         }
                     }
@@ -135,11 +138,12 @@ switch ($op) {
             } else {
                 echo $xoops->confirm(
                     ['op' => 'del', 'ok' => 1, 'imgcat_id' => $imgcat_id],
-                    XOOPS_URL . '/modules/images/admin/categories.php',
+                    XOOPS_URL.'/modules/images/admin/categories.php',
                     sprintf(_AM_IMAGES_CAT_DELETE, $obj->getVar('imgcat_name'))
                 );
             }
         }
+
         break;
 
     case 'display':
@@ -152,6 +156,7 @@ switch ($op) {
                 $error = true;
             }
         }
+
         break;
 
     case 'list':
@@ -172,6 +177,7 @@ switch ($op) {
                 unset($cat_images);
             }
         }
+
         break;
 }
 $xoops->footer();

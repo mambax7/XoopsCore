@@ -3,7 +3,7 @@
 // $Id$
 
 /**
- * package::i.tools
+ * package::i.tools.
  *
  * php-downloader    v1.0    -    www.ipunkt.biz
  *
@@ -26,33 +26,32 @@
  * Official ZIP file format: http://www.pkware.com/appnote.txt
  *
  * @copyright (c)    2002 - www.ipunkt.biz (rok)
- * @package class
  */
 class zipfile
 {
     /**
-     * Array to store compressed data
+     * Array to store compressed data.
      *
      * @var array
      */
     public $datasec = [];
 
     /**
-     * Central directory
+     * Central directory.
      *
      * @var array
      */
     public $ctrl_dir = [];
 
     /**
-     * End of central directory record
+     * End of central directory record.
      *
      * @var string
      */
     public $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 
     /**
-     * Last offset position
+     * Last offset position.
      *
      * @var integer
      */
@@ -62,13 +61,12 @@ class zipfile
      * Converts an Unix timestamp to a four byte DOS date and time format (date
      * in high two bytes, time in low two bytes allowing magnitude comparison).
      *
-     * @param integer $unixtime the current Unix timestamp
-     * @return integer the current date in a four byte DOS format
-     * @access private
+     * @param  int $unixtime the current Unix timestamp
+     * @return int the current date in a four byte DOS format
      */
     public function unix2DosTime($unixtime = 0)
     {
-        $timearray = ($unixtime === 0) ? getdate() : getdate($unixtime);
+        $timearray = (0 === $unixtime) ? getdate() : getdate($unixtime);
         if ($timearray['year'] < 1980) {
             $timearray['year'] = 1980;
             $timearray['mon'] = 1;
@@ -83,20 +81,19 @@ class zipfile
     // end of the 'unix2DosTime()' method
 
     /**
-     * Adds "file" to archive
+     * Adds "file" to archive.
      *
      * @param string $data file contents
      * @param string $name name of the file in the archive (may contains the path)
-     * @param integer $time the current timestamp
-     * @access public
+     * @param int    $time the current timestamp
      */
     public function addFile($data, $name, $time = 0)
     {
         $name = str_replace('\\', '/', $name);
 
         $dtime = dechex($this->unix2DosTime($time));
-        $hexdtime = '\x' . $dtime[6] . $dtime[7] . '\x' . $dtime[4] . $dtime[5] . '\x' . $dtime[2] . $dtime[3] . '\x' . $dtime[0] . $dtime[1];
-        eval('$hexdtime = "' . $hexdtime . '";');
+        $hexdtime = '\x'.$dtime[6].$dtime[7].'\x'.$dtime[4].$dtime[5].'\x'.$dtime[2].$dtime[3].'\x'.$dtime[0].$dtime[1];
+        eval('$hexdtime = "'.$hexdtime.'";');
 
         $fr = "\x50\x4b\x03\x04";
         $fr .= "\x14\x00"; // ver needed to extract
@@ -152,23 +149,22 @@ class zipfile
     // end of the 'addFile()' method
 
     /**
-     * Dumps out file
+     * Dumps out file.
      *
      * @return string the zipped file
-     * @access public
      */
     public function file()
     {
         $data = implode('', $this->datasec);
         $ctrldir = implode('', $this->ctrl_dir);
 
-        return $data . $ctrldir . $this->eof_ctrl_dir . pack(
+        return $data.$ctrldir.$this->eof_ctrl_dir.pack(
             'v',
             count($this->ctrl_dir)
-        ) . // total # of entries "on this disk"
-               pack('v', count($this->ctrl_dir)) . // total # of entries overall
-               pack('V', strlen($ctrldir)) . // size of central dir
-               pack('V', strlen($data)) . // offset to start of central dir
+        ). // total # of entries "on this disk"
+               pack('v', count($this->ctrl_dir)). // total # of entries overall
+               pack('V', strlen($ctrldir)). // size of central dir
+               pack('V', strlen($data)). // offset to start of central dir
                "\x00\x00"; // .zip file comment length
     }
 

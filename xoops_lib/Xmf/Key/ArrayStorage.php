@@ -12,35 +12,35 @@
 namespace Xmf\Key;
 
 /**
- * Xmf\Key\ArrayStorage
+ * Xmf\Key\ArrayStorage.
  *
  * A non-persisting key storage, mainly for testing
  *
  * @category  Xmf\Key\StorageInterface
- * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class ArrayStorage extends \ArrayObject implements StorageInterface
 {
     /**
-     * Save key data by name
+     * Save key data by name.
      *
      * @param string $name key name
      * @param string $data key data, serialized to string if required
      *
-     * @return boolean true if key saved, otherwise false
+     * @return bool true if key saved, otherwise false
      */
     public function save($name, $data)
     {
         $this->offsetSet($name, $data);
+
         return true;
     }
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
@@ -51,15 +51,16 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
         if ($this->offsetExists($name)) {
             return $this->offsetGet($name);
         }
+
         return false;
     }
 
     /**
-     * Fetch key data by name
+     * Fetch key data by name.
      *
      * @param string $name key name
      *
-     * @return boolean true if key exists, otherwise false
+     * @return bool true if key exists, otherwise false
      */
     public function exists($name)
     {
@@ -67,18 +68,20 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
     }
 
     /**
-     * Delete a key
+     * Delete a key.
      *
      * @param string $name key name
      *
-     * @return boolean true if key deleted, otherwise false
+     * @return bool true if key deleted, otherwise false
      */
     public function delete($name)
     {
         if ($this->offsetExists($name)) {
             $this->offsetUnset($name);
+
             return true;
         }
+
         return false;
     }
 }

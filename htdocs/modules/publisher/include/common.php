@@ -10,30 +10,28 @@
  */
 
 /**
- *  Publisher class
+ *  Publisher class.
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Publisher
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 $xoops = \Xoops::getInstance();
 define('PUBLISHER_DIRNAME', basename(dirname(__DIR__)));
-define('PUBLISHER_URL', $xoops->url('modules/' . PUBLISHER_DIRNAME));
-define('PUBLISHER_ADMIN_URL', PUBLISHER_URL . '/admin');
-define('PUBLISHER_UPLOADS_URL', $xoops->url('uploads/' . PUBLISHER_DIRNAME));
-define('PUBLISHER_ROOT_PATH', $xoops->path('modules/' . PUBLISHER_DIRNAME));
-define('PUBLISHER_UPLOADS_PATH', $xoops->path('uploads/' . PUBLISHER_DIRNAME));
+define('PUBLISHER_URL', $xoops->url('modules/'.PUBLISHER_DIRNAME));
+define('PUBLISHER_ADMIN_URL', PUBLISHER_URL.'/admin');
+define('PUBLISHER_UPLOADS_URL', $xoops->url('uploads/'.PUBLISHER_DIRNAME));
+define('PUBLISHER_ROOT_PATH', $xoops->path('modules/'.PUBLISHER_DIRNAME));
+define('PUBLISHER_UPLOADS_PATH', $xoops->path('uploads/'.PUBLISHER_DIRNAME));
 
 $path = dirname(__DIR__);
 XoopsLoad::addMap([
-    'publishermetagen' => $path . '/class/metagen.php',
-    'publisher' => $path . '/class/helper.php',
-    'publisherutils' => $path . '/class/utils.php',
-    'publisherblockform' => $path . '/class/blockform.php',
+    'publishermetagen' => $path.'/class/metagen.php',
+    'publisher' => $path.'/class/helper.php',
+    'publisherutils' => $path.'/class/utils.php',
+    'publisherblockform' => $path.'/class/blockform.php',
 ]);
 
 $publisher = Publisher::getInstance();

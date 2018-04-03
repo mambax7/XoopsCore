@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class FileTest extends \PHPUnit\Framework\TestCase
 {
@@ -37,7 +37,7 @@ class FileTest extends \PHPUnit\Framework\TestCase
     public function test__construct()
     {
         $oldWay = new File('mycaption', 'myname');
-        $newWay = new File(['caption' => 'mycaption', 'name' => 'myname', ]);
+        $newWay = new File(['caption' => 'mycaption', 'name' => 'myname']);
         $this->assertSame($oldWay->render(), $newWay->render());
     }
 }

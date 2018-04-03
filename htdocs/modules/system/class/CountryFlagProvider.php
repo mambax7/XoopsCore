@@ -15,14 +15,13 @@ use Xoops\Core\Service\Response;
 use Xoops\Html\Img;
 
 /**
- * Qrcode provider for service manager
+ * Qrcode provider for service manager.
  *
  * @category  ServiceProvider
- * @package   CountryFlagProvider
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.6.0
  */
 class CountryFlagProvider extends AbstractContract implements CountryflagInterface
@@ -69,7 +68,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
     }
 
     /**
-     * getDescription - get human readable description of the service provider
+     * getDescription - get human readable description of the service provider.
      *
      * @return string
      */
@@ -79,7 +78,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
     }
 
     /**
-     * getImgTag - get a full HTML tag or string to display a flag based on county code
+     * getImgTag - get a full HTML tag or string to display a flag based on county code.
      *
      * @param Response $response    \Xoops\Core\Service\Response object
      * @param string   $countryCode ISO 3166-1 alpha-2 code to select flag
@@ -103,7 +102,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
     }
 
     /**
-     * getFlagUrl
+     * getFlagUrl.
      *
      * @param string $countryCode ISO 3166-1 alpha-2 code to select flag
      * @param string $size        'small', 'medium' or 'large'
@@ -118,27 +117,30 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
         switch ($size) {
             case 's':
                 $sizeDir = '16';
+
                 break;
             case 'm':
                 $sizeDir = '32';
+
                 break;
         }
 
         $xoops = \Xoops::getInstance();
-        $flagDir = $this->flagSource . $sizeDir . '/';
-        $flagFile = $flagDir . $countryCode . '.png';
+        $flagDir = $this->flagSource.$sizeDir.'/';
+        $flagFile = $flagDir.$countryCode.'.png';
 
         $file = $xoops->path($flagFile);
         // switch to unknown if file is not readable
         if (!is_readable($file)) {
-            $flagFile = $flagDir . '_unknown.png';
+            $flagFile = $flagDir.'_unknown.png';
         }
         $url = $xoops->url($flagFile);
+
         return $url;
     }
 
     /**
-     * getCountryOverride
+     * getCountryOverride.
      *
      * @param string $countryCode ISO 3166-1 alpha-2 code
      *
@@ -149,6 +151,7 @@ class CountryFlagProvider extends AbstractContract implements CountryflagInterfa
         $countryCode = (isset($this->overrideMap[$countryCode]))
             ? $this->overrideMap[$countryCode]
             : $countryCode;
+
         return $countryCode;
     }
 }

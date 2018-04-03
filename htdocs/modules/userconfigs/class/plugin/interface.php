@@ -15,11 +15,10 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 interface UserconfigsPluginInterface
 {
     /**
-     * Expects an array of arrays containing:
+     * Expects an array of arrays containing:.
      *
      * name,        Name of the config
      * title,       Display name for the config, use constant
@@ -32,7 +31,7 @@ interface UserconfigsPluginInterface
     public function configs();
 
     /**
-     * Expects an array of arrays containing:
+     * Expects an array of arrays containing:.
      *
      * name,        Name of the category
      * description, Description for the category, use constant

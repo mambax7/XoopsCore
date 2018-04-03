@@ -16,20 +16,18 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Extended User Profile
+ * Extended User Profile.
  *
  * @copyright       2000-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         profile
  * @since           2.3.0
  * @author          Jan Pedersen
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 class ProfileVisibility extends XoopsObject
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -50,7 +48,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Get fields visible to the $user_groups on a $profile_groups profile
+     * Get fields visible to the $user_groups on a $profile_groups profile.
      *
      * @param array $profile_groups groups of the user to be accessed
      * @param array $user_groups    groups of the visitor, default as $xoops->user
@@ -81,9 +79,9 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * get all rows matching a condition
+     * get all rows matching a condition.
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} to match
+     * @param CriteriaElement $criteria {@link CriteriaElement} to match
      *
      * @return array of row arrays, indexed by field_id
      */
@@ -104,7 +102,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     /**
      * compare two arrays, each a row from profile_visibility
      * The comparison is on three columns, 'field_id', 'user_group', 'profile_group' considered in that
-     * order for comparison
+     * order for comparison.
      *
      * @param array $a associative array with 3 numeric entries 'field_id', 'user_group', 'profile_group'
      * @param array $b associative array with 3 numeric entries 'field_id', 'user_group', 'profile_group'
@@ -118,11 +116,12 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $fieldDiff = $a['field_id'] - $b['field_id'];
         $userDiff = $a['user_group'] - $b['user_group'];
         $profDiff = $a['profile_group'] - $b['profile_group'];
-        if ($fieldDiff !== 0) {
+        if (0 !== $fieldDiff) {
             return $fieldDiff;
-        } elseif ($userDiff !== 0) {
+        } elseif (0 !== $userDiff) {
             return $userDiff;
         }
+
         return $profDiff;
     }
 }

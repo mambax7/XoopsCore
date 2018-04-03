@@ -10,28 +10,24 @@
 */
 
 /**
- * XOOPS listing utilities
+ * XOOPS listing utilities.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package     class
  * @since       2.0.0
  * @version     $Id$
  */
 
 /**
- * XoopsLists
+ * XoopsLists.
  *
  * @author     John Neill <catzwolf@xoops.org>
  * @copyright  2011-2015 copyright (c) XOOPS.org
- * @package    Xoops\Core
- * @subpackage Lists
- * @access public
  */
 class xoopslists
 {
     /**
-     * get list of timezones
+     * get list of timezones.
      *
      * @return array
      */
@@ -41,7 +37,7 @@ class xoopslists
     }
 
     /**
-     * gets list of themes folder from themes directory
+     * gets list of themes folder from themes directory.
      *
      * @return array
      */
@@ -51,7 +47,7 @@ class xoopslists
     }
 
     /**
-     * gets a list of module folders from the modules directory
+     * gets a list of module folders from the modules directory.
      *
      * @return array
      */
@@ -61,7 +57,7 @@ class xoopslists
     }
 
     /**
-     * gets list of editors
+     * gets list of editors.
      *
      * @return array
      */
@@ -71,7 +67,7 @@ class xoopslists
     }
 
     /**
-     * gets list of name of directories inside a directory
+     * gets list of name of directories inside a directory.
      *
      * @param string $path filesystem path
      *
@@ -80,11 +76,12 @@ class xoopslists
     public static function getDirListAsArray($path)
     {
         $ignored = ['cvs', '_darcs'];
+
         return \Xoops\Core\Lists\Directory::getList($path, $ignored);
     }
 
     /**
-     * gets list of all files in a directory
+     * gets list of all files in a directory.
      *
      * @param string $path   filesystem path
      * @param string $prefix prefix added to file names
@@ -97,7 +94,7 @@ class xoopslists
     }
 
     /**
-     * gets list of image file names in a directory
+     * gets list of image file names in a directory.
      *
      * @param string $path   filesystem path
      * @param string $prefix prefix added to file names
@@ -110,7 +107,7 @@ class xoopslists
     }
 
     /**
-     * gets list of html file names in a certain directory
+     * gets list of html file names in a certain directory.
      *
      * @param string $path   filesystem path
      * @param string $prefix prefix added to file names
@@ -124,7 +121,7 @@ class xoopslists
 
     /**
      * gets list of subject icon image file names in a certain directory
-     * if directory is not specified, default directory will be searched
+     * if directory is not specified, default directory will be searched.
      *
      * @param string $subDirectory
      *
@@ -136,21 +133,21 @@ class xoopslists
     }
 
     /**
-     * gets list of language folders inside default language directory
+     * gets list of language folders inside default language directory.
      *
      * @return array
      */
     public static function getLangList()
     {
-        $lang_list = self::getDirListAsArray(\XoopsBaseConfig::get('root-path') . '/language/');
+        $lang_list = self::getDirListAsArray(\XoopsBaseConfig::get('root-path').'/language/');
 
         return $lang_list;
     }
 
     /**
-     * gets list of locale folders inside default language directory
+     * gets list of locale folders inside default language directory.
      *
-     * @param boolean $showInCodeLanguage true to show a code's name in the language the code represents
+     * @param bool $showInCodeLanguage true to show a code's name in the language the code represents
      *
      * @return array
      */
@@ -160,7 +157,7 @@ class xoopslists
     }
 
     /**
-     * XoopsLists::getCountryList()
+     * XoopsLists::getCountryList().
      *
      * @return array
      */
@@ -170,7 +167,7 @@ class xoopslists
     }
 
     /**
-     * Get a list of localized month names
+     * Get a list of localized month names.
      *
      * @param string $width The format name; it can be 'wide' (eg 'January'),
      *                      'abbreviated' (eg 'Jan') or 'narrow' (eg 'J').

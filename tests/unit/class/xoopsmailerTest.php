@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../init_new.php');
+require_once __DIR__.'/../init_new.php';
 
 use Xoops\Core\Kernel\Handlers\XoopsGroup;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
@@ -88,7 +88,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $x = $this->getPropertyValue('templatedir');
         $this->assertSame('', $x);
 
-        $instance->setTemplateDir('aa' . DIRECTORY_SEPARATOR . 'bb');
+        $instance->setTemplateDir('aa'.DIRECTORY_SEPARATOR.'bb');
         $x = $this->getPropertyValue('templatedir');
         $this->assertSame('aa/bb', $x);
     }
@@ -265,7 +265,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
         $instance->addHeaders($value);
         $x = $this->getPropertyValue('headers');
         $le = $this->getPropertyValue('LE');
-        $this->assertSame(trim($value) . $le, $x[0]);
+        $this->assertSame(trim($value).$le, $x[0]);
     }
 
     public function test_setToEmails()
@@ -332,6 +332,7 @@ class xoopsmailerTest extends \PHPUnit\Framework\TestCase
     {
         $prop = new ReflectionProperty(get_class($this->object), $name);
         $prop->setAccessible(true);
+
         return $prop->getValue($this->object);
     }
 }

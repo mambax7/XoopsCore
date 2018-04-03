@@ -21,12 +21,11 @@ use Xoops\Core\Logger;
  * and various logs.
  *
  * @category  DebugbarLogger
- * @package   DebugbarLogger
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2013 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     1.0
  */
 class debugbarlogger implements LoggerInterface
@@ -52,7 +51,7 @@ class debugbarlogger implements LoggerInterface
     private $quietmode = false;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
@@ -60,9 +59,9 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Get a reference to the only instance of this class
+     * Get a reference to the only instance of this class.
      *
-     * @return  object LoggerAbstract  reference to the only instance
+     * @return object LoggerAbstract  reference to the only instance
      */
     public static function getInstance()
     {
@@ -76,7 +75,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Get our debugbar object
+     * Get our debugbar object.
      *
      * @return \DebugBar\DebugBar
      */
@@ -86,7 +85,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * disable logging
+     * disable logging.
      */
     public function disable()
     {
@@ -127,7 +126,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * report enabled status
+     * report enabled status.
      *
      * @return bool
      */
@@ -137,7 +136,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * disable output for the benefit of ajax scripts
+     * disable output for the benefit of ajax scripts.
      */
     public function quiet()
     {
@@ -146,7 +145,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Start a timer
+     * Start a timer.
      *
      * @param string      $name  name of the timer
      * @param string|null $label optional label for this timer
@@ -163,7 +162,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Stop a timer
+     * Stop a timer.
      *
      * @param string $name name of the timer
      */
@@ -181,7 +180,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Log a database query
+     * Log a database query.
      *
      * @param string $sql        sql that was processed
      * @param string $error      error message
@@ -206,7 +205,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Log display of a block
+     * Log display of a block.
      *
      * @param string $name      name of the block
      * @param bool   $cached    was the block cached?
@@ -221,7 +220,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Log extra information
+     * Log extra information.
      *
      * @param string $name name for the entry
      * @param string $msg  text message for the entry
@@ -235,7 +234,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Log messages for deprecated functions
+     * Log messages for deprecated functions.
      *
      * @param string $msg name for the entry
      */
@@ -247,7 +246,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Log exceptions
+     * Log exceptions.
      *
      * @param Exception $e name for the entry
      */
@@ -259,7 +258,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Dump Smarty variables
+     * Dump Smarty variables.
      */
     public function addSmarty()
     {
@@ -267,13 +266,13 @@ class debugbarlogger implements LoggerInterface
             $data = Xoops::getInstance()->tpl()->getTemplateVars();
             // fix values that don't display properly
             foreach ($data as $k => $v) {
-                if ($v === '') {
+                if ('' === $v) {
                     $data[$k] = '(empty string)';
-                } elseif ($v === null) {
+                } elseif (null === $v) {
                     $data[$k] = 'NULL';
-                } elseif ($v === true) { // just to be consistent with false
+                } elseif (true === $v) { // just to be consistent with false
                     $data[$k] = 'bool TRUE';
-                } elseif ($v === false) {
+                } elseif (false === $v) {
                     $data[$k] = 'bool FALSE';
                 }
             }
@@ -285,7 +284,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Dump a variable to the messages pane
+     * Dump a variable to the messages pane.
      *
      * @param mixed $var variable to dump
      */
@@ -295,7 +294,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * stackData - stash log data before a redirect
+     * stackData - stash log data before a redirect.
      */
     public function stackData()
     {
@@ -318,7 +317,7 @@ class debugbarlogger implements LoggerInterface
     }
 
     /**
-     * Output buffering callback inserting logger dump in page output
+     * Output buffering callback inserting logger dump in page output.
      *
      * @param string $output output buffer to add logger rendering to
      *
@@ -331,7 +330,7 @@ class debugbarlogger implements LoggerInterface
         }
 
         $xoops = Xoops::getInstance();
-        $head = '</script>' . $this->renderer->renderHead() . '<script>';
+        $head = '</script>'.$this->renderer->renderHead().'<script>';
         $xoops->theme()->addScript(null, null, $head);
 
         $log = $this->renderer->render();
@@ -339,14 +338,15 @@ class debugbarlogger implements LoggerInterface
 
         $pattern = '<!--<xo-logger-output>-->';
         $pos = strpos($output, $pattern);
-        if ($pos !== false) {
-            return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
+        if (false !== $pos) {
+            return substr($output, 0, $pos).$log.substr($output, $pos + strlen($pattern));
         }
-        return $output . $log;
+
+        return $output.$log;
     }
 
     /**
-     * dump everything we have  // was __destruct()
+     * dump everything we have  // was __destruct().
      */
     public function renderDebugBar()
     {
@@ -364,18 +364,18 @@ class debugbarlogger implements LoggerInterface
             $conn = \Xoops::getInstance()->db()->getWrappedConnection();
             if ($conn instanceof \PDO) {
                 $this->addExtra(
-                    $conn->getAttribute(\PDO::ATTR_DRIVER_NAME) . ' version',
+                    $conn->getAttribute(\PDO::ATTR_DRIVER_NAME).' version',
                     $conn->getAttribute(\PDO::ATTR_SERVER_VERSION)
                 );
                 $this->addExtra(
-                    $conn->getAttribute(\PDO::ATTR_DRIVER_NAME) . ' stats',
+                    $conn->getAttribute(\PDO::ATTR_DRIVER_NAME).' stats',
                     $conn->getAttribute(\PDO::ATTR_SERVER_INFO)
                 );
             }
 
-            if ($this->quietmode === false) {
+            if (false === $this->quietmode) {
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                    && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+                    && 'XMLHttpRequest' === $_SERVER['HTTP_X_REQUESTED_WITH']) {
                     // default for ajax, do not initialize a new toolbar, just add dataset
                     $log = $this->renderer->render(false);
                 } else {
@@ -519,7 +519,7 @@ class debugbarlogger implements LoggerInterface
         $channel = 'messages';
         $msg = $message;
 
-        /**
+        /*
          * If we have embedded channel in the context array, format the message
          * approriatly using context values.
          */
@@ -528,70 +528,82 @@ class debugbarlogger implements LoggerInterface
             switch ($chan) {
                 case 'blocks':
                     $channel = 'Blocks';
-                    $msg = $message . ': ';
+                    $msg = $message.': ';
                     if ($context['cached']) {
                         $msg .= sprintf(_MD_DEBUGBAR_CACHED, (int) ($context['cachetime']));
                     } else {
                         $msg .= _MD_DEBUGBAR_NOT_CACHED;
                     }
+
                     break;
                 case 'deprecated':
                     $channel = 'Deprecated';
                     $msg = $message;
+
                     break;
                 case 'extra':
                     $channel = 'Extra';
-                    $msg = $context['name'] . ': ' . $message;
+                    $msg = $context['name'].': '.$message;
+
                     break;
                 case 'queries':
                     $channel = 'Queries';
                     $msg = $message;
                     $qt = empty($context['query_time']) ?
                         '' : sprintf('%0.6f - ', $context['query_time']);
-                    if ($level === LogLevel::ERROR) {
+                    if (LogLevel::ERROR === $level) {
                         //if (!is_scalar($context['errno']) ||  !is_scalar($context['errno'])) {
                         //    \Xmf\Debug::dump($context);
                         //}
                         $msg .= ' -- Error number: '
-                            . (is_scalar($context['errno']) ? $context['errno'] : '?')
-                            . ' Error message: '
-                            . (is_scalar($context['error']) ? $context['error'] : '?');
+                            .(is_scalar($context['errno']) ? $context['errno'] : '?')
+                            .' Error message: '
+                            .(is_scalar($context['error']) ? $context['error'] : '?');
                     }
-                    $msg = $qt . $msg;
+                    $msg = $qt.$msg;
+
                     break;
             }
         }
         switch ($level) {
             case LogLevel::EMERGENCY:
                 $this->debugbar[$channel]->emergency($msg);
+
                 break;
             case LogLevel::ALERT:
                 $this->debugbar[$channel]->alert($msg);
+
                 break;
             case LogLevel::CRITICAL:
                 $this->debugbar[$channel]->critical($msg);
+
                 break;
             case LogLevel::ERROR:
                 $this->debugbar[$channel]->error($msg);
+
                 break;
             case LogLevel::WARNING:
                 $this->debugbar[$channel]->warning($msg);
+
                 break;
             case LogLevel::NOTICE:
                 $this->debugbar[$channel]->notice($msg);
+
                 break;
             case LogLevel::INFO:
                 $this->debugbar[$channel]->info($msg);
+
                 break;
             case LogLevel::DEBUG:
             default:
                 $this->debugbar[$channel]->debug($msg);
+
                 break;
         }
     }
 
     /**
-     * Add our resources to the theme as soon as it is available, otherwise return
+     * Add our resources to the theme as soon as it is available, otherwise return.
      */
     private function addToTheme()
     {
@@ -621,10 +633,11 @@ class debugbarlogger implements LoggerInterface
                     $cssAssets,
                     function ($filename) use ($excludes) {
                         foreach ($excludes as $exclude) {
-                            if (strpos($filename, $exclude) !== false) {
+                            if (false !== strpos($filename, $exclude)) {
                                 return false;
                             }
                         }
+
                         return true;
                     }
                 );
@@ -633,10 +646,11 @@ class debugbarlogger implements LoggerInterface
                     $jsAssets,
                     function ($filename) use ($excludes) {
                         foreach ($excludes as $exclude) {
-                            if (strpos($filename, $exclude) !== false) {
+                            if (false !== strpos($filename, $exclude)) {
                                 return false;
                             }
                         }
+
                         return true;
                     }
                 );

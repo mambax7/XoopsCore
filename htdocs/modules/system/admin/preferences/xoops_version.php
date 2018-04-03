@@ -10,16 +10,13 @@
 */
 
 /**
- * Preferences Manager
+ * Preferences Manager.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Kazumi Ono (AKA onokazu)
- * @package         system
- * @subpackage      preferences
  * @version         $Id$
  */
-
 $modversion['name'] = XoopsLocale::PREFERENCES;
 $modversion['version'] = '1.0';
 $modversion['description'] = SystemLocale::PREFERENCES_DESC;

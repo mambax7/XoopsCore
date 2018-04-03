@@ -14,14 +14,13 @@ namespace Xoops\Auth;
 use Xoops\Core\Database\Connection;
 
 /**
- * Authentication class for standard LDAP Server V3
+ * Authentication class for standard LDAP Server V3.
  *
  * @category  Xoops\Auth
- * @package   Ldap
  * @author    Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright 2000-2014 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  * @since     2.0
  */
 class Ldap extends AuthAbstract
@@ -107,7 +106,7 @@ class Ldap extends AuthAbstract
     public $ldap_filter_person;
 
     /**
-     * Authentication Service constructor
+     * Authentication Service constructor.
      *
      * @param Connection|null $dao databse
      */
@@ -115,6 +114,7 @@ class Ldap extends AuthAbstract
     {
         if (!extension_loaded('ldap')) {
             trigger_error(sprintf(\XoopsLocale::F_EXTENSION_PHP_NOT_LOADED, 'LDAP'), E_USER_ERROR);
+
             return;
         }
 
@@ -131,7 +131,7 @@ class Ldap extends AuthAbstract
      * Authenticate  user again LDAP directory (Bind)
      *               2 options :
      *         Authenticate directly with uname in the DN
-     *         Authenticate with manager, search the dn
+     *         Authenticate with manager, search the dn.
      *
      * @param string $uname Username
      * @param string $pwd   Password
@@ -161,7 +161,7 @@ class Ldap extends AuthAbstract
                 // We load the Xoops User database
                 return $this->loadXoopsUser($userDN, $uname, $pwd);
             }
-            $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)) . '(' . $userDN . ')');
+            $this->setErrors(ldap_errno($this->ds), ldap_err2str(ldap_errno($this->ds)).'('.$userDN.')');
         } else {
             $this->setErrors(0, \XoopsLocale::E_CANNOT_CONNECT_TO_SERVER);
         }
@@ -185,7 +185,7 @@ class Ldap extends AuthAbstract
             if (!ldap_bind($this->ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
                 $this->setErrors(
                     ldap_errno($this->ds),
-                    ldap_err2str(ldap_errno($this->ds)) . '(' . $this->ldap_manager_dn . ')'
+                    ldap_err2str(ldap_errno($this->ds)).'('.$this->ldap_manager_dn.')'
                 );
 
                 return false;
@@ -204,14 +204,14 @@ class Ldap extends AuthAbstract
                 ));
             }
         } else {
-            $userDN = $this->ldap_loginldap_attr . '=' . $uname . ',' . $this->ldap_base_dn;
+            $userDN = $this->ldap_loginldap_attr.'='.$uname.','.$this->ldap_base_dn;
         }
 
         return $userDN;
     }
 
     /**
-     * Load user from XOOPS Database
+     * Load user from XOOPS Database.
      *
      * @param string $uname username
      *
@@ -219,17 +219,17 @@ class Ldap extends AuthAbstract
      */
     public function getFilter($uname)
     {
-        if ($this->ldap_filter_person !== '') {
+        if ('' !== $this->ldap_filter_person) {
             $filter = str_replace('@@loginname@@', $uname, $this->ldap_filter_person);
         } else {
-            $filter = $this->ldap_loginldap_attr . '=' . $uname;
+            $filter = $this->ldap_loginldap_attr.'='.$uname;
         }
 
         return $filter;
     }
 
     /**
-     * loadXoopsUser
+     * loadXoopsUser.
      *
      * @param string $userdn base DN for the directory
      * @param string $uname  username
@@ -246,7 +246,7 @@ class Ldap extends AuthAbstract
         if ($entries['count'] > 0) {
             $xoopsUser = $provisHandler->sync($entries[0], $uname, $pwd);
         } else {
-            $this->setErrors(0, sprintf('loadXoopsUser - ' . \XoopsLocale::EF_ENTRY_NOT_READ, $userdn));
+            $this->setErrors(0, sprintf('loadXoopsUser - '.\XoopsLocale::EF_ENTRY_NOT_READ, $userdn));
         }
 
         return $xoopsUser;

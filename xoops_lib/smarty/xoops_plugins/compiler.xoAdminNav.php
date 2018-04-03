@@ -9,30 +9,30 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 /**
- * xoAdminNav Smarty compiler plug-in
+ * xoAdminNav Smarty compiler plug-in.
  *
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Andricq Nicolas (AKA MusS)
  * @since       2.5
  */
-
 function smarty_compiler_xoAdminNav($argStr, &$smarty)
 {
     $xoops = Xoops::getInstance();
 
     $icons = $xoops->getModuleConfig('typebreadcrumb', 'system');
-    if ($icons === '') {
+    if ('' === $icons) {
         $icons = 'default';
     }
 
     $url = '';
-    if (XoopsLoad::fileExists($xoops->path('modules/system/images/breadcrumb/' . $icons . '/index.html'))) {
-        $url = $xoops->url('modules/system/images/breadcrumb/' . $icons . '/' . $argStr);
+    if (XoopsLoad::fileExists($xoops->path('modules/system/images/breadcrumb/'.$icons.'/index.html'))) {
+        $url = $xoops->url('modules/system/images/breadcrumb/'.$icons.'/'.$argStr);
     } else {
-        if (XoopsLoad::fileExists($xoops->path('modules/system/images/breadcrumb/default/' . $argStr))) {
-            $url = $xoops->url('modules/system/images/icons/default/' . $argStr);
+        if (XoopsLoad::fileExists($xoops->path('modules/system/images/breadcrumb/default/'.$argStr))) {
+            $url = $xoops->url('modules/system/images/icons/default/'.$argStr);
         }
     }
-    return "\necho '" . addslashes($url) . "';";
+
+    return "\necho '".addslashes($url)."';";
 }

@@ -12,19 +12,18 @@
 namespace Xoops\Core\Lists;
 
 /**
- * Editor - provide list of editors
+ * Editor - provide list of editors.
  *
  * @category  Xoops\Core\Lists\Editor
- * @package   Xoops\Core
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Editor extends ListAbstract
 {
     /**
-     * gets list of available editors
+     * gets list of available editors.
      *
      * Presently,  a list of folders from class/xoopseditor directory.
      *
@@ -32,6 +31,6 @@ class Editor extends ListAbstract
      */
     public static function getList()
     {
-        return Directory::getList(\XoopsBaseConfig::get('root-path') . '/class/xoopseditor/');
+        return Directory::getList(\XoopsBaseConfig::get('root-path').'/class/xoopseditor/');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * XOOPS user handler
+ * XOOPS user handler.
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,7 +9,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @package   Kernel
  * @author    Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -23,14 +22,13 @@ use Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * Class for users
+ * Class for users.
  *
  * @category  Xoops\Core\Kernel\Handlers\XoopsUser
- * @package   Xoops\Core\Kernel
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright 2000-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class XoopsUser extends XoopsObject
 {
@@ -50,7 +48,7 @@ class XoopsUser extends XoopsObject
     private $isOnline = null;
 
     /**
-     * constructor
+     * constructor.
      *
      * @param int|array $id ID of the user to be loaded from the database or
      *                      Array of key-value-pairs to be assigned to the user.
@@ -107,7 +105,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * check if the user is a guest user
+     * check if the user is a guest user.
      *
      * @return bool returns false
      */
@@ -118,7 +116,7 @@ class XoopsUser extends XoopsObject
 
     /**
      * Updated by Catzwolf 11 Jan 2004
-     * find the username for a given ID
+     * find the username for a given ID.
      *
      * @param int $userid  ID of the user to find
      * @param int $usereal switch for usename or realname
@@ -137,19 +135,22 @@ class XoopsUser extends XoopsObject
                 $ts = \Xoops\Core\Text\Sanitizer::getInstance();
                 if ($usereal) {
                     $name = $user->getVar('name');
-                    if ($name !== '') {
+                    if ('' !== $name) {
                         return $ts->htmlSpecialChars($name);
                     }
+
                     return $ts->htmlSpecialChars($user->getVar('uname'));
                 }
+
                 return $ts->htmlSpecialChars($user->getVar('uname'));
             }
         }
+
         return $xoops->getConfig('anonymous');
     }
 
     /**
-     * increase the number of posts for the user
+     * increase the number of posts for the user.
      *
      * @deprecated
      * @return bool
@@ -160,7 +161,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * set the groups for the user
+     * set the groups for the user.
      *
      * @param array $groupsArr Array of groups that user belongs to
      */
@@ -172,7 +173,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * get the groups that the user belongs to
+     * get the groups that the user belongs to.
      *
      * @return array array of groups
      */
@@ -181,11 +182,12 @@ class XoopsUser extends XoopsObject
         if (empty($this->groups)) {
             $this->groups = \Xoops::getInstance()->getHandlerMember()->getGroupsByUser($this->getVar('uid'));
         }
+
         return $this->groups;
     }
 
     /**
-     * alias for getGroups()
+     * alias for getGroups().
      *
      * @see getGroups()
      * @return array array of groups
@@ -194,6 +196,7 @@ class XoopsUser extends XoopsObject
     public function groups()
     {
         $groups = $this->getGroups();
+
         return $groups;
     }
 
@@ -211,17 +214,18 @@ class XoopsUser extends XoopsObject
     public function isAdmin($module_id = null)
     {
         $xoops = \Xoops::getInstance();
-        if ($module_id === null) {
+        if (null === $module_id) {
             $module_id = $xoops->isModule() ? $xoops->module->getVar('mid', 'n') : 1;
         } elseif ((int) ($module_id) < 1) {
             $module_id = 0;
         }
         $moduleperm_handler = $xoops->getHandlerGroupPermission();
+
         return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
     }
 
     /**
-     * get the user's rank
+     * get the user's rank.
      *
      * @return array array of rank ID and title
      */
@@ -231,6 +235,7 @@ class XoopsUser extends XoopsObject
         if (!isset($this->rank)) {
             $this->rank = $xoops->service('userrank')->getUserRank($this)->getValue();
         }
+
         return $this->rank;
     }
 
@@ -241,9 +246,10 @@ class XoopsUser extends XoopsObject
      */
     public function isActive()
     {
-        if ($this->getVar('level') === 0) {
+        if (0 === $this->getVar('level')) {
             return false;
         }
+
         return true;
     }
 
@@ -259,11 +265,12 @@ class XoopsUser extends XoopsObject
             $this->isOnline =
                 ($online_handler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
         }
+
         return $this->isOnline;
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -275,7 +282,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -287,7 +294,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -299,7 +306,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -311,7 +318,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -323,7 +330,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -335,7 +342,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -347,7 +354,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -359,7 +366,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -371,7 +378,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -383,7 +390,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -395,7 +402,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -407,7 +414,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -419,7 +426,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -431,7 +438,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -443,7 +450,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -455,7 +462,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -467,7 +474,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -479,7 +486,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -491,7 +498,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -503,7 +510,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -515,7 +522,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -527,7 +534,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -539,7 +546,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -551,7 +558,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -563,7 +570,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -575,7 +582,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -587,7 +594,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *
@@ -599,7 +606,7 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * getter
+     * getter.
      *
      * @param string $format Dtype::FORMAT_xxxx constant
      *

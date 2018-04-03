@@ -2,7 +2,7 @@
 
 namespace Xoops\Form;
 
-require_once(__DIR__ . '/../../../init_new.php');
+require_once __DIR__.'/../../../init_new.php';
 
 class SelectTest extends \PHPUnit\Framework\TestCase
 {
@@ -78,34 +78,34 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->object->setValue('opt_key');
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<select') !== false);
-        $this->assertTrue(strpos($value, 'name="name"') !== false);
-        $this->assertTrue(strpos($value, 'size="1"') !== false);
-        $this->assertTrue(strpos($value, 'title="Caption"') !== false);
-        $this->assertTrue(strpos($value, 'id="name"') !== false);
-        $this->assertTrue(strpos($value, '<option') !== false);
-        $this->assertTrue(strpos($value, 'value="opt_key"') !== false);
-        $this->assertTrue(strpos($value, '>opt_name</option>') !== false);
-        $this->assertTrue(strpos($value, 'value="opt_just_key"') !== false);
-        $this->assertTrue(strpos($value, '>opt_just_key</option>') !== false);
+        $this->assertTrue(false !== strpos($value, '<select'));
+        $this->assertTrue(false !== strpos($value, 'name="name"'));
+        $this->assertTrue(false !== strpos($value, 'size="1"'));
+        $this->assertTrue(false !== strpos($value, 'title="Caption"'));
+        $this->assertTrue(false !== strpos($value, 'id="name"'));
+        $this->assertTrue(false !== strpos($value, '<option'));
+        $this->assertTrue(false !== strpos($value, 'value="opt_key"'));
+        $this->assertTrue(false !== strpos($value, '>opt_name</option>'));
+        $this->assertTrue(false !== strpos($value, 'value="opt_just_key"'));
+        $this->assertTrue(false !== strpos($value, '>opt_just_key</option>'));
 
         $this->object = new Select('Caption', 'name', 'value'); // reset object
         $groups = ['grp_key' => 'grp_name', 'grp_key1' => 'grp_name1'];
         $this->object->addOptionGroup('opt_grp_name', $groups);
         $value = $this->object->render();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, '<select') !== false);
-        $this->assertTrue(strpos($value, 'name="name"') !== false);
-        $this->assertTrue(strpos($value, 'size="1"') !== false);
-        $this->assertTrue(strpos($value, 'title="Caption"') !== false);
-        $this->assertTrue(strpos($value, 'id="name"') !== false);
-        $this->assertTrue(strpos($value, '<optgroup') !== false);
-        $this->assertTrue(strpos($value, 'label="opt_grp_name"') !== false);
-        $this->assertTrue(strpos($value, '<option') !== false);
-        $this->assertTrue(strpos($value, 'value="grp_key"') !== false);
-        $this->assertTrue(strpos($value, '>grp_name</option>') !== false);
-        $this->assertTrue(strpos($value, 'value="grp_key1"') !== false);
-        $this->assertTrue(strpos($value, '>grp_name1</option>') !== false);
+        $this->assertTrue(false !== strpos($value, '<select'));
+        $this->assertTrue(false !== strpos($value, 'name="name"'));
+        $this->assertTrue(false !== strpos($value, 'size="1"'));
+        $this->assertTrue(false !== strpos($value, 'title="Caption"'));
+        $this->assertTrue(false !== strpos($value, 'id="name"'));
+        $this->assertTrue(false !== strpos($value, '<optgroup'));
+        $this->assertTrue(false !== strpos($value, 'label="opt_grp_name"'));
+        $this->assertTrue(false !== strpos($value, '<option'));
+        $this->assertTrue(false !== strpos($value, 'value="grp_key"'));
+        $this->assertTrue(false !== strpos($value, '>grp_name</option>'));
+        $this->assertTrue(false !== strpos($value, 'value="grp_key1"'));
+        $this->assertTrue(false !== strpos($value, '>grp_name1</option>'));
     }
 
     public function testRenderValidationJS()
@@ -116,7 +116,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->object->setRequired(true);
         $value = $this->object->renderValidationJS();
         $this->assertTrue(is_string($value));
-        $this->assertTrue(strpos($value, 'window.alert') !== false);
+        $this->assertTrue(false !== strpos($value, 'window.alert'));
     }
 
     public function test__construct()

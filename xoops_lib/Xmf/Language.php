@@ -12,19 +12,18 @@
 namespace Xmf;
 
 /**
- * Language
+ * Language.
  *
  * @category  Xmf\Language
- * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @see      https://xoops.org
  */
 class Language
 {
     /**
-     * Attempt a translation of a simple string
+     * Attempt a translation of a simple string.
      *
      * @param string $string string to translate
      * @param string $domain language domain
@@ -39,7 +38,7 @@ class Language
     }
 
     /**
-     * load - load a language file
+     * load - load a language file.
      *
      * @param string $name     name of the language file
      * @param string $domain   domain or module supplying language file
@@ -56,8 +55,8 @@ class Language
                 $language = 'english';
             }
         }
-        $path = \XoopsBaseConfig::get('root-path') . '/' . ((empty($domain) || $domain === 'global') ? ''
-            : "modules/{$domain}/") . 'language';
+        $path = \XoopsBaseConfig::get('root-path').'/'.((empty($domain) || 'global' === $domain) ? ''
+            : "modules/{$domain}/").'language';
         if (!$ret = static::loadFile("{$path}/{$language}/{$name}.php")) {
             $ret = static::loadFile("{$path}/english/{$name}.php");
         }
@@ -66,7 +65,7 @@ class Language
     }
 
     /**
-     * Load a file
+     * Load a file.
      *
      * @param string $filename filename to load
      *
@@ -81,8 +80,10 @@ class Language
         }
         if (file_exists($filename)) {
             include_once $filename;
+
             return true;
         }
+
         return false;
     }
 }

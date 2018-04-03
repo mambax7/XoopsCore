@@ -12,19 +12,18 @@
 namespace Xoops;
 
 /**
- * Utils
+ * Utils.
  *
  * @category  Xoops\Utils
- * @package   Xoops
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class Utils
 {
     /**
-     * Output a dump of a variable
+     * Output a dump of a variable.
      *
      * @param mixed $var  variable to dump
      * @param bool  $echo true to echo dump, false to return dump as string
@@ -39,11 +38,12 @@ class Utils
         if ($echo) {
             echo $msg;
         }
+
         return $msg;
     }
 
     /**
-     * Output a dump of a file
+     * Output a dump of a file.
      *
      * @param mixed $file file to dump
      * @param bool  $echo true to echo dump, false to return dump as string
@@ -57,11 +57,12 @@ class Utils
         if ($echo) {
             echo $msg;
         }
+
         return $msg;
     }
 
     /**
-     * Support for recursive array_diff
+     * Support for recursive array_diff.
      *
      * Compares first array against the second and returns the difference - that is
      * the values in the first, but not in the second array
@@ -91,6 +92,7 @@ class Utils
                 $aReturn[$mKey] = $mValue;
             }
         }
+
         return $aReturn;
     }
 
@@ -107,14 +109,14 @@ class Utils
      * @param mixed $merge Array to merge with. The argument and all trailing arguments will be array cast when merged
      *
      * @return array Merged array
-     * @link http://book.cakephp.org/2.0/en/core-utility-libraries/hash.html#Hash::merge
+     * @see http://book.cakephp.org/2.0/en/core-utility-libraries/hash.html#Hash::merge
      */
     public static function arrayRecursiveMerge(array $data, $merge)
     {
         $args = func_get_args();
         $return = current($args);
 
-        while (($arg = next($args)) !== false) {
+        while (false !== ($arg = next($args))) {
             foreach ((array) $arg as $key => $val) {
                 if (!empty($return[$key]) && is_array($return[$key]) && is_array($val)) {
                     $return[$key] = self::arrayRecursiveMerge($return[$key], $val);
@@ -127,6 +129,7 @@ class Utils
                 }
             }
         }
+
         return $return;
     }
 }

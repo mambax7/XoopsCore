@@ -14,19 +14,18 @@ namespace Xoops\Core\Kernel\Dtype;
 use Xoops\Core\Kernel\XoopsObject;
 
 /**
- * DtypeEnumeration
+ * DtypeEnumeration.
  *
  * @category  Xoops\Core\Kernel\Dtype\DtypeEnumeration
- * @package   Xoops\Core\Kernel
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2015 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 class DtypeEnumeration extends DtypeAbstract
 {
     /**
-     * cleanVar prepare variable for persistence
+     * cleanVar prepare variable for persistence.
      *
      * @param XoopsObject $obj object containing variable
      * @param string      $key name of variable
@@ -38,8 +37,10 @@ class DtypeEnumeration extends DtypeAbstract
         $value = $obj->vars[$key]['value'];
         if (!in_array($value, $obj->vars[$key]['enumeration'], true)) {
             $obj->setErrors('Invalid Enumeration');
+
             return $value;
         }
+
         return $value;
     }
 }

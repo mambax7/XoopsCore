@@ -12,11 +12,10 @@
 use Xoops\Core\PreloadItem;
 
 /**
- * plugins module
+ * plugins module.
  *
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         plugins
  * @since           2.6.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
@@ -25,7 +24,7 @@ class PluginsPreload extends PreloadItem
 {
     /**
      * listen for core.include.common.classmaps
-     * add any module specific class map entries
+     * add any module specific class map entries.
      *
      * @param mixed $args not used
      */
@@ -33,13 +32,13 @@ class PluginsPreload extends PreloadItem
     {
         $path = dirname(__DIR__);
         \XoopsLoad::addMap([
-            'plugins' => $path . '/class/helper.php',
-            'pluginsmanager' => $path . '/class/manager.php',
+            'plugins' => $path.'/class/helper.php',
+            'pluginsmanager' => $path.'/class/manager.php',
         ]);
     }
 
     /**
-     * Filters an orders plugin listeners
+     * Filters an orders plugin listeners.
      *
      * @param array $args
      */
@@ -52,7 +51,7 @@ class PluginsPreload extends PreloadItem
     }
 
     /**
-     * Updates plugins on module install
+     * Updates plugins on module install.
      */
     public static function eventSystemModuleInstall($args)
     {

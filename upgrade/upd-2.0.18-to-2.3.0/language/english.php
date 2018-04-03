@@ -9,9 +9,9 @@ define('LEGEND_XOOPS_PATHS', 'XOOPS Physical paths');
 define('LEGEND_DATABASE', 'Database Character Set');
 
 define('XOOPS_LIB_PATH_LABEL', 'XOOPS library directory');
-define('XOOPS_LIB_PATH_HELP', 'Physical path to the XOOPS library directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of ' . XOOPS_ROOT_PATH . ' to make it secure.');
+define('XOOPS_LIB_PATH_HELP', 'Physical path to the XOOPS library directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of '.XOOPS_ROOT_PATH.' to make it secure.');
 define('XOOPS_DATA_PATH_LABEL', 'XOOPS datafiles directory');
-define('XOOPS_DATA_PATH_HELP', 'Physical path to the XOOPS datafiles (writable) directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of ' . XOOPS_ROOT_PATH . ' to make it secure.');
+define('XOOPS_DATA_PATH_HELP', 'Physical path to the XOOPS datafiles (writable) directory WITHOUT trailing slash, for forward compatibility. Locate the folder out of '.XOOPS_ROOT_PATH.' to make it secure.');
 
 define('DB_COLLATION_LABEL', 'Database character set and collation');
 define('DB_COLLATION_HELP', "As of 4.12 MySQL supports custom character set and collation. However it is more complex than expected, so DON'T make any change unless you are confident with your choice.");

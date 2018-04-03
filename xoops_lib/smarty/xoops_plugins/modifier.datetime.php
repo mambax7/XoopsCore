@@ -10,18 +10,17 @@
  */
 
 /**
- * Xoops\Core\Locale\Time - localized time handling
+ * Xoops\Core\Locale\Time - localized time handling.
  *
  * @category  Smarty_modifier
- * @package   modifier.datetime.php
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2015 XOOPS Project (http://xoops.org)/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @see      http://xoops.org
  */
 
 /**
- * Smarty plugin to format a DateTime value
+ * Smarty plugin to format a DateTime value.
  *
  * Examples: {$datevariable|datetime}           - Oct 19, 2015, 9:43:12 PM ('medium' is default)
  *           {$datevariable|datetime:'elapse'}  - 2 days ago
@@ -42,5 +41,6 @@
 function smarty_modifier_datetime($datetime, $format = 'medium')
 {
     $string = \XoopsLocale::formatTimestamp($datetime, $format);
+
     return $string;
 }

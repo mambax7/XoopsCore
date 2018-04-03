@@ -12,12 +12,10 @@
 /**
  * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         Menus
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecoratorInterface
 {
     public function accessFilter(&$accessFilter)
@@ -34,6 +32,7 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
         foreach ($menus as $menu) {
             if (!preg_match('/{(MODULE\|.*)}/i', $menu['title'], $reg)) {
                 $ret[] = $menu;
+
                 continue;
             }
             $result = array_map('strtolower', explode('|', $reg[1]));
@@ -75,6 +74,7 @@ class MenusDynamicDecorator extends MenusDecoratorAbstract implements MenusDecor
                 }
             }
         }
+
         return $ret;
     }
 }

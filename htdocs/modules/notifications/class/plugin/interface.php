@@ -15,7 +15,6 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id$
  */
-
 interface NotificationsPluginInterface
 {
     /**
@@ -30,7 +29,7 @@ interface NotificationsPluginInterface
     public function item($category, $itemId);
 
     /**
-     * Expects array of arrays containing:
+     * Expects array of arrays containing:.
      *
      * 'name' => 'thread';
      * 'title' => _MI_NEWBB_THREAD_NOTIFY;
@@ -53,7 +52,7 @@ interface NotificationsPluginInterface
     public function categories();
 
     /**
-     * Expects array of arrays containing:
+     * Expects array of arrays containing:.
      *
      * 'name' => 'new_post';
      * 'category' => 'thread';
@@ -82,13 +81,13 @@ interface NotificationsPluginInterface
     public function events();
 
     /**
-     * Expects array containing tags to use in mail template
+     * Expects array containing tags to use in mail template.
      *
      * ex: return array('X_SOME_NEW_TAG' => 'Some New Content');
      * note: Using tags is optional, you can return an empty array if you like
      *
      * @param string $category
-     * @param int $item_id
+     * @param int    $item_id
      * @param string $event
      *
      * @return mixed
